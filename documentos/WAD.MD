@@ -200,6 +200,20 @@ Data de criação:\<dia, mês e ano em que o documento foi criado\>
 # [**Referências**](#sumário)
 
 Toda referência citada no texto deverá constar nessa seção, utilizando o padrão de normalização da ABNT). As citações devem ser confiáveis e relevantes para o trabalho. São imprescindíveis as citações dos sites de download das ferramentas utilizadas, bem como a citação de algum objeto, música, textura ou outros que não tenham sido produzidos pelo grupo, mas utilizados (mesmo no caso de licenças gratuitas, royalty free ou similares)
+    
+| Usuário | Nota de Usabilidade | Nota de Funcionalidade |
+|---------|---------------------|------------------------|
+| 1       | 5                   | 5                      |
+| 2       | 4                   | 5                      |
+| 3       | 3                   | 5                      |
+| 4       | 2                   | 3                      |
+| 5       | 1                   | 2                      |
+| 6       | 3                   | 4                      |
+| 7       | 5                   | 4                      |
+| 8       | 2                   | 5                      |
+| 9       | 3                   | 1                      |
+| 10      | 4                   | 2                      |
+[Gerador de Tabelas em MarkDown - Basta copiar a tabela e colar no site](https://www.tablesgenerator.com/markdown_tables)
 
 #
 
