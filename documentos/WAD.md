@@ -2,7 +2,7 @@
 
 # WAD
 
-[//]: # (include ../README.md)
+<!-- include "teste.html" -->
     
 # WEB APPLICATION DOCUMENT
 <br><br><br><br>
