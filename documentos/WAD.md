@@ -29,7 +29,6 @@ Data de criação:\<dia, mês e ano em que o documento foi criado\>
 | **Data** | **Autor** | **Versão** | **Resumo da atividade** |
 | --- | --- | --- | --- |
 | \<xx/xx/xxxx\>Exemplo: 27/04/2022 | \<Nome do responsável pela versão\>Exemplo: José da Silva | \<número da Sprint.sequencial\>Exemplo: 1.1 | \<descrever o que foi atualizado nesta versão\>Exemplo: Criação do documento |
-|
 
 
 ### **Sumário**
