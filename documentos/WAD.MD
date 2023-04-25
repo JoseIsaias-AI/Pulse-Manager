@@ -2,7 +2,8 @@
 
 # WAD
 
-
+[//]: # (include ../README.md)
+    
 # WEB APPLICATION DOCUMENT
 <br><br><br><br>
 
