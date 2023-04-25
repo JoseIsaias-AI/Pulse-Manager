@@ -2,8 +2,6 @@
 
 # WAD
 
-<!-- include "teste.html" -->
-    
 # WEB APPLICATION DOCUMENT
 <br><br><br><br>
 
