@@ -213,8 +213,11 @@ Toda referência citada no texto deverá constar nessa seção, utilizando o pad
 | 8       | 2                   | 5                      |
 | 9       | 3                   | 1                      |
 | 10      | 4                   | 2                      |
+
 [Gerador de Tabelas em MarkDown - Basta copiar a tabela e colar no site](https://www.tablesgenerator.com/markdown_tables)
 
+<img src="../imagens/grafico.png">
+    
 #
 
 # [**Apêndice**](#sumário)
