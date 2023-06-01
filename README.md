@@ -8,7 +8,7 @@
 
 ## Nome do grupo
 
-## Integrantes: 
+## :student: Integrantes: 
 - <a href="https://www.linkedin.com/in/victorbarq/">Nome do integrante 1</a>
 - <a href="https://www.linkedin.com/in/victorbarq/">Nome do integrante 2</a>
 - <a href="https://www.linkedin.com/in/victorbarq/">Nome do integrante 3</a> 
@@ -17,7 +17,7 @@
 - <a href="https://www.linkedin.com/in/victorbarq/">Nome do integrante 6</a> 
 - <a href="https://www.linkedin.com/in/victorbarq/">Nome do integrante 7</a>
 
-## Professores:
+## :teacher: Professores:
 ### Orientador(a) 
 - <a href="https://www.linkedin.com/in/victorbarq/">Nome do integrante 1</a>
 ### Instrutores
@@ -34,7 +34,7 @@ Curta descrição sobre o que o seu projeto faz (problema a ser resolvido e solu
 
 ## 📝 LINK
 
-Clique<<a href="https://www.linkedin.com/in/victorbarq/">AQUI</a> para ver o projeto funcionando.
+Clique<a href="https://www.linkedin.com/in/victorbarq/">AQUI</a> para ver o projeto funcionando.
 
 ## 📁 Estrutura de pastas
 
