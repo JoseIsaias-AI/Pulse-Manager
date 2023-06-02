@@ -34,7 +34,7 @@ Curta descrição sobre o que o seu projeto faz (problema a ser resolvido e solu
 
 ## 📝 LINK
 
-Clique<a href="https://www.linkedin.com/in/victorbarq/">AQUI</a> para ver o projeto funcionando.
+Clique <a href="https://www.linkedin.com/in/victorbarq/">AQUI</a> para ver o projeto funcionando.
 
 ## 📁 Estrutura de pastas
 
