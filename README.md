@@ -30,7 +30,7 @@
 
 ## 📝 Descrição
 
-Curta descrição sobre o que o seu projeto faz (problema a ser resolvido e solução proposta).
+Curta descrição sobre o que o seu projeto faz (problema a ser resolvido e solução proposta - máx. 250 palavras - deve incluir link para vídeo de demonstração - pode conter outras imagens).
 
 ## 📝 LINK
 
