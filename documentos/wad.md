@@ -86,10 +86,11 @@
 *Template de User Story*
 Identificação | USXX (troque XX por numeração ordenada das User Stories)
 --- | ---
+Persona | nome da Persona
 User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | descrever cenário + testes de aceite
-Critério de aceite 2 | descrever cenário + testes de aceite
-Critério de aceite ... | ...
+Critério de aceite 1 | CR1: descrever cenário + testes de aceite
+Critério de aceite 2 | CR2: descrever cenário + testes de aceite
+Critério de aceite ... | CR...
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 4)
 
