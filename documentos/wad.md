@@ -130,7 +130,7 @@ Critério de aceite ... | CR...
 
 *posicione aqui os diagramas de modelos relacionais do seu banco de dados, apresentando todos os esquemas de tabelas e suas relações. Utilize texto para complementar suas explicações, se necessário* 
 
-## 3.5. WebAPI e endpoints (sprint 3)
+## 3.6. WebAPI e endpoints (sprint 3)
 
 *Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.* 
 
