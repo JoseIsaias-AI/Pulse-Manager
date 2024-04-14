@@ -124,7 +124,7 @@ Critério de aceite ... | CR...
 
 *posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)*
 
-## 3.5. Modelagem do banco de dados (sprint 2)
+## 3.5. Modelagem do banco de dados (sprints 2 e 3)
 
 ### 3.5.1. Modelo relacional (sprints 2)
 
