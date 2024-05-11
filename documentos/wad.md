@@ -142,19 +142,15 @@ Critério de aceite ... | CR...
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
-## 4.1. Primeira versão da aplicação web (sprint 2)
+## 4.1. Primeira versão da aplicação web (sprint 3)
 
 *Descreva e ilustre aqui o desenvolvimento da sua primeira versão do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
 
-## 4.2. Segunda versão da aplicação web (sprint 3)
+## 4.2. Segunda versão da aplicação web (sprint 4)
 
 *Descreva e ilustre aqui o desenvolvimento da sua segunda versão do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
 
-## 4.3. Terceira versão da aplicação web (sprint 4)
-
-*Descreva e ilustre aqui o desenvolvimento da sua terceira versão do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
-
-## 4.4. Versão final da aplicação web (sprint 5)
+## 4.3. Versão final da aplicação web (sprint 5)
 
 *Descreva e ilustre aqui o desenvolvimento da última versão do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
 
