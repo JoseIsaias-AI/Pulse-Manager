@@ -132,7 +132,26 @@ Critério de aceite ... | CR...
 
 ### 3.5.2. Consultas SQL e lógica proposicional (sprint 3)
 
-*posicione aqui uma lista de consultas SQL realizadas pelo back-end da aplicação web com sua respectiva lógica proposicional, descrita conforme template oferecido pelos professores de Matemática*
+*posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
+
+*Template de SQL + lógica proposicional*
+#1 | ---
+--- | ---
+**Expressão SQL** | SELECT * FROM suppliers WHERE (state = 'California' AND supplier_id <> 900) OR (supplier_id = 100); 
+**Proposições lógicas** | $A$: O estado é 'California' (state = 'California') <br> $B$: O ID do fornecedor não é 900 (supplier_id ≠ 900) <br> $C$: O ID do fornecedor é 100 (supplier_id = 100)
+**Expressão lógica proposicional** | $(A \land B) \lor C$
+**Tabela Verdade** | 
+
+$A$ | $B$ | $C$ | $(A \land B)$ | $(A \land B) \lor C$
+--- | --- | --- | --- | ---
+F | F | F | F | F
+F | F | V | F | V
+F | V | F | F | F
+F | V | V | F | V
+V | F | F | F | F
+V | F | V | F | V
+V | V | F | V | V
+V | V | V | V | V
 
 ## 3.6. WebAPI e endpoints (sprint 3)
 
