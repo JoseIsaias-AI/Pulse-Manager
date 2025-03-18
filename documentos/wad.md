@@ -46,7 +46,7 @@
 
 ### 2.1.1. Contexto da indústria (sprint 1)
 
-*Posicione aqui o texto que explica o contexto da indústria/mercado do qual o parceiro de projeto faz parte. Contextualize o segmento de atuação do parceiro (pode ser indústria, comércio ou serviço). Caracterize as atividades executadas pelo negócio do parceiro e a abrangência de suas atividades (âmbito internacional, nacional ou regional).*
+*Posicione aqui o texto que explica o contexto da indústria/mercado do qual o parceiro de projeto faz parte.*
 
 ### 2.1.2. Modelo de 5 Forças de Porter (sprint 1)
 
@@ -54,7 +54,7 @@
 
 ### 2.1.3. Análise SWOT (sprint 1)
 
-*Posicione aqui a análise SWOT relacionada ao parceiro de projeto. Utilize a análise SWOT para fazer uma análise ambiental do parceiro no âmbito estratégico. Leve em consideração o contexto da indústria, concorrência e as características do ambiente interno (forças e fraquezas) e externo (oportunidades e ameaças) do parceiro.*
+*Posicione aqui a análise SWOT relacionada ao parceiro de projeto.*
 
 ### 2.1.4. Solução (sprints 1 a 5): 
 *(entre 20 e 60 palavras para cada subitem)*
@@ -67,11 +67,11 @@
 
 ### 2.1.5. Proposta de Valor (sprint 1)
 
-*Posicione aqui o canvas de proposta de valor. Descreva os aspectos essenciais para a criação de valor da ideia do produto com o objetivo de ajudar a entender melhor a realidade do cliente e entregar uma solução que está alinhado com o que ele espera.*
+*Posicione aqui o canvas de proposta de valor da solução.*
 
 ### 2.1.6. Matriz de Riscos (sprint 1)
 
-*Registre na matriz os riscos identificados no projeto, visando avaliar situações que possam representar ameaças e oportunidades, bem como os impactos relevantes sobre o projeto. Apresente os riscos, ressaltando, para cada um, impactos e probabilidades com plano de ação e respostas.*
+*Registre na matriz os riscos identificados no projeto.*
 
 ## 2.2. Personas (sprint 1)
 
@@ -94,15 +94,15 @@ Critério de aceite ... | CR...
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 4)
 
-## 3.1. Arquitetura (sprints 1)
+## 3.1. Arquitetura (sprint 1)
 
 *Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário*
 
-## 3.2. Wireframes (sprint 1)
+## 3.2. Wireframes (sprint 2)
 
 *Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)*
 
-## 3.3. Guia de estilos (sprints 2 e 3)
+## 3.3. Guia de estilos (sprint 3)
 
 *Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução*
 
@@ -120,7 +120,7 @@ Critério de aceite ... | CR...
 
 *posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução*
 
-## 3.4 Protótipo de alta fidelidade (sprints 2 e 3)
+## 3.4 Protótipo de alta fidelidade (sprint 3)
 
 *posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)*
 
@@ -130,7 +130,7 @@ Critério de aceite ... | CR...
 
 *posicione aqui os diagramas de modelos relacionais do seu banco de dados, apresentando todos os esquemas de tabelas e suas relações. Utilize texto para complementar suas explicações, se necessário* 
 
-### 3.5.2. Consultas SQL e lógica proposicional (sprint 3)
+### 3.5.2. Consultas SQL e lógica proposicional (sprint 2)
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
 
@@ -171,8 +171,6 @@ Critério de aceite ... | CR...
 *Liste e descreva os testes automatizados planejados para sua solução. Posicione aqui também o relatório de testes (através de link ou transcrito para estrutura markdown)*
 
 ## 5.2. Testes de usabilidade (sprint 5)
-
-### 5.2.1 Registros de testes e melhorias
 
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)*
 
