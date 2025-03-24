@@ -166,9 +166,9 @@ Critério de aceite ... | CR...
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes automatizados (sprint 4)
+## 5.1. Relatório de testes unitários e automatizados (sprint 4)
 
-*Liste e descreva os testes automatizados planejados para sua solução. Posicione aqui também o relatório de testes (através de link ou transcrito para estrutura markdown)*
+*Liste e descreva os testes unitários dos services criados, automatizados e planejados para sua solução. Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown)*
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
