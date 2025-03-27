@@ -79,7 +79,7 @@
 
 ## 2.3. User Stories (sprints 1 a 5)
 
-*Posicione aqui a lista de User Stories levantadas para o projeto. Siga o template de User Stories e utilize a mesma referência USXX no roadmap de seu quadro Kanban. Indique todas as User Stories mapeadas, mesmo aquelas que não forem implementadas ao longo do projeto.*
+*Posicione aqui a lista de User Stories levantadas para o projeto. Siga o template de User Stories e utilize a mesma referência USXX no roadmap de seu quadro Kanban. Indique todas as User Stories mapeadas, mesmo aquelas que não forem implementadas ao longo do projeto. Não se esqueça de explicar o INVEST das 5 User Stories prioritárias*
 
 *ATUALIZE ESTA SEÇÃO SEMPRE QUE ALGUMA DEMANDA MUDAR EM SEU PROJETO*
 
@@ -91,6 +91,7 @@ User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)
 Critério de aceite 1 | CR1: descrever cenário + testes de aceite
 Critério de aceite 2 | CR2: descrever cenário + testes de aceite
 Critério de aceite ... | CR...
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 4)
 
