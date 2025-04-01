@@ -95,7 +95,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 4)
 
-## 3.1. Arquitetura (sprint 1)
+## 3.1. Arquitetura (sprint 3)
 
 *Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário*
 
