@@ -95,7 +95,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 4)
 
-## 3.1. Arquitetura (sprint 1)
+## 3.1. Arquitetura (sprints 1 e 4)
 
 *Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário*
 
@@ -125,7 +125,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 *posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)*
 
-## 3.5. Modelagem do banco de dados (sprints 2 e 3)
+## 3.5. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.5.1. Modelo relacional (sprints 2)
 
