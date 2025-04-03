@@ -127,7 +127,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 ## 3.5. Modelagem do banco de dados (sprints 2 e 3)
 
-### 3.5.1. Modelo relacional (sprints 2)
+### 3.5.1. Modelo relacional (sprint 2)
 
 *posicione aqui os diagramas de modelos relacionais do seu banco de dados, apresentando todos os esquemas de tabelas e suas relações. Utilize texto para complementar suas explicações, se necessário* 
 
