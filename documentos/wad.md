@@ -23,11 +23,13 @@
 
 [5. Testes da Aplicação Web](#c5)
 
-[6. Conclusões e trabalhos futuros](#c6)
+[6. Estudo de Mercado e Plano de Marketing](#c6)
 
-[7. Referências](#c7)
+[7. Conclusões e trabalhos futuros](#c7)
 
-[Anexos](#c8)
+[8. Referências](c#8)
+
+[Anexos](#c9)
 
 <br>
 
@@ -175,7 +177,33 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)*
 
-# <a name="c6"></a>6. Conclusões e trabalhos futuros (sprint 5)
+# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+
+## 6.1 Resumo Executivo
+
+*Posicione aqui seu Resumo Executivo, com até 300 palavras, sem necessidade de fonte*
+
+## 6.2 Análise de Mercado
+
+*Posicione aqui seu Resumo Executivo, com até 800 palavras, fontes obrigatórias*
+
+## 6.3 Análise da Concorrência
+
+*Posicione aqui seu Resumo Executivo, com até 500 palavras, fontes obrigatórias*
+
+## 6.4 Público-Alvo
+
+*Posicione aqui seu Resumo Executivo, com até 500 palavras, fontes obrigatórias*
+
+## 6.5 Posicionamento
+
+*Posicione aqui seu Resumo Executivo, com até 500 palavras, sem necessidade de fonte*
+
+## 6.6 Estratégia de Marketing 
+
+*Posicione aqui seu Resumo Executivo, com até 800 palavras, sem necessidade de fonte*
+
+# <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
 *Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na seção 2 deste documento. Indique pontos fortes e pontos a melhorar de maneira geral.*
 
@@ -183,7 +211,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 *Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
 
-# <a name="c7"></a>7. Referências (sprints 1 a 5)
+# <a name="c8"></a>8. Referências (sprints 1 a 5)
 
 _Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
 
@@ -193,6 +221,6 @@ SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publ
 INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
 SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
 
-# <a name="c8"></a>Anexos
+# <a name="c9"></a>Anexos
 
 *Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)*
