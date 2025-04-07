@@ -52,14 +52,18 @@
 
 ### 2.1.2. Modelo de 5 Forças de Porter (sprint 1)
 
+*Preencha com até 400 palavras*
+
 *Posicione aqui o modelo de 5 Forças de Porter para sustentar o contexto da indústria.*
 
 ### 2.1.3. Análise SWOT (sprint 1)
 
+*Preencha com até 100 palavras – sem necessidade de fonte*
+
 *Posicione aqui a análise SWOT relacionada ao parceiro de projeto.*
 
 ### 2.1.4. Solução (sprints 1 a 5): 
-*(entre 20 e 60 palavras para cada subitem)*
+*(Até 60 palavras para cada subitem)*
 1. qual é o problema a ser resolvido 
 2. quais os dados disponíveis (fonte e conteúdo - exemplo: dados da área de Compras da empresa descrevendo seus fornecedores - se não houver, apenas indique "não se aplica") 
 3. qual a solução proposta 
@@ -67,11 +71,15 @@
 5. quais os benefícios trazidos pela solução proposta 
 6. qual será o critério de sucesso e qual medida será utilizada para o avaliar 
 
-### 2.1.5. Proposta de Valor (sprint 1)
+### 2.1.5. Value Proposition Canvas  (sprint 1)
+
+*Sem limite de palavras – usar template do curso*
 
 *Posicione aqui o canvas de proposta de valor da solução.*
 
 ### 2.1.6. Matriz de Riscos (sprint 1)
+
+*Sem limite de palavras – usar template do curso*
 
 *Registre na matriz os riscos identificados no projeto.*
 
