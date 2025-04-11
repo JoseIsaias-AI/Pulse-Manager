@@ -103,7 +103,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 4)
 
-## 3.1. Arquitetura (sprint 3)
+## 3.1. Arquitetura (sprints 3 e 4)
 
 *Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário*
 
@@ -133,9 +133,9 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 *posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)*
 
-## 3.5. Modelagem do banco de dados (sprints 2 e 3)
+## 3.5. Modelagem do banco de dados (sprints 2 e 4)
 
-### 3.5.1. Modelo relacional (sprint 2)
+### 3.5.1. Modelo relacional (sprints 2 e 4)
 
 *posicione aqui os diagramas de modelos relacionais do seu banco de dados, apresentando todos os esquemas de tabelas e suas relações. Utilize texto para complementar suas explicações, se necessário* 
 
@@ -153,7 +153,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 *Dica: edite a tabela verdade fora do markdown, para ter melhor controle*
 
-## 3.6. WebAPI e endpoints (sprint 3)
+## 3.6. WebAPI e endpoints (sprints 3 e 4)
 
 *Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.* 
 
