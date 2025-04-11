@@ -187,27 +187,60 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 ## 6.1 Resumo Executivo
 
-*Posicione aqui seu Resumo Executivo, com até 300 palavras, sem necessidade de fonte*
+*Preencher com até 300 palavras, sem necessidade de fonte*
+
+*Apresente de forma clara e objetiva os principais destaques do projeto: oportunidades de mercado, diferenciais competitivos da aplicação web e os objetivos estratégicos pretendidos.*
 
 ## 6.2 Análise de Mercado
 
-*Posicione aqui seu Resumo Executivo, com até 800 palavras, fontes obrigatórias*
+*a) Visão Geral do Setor (até 250 palavras)*
+*Contextualize o setor no qual a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
+
+*b) Tamanho e Crescimento do Mercado (até 250 palavras)*
+*Apresente dados quantitativos sobre o tamanho atual e projeções de crescimento do mercado. Utilize fontes confiáveis.*
+
+*c) Tendências de Mercado (até 300 palavras)*
+*Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis.*
 
 ## 6.3 Análise da Concorrência
 
-*Posicione aqui seu Resumo Executivo, com até 500 palavras, fontes obrigatórias*
+*a) Principais Concorrentes (até 250 palavras)*
+*Liste os concorrentes diretos e indiretos, destacando suas principais características e posicionamento no mercado.*
+
+*b) Vantagens Competitivas da Aplicação Web (até 250 palavras)*
+*Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes.*
+
 
 ## 6.4 Público-Alvo
 
-*Posicione aqui seu Resumo Executivo, com até 500 palavras, fontes obrigatórias*
+*a) Segmentação de Mercado (até 250 palavras)*
+Descreva os principais segmentos de mercado a serem atendidos pela aplicação. Utilize bases de dados e fontes confiáveis.*
+
+*b) Perfil do Público-Alvo (até 250 palavras)*
+*Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias.*
+
 
 ## 6.5 Posicionamento
 
-*Posicione aqui seu Resumo Executivo, com até 500 palavras, sem necessidade de fonte*
+*a) Proposta de Valor Única (até 250 palavras)*
+*Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado.*
+
+*b) Estratégia de Diferenciação (até 250 palavras)*
+*Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*
 
 ## 6.6 Estratégia de Marketing 
 
-*Posicione aqui seu Resumo Executivo, com até 800 palavras, sem necessidade de fonte*
+*a) Produto/Serviço (até 200 palavras)*
+*Descreva as funcionalidades, benefícios e diferenciais da aplicação*
+
+*6.2 Preço (até 200 palavras)*
+*Explique o modelo de precificação adotado e justifique com base nas análises anteriores.*
+
+*6.3 Praça (Distribuição) (até 200 palavras)*
+*Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público.*
+
+*6.4 Promoção (até 200 palavras)*
+*Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas.*
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
