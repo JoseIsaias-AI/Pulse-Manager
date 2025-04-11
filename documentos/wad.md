@@ -50,7 +50,9 @@
 
 ### 2.1.1. Modelo de 5 Forças de Porter (sprint 1)
 
-*Descreva as 5 forças de Porter no contexto da instituição parceira. Considere: Ameaça de novos entrantes; Poder de barganha dos fornecedores; Poder de barganha dos clientes; Ameaça de produtos substitutos; Rivalidade entre concorrentes.*
+*Preencha com até 400 palavras*
+
+*Posicione aqui o modelo de 5 Forças de Porter para sustentar o contexto da indústria.*
 
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
@@ -71,7 +73,9 @@ f) Critério de sucesso e como será avaliado
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
-*Sem limite de palavras – usar template do curso: Listar todos os riscos potenciais e reais do projeto, incluindo Impacto e probabilidade; Plano de ação e resposta para cada risco.*
+*Sem limite de palavras – usar template do curso*
+
+*Registre na matriz os riscos identificados no projeto.*
 
 ## 2.2. Personas (sprint 1)
 
