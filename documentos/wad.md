@@ -36,6 +36,8 @@
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
+*Preencha com até 300 palavras – sem necessidade de fonte*
+
 *Contextualize aqui a problemática trazida pelo parceiro de projeto.*
 
 *Descreva brevemente a solução desenvolvida para o parceiro de negócios. Descreva os aspectos essenciais para a criação de valor do produto, com o objetivo de ajudar a entender melhor a realidade do cliente e entregar uma solução que está alinhado com o que ele espera.*
