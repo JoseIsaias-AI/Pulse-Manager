@@ -56,20 +56,24 @@
 
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
+*Preencha com até 100 palavras – sem necessidade de fonte*
+
 *Apresente uma visão geral da situação do parceiro com base na matriz SWOT (forças, fraquezas, oportunidades e ameaças). Foque na relação com os concorrentes e o posicionamento da instituição.*
 
 ### 2.1.3. Solução (sprints 1 a 5)
 
 *Explique detalhadamente os seguintes aspectos (até 60 palavras por item):*
-a) Problema a ser resolvido
-b) Dados disponíveis (mencionar fonte e conteúdo; se não houver, indicar “não se aplica”)
-c) Solução proposta
-d) Forma de utilização da solução
-e) Benefícios esperados
-f) Critério de sucesso e como será avaliado
+1. Problema a ser resolvido
+2. Dados disponíveis (mencionar fonte e conteúdo; se não houver, indicar “não se aplica”)
+3. Solução proposta
+4. Forma de utilização da solução
+5. Benefícios esperados
+6. Critério de sucesso e como será avaliado
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
-*Sem limite de palavras – usar template do curso: Elaborar o Value Proposition Canvas com base na proposta de solução definida.*
+*Sem limite de palavras – usar template do curso*
+
+*Elaborar o Value Proposition Canvas com base na proposta de solução definida.*
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
