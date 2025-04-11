@@ -36,6 +36,8 @@
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
+*Preencha com até 300 palavras – sem necessidade de fonte*
+
 *Contextualize aqui a problemática trazida pelo parceiro de projeto.*
 
 *Descreva brevemente a solução desenvolvida para o parceiro de negócios. Descreva os aspectos essenciais para a criação de valor do produto, com o objetivo de ajudar a entender melhor a realidade do cliente e entregar uma solução que está alinhado com o que ele espera.*
@@ -44,40 +46,32 @@
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
-## 2.1. Escopo do Projeto (sprint 1)
+## 2.1. Escopo do Projeto (sprints 1 e 4)
 
-### 2.1.1. Contexto da indústria (sprint 1)
-
-*Posicione aqui o texto que explica o contexto da indústria/mercado do qual o parceiro de projeto faz parte.*
-
-### 2.1.2. Modelo de 5 Forças de Porter (sprint 1)
+### 2.1.1. Modelo de 5 Forças de Porter (sprint 1)
 
 *Preencha com até 400 palavras*
 
 *Posicione aqui o modelo de 5 Forças de Porter para sustentar o contexto da indústria.*
 
-### 2.1.3. Análise SWOT (sprint 1)
+### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-*Preencha com até 100 palavras – sem necessidade de fonte*
+*Apresente uma visão geral da situação do parceiro com base na matriz SWOT (forças, fraquezas, oportunidades e ameaças). Foque na relação com os concorrentes e o posicionamento da instituição.*
 
-*Posicione aqui a análise SWOT relacionada ao parceiro de projeto.*
+### 2.1.3. Solução (sprints 1 a 5)
 
-### 2.1.4. Solução (sprints 1 a 5): 
-*(Até 60 palavras para cada subitem)*
-1. qual é o problema a ser resolvido 
-2. quais os dados disponíveis (fonte e conteúdo - exemplo: dados da área de Compras da empresa descrevendo seus fornecedores - se não houver, apenas indique "não se aplica") 
-3. qual a solução proposta 
-4. como a solução proposta deverá ser utilizada 
-5. quais os benefícios trazidos pela solução proposta 
-6. qual será o critério de sucesso e qual medida será utilizada para o avaliar 
+*Explique detalhadamente os seguintes aspectos (até 60 palavras por item):*
+a) Problema a ser resolvido
+b) Dados disponíveis (mencionar fonte e conteúdo; se não houver, indicar “não se aplica”)
+c) Solução proposta
+d) Forma de utilização da solução
+e) Benefícios esperados
+f) Critério de sucesso e como será avaliado
 
-### 2.1.5. Value Proposition Canvas  (sprint 1)
+### 2.1.4. Value Proposition Canvas (sprint 1): 
+*Sem limite de palavras – usar template do curso: Elaborar o Value Proposition Canvas com base na proposta de solução definida.*
 
-*Sem limite de palavras – usar template do curso*
-
-*Posicione aqui o canvas de proposta de valor da solução.*
-
-### 2.1.6. Matriz de Riscos (sprint 1)
+### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
 *Sem limite de palavras – usar template do curso*
 
