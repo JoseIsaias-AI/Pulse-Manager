@@ -23,16 +23,20 @@
 
 [5. Testes da Aplicação Web](#c5)
 
-[6. Conclusões e trabalhos futuros](#c6)
+[6. Estudo de Mercado e Plano de Marketing](#c6)
 
-[7. Referências](#c7)
+[7. Conclusões e trabalhos futuros](#c7)
 
-[Anexos](#c8)
+[8. Referências](c#8)
+
+[Anexos](#c9)
 
 <br>
 
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
+
+*Preencha com até 300 palavras – sem necessidade de fonte*
 
 *Contextualize aqui a problemática trazida pelo parceiro de projeto.*
 
@@ -42,34 +46,38 @@
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
-## 2.1. Escopo do Projeto (sprint 1)
+## 2.1. Escopo do Projeto (sprints 1 e 4)
 
-### 2.1.1. Contexto da indústria (sprint 1)
+### 2.1.1. Modelo de 5 Forças de Porter (sprint 1)
 
-*Posicione aqui o texto que explica o contexto da indústria/mercado do qual o parceiro de projeto faz parte.*
-
-### 2.1.2. Modelo de 5 Forças de Porter (sprint 1)
+*Preencha com até 400 palavras*
 
 *Posicione aqui o modelo de 5 Forças de Porter para sustentar o contexto da indústria.*
 
-### 2.1.3. Análise SWOT (sprint 1)
+### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-*Posicione aqui a análise SWOT relacionada ao parceiro de projeto.*
+*Preencha com até 100 palavras – sem necessidade de fonte*
 
-### 2.1.4. Solução (sprints 1 a 5): 
-*(entre 20 e 60 palavras para cada subitem)*
-1. qual é o problema a ser resolvido 
-2. quais os dados disponíveis (fonte e conteúdo - exemplo: dados da área de Compras da empresa descrevendo seus fornecedores - se não houver, apenas indique "não se aplica") 
-3. qual a solução proposta 
-4. como a solução proposta deverá ser utilizada 
-5. quais os benefícios trazidos pela solução proposta 
-6. qual será o critério de sucesso e qual medida será utilizada para o avaliar 
+*Apresente uma visão geral da situação do parceiro com base na matriz SWOT (forças, fraquezas, oportunidades e ameaças). Foque na relação com os concorrentes e o posicionamento da instituição.*
 
-### 2.1.5. Proposta de Valor (sprint 1)
+### 2.1.3. Solução (sprints 1 a 5)
 
-*Posicione aqui o canvas de proposta de valor da solução.*
+*Explique detalhadamente os seguintes aspectos (até 60 palavras por item):*
+1. Problema a ser resolvido
+2. Dados disponíveis (mencionar fonte e conteúdo; se não houver, indicar “não se aplica”)
+3. Solução proposta
+4. Forma de utilização da solução
+5. Benefícios esperados
+6. Critério de sucesso e como será avaliado
 
-### 2.1.6. Matriz de Riscos (sprint 1)
+### 2.1.4. Value Proposition Canvas (sprint 1): 
+*Sem limite de palavras – usar template do curso*
+
+*Elaborar o Value Proposition Canvas com base na proposta de solução definida.*
+
+### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
+
+*Sem limite de palavras – usar template do curso*
 
 *Registre na matriz os riscos identificados no projeto.*
 
@@ -95,7 +103,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 4)
 
-## 3.1. Arquitetura (sprints 1 e 4)
+## 3.1. Arquitetura (sprints 3 e 4)
 
 *Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário*
 
@@ -127,7 +135,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 ## 3.5. Modelagem do banco de dados (sprints 2 e 4)
 
-### 3.5.1. Modelo relacional (sprints 2)
+### 3.5.1. Modelo relacional (sprints 2 e 4)
 
 *posicione aqui os diagramas de modelos relacionais do seu banco de dados, apresentando todos os esquemas de tabelas e suas relações. Utilize texto para complementar suas explicações, se necessário* 
 
@@ -145,7 +153,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 *Dica: edite a tabela verdade fora do markdown, para ter melhor controle*
 
-## 3.6. WebAPI e endpoints (sprint 3)
+## 3.6. WebAPI e endpoints (sprints 3 e 4)
 
 *Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.* 
 
@@ -175,7 +183,66 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)*
 
-# <a name="c6"></a>6. Conclusões e trabalhos futuros (sprint 5)
+# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+
+## 6.1 Resumo Executivo
+
+*Preencher com até 300 palavras, sem necessidade de fonte*
+
+*Apresente de forma clara e objetiva os principais destaques do projeto: oportunidades de mercado, diferenciais competitivos da aplicação web e os objetivos estratégicos pretendidos.*
+
+## 6.2 Análise de Mercado
+
+*a) Visão Geral do Setor (até 250 palavras)*
+*Contextualize o setor no qual a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
+
+*b) Tamanho e Crescimento do Mercado (até 250 palavras)*
+*Apresente dados quantitativos sobre o tamanho atual e projeções de crescimento do mercado. Utilize fontes confiáveis.*
+
+*c) Tendências de Mercado (até 300 palavras)*
+*Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis.*
+
+## 6.3 Análise da Concorrência
+
+*a) Principais Concorrentes (até 250 palavras)*
+*Liste os concorrentes diretos e indiretos, destacando suas principais características e posicionamento no mercado.*
+
+*b) Vantagens Competitivas da Aplicação Web (até 250 palavras)*
+*Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes.*
+
+
+## 6.4 Público-Alvo
+
+*a) Segmentação de Mercado (até 250 palavras)*
+Descreva os principais segmentos de mercado a serem atendidos pela aplicação. Utilize bases de dados e fontes confiáveis.*
+
+*b) Perfil do Público-Alvo (até 250 palavras)*
+*Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias.*
+
+
+## 6.5 Posicionamento
+
+*a) Proposta de Valor Única (até 250 palavras)*
+*Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado.*
+
+*b) Estratégia de Diferenciação (até 250 palavras)*
+*Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*
+
+## 6.6 Estratégia de Marketing 
+
+*a) Produto/Serviço (até 200 palavras)*
+*Descreva as funcionalidades, benefícios e diferenciais da aplicação*
+
+*6.2 Preço (até 200 palavras)*
+*Explique o modelo de precificação adotado e justifique com base nas análises anteriores.*
+
+*6.3 Praça (Distribuição) (até 200 palavras)*
+*Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público.*
+
+*6.4 Promoção (até 200 palavras)*
+*Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas.*
+
+# <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
 *Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na seção 2 deste documento. Indique pontos fortes e pontos a melhorar de maneira geral.*
 
@@ -183,7 +250,7 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 *Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
 
-# <a name="c7"></a>7. Referências (sprints 1 a 5)
+# <a name="c8"></a>8. Referências (sprints 1 a 5)
 
 _Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
 
@@ -193,6 +260,6 @@ SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publ
 INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
 SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
 
-# <a name="c8"></a>Anexos
+# <a name="c9"></a>Anexos
 
 *Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)*
