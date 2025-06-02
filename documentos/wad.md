@@ -233,13 +233,13 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 *a) Produto/Serviço (até 200 palavras)*
 *Descreva as funcionalidades, benefícios e diferenciais da aplicação*
 
-*6.2 Preço (até 200 palavras)*
+*b) Preço (até 200 palavras)*
 *Explique o modelo de precificação adotado e justifique com base nas análises anteriores.*
 
-*6.3 Praça (Distribuição) (até 200 palavras)*
+*c) Praça (Distribuição) (até 200 palavras)*
 *Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público.*
 
-*6.4 Promoção (até 200 palavras)*
+*d) Promoção (até 200 palavras)*
 *Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas.*
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
