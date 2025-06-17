@@ -33,7 +33,7 @@ _Descreva seu projeto (até 600 palavras)_
 
 ## 📝 Link de demonstração
 
-_Coloque aqui o link para seu projeto publicado e link para vídeo de demonstração_
+_Coloque aqui o link para o vídeo de demonstração do projeto_
 
 ## 📁 Estrutura de pastas
 
