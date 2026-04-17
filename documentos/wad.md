@@ -101,45 +101,124 @@ Critério de aceite 2 | CR2: descrever cenário + testes de aceite
 Critério de aceite ... | CR...
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
-# <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 4)
+# <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
-## 3.1. Arquitetura (sprints 3 e 4)
+## 3.1. Requisitos do Sistema (sprints 1 a 5)
 
-*Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário*
+*Esta seção formaliza o que o sistema deve fazer, sob quais regras e com quais qualidades. Atualize a cada sprint conforme os requisitos evoluem.*
 
-## 3.2. Wireframes (sprint 2)
+### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
+
+*Liste os RF numerados de forma objetiva e verificável. Cada RF deve poder ser convertido em caso de teste.*
+
+| ID    | Descrição | Prioridade | Status       |
+|-------|-----------|------------|--------------|
+| RF001 | ...       | Alta       | Implementado |
+| RF002 | ...       | Média      | Planejado    |
+
+### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
+
+*Numere e redija as RN de forma implementável e testável. Toda RN deve ter pelo menos um teste automatizado associado a partir da sprint 3.*
+
+| ID   | Descrição | RF associado |
+|------|-----------|--------------|
+| RN01 | ...       | RF001        |
+| RN02 | ...       | RF001        |
+
+### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
+
+*Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métrica, limite ou critério concreto) ou justificativa explícita de ausência. Evolua do conceitual (sprint 1) ao técnico mensurável (sprint 5).*
+
+| Eixo                     | Requisito | Métrica / Critério | Como atendido |
+|--------------------------|-----------|--------------------|---------------|
+| USAB — Usabilidade       | ...       | ...                | ...           |
+| CONF — Confiabilidade    | ...       | ...                | ...           |
+| DES — Desempenho         | ...       | p95 < X ms         | ...           |
+| SUP — Suportabilidade    | ...       | ...                | ...           |
+| SEG — Segurança          | ...       | ...                | ...           |
+| CAP — Capacidade         | ...       | ...                | ...           |
+| REST — Restrições Design | ...       | ...                | ...           |
+| ORG — Organizacionais    | ...       | ...                | ...           |
+
+### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
+
+*Matriz de cobertura mostrando quais RN e endpoints implementam cada RF.*
+
+| RF    | RN associadas | Endpoint    | Método |
+|-------|---------------|-------------|--------|
+| RF001 | RN01, RN02    | `/usuarios` | POST   |
+
+## 3.2. Arquitetura (sprints 1 a 5)
+
+### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
+
+*Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário.*
+
+### 3.2.2. Diagrama de Casos de Uso (sprint 1)
+
+*Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `in02/suporte/use-case_3.0_v1.0.pdf`.*
+
+### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
+
+*Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação.*
+
+### 3.2.4. Diagrama de Sequência UML (sprint 3)
+
+*Ao menos um fluxo prioritário, mostrando a interação entre as camadas Controller → Service → Repository → Banco. Linhas de vida verticais, ativação correta, mensagens síncronas e assíncronas diferenciadas, retornos tracejados.*
+
+### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
+
+*Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escolhida de forma consistente (sem misturar convenções).*
+
+### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
+
+*Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
+
+### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
+
+*Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto.*
+
+## 3.3. Wireframes (sprint 2)
 
 *Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)*
 
-## 3.3. Guia de estilos (sprint 3)
+## 3.4. Guia de estilos (sprint 3)
 
 *Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução*
 
-### 3.3.1 Cores
+### 3.4.1 Cores
 
 *Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções*
 
-### 3.3.2 Tipografia
+### 3.4.2 Tipografia
 
 *Apresente aqui a tipografia da solução, com famílias de fontes e suas respectivas funções*
 
-### 3.3.3 Iconografia e imagens 
+### 3.4.3 Iconografia e imagens 
 
 *(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)*
 
 *posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução*
 
-## 3.4 Protótipo de alta fidelidade (sprint 3)
+## 3.5 Protótipo de alta fidelidade (sprint 3)
 
 *posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)*
 
-## 3.5. Modelagem do banco de dados (sprints 2 e 4)
+## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
-### 3.5.1. Modelo relacional (sprints 2 e 4)
+### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-*posicione aqui os diagramas de modelos relacionais do seu banco de dados, apresentando todos os esquemas de tabelas e suas relações. Utilize texto para complementar suas explicações, se necessário* 
+*Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
 
-### 3.5.2. Consultas SQL e lógica proposicional (sprint 2)
+### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+
+*Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3).*
+
+### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
+
+*Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário.*
+
+### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
 
@@ -153,35 +232,106 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 *Dica: edite a tabela verdade fora do markdown, para ter melhor controle*
 
-## 3.6. WebAPI e endpoints (sprints 3 e 4)
+## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
 *Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.* 
 
-*Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), header, body e formatos de response*
+*Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), header, body, formatos de response e os status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422, 500).*
+
+## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
+
+### 3.8.1. Autenticação
+
+*Descreva o fluxo de autenticação implementado: persistência de senha com hash bcrypt/argon2 (parâmetros de custo explícitos e justificados), validação de credenciais e criação de sessão. Senhas em texto plano no banco não são aceitas.*
+
+### 3.8.2. Controle de sessão
+
+*Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto).*
+
+### 3.8.3. Autorização
+
+*Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização.*
+
+### 3.8.4. Estratégias de Resiliência
+
+*Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.).*
+
+## 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+
+*A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais.*
+
+| Persona | RF    | RN   | Endpoint    | Tela     | Teste | Evidência        |
+|---------|-------|------|-------------|----------|-------|------------------|
+| ...     | RF001 | RN01 | `/usuarios` | Cadastro | CT02  | print, log, relatório de cobertura |
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
 ## 4.1. Primeira versão da aplicação web (sprint 3)
 
-*Descreva e ilustre aqui o desenvolvimento da sua primeira versão do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
+*Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 
-*Descreva e ilustre aqui o desenvolvimento da sua segunda versão do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
+*Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, com foco no que foi consolidado entre a primeira versão funcional e o sistema operacional integrado. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
-*Descreva e ilustre aqui o desenvolvimento da última versão do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar. Indique as eventuais dificuldades e próximos passos.*
+*Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## 5.1. Estratégia de Testes (sprint 3)
 
-*Liste e descreva os testes unitários dos endpoints criados, automatizados e planejados para sua solução. Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown)*
+*Descreva a estratégia de testes adotada e a separação por camada:*
 
-## 5.2. Testes de usabilidade (sprint 5)
+- **Service** — testes unitários **white-box** (cobrem ramos, exceções, regras de negócio). É onde mora a regra de negócio e onde se cobra cobertura.
+- **Controller** — testes **black-box end-to-end** (E2E) via Supertest: a requisição HTTP é enviada e verifica-se a resposta (status, body, efeito observável). Não se testa a implementação do controller — testa-se o contrato.
+- **Repository / camada de dados** — sem cobrança de cobertura. Testes opcionais quando houver lógica não trivial de query.
 
-*Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)*
+*Todos os testes devem seguir o padrão **AAA** (Arrange, Act, Assert) e ser determinísticos — não dependem de ordem de execução, relógio do sistema, rede externa ou dados residuais.*
+
+## 5.2. Testes unitários de Service com cobertura (sprints 3 a 5)
+
+*Liste os testes unitários de Service implementados, organizados por RF/RN. Apresente o relatório de cobertura gerado por `npm test -- --coverage` — mínimo **≥80%** nas Services a partir da sprint 3. O relatório deve ser versionado como evidência.*
+
+| RF    | RN   | Service                | Arquivo de teste          | Ramos cobertos                |
+|-------|------|------------------------|---------------------------|-------------------------------|
+| RF001 | RN01 | `UsuarioService.criar` | `usuario.service.test.ts` | sucesso, duplicado, validação |
+
+## 5.3. Testes de integração de endpoints automatizados (sprint 4)
+
+*Liste e descreva os testes de integração dos endpoints criados, automatizados com Jest + Supertest. Cubra obrigatoriamente os cenários: sucesso, falha de validação, regra de negócio violada e conflito (409). Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown).*
+
+## 5.4. Testes de usabilidade (sprint 5)
+
+*Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
+
+### 5.4.1. Heurísticas de Nielsen
+
+*Checklist das 10 heurísticas verificadas nas telas principais, com evidência (print, observação, etc.):*
+
+| #   | Heurística                                           | Verificada? | Evidência |
+|-----|------------------------------------------------------|-------------|-----------|
+| H1  | Visibilidade do status do sistema                    |             |           |
+| H2  | Correspondência entre o sistema e o mundo real       |             |           |
+| H3  | Controle e liberdade do usuário                      |             |           |
+| H4  | Consistência e padrões                               |             |           |
+| H5  | Prevenção de erros                                   |             |           |
+| H6  | Reconhecimento em vez de memorização                 |             |           |
+| H7  | Flexibilidade e eficiência de uso                    |             |           |
+| H8  | Estética e design minimalista                        |             |           |
+| H9  | Ajudar usuários a reconhecer e recuperar de erros    |             |           |
+| H10 | Ajuda e documentação                                 |             |           |
+
+### 5.4.2. Acessibilidade mínima
+
+*Checklist de acessibilidade verificada nas telas principais:*
+
+- [ ] `label` em todos os inputs de formulário
+- [ ] Contraste de cores legível (WCAG AA mínimo)
+- [ ] Navegação por teclado funcional nas ações principais
+- [ ] Textos alternativos (`alt`) em imagens informativas
+- [ ] Mensagens de erro associadas ao campo correspondente
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
