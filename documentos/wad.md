@@ -291,7 +291,13 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
+### 5.2.1. Relatório de testes de guerrilha
+
 *Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização).*
+
+### 5.2.2. Relatório de testes SUS (System Usability Scale)
+
+*Posicione aqui o relatório dos testes SUS realizados.*
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
