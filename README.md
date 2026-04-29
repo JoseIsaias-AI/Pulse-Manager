@@ -1,7 +1,7 @@
 # Inteli - Instituto de Tecnologia e Liderança 
 
 <p align="center">
-<a href= "https://www.inteli.edu.br/"><img src="/assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
+<a href= "https://www.inteli.edu.br/"><img src="/frontend/assets/images/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
 </p>
 
 # Nome do projeto
@@ -27,51 +27,53 @@
 - <a href="https://www.linkedin.com/in/fernando-pizzo-208b526a/">Fernando Pizzo</a>
 - <a href="https://www.linkedin.com/in/vanunes/">Vanessa Nunes</a>
 
-## 📝 Descrição
+## Descrição
 
 _Descreva seu projeto (até 600 palavras)_
 
-## 📝 Link de demonstração
+## Link de demonstração
 
 _Coloque aqui o link para o vídeo de demonstração do projeto_
 
-## 📁 Estrutura de pastas
+## Estrutura de pastas
 
 Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
-- <b>assets</b>: aqui estão os arquivos relacionados a elementos não-estruturados deste repositório, como imagens.
+- <b>frontend</b>: concentra as páginas HTML, estilos CSS, scripts JavaScript e assets de interface.
 
-- <b>document</b>: aqui estão todos os documentos do projeto, como o Web Application  Document (WAD) bem como documentos complementares, na pasta "other".
+- <b>backend</b>: reúne a API em Node.js/Express, com rotas, controladores, modelos e utilitários.
 
-- <b>src</b>: Todo o código fonte criado para o desenvolvimento do projeto de aplicação web.
+- <b>database</b>: contém migrations, seeds e o schema do banco de dados.
 
-- <b>README.md</b>: arquivo que serve como guia introdutório e explicação geral sobre o projeto e a aplicação (o mesmo arquivo que você está lendo agora).
+- <b>docs</b>: reúne a documentação do projeto, incluindo setup, decisões técnicas, API e WAD.
 
-## 💻 Configuração para desenvolvimento e execução do código
+- <b>README.md</b>: arquivo introdutório com visão geral do projeto e instruções de uso.
+
+## Configuração para desenvolvimento e execução do código
 
 *Acrescentar as informações necessárias sobre pré-requisitos (IDEs, bibliotecas, serviços etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o código e executar a aplicação a partir de sua máquina local.*
 
 *exemplo de instruções*
 
-Aqui encontram-se todas as instruções necessárias para a instalação de todos os programas, bibliotecas e ferramentas imprescindíveis para a configuração do ambiente de desenvolvimento.
+Aqui encontram-se as instruções necessárias para a instalação de programas, bibliotecas e ferramentas imprescindíveis à configuração do ambiente de desenvolvimento.
 
 1. Baixar e instalar o node.js: [https://nodejs.org/pt-br/](https://nodejs.org/pt-br/) (versão 16.15.1 LTS)
 2. Clone o repositório em questão.
-3. No modo administrador, abra o "prompt de comando" ou o "terminal" e, após, abra a pasta "src/backend" no diretório raiz do repositório clonado e digite o segundo comando:
+3. No modo administrador, abra o prompt de comando ou o terminal e, em seguida, acesse a pasta `backend` no diretório raiz do repositório clonado.
 
 ```sh
 npm install
 ```
 
-Isso instalará todas as dependências definidas no arquivo <b>package.json</b> que são necessárias para rodar o projeto. Agora o projeto já está pronto para ser modificado. Caso ainda deseje iniciar a aplicação, digite o comando abaixo no terminal:
+4. Isso instalará todas as dependências definidas no arquivo <b>package.json</b> necessárias para executar o projeto. Para iniciar a aplicação, digite:
 
 ```sh
 npm start
 ```
-5. Agora você pode acessar a aplicação através do link http://localhost:1234/
-6. O servidor está online.
+5. Agora você pode acessar a aplicação no link `http://localhost:1234/`.
+6. O servidor estará online.
 
-## 🗃 Histórico de lançamentos
+## Histórico de lançamentos
 
 * 0.5.0 - XX/XX/2024
     * 
@@ -84,12 +86,13 @@ npm start
 * 0.1.0 - XX/XX/2024
     *
 
-## 📋 Licença/License
+## Licença/License
 ```
-Alunos inteli (remover essa observação do readme.md após leitura e execução, junto com o link para o tutorial):
+Alunos Inteli (remover esta observação do readme.md após leitura e execução, junto com o link para o tutorial):
 
 1. Siga o tutorial para criação da licença: https://drive.google.com/file/d/1hXWLHUhjBkPVuGqeE2LZKozFntnJZzlx/view
 ```
 
 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/Intelihub/Template_M2/">MODELO GIT INTELI</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://www.yggbrasil.com.br/vr">Inteli, Nome do integrante 1, Nome do integrante 2, Nome do integrante 3, Nome do integrante 4, Nome do integrante 5, Nome do integrante 6, Nome do integrante 7</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
+
 
