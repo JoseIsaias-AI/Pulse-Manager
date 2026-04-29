@@ -1,7 +1,7 @@
-﻿# Inteli - Instituto de Tecnologia e LideranÃ§a 
+# Inteli - Instituto de Tecnologia e Liderança 
 
 <p align="center">
-<a href= "https://www.inteli.edu.br/"><img src="/frontend/assets/images/inteli.png" alt="Inteli - Instituto de Tecnologia e LideranÃ§a" border="0"></a>
+<a href= "https://www.inteli.edu.br/"><img src="/frontend/assets/images/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
 </p>
 
 # Nome do projeto
@@ -27,51 +27,53 @@
 - <a href="https://www.linkedin.com/">Nome do professor 5</a>
 - <a href="https://www.linkedin.com/">Nome do professor 6</a>
 
-## ðŸ“ DescriÃ§Ã£o
+## Descrição
 
-_Descreva seu projeto (atÃ© 600 palavras)_
+_Descreva seu projeto (até 600 palavras)_
 
-## ðŸ“ Link de demonstraÃ§Ã£o
+## Link de demonstração
 
-_Coloque aqui o link para o vÃ­deo de demonstraÃ§Ã£o do projeto_
+_Coloque aqui o link para o vídeo de demonstração do projeto_
 
-## ðŸ“ Estrutura de pastas
+## Estrutura de pastas
 
 Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
-- <b>assets</b>: aqui estÃ£o os arquivos relacionados a elementos nÃ£o-estruturados deste repositÃ³rio, como imagens.
+- <b>frontend</b>: concentra as páginas HTML, estilos CSS, scripts JavaScript e assets de interface.
 
-- <b>document</b>: aqui estÃ£o todos os documentos do projeto, como o Web Application  Document (WAD) bem como documentos complementares, na pasta "other".
+- <b>backend</b>: reúne a API em Node.js/Express, com rotas, controladores, modelos e utilitários.
 
-- <b>src</b>: Todo o cÃ³digo fonte criado para o desenvolvimento do projeto de aplicaÃ§Ã£o web.
+- <b>database</b>: contém migrations, seeds e o schema do banco de dados.
 
-- <b>README.md</b>: arquivo que serve como guia introdutÃ³rio e explicaÃ§Ã£o geral sobre o projeto e a aplicaÃ§Ã£o (o mesmo arquivo que vocÃª estÃ¡ lendo agora).
+- <b>docs</b>: reúne a documentação do projeto, incluindo setup, decisões técnicas, API e WAD.
 
-## ðŸ’» ConfiguraÃ§Ã£o para desenvolvimento e execuÃ§Ã£o do cÃ³digo
+- <b>README.md</b>: arquivo introdutório com visão geral do projeto e instruções de uso.
 
-*Acrescentar as informaÃ§Ãµes necessÃ¡rias sobre prÃ©-requisitos (IDEs, bibliotecas, serviÃ§os etc.) e instalaÃ§Ã£o bÃ¡sica do projeto, descrevendo eventuais versÃµes utilizadas. Colocar um passo a passo de como o leitor pode baixar o cÃ³digo e executar a aplicaÃ§Ã£o a partir de sua mÃ¡quina local.*
+## Configuração para desenvolvimento e execução do código
 
-*exemplo de instruÃ§Ãµes*
+*Acrescentar as informações necessárias sobre pré-requisitos (IDEs, bibliotecas, serviços etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o código e executar a aplicação a partir de sua máquina local.*
 
-Aqui encontram-se todas as instruÃ§Ãµes necessÃ¡rias para a instalaÃ§Ã£o de todos os programas, bibliotecas e ferramentas imprescindÃ­veis para a configuraÃ§Ã£o do ambiente de desenvolvimento.
+*exemplo de instruções*
 
-1. Baixar e instalar o node.js: [https://nodejs.org/pt-br/](https://nodejs.org/pt-br/) (versÃ£o 16.15.1 LTS)
-2. Clone o repositÃ³rio em questÃ£o.
-3. No modo administrador, abra o "prompt de comando" ou o "terminal" e, apÃ³s, abra a pasta "src/backend" no diretÃ³rio raiz do repositÃ³rio clonado e digite o segundo comando:
+Aqui encontram-se as instruções necessárias para a instalação de programas, bibliotecas e ferramentas imprescindíveis à configuração do ambiente de desenvolvimento.
+
+1. Baixar e instalar o node.js: [https://nodejs.org/pt-br/](https://nodejs.org/pt-br/) (versão 16.15.1 LTS)
+2. Clone o repositório em questão.
+3. No modo administrador, abra o prompt de comando ou o terminal e, em seguida, acesse a pasta `backend` no diretório raiz do repositório clonado.
 
 ```sh
 npm install
 ```
 
-Isso instalarÃ¡ todas as dependÃªncias definidas no arquivo <b>package.json</b> que sÃ£o necessÃ¡rias para rodar o projeto. Agora o projeto jÃ¡ estÃ¡ pronto para ser modificado. Caso ainda deseje iniciar a aplicaÃ§Ã£o, digite o comando abaixo no terminal:
+4. Isso instalará todas as dependências definidas no arquivo <b>package.json</b> necessárias para executar o projeto. Para iniciar a aplicação, digite:
 
 ```sh
 npm start
 ```
-5. Agora vocÃª pode acessar a aplicaÃ§Ã£o atravÃ©s do link http://localhost:1234/
-6. O servidor estÃ¡ online.
+5. Agora você pode acessar a aplicação no link `http://localhost:1234/`.
+6. O servidor estará online.
 
-## ðŸ—ƒ HistÃ³rico de lanÃ§amentos
+## Histórico de lançamentos
 
 * 0.5.0 - XX/XX/2024
     * 
@@ -84,11 +86,11 @@ npm start
 * 0.1.0 - XX/XX/2024
     *
 
-## ðŸ“‹ LicenÃ§a/License
+## Licença/License
 ```
-Alunos inteli (remover essa observaÃ§Ã£o do readme.md apÃ³s leitura e execuÃ§Ã£o, junto com o link para o tutorial):
+Alunos Inteli (remover esta observação do readme.md após leitura e execução, junto com o link para o tutorial):
 
-1. Siga o tutorial para criaÃ§Ã£o da licenÃ§a: https://drive.google.com/file/d/1hXWLHUhjBkPVuGqeE2LZKozFntnJZzlx/view
+1. Siga o tutorial para criação da licença: https://drive.google.com/file/d/1hXWLHUhjBkPVuGqeE2LZKozFntnJZzlx/view
 ```
 
 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/Intelihub/Template_M2/">MODELO GIT INTELI</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://www.yggbrasil.com.br/vr">Inteli, Nome do integrante 1, Nome do integrante 2, Nome do integrante 3, Nome do integrante 4, Nome do integrante 5, Nome do integrante 6, Nome do integrante 7</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
