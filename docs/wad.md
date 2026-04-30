@@ -149,12 +149,32 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 ### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
-*Liste os RF numerados de forma objetiva e verificável. Cada RF deve poder ser convertido em caso de teste.*
+Os requisitos funcionais a seguir foram extraídos do Termo de Abertura do Projeto Inteli (TAPI) da Pulse Mais e refinados a partir das conversas iniciais com os pontos focais do parceiro. A priorização (Alta, Média, Baixa) reflete o entendimento de que o núcleo da solução é a gestão centralizada da jornada do aluno pela equipe interna da Pulse Mais, sendo que funcionalidades voltadas ao aluno final ou a integrações e automações periféricas aparecem como prioridade secundária.
 
-| ID    | Descrição | Prioridade | Status       |
-|-------|-----------|------------|--------------|
-| RF001 | ...       | Alta       | Implementado |
-| RF002 | ...       | Média      | Planejado    |
+| ID | Descrição | Prioridade | Status |
+|----|-----------|------------|--------|
+| RF001 | O sistema deve permitir o cadastro de alunos e ex-alunos com dados pessoais, acadêmicos, de jornada na Pulse Mais, empregabilidade e engajamento. | Alta | Planejado |
+| RF002 | O sistema deve permitir a edição e atualização dos dados cadastrais de um aluno pela equipe Pulse Mais. | Alta | Planejado |
+| RF003 | O sistema deve permitir a consulta e listagem dos alunos cadastrados. | Alta | Planejado |
+| RF004 | O sistema deve consolidar e apresentar o histórico completo de cada aluno (dados gerais, programas, eventos, empregabilidade e renda) de forma integrada. | Alta | Planejado |
+| RF005 | O sistema deve permitir o registro de frequência dos alunos em aulas. | Alta | Planejado |
+| RF006 | O sistema deve permitir o registro de participação dos alunos em eventos promovidos pela Pulse Mais. | Alta | Planejado |
+| RF007 | O sistema deve permitir o registro de indicadores de empregabilidade do aluno (conquista e retenção de emprego). | Alta | Planejado |
+| RF008 | O sistema deve permitir o registro de informações sobre o acesso e permanência do aluno no ensino superior. | Alta | Planejado |
+| RF009 | O sistema deve permitir o registro de anotações qualitativas e quantitativas sobre a evolução de cada jovem (mentorias, atendimentos e observações gerais). | Alta | Planejado |
+| RF010 | O sistema deve permitir o registro de observações sobre saúde mental e bem-estar do aluno, com acesso restrito ao psicólogo da instituição. | Alta | Planejado |
+| RF011 | O sistema deve restringir o acesso às funcionalidades de acordo com o perfil do usuário (ex.: equipe Pulse, psicólogo, aluno). | Alta | Planejado |
+| RF012 | O sistema deve permitir a localização e segmentação de alunos com base em múltiplos critérios combinados (ex.: identificação de perfis para oportunidades específicas ou de multiplicadores na rede). | Alta | Planejado |
+| RF013 | O sistema deve permitir que a equipe Pulse Mais crie novos campos personalizados no cadastro do aluno, com autonomia. | Alta | Planejado |
+| RF014 | O sistema deve apresentar um dashboard consolidando os principais indicadores de impacto da Pulse Mais. | Alta | Planejado |
+| RF015 | O sistema deve calcular e apresentar o total de alunos empregados em um período selecionado. | Alta | Planejado |
+| RF016 | O sistema deve calcular e apresentar o total de alunos que concluíram um programa em um período selecionado. | Alta | Planejado |
+| RF017 | O sistema deve calcular e apresentar indicadores de evasão e risco de evasão por programa ou turma. | Alta | Planejado |
+| RF018 | O sistema deve calcular e apresentar indicadores de acesso ao ensino superior dentro da rede de alunos. | Alta | Planejado |
+| RF019 | O sistema deve disponibilizar um portal restrito no qual o próprio aluno possa visualizar seus dados cadastrais. | Média | Planejado |
+| RF020 | O sistema deve permitir que o aluno atualize informações do seu perfil pelo portal do aluno. | Média | Planejado |
+| RF021 | O sistema deve permitir o envio de e-mails informativos e convites para eventos. | Média | Planejado |
+| RF022 | O sistema deve permitir o envio de formulários cujas respostas atualizem ou adicionem automaticamente as informações dos alunos. | Baixa | Planejado |
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
