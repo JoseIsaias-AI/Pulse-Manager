@@ -141,6 +141,32 @@ Critério de aceite 2 | CR2: descrever cenário + testes de aceite
 Critério de aceite ... | CR...
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
+Identificação | US01
+--- | ---
+Persona | Denise Ghattas
+User Story | como uma gestora eu busco ter uma visão geral do perfil do aluno de forma prática para avaliá-lo da melhor maneira  
+Critério de aceite 1 | CR1:   Dado que a gestora acessa o dashboard, quando ela clica no perfil do aluno, então é exibido os dados do histórico do aluno. 
+Critério de aceite 2 | CR2: dado que a gestora acesse a plataforma, quando ela abrir a aba “alunos”, então devem ser exibidos resumos sobre todos os alunos atingidos.
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+Identificação | US01
+--- | ---
+Persona | Denise Ghattas
+User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
+Critério de aceite 1 | CR1: descrever cenário + testes de aceite
+Critério de aceite 2 | CR2: descrever cenário + testes de aceite
+Critério de aceite ... | CR...
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+Identificação | US01
+--- | ---
+Persona | Denise Ghattas
+User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
+Critério de aceite 1 | CR1: descrever cenário + testes de aceite
+Critério de aceite 2 | CR2: descrever cenário + testes de aceite
+Critério de aceite ... | CR...
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
 ## 3.1. Requisitos do Sistema (sprints 1 a 5)
