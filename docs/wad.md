@@ -149,16 +149,15 @@ Critério de aceite 1 | CR1:   Dado que a gestora acessa o dashboard, quando ela
 Critério de aceite 2 | CR2: dado que a gestora acesse a plataforma, quando ela abrir a aba “alunos”, então devem ser exibidos resumos sobre todos os alunos atingidos.
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
-Identificação | US01
+Identificação | US02
 --- | ---
 Persona | Denise Ghattas
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
+User Story | como uma gestora eu busco uma plataforma que unifique os dados para não perder informação relevante. 
+Critério de aceite 1 | CR1: dado que a gestora acesse a plataforma, quando ela abrir a aba de insights, então devem ser exibidos indicadores sobre a performance dos jovens
+Critério de aceite 2 | CR2: dado que a gestora acesse a plataforma, quando ela acessar a aba “funcionários”, então devem ser exibidos dados quantitativos sobre os funcionários. 
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
-Identificação | US01
+Identificação | US03
 --- | ---
 Persona | Denise Ghattas
 User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
