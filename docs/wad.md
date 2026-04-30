@@ -131,16 +131,6 @@ São identificadas ameaças a partir de fatores externos à organização, sendo
 
 *ATUALIZE ESTA SEÇÃO SEMPRE QUE ALGUMA DEMANDA MUDAR EM SEU PROJETO*
 
-*Template de User Story*
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
-
 Identificação | US01
 --- | ---
 Persona | Denise Ghattas
@@ -163,6 +153,68 @@ Persona | Denise Ghattas
 User Story | como gestora eu busco filtrar os alunos para aumentar a agilidade de busca de dados de um aluno e agilidade de trabalho. 
 Critério de aceite 1 | CR1: Dado que o usuário abre a plataforma, quando ele busca os dados dos alunos, então os dados aparecem integrados em um único sistema. 
 Critério de aceite 2 | CR2: Dado que a gestora quer filtrar os alunos por dados específicos (como nota ou faltas), quando ela cria os filtros, então a plataforma organiza os alunos baseado nos filtros selecionados.
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+Identificação | US04
+--- | ---
+Persona | Denise Ghattas
+User Story | Como gestora, eu quero ter acesso a todos os dados dos alunos, funcionários e ex alunos ,para que eu não dependa mais da minha memória para acessar dados específicos de cada aluno, ex aluno e funcionário.
+Critério de aceite 1 | CR1:   Dado que o usuário busca acessar um dado de um aluno, ex aluno ou funcionário, quando ele clica nessa pessoa específica, então o sistema abre uma página com todos os dados dessa pessoa (como nota, presença, função, empregabilidade)
+Critério de aceite 2 | CR2: Dado que a gestora quer achar uma pessoa específica, quando ele busca um dado dessa pessoa (como nome e CPF), então o sistema mostra todos os dados dessa pessoa. 
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+Identificação | USXX (troque XX por numeração ordenada das User Stories)
+--- | ---
+Persona | nome da Persona
+User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
+Critério de aceite 1 | CR1: descrever cenário + testes de aceite
+Critério de aceite 2 | CR2: descrever cenário + testes de aceite
+Critério de aceite ... | CR...
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+Identificação | USXX (troque XX por numeração ordenada das User Stories)
+--- | ---
+Persona | nome da Persona
+User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
+Critério de aceite 1 | CR1: descrever cenário + testes de aceite
+Critério de aceite 2 | CR2: descrever cenário + testes de aceite
+Critério de aceite ... | CR...
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+Identificação | USXX (troque XX por numeração ordenada das User Stories)
+--- | ---
+Persona | nome da Persona
+User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
+Critério de aceite 1 | CR1: descrever cenário + testes de aceite
+Critério de aceite 2 | CR2: descrever cenário + testes de aceite
+Critério de aceite ... | CR...
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+Identificação | USXX (troque XX por numeração ordenada das User Stories)
+--- | ---
+Persona | nome da Persona
+User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
+Critério de aceite 1 | CR1: descrever cenário + testes de aceite
+Critério de aceite 2 | CR2: descrever cenário + testes de aceite
+Critério de aceite ... | CR...
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+Identificação | USXX (troque XX por numeração ordenada das User Stories)
+--- | ---
+Persona | nome da Persona
+User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
+Critério de aceite 1 | CR1: descrever cenário + testes de aceite
+Critério de aceite 2 | CR2: descrever cenário + testes de aceite
+Critério de aceite ... | CR...
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+Identificação | USXX (troque XX por numeração ordenada das User Stories)
+--- | ---
+Persona | nome da Persona
+User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
+Critério de aceite 1 | CR1: descrever cenário + testes de aceite
+Critério de aceite 2 | CR2: descrever cenário + testes de aceite
+Critério de aceite ... | CR...
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
