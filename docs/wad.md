@@ -234,7 +234,11 @@ A primeira versão a seguir consolida as regras já levantadas com o parceiro du
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-*Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `in02/suporte/use-case_3.0_v1.0.pdf`.*
+<div align = "center">
+<sup>Figura 3: Diagrama Casos de Uso.</sup><br>
+<img src="./assets/diagramaUC.jpg"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
