@@ -123,7 +123,12 @@ São identificadas ameaças a partir de fatores externos à organização, sendo
 
 ## 2.2. Personas (sprint 1)
 
-*Posicione aqui suas Personas em forma de texto markdown com imagens, ou como imagem de template preenchido. Atualize esta seção ao longo do módulo se necessário.*
+<div align="center">
+    <img src="assets/Persona 01.jpg" width="60%"><br>
+    <img src="assets/Persona 02.jpg" width="60%"><br>
+    <img src="assets/Persona 03.jpg" width="60%"><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
 
 ## 2.3. User Stories (sprints 1 a 5)
 
