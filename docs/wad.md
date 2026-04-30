@@ -52,18 +52,23 @@
 <div align = "justify">
 
 **Ameaça de novos entrantes - Ameaça Baixa**
+
 A entrada no segmento de ONGs voltadas à capacitação no mercado tecnológico se torna de difícil execução devido aos desafios burocráticos, além da captação de mentores e entidades doadoras. Para além disso, há uma expansão de instituições voltadas ao aprendizado e tecnologia no Brasil, de acordo com a Edtech Report 2024 da Distrito, indo de 197 para 619 entre 2013 e 2024. Apesar disso, a popularização da IA Generativa facilitou a construção de novas ferramentas voltadas ao ensino e capacitação tecnológica de jovens, permitindo a construção rápida de novas ferramentas e menos infraestrutura física; explicitando que, apesar das barreiras, há pontos que tornam a ameaça moderada.
 
 **Ameaça de produtos substitutos - Ameaça Alta**
+
 É identificada uma alta ameaça de produtos substitutos devido ao crescimento da disponibilidade de conteúdos onlines, como cursos gratuitos e vídeos em plataformas como Youtube, além da existência de programas governamentais, como o Pronatec. Para além disso, há também a substituição através de outras organizações que oferecem serviços semelhantes, classificando a ameaça como alta.
 
 **Poder de barganha dos fornecedores - Poder Alto**
+
 Os fornecedores deste segmento são definidos como os mentores e equipe voluntários e empresas parceiras doadoras, que podem exercer grande poder sobre as operações. Para além da existência de dificuldades relacionadas à captação e mantenimento de colaboradores, a equipe também influencia na credibilidade institucional e sua substituição é de alto custo de tempo, ocasionando um alto poder de barganha da parte dos fornecedores.
 
 **Poder de barganha dos clientes - Poder Baixo-Médio**
+
 Os clientes são classificados como os jovens atingidos, que possuem, em muitos casos, acesso limitado a alternativas de capacitação acadêmica em tecnologia. Além disso, há a classificação de 88,2 no NPS (Net Promoter Score) da Formação Líder-Mentor, que indica alta satisfação e baixo poder de negociação individual.
 
 **Rivalidade entre concorrentes - Rivalidade Alta**
+
 No segmento de aprendizado voltado à tecnologia, há uma maior disputa por visibilidade entre outras, financiamento de empresas e captação de talentos. Como exemplo estão instituições como o Códigos do Amanhã, que oferece serviços em nichos semelhantes, além de competir por doadores e ter perfis semelhantes de beneficiários, ocasionando a classificação de alta rivalidade.
 
 </div>
@@ -79,15 +84,19 @@ No segmento de aprendizado voltado à tecnologia, há uma maior disputa por visi
 <div align = "justify">
 
 **Ponto Fortes** 
+
 Um dos principais pontos forte da instituição é evidenciado pelo NPS de 88,2 na Formação Líder-Mentor que explicita uma fidelidade e alto nível de satisfação dos participantes envolvidos com a instituição, sendo eles os clientes e doadores; Além disso, também há o retorno financeiro de R$1,03 milhão na economia brasileira reforça o impacto social real e mensurável da organização e a documentação voltada ao Planejamento Estratégico Anual, que é reconhecida como um diferencial de mercado que confere à instituição maior previsibilidade e coerência na execução de suas iniciativas. 
 
 **Pontos Fracos**
+
 Entre os pontos fracos da instituição, um dos principais é a fragmentação dos dados organizacionais em diversos arquivos que compromete diretamente a escalabilidade operacional das operações e a eficiência na tomada de decisões devido à dificuldade de realizar análises a partir de dados agrupados. Para além disso, a equipe composta em sua maioria por cargos temporários também apresenta fraqueza relacionada à instabilidade na continuidade de processos devido à alta rotatividade; e a principal fonte de receita representa uma dependência e vulnerabilidade financeira causada por decisões fora do controle direto da organização.
 
 **Oportunidades**
+
 São identificadas oportunidades a partir de diversos pontos de importância, sendo eles a necessidade do aumento da capacitação tecnológica até 2030 e o déficit estrutural de 100 mil profissionais de TI no Brasil, que confira uma alta demanda de mercado que auxilia a empresa à se estabelecer em um cenário externo propício ao seu crescimento. Adicionalmente, o desenvolvimento de uma plataforma web com o Inteli pode ser reconhecido como ponto de diferenciação que possibilita crescimento na eficiência na tomada de decisão.
 
 **Ameaças**
+
 São identificadas ameaças a partir de fatores externos à organização, sendo a principal ameaça a necessidade de atualização das habilidades profissionais até 2030 devido ao crescimento da Inteligência Artificial que impõe à instituição a necessidade de constante revisão curricular para evitar desatualização e manter a relevância competitiva. Paralelamente, a disputa crescente por captação de equipe qualificada, parcerias empresariais e demais recursos representa risco ao crescimento sustentável, pois o ambiente de alta competitividade exige que a instituição fortaleça sua proposta de valor e consolide alianças estratégicas para preservar seu posicionamento no mercado. 
 
 </div>
