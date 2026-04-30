@@ -163,7 +163,23 @@ Critério de aceite 1 | CR1:   Dado que o usuário busca acessar um dado de um a
 Critério de aceite 2 | CR2: Dado que a gestora quer achar uma pessoa específica, quando ele busca um dado dessa pessoa (como nome e CPF), então o sistema mostra todos os dados dessa pessoa. 
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
+Identificação | US05
+--- | ---
+Persona | Lucas Silva 
+User Story | Como um psicólogo, eu quero mandar notificações para os alunos, para que eu consiga entrar em contato com o aluno para ajudar ele conforme suas necessidades. 
+Critério de aceite 1 | CR1: Dado que o psicólogo abre a plataforma, quando ele percebe que um aluno está tendo dificuldades, e clica no perfil do aluno, o sistema envia uma notificação para o aluno mostrando que o psicólogo quer entrar em contato com ele.
+Critério de aceite 2 | CR2: Dado que o psicólogo recebe uma notificação de um aluno, quando ele clica no perfil do aluno, o sistema envia uma notificação para o aluno marcando uma conversa entre o aluno e o psicólogo.
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+Identificação | US06
+--- | ---
+Persona | Lucas Silva
+User Story | Como um psicólogo, eu quero receber notificações dos alunos quando eles tiverem dificuldades, quando o desempenho deles diminuir e quando esse aluno atingir uma porcentagem de faltas alta, para que eu consiga dar o apoio e suporte necessário para esse aluno.
+Critério de aceite 1 | CR1: Dado que o psicólogo está com a plataforma aberta, quando ele clicar em notificações, o sistema vai abrir uma sidebar com as notificações que os alunos enviaram para ele.
+Critério de aceite 2 | CR2: Dado que o desempenho de um aluno cai ou quando a porcentagem de faltas desse aluno estiver alta, quando o psicólogo abre a plataforma, o sistema envia uma notificação para o psicólogo informando ele das questões desses alunos com dificuldades.
+Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
+
+Identificação | US07
 --- | ---
 Persona | nome da Persona
 User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
@@ -172,7 +188,7 @@ Critério de aceite 2 | CR2: descrever cenário + testes de aceite
 Critério de aceite ... | CR...
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
+Identificação | US08
 --- | ---
 Persona | nome da Persona
 User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
@@ -181,7 +197,7 @@ Critério de aceite 2 | CR2: descrever cenário + testes de aceite
 Critério de aceite ... | CR...
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
+Identificação | US09
 --- | ---
 Persona | nome da Persona
 User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
@@ -190,25 +206,7 @@ Critério de aceite 2 | CR2: descrever cenário + testes de aceite
 Critério de aceite ... | CR...
 Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
 
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
-
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
---- | ---
-Persona | nome da Persona
-User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
-Critério de aceite 1 | CR1: descrever cenário + testes de aceite
-Critério de aceite 2 | CR2: descrever cenário + testes de aceite
-Critério de aceite ... | CR...
-Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que é Valorosa? Por que é Estimável? Por que é Pequena? Por que é Testável?)*
-
-Identificação | USXX (troque XX por numeração ordenada das User Stories)
+Identificação | US10
 --- | ---
 Persona | nome da Persona
 User Story | "como (papel/perfil), posso (ação/meta), para (benefício/razão)"
