@@ -777,7 +777,7 @@ A próxima evolução desta seção (sprints 2 a 5) deve incluir o refinamento d
 
 <div align = "center">
 <sup>Figura 3: Diagrama Casos de Uso.</sup><br>
-<img src="./assets/diagramaUC.jpg"><br>
+<img src="./assets/diagramaUC.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
