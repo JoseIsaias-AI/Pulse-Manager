@@ -496,6 +496,8 @@ Diante disso, conclui-se que a condução mais adequada consiste em priorizar um
 
 ## 2.2. Personas (sprint 1)
 
+Personas: A persona é definida como uma descrição realista e detalhada do usuário ideal, sendo elaborada com base nos objetivos estratégicos do produto e sustentada por dados reais sobre o comportamento, necessidades e motivações do público-alvo. Nesse caso usamos Proto-Personas (Quando não sustentamos com dados reais.).
+
 <div align="center">
     <img src="assets/personaUm.jpg" width="60%"><br>
     <img src="assets/personaDois.jpg" width="60%"><br>
@@ -504,6 +506,8 @@ Diante disso, conclui-se que a condução mais adequada consiste em priorizar um
 </div>
 
 ## 2.3. User Stories (sprints 1 a 5)
+
+User Stories: As User Stories são definidas como descrições de uma funcionalidade, sob a perspectiva do usuário final. Por meio desta técnica, o foco do desenvolvimento é direcionado às necessidades reais dos usuários, em vez das percepções internas da equipe.
 
 Identificação | US01
 --- | ---
