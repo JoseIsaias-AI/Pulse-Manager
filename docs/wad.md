@@ -120,10 +120,79 @@ Espera-se reduzir a fragmentação de dados e centralizar a jornada dos jovens e
 #### 6. Critério de sucesso e como será avaliado
 O sucesso será avaliado pela centralização dos dados, clareza da visualização histórica, utilidade dos dashboards e efetividade dos fluxos para gestores e alunos. Também serão considerados a aderência ao fluxo operacional da Pulse Mais, a qualidade das funcionalidades entregues e a validação contínua com o parceiro ao longo das sprints.
 
-### 2.1.4. Value Proposition Canvas (sprint 1): 
-*Sem limite de palavras — usar template do curso*
+### 2.1.4. Canvas de Proposta de Valor
 
-*Elaborar o Value Proposition Canvas com base na proposta de solução definida.*
+
+O Canvas de Proposta de valor da Pulse Mais foi estruturado com base em dois segmentos prioritários da solução: **gestores da instituição** e **alunos/ex-alunos da rede**. Essa definição foi adotada porque a proposta de valor da plataforma depende, ao mesmo tempo, da capacidade institucional de acompanhar a jornada completa dos jovens e da capacidade dos próprios alunos de acessarem seu histórico, manterem seus perfis atualizados e se conectarem a oportunidades. Dessa forma, o canvas foi organizado para evidenciar, de um lado, as tarefas, dores e ganhos desses públicos e, de outro, os elementos da solução que aliviam essas dores e potencializam a geração de valor.
+
+
+### Perfil do cliente - Gestores da Pulse Mais
+
+
+#### Tarefas do cliente
+Os gestores precisam acompanhar a jornada completa dos jovens desde a entrada na organização até os desdobramentos em formação, mentoria, empregabilidade, ensino superior e rede de talentos. Também precisam localizar rapidamente históricos individuais, monitorar indicadores institucionais, identificar riscos de evasão, segmentar perfis para oportunidades específicas, registrar feedbacks de performance e tomar decisões baseadas em dados consolidados. Essas necessidades são coerentes com o escopo macro, o dashboard, a página do aluno, os filtros avançados e o módulo de registro de jornada previstos no TAPI.
+
+
+#### Pains
+Atualmente, a gestão enfrenta dispersão de informações em planilhas isoladas, dificuldade de reconstrução da trajetória do aluno, baixa rastreabilidade histórica, dependência de memória individual da equipe e esforço manual para consolidação de indicadores. Há também limitação para personalizar o atendimento com base em dados completos e para agir preventivamente diante de sinais de evasão, queda de engajamento ou necessidade de suporte direcionado.
+
+
+#### Ganhos
+Os gestores desejam uma visão única e confiável de cada aluno, dashboards claros, rapidez de consulta, histórico completo em uma só interface, filtros inteligentes, apoio à tomada de decisão e maior precisão na estratégia de acompanhamento e empregabilidade. Desejam ainda reduzir o retrabalho operacional e transformar dados dispersos em inteligência acionável.
+
+
+### Mapa de valor - Gestores da Pulse Mais
+
+
+#### Produtos & Serviços
+A solução entrega base centralizada de dados, dashboard institucional, página individual do aluno, módulo de registro da jornada, histórico consolidado, filtros avançados, campos estruturados para indicadores de impacto e funcionalidade para inserção de feedbacks e anotações de performance. O modelo institucional também prevê prontuário digital e visão segmentada por perfil de acesso.
+
+
+#### Aliviadores
+A plataforma reduz a fragmentação de informações ao concentrar dados pessoais, acadêmicos, institucionais e profissionais em uma única base. Diminui a dependência de conhecimento informal da equipe ao registrar a trajetória completa do jovem. Reduz o tempo gasto na busca por históricos e melhora o acompanhamento preventivo por meio de visualização integrada e atualização contínua dos dados. Também reduz a dificuldade de monitorar impacto ao substituir consolidações manuais por consultas estruturadas.
+
+
+#### Criadores de Ganho
+A solução cria valor ao transformar dados operacionais em visão estratégica. Os dashboards e históricos completos permitem atendimento mais consultivo, identificação de padrões, acompanhamento longitudinal e maior capacidade de personalização do suporte. Os registros de performance e os insights individualizados ampliam a qualidade da gestão e tornam a tomada de decisão mais rápida, precisa e fundamentada.
+
+
+### Perfil do cliente - Alunos e ex-alunos
+
+
+#### Tarefas do cliente
+Os alunos e ex-alunos precisam acessar seu histórico com a Pulse Mais, manter o perfil atualizado, acompanhar sua trajetória, visualizar oportunidades de desenvolvimento e carreira e permanecer conectados à rede institucional após a formação. Isso está alinhado ao portal do aluno previsto no TAPI e à lógica da rede de talentos, que oferece oportunidades profissionais e educacionais para apoiar os primeiros passos da carreira.
+
+
+#### Dores
+Sem uma plataforma centralizada, o jovem tende a ter acesso fragmentado às próprias informações e menos visibilidade sobre sua evolução, suas oportunidades e seu vínculo com a rede. Também pode haver dificuldade para atualizar dados de perfil e para acompanhar, de forma estruturada, sua própria jornada dentro da Pulse Mais. A ausência desse ambiente reduz autonomia e continuidade do relacionamento institucional. A necessidade de fortalecer pertencimento e progresso nos primeiros passos da carreira aparece claramente na apresentação institucional da rede de talentos.
+
+
+#### Ganhos
+Os alunos e ex-alunos buscam autonomia, visibilidade sobre o próprio histórico, facilidade para atualização cadastral, acesso simplificado a oportunidades e percepção de continuidade da relação com a Pulse Mais mesmo após a formação. Também valorizam um ambiente que reforce pertencimento à rede e apoio à progressão acadêmica e profissional.
+
+
+### Mapa de valor - Alunos e ex-alunos
+
+
+#### Produtos & Serviços
+A solução entrega portal do aluno, consulta de histórico, visualização de dados cadastrais, atualização de perfil, acesso a registros da jornada e conexão com oportunidades educacionais e profissionais vinculadas à rede.
+
+
+#### Aliviadores
+A plataforma reduz a falta de visibilidade do próprio percurso ao reunir, em um único ambiente, informações antes dispersas. Também reduz barreiras de comunicação institucional ao oferecer um ponto de acesso contínuo para consulta e atualização de dados. Ao organizar histórico e oportunidades em um mesmo ecossistema, a solução reduz fricção e melhora a experiência do jovem com a organização.
+
+
+#### Criadores de ganho
+A solução cria valor ao ampliar a autonomia do estudante, fortalecer o vínculo com a Pulse Mais e facilitar o acesso a oportunidades de educação continuada e carreira. Ao tornar a jornada visível e acessível, contribui para o senso de pertencimento, para a organização dos próximos passos profissionais e para a continuidade da relação com a rede de talentos.
+
+
+### Encaixe proposta-cliente
+
+
+A proposta apresenta forte aderência ao domínio da Pulse Mais porque conecta diretamente a principal dor institucional, que é a fragmentação dos dados da jornada do jovem, com uma solução digital centralizada orientada à gestão, acompanhamento e impacto. Para os gestores, a plataforma entrega visão histórica consolidada, rastreabilidade e suporte à decisão. Para alunos e ex-alunos, entrega autonomia, consulta da trajetória e acesso à rede de oportunidades. Assim, o valor gerado não está apenas na organização dos dados, mas na transformação desses dados em acompanhamento qualificado, ação preventiva e fortalecimento da empregabilidade.
+
+
+
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
