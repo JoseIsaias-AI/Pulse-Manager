@@ -1,4 +1,4 @@
-<img src="../frontend/assets/images/logointeli.png">
+<img src="./assets/logointeli.png">
 
 
 # WAD - Web Application Document - Módulo 2 - Inteli
@@ -404,17 +404,13 @@ A análise a seguir foi estruturada de forma a atender aos critérios do projeto
 ## 2.2. Personas (sprint 1)
 
 <div align="center">
-    <img src="assets/Persona 01.jpg" width="60%"><br>
-    <img src="assets/Persona 02.jpg" width="60%"><br>
-    <img src="assets/Persona 03.jpg" width="60%"><br>
+    <img src="assets/personaUm.jpg" width="60%"><br>
+    <img src="assets/personaDois.jpg" width="60%"><br>
+    <img src="assets/personaTres.jpg" width="60%"><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
 ## 2.3. User Stories (sprints 1 a 5)
-
-*Posicione aqui a lista de User Stories levantadas para o projeto. Siga o template de User Stories e utilize a mesma referência USXX no roadmap de seu quadro Kanban. Indique todas as User Stories mapeadas, mesmo aquelas que não forem implementadas ao longo do projeto. Não se esqueça de explicar o INVEST das 5 User Stories prioritárias*
-
-*ATUALIZE ESTA SEÇÃO SEMPRE QUE ALGUMA DEMANDA MUDAR EM SEU PROJETO*
 
 Identificação | US01
 --- | ---
