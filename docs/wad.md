@@ -109,13 +109,11 @@ O sucesso será avaliado pela centralização dos dados, clareza da visualizaç�
 ### 2.1.4. Canvas de Proposta de Valor
 
 
-<p align="center">Figura 3 - Canvas de Proposta de Valor da Pulse Manager</strong></p>
-
+<p align="center"><strong>Figura 3 - Canvas de Proposta de Valor da Pulse Manager</strong></p>
 
 <img src="./assets/canvasvalor.png"><br>
 
-
-Fonte: Elaborado pela equipe (2026), com base no Value Proposition Canvas de Strategyzer.
+<p align="center"><em>Fonte: Elaborado pela equipe (2026), com base no Value Proposition Canvas de Strategyzer.</em></p>
 
 
 O Canvas de Proposta de valor da Pulse Mais foi estruturado com base em dois segmentos prioritários da solução: **gestores da instituição** e **alunos/ex-alunos da rede**. Essa definição foi adotada porque a proposta de valor da plataforma depende, ao mesmo tempo, da capacidade institucional de acompanhar a jornada completa dos jovens e da capacidade dos próprios alunos de acessarem seu histórico, manterem seus perfis atualizados e se conectarem a oportunidades. Dessa forma, o canvas foi organizado para evidenciar, de um lado, as tarefas, dores e ganhos desses públicos e, de outro, os elementos da solução que aliviam essas dores e potencializam a geração de valor.
