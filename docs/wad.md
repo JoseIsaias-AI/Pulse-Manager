@@ -76,27 +76,13 @@ No segmento de aprendizado voltado à tecnologia, há uma maior disputa por visi
 
 <div align = "center">
 <sup>Figura 2: Análise SWOT.</sup><br>
-<img src="./assets/analiseSwot.jpg"><br>
+<img src="./assets/analiseSwot.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
 <div align = "justify">
 
-**Ponto Fortes** 
-
-Um dos principais pontos forte da instituição é evidenciado pelo NPS de 88,2 na Formação Líder-Mentor que explicita uma fidelidade e alto nível de satisfação dos participantes envolvidos com a instituição, sendo eles os clientes e doadores; Além disso, também há o retorno financeiro de R$1,03 milhão na economia brasileira reforça o impacto social real e mensurável da organização e a documentação voltada ao Planejamento Estratégico Anual, que é reconhecida como um diferencial de mercado que confere à instituição maior previsibilidade e coerência na execução de suas iniciativas. 
-
-**Pontos Fracos**
-
-Entre os pontos fracos da instituição, um dos principais é a fragmentação dos dados organizacionais em diversos arquivos que compromete diretamente a escalabilidade operacional das operações e a eficiência na tomada de decisões devido à dificuldade de realizar análises a partir de dados agrupados. Para além disso, a equipe composta em sua maioria por cargos temporários também apresenta fraqueza relacionada à instabilidade na continuidade de processos devido à alta rotatividade; e a principal fonte de receita representa uma dependência e vulnerabilidade financeira causada por decisões fora do controle direto da organização.
-
-**Oportunidades**
-
-São identificadas oportunidades a partir de diversos pontos de importância, sendo eles a necessidade do aumento da capacitação tecnológica até 2030 e o déficit estrutural de 100 mil profissionais de TI no Brasil, que confira uma alta demanda de mercado que auxilia a empresa à se estabelecer em um cenário externo propício ao seu crescimento. Adicionalmente, o desenvolvimento de uma plataforma web com o Inteli pode ser reconhecido como ponto de diferenciação que possibilita crescimento na eficiência na tomada de decisão.
-
-**Ameaças**
-
-São identificadas ameaças a partir de fatores externos à organização, sendo a principal ameaça a necessidade de atualização das habilidades profissionais até 2030 devido ao crescimento da Inteligência Artificial que impõe à instituição a necessidade de constante revisão curricular para evitar desatualização e manter a relevância competitiva. Paralelamente, a disputa crescente por captação de equipe qualificada, parcerias empresariais e demais recursos representa risco ao crescimento sustentável, pois o ambiente de alta competitividade exige que a instituição fortaleça sua proposta de valor e consolide alianças estratégicas para preservar seu posicionamento no mercado. 
+Cada um dos fatores associados à instituição revelam diferentes efeitos na sua participação de mercado. As pontos fortes explicitam a fidelidade dos clientes e fornecedores e o planejamento coerente com os impactos sociais da instituição; já os pontos fracos, a falta de eficiência e a instabilidade na continuidade de processos, além da vulnerabilidade por decisões externas. Há também as oportunidades mapeadas como um cenário de crescimento no mercado e a diferenciação de outros produtos; além das ameaças mostra a necessidade de estratégias para manter a relevância competitiva e consolidar alianças estratégicas.
 
 </div>
 
