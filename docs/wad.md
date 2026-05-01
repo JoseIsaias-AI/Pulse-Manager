@@ -195,10 +195,225 @@ A proposta apresenta forte aderência ao domínio da Pulse Mais porque conecta d
 
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
+## 2.1.5. Matriz de Riscos do Projeto
 
-*Sem limite de palavras — usar template do curso*
 
-*Registre na matriz os riscos identificados no projeto.*
+A Matriz de Riscos do projeto foi elaborada para identificar, classificar e tratar os principais eventos que podem comprometer a entrega e o valor da aplicação web da Pulse Mais. Considerando que a solução deverá centralizar dados hoje dispersos, apoiar o acompanhamento integral da jornada dos jovens, viabilizar dashboards gerenciais, permitir consultas históricas, segmentação de perfis e atualização de informações pelos próprios usuários, tornou-se necessário mapear riscos técnicos, operacionais, de negócio, de dados, de usabilidade e de conformidade.
+
+
+A análise a seguir foi estruturada de forma a atender aos critérios do projeto e manter consistência com o nível de detalhamento adotado em documentos anteriores, contemplando identificação do risco, classificação, impacto, probabilidade, prevenção, mitigação e contingência.
+
+
+### Critérios adotados
+
+
+#### Probabilidade
+- **Muito baixa**: evento improvável no contexto do projeto
+- **Baixa**: evento possível, porém pouco frequente
+- **Moderada**: evento plausível ao longo do desenvolvimento
+- **Alta**: evento provável, com indícios concretos de ocorrência
+- **Muito alta**: evento fortemente esperado se nenhuma ação for tomada
+
+
+#### Impacto
+- **Muito baixo**: afeta detalhes periféricos, sem comprometer o objetivo central
+- **Baixo**: gera retrabalho localizado, mas não compromete a entrega principal
+- **Moderado**: afeta uma funcionalidade importante ou dificulta a validação
+- **Alto**: compromete parte relevante do valor do produto ou da operação
+- **Muito alto**: ameaça diretamente a entrega, a utilidade do sistema ou sua aderência ao TAPI
+
+
+### Tabela síntese de riscos
+
+
+| ID | Risco | Categoria | Probabilidade | Impacto |
+|---|---|---|---|---|
+| R1 | Inconsistência na consolidação dos dados legados | Dados | Alta | Muito alto |
+| R2 | Modelagem insuficiente para representar toda a jornada do jovem | Negócio / Dados | Moderada | Muito alto |
+| R3 | Falta de aderência da solução às necessidades reais da Pulse Mais | Negócio | Moderada | Muito alto |
+| R4 | Sobrecarga de escopo para o tempo disponível do módulo | Gestão | Alta | Alto |
+| R5 | Dashboard com indicadores pouco úteis para a tomada de decisão | Produto | Moderada | Alto |
+| R6 | Dificuldade de visualização do histórico completo do aluno | Usabilidade / Produto | Moderada | Alto |
+| R7 | Filtros e segmentações não atenderem às buscas operacionais | Produto / Negócio | Moderada | Alto |
+| R8 | Baixa qualidade ou incompletude dos dados alimentados no sistema | Dados / Operação | Alta | Alto |
+| R9 | Dependência excessiva de conhecimento informal da equipe | Operação | Alta | Alto |
+| R10 | Tratamento inadequado de dados sensíveis ou restritos | Segurança / Conformidade | Moderada | Muito alto |
+| R11 | Interpretação equivocada das restrições de autenticação e permissão | Arquitetura / Segurança | Moderada | Alto |
+| R12 | Complexidade excessiva na migração inicial de planilhas | Dados / Técnica | Alta | Moderado |
+| R13 | Portal do aluno gerar pouco valor percebido | Produto | Moderada | Moderado |
+| R14 | Falhas de comunicação entre front-end, back-end e banco | Técnica | Alta | Alto |
+| R15 | Desempenho insuficiente em consultas históricas e filtros | Técnica / Produto | Moderada | Moderado |
+| R16 | Interface pouco intuitiva para a equipe gestora | Usabilidade | Moderada | Alto |
+| R17 | Atualização futura dificultada pela falta de flexibilidade estrutural | Arquitetura | Alta | Alto |
+| R18 | Subestimação da complexidade dos feedbacks e registros qualitativos | Negócio / Produto | Moderada | Alto |
+| R19 | Falta de rastreabilidade entre requisitos, dados e funcionalidades | Gestão / Engenharia | Moderada | Alto |
+| R20 | Adoção limitada da plataforma pela equipe no curto prazo | Operação / Mudança | Moderada | Moderado |
+
+
+### Detalhamento dos riscos
+
+
+#### R1 - Inconsistência na consolidação dos dados legados
+**Categoria:** Dados  
+**Descrição:** Os dados atualmente estão dispersos em múltiplas planilhas e registros operacionais, o que pode gerar duplicidade, lacunas, divergências de preenchimento e dificuldade de normalização no banco central.  
+**Probabilidade:** Alta  
+**Impacto:** Muito alto  
+**Prevenção / Mitigação:** Definir modelo canônico de dados, criar regras de padronização, mapear campos equivalentes e validar amostras antes da carga principal.  
+**Plano de contingência / Resposta:** Priorizar migração parcial por blocos, registrar inconsistências em log e criar rotina manual de saneamento dos dados críticos.
+
+
+#### R2 - Modelagem insuficiente para representar toda a jornada do jovem
+**Categoria:** Negócio / Dados  
+**Descrição:** A estrutura do banco pode não contemplar adequadamente formação, mentoria, empregabilidade, ensino superior, rede de talentos, feedbacks e histórico longitudinal.  
+**Probabilidade:** Moderada  
+**Impacto:** Muito alto  
+**Prevenção / Mitigação:** Realizar levantamento detalhado das entidades e relações com base no TAPI e revisar a modelagem a cada sprint com os stakeholders.  
+**Plano de contingência / Resposta:** Repriorizar o banco para atender primeiro os fluxos centrais e registrar campos complementares para expansão incremental.
+
+
+#### R3 - Falta de aderência da solução às necessidades reais da Pulse Mais
+**Categoria:** Negócio  
+**Descrição:** A plataforma pode ser tecnicamente funcional, mas não refletir o fluxo operacional da equipe nem as decisões que os gestores realmente precisam tomar.  
+**Probabilidade:** Moderada  
+**Impacto:** Muito alto  
+**Prevenção / Mitigação:** Validar backlog e protótipos em reuniões frequentes com os pontos focais e testar as funcionalidades com cenários reais de uso.  
+**Plano de contingência / Resposta:** Ajustar rapidamente as funcionalidades de maior criticidade e documentar itens fora de escopo para evolução posterior.
+
+
+#### R4 - Sobrecarga de escopo para o tempo disponível do módulo
+**Categoria:** Gestão  
+**Descrição:** O projeto contempla dashboard, página do aluno, portal do aluno, filtros, histórico, registros e centralização, o que pode exceder a capacidade de entrega no prazo acadêmico.  
+**Probabilidade:** Alta  
+**Impacto:** Alto  
+**Prevenção / Mitigação:** Priorizar claramente o MVP e congelar o escopo mínimo essencial logo nas primeiras sprints.  
+**Plano de contingência / Resposta:** Reduzir funcionalidades secundárias, postergar entregáveis desejáveis e concentrar a equipe nos fluxos prioritários.
+
+
+#### R5 - Dashboard com indicadores pouco úteis para a tomada de decisão
+**Categoria:** Produto  
+**Descrição:** Existe o risco de construir dashboards visualmente corretos, mas sem responder às dores concretas de retenção, empregabilidade, histórico e acompanhamento preventivo.  
+**Probabilidade:** Moderada  
+**Impacto:** Alto  
+**Prevenção / Mitigação:** Definir indicadores com base nas necessidades do parceiro e validar previamente quais perguntas o dashboard deve responder.  
+**Plano de contingência / Resposta:** Reestruturar os painéis para priorizar poucos indicadores acionáveis em vez de um grande volume de métricas superficiais.
+
+
+#### R6 - Dificuldade de visualização do histórico completo do aluno
+**Categoria:** Usabilidade / Produto  
+**Descrição:** A página do aluno pode ficar confusa, excessivamente longa ou mal organizada, dificultando a leitura da trajetória individual.  
+**Probabilidade:** Moderada  
+**Impacto:** Alto  
+**Prevenção / Mitigação:** Organizar a interface por blocos de jornada, usar hierarquia visual clara e testar os fluxos de consulta com usuários internos.  
+**Plano de contingência / Resposta:** Simplificar a página, agrupar informações por categoria e criar visualizações resumidas para acesso rápido.
+
+
+#### R7 - Filtros e segmentações não atenderem às buscas operacionais
+**Categoria:** Produto / Negócio  
+**Descrição:** A busca avançada pode não permitir que gestores encontrem rapidamente perfis para oportunidades, acompanhamento ou identificação de jovens multiplicadores.  
+**Probabilidade:** Moderada  
+**Impacto:** Alto  
+**Prevenção / Mitigação:** Mapear com antecedência os critérios de busca realmente usados pela equipe e projetar filtros compatíveis com o processo institucional.  
+**Plano de contingência / Resposta:** Repriorizar os filtros mais relevantes e deixar segmentações menos críticas para iterações posteriores.
+
+
+#### R8 - Baixa qualidade ou incompletude dos dados alimentados no sistema
+**Categoria:** Dados / Operação  
+**Descrição:** Mesmo com banco centralizado, a plataforma pode receber dados incompletos, inconsistentes ou desatualizados, reduzindo seu valor analítico.  
+**Probabilidade:** Alta  
+**Impacto:** Alto  
+**Prevenção / Mitigação:** Definir campos obrigatórios, padrões de preenchimento e validações mínimas nas rotas e interfaces.  
+**Plano de contingência / Resposta:** Sinalizar registros incompletos, criar painéis de qualidade de dados e tratar prioritariamente os campos essenciais.
+
+
+#### R9 - Dependência excessiva de conhecimento informal da equipe
+**Categoria:** Operação  
+**Descrição:** Parte da lógica institucional pode permanecer implícita, dificultando a transformação do conhecimento tácito em estrutura de sistema.  
+**Probabilidade:** Alta  
+**Impacto:** Alto  
+**Prevenção / Mitigação:** Formalizar regras de negócio, dicionário de dados, fluxos de uso e critérios de preenchimento desde o início.  
+**Plano de contingência / Resposta:** Realizar sessões de refinamento com o parceiro para converter lacunas operacionais em regras explícitas documentadas.
+
+
+#### R10 - Tratamento inadequado de dados sensíveis ou restritos
+**Categoria:** Segurança / Conformidade  
+**Descrição:** O projeto lida com informações pessoais e, potencialmente, registros qualitativos delicados, o que exige cuidado especial mesmo em ambiente acadêmico.  
+**Probabilidade:** Moderada  
+**Impacto:** Muito alto  
+**Prevenção / Mitigação:** Restringir o uso de dados sensíveis, anonimizar o que for possível, limitar visibilidade por perfil e evitar exposição em repositórios públicos.  
+**Plano de contingência / Resposta:** Remover imediatamente dados indevidos do ambiente de desenvolvimento e substituir por dados fictícios ou mascarados.
+
+
+#### R11 - Interpretação equivocada das restrições de autenticação e permissão
+**Categoria:** Arquitetura / Segurança  
+**Descrição:** Como o projeto não contempla sistema completo de login, pode haver inconsistência na definição de acessos entre gestores, alunos e demais perfis.  
+**Probabilidade:** Moderada  
+**Impacto:** Alto  
+**Prevenção / Mitigação:** Definir claramente a estratégia acadêmica de permissão por rota ou por papel simplificado antes da implementação.  
+**Plano de contingência / Resposta:** Reduzir o número de perfis ativos no MVP e manter controle mínimo de acesso compatível com o escopo.
+
+
+#### R12 - Complexidade excessiva na migração inicial de planilhas
+**Categoria:** Dados / Técnica  
+**Descrição:** A importação de dados históricos pode consumir mais tempo do que o previsto, especialmente se houver formatos heterogêneos e baixa padronização.  
+**Probabilidade:** Alta  
+**Impacto:** Moderado  
+**Prevenção / Mitigação:** Trabalhar com recortes de importação e estruturar modelo de upload simples, com validações progressivas.  
+**Plano de contingência / Resposta:** Suspender automações complexas e realizar carga assistida apenas dos dados indispensáveis para demonstração do MVP.
+
+
+#### R13 - Portal do aluno gerar pouco valor percebido
+**Categoria:** Produto  
+**Descrição:** Se a área do aluno não oferecer histórico claro, atualização útil e conexão com oportunidades, ela pode parecer periférica e pouco utilizada.  
+**Probabilidade:** Moderada  
+**Impacto:** Moderado  
+**Prevenção / Mitigação:** Garantir que o portal entregue valor direto ao estudante desde a primeira versão, com foco em histórico, perfil e oportunidades.  
+**Plano de contingência / Resposta:** Simplificar o portal para um fluxo enxuto, mas funcional, e priorizar as funcionalidades mais tangíveis ao usuário final.
+
+
+#### R14 - Falhas de comunicação entre front-end, back-end e banco
+**Categoria:** Técnica  
+**Descrição:** Divergências de contrato entre interface, API e persistência podem gerar erros de cadastro, consulta e atualização.  
+**Probabilidade:** Alta  
+**Impacto:** Alto  
+**Prevenção / Mitigação:** Definir contratos de dados antes da implementação, documentar payloads e realizar testes integrados continuamente.  
+**Plano de contingência / Resposta:** Corrigir endpoints críticos primeiro e congelar alterações de estrutura até estabilização do fluxo principal.
+
+
+#### R15 - Desempenho insuficiente em consultas históricas e filtros
+**Categoria:** Técnica / Produto  
+**Descrição:** Consultas mais pesadas podem degradar a experiência de gestores, especialmente em páginas individuais ou dashboards.  
+**Probabilidade:** Moderada  
+**Impacto:** Moderado  
+**Prevenção / Mitigação:** Modelar corretamente as relações, otimizar consultas e reduzir carregamentos desnecessários de dados.  
+**Plano de contingência / Resposta:** Simplificar visualizações, paginar resultados e restringir consultas muito amplas no MVP.
+
+
+#### R16 - Interface pouco intuitiva para a equipe gestora
+**Categoria:** Usabilidade  
+**Descrição:** Mesmo com funcionalidades corretas, uma interface confusa pode reduzir adoção e aumentar retrabalho operacional.  
+**Probabilidade:** Moderada  
+**Impacto:** Alto  
+**Prevenção / Mitigação:** Aplicar princípios de UX, testar fluxos com usuários reais da instituição e ajustar nomenclaturas, organização e navegação.  
+**Plano de contingência / Resposta:** Redesenhar as telas mais críticas com foco em clareza funcional e priorização da informação.
+
+
+#### R17 - Atualização futura dificultada pela falta de flexibilidade estrutural
+**Categoria:** Arquitetura  
+**Descrição:** O TAPI indica necessidade de autonomia para criação de novos campos; se a estrutura for rígida, a manutenção futura ficará comprometida.  
+**Probabilidade:** Alta  
+**Impacto:** Alto  
+**Prevenção / Mitigação:** Modelar o sistema com foco em extensibilidade e documentar cuidadosamente entidades e campos.  
+**Plano de contingência / Resposta:** Registrar a limitação no WAD e projetar pontos de expansão claros para versões posteriores.
+
+
+#### R18 - Subestimação da complexidade dos feedbacks e registros qualitativos
+**Categoria:** Negócio / Produto  
+**Descrição:** O registro de performance e acompanhamento qualitativo pode demandar mais refinamento semântico e estrutural do que o previsto.  
+**Probabilidade:** Moderada  
+**Impacto:** Alto  
+**Prevenção / Mitigação:** Definir categorias, campos e objetivos de cada tipo de anotação antes da implementação.  
+**Plano de contingência / Resposta:** Reduzir os registros qualitativos a um formato mais enxuto no MVP e documentar a expansão futura.
+.*
 
 ## 2.2. Personas (sprint 1)
 
