@@ -132,7 +132,7 @@ Os gestores precisam acompanhar a jornada completa dos jovens desde a entrada na
 
 
 
-#### Pains
+#### Dores
 Atualmente, a gestão enfrenta dispersão de informações em planilhas isoladas, dificuldade de reconstrução da trajetória do aluno, baixa rastreabilidade histórica, dependência de memória individual da equipe e esforço manual para consolidação de indicadores. Há também limitação para personalizar o atendimento com base em dados completos e para agir preventivamente diante de sinais de evasão, queda de engajamento ou necessidade de suporte direcionado.
 
 
@@ -172,6 +172,11 @@ A solução cria valor ao transformar dados operacionais em visão estratégica.
 
 A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, classificar e tratar os principais eventos capazes de comprometer a entrega e o valor da aplicação web proposta para a Pulse Mais. Considerando que a solução deverá centralizar dados atualmente dispersos, sustentar o acompanhamento da jornada dos jovens, viabilizar consultas históricas, apoiar dashboards gerenciais e permitir segmentações estratégicas, tornou-se necessário antecipar riscos de natureza técnica, operacional, analítica e institucional.
 
+<p align="center"><strong>Figura 4 - Matriz de Riscos da Pulse Manager</strong></p>
+
+<img src="./assets/imagem.png"><br>
+
+<p align="center"><em>Fonte: Elaborado pela equipe (2026).</em></p>
 
 A análise foi organizada de modo a preservar coerência com o nível de detalhamento adotado nas demais seções do WAD, contemplando não apenas a identificação dos riscos, mas também sua classificação, criticidade e respectivas estratégias de prevenção, mitigação e contingência.
 
