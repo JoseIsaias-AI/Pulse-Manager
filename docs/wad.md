@@ -724,8 +724,6 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 
 #### 3.2.4.1. UC-03 — Cadastrar Aluno
 
-
-
 <div align = "center">
 <sup>Figura 4: Diagrama de sequência do caso de uso Cadastrar Aluno.</sup>
 <img src="../docs/assets/diagrama-sequencia-1.png">
@@ -733,6 +731,32 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 <br><br>
 
 O fluxo começa quando o membro da equipe preenche o formulário de cadastro na `:TelaCadastroAluno` e submete os dados ao `:AlunoController`, que os repassa ao `:AlunoService`. O service realiza a validação dos campos obrigatórios (RN002), e em caso de sucesso aciona o `:AlunoRepository` para persistir o registro no banco. Após o INSERT, o service deriva o código identificador no formato `PM-AAAA-NNN` a partir do `id_aluno` e do ano de ingresso (RN001) e dispara a mensagem de boas-vindas pelo `:EmailService`. A confirmação retorna pelas camadas até a tela, exibindo o código gerado ao usuário. Caso a validação inicial falhe, o fluxo segue pelo ramo alternativo do fragmento `alt`, devolvendo um erro 400 sem chegar ao banco. Esse diagrama atende ao RF001 e cobre as RN001 e RN002.
+
+</div>
+
+#### 3.2.4.2. UC-06 — Visualizar Histórico Consolidado
+
+<div align = "center">
+<sup>Figura 5: Diagrama de sequência do caso de uso Visualizar Histórico Consolidado.</sup>
+<img src="../docs/assets/diagrama-sequencia-2.png">
+<sub>Fonte: Autoria própria (2026). </sub>
+<br><br>
+
+A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoController` via `GET /alunos/{id}/historico`. O controller delega ao `:HistoricoService`, que coordena quatro consultas em sequência: dados gerais do aluno (`:AlunoRepository`), atividades em que ele participou (`:ParticipacaoRepository`, com `JOIN` entre `atividade` e `participacao`), notas obtidas (`:NotaRepository`, com `JOIN` via `idatividade`) e labels qualitativas (`:LabelRepository`). Após receber todas as respostas, o service consolida o histórico em uma única estrutura (auto-chamada `consolidarHistorico`) e devolve ao controller, que responde 200 com o objeto completo. A tela então renderiza o perfil consolidado. Vale notar que `HistoricoPsicologico` não aparece neste fluxo: o acesso a essa entidade é restrito ao perfil Psicólogo (RN012), e o fluxo correspondente está detalhado em 3.2.4.5. Esse diagrama atende ao RF004.
+
+</div>
+
+#### 3.2.4.3. UC-08 — Registrar Participação do Aluno em Atividade
+
+<div align = "center">
+<sup>Figura 6: Diagrama de sequência do caso de uso Registrar Participação do Aluno em Atividade.</sup>
+<img src="../docs/assets/diagrama-sequencia-3.png">
+<sub>Fonte: Autoria própria (2026). </sub>
+<br><br>
+
+O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e define o status da participação. A `:TelaParticipacao` envia `POST /participacoes` ao `:ParticipacaoController`, que delega ao `:ParticipacaoService`. O service executa duas validações em sequência: existência do aluno (`:AlunoRepository`) e existência da atividade (`:AtividadeRepository`). Quando ambas retornam verdadeiro, o ramo principal do fragmento `alt` é seguido: o `:ParticipacaoRepository` emite o `INSERT` na tabela `participacao`, registrando `idAluno`, `idatividade`, `data_part` e `status_part`, e a confirmação retorna pelas camadas até a tela. Quando qualquer das validações falha, o ramo alternativo devolve 404 sem chegar à escrita, preservando a integridade referencial. Diferente de um simples registro de frequência, este fluxo cria uma entrada completa de participação — com data e status próprios — que sustenta tanto a consulta de histórico (UC-06) quanto o cálculo de indicadores (UC-15). Esse diagrama atende ao RF005.
+
+</div>
 
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
