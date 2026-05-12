@@ -716,7 +716,11 @@ A próxima evolução desta seção (sprints 2 a 5) deve incluir o refinamento d
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
-*Diagrama UML de classes com entidades, atributos, relacionamentos e responsabilidades. Diferencie **associação**, **agregação** (losango vazio), **composição** (losango cheio) e **herança** (triângulo vazio). Multiplicidade explícita em toda associação.*
+ <div align = "center">
+<sup>Figura 3: Diagrama Classes de Domínio.</sup><br>
+<img src="./assets/Diagrama_Classe_Dominio.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
