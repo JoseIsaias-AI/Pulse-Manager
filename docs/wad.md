@@ -781,6 +781,12 @@ Um diagrama de Modelo Entidade-Relacionamento (MER) é uma representação visua
 
 A partir destes conceitos e utilizando como base o TAPI e outros materiais disponibilizados pelos pelo parceiro, foram mapeadas as entidades que serão a base para o desenvolvimento de novas funcionalidades do projeto, além de seus atributos, importantes para o funcionamento adequado das funcionalidades. Essas entidades e atributos estão explicitados na seguinte imagem:
 
+<div align = "center">
+<sup>Figura 9: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
+<img src="./assets/mer.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
+
 
 Dentro do modelo conceitual, estão explicitadas as relações entre as entidades, sendo estas:
 
