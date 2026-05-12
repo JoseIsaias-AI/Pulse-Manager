@@ -75,7 +75,7 @@ No segmento de aprendizado voltado à tecnologia, há uma maior disputa por visi
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
 <div align = "center">
-<sup>Figura 2: Análise SWOT.</sup><br>
+<sup>Figura 1: Análise SWOT.</sup><br>
 <img src="./assets/analiseSwot.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -109,11 +109,13 @@ O sucesso será avaliado pela centralização dos dados, clareza da visualizaç�
 ### 2.1.4. Canvas de Proposta de Valor
 
 
-<p align="center"><strong>Figura 3 - Canvas de Proposta de Valor da Pulse Manager</strong></p>
+<div align = 'center'>
+<sup>Figura 2: Canvas de Proposta de Valor da Pulse Manager</sup></p>
 
 <img src="./assets/canvasvalor.png"><br>
 
-<p align="center"><em>Fonte: Elaborado pela equipe (2026), com base no Value Proposition Canvas de Strategyzer.</em></p>
+<sub>Fonte: Autoria própria (2026), com base no Value Proposition Canvas de Strategyzer. </sub><br>
+</div>
 
 
 O Canvas de Proposta de valor da Pulse Mais foi estruturado com base em dois segmentos prioritários da solução: **gestores da instituição** e **alunos/ex-alunos da rede**. Essa definição foi adotada porque a proposta de valor da plataforma depende, ao mesmo tempo, da capacidade institucional de acompanhar a jornada completa dos jovens e da capacidade dos próprios alunos de acessarem seu histórico, manterem seus perfis atualizados e se conectarem a oportunidades. Dessa forma, o canvas foi organizado para evidenciar, de um lado, as tarefas, dores e ganhos desses públicos e, de outro, os elementos da solução que aliviam essas dores e potencializam a geração de valor.
@@ -172,11 +174,13 @@ A solução cria valor ao transformar dados operacionais em visão estratégica.
 
 A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, classificar e tratar os principais eventos capazes de comprometer a entrega e o valor da aplicação web proposta para a Pulse Mais. Considerando que a solução deverá centralizar dados atualmente dispersos, sustentar o acompanhamento da jornada dos jovens, viabilizar consultas históricas, apoiar dashboards gerenciais e permitir segmentações estratégicas, tornou-se necessário antecipar riscos de natureza técnica, operacional, analítica e institucional.
 
-<p align="center"><strong>Figura 4 - Matriz de Riscos da Pulse Manager</strong></p>
+<div align="center">
+<sup>Figura 4: Matriz de Riscos da Pulse Manager</sup></p>
 
 <img src="./assets/imagem.png"><br>
 
-<p align="center"><em>Fonte: Elaborado pela equipe (2026).</em></p>
+<em>Fonte: Elaborado pela equipe (2026).</em></p>
+</div>
 
 A análise foi organizada de modo a preservar coerência com o nível de detalhamento adotado nas demais seções do WAD, contemplando não apenas a identificação dos riscos, mas também sua classificação, criticidade e respectivas estratégias de prevenção, mitigação e contingência.
 
@@ -503,11 +507,20 @@ Diante disso, conclui-se que a condução mais adequada consiste em priorizar um
 
 Personas: A persona é definida como uma descrição realista e detalhada do usuário ideal, sendo elaborada com base nos objetivos estratégicos do produto e sustentada por dados reais sobre o comportamento, necessidades e motivações do público-alvo. Nesse caso usamos Proto-Personas (Quando não sustentamos com dados reais.).
 
+
 <div align="center">
+<sup>Figura 5: Persona 01.</sup><br>
     <img src="assets/personaUm.jpg" width="60%"><br>
+
+<sub>Fonte: Autoria própria (2026). </sub><br>
+
+<sup>Figura 6: Persona 02.</sup><br>
     <img src="assets/personaDois.jpg" width="60%"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+
+<sup>Figura 7: Persona 03.</sup><br>
     <img src="assets/personaTres.jpg" width="60%"><br>
-    <sub>Fonte: Autoria própria (2026).</sub>
+<sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
 ## 2.3. User Stories (sprints 1 a 5)
@@ -709,7 +722,7 @@ A próxima evolução desta seção (sprints 2 a 5) deve incluir o refinamento d
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
 <div align = "center">
-<sup>Figura 3: Diagrama Casos de Uso.</sup><br>
+<sup>Figura 8: Diagrama Casos de Uso.</sup><br>
 <img src="./assets/diagramaUC.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -764,7 +777,38 @@ A próxima evolução desta seção (sprints 2 a 5) deve incluir o refinamento d
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-*Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
+Um diagrama de Modelo Entidade-Relacionamento (MER) é uma representação visual da estrutura lógica de um banco de dados que descreve como os dados de um sistema estão organizados e se relacionam entre si. Ele é composto por três elementos fundamentais: Entidades, que representam os objetos ou conceitos do mundo real sobre os quais se deseja armazenar informações, como usuários, produtos ou pedidos; Atributos, que são as características ou propriedades que descrevem cada entidade, como nome, data de nascimento ou preço; e Relacionamentos, que expressam as associações existentes entre as entidades, podendo ser do tipo um-para-um, um-para-muitos ou muitos-para-muitos. Esse tipo de diagrama é amplamente utilizado na fase de modelagem de dados de um projeto, pois permite visualizar de forma clara e estruturada como as informações se conectam, facilitando o planejamento do banco de dados, a comunicação entre a equipe de desenvolvimento e a posterior implementação das tabelas e relações em um sistema gerenciador de banco de dados. 
+
+A partir destes conceitos e utilizando como base o TAPI e outros materiais disponibilizados pelos pelo parceiro, foram mapeadas as entidades que serão a base para o desenvolvimento de novas funcionalidades do projeto, além de seus atributos, importantes para o funcionamento adequado das funcionalidades. Essas entidades e atributos estão explicitados na seguinte imagem:
+
+
+Dentro do modelo conceitual, estão explicitadas as relações entre as entidades, sendo estas:
+
+##### `Membro da Equipe`
+
+- Sobre `notificacao`: Envia zero ou várias notificações (0, n), onde cada uma é enviada por apenas um membro da equipe (1,1);
+- Sobre `oportunidade`: Publica zero ou várias oportunidades (0, n), onde cada uma é publicada por apenas um membro da equipe (1, 1);
+- Sobre `agenda`: Registra zero ou várias agendas (0, n), onde cada uma é registrada por apenas um membro da equipe (1, 1).
+
+
+##### `Aluno`
+
+- Sobre `historicoPsicologo`: Possui zero ou vários registros (0, n), onde cada uma pertence a apenas um aluno (1, 1);
+- Sobre `notificacao`: Recebe zero ou várias notificações (0, n), onde cada uma é recebida por um aluno (1, 1);
+- Sobre `agenda`: Possui nenhuma ou várias agendas (0, n), onde cada uma pertence a apenas um aluno (1, 1);
+- Sobre `label`: Possui nenhuma ou várias labels (0, n), onde cada uma pertence a apenas um aluno (1, 1);
+- Sobre `participacao`: Possui nenhuma ou várias participações (0, n), onde cada uma está vinculada a apenas um aluno (1, 1).
+
+
+##### `Psicológo`
+
+- Sobre `historicoPsicologo`: Registra zero ou vários históricos (0, n), onde cada histórico é registrado por apenas um psicológo (1, 1);
+- Sobre `notificacao`: Envia zero ou várias notificações (0, n), onde cada uma é enviada por apenas um psicólogo (1,1).
+
+
+##### `Participação`
+
+- Sobre `atividade`: Vinculada a apenas uma atividade (1, 1), onde cada uma pode ter nenhuma ou várias participações vinculadas.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
