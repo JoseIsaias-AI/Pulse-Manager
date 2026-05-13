@@ -736,7 +736,77 @@ A próxima evolução desta seção (sprints 2 a 5) deve incluir o refinamento d
 
 ## 3.3. Wireframes (sprint 2)
 
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)*
+<div align="justify">
+Wireframes são esboços simples de telas, como sites e aplicativos. O objetivo é validar ideias, por isso eles não contêm informações detalhadas como cores, imagens e tipografia final. Desta forma, wireframes conseguem demonstrar de forma direta a estrutura das telas e o fluxo de navegação do sistema, focando apenas no que é essencial.
+</div>
+
+Caso queira acessar os wireframes completos, acesse o link: https://www.canva.com/design/DAHJebfiO4A/NqxvsvUgwcbkv3LeEEnRwA/edit
+
+<div align="center">
+    <img src="assets/Wireframe8.jpg" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+A tela de Dashboard do Psicólogo apresenta uma barra de navegação lateral com as seções Início, Alunos, Dashboard e Agenda, além de Configurações fixadas na parte inferior. No topo da área principal, quatro cartões exibem indicadores-chave de saúde mental: Humor Médio, Check-ins por semana, Flags Ativas e Sessões Realizadas. Na metade inferior, dois gráficos de barras complementam a análise: "Bem-estar por curso" e "Engajamento por faixa etária", permitindo comparações visuais entre grupos. O cabeçalho global mantém o campo de busca e o ícone de perfil do usuário, seguindo o padrão de layout das demais telas da plataforma.
+</div>
+
+<div align="center">
+    <img src="assets/Wireframe9.jpg" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Tela de listagem de alunos do psicólogo no sistema Pulse Manager, exibindo cards em grade com foto, nome, turma e status de cada aluno (ok, risco, atenção, inativo). Há uma barra de busca por nome com filtros por turma, flag e humor para facilitar a localização de alunos específicos. Cada card possui um botão "Notificar" que permite ao psicólogo acionar uma notificação diretamente a partir da listagem.
+</div>
+
+<div align="center">
+    <img src="assets/Wireframe10.jpg" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+A tela exibe o perfil de um aluno com navegação lateral (Início, Alunos, Dashboard, Agenda) e abas de conteúdo (Dados Gerais, Jornada, Empregabilidade, Ens. Superior, Observações). No topo do perfil há foto, status, etapa, categoria e botões de "editar" e "Notificar", com campos como Nome, E-mail, CPF, Curso Superior e Emprego na aba ativa. O acesso é compartilhado entre gestor, psicólogo e o próprio aluno.
+</div>
+
+<div align="center">
+    <img src="assets/Wireframe11.jpg" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Tela inicial do aluno está dividida em quatro seções: jornada de aprendizado com barra de progresso e módulos, próximos eventos, saúde e bem-estar com escala de humor e acesso a psicólogo, e oportunidades com botões de candidatura. O layout usa dois painéis lado a lado para organizar o conteúdo. A navegação superior destaca as áreas principais: jornada, eventos e oportunidades.
+</div>
+
+<div align="center">
+    <img src="assets/Wireframe12.jpg" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Wireframe da tela agenda com calendário mensal navegável e botão "+ Evento" à esquerda, e dois painéis à direita: lista de próximos eventos com indicadores de tempo e um pop-up de alerta com opções "adiar" ou "abrir agora". Elementos de conteúdo são representados por retângulos cinzas em layout de duas colunas.
+</div>
+
+<div align="center">  
+    <img src="assets/Wireframe13.jpg" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Wireframe da tela notificações com uma lista à esquerda filtrada por abas (Todas, Alunos, Sistema), onde círculos indicam notificações não lidas, e um painel de detalhe à direita exibindo o conteúdo da notificação selecionada. As ações disponíveis no detalhe são abrir perfil, reenviar e marcar como lida.
+</div>
+
+
+<div align="center">  
+    <img src="assets/Wireframe14.jpg" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Wireframe de uma tela de gerenciamento de alunos com sidebar de navegação (Início, Alunos, Dashboard, Agenda), área principal com busca e filtros, e cards de alunos em grade 2x2 com avatar e status.
+</div>
+
+
 
 ## 3.4. Guia de estilos (sprint 3)
 
