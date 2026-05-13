@@ -831,6 +831,39 @@ A tabela `atividade` armazena atividades ligadas à jornada dos alunos. Seus atr
 ##### Tabela Participacao
 A tabela `participacao` é uma tabela lógica associativa entre `aluno` e `atividade`. Ela possui os atributos `id_part` (chave primária), `data_part`, `status_part`, `id_aluno` e `id_atividade`. Essa estrutura permite que um aluno participe de várias atividades e que uma atividade tenha vários alunos participantes.
 
+### Implementação de Chaves Estrangeiras e Regras de Negócio
+
+Com base nas cardinalidades apresentadas no DER, as chaves estrangeiras foram posicionadas nas tabelas que representam o lado dependente de cada relacionamento. Dessa forma, quando uma entidade precisa referenciar outra para existir de maneira coerente, seu identificador é armazenado como chave estrangeira. Esse mapeamento preserva a integridade entre os registros e impede que informações importantes da jornada do aluno fiquem soltas no banco.
+
+#### Mapeamento das chaves estrangeiras
+
+| Tabela | Chave estrangeira | Referência | Finalidade |
+|---|---|---|---|
+| `notificacao` | `id_membro` | `membro_equipe(id_membro)` | Identificar o membro da equipe relacionado à notificação. |
+| `notificacao` | `id_psi` | `psicologo(id_psi)` | Identificar o psicólogo relacionado à notificação. |
+| `oportunidade` | `id_membro` | `membro_equipe(id_membro)` | Indicar qual membro da equipe publicou ou administra a oportunidade. |
+| `agenda` | `id_membro` | `membro_equipe(id_membro)` | Registrar o responsável interno pelo compromisso ou acompanhamento. |
+| `agenda` | `id_aluno` | `aluno(id_aluno)` | Associar o compromisso ao aluno envolvido. |
+| `label` | `id_aluno` | `aluno(id_aluno)` | Vincular marcações e classificações ao aluno correspondente. |
+| `historico_psicologico` | `id_aluno` | `aluno(id_aluno)` | Associar o registro psicológico ao aluno acompanhado. |
+| `historico_psicologico` | `id_psi` | `psicologo(id_psi)` | Associar o registro psicológico ao psicólogo responsável. |
+| `participacao` | `id_aluno` | `aluno(id_aluno)` | Indicar qual aluno participou de determinada atividade. |
+| `participacao` | `id_atividade` | `atividade(id_atividade)` | Indicar qual atividade recebeu a participação do aluno. |
+
+#### Regras de negócio derivadas do DER
+
+A tabela `aluno` permanece como entidade central da jornada do jovem, sendo referenciada por registros de agenda, labels, histórico psicológico e participações. Assim, as informações de acompanhamento ficam organizadas a partir do aluno, sem duplicar seus dados pessoais em outras tabelas.
+
+A tabela `participacao` resolve o relacionamento entre `aluno` e `atividade`. Essa decisão evita armazenar uma lista de alunos dentro de `atividade` ou uma lista de atividades dentro de `aluno`, mantendo o modelo normalizado. Como regra de negócio, um mesmo aluno não deve ser registrado mais de uma vez na mesma atividade.
+
+A tabela `atividade` mantém `nota` como atributo próprio, pois o novo DER não apresenta uma entidade separada para notas. Com isso, a avaliação fica diretamente ligada à atividade registrada.
+
+A tabela `oportunidade` passa a se relacionar com `membro_equipe`, e não diretamente com `aluno`. Essa escolha segue o novo DER e representa que oportunidades são cadastradas ou administradas pela equipe, podendo depois ser visualizadas ou utilizadas pelos alunos conforme as funcionalidades da aplicação.
+
+A tabela `historico_psicologico` deve sempre preservar o vínculo entre o aluno acompanhado e o psicólogo responsável. Essa regra é importante porque os registros psicológicos são sensíveis e precisam manter rastreabilidade sobre quem realizou ou registrou o acompanhamento.
+
+O campo `autor_id`, presente em `label`, foi mantido como atributo simples no modelo relacional. Ele não foi definido como chave estrangeira porque o DER não especifica se o autor pertence à tabela `membro_equipe`, `psicologo` ou outra entidade futura.
+
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
