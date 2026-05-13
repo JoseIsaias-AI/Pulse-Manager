@@ -787,13 +787,23 @@ Tela inicial do aluno está dividida em quatro seções: jornada de aprendizado 
 Wireframe da tela agenda com calendário mensal navegável e botão "+ Evento" à esquerda, e dois painéis à direita: lista de próximos eventos com indicadores de tempo e um pop-up de alerta com opções "adiar" ou "abrir agora". Elementos de conteúdo são representados por retângulos cinzas em layout de duas colunas.
 </div>
 
-<div align="center">
+<div align="center">  
     <img src="assets/Wireframe13.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
 <div align="justify">
 Wireframe da tela notificações com uma lista à esquerda filtrada por abas (Todas, Alunos, Sistema), onde círculos indicam notificações não lidas, e um painel de detalhe à direita exibindo o conteúdo da notificação selecionada. As ações disponíveis no detalhe são abrir perfil, reenviar e marcar como lida.
+</div>
+
+
+<div align="center">  
+    <img src="assets/Wireframe14.jpg" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Wireframe de uma tela de gerenciamento de alunos com sidebar de navegação (Início, Alunos, Dashboard, Agenda), área principal com busca e filtros, e cards de alunos em grade 2x2 com avatar e status.
 </div>
 
 
