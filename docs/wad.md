@@ -767,8 +767,205 @@ A próxima evolução desta seção (sprints 2 a 5) deve incluir o refinamento d
 *Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+ 
+O Diagrama Entidade-Relacionamento (DER) do sistema PulseManager representa a estrutura lógica do banco de dados responsável por armazenar e organizar as informações relacionadas ao acompanhamento acadêmico, profissional e psicossocial dos alunos atendidos pela organização Pulse Mais. O modelo foi desenvolvido com base nos requisitos funcionais levantados ao longo da análise do sistema e está integralmente alinhado ao Diagrama de Classes do Domínio, garantindo consistência entre a modelagem conceitual orientada a objetos e a modelagem relacional.
+ 
+O DER explicita as entidades do sistema, seus atributos, as respectivas chaves primárias (Primary Keys – PK), chaves estrangeiras (Foreign Keys – FK) e as cardinalidades de todos os relacionamentos, assegurando a integridade referencial e a correta representação das regras de negócio.
+ 
+### Entidade Aluno
+ 
+A entidade `Aluno` constitui o elemento central do modelo, pois representa os jovens acompanhados pela organização e concentra a maior parte dos relacionamentos do sistema.
+ 
+Seus atributos são:
+ 
+- `id_aluno` (PK)
+- `nome`
+- `email`
+- `idade`
+- `genero`
+- `ocupacao`
+- `escolaridade`
+- `data_ingresso`
+- `status`
+Cada aluno pode participar de diversas atividades, registrar compromissos na agenda, acumular labels de acompanhamento e possuir diversos registros em seu histórico psicológico.
+ 
+### Entidade MembroEquipe
+ 
+A entidade `MembroEquipe` representa os colaboradores da organização responsáveis pela gestão administrativa e pedagógica do sistema, incluindo gestores e outros profissionais autorizados.
+ 
+Seus atributos são:
+ 
+- `id_membro` (PK)
+- `nome`
+- `cargo`
+- `email`
+Cada membro da equipe pode publicar oportunidades, registrar compromissos institucionais na agenda e enviar notificações.
+ 
+### Entidade Psicólogo
+ 
+A entidade `Psicologo` representa os profissionais responsáveis pelo acompanhamento psicossocial dos alunos.
+ 
+Seus atributos são:
+ 
+- `id_psi` (PK)
+- `nome_psi`
+- `cargo_psi`
+Cada psicólogo pode registrar históricos psicológicos, enviar notificações e acompanhar a evolução comportamental e emocional dos alunos.
+ 
+### Entidade Atividade
+ 
+A entidade `Atividade` foi concebida como uma abstração genérica para representar cursos, eventos, mentorias e aulas em uma única estrutura. Essa decisão de modelagem reduz redundâncias e simplifica o tratamento das informações acadêmicas.
+ 
+Seus atributos são:
+ 
+- `id_atividade` (PK)
+- `titulo`
+- `tipo`
+- `descricao`
+- `data`
+- `nota`
+O atributo `tipo` permite identificar a natureza da atividade, enquanto o atributo `nota` armazena o valor avaliativo associado à atividade, conforme as necessidades do sistema.
+ 
+### Entidade Participacao
+ 
+A entidade `Participacao` materializa o relacionamento entre `Aluno` e `Atividade`, registrando o envolvimento efetivo do aluno em cada atividade.
+ 
+Seus atributos são:
+ 
+- `id_part` (PK)
+- `data_part`
+- `status_part`
+- `idAluno` (FK)
+- `idAtividade` (FK)
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitas participações.
+- Cada `Participacao` pertence a exatamente um aluno.
+- Uma `Atividade` pode possuir zero ou muitas participações.
+- Cada `Participacao` refere-se a exatamente uma atividade.
+### Entidade Label
+ 
+A entidade `Label` representa marcadores de acompanhamento atribuídos aos alunos, podendo ser gerados automaticamente pelo sistema ou cadastrados manualmente por psicólogos e membros da equipe.
+ 
+Seus atributos são:
+ 
+- `id_lbl` (PK)
+- `descricao`
+- `tipo_label`
+- `idAluno` (FK)
+- `autor_id`
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitas labels.
+- Cada `Label` está associada a exatamente um aluno.
+O atributo `autor_id` identifica o responsável pela criação da label e pode referenciar um psicólogo, um membro da equipe ou permanecer nulo quando a label for gerada automaticamente.
+ 
+### Entidade HistoricoPsicologico
+ 
+A entidade `HistoricoPsicologico` armazena observações qualitativas e classificações registradas pelos psicólogos durante o acompanhamento individual dos alunos.
+ 
+Seus atributos são:
+ 
+- `id_historico` (PK)
+- `observacao`
+- `classificacao`
+- `idAluno` (FK)
+- `idPsicologo` (FK)
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitos registros psicológicos.
+- Cada `HistoricoPsicologico` pertence a exatamente um aluno.
+- Um `Psicologo` pode registrar zero ou muitos históricos.
+- Cada `HistoricoPsicologico` é elaborado por exatamente um psicólogo.
 
-*Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3).*
+
+### Entidade Agenda
+ 
+A entidade `Agenda` armazena compromissos pessoais e institucionais, permitindo o registro de eventos vinculados tanto a alunos quanto a membros da equipe.
+ 
+Seus atributos são:
+ 
+- `id_agenda`
+- `tipo_user`
+- `registro`
+- `data`
+- `status`
+- `idMembroEquipe` (FK)
+- `idAluno` (FK)
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitos registros na agenda.
+- Um `MembroEquipe` pode criar zero ou muitos compromissos.
+
+
+### Entidade Oportunidade
+ 
+A entidade `Oportunidade` representa conteúdos disponibilizados pela equipe, como vagas de emprego, bolsas de estudo, cursos e eventos externos.
+ 
+Seus atributos são:
+ 
+- `id_oportunidade` (PK)
+- `titulo`
+- `descricao`
+- `tipo`
+- `data_publicacao`
+- `idMembroEquipe` (FK)
+Cardinalidades:
+ 
+- Um `MembroEquipe` pode publicar zero ou muitas oportunidades.
+- Cada `Oportunidade` é publicada por exatamente um membro da equipe.
+
+
+### Entidade Notificacao
+ 
+A entidade `Notificacao` registra as comunicações enviadas pelos membros da equipe e psicólogos no sistema.
+ 
+Seus atributos são:
+ 
+- `id_notificacao` (PK)
+- `titulo`
+- `remetente_id`
+- `mensagem`
+- `data_envio`
+- `tipo`
+- `idMembroEquipe` (FK)
+- `idPsicologo` (FK)
+Cardinalidades:
+ 
+- Um `MembroEquipe` pode enviar zero ou muitas notificações.
+- Um `Psicologo` pode enviar zero ou muitas notificações.
+
+
+### Principais Relacionamentos e Cardinalidades
+ 
+Os principais relacionamentos definidos no DER são:
+ 
+- `Aluno` 1:N `Participacao`
+- `Atividade` 1:N `Participacao`
+- `Aluno` 1:N `Label`
+- `Aluno` 1:N `Agenda`
+- `Aluno` 1:N `HistoricoPsicologico`
+- `MembroEquipe` 1:N `Oportunidade`
+- `MembroEquipe` 1:N `Agenda`
+- `MembroEquipe` 1:N `Notificacao`
+- `Psicologo` 1:N `HistoricoPsicologico`
+- `Psicologo` 1:N `Notificacao`
+
+
+### Decisões de Modelagem
+ 
+A principal decisão arquitetural foi a criação da entidade `Atividade`, responsável por unificar cursos, eventos, mentorias e aulas em uma estrutura única, incluindo o atributo `nota` diretamente nessa entidade. Essa abordagem reduz a redundância de dados e facilita a manutenção do sistema, uma vez que a entidade `Participacao` passa a referenciar um único tipo de objeto para registrar o vínculo entre alunos e atividades.
+ 
+Outra decisão importante foi a adoção da entidade associativa `Participacao`, que implementa o relacionamento muitos-para-muitos entre alunos e atividades e permite armazenar atributos específicos, como data e status da participação.
+ 
+O modelo também foi concebido para suportar a importação e exportação de planilhas, possibilitando atualizações em lote de informações como participações e indicadores sem necessidade de alterações estruturais no banco de dados.
+ 
+### Conclusão
+ 
+O Diagrama Entidade-Relacionamento do PulseManager representa de forma estruturada, consistente e normalizada os dados necessários para o funcionamento do sistema. A identificação explícita de chaves primárias, chaves estrangeiras e cardinalidades garante integridade referencial e aderência às regras de negócio, estabelecendo uma base sólida para a construção do Modelo Relacional e do Modelo Físico do banco de dados.
+
+
+
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
