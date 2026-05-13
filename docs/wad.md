@@ -98,7 +98,7 @@ Foram identificados como insumos o uma planilha de jovens do framework, relatór
 Foi proposta uma aplicação web com WebAPI e banco de dados estruturado para centralizar o histórico acadêmico, institucional e profissional de alunos e ex-alunos. A solução atuará como Single Source of Truth da Pulse Mais, oferecendo visão consolidada para gestores e portal de consulta, atualização e oportunidades para alunos.
 
 #### 4. Forma de utilização da solução
-Gestores utilizarão dashboards, filtros e páginas individuais para consultar históricos, acompanhar indicadores e registrar feedbacks. Alunos e ex-alunos acessarão um portal para visualizar dados, atualizar perfis e consultar oportunidades. A solução será desenvolvida com HTML, CSS e JavaScript no front-end, Node.js no back-end e SQLite no banco de dados.
+Gestores utilizarão dashboards, filtros e páginas individuais para consultar históricos, acompanhar indicadores e registrar feedbacks. Alunos e ex-alunos acessarão um portal para visualizar dados, atualizar perfis e consultar oportunidades. A solução será desenvolvida com HTML, CSS e JavaScript no front-end, Node.js no back-end e PostgreSQL no banco de dados, com possibilidade de hospedagem no Supabase.
 
 #### 5. Benefícios esperados
 Espera-se reduzir a fragmentação de dados e centralizar a jornada dos jovens em uma única plataforma. A solução deverá ampliar a agilidade operacional, melhorar o acompanhamento estratégico, apoiar decisões baseadas em dados e fortalecer a autonomia dos alunos no acesso ao histórico e oportunidades.
@@ -520,7 +520,7 @@ Persona | Denise Ghattas
 User Story | como uma gestora eu busco ter uma visão geral do perfil do aluno de forma prática para avaliá-lo da melhor maneira  
 Critério de aceite 1 | CR1:   Dado que a gestora acessa o dashboard, quando ela clica no perfil do aluno, então é exibido os dados do histórico do aluno. 
 Critério de aceite 2 | CR2: dado que a gestora acesse a plataforma, quando ela abrir a aba “alunos”, então devem ser exibidos resumos sobre todos os alunos atingidos.
-Critérios INVEST | INDEPENDENTE: Pode ser desenvolvida sem depender de outras histórias , utilizando dados pré-existentes no banco. <br><br> NEGOCIÁVEL:  O formato de exibição dos dados  no dashboard pode ser ajustado com o parceiro Pulse Mais. <br><br> VALIOSA: Resolve a dor real da fragmentação de dados  e da dificuldade em visualizar a jornada do jovem. <br><br> ESTIMÁVEL: A equipe técnica consegue estimar  o esforço de criação de uma interface de consulta conectada ao SQLite. <br><br> PEQUENA: A implementação de uma tela de consulta básica cabe dentro de uma sprint de desenvolvimento. <br><br> TESTÁVEL: Tem como saber que está pronta verificando se os dados do banco aparecem corretamente ao clicar no perfil.
+Critérios INVEST | INDEPENDENTE: Pode ser desenvolvida sem depender de outras histórias , utilizando dados pré-existentes no banco. <br><br> NEGOCIÁVEL:  O formato de exibição dos dados  no dashboard pode ser ajustado com o parceiro Pulse Mais. <br><br> VALIOSA: Resolve a dor real da fragmentação de dados  e da dificuldade em visualizar a jornada do jovem. <br><br> ESTIMÁVEL: A equipe técnica consegue estimar  o esforço de criação de uma interface de consulta conectada ao PostgreSQL. <br><br> PEQUENA: A implementação de uma tela de consulta básica cabe dentro de uma sprint de desenvolvimento. <br><br> TESTÁVEL: Tem como saber que está pronta verificando se os dados do banco aparecem corretamente ao clicar no perfil.
 
 Identificação | US02
 --- | ---
@@ -528,7 +528,7 @@ Persona | Denise Ghattas
 User Story | como uma gestora eu busco uma plataforma que unifique os dados para não perder informação relevante. 
 Critério de aceite 1 | CR1: dado que a gestora acesse a plataforma, quando ela abrir a aba de insights, então devem ser exibidos indicadores sobre a performance dos jovens
 Critério de aceite 2 | CR2: dado que a gestora acesse a plataforma, quando ela acessar a aba “funcionários”, então devem ser exibidos dados quantitativos sobre os funcionários. 
-Critérios INVEST | INDEPENDENTE: A plataforma de unificação pode ser estruturada como o núcleo central do sistema  sem depender de módulos externos de comunicação. <br><br> NEGOCIÁVEL: Os indicadores de performance e os dados quantitativos exibidos nas abas de "insights" e "funcionários" podem ser refinados conforme a necessidade estratégica da Denise. <br><br> VALIOSA: Resolve o problema da fragmentação de dados em múltiplas planilhas centralizando o prontuário em uma única interface e com a organização do time. <br><br> ESTIMÁVEL:  O esforço para consolidar os dados acadêmicos e de jornada em um banco de dados SQLite é mensurável pela equipe de desenvolvimento. <br><br> PEQUENA: A criação das abas principais para exibição de indicadores e dados quantitativos está delimitada ao escopo do MVP, sendo coerente  para uma sprint. <br><br> TESTÁVEL: É possível validar a conclusão da tarefa ao verificar se os indicadores de performance que são exibidos corretamente na aba de insights ao acessar a plataforma.
+Critérios INVEST | INDEPENDENTE: A plataforma de unificação pode ser estruturada como o núcleo central do sistema  sem depender de módulos externos de comunicação. <br><br> NEGOCIÁVEL: Os indicadores de performance e os dados quantitativos exibidos nas abas de "insights" e "funcionários" podem ser refinados conforme a necessidade estratégica da Denise. <br><br> VALIOSA: Resolve o problema da fragmentação de dados em múltiplas planilhas centralizando o prontuário em uma única interface e com a organização do time. <br><br> ESTIMÁVEL:  O esforço para consolidar os dados acadêmicos e de jornada em um banco de dados PostgreSQL é mensurável pela equipe de desenvolvimento. <br><br> PEQUENA: A criação das abas principais para exibição de indicadores e dados quantitativos está delimitada ao escopo do MVP, sendo coerente  para uma sprint. <br><br> TESTÁVEL: É possível validar a conclusão da tarefa ao verificar se os indicadores de performance que são exibidos corretamente na aba de insights ao acessar a plataforma.
 
 Identificação | US03
 --- | ---
@@ -673,17 +673,17 @@ A coluna "Requisito" descreve o atributo de qualidade esperado em linguagem de n
 | USAB: Usabilidade | A interface da equipe e do portal do aluno deve ser responsiva, funcionando adequadamente em dispositivos mobile, tablet e desktop, dado que parte da equipe Pulse Mais utiliza desktop e a maior parte dos jovens (idade média 22 anos) acessa preferencialmente pelo celular. | Layout funcional e legível em viewports de 320px a 1920px de largura, sem rolagem horizontal indesejada, com elementos interativos com área de toque mínima de 44×44 px. | CSS responsivo com media queries; testes manuais nos breakpoints de mobile, tablet e desktop. |
 | USAB: Usabilidade | A interface deve adotar boas práticas de acessibilidade inspiradas na WCAG 2.1 nível AA, com foco em contraste de cores e suporte a daltonismo. | Contraste mínimo de 4.5:1 para textos e 3:1 para elementos gráficos; informações de status nunca transmitidas exclusivamente por cor; pontuação mínima de 90 na categoria Accessibility do Google Lighthouse nas principais telas. | Paleta validada por ferramenta de contraste (ex.: WebAIM Contrast Checker); ícones e rótulos textuais associados a indicadores coloridos; auditoria via Lighthouse executada nas revisões de sprint. |
 | USAB: Usabilidade | A interface deve apresentar curva de aprendizado curta para usuários da equipe Pulse Mais. | Um novo usuário da equipe deve conseguir realizar o cadastro completo de um aluno em até 5 minutos sem treinamento formal, apoiado apenas pelos rótulos e dicas da própria interface. | Padrões visuais consistentes em todas as telas; rótulos claros em português; mensagens de erro orientadas à ação corretiva. |
-| CONF: Confiabilidade | O sistema deve utilizar identificador interno estável para cada aluno, independente de e-mail, CPF ou nome, resolvendo a dor atual de quebra de cruzamento de dados quando o aluno troca de e-mail. | Todo aluno cadastrado recebe um código no formato `PM-AAAA-NNN`, único, imutável e gerado automaticamente; relacionamentos internos do sistema não dependem de e-mail ou nome. | Chave primária artificial na tabela de alunos; campo `codigo_pulse` único; constraints de integridade referencial no SQLite. |
-| CONF: Confiabilidade | O sistema deve preservar a integridade dos dados em caso de falha durante uma operação de escrita, evitando registros parciais ou inconsistentes. | Operações que envolvem múltiplas tabelas devem ser atômicas: ou completam por inteiro ou são desfeitas integralmente. | Uso de transações do SQLite com `BEGIN`/`COMMIT`/`ROLLBACK` via biblioteca do Node.js; testes manuais simulando falha durante escrita. |
+| CONF: Confiabilidade | O sistema deve utilizar identificador interno estável para cada aluno, independente de e-mail, CPF ou nome, resolvendo a dor atual de quebra de cruzamento de dados quando o aluno troca de e-mail. | Todo aluno cadastrado recebe um `id_aluno` único, imutável e gerado automaticamente; relacionamentos internos do sistema não dependem de e-mail ou nome. | Chave primária artificial `id_aluno` na tabela de alunos e constraints de integridade referencial no PostgreSQL. |
+| CONF: Confiabilidade | O sistema deve preservar a integridade dos dados em caso de falha durante uma operação de escrita, evitando registros parciais ou inconsistentes. | Operações que envolvem múltiplas tabelas devem ser atômicas: ou completam por inteiro ou são desfeitas integralmente. | Uso de transações do PostgreSQL com `BEGIN`/`COMMIT`/`ROLLBACK` via biblioteca do Node.js; testes manuais simulando falha durante escrita. |
 | DES: Desempenho | A listagem de alunos com critérios aplicados deve responder rapidamente, mesmo com o crescimento da base prevista (aprox. 600 alunos hoje, projeção de até 2000 ao longo dos próximos anos). | Tempo de resposta p95 < 2 segundos para listagem com até 2000 registros; p95 < 3 segundos para o dashboard agregado com os quatro indicadores principais. | Índices nas colunas mais consultadas (ano, programa, categoria); queries SQL otimizadas; medição via testes de carga simples na sprint 5. |
 | DES: Desempenho | A consulta ao histórico consolidado de um aluno deve carregar em tempo aceitável para uso diário pela equipe. | Tempo de resposta p95 < 1.5 segundos para abertura do histórico completo de um aluno; pontuação mínima de 80 na categoria Performance do Google Lighthouse nas principais telas. | Consultas pré-otimizadas; agregações feitas no servidor; payload JSON enxuto entre back-end e front-end; auditoria via Lighthouse executada nas revisões de sprint. |
 | SUP: Suportabilidade | O código-fonte deve seguir um padrão arquitetural claro, com separação de responsabilidades entre apresentação, lógica de aplicação e persistência. | Cada camada do sistema deve ter responsabilidade única e bem delimitada; nenhuma lógica de acesso a dados deve estar misturada com a camada de apresentação. | Adoção do padrão MVC com diretórios `views/`, `controllers/` e `models/`; revisões de pull request validando a separação; consultas SQL restritas à camada de Model. |
 | SUP: Suportabilidade | O sistema deve ser facilmente analisável, permitindo que um novo desenvolvedor ou docente entenda e contribua com o código. | Um novo colaborador deve conseguir realizar o setup local em até 10 minutos a partir da documentação; trechos de lógica não trivial devem estar comentados; nomenclatura consistente. | README com passo a passo de instalação; revisão por pares; aderência ao guia de estilo do módulo. |
 | SEG: Segurança | O acesso às funcionalidades sensíveis deve ser controlado por níveis de permissão simples, sem autenticação formal (login/senha), conforme restrição do TAPI. As observações de saúde mental devem ser visíveis apenas para usuários com perfil de psicólogo. | Usuários sem o perfil adequado não devem conseguir acessar dados de saúde mental por nenhum caminho do sistema, incluindo tentativas de acesso direto. | Middleware de verificação de perfil no Express; rotas protegidas por papel; testes de bloqueio em cada perfil. |
 | SEG: Segurança | Dados pessoais e relatos qualitativos sensíveis dos jovens, em conformidade com a LGPD e com o "Conteúdo Restrito" definido no TAPI, não devem ser expostos publicamente nem incluídos em commits do repositório público. | Nenhum dado pessoal real presente no repositório; uso obrigatório de massa de dados fictícia para desenvolvimento e demonstração. | Banco real e dumps incluídos no `.gitignore`; arquivo de seeds com dados fictícios; revisão manual de segredos antes de cada commit. |
-| CAP: Capacidade | O sistema deve suportar a carga prevista de uso pela equipe Pulse Mais e o volume estimado de alunos cadastrados. | Suporte a, no mínimo, 15 usuários simultâneos da equipe (margem confortável sobre os 7 colaboradores internos atuais); base de dados projetada para crescer até 2000 alunos cadastrados sem degradação perceptível. | Banco SQLite com índices nas colunas críticas; arquitetura preparada para migração futura a outro SGBD caso o volume cresça além do previsto. |
+| CAP: Capacidade | O sistema deve suportar a carga prevista de uso pela equipe Pulse Mais e o volume estimado de alunos cadastrados. | Suporte a, no mínimo, 15 usuários simultâneos da equipe (margem confortável sobre os 7 colaboradores internos atuais); base de dados projetada para crescer até 2000 alunos cadastrados sem degradação perceptível. | Banco PostgreSQL com índices nas colunas críticas e hospedagem possível no Supabase para facilitar operação e escalabilidade. |
 | CAP: Capacidade | O portal do aluno deve suportar acessos eventuais distribuídos ao longo do dia, sem necessidade de alta concorrência. | Suporte a, no mínimo, 30 acessos simultâneos no portal do aluno sem degradação superior a 20% no tempo de resposta. | Arquitetura stateless do back-end Node.js; consultas leves na rota pública do aluno. |
-| REST: Restrições de Design | Stack tecnológica obrigatória definida pelo Inteli e pelo TAPI: front-end em HTML, CSS e JavaScript; back-end em Node.js; banco de dados SQLite. | O front-end deve ser construído sem o uso de frameworks SPA (Single Page Application), como React, Vue, Angular ou similares; o back-end deve permanecer em Node.js e a persistência em SQLite. | Verificação no `package.json` e na estrutura do projeto durante revisões de sprint; validação arquitetural com docente orientador. |
+| REST: Restrições de Design | Stack tecnológica obrigatória definida pelo Inteli e pelo TAPI: front-end em HTML, CSS e JavaScript; back-end em Node.js; banco de dados PostgreSQL. | O front-end deve ser construído sem o uso de frameworks SPA (Single Page Application), como React, Vue, Angular ou similares; o back-end deve permanecer em Node.js e a persistência em PostgreSQL, preferencialmente hospedada no Supabase. | Verificação no `package.json` e na estrutura do projeto durante revisões de sprint; validação arquitetural com docente orientador. |
 | REST: Restrições de Design | Não haverá sistema de autenticação tradicional (login/senha), nem integração em tempo real com APIs externas (ex.: WhatsApp, Google), conforme TAPI. | Ausência de fluxos de cadastro de senha, recuperação de senha, OAuth ou tokens externos; ausência de chamadas a Web APIs externas em runtime. | Definido na arquitetura inicial; validado em revisão arquitetural com docente orientador. |
 | REST: Restrições de Design | A comunicação entre aluno e equipe (mentor, psicólogo) deve ocorrer fora da plataforma; o sistema apenas registra histórico de interações, não implementa chat em tempo real. | Nenhum componente de chat ou comunicação em tempo real implementado; comunicação representada apenas por registros estruturados (mensagens, formulários, anotações). | Decisão arquitetural documentada; escopo do MVP alinhado com o parceiro. |
 | ORG: Organizacionais | O projeto deve aderir ao processo Scrum adotado pelo Inteli, com entregas incrementais a cada sprint e este documento (WAD) atualizado ao final de cada uma delas. | Cinco sprints planejadas; histórico de alterações do WAD versionado; backlog mantido em ferramenta visível ao parceiro e ao corpo docente. | Repositório no GitHub; reuniões de revisão a cada sprint com o parceiro; commits de atualização do WAD. |
@@ -772,7 +772,64 @@ A próxima evolução desta seção (sprints 2 a 5) deve incluir o refinamento d
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
-*Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário.*
+O modelo relacional consiste em uma forma de organizar dados em tabelas com seus respectivos campos (Normando, 2024). Para compreensão desta seção, destaca-se que chaves primárias funcionam como identificador único de cada registro, enquanto chaves estrangeiras referenciam chaves primárias de outras tabelas, estabelecendo os vínculos entre elas. Ademais, o Diagrama Entidade-Relacionamento (DER) representa visualmente essas estruturas e conexões antes de sua implementação física. Dessa forma, elaborou-se o modelo relacional apresentado na Figura 5 para a presente solução, considerando a modelagem atualizada no novo DER do grupo.
+
+<div align = "center">
+<sup>Figura 5: Modelo Relacional Pulse Manager</sup><br>
+<img src="./assets/modeloRelacional.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
+
+### Modelo Relacional - Pulse Manager
+
+A partir do novo DER, o modelo relacional foi reorganizado para refletir as entidades atuais do sistema. As principais mudanças em relação à versão anterior são a remoção da tabela `nota`, pois `nota` passou a ser atributo de `atividade`; a inclusão da tabela lógica `participacao`, responsável pelo relacionamento entre `aluno` e `atividade`; a vinculação de `oportunidade` a `membro_equipe`; e a inclusão de `id_psi` no `historico_psicologico`.
+
+Para manter a padronização do modelo relacional, os nomes foram normalizados em `snake_case` e sem acentos. Assim, campos como `idPsicólogo`, `idmembroequipe` e `idAluno`, apresentados no DER, foram representados como `id_psi`, `id_membro` e `id_aluno`.
+
+#### Representação relacional
+
+- `aluno`(`id_aluno` PK, `nome`, `email`, `idade`, `genero`, `ocupacao`, `escolaridade`, `data_ingresso`, `status`)
+- `membro_equipe`(`id_membro` PK, `nome`, `cargo`, `email`)
+- `psicologo`(`id_psi` PK, `nome_psi`, `cargo_psi`)
+- `notificacao`(`id_notificacao` PK, `titulo`, `remetente_id`, `mensagem`, `data_envio`, `tipo`, `id_membro` FK, `id_psi` FK)
+- `oportunidade`(`id_oportunidade` PK, `titulo`, `descricao`, `tipo`, `data_publicacao`, `id_membro` FK)
+- `agenda`(`id_agenda` PK, `tipo_user`, `registro`, `data`, `status`, `id_membro` FK, `id_aluno` FK)
+- `label`(`id_lbl` PK, `descricao`, `tipo_label`, `id_aluno` FK, `autor_id`)
+- `historico_psicologico`(`id_historico` PK, `observacao`, `classificacao`, `id_aluno` FK, `id_psi` FK)
+- `atividade`(`id_atividade` PK, `titulo`, `tipo`, `descricao`, `data`, `nota`)
+- `participacao`(`id_part` PK, `data_part`, `status_part`, `id_aluno` FK, `id_atividade` FK)
+
+#### Explicação sobre o Modelo Relacional do Projeto Pulse Manager
+
+##### Tabela Aluno
+A tabela `aluno` representa os jovens acompanhados pela Pulse Mais. Ela contempla os atributos `id_aluno` (chave primária), `nome`, `email`, `idade`, `genero`, `ocupacao`, `escolaridade`, `data_ingresso` e `status`. No novo modelo, o aluno se relaciona diretamente com `agenda`, `label`, `historico_psicologico` e `participacao`.
+
+##### Tabela Membro_equipe
+A tabela `membro_equipe` armazena os profissionais da equipe responsáveis por registros administrativos, comunicações, oportunidades e compromissos. Seus atributos são `id_membro` (chave primária), `nome`, `cargo` e `email`. Ela se relaciona com `notificacao`, `oportunidade` e `agenda`.
+
+##### Tabela Psicologo
+A tabela `psicologo` representa os profissionais responsáveis por registros e acompanhamentos psicológicos. Ela possui os atributos `id_psi` (chave primária), `nome_psi` e `cargo_psi`. No DER atualizado, essa entidade é referenciada por `notificacao` e `historico_psicologico`.
+
+##### Tabela Notificacao
+A tabela `notificacao` armazena mensagens e avisos emitidos no sistema. Seus atributos são `id_notificacao` (chave primária), `titulo`, `remetente_id`, `mensagem`, `data_envio`, `tipo`, `id_membro` e `id_psi`. As chaves estrangeiras `id_membro` e `id_psi` associam a notificação aos responsáveis indicados no novo DER.
+
+##### Tabela Oportunidade
+A tabela `oportunidade` registra oportunidades acadêmicas, profissionais ou institucionais. Ela contempla os atributos `id_oportunidade` (chave primária), `titulo`, `descricao`, `tipo`, `data_publicacao` e `id_membro` (chave estrangeira). Diferente da versão anterior, a oportunidade é criada ou mantida por um membro da equipe, e não vinculada diretamente a um aluno.
+
+##### Tabela Agenda
+A tabela `agenda` registra compromissos, eventos e acompanhamentos. Seus atributos são `id_agenda` (chave primária), `tipo_user`, `registro`, `data`, `status`, `id_membro` e `id_aluno`. Com isso, cada registro pode ser associado ao aluno envolvido e ao membro da equipe responsável.
+
+##### Tabela Label
+A tabela `label` armazena classificações ou marcações vinculadas ao aluno. Seus atributos são `id_lbl` (chave primária), `descricao`, `tipo_label`, `id_aluno` e `autor_id`. O campo `autor_id` foi mantido como atributo simples, pois o novo DER não o identifica como chave estrangeira para uma tabela específica.
+
+##### Tabela Historico_psicologico
+A tabela `historico_psicologico` registra informações de acompanhamento psicológico. Ela possui os atributos `id_historico` (chave primária), `observacao`, `classificacao`, `id_aluno` e `id_psi`. Dessa forma, cada registro histórico fica vinculado ao aluno acompanhado e ao psicólogo responsável.
+
+##### Tabela Atividade
+A tabela `atividade` armazena atividades ligadas à jornada dos alunos. Seus atributos são `id_atividade` (chave primária), `titulo`, `tipo`, `descricao`, `data` e `nota`. A nota foi incorporada como atributo da própria atividade, conforme indicado no DER atualizado.
+
+##### Tabela Participacao
+A tabela `participacao` é uma tabela lógica associativa entre `aluno` e `atividade`. Ela possui os atributos `id_part` (chave primária), `data_part`, `status_part`, `id_aluno` e `id_atividade`. Essa estrutura permite que um aluno participe de várias atividades e que uma atividade tenha vários alunos participantes.
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
