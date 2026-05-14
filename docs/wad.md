@@ -792,6 +792,15 @@ Tela inicial do gestor no Pulse Manager, com menu lateral contendo Início, Alun
 </div>
 
 <div align="center">
+    <img src="assets/Wireframe2B.png" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Tela inicial do psicólogo no Pulse Manager, com menu lateral contendo Início, Alunos, Dashboard e Agenda. No topo, quatro cards de métricas: alunos acompanhados, em atenção, sessões por semana e notificações enviadas. Na parte inferior, dois painéis: alertas de atenção com lista de alunos sinalizados e opção de notificar, e um painel de bem-estar com gráfico e lista das próximas sessões. Foco em monitoramento clínico e agenda do psicólogo.
+</div>
+
+<div align="center">
     <img src="assets/Wireframe8.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
