@@ -765,6 +765,15 @@ Tela de login do sistema  dividida em dois painéis. O painel esquerdo (cinza) e
 </div>
 
 <div align="center">
+    <img src="assets/Wireframe1B.png" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Tela de login para Alunos do PULSE MAIS com layout dividido em dois painéis. O painel esquerdo exibe conteúdo informativo da plataforma. O painel direito contém campos de CPF e Nome completo para autenticação. O acesso é feito sem senha, validado apenas pelo CPF cadastrado. Um botão "ENTRAR" escuro centralizado confirma o login.
+</div>
+
+<div align="center">
     <img src="assets/Wireframe8.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
