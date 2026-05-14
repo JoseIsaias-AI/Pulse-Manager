@@ -692,24 +692,24 @@ No que tange aos registros de impacto e classificação, a classe Atividade arma
 
 ### 3.2.4. Diagrama de Sequência UML
 
-Esta seção apresenta cinco diagramas de sequência UML que descrevem como os principais fluxos do sistema Pulse Mais se desenrolam no tempo. Cada diagrama segue a mesma arquitetura em camadas (Tela, Controller, Service, Repository e Banco) e usa a notação UML padrão: linhas contínuas para mensagens síncronas, tracejadas para retornos, barras de ativação sobre as lifelines e fragmentos `alt` para fluxos alternativos. Os fluxos diagramados são UC-03 (Cadastrar Aluno), UC-06 (Visualizar Histórico), UC-08 (Registrar Participação), UC-15 (Dashboard de Impacto) e UC-22 (Registrar Histórico Psicológico), escolhidos por exercitarem todas as camadas e cobrirem os requisitos funcionais e regras de negócio mais críticos do MVP.
+Esta seção apresenta cinco diagramas de sequência UML que descrevem como os principais fluxos do sistema Pulse Mais se desenrolam no tempo. Cada diagrama segue a mesma arquitetura em camadas (Tela, Controller, Service, Repository e Banco) e usa a notação UML padrão: linhas contínuas para mensagens síncronas, tracejadas para retornos, barras de ativação sobre as lifelines e fragmentos `alt` para fluxos alternativos. Os fluxos diagramados são UC-03 (Manter cadastro do aluno), UC-06 (Visualizar histórico consolidado do aluno), UC-08 (Registrar participação em atividade), UC-15 (Visualizar dashboard de impacto) e UC-22 (Manter registros de saúde mental), escolhidos por exercitarem todas as camadas e cobrirem os requisitos funcionais e regras de negócio mais críticos do MVP.
 
-#### 3.2.4.1. UC-03 — Cadastrar Aluno
+#### 3.2.4.1. UC-03 — Manter cadastro do aluno
 
 <div align = "center">
-<sup>Figura 4: Diagrama de sequência do caso de uso Cadastrar Aluno.</sup>
+<sup>Figura 4: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup>
 <img src="../docs/assets/diagrama-sequencia-1.png">
 <sub>Fonte: Autoria própria (2026). </sub>
 <br><br>
 
-O fluxo começa quando o membro da equipe preenche o formulário de cadastro na `:TelaCadastroAluno` e submete os dados ao `:AlunoController`, que os repassa ao `:AlunoService`. O service realiza a validação dos campos obrigatórios (RN002), e em caso de sucesso aciona o `:AlunoRepository` para persistir o registro no banco. Após o INSERT, o service deriva o código identificador no formato `PM-AAAA-NNN` a partir do `id_aluno` e do ano de ingresso (RN001) e dispara a mensagem de boas-vindas pelo `:EmailService`. A confirmação retorna pelas camadas até a tela, exibindo o código gerado ao usuário. Caso a validação inicial falhe, o fluxo segue pelo ramo alternativo do fragmento `alt`, devolvendo um erro 400 sem chegar ao banco. Esse diagrama atende ao RF001 e cobre as RN001 e RN002.
+O fluxo começa quando o membro da equipe preenche o formulário de cadastro na `:TelaCadastroAluno` e submete os dados ao `:AlunoController`, que os repassa ao `:AlunoService`. O service realiza a validação dos campos obrigatórios (RN002), e em caso de sucesso aciona o `:AlunoRepository` para persistir o registro no banco. Após o INSERT, o service deriva o código identificador no formato `PM-AAAA-NNN` a partir do `id_aluno` e do ano de ingresso — operação detalhada como caso de uso próprio (UC-04, incluído via `«include»`), cobrindo a RN001 — e dispara a mensagem de boas-vindas pelo `:EmailService`. A confirmação retorna pelas camadas até a tela, exibindo o código gerado ao usuário. Caso a validação inicial falhe, o fluxo segue pelo ramo alternativo do fragmento `alt`, devolvendo um erro 400 sem chegar ao banco. Esse diagrama atende ao RF001 e cobre as RN001 e RN002.
 
 </div>
 
-#### 3.2.4.2. UC-06 — Visualizar Histórico Consolidado
+#### 3.2.4.2. UC-06 — Visualizar histórico consolidado do aluno
 
 <div align = "center">
-<sup>Figura 5: Diagrama de sequência do caso de uso Visualizar Histórico Consolidado.</sup>
+<sup>Figura 5: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup>
 <img src="../docs/assets/diagrama-sequencia-2.png">
 <sub>Fonte: Autoria própria (2026). </sub>
 <br><br>
@@ -718,10 +718,10 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 
 </div>
 
-#### 3.2.4.3. UC-08 — Registrar Participação do Aluno em Atividade
+#### 3.2.4.3. UC-08 — Registrar participação em atividade
 
 <div align = "center">
-<sup>Figura 6: Diagrama de sequência do caso de uso Registrar Participação do Aluno em Atividade.</sup>
+<sup>Figura 6: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup>
 <img src="../docs/assets/diagrama-sequencia-3.png">
 <sub>Fonte: Autoria própria (2026). </sub>
 <br><br>
@@ -730,10 +730,10 @@ O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e 
 
 </div>
 
-#### 3.2.4.4. UC-15 — Carregar Dashboard de Impacto
+#### 3.2.4.4. UC-15 — Visualizar dashboard de impacto
 
 <div align = "center">
-<sup>Figura 7: Diagrama de sequência do caso de uso Carregar Dashboard de Impacto.</sup>
+<sup>Figura 7: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup>
 <img src="../docs/assets/diagrama-sequencia-4.png">
 <sub>Fonte: Autoria própria (2026). </sub>
 <br><br>
@@ -742,10 +742,10 @@ A gestora abre o dashboard e a `:TelaDashboard` chama o `:DashboardController`, 
 
 </div>
 
-#### 3.2.4.5. UC-22 — Registrar Observação em Histórico Psicológico
+#### 3.2.4.5. UC-22 — Manter registros de saúde mental
 
 <div align = "center">
-<sup>Figura 8: Diagrama de sequência do caso de uso Registrar Observação em Histórico Psicológico.</sup>
+<sup>Figura 8: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup>
 <img src="../docs/assets/diagrama-sequencia-5.png">
 <sub>Fonte: Autoria própria (2026). </sub>
 <br><br>
