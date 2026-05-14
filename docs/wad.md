@@ -783,6 +783,15 @@ Tela de login exclusiva para psicólogos da plataforma Pulse Mais. Dividida em d
 </div>
 
 <div align="center">
+    <img src="assets/Wireframe2A.png" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Tela inicial do gestor no Pulse Manager, com menu lateral contendo Início, Alunos, Dashboard e Agenda. No topo, três cards de métricas: alunos conectados, alunos transformados e evolução. Na parte inferior, dois painéis: um gráfico de barras com distribuição de alunos por etapa e uma lista de atividades recentes. Layout de dashboard simples, focado em visão geral da turma.
+</div>
+
+<div align="center">
     <img src="assets/Wireframe8.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
