@@ -774,6 +774,15 @@ Tela de login para Alunos do PULSE MAIS com layout dividido em dois painéis. O 
 </div>
 
 <div align="center">
+    <img src="assets/Wireframe1C.png" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Tela de login exclusiva para psicólogos da plataforma Pulse Mais. Dividida em dois painéis: esquerdo com imagem/texto ilustrativo, direito com formulário. O formulário possui três campos (e-mail, nome completo e senha) e um botão "Entrar".
+</div>
+
+<div align="center">
     <img src="assets/Wireframe8.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
