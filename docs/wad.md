@@ -810,6 +810,15 @@ Dashboard de performance da turma para o gestor no Pulse Manager. No topo, quatr
 </div>
 
 <div align="center">
+    <img src="assets/Wireframe3B.png" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Dashboard de progresso pessoal do aluno no Pulse Manager. No topo, quatro cards de métricas: frequência, módulos concluídos, nota média e próxima entrega. Na parte inferior, dois gráficos: barras com presenças por bimestre e linha com a evolução do aluno ao longo do tempo. Foco em automonitoramento e acompanhamento acadêmico individual.
+</div>
+
+<div align="center">
     <img src="assets/Wireframe8.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
