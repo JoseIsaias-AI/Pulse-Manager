@@ -721,7 +721,7 @@ O Diagrama de Classes de Domínio do sistema Pulse Mais estabelece a estrutura c
 
  <div align = "center">
 <sup>Figura 3: Diagrama Classes de Domínio.</sup><br>
-<img src="./assets/Diagrama_Classe_Dominio.png"><br>
+<img src="./assets/Diagrama_Classes_Dominio.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
