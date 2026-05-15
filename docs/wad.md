@@ -793,6 +793,7 @@ Seus atributos são:
 - `escolaridade`
 - `data_ingresso`
 - `status`
+
 Cada aluno pode participar de diversas atividades, registrar compromissos na agenda, acumular labels de acompanhamento e possuir diversos registros em seu histórico psicológico.
  
 ### Entidade MembroEquipe
@@ -805,6 +806,7 @@ Seus atributos são:
 - `nome`
 - `cargo`
 - `email`
+
 Cada membro da equipe pode publicar oportunidades, registrar compromissos institucionais na agenda e enviar notificações.
  
 ### Entidade Psicólogo
@@ -816,6 +818,7 @@ Seus atributos são:
 - `id_psi` (PK)
 - `nome_psi`
 - `cargo_psi`
+
 Cada psicólogo pode registrar históricos psicológicos, enviar notificações e acompanhar a evolução comportamental e emocional dos alunos.
  
 ### Entidade Atividade
@@ -848,13 +851,13 @@ Seus atributos são:
 Cardinalidades:
  
 - Um `Aluno` pode possuir zero ou muitas participações.
-- Cada `Participacao` pertence a exatamente um aluno.
+- Cada `Participacao` pertence a um aluno.
 - Uma `Atividade` pode possuir zero ou muitas participações.
 - Cada `Participacao` refere-se a exatamente uma atividade.
 
 ### Entidade Label
  
-A entidade `Label` representa marcadores de acompanhamento atribuídos aos alunos, podendo ser gerados automaticamente pelo sistema ou cadastrados manualmente por psicólogos e membros da equipe.
+A entidade `Label` representa marcadores de acompanhamento atribuídos aos alunos, podendo ser gerados ou cadastrados manualmente por psicólogos.
  
 Seus atributos são:
  
@@ -867,7 +870,7 @@ Seus atributos são:
 Cardinalidades:
  
 - Um `Aluno` pode possuir zero ou muitas labels.
-- Cada `Label` está associada a exatamente um aluno.
+- Cada `Label` está associada a um aluno.
 O atributo `id_psi` referencia o psicólogo responsável pela criação da label, podendo ser nulo quando a label for gerada automaticamente pelo sistema.
  
 ### Entidade HistoricoPsicologico
@@ -878,7 +881,6 @@ Seus atributos são:
  
 - `id_historico` (PK)
 - `observacao`
-- `classificacao`
 - `titulo`
 - `id_aluno` (FK)
 - `id_psi` (FK)
@@ -897,7 +899,7 @@ A entidade `Agenda` armazena compromissos pessoais e institucionais, permitindo 
  
 Seus atributos são:
  
-- `id_agenda`
+- `id_agenda` (PK)
 - `tipo_user`
 - `registro`
 - `data`
@@ -976,10 +978,15 @@ Os principais relacionamentos definidos no DER são:
 A principal decisão arquitetural foi a criação da entidade `Atividade`, responsável por unificar cursos, eventos, mentorias e aulas em uma estrutura única, incluindo o atributo `nota` diretamente nessa entidade. Essa abordagem reduz a redundância de dados e facilita a manutenção do sistema, uma vez que a entidade `Participacao` passa a referenciar um único tipo de objeto para registrar o vínculo entre alunos e atividades.
  
 Outra decisão importante foi a adoção da entidade associativa `Participacao`, que implementa o relacionamento muitos-para-muitos entre alunos e atividades e permite armazenar atributos específicos, como data e status da participação.
+
+O modelo foi construído respeitando a Terceira Forma Normal (3FN). Não há dependências transitivas entre atributos não-chave, e todos os atributos dependem exclusivamente de suas respectivas chaves primárias. A entidade associativa Participacao, por exemplo, garante que os atributos data_part e status_part dependam da combinação de id_aluno e id_atividade, e não de apenas uma das chaves isoladamente.
  
-O modelo também foi concebido para suportar a importação e exportação de planilhas, possibilitando atualizações em lote de informações como participações e indicadores sem necessidade de alterações estruturais no banco de dados.
- 
+### Limitações Conhecidas do Modelo
+
+A unificação de cursos, eventos, mentorias e aulas no atributo "tipo" da entidade Atividade simplifica o modelo e reduz redundâncias, porém implica perda de especificidade estrutural entre os tipos. Caso futuramente seja necessário armazenar atributos exclusivos de cada tipo, como carga horária para cursos ou palestrante para eventos, o modelo exigirá refatoração. Essa é uma limitação conhecida e aceita, justificada pelo escopo atual do sistema.
+
 ### Conclusão
+
  
 O Diagrama Entidade-Relacionamento do PulseManager representa de forma estruturada, consistente e normalizada os dados necessários para o funcionamento do sistema. A identificação explícita de chaves primárias, chaves estrangeiras e cardinalidades garante integridade referencial e aderência às regras de negócio, estabelecendo uma base sólida para a construção do Modelo Relacional e do Modelo Físico do banco de dados.
 
