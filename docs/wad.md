@@ -843,12 +843,14 @@ Seus atributos são:
 - `status_part`
 - `idAluno` (FK)
 - `idAtividade` (FK)
+
 Cardinalidades:
  
 - Um `Aluno` pode possuir zero ou muitas participações.
 - Cada `Participacao` pertence a exatamente um aluno.
 - Uma `Atividade` pode possuir zero ou muitas participações.
 - Cada `Participacao` refere-se a exatamente uma atividade.
+
 ### Entidade Label
  
 A entidade `Label` representa marcadores de acompanhamento atribuídos aos alunos, podendo ser gerados automaticamente pelo sistema ou cadastrados manualmente por psicólogos e membros da equipe.
@@ -858,13 +860,14 @@ Seus atributos são:
 - `id_lbl` (PK)
 - `descricao`
 - `tipo_label`
-- `idAluno` (FK)
-- `autor_id`
+- `id_aluno` (FK)
+- `id_psi` (FK)
+
 Cardinalidades:
  
 - Um `Aluno` pode possuir zero ou muitas labels.
 - Cada `Label` está associada a exatamente um aluno.
-O atributo `autor_id` identifica o responsável pela criação da label e pode referenciar um psicólogo, um membro da equipe ou permanecer nulo quando a label for gerada automaticamente.
+O atributo `id_psi` referencia o psicólogo responsável pela criação da label, podendo ser nulo quando a label for gerada automaticamente pelo sistema.
  
 ### Entidade HistoricoPsicologico
  
@@ -875,8 +878,10 @@ Seus atributos são:
 - `id_historico` (PK)
 - `observacao`
 - `classificacao`
-- `idAluno` (FK)
-- `idPsicologo` (FK)
+- `titulo`
+- `id_aluno` (FK)
+- `id_psi` (FK)
+
 Cardinalidades:
  
 - Um `Aluno` pode possuir zero ou muitos registros psicológicos.
@@ -896,8 +901,9 @@ Seus atributos são:
 - `registro`
 - `data`
 - `status`
-- `idMembroEquipe` (FK)
-- `idAluno` (FK)
+- `id_membro` (FK)
+- `id_aluno` (FK)
+
 Cardinalidades:
  
 - Um `Aluno` pode possuir zero ou muitos registros na agenda.
@@ -915,7 +921,8 @@ Seus atributos são:
 - `descricao`
 - `tipo`
 - `data_publicacao`
-- `idMembroEquipe` (FK)
+- `id_membro` (FK)
+
 Cardinalidades:
  
 - Um `MembroEquipe` pode publicar zero ou muitas oportunidades.
@@ -930,14 +937,17 @@ Seus atributos são:
  
 - `id_notificacao` (PK)
 - `titulo`
-- `remetente_id`
 - `mensagem`
 - `data_envio`
 - `tipo`
-- `idMembroEquipe` (FK)
-- `idPsicologo` (FK)
+- `id_aluno` (FK)
+- `id_membro` (FK)
+- `id_psi` (FK)
+
 Cardinalidades:
  
+- Um `Aluno` pode receber zero ou muitas notificações.
+- Cada `Notificacao` está associada a exatamente um aluno.
 - Um `MembroEquipe` pode enviar zero ou muitas notificações.
 - Um `Psicologo` pode enviar zero ou muitas notificações.
 
@@ -953,9 +963,11 @@ Os principais relacionamentos definidos no DER são:
 - `Aluno` 1:N `HistoricoPsicologico`
 - `MembroEquipe` 1:N `Oportunidade`
 - `MembroEquipe` 1:N `Agenda`
+- `Aluno` 1:N `Notificacao`
 - `MembroEquipe` 1:N `Notificacao`
-- `Psicologo` 1:N `HistoricoPsicologico`
 - `Psicologo` 1:N `Notificacao`
+- `Psicologo` 1:N `HistoricoPsicologico`
+
 
 
 ### Decisões de Modelagem
