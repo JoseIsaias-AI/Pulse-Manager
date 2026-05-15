@@ -774,7 +774,7 @@ O DER explicita as entidades do sistema, seus atributos, as respectivas chaves p
 
 <p align="center"><strong>Figura 6- Diagrama Entidade Relacionamento</strong></p>
 
-<img src="./assets/diagram.png"><br>
+<img align="center" src="./assets/diagram.png"><br>
 
 <p align="center"><em>Fonte: Elaborado pela equipe (2026).</em></p>
  
@@ -823,7 +823,7 @@ Cada psicólogo pode registrar históricos psicológicos, enviar notificações 
  
 ### Entidade Atividade
  
-A entidade `Atividade` foi concebida como uma abstração genérica para representar cursos, eventos, mentorias e aulas em uma única estrutura. Essa decisão de modelagem reduz redundâncias e simplifica o tratamento das informações acadêmicas.
+A entidade `Atividade` foi concebida como uma entidade unificadora para representar cursos, eventos, mentorias e aulas em uma única estrutura. Essa decisão de modelagem reduz redundâncias e simplifica o tratamento das informações acadêmicas.
  
 Seus atributos são:
  
@@ -832,13 +832,12 @@ Seus atributos são:
 - `tipo`
 - `descricao`
 - `data`
-- `nota`
 
-O atributo `tipo` permite identificar a natureza da atividade, enquanto o atributo `nota` armazena o valor avaliativo associado à atividade, conforme as necessidades do sistema.
+O atributo `tipo` permite identificar a natureza da atividade, diferenciando cursos, eventos, mentorias e aulas dentro de uma estrutura unificada.
  
 ### Entidade Participacao
  
-A entidade `Participacao` materializa o relacionamento entre `Aluno` e `Atividade`, registrando o envolvimento efetivo do aluno em cada atividade.
+A entidade `Participacao` materializa o relacionamento entre `Aluno` e `Atividade`, registrando o envolvimento efetivo do aluno em cada atividade. O atributo nota registra o desempenho individual do aluno naquela atividade específica, refletindo que a avaliação é um atributo do vínculo entre aluno e atividade, e não da atividade em si.
  
 Seus atributos são:
  
@@ -847,6 +846,7 @@ Seus atributos são:
 - `status_part`
 - `idAluno` (FK)
 - `idAtividade` (FK)
+- `nota`
 
 Cardinalidades:
  
@@ -895,7 +895,7 @@ Cardinalidades:
 
 ### Entidade Agenda
  
-A entidade `Agenda` armazena compromissos pessoais e institucionais, permitindo o registro de eventos vinculados tanto a alunos quanto a membros da equipe.
+A entidade Agenda armazena registros de compromissos e acompanhamentos vinculados a alunos e membros da equipe.
  
 Seus atributos são:
  
@@ -944,15 +944,15 @@ Seus atributos são:
 - `data_envio`
 - `tipo`
 - `id_aluno` (FK)
-- `id_membro` (FK)
-- `id_psi` (FK)
+- `id_remetente`
+- `tipo_remetente`
+- `nome_remetente`
 
 Cardinalidades:
  
 - Um `Aluno` pode receber zero ou muitas notificações.
 - Cada `Notificacao` está associada a exatamente um aluno.
-- Um `MembroEquipe` pode enviar zero ou muitas notificações.
-- Um `Psicologo` pode enviar zero ou muitas notificações.
+- Cada `Notificacao` é enviada por exatamente um remetente, identificado pelos campos `id_remetente` e `tipo_remetente`, que indicam respectivamente o identificador e o tipo do emissor (membro da equipe ou psicólogo).
 
 
 ### Principais Relacionamentos e Cardinalidades
@@ -967,23 +967,26 @@ Os principais relacionamentos definidos no DER são:
 - `MembroEquipe` 1:N `Oportunidade`
 - `MembroEquipe` 1:N `Agenda`
 - `Aluno` 1:N `Notificacao`
-- `MembroEquipe` 1:N `Notificacao`
-- `Psicologo` 1:N `Notificacao`
+- `Remetente` (polimórfico) 1:N `Notificacao`
 - `Psicologo` 1:N `HistoricoPsicologico`
 
 
 
 ### Decisões de Modelagem
  
-A principal decisão arquitetural foi a criação da entidade `Atividade`, responsável por unificar cursos, eventos, mentorias e aulas em uma estrutura única, incluindo o atributo `nota` diretamente nessa entidade. Essa abordagem reduz a redundância de dados e facilita a manutenção do sistema, uma vez que a entidade `Participacao` passa a referenciar um único tipo de objeto para registrar o vínculo entre alunos e atividades.
+A principal decisão arquitetural foi a criação da entidade Atividade, responsável por unificar cursos, eventos, mentorias e aulas em uma estrutura única. O atributo nota foi posicionado na entidade Participacao, pois representa o desempenho individual de cada aluno em uma atividade específica, e não uma característica da atividade em si.. Essa abordagem reduz a redundância de dados e facilita a manutenção do sistema, uma vez que a entidade `Participacao` passa a referenciar um único tipo de objeto para registrar o vínculo entre alunos e atividades.
  
-Outra decisão importante foi a adoção da entidade associativa `Participacao`, que implementa o relacionamento muitos-para-muitos entre alunos e atividades e permite armazenar atributos específicos, como data e status da participação.
+Outra decisão importante foi a adoção da entidade associativa Participacao, responsável por implementar o relacionamento muitos-para-muitos entre alunos e atividades, além de possibilitar o armazenamento de informações específicas da relação, como data e status da participação.
 
-O modelo foi construído respeitando a Terceira Forma Normal (3FN). Não há dependências transitivas entre atributos não-chave, e todos os atributos dependem exclusivamente de suas respectivas chaves primárias. A entidade associativa Participacao, por exemplo, garante que os atributos data_part e status_part dependam da combinação de id_aluno e id_atividade, e não de apenas uma das chaves isoladamente.
+O modelo foi construído respeitando a Terceira Forma Normal (3FN). Não há dependências transitivas entre atributos não-chave, e todos os atributos dependem exclusivamente de suas respectivas chaves primárias, contribuindo para a redução de redundâncias e para a integridade estrutural do banco de dados
  
 ### Limitações Conhecidas do Modelo
 
 A unificação de cursos, eventos, mentorias e aulas no atributo "tipo" da entidade Atividade simplifica o modelo e reduz redundâncias, porém implica perda de especificidade estrutural entre os tipos. Caso futuramente seja necessário armazenar atributos exclusivos de cada tipo, como carga horária para cursos ou palestrante para eventos, o modelo exigirá refatoração. Essa é uma limitação conhecida e aceita, justificada pelo escopo atual do sistema.
+
+A entidade `Notificacao` adota associação polimórfica para identificar o remetente, por meio dos campos `id_remetente` e `tipo_remetente`, em vez de uma superclasse `Remetente` formal. Essa abordagem simplifica a implementação, mas delega a integridade referencial à camada de aplicação.
+
+O campo `nome_remetente` em `Notificacao` representa uma desnormalização intencional, adotada para simplificar consultas decorrentes da associação polimórfica. Essa decisão implica redundância controlada e exige sincronização pelo código da aplicação em caso de atualização.
 
 ### Conclusão
 
