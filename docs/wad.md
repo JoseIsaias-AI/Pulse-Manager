@@ -812,6 +812,22 @@ Dentro do modelo conceitual, estão explicitadas as relações entre as entidade
 - Gerencia zero ou várias `labels` (0, n), onde cada uma pode ser gerenciada por apenas um psicólogo (1, 1);
 - Envia zero ou várias `notificações` (0, n), onde cada uma pode ser enviada por apenas um remetente, este que pode ser membro da equipe ou psicólogo (1, 1).
 
+Além disso, as entidades aplicadas foram elaboradas a partir da análise das Regras de Negócio anteriormente desenvolvidas, foram definidas as seguintes relações: 
+
+| Entidade principal | Relacionamento com | RNs associadas | Justificativa |
+|-------------|------------|---------------|-------------|
+| Membro da Equipe | Publicação de oportunidades | RN008, RN011 | Pois a interface incentiva o registro de vínculos de trabalho (formal/informal) e a publicação de oportunidades é ação exclusiva da equipe interna |
+| Membro da Equipe | Registro na agenda | RN011 | Pois toda a equipe interna tem permissão para registrar e editar dados no sistema, eliminando dependência de uma única pessoa |
+| Membro da Equipe | Envio de notificações | RN011, RN016 | Pois a equipe interna tem autonomia no quesito registros no sistema, além de ter que comunicar os alunos sobre atividades de mentores voluntários (não-usuários), já que estes não tem liberdade de alterações no sistema |
+| Aluno | Acesso de agenda | RN013 | Pois o aluno não tem permissão de alterar todos os dados do sistema, apenas dados essenciais, outros dados podem apenas ser acessados para verificação |
+| Aluno | Atribuição de labels | RN015 | Pois as labels podem ser criadas apenas por psicológos/membros da equipe, assim, o aluno só se relaciona com ela no momento da atribuição |
+| Aluno | Recebimento de notificações | RN013, RN014 | Pois o aluno não tem permissão de alterar todos os dados do sistema, apenas dados essenciais, outros dados podem apenas ser acessados para verificação. Além disso, as notifações são um meio de enviar formulários para que os alunos atualizem seus dados |
+| Aluno | Participações dos alunos | RN004, RN009, RN007 | Pois o histórico de programas anteriores deve ser preservado para verificações futuros, algo permitido através do registro de participações. Além deste registro servir como base para criação de alguns indicadores em dashboards e cálculos de variavéis |
+| Aluno | Registros psicológicos | RN012, RN010 | Pois registros voltados à saúde mental só podem ser criados e editados por psicológos, sua ligação com o aluno se relaciona com a existência desta entidade no registro estudantil visto pela equipe especificada. Além disso, estes dados podem ser preservados para análises futuras dos profissionais |
+| Psicólogo | Registros psicológicos | RN012, RN010 | Pois os registros relacionados à saúde mental são criados e editados pela equipe de psicólogos, além da necessidade de preservação dos dados para outras análises |
+| Psicólogo | Gerenciamento de labels | RN015 | Pois a criação de labels é de autonomia exclusiva da equipe interna de psicólogos  |
+| Psicólogo | Envio de notificações | RN011 | Pois a equipe interna tem autonomia no quesito registros no sistema, assim, precisa utilizar notificações para a coleta de informações |
+
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
