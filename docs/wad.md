@@ -792,29 +792,26 @@ Dentro do modelo conceitual, estão explicitadas as relações entre as entidade
 
 ##### `Membro da Equipe`
 
-- Sobre `notificacao`: Envia zero ou várias notificações (0, n), onde cada uma é enviada por apenas um membro da equipe (1,1);
-- Sobre `oportunidade`: Publica zero ou várias oportunidades (0, n), onde cada uma é publicada por apenas um membro da equipe (1, 1);
-- Sobre `agenda`: Registra zero ou várias agendas (0, n), onde cada uma é registrada por apenas um membro da equipe (1, 1).
+- Publica zero ou várias `oportunidades` (0, n), onde cada uma pode ser enviada por apenas um membro da equipe (1, 1);
+- Registra zero ou várias `agendas` (0, n), onde cada uma pode ser registrada por apenas um membro da equipe (1, 1);
+- Envia zero ou várias `notificações` (0, n), onde cada uma pode ser enviada por apenas um remetente, este que pode ser membro da equipe ou psicólogo (1, 1).
 
 
 ##### `Aluno`
 
-- Sobre `historicoPsicologo`: Possui zero ou vários registros (0, n), onde cada uma pertence a apenas um aluno (1, 1);
-- Sobre `notificacao`: Recebe zero ou várias notificações (0, n), onde cada uma é recebida por um aluno (1, 1);
-- Sobre `agenda`: Possui nenhuma ou várias agendas (0, n), onde cada uma pertence a apenas um aluno (1, 1);
-- Sobre `label`: Possui nenhuma ou várias labels (0, n), onde cada uma pertence a apenas um aluno (1, 1);
-- Sobre `participacao`: Possui nenhuma ou várias participações (0, n), onde cada uma está vinculada a apenas um aluno (1, 1).
+- Acessa zero ou várias `agendas` (0, n), onde cada agenda é acessada por um aluno (1, 1);
+- Possui uma ou várias `labels` atribuídas (1, n), onde cada uma pode ser atribuída à zero ou vários alunos (0, n);
+- Recebe zero ou várias `notificações` (0, n), que podem ser recebidas por um ou vários alunos (1, n);
+- Possui zero ou várias `participações` (0, n), onde cada uma pertence à apenas um aluno (1, 1) e está vinculada a zero ou várias `atividades` (0, n);
+- Possui zero ou vários `registros` psicológicos (0, n), onde cada um pertence à apenas um aluno (1, 1).
 
 
-##### `Psicológo`
+##### `Psicólogo`
 
-- Sobre `historicoPsicologo`: Registra zero ou vários históricos (0, n), onde cada histórico é registrado por apenas um psicológo (1, 1);
-- Sobre `notificacao`: Envia zero ou várias notificações (0, n), onde cada uma é enviada por apenas um psicólogo (1,1).
+- Registra zero ou vários `registros` psicológicos (0, n), os quais podem ser registrados por apenas um psicólogo (1, 1);
+- Gerencia zero ou várias `labels` (0, n), onde cada uma pode ser gerenciada por apenas um psicólogo (1, 1);
+- Envia zero ou várias `notificações` (0, n), onde cada uma pode ser enviada por apenas um remetente, este que pode ser membro da equipe ou psicólogo (1, 1).
 
-
-##### `Participação`
-
-- Sobre `atividade`: Vinculada a apenas uma atividade (1, 1), onde cada uma pode ter nenhuma ou várias participações vinculadas.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
