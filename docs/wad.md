@@ -830,6 +830,7 @@ Seus atributos são:
 - `descricao`
 - `data`
 - `nota`
+
 O atributo `tipo` permite identificar a natureza da atividade, enquanto o atributo `nota` armazena o valor avaliativo associado à atividade, conforme as necessidades do sistema.
  
 ### Entidade Participacao
