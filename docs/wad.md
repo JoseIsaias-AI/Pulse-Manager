@@ -98,7 +98,7 @@ Foram identificados como insumos o uma planilha de jovens do framework, relatór
 Foi proposta uma aplicação web com WebAPI e banco de dados estruturado para centralizar o histórico acadêmico, institucional e profissional de alunos e ex-alunos. A solução atuará como Single Source of Truth da Pulse Mais, oferecendo visão consolidada para gestores e portal de consulta, atualização e oportunidades para alunos.
 
 #### 4. Forma de utilização da solução
-Gestores utilizarão dashboards, filtros e páginas individuais para consultar históricos, acompanhar indicadores e registrar feedbacks. Alunos e ex-alunos acessarão um portal para visualizar dados, atualizar perfis e consultar oportunidades. A solução será desenvolvida com HTML, CSS e JavaScript no front-end, Node.js no back-end e PostgreSQL no banco de dados, com possibilidade de hospedagem no Supabase.
+Gestores utilizarão dashboards, filtros e páginas individuais para consultar históricos, acompanhar indicadores e registrar feedbacks. Alunos e ex-alunos acessarão um portal para visualizar dados, atualizar perfis e consultar oportunidades. A solução será desenvolvida com HTML, CSS e JavaScript no front-end, Node.js no back-end e PostgreSQL no banco de dados.
 
 #### 5. Benefícios esperados
 Espera-se reduzir a fragmentação de dados e centralizar a jornada dos jovens em uma única plataforma. A solução deverá ampliar a agilidade operacional, melhorar o acompanhamento estratégico, apoiar decisões baseadas em dados e fortalecer a autonomia dos alunos no acesso ao histórico e oportunidades.
@@ -681,9 +681,9 @@ A coluna "Requisito" descreve o atributo de qualidade esperado em linguagem de n
 | SUP: Suportabilidade | O sistema deve ser facilmente analisável, permitindo que um novo desenvolvedor ou docente entenda e contribua com o código. | Um novo colaborador deve conseguir realizar o setup local em até 10 minutos a partir da documentação; trechos de lógica não trivial devem estar comentados; nomenclatura consistente. | README com passo a passo de instalação; revisão por pares; aderência ao guia de estilo do módulo. |
 | SEG: Segurança | O acesso às funcionalidades sensíveis deve ser controlado por níveis de permissão simples, sem autenticação formal (login/senha), conforme restrição do TAPI. As observações de saúde mental devem ser visíveis apenas para usuários com perfil de psicólogo. | Usuários sem o perfil adequado não devem conseguir acessar dados de saúde mental por nenhum caminho do sistema, incluindo tentativas de acesso direto. | Middleware de verificação de perfil no Express; rotas protegidas por papel; testes de bloqueio em cada perfil. |
 | SEG: Segurança | Dados pessoais e relatos qualitativos sensíveis dos jovens, em conformidade com a LGPD e com o "Conteúdo Restrito" definido no TAPI, não devem ser expostos publicamente nem incluídos em commits do repositório público. | Nenhum dado pessoal real presente no repositório; uso obrigatório de massa de dados fictícia para desenvolvimento e demonstração. | Banco real e dumps incluídos no `.gitignore`; arquivo de seeds com dados fictícios; revisão manual de segredos antes de cada commit. |
-| CAP: Capacidade | O sistema deve suportar a carga prevista de uso pela equipe Pulse Mais e o volume estimado de alunos cadastrados. | Suporte a, no mínimo, 15 usuários simultâneos da equipe (margem confortável sobre os 7 colaboradores internos atuais); base de dados projetada para crescer até 2000 alunos cadastrados sem degradação perceptível. | Banco PostgreSQL com índices nas colunas críticas e hospedagem possível no Supabase para facilitar operação e escalabilidade. |
+| CAP: Capacidade | O sistema deve suportar a carga prevista de uso pela equipe Pulse Mais e o volume estimado de alunos cadastrados. | Suporte a, no mínimo, 15 usuários simultâneos da equipe (margem confortável sobre os 7 colaboradores internos atuais); base de dados projetada para crescer até 2000 alunos cadastrados sem degradação perceptível. | Banco PostgreSQL com índices nas colunas críticas para facilitar operação e escalabilidade. |
 | CAP: Capacidade | O portal do aluno deve suportar acessos eventuais distribuídos ao longo do dia, sem necessidade de alta concorrência. | Suporte a, no mínimo, 30 acessos simultâneos no portal do aluno sem degradação superior a 20% no tempo de resposta. | Arquitetura stateless do back-end Node.js; consultas leves na rota pública do aluno. |
-| REST: Restrições de Design | Stack tecnológica obrigatória definida pelo Inteli e pelo TAPI: front-end em HTML, CSS e JavaScript; back-end em Node.js; banco de dados PostgreSQL. | O front-end deve ser construído sem o uso de frameworks SPA (Single Page Application), como React, Vue, Angular ou similares; o back-end deve permanecer em Node.js e a persistência em PostgreSQL, preferencialmente hospedada no Supabase. | Verificação no `package.json` e na estrutura do projeto durante revisões de sprint; validação arquitetural com docente orientador. |
+| REST: Restrições de Design | Stack tecnológica obrigatória definida pelo Inteli e pelo TAPI: front-end em HTML, CSS e JavaScript; back-end em Node.js; banco de dados PostgreSQL. | O front-end deve ser construído sem o uso de frameworks SPA (Single Page Application), como React, Vue, Angular ou similares; o back-end deve permanecer em Node.js e a persistência em PostgreSQL. | Verificação no `package.json` e na estrutura do projeto durante revisões de sprint; validação arquitetural com docente orientador. |
 | REST: Restrições de Design | Não haverá sistema de autenticação tradicional (login/senha), nem integração em tempo real com APIs externas (ex.: WhatsApp, Google), conforme TAPI. | Ausência de fluxos de cadastro de senha, recuperação de senha, OAuth ou tokens externos; ausência de chamadas a Web APIs externas em runtime. | Definido na arquitetura inicial; validado em revisão arquitetural com docente orientador. |
 | REST: Restrições de Design | A comunicação entre aluno e equipe (mentor, psicólogo) deve ocorrer fora da plataforma; o sistema apenas registra histórico de interações, não implementa chat em tempo real. | Nenhum componente de chat ou comunicação em tempo real implementado; comunicação representada apenas por registros estruturados (mensagens, formulários, anotações). | Decisão arquitetural documentada; escopo do MVP alinhado com o parceiro. |
 | ORG: Organizacionais | O projeto deve aderir ao processo Scrum adotado pelo Inteli, com entregas incrementais a cada sprint e este documento (WAD) atualizado ao final de cada uma delas. | Cinco sprints planejadas; histórico de alterações do WAD versionado; backlog mantido em ferramenta visível ao parceiro e ao corpo docente. | Repositório no GitHub; reuniões de revisão a cada sprint com o parceiro; commits de atualização do WAD. |
@@ -767,109 +767,312 @@ A próxima evolução desta seção (sprints 2 a 5) deve incluir o refinamento d
 *Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+ 
+O Diagrama Entidade-Relacionamento (DER) do sistema PulseManager representa a estrutura lógica do banco de dados responsável por armazenar e organizar as informações relacionadas ao acompanhamento acadêmico, profissional e psicossocial dos alunos atendidos pela organização Pulse Mais. O modelo foi desenvolvido com base nos requisitos funcionais levantados ao longo da análise do sistema e está integralmente alinhado ao Diagrama de Classes do Domínio, garantindo consistência entre a modelagem conceitual orientada a objetos e a modelagem relacional.
+ 
+O DER explicita as entidades do sistema, seus atributos, as respectivas chaves primárias (Primary Keys – PK), chaves estrangeiras (Foreign Keys – FK) e as cardinalidades de todos os relacionamentos, assegurando a integridade referencial e a correta representação das regras de negócio.
+ 
+### Entidade Aluno
+ 
+A entidade `Aluno` constitui o elemento central do modelo, pois representa os jovens acompanhados pela organização e concentra a maior parte dos relacionamentos do sistema.
+ 
+Seus atributos são:
+ 
+- `id_aluno` (PK)
+- `nome`
+- `email`
+- `idade`
+- `genero`
+- `ocupacao`
+- `escolaridade`
+- `data_ingresso`
+- `status`
+Cada aluno pode participar de diversas atividades, registrar compromissos na agenda, acumular labels de acompanhamento e possuir diversos registros em seu histórico psicológico.
+ 
+### Entidade MembroEquipe
+ 
+A entidade `MembroEquipe` representa os colaboradores da organização responsáveis pela gestão administrativa e pedagógica do sistema, incluindo gestores e outros profissionais autorizados.
+ 
+Seus atributos são:
+ 
+- `id_membro` (PK)
+- `nome`
+- `cargo`
+- `email`
+Cada membro da equipe pode publicar oportunidades, registrar compromissos institucionais na agenda e enviar notificações.
+ 
+### Entidade Psicólogo
+ 
+A entidade `Psicólogo` representa os profissionais responsáveis pelo acompanhamento psicossocial dos alunos.
+ 
+Seus atributos são:
+ 
+- `id_psi` (PK)
+- `nome_psi`
+- `cargo_psi`
+Cada psicólogo pode registrar históricos psicológicos, criar labels, enviar notificações e acompanhar a evolução comportamental e emocional dos alunos.
+ 
+### Entidade Atividade
+ 
+A entidade `Atividade` foi concebida como uma abstração genérica para representar cursos, eventos, mentorias e aulas em uma única estrutura. Essa decisão de modelagem reduz redundâncias e simplifica o tratamento das informações acadêmicas.
+ 
+Seus atributos são:
+ 
+- `id_atividade` (PK)
+- `titulo`
+- `tipo`
+- `descricao`
+- `data`
+O atributo `tipo` permite identificar a natureza da atividade. A nota não fica diretamente em `Atividade`, pois ela depende do desempenho de cada aluno em uma atividade específica.
+ 
+### Entidade Participacao
+ 
+A entidade `Participacao` materializa o relacionamento entre `Aluno` e `Atividade`, registrando o envolvimento efetivo do aluno em cada atividade.
+ 
+Seus atributos são:
+ 
+- `id_part` (PK)
+- `data_part`
+- `status_part`
+- `id_aluno` (FK)
+- `id_atividade` (FK)
+- `nota`
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitas participações.
+- Cada `Participacao` pertence a exatamente um aluno.
+- Uma `Atividade` pode possuir zero ou muitas participações.
+- Cada `Participacao` refere-se a exatamente uma atividade.
+### Entidade Label
+ 
+A entidade `Label` representa marcadores de acompanhamento atribuídos aos alunos, cadastrados por psicólogos para apoiar a leitura da situação de cada jovem.
+ 
+Seus atributos são:
+ 
+- `id_lbl` (PK)
+- `descricao`
+- `tipo_label`
+- `id_aluno` (FK)
+- `id_psi` (FK)
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitas labels.
+- Cada `Label` está associada a exatamente um aluno.
+- Um `Psicólogo` pode criar zero ou muitas labels.
+- Cada `Label` é associada a exatamente um psicólogo responsável.
+ 
+### Entidade HistoricoPsicologico
+ 
+A entidade `HistoricoPsicologico` armazena observações qualitativas registradas pelos psicólogos durante o acompanhamento individual dos alunos.
+ 
+Seus atributos são:
+ 
+- `id_historico` (PK)
+- `observacao`
+- `titulo`
+- `id_aluno` (FK)
+- `id_psi` (FK)
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitos registros psicológicos.
+- Cada `HistoricoPsicologico` pertence a exatamente um aluno.
+- Um `Psicólogo` pode registrar zero ou muitos históricos.
+- Cada `HistoricoPsicologico` é elaborado por exatamente um psicólogo.
 
-*Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3).*
 
-### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
+### Entidade Agenda
+ 
+A entidade `Agenda` armazena compromissos pessoais e institucionais, permitindo o registro de eventos vinculados tanto a alunos quanto a membros da equipe.
+ 
+Seus atributos são:
+ 
+- `id_agenda`
+- `tipo_user`
+- `registro`
+- `data`
+- `status`
+- `id_membro` (FK)
+- `id_aluno` (FK)
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitos registros na agenda.
+- Um `MembroEquipe` pode criar zero ou muitos compromissos.
 
-O modelo relacional consiste em uma forma de organizar dados em tabelas com seus respectivos campos (Normando, 2024). Para compreensão desta seção, destaca-se que chaves primárias funcionam como identificador único de cada registro, enquanto chaves estrangeiras referenciam chaves primárias de outras tabelas, estabelecendo os vínculos entre elas. Ademais, o Diagrama Entidade-Relacionamento (DER) representa visualmente essas estruturas e conexões antes de sua implementação física. Dessa forma, elaborou-se o modelo relacional apresentado na Figura 5 para a presente solução, considerando a modelagem atualizada no novo DER do grupo.
+
+### Entidade Oportunidade
+ 
+A entidade `Oportunidade` representa conteúdos disponibilizados pela equipe, como vagas de emprego, bolsas de estudo, cursos e eventos externos.
+ 
+Seus atributos são:
+ 
+- `id_oportunidade` (PK)
+- `titulo`
+- `descricao`
+- `tipo`
+- `data_publicacao`
+- `id_membro` (FK)
+Cardinalidades:
+ 
+- Um `MembroEquipe` pode publicar zero ou muitas oportunidades.
+- Cada `Oportunidade` é publicada por exatamente um membro da equipe.
+
+
+### Entidade Notificacao
+ 
+A entidade `Notificacao` registra as comunicações enviadas no sistema e direcionadas a um aluno específico.
+ 
+Seus atributos são:
+ 
+- `id_notificacao` (PK)
+- `titulo`
+- `id_aluno` (FK)
+- `mensagem`
+- `data_envio`
+- `tipo`
+- `id_remetente` (FK lógica)
+- `tipo_remetente`
+- `nome_remetente`
+Cardinalidades:
+ 
+- Um `Aluno` pode receber zero ou muitas notificações.
+- Um `MembroEquipe` pode enviar zero ou muitas notificações.
+- Um `Psicólogo` pode enviar zero ou muitas notificações.
+
+
+### Principais Relacionamentos e Cardinalidades
+ 
+Os principais relacionamentos definidos no DER são:
+ 
+- `Aluno` 1:N `Participacao`
+- `Atividade` 1:N `Participacao`
+- `Aluno` 1:N `Label`
+- `Psicólogo` 1:N `Label`
+- `Aluno` 1:N `Agenda`
+- `Aluno` 1:N `HistoricoPsicologico`
+- `MembroEquipe` 1:N `Oportunidade`
+- `MembroEquipe` 1:N `Agenda`
+- `MembroEquipe` 1:N `Notificacao`
+- `Psicólogo` 1:N `HistoricoPsicologico`
+- `Psicólogo` 1:N `Notificacao`
+- `Aluno` 1:N `Notificacao`
+
+
+### Decisões de Modelagem
+ 
+A principal decisão arquitetural foi a criação da entidade `Atividade`, responsável por unificar cursos, eventos, mentorias e aulas em uma estrutura única. A nota foi mantida em `Participacao`, pois a avaliação varia conforme o aluno e a atividade, evitando que todos os alunos de uma mesma atividade compartilhem indevidamente o mesmo valor.
+ 
+Outra decisão importante foi a adoção da entidade associativa `Participacao`, que implementa o relacionamento muitos-para-muitos entre alunos e atividades e permite armazenar atributos específicos, como data e status da participação.
+ 
+O modelo também foi concebido para suportar a importação e exportação de planilhas, possibilitando atualizações em lote de informações como participações e indicadores sem necessidade de alterações estruturais no banco de dados.
+ 
+### Conclusão
+ 
+O Diagrama Entidade-Relacionamento do PulseManager representa de forma estruturada, consistente e normalizada os dados necessários para o funcionamento do sistema. A identificação explícita de chaves primárias, chaves estrangeiras e cardinalidades garante integridade referencial e aderência às regras de negócio, estabelecendo uma base sólida para a construção do Modelo Relacional e do Modelo Físico do banco de dados.
+
 
 <div align = "center">
-<sup>Figura 5: Modelo Relacional Pulse Manager</sup><br>
-<img src="./assets/modeloRelacional.png"><br>
+<sup>Figura 5: Diagrama Entidade-Relacionamento (DER)</sup><br>
+<img src="./assets/dernovo.jpeg"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
-### Modelo Relacional - Pulse Manager
+### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
-A partir do novo DER, o modelo relacional foi reorganizado para refletir as entidades atuais do sistema. As principais mudanças em relação à versão anterior são a remoção da tabela `nota`, pois `nota` passou a ser atributo de `atividade`; a inclusão da tabela lógica `participacao`, responsável pelo relacionamento entre `aluno` e `atividade`; a vinculação de `oportunidade` a `membro_equipe`; e a inclusão de `id_psi` no `historico_psicologico`.
+Esta seção traduz o DER apresentado na seção 3.6.2 para o modelo relacional e para sua implementação física em PostgreSQL.
 
-Para manter a padronização do modelo relacional, os nomes foram normalizados em `snake_case` e sem acentos. Assim, campos como `idPsicólogo`, `idmembroequipe` e `idAluno`, apresentados no DER, foram representados como `id_psi`, `id_membro` e `id_aluno`.
+O modelo relacional organiza os dados em tabelas com seus respectivos campos (Normando, 2024). As chaves primárias identificam de forma única cada registro, enquanto as chaves estrangeiras conectam uma tabela a outra e preservam os vínculos definidos na modelagem. Dessa forma, as entidades e relacionamentos do DER são convertidos em uma estrutura pronta para implementação no banco de dados.
 
-#### Representação relacional
+#### Modelo Relacional - Pulse Manager
 
-- `aluno`(`id_aluno` PK, `nome`, `email`, `idade`, `genero`, `ocupacao`, `escolaridade`, `data_ingresso`, `status`)
-- `membro_equipe`(`id_membro` PK, `nome`, `cargo`, `email`)
-- `psicologo`(`id_psi` PK, `nome_psi`, `cargo_psi`)
-- `notificacao`(`id_notificacao` PK, `titulo`, `remetente_id`, `mensagem`, `data_envio`, `tipo`, `id_membro` FK, `id_psi` FK)
-- `oportunidade`(`id_oportunidade` PK, `titulo`, `descricao`, `tipo`, `data_publicacao`, `id_membro` FK)
-- `agenda`(`id_agenda` PK, `tipo_user`, `registro`, `data`, `status`, `id_membro` FK, `id_aluno` FK)
-- `label`(`id_lbl` PK, `descricao`, `tipo_label`, `id_aluno` FK, `autor_id`)
-- `historico_psicologico`(`id_historico` PK, `observacao`, `classificacao`, `id_aluno` FK, `id_psi` FK)
-- `atividade`(`id_atividade` PK, `titulo`, `tipo`, `descricao`, `data`, `nota`)
-- `participacao`(`id_part` PK, `data_part`, `status_part`, `id_aluno` FK, `id_atividade` FK)
+Com base na modelagem de dados do projeto, o modelo relacional foi definido para refletir as entidades atuais do sistema conforme o DER. A tabela `participacao` representa o relacionamento entre `aluno` e `atividade` e concentra os dados específicos desse vínculo, incluindo `nota`; `oportunidade` fica vinculada a `membro_equipe`; e os registros de agenda, notificações, labels e histórico psicológico mantêm vínculo com os usuários definidos na modelagem.
 
-#### Explicação sobre o Modelo Relacional do Projeto Pulse Manager
+##### Representação Relacional
 
-##### Tabela Aluno
-A tabela `aluno` representa os jovens acompanhados pela Pulse Mais. Ela contempla os atributos `id_aluno` (chave primária), `nome`, `email`, `idade`, `genero`, `ocupacao`, `escolaridade`, `data_ingresso` e `status`. No novo modelo, o aluno se relaciona diretamente com `agenda`, `label`, `historico_psicologico` e `participacao`.
+| Tabela | Chave primária | Atributos | Chaves estrangeiras |
+|---|---|---|---|
+| `aluno` | `id_aluno` | `nome`, `email`, `idade`, `genero`, `ocupacao`, `escolaridade`, `data_ingresso`, `status` | - |
+| `membro_equipe` | `id_membro` | `nome`, `cargo`, `email` | - |
+| `psicologo` | `id_psi` | `nome_psi`, `cargo_psi` | - |
+| `atividade` | `id_atividade` | `titulo`, `tipo`, `descricao`, `data` | - |
+| `notificacao` | `id_notificacao` | `titulo`, `mensagem`, `data_envio`, `tipo`, `tipo_remetente`, `nome_remetente` | `id_aluno`, `id_remetente` |
+| `oportunidade` | `id_oportunidade` | `titulo`, `descricao`, `tipo`, `data_publicacao` | `id_membro` |
+| `agenda` | `id_agenda` | `tipo_user`, `registro`, `data`, `status` | `id_membro`, `id_aluno` |
+| `label` | `id_lbl` | `descricao`, `tipo_label` | `id_aluno`, `id_psi` |
+| `historico_psicologico` | `id_historico` | `observacao`, `titulo` | `id_aluno`, `id_psi` |
+| `participacao` | `id_part` | `data_part`, `status_part`, `nota` | `id_aluno`, `id_atividade` |
 
-##### Tabela Membro_equipe
-A tabela `membro_equipe` armazena os profissionais da equipe responsáveis por registros administrativos, comunicações, oportunidades e compromissos. Seus atributos são `id_membro` (chave primária), `nome`, `cargo` e `email`. Ela se relaciona com `notificacao`, `oportunidade` e `agenda`.
+##### Descrição das Tabelas
 
-##### Tabela Psicologo
-A tabela `psicologo` representa os profissionais responsáveis por registros e acompanhamentos psicológicos. Ela possui os atributos `id_psi` (chave primária), `nome_psi` e `cargo_psi`. No DER atualizado, essa entidade é referenciada por `notificacao` e `historico_psicologico`.
+###### Tabela aluno
+A tabela `aluno` representa os jovens acompanhados pela Pulse Mais. Ela contém os dados principais do aluno e é a base para registros de agenda, notificações, labels, histórico psicológico e participação em atividades.
 
-##### Tabela Notificacao
-A tabela `notificacao` armazena mensagens e avisos emitidos no sistema. Seus atributos são `id_notificacao` (chave primária), `titulo`, `remetente_id`, `mensagem`, `data_envio`, `tipo`, `id_membro` e `id_psi`. As chaves estrangeiras `id_membro` e `id_psi` associam a notificação aos responsáveis indicados no novo DER.
+###### Tabela membro_equipe
+A tabela `membro_equipe` armazena os profissionais da equipe responsáveis por registros administrativos, comunicações, oportunidades e compromissos. Ela se relaciona com `notificacao`, `oportunidade` e `agenda`.
 
-##### Tabela Oportunidade
-A tabela `oportunidade` registra oportunidades acadêmicas, profissionais ou institucionais. Ela contempla os atributos `id_oportunidade` (chave primária), `titulo`, `descricao`, `tipo`, `data_publicacao` e `id_membro` (chave estrangeira). Diferente da versão anterior, a oportunidade é criada ou mantida por um membro da equipe, e não vinculada diretamente a um aluno.
+###### Tabela psicologo
+A tabela `psicologo` representa os profissionais responsáveis por registros e acompanhamentos psicológicos. Na modelagem, essa entidade é referenciada por `notificacao`, `label` e `historico_psicologico`.
 
-##### Tabela Agenda
-A tabela `agenda` registra compromissos, eventos e acompanhamentos. Seus atributos são `id_agenda` (chave primária), `tipo_user`, `registro`, `data`, `status`, `id_membro` e `id_aluno`. Com isso, cada registro pode ser associado ao aluno envolvido e ao membro da equipe responsável.
+###### Tabela notificacao
+A tabela `notificacao` armazena mensagens e avisos emitidos no sistema. O campo `id_aluno` associa a notificação ao aluno destinatário, enquanto `id_remetente`, `tipo_remetente` e `nome_remetente` identificam quem enviou a comunicação, podendo ser um membro da equipe ou um psicólogo.
 
-##### Tabela Label
-A tabela `label` armazena classificações ou marcações vinculadas ao aluno. Seus atributos são `id_lbl` (chave primária), `descricao`, `tipo_label`, `id_aluno` e `autor_id`. O campo `autor_id` foi mantido como atributo simples, pois o novo DER não o identifica como chave estrangeira para uma tabela específica.
+###### Tabela oportunidade
+A tabela `oportunidade` registra oportunidades acadêmicas, profissionais ou institucionais. Cada oportunidade é criada ou mantida por um membro da equipe, e não vinculada diretamente a um aluno.
 
-##### Tabela Historico_psicologico
-A tabela `historico_psicologico` registra informações de acompanhamento psicológico. Ela possui os atributos `id_historico` (chave primária), `observacao`, `classificacao`, `id_aluno` e `id_psi`. Dessa forma, cada registro histórico fica vinculado ao aluno acompanhado e ao psicólogo responsável.
+###### Tabela agenda
+A tabela `agenda` registra compromissos, eventos e acompanhamentos. Cada registro pode ser associado ao aluno envolvido e ao membro da equipe responsável, conforme os campos `id_aluno` e `id_membro` padronizados no modelo relacional.
 
-##### Tabela Atividade
-A tabela `atividade` armazena atividades ligadas à jornada dos alunos. Seus atributos são `id_atividade` (chave primária), `titulo`, `tipo`, `descricao`, `data` e `nota`. A nota foi incorporada como atributo da própria atividade, conforme indicado no DER atualizado.
+###### Tabela label
+A tabela `label` armazena classificações ou marcações vinculadas ao aluno. O campo `id_aluno` vincula a label ao aluno correspondente, enquanto `id_psi` identifica o psicólogo responsável pela marcação.
 
-##### Tabela Participacao
-A tabela `participacao` é uma tabela lógica associativa entre `aluno` e `atividade`. Ela possui os atributos `id_part` (chave primária), `data_part`, `status_part`, `id_aluno` e `id_atividade`. Essa estrutura permite que um aluno participe de várias atividades e que uma atividade tenha vários alunos participantes.
+###### Tabela historico_psicologico
+A tabela `historico_psicologico` registra informações de acompanhamento psicológico. Cada registro histórico possui uma observação e um título, ficando vinculado ao aluno acompanhado e ao psicólogo responsável.
 
-### Implementação de Chaves Estrangeiras e Regras de Negócio
+###### Tabela atividade
+A tabela `atividade` armazena cursos, eventos, mentorias e aulas em uma estrutura única. O DER atual não apresenta `nota` como atributo direto de `atividade`.
 
-Com base nas cardinalidades apresentadas no DER, as chaves estrangeiras foram posicionadas nas tabelas que representam o lado dependente de cada relacionamento. Dessa forma, quando uma entidade precisa referenciar outra para existir de maneira coerente, seu identificador é armazenado como chave estrangeira. Esse mapeamento preserva a integridade entre os registros e impede que informações importantes da jornada do aluno fiquem soltas no banco.
+###### Tabela participacao
+A tabela `participacao` é uma tabela lógica associativa entre `aluno` e `atividade`. Essa estrutura permite que um aluno participe de várias atividades e que uma atividade tenha vários alunos participantes. O campo `nota` pertence a essa tabela, pois a avaliação está ligada ao vínculo entre aluno e atividade.
 
-#### Mapeamento das chaves estrangeiras
+#### Implementação de Chaves Estrangeiras
+
+Com base nas cardinalidades descritas no DER, as chaves estrangeiras foram posicionadas nas tabelas dependentes de cada relacionamento. Esse mapeamento preserva a integridade entre os registros e impede que informações da jornada do aluno fiquem desconectadas no banco.
+
+##### Mapeamento das Chaves Estrangeiras
 
 | Tabela | Chave estrangeira | Referência | Finalidade |
 |---|---|---|---|
-| `notificacao` | `id_membro` | `membro_equipe(id_membro)` | Identificar o membro da equipe relacionado à notificação. |
-| `notificacao` | `id_psi` | `psicologo(id_psi)` | Identificar o psicólogo relacionado à notificação. |
+| `notificacao` | `id_aluno` | `aluno(id_aluno)` | Identificar o aluno destinatário da notificação. |
+| `notificacao` | `id_remetente` | `membro_equipe(id_membro)` ou `psicologo(id_psi)` | Identificar o remetente da notificação conforme o valor de `tipo_remetente`. |
 | `oportunidade` | `id_membro` | `membro_equipe(id_membro)` | Indicar qual membro da equipe publicou ou administra a oportunidade. |
 | `agenda` | `id_membro` | `membro_equipe(id_membro)` | Registrar o responsável interno pelo compromisso ou acompanhamento. |
 | `agenda` | `id_aluno` | `aluno(id_aluno)` | Associar o compromisso ao aluno envolvido. |
 | `label` | `id_aluno` | `aluno(id_aluno)` | Vincular marcações e classificações ao aluno correspondente. |
+| `label` | `id_psi` | `psicologo(id_psi)` | Identificar o psicólogo responsável pela label. |
 | `historico_psicologico` | `id_aluno` | `aluno(id_aluno)` | Associar o registro psicológico ao aluno acompanhado. |
 | `historico_psicologico` | `id_psi` | `psicologo(id_psi)` | Associar o registro psicológico ao psicólogo responsável. |
 | `participacao` | `id_aluno` | `aluno(id_aluno)` | Indicar qual aluno participou de determinada atividade. |
 | `participacao` | `id_atividade` | `atividade(id_atividade)` | Indicar qual atividade recebeu a participação do aluno. |
 
-#### Regras de negócio derivadas do DER
+##### Regras de Negócio do Modelo Relacional
 
-A tabela `aluno` permanece como entidade central da jornada do jovem, sendo referenciada por registros de agenda, labels, histórico psicológico e participações. Assim, as informações de acompanhamento ficam organizadas a partir do aluno, sem duplicar seus dados pessoais em outras tabelas.
+O modelo mantém `aluno` como entidade central, referenciada por notificações, agenda, labels, histórico psicológico e participações. Assim, os dados de acompanhamento ficam ligados ao aluno sem duplicação de informações pessoais em outras tabelas.
 
-A tabela `participacao` resolve o relacionamento entre `aluno` e `atividade`. Essa decisão evita armazenar uma lista de alunos dentro de `atividade` ou uma lista de atividades dentro de `aluno`, mantendo o modelo normalizado. Como regra de negócio, um mesmo aluno não deve ser registrado mais de uma vez na mesma atividade.
+O relacionamento entre `aluno` e `atividade` é resolvido por `participacao`, o que mantém o modelo normalizado e permite registrar dados próprios do vínculo, como `data_part`, `status_part` e `nota`. Como regra de negócio, um mesmo aluno não deve ser registrado mais de uma vez na mesma atividade.
 
-A tabela `atividade` mantém `nota` como atributo próprio, pois o novo DER não apresenta uma entidade separada para notas. Com isso, a avaliação fica diretamente ligada à atividade registrada.
+Como o DER atual não apresenta uma entidade separada para notas, `nota` permanece como atributo de `participacao`, mantendo a avaliação associada ao aluno em uma atividade específica.
 
-A tabela `oportunidade` passa a se relacionar com `membro_equipe`, e não diretamente com `aluno`. Essa escolha segue o novo DER e representa que oportunidades são cadastradas ou administradas pela equipe, podendo depois ser visualizadas ou utilizadas pelos alunos conforme as funcionalidades da aplicação.
+Os vínculos com `membro_equipe` e `psicologo` preservam a rastreabilidade dos responsáveis por oportunidades, notificações, labels e registros psicológicos, respeitando as relações representadas no DER.
 
-A tabela `historico_psicologico` deve sempre preservar o vínculo entre o aluno acompanhado e o psicólogo responsável. Essa regra é importante porque os registros psicológicos são sensíveis e precisam manter rastreabilidade sobre quem realizou ou registrou o acompanhamento.
+Como regra de acesso, o psicólogo não possui visão geral de todos os alunos. Sua visualização deve ser limitada aos alunos aos quais ele está relacionado por registros como `label` e `historico_psicologico`, que possuem simultaneamente `id_psi` e `id_aluno`, ou por notificações em que `tipo_remetente` seja `psicologo` e `id_remetente` corresponda ao seu `id_psi`. Já `membro_equipe` mantém acesso institucional mais amplo aos registros administrativos e acadêmicos dos alunos, respeitando a restrição de que informações sensíveis de acompanhamento psicológico só devem ser acessadas por usuários com perfil de psicólogo.
 
-O campo `autor_id`, presente em `label`, foi mantido como atributo simples no modelo relacional. Ele não foi definido como chave estrangeira porque o DER não especifica se o autor pertence à tabela `membro_equipe`, `psicologo` ou outra entidade futura.
+#### Codificação do Modelo Físico em PostgreSQL
 
-### Codificação do DDL Base e Restrições Simples
+A codificação a seguir representa o DDL do modelo físico em PostgreSQL. Esse script implementa o modelo relacional apresentado anteriormente, criando os tipos, as tabelas, as chaves primárias, as chaves estrangeiras e as restrições simples do sistema.
 
-A partir do modelo relacional e das regras de integridade mapeadas, foi definida a codificação inicial do modelo físico em PostgreSQL, compatível com o uso no Supabase. Os identificadores principais usam `GENERATED ALWAYS AS IDENTITY`, recurso do PostgreSQL que gera automaticamente valores inteiros sequenciais para as chaves primárias. Os campos de domínio fechado foram representados com `ENUM`, e as restrições simples foram declaradas com `NOT NULL`, `UNIQUE`, `CHECK`, `PRIMARY KEY` e `FOREIGN KEY`.
+Os identificadores principais usam `GENERATED ALWAYS AS IDENTITY`, recurso do PostgreSQL que gera automaticamente valores inteiros sequenciais para as chaves primárias. Os campos de domínio fechado foram representados com `ENUM`, e as restrições simples foram declaradas com `NOT NULL`, `UNIQUE`, `CHECK`, `PRIMARY KEY` e `FOREIGN KEY`.
 
 ```sql
--- PostgreSQL / Supabase
+-- PostgreSQL
 
 DO $$
 BEGIN
@@ -922,12 +1125,20 @@ END $$;
 DO $$
 BEGIN
   CREATE TYPE tipo_notificacao_enum AS ENUM (
-    'geral',
     'alerta',
-    'oportunidade',
-    'agenda',
-    'acompanhamento',
+    'informativo',
+    'convite',
+    'urgente',
     'outro'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE TYPE tipo_remetente_enum AS ENUM (
+    'membro_equipe',
+    'psicologo'
   );
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
@@ -950,19 +1161,7 @@ DO $$
 BEGIN
   CREATE TYPE tipo_usuario_agenda_enum AS ENUM (
     'aluno',
-    'membro_equipe',
-    'psicologo'
-  );
-EXCEPTION WHEN duplicate_object THEN NULL;
-END $$;
-
-DO $$
-BEGIN
-  CREATE TYPE status_agenda_enum AS ENUM (
-    'pendente',
-    'agendado',
-    'realizado',
-    'cancelado'
+    'membro_equipe'
   );
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
@@ -982,18 +1181,6 @@ END $$;
 
 DO $$
 BEGIN
-  CREATE TYPE classificacao_historico_enum AS ENUM (
-    'baixo',
-    'medio',
-    'alto',
-    'critico',
-    'acompanhamento'
-  );
-EXCEPTION WHEN duplicate_object THEN NULL;
-END $$;
-
-DO $$
-BEGIN
   CREATE TYPE tipo_atividade_enum AS ENUM (
     'aula',
     'mentoria',
@@ -1001,18 +1188,6 @@ BEGIN
     'evento',
     'avaliacao',
     'outro'
-  );
-EXCEPTION WHEN duplicate_object THEN NULL;
-END $$;
-
-DO $$
-BEGIN
-  CREATE TYPE status_participacao_enum AS ENUM (
-    'inscrito',
-    'presente',
-    'ausente',
-    'concluido',
-    'cancelado'
   );
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
@@ -1042,23 +1217,59 @@ CREATE TABLE IF NOT EXISTS psicologo (
   cargo_psi cargo_psicologo_enum NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS atividade (
+  id_atividade INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  titulo VARCHAR(255) NOT NULL,
+  tipo tipo_atividade_enum NOT NULL,
+  descricao VARCHAR(500),
+  data DATE
+);
+
 CREATE TABLE IF NOT EXISTS notificacao (
   id_notificacao INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   titulo VARCHAR(255) NOT NULL,
-  remetente_id INTEGER NOT NULL,
-  mensagem TEXT NOT NULL,
-  data_envio TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  id_aluno INTEGER NOT NULL,
+  mensagem VARCHAR(500) NOT NULL,
+  data_envio DATE NOT NULL DEFAULT CURRENT_DATE,
   tipo tipo_notificacao_enum NOT NULL,
-  id_membro INTEGER NOT NULL,
-  id_psi INTEGER NOT NULL,
-  FOREIGN KEY (id_membro) REFERENCES membro_equipe(id_membro),
-  FOREIGN KEY (id_psi) REFERENCES psicologo(id_psi)
+  id_remetente INTEGER NOT NULL,
+  tipo_remetente tipo_remetente_enum NOT NULL,
+  nome_remetente VARCHAR(150) NOT NULL,
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno)
 );
+
+CREATE OR REPLACE FUNCTION validar_remetente_notificacao()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.tipo_remetente = 'membro_equipe' THEN
+    IF NOT EXISTS (
+      SELECT 1 FROM membro_equipe WHERE id_membro = NEW.id_remetente
+    ) THEN
+      RAISE EXCEPTION 'Remetente membro_equipe % não encontrado', NEW.id_remetente;
+    END IF;
+  ELSIF NEW.tipo_remetente = 'psicologo' THEN
+    IF NOT EXISTS (
+      SELECT 1 FROM psicologo WHERE id_psi = NEW.id_remetente
+    ) THEN
+      RAISE EXCEPTION 'Remetente psicologo % não encontrado', NEW.id_remetente;
+    END IF;
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trg_validar_remetente_notificacao ON notificacao;
+
+CREATE TRIGGER trg_validar_remetente_notificacao
+BEFORE INSERT OR UPDATE ON notificacao
+FOR EACH ROW
+EXECUTE FUNCTION validar_remetente_notificacao();
 
 CREATE TABLE IF NOT EXISTS oportunidade (
   id_oportunidade INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   titulo VARCHAR(255) NOT NULL,
-  descricao TEXT,
+  descricao VARCHAR(500),
   tipo tipo_oportunidade_enum NOT NULL,
   data_publicacao DATE DEFAULT CURRENT_DATE,
   id_membro INTEGER NOT NULL,
@@ -1068,9 +1279,9 @@ CREATE TABLE IF NOT EXISTS oportunidade (
 CREATE TABLE IF NOT EXISTS agenda (
   id_agenda INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   tipo_user tipo_usuario_agenda_enum NOT NULL,
-  registro TEXT NOT NULL,
-  data TIMESTAMPTZ NOT NULL,
-  status status_agenda_enum NOT NULL DEFAULT 'pendente',
+  registro VARCHAR(500) NOT NULL,
+  data DATE NOT NULL,
+  status INTEGER NOT NULL,
   id_membro INTEGER NOT NULL,
   id_aluno INTEGER NOT NULL,
   FOREIGN KEY (id_membro) REFERENCES membro_equipe(id_membro),
@@ -1079,38 +1290,31 @@ CREATE TABLE IF NOT EXISTS agenda (
 
 CREATE TABLE IF NOT EXISTS label (
   id_lbl INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  descricao TEXT NOT NULL,
+  descricao VARCHAR(500) NOT NULL,
   tipo_label tipo_label_enum NOT NULL,
-  id_aluno INTEGER NOT NULL,
-  autor_id INTEGER,
-  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno)
-);
-
-CREATE TABLE IF NOT EXISTS historico_psicologico (
-  id_historico INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  observacao TEXT NOT NULL,
-  classificacao classificacao_historico_enum NOT NULL,
   id_aluno INTEGER NOT NULL,
   id_psi INTEGER NOT NULL,
   FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno),
   FOREIGN KEY (id_psi) REFERENCES psicologo(id_psi)
 );
 
-CREATE TABLE IF NOT EXISTS atividade (
-  id_atividade INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS historico_psicologico (
+  id_historico INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  observacao VARCHAR(500) NOT NULL,
   titulo VARCHAR(255) NOT NULL,
-  tipo tipo_atividade_enum NOT NULL,
-  descricao TEXT,
-  data DATE,
-  nota NUMERIC(4,2) CHECK (nota IS NULL OR (nota >= 0 AND nota <= 10))
+  id_aluno INTEGER NOT NULL,
+  id_psi INTEGER NOT NULL,
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno),
+  FOREIGN KEY (id_psi) REFERENCES psicologo(id_psi)
 );
 
 CREATE TABLE IF NOT EXISTS participacao (
   id_part INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   data_part DATE DEFAULT CURRENT_DATE,
-  status_part status_participacao_enum NOT NULL DEFAULT 'inscrito',
+  status_part BOOLEAN NOT NULL DEFAULT FALSE,
   id_aluno INTEGER NOT NULL,
   id_atividade INTEGER NOT NULL,
+  nota DECIMAL(3,1) CHECK (nota >= 0 AND nota <= 10),
   FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno),
   FOREIGN KEY (id_atividade) REFERENCES atividade(id_atividade),
   UNIQUE (id_aluno, id_atividade)
@@ -1119,7 +1323,35 @@ CREATE TABLE IF NOT EXISTS participacao (
 
 As restrições `PRIMARY KEY` garantem identificação única para cada registro, enquanto `GENERATED ALWAYS AS IDENTITY` automatiza a geração dos identificadores. As restrições `NOT NULL` foram aplicadas aos campos obrigatórios para impedir registros incompletos nos dados essenciais. A restrição `UNIQUE` foi usada em campos que não devem se repetir, como `email`, e também em `participacao(id_aluno, id_atividade)`, evitando duplicidade de participação do mesmo aluno na mesma atividade.
 
-As restrições `CHECK` foram usadas em regras numéricas simples, como a validação da idade do aluno e da nota da atividade. Já os tipos `ENUM` limitam campos categóricos a valores previamente definidos, reduzindo inconsistências de preenchimento em campos como `status`, `cargo`, `tipo`, `classificacao` e `status_part`.
+As restrições `CHECK` foram usadas em regras numéricas simples, como a validação da idade do aluno e da nota em `participacao`. A coluna `nota` foi definida como `DECIMAL(3,1)` para permitir avaliações de 0 a 10 com uma casa decimal, como `8.5` ou `10.0`, sem permitir valores fora da escala definida. Já os tipos `ENUM` limitam campos categóricos a valores previamente definidos, reduzindo inconsistências de preenchimento em campos como `status`, `cargo`, `tipo`, `tipo_user`, `tipo_label` e `tipo_remetente`.
+
+Na tabela `notificacao`, `id_remetente` funciona como uma referência polimórfica: quando `tipo_remetente` é `membro_equipe`, o identificador deve existir em `membro_equipe(id_membro)`; quando é `psicologo`, deve existir em `psicologo(id_psi)`. Como o PostgreSQL não permite que uma única chave estrangeira convencional aponte condicionalmente para duas tabelas diferentes, essa validação foi representada no modelo físico por uma trigger.
+
+#### Mapeamento da Ordem de Dependência
+
+O mapeamento da ordem de dependência organiza a sequência correta para criação, manutenção e eventual remoção das estruturas do banco de dados. Como o modelo físico utiliza chaves estrangeiras, as tabelas referenciadas precisam existir antes das tabelas que dependem delas. Essa ordem evita erros de integridade referencial durante a execução do DDL e facilita a leitura do modelo por etapas.
+
+No modelo da solução, não há dependência circular entre as tabelas. As entidades `aluno`, `membro_equipe`, `psicologo` e `atividade` funcionam como bases do domínio, pois não possuem chaves estrangeiras. Já `notificacao`, `oportunidade`, `agenda`, `label`, `historico_psicologico` e `participacao` dependem dessas bases para manter os vínculos definidos no modelo.
+
+##### Ordem Sugerida de Criação
+
+| Ordem | Estrutura | Depende de | Justificativa |
+|---|---|---|---|
+| 1 | Tipos `ENUM` | Nenhuma estrutura relacional | Os domínios categóricos precisam existir antes das tabelas que usam esses tipos em suas colunas. |
+| 2 | `aluno` | Nenhuma tabela | Entidade central da jornada do jovem, referenciada por notificações, agenda, label, histórico psicológico e participação. |
+| 3 | `membro_equipe` | Nenhuma tabela | Entidade base para registros administrativos, oportunidades, agenda e notificações. |
+| 4 | `psicologo` | Nenhuma tabela | Entidade base para notificações, labels e registros de acompanhamento psicológico. |
+| 5 | `atividade` | Nenhuma tabela | Entidade base das atividades realizadas ou acompanhadas pela plataforma. |
+| 6 | `notificacao` | `aluno`, `membro_equipe`, `psicologo` | Precisa do aluno destinatário e do remetente cadastrado, validado conforme `tipo_remetente`. |
+| 7 | `oportunidade` | `membro_equipe` | Precisa do membro da equipe responsável pela publicação ou administração da oportunidade. |
+| 8 | `agenda` | `membro_equipe`, `aluno` | Depende do aluno envolvido e do responsável interno pelo compromisso. |
+| 9 | `label` | `aluno`, `psicologo` | Depende do aluno e do psicólogo responsável para registrar marcações, classificações ou prioridades. |
+| 10 | `historico_psicologico` | `aluno`, `psicologo` | Depende do aluno acompanhado e do psicólogo responsável pelo registro. |
+| 11 | `participacao` | `aluno`, `atividade` | Representa a relação associativa entre alunos e atividades, por isso só pode ser criada após as duas tabelas-base. |
+
+Essa sequência também orienta a ordem de carga inicial de dados. Primeiro devem ser cadastrados os registros-base, como alunos, membros da equipe, psicólogos e atividades. Em seguida, podem ser inseridos os registros dependentes, como agenda, labels, histórico psicológico, oportunidades, notificações e participações.
+
+Para exclusões estruturais, a ordem deve ser invertida: primeiro removem-se ou ajustam-se as tabelas dependentes e, somente depois, as tabelas-base. Dessa forma, evita-se quebrar vínculos ativos de chave estrangeira durante manutenções no banco.
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
