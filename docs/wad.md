@@ -72,7 +72,7 @@ No segmento de aprendizado voltado à tecnologia, há uma maior disputa por visi
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
 <div align = "center">
-<sup>Figura 2: Análise SWOT.</sup><br>
+<sup>Figura 1: Análise SWOT.</sup><br>
 <img src="./assets/analiseSwot.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -111,11 +111,13 @@ O sucesso será avaliado pela centralização dos dados, clareza da visualizaç�
 
 ### 2.1.4. Canvas de Proposta de Valor
 
-<p align="center"><strong>Figura 3 - Canvas de Proposta de Valor da Pulse Manager</strong></p>
+<div align = 'center'>
+<sup>Figura 2: Canvas de Proposta de Valor da Pulse Manager</sup></p>
 
 <img src="./assets/canvasvalor.png"><br>
 
 <p align="center"><em>Fonte: Elaborado pela equipe (2026), com base no Value Proposition Canvas de Strategyzer.</em></p>
+
 
 O Canvas de Proposta de valor da Pulse Mais foi estruturado com base em dois segmentos prioritários da solução: **gestores da instituição** e **alunos/ex-alunos da rede**. Essa definição foi adotada porque a proposta de valor da plataforma depende, ao mesmo tempo, da capacidade institucional de acompanhar a jornada completa dos jovens e da capacidade dos próprios alunos de acessarem seu histórico, manterem seus perfis atualizados e se conectarem a oportunidades. Dessa forma, o canvas foi organizado para evidenciar, de um lado, as tarefas, dores e ganhos desses públicos e, de outro, os elementos da solução que aliviam essas dores e potencializam a geração de valor.
 
@@ -151,11 +153,13 @@ A solução cria valor ao transformar dados operacionais em visão estratégica.
 
 A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, classificar e tratar os principais eventos capazes de comprometer a entrega e o valor da aplicação web proposta para a Pulse Mais. Considerando que a solução deverá centralizar dados atualmente dispersos, sustentar o acompanhamento da jornada dos jovens, viabilizar consultas históricas, apoiar dashboards gerenciais e permitir segmentações estratégicas, tornou-se necessário antecipar riscos de natureza técnica, operacional, analítica e institucional.
 
-<p align="center"><strong>Figura 4 - Matriz de Riscos da Pulse Manager</strong></p>
+<div align="center">
+<sup>Figura 4: Matriz de Riscos da Pulse Manager</sup></p>
 
 <img src="./assets/imagem.png"><br>
 
-<p align="center"><em>Fonte: Elaborado pela equipe (2026).</em></p>
+<em>Fonte: Elaborado pela equipe (2026).</em></p>
+</div>
 
 A análise foi organizada de modo a preservar coerência com o nível de detalhamento adotado nas demais seções do WAD, contemplando não apenas a identificação dos riscos, mas também sua classificação, criticidade e respectivas estratégias de prevenção, mitigação e contingência.
 
@@ -468,11 +472,20 @@ Diante disso, conclui-se que a condução mais adequada consiste em priorizar um
 
 Personas: A persona é definida como uma descrição realista e detalhada do usuário ideal, sendo elaborada com base nos objetivos estratégicos do produto e sustentada por dados reais sobre o comportamento, necessidades e motivações do público-alvo. Nesse caso usamos Proto-Personas (Quando não sustentamos com dados reais.).
 
+
 <div align="center">
+<sup>Figura 5: Persona 01.</sup><br>
     <img src="assets/personaUm.jpg" width="60%"><br>
+
+<sub>Fonte: Autoria própria (2026). </sub><br>
+
+<sup>Figura 6: Persona 02.</sup><br>
     <img src="assets/personaDois.jpg" width="60%"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+
+<sup>Figura 7: Persona 03.</sup><br>
     <img src="assets/personaTres.jpg" width="60%"><br>
-    <sub>Fonte: Autoria própria (2026).</sub>
+<sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
 ## 2.3. User Stories (sprints 1 a 5)
@@ -691,7 +704,7 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
 <div align = "center">
-<sup>Figura 3: Diagrama Casos de Uso.</sup><br>
+<sup>Figura 8: Diagrama Casos de Uso.</sup><br>
 <img src="./assets/diagramaUC.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -952,7 +965,66 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-_Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture)._
+<div align = "justify">
+Um diagrama de Modelo Entidade-Relacionamento (MER) é uma representação visual da estrutura lógica de um banco de dados que descreve como os dados de um sistema estão organizados e se relacionam entre si. Ele é composto por três elementos fundamentais: Entidades, que representam os objetos ou conceitos do mundo real sobre os quais se deseja armazenar informações, como usuários, produtos ou pedidos; Atributos, que são as características ou propriedades que descrevem cada entidade, como nome, data de nascimento ou preço; e Relacionamentos, que expressam as associações existentes entre as entidades, podendo ser do tipo um-para-um, um-para-muitos ou muitos-para-muitos. Esse tipo de diagrama é amplamente utilizado na fase de modelagem de dados de um projeto, pois permite visualizar de forma clara e estruturada como as informações se conectam, facilitando o planejamento do banco de dados, a comunicação entre a equipe de desenvolvimento e a posterior implementação das tabelas e relações em um sistema gerenciador de banco de dados. 
+
+A partir destes conceitos e utilizando como base o TAPI e outros materiais disponibilizados pelo parceiro, foram mapeadas as entidades que serão a base para o desenvolvimento de novas funcionalidades do projeto, além de seus atributos, importantes para o funcionamento adequado das funcionalidades. Essas entidades e atributos estão explicitados na seguinte imagem:
+</div> 
+
+<div align = "center">
+<sup>Figura 9: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
+<img src="./assets/mer.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div> 
+
+<div align = "justify">
+Dentro do modelo conceitual, estão explicitadas as relações entre as entidades, sendo estas:
+
+##### `Membro da Equipe`
+
+- Publica zero ou várias `oportunidades` (0, n), onde cada uma pode ser enviada por apenas um membro da equipe (1, 1);
+- Registra zero ou várias `agendas` (0, n), onde cada uma pode ser registrada por apenas um membro da equipe (1, 1);
+- Envia zero ou várias `notificações` (0, n), onde cada uma pode ser enviada por apenas um remetente, este que pode ser membro da equipe ou psicólogo (1, 1).
+
+
+##### `Aluno`
+
+- Acessa zero ou várias `agendas` (0, n), onde cada agenda é acessada por um aluno (1, 1);
+- Possui uma ou várias `labels` atribuídas (1, n), onde cada uma pode ser atribuída a zero ou vários alunos (0, n);
+- Recebe zero ou várias `notificações` (0, n), que podem ser recebidas por um ou vários alunos (1, n);
+- Possui zero ou várias `participações` (0, n), onde cada uma pertence a apenas um aluno (1, 1) e está vinculada a zero ou várias `atividades` (0, n);
+- Possui zero ou vários `registros` psicológicos (0, n), onde cada um pertence a apenas um aluno (1, 1).
+
+
+##### `Psicólogo`
+
+- Registra zero ou vários `registros` psicológicos (0, n), os quais podem ser registrados por apenas um psicólogo (1, 1);
+- Gerencia zero ou várias `labels` (0, n), onde cada uma pode ser gerenciada por apenas um psicólogo (1, 1);
+- Envia zero ou várias `notificações` (0, n), onde cada uma pode ser enviada por apenas um remetente, este que pode ser membro da equipe ou psicólogo (1, 1).
+
+Além disso, faz-se necessário explicar a importância de decisões específicas utilizadas na modelagem conceitual do modelo entidade-relacionamento. Assim, como pontos importantes têm-se as aplicações das relações com as entidades e cardinalidades e a utilização do símbolo de especialização/generalização.
+
+Na construção do modelo entidade-relacionamento, é utilizada a sinalização de retângulos para exemplificar as entidades utilizadas, futuramente representadas como tabelas no banco de dados; também são utilizadas elipses para explicitar os atributos destas entidades e, além disso, os losangos para visualização das relações existentes entre as entidades do modelo. Já as cardinalidades são utilizadas para identificar visualmente como funcionam as quantificações entre relações, como, por exemplo, quantas entidades participam de uma ação.
+
+Além disso, um novo conceito utilizado é a sinalização de um triângulo para explicitar que há uma superclasse (`remetente`), que se divide em duas subclasses (`membroEquipe` e `psicologo`), onde são utilizadas as letras (t, d) no triângulo que significam (total, disjoint), mostrando que todo elemento da superclasse pertence a pelo menos uma subclasse e que um elemento só pode pertencer a uma única subclasse por vez.
+
+Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras de Negócio anteriormente desenvolvidas, sendo definidas as seguintes relações: 
+</div>
+
+| Entidade principal | Relacionamento com | RNs associadas | Justificativa |
+|-------------|------------|---------------|-------------|
+| Membro da Equipe | Publicação de oportunidades | RN008, RN011 | Pois a interface incentiva o registro de vínculos de trabalho (formal/informal) e a publicação de oportunidades é uma ação exclusiva da equipe interna |
+| Membro da Equipe | Registro na agenda | RN011 | Pois toda a equipe interna tem permissão para registrar e editar dados no sistema, eliminando a dependência de uma única pessoa |
+| Membro da Equipe | Envio de notificações | RN011, RN016 | Pois a equipe interna tem autonomia no quesito de registros no sistema, além de ter que comunicar os alunos sobre atividades de mentores voluntários (não-usuários), já que estes não têm liberdade de alterações no sistema |
+| Aluno | Acesso de agenda | RN013 | Pois o aluno não tem permissão de alterar todos os dados do sistema, apenas dados essenciais, outros dados podem apenas ser acessados para verificação |
+| Aluno | Atribuição de labels | RN015 | Pois as labels podem ser criadas apenas por psicólogos/membros da equipe, assim, o aluno só se relaciona com elas no momento da atribuição |
+| Aluno | Recebimento de notificações | RN013, RN014 | Pois o aluno não tem permissão de alterar todos os dados do sistema, apenas dados essenciais, outros dados podem apenas ser acessados para verificação. Além disso, as notificações são um meio de enviar formulários para que os alunos atualizem seus dados |
+| Aluno | Participações dos alunos | RN004, RN009, RN007 | Pois o histórico de programas anteriores deve ser preservado para verificações futuras, algo permitido através do registro de participações. Além de este registro servir como base para a criação de alguns indicadores em dashboards e cálculos de variáveis |
+| Aluno | Registros psicológicos | RN012, RN010 | Pois registros voltados à saúde mental só podem ser criados e editados por psicólogos, sua ligação com o aluno se relaciona com a existência desta entidade no registro estudantil visto pela equipe especificada. Além disso, estes dados podem ser preservados para análises futuras dos profissionais |
+| Psicólogo | Registros psicológicos | RN012, RN010 | Pois os registros relacionados à saúde mental são criados e editados pela equipe de psicólogos, além da necessidade de preservação dos dados para outras análises |
+| Psicólogo | Gerenciamento de labels | RN015 | Pois a criação de labels é de autonomia exclusiva da equipe interna de psicólogos  |
+| Psicólogo | Envio de notificações | RN011 | Pois a equipe interna tem autonomia no quesito de registros no sistema, assim, precisa utilizar notificações para a coleta de informações |
+
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
