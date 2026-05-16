@@ -32,7 +32,7 @@
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
-<div align = "justify">
+<div align="justify">
 A Pulse Mais é uma organização sem fins lucrativos voltada à capacitação profissional de jovens que desejam seguir na área de tecnologia. Ao analisar mais profundamente o contexto da organização é identificada uma problemática central em relação à organização operacional: a descentralização dos dados institucionais, divididos em múltiplos arquivos em diferentes formatos, de planilhas à relatórios, e sistemas externos. Essa fragmentação de informações compromete diretamente a eficiência na tomada de decisões da equipe, dificulta o acompanhamento individual dos jovens atingidos e reduz a oportunidade da instituição de explicitar o impacto de forma estruturada em apresentações ao público e parceiros.
 
 A partir desta problemática, o grupo propõe o desenvolvimento de uma plataforma web voltada à organização e gestão dos dados institucionais e dos alunos que possibilita a centralização das informações em um ambiente e o monitoramento dos indicadores empresariais, contribuindo para maior eficiência nos processos desenvolvidos pela equipe.
@@ -45,7 +45,7 @@ A partir desta problemática, o grupo propõe o desenvolvimento de uma plataform
 
 ### 2.1.1. Modelo de 5 Forças de Porter (sprint 1)
 
-<div align = "justify">
+<div align="justify">
 
 **Ameaça de novos entrantes - Ameaça Baixa**
 
@@ -71,13 +71,13 @@ No segmento de aprendizado voltado à tecnologia, há uma maior disputa por visi
 
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-<div align = "center">
+<div align="center">
 <sup>Figura 1: Análise SWOT.</sup><br>
 <img src="./assets/analiseSwot.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
-<div align = "justify">
+<div align="justify">
 
 Cada um dos fatores associados à instituição revelam diferentes efeitos na sua participação de mercado. As pontos fortes explicitam a fidelidade dos clientes e fornecedores e o planejamento coerente com os impactos sociais da instituição; já os pontos fracos, a falta de eficiência e a instabilidade na continuidade de processos, além da vulnerabilidade por decisões externas. Há também as oportunidades mapeadas como um cenário de crescimento no mercado e a diferenciação de outros produtos; além das ameaças mostra a necessidade de estratégias para manter a relevância competitiva e consolidar alianças estratégicas.
 
@@ -87,82 +87,138 @@ Cada um dos fatores associados à instituição revelam diferentes efeitos na su
 
 #### 1. Problema a ser resolvido
 
+<div align="justify">
+
 Verificou-se que a Pulse Mais opera com dados de alunos fragmentados em planilhas e registros dispersos, dificultando a visualização da jornada do jovem. Esse cenário compromete o acompanhamento histórico, a análise de indicadores, a personalização do suporte e a agilidade da tomada de decisão institucional.
+
+</div>
 
 #### 2. Dados disponíveis
 
+<div align="justify">
+
 Foram identificados como insumos o uma planilha de jovens do framework, relatórios CSV da plataforma atual e dados institucionais sobre programas, trilhas, mentoria, empregabilidade, ensino superior e rede de talentos. Também foram considerados critérios de público, jornada do jovem e indicadores estratégicos da organização.
+
+</div>
 
 #### 3. Solução proposta
 
+<div align="justify">
+
 Foi proposta uma aplicação web com WebAPI e banco de dados estruturado para centralizar o histórico acadêmico, institucional e profissional de alunos e ex-alunos. A solução atuará como Single Source of Truth da Pulse Mais, oferecendo visão consolidada para gestores e portal de consulta, atualização e oportunidades para alunos.
+
+</div>
 
 #### 4. Forma de utilização da solução
 
-Gestores utilizarão dashboards, filtros e páginas individuais para consultar históricos, acompanhar indicadores e registrar feedbacks. Alunos e ex-alunos acessarão um portal para visualizar dados, atualizar perfis e consultar oportunidades. A solução será desenvolvida com HTML, CSS e JavaScript no front-end, Node.js no back-end e SQLite no banco de dados.
+<div align="justify">
+
+Gestores utilizarão dashboards, filtros e páginas individuais para consultar históricos, acompanhar indicadores e registrar feedbacks. Alunos e ex-alunos acessarão um portal para visualizar dados, atualizar perfis e consultar oportunidades. A solução será desenvolvida com HTML, CSS e JavaScript no front-end, Node.js no back-end e PostgreSQL no banco de dados.
+
+</div>
 
 #### 5. Benefícios esperados
 
+<div align="justify">
+
 Espera-se reduzir a fragmentação de dados e centralizar a jornada dos jovens em uma única plataforma. A solução deverá ampliar a agilidade operacional, melhorar o acompanhamento estratégico, apoiar decisões baseadas em dados e fortalecer a autonomia dos alunos no acesso ao histórico e oportunidades.
+
+</div>
 
 #### 6. Critério de sucesso e como será avaliado
 
+<div align="justify">
+
 O sucesso será avaliado pela centralização dos dados, clareza da visualização histórica, utilidade dos dashboards e efetividade dos fluxos para gestores e alunos. Também serão considerados a aderência ao fluxo operacional da Pulse Mais, a qualidade das funcionalidades entregues e a validação contínua com o parceiro ao longo das sprints.
+
+</div>
 
 ### 2.1.4. Canvas de Proposta de Valor
 
-<div align = 'center'>
-<sup>Figura 2: Canvas de Proposta de Valor da Pulse Manager</sup></p>
-
+<div align="center">
+<sup>Figura 2: Canvas de Proposta de Valor da Pulse Manager.</sup><br>
 <img src="./assets/canvasvalor.png"><br>
-
-<p align="center"><em>Fonte: Elaborado pela equipe (2026), com base no Value Proposition Canvas de Strategyzer.</em></p>
+<sub>Fonte: Elaborado pela equipe (2026), com base no Value Proposition Canvas de Strategyzer.</sub><br>
 </div>
 
 
+<div align="justify">
+
 O Canvas de Proposta de valor da Pulse Mais foi estruturado com base em dois segmentos prioritários da solução: **gestores da instituição** e **alunos/ex-alunos da rede**. Essa definição foi adotada porque a proposta de valor da plataforma depende, ao mesmo tempo, da capacidade institucional de acompanhar a jornada completa dos jovens e da capacidade dos próprios alunos de acessarem seu histórico, manterem seus perfis atualizados e se conectarem a oportunidades. Dessa forma, o canvas foi organizado para evidenciar, de um lado, as tarefas, dores e ganhos desses públicos e, de outro, os elementos da solução que aliviam essas dores e potencializam a geração de valor.
+
+</div>
 
 ### Perfil do cliente - Gestores da Pulse Mais
 
 #### Tarefas do cliente
 
+<div align="justify">
+
 Os gestores precisam acompanhar a jornada completa dos jovens desde a entrada na organização até os desdobramentos em formação, mentoria, empregabilidade, ensino superior e rede de talentos. Também precisam localizar rapidamente históricos individuais, monitorar indicadores institucionais, identificar riscos de evasão, segmentar perfis para oportunidades específicas, registrar feedbacks de performance e tomar decisões baseadas em dados consolidados. Essas necessidades são coerentes com o escopo macro, o dashboard, a página do aluno, os filtros avançados e o módulo de registro de jornada previstos no TAPI.
+
+</div>
 
 #### Dores
 
+<div align="justify">
+
 Atualmente, a gestão enfrenta dispersão de informações em planilhas isoladas, dificuldade de reconstrução da trajetória do aluno, baixa rastreabilidade histórica, dependência de memória individual da equipe e esforço manual para consolidação de indicadores. Há também limitação para personalizar o atendimento com base em dados completos e para agir preventivamente diante de sinais de evasão, queda de engajamento ou necessidade de suporte direcionado.
+
+</div>
 
 #### Ganhos
 
+<div align="justify">
+
 Os gestores desejam uma visão única e confiável de cada aluno, dashboards claros, rapidez de consulta, histórico completo em uma só interface, filtros inteligentes, apoio à tomada de decisão e maior precisão na estratégia de acompanhamento e empregabilidade. Desejam ainda reduzir o retrabalho operacional e transformar dados dispersos em inteligência acionável.
+
+</div>
 
 ### Mapa de valor - Gestores da Pulse Mais
 
 #### Produtos & Serviços
 
+<div align="justify">
+
 A solução entrega base centralizada de dados, dashboard institucional, página individual do aluno, módulo de registro da jornada, histórico consolidado, filtros avançados, campos estruturados para indicadores de impacto e funcionalidade para inserção de feedbacks e anotações de performance. O modelo institucional também prevê prontuário digital e visão segmentada por perfil de acesso.
+
+</div>
 
 #### Aliviadores
 
+<div align="justify">
+
 A plataforma reduz a fragmentação de informações ao concentrar dados pessoais, acadêmicos, institucionais e profissionais em uma única base. Diminui a dependência de conhecimento informal da equipe ao registrar a trajetória completa do jovem. Reduz o tempo gasto na busca por históricos e melhora o acompanhamento preventivo por meio de visualização integrada e atualização contínua dos dados. Também reduz a dificuldade de monitorar impacto ao substituir consolidações manuais por consultas estruturadas.
+
+</div>
 
 #### Criadores de Ganho
 
+<div align="justify">
+
 A solução cria valor ao transformar dados operacionais em visão estratégica. Os dashboards e históricos completos permitem atendimento mais consultivo, identificação de padrões, acompanhamento longitudinal e maior capacidade de personalização do suporte. Os registros de performance e os insights individualizados ampliam a qualidade da gestão e tornam a tomada de decisão mais rápida, precisa e fundamentada.
+
+</div>
 
 ## 2.1.5. Matriz de Riscos do Projeto
 
+<div align="justify">
+
 A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, classificar e tratar os principais eventos capazes de comprometer a entrega e o valor da aplicação web proposta para a Pulse Mais. Considerando que a solução deverá centralizar dados atualmente dispersos, sustentar o acompanhamento da jornada dos jovens, viabilizar consultas históricas, apoiar dashboards gerenciais e permitir segmentações estratégicas, tornou-se necessário antecipar riscos de natureza técnica, operacional, analítica e institucional.
 
-<div align="center">
-<sup>Figura 4: Matriz de Riscos da Pulse Manager</sup></p>
-
-<img src="./assets/imagem.png"><br>
-
-<em>Fonte: Elaborado pela equipe (2026).</em></p>
 </div>
 
+<div align="center">
+<sup>Figura 4: Matriz de Riscos da Pulse Manager.</sup><br>
+<img src="./assets/imagem.png"><br>
+<sub>Fonte: Elaborado pela equipe (2026).</sub><br>
+</div>
+
+<div align="justify">
+
 A análise foi organizada de modo a preservar coerência com o nível de detalhamento adotado nas demais seções do WAD, contemplando não apenas a identificação dos riscos, mas também sua classificação, criticidade e respectivas estratégias de prevenção, mitigação e contingência.
+
+</div>
 
 ### Critérios adotados
 
@@ -211,182 +267,182 @@ A análise foi organizada de modo a preservar coerência com o nível de detalha
 
 #### R1 - Inconsistência na consolidação dos dados legados
 
-**Categoria:** Dados  
-**Descrição:** Os dados atualmente encontram-se distribuídos em planilhas distintas e registros descentralizados, o que pode provocar duplicidade, lacunas e divergências de preenchimento durante a consolidação da base.  
-**Probabilidade:** Alta  
-**Impacto:** Muito alto  
-**Prevenção / Mitigação:** Definir modelo canônico, padronizar campos e validar amostras antes da carga principal.  
+**Categoria:** Dados
+**Descrição:** Os dados atualmente encontram-se distribuídos em planilhas distintas e registros descentralizados, o que pode provocar duplicidade, lacunas e divergências de preenchimento durante a consolidação da base.
+**Probabilidade:** Alta
+**Impacto:** Muito alto
+**Prevenção / Mitigação:** Definir modelo canônico, padronizar campos e validar amostras antes da carga principal.
 **Plano de contingência / Resposta:** Priorizar cargas parciais, registrar inconsistências e executar saneamento manual dos dados críticos.
 
 #### R2 - Modelagem insuficiente para representar toda a jornada do jovem
 
-**Categoria:** Negócio / Dados  
-**Descrição:** Há risco de que a estrutura de dados não represente adequadamente dimensões como formação, mentoria, empregabilidade, ensino superior e histórico longitudinal.  
-**Probabilidade:** Moderada  
-**Impacto:** Muito alto  
-**Prevenção / Mitigação:** Revisar entidades e relações com base no TAPI e validar a modelagem ao longo das sprints.  
+**Categoria:** Negócio / Dados
+**Descrição:** Há risco de que a estrutura de dados não represente adequadamente dimensões como formação, mentoria, empregabilidade, ensino superior e histórico longitudinal.
+**Probabilidade:** Moderada
+**Impacto:** Muito alto
+**Prevenção / Mitigação:** Revisar entidades e relações com base no TAPI e validar a modelagem ao longo das sprints.
 **Plano de contingência / Resposta:** Repriorizar a modelagem para os fluxos centrais e manter campos complementares para evolução futura.
 
 #### R3 - Falta de aderência da solução às necessidades reais da Pulse Mais
 
-**Categoria:** Negócio  
-**Descrição:** A solução pode apresentar consistência técnica sem, necessariamente, refletir o fluxo operacional e decisório da equipe.  
-**Probabilidade:** Moderada  
-**Impacto:** Muito alto  
-**Prevenção / Mitigação:** Validar backlog, protótipos e fluxos em ciclos frequentes com os pontos focais da instituição.  
+**Categoria:** Negócio
+**Descrição:** A solução pode apresentar consistência técnica sem, necessariamente, refletir o fluxo operacional e decisório da equipe.
+**Probabilidade:** Moderada
+**Impacto:** Muito alto
+**Prevenção / Mitigação:** Validar backlog, protótipos e fluxos em ciclos frequentes com os pontos focais da instituição.
 **Plano de contingência / Resposta:** Readequar funcionalidades críticas e registrar itens não absorvidos para iterações posteriores.
 
 #### R4 - Sobrecarga de escopo para o tempo disponível do módulo
 
-**Categoria:** Gestão  
-**Descrição:** O volume de funcionalidades previstas pode ultrapassar a capacidade de entrega no prazo acadêmico.  
-**Probabilidade:** Alta  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Definir o MVP logo nas primeiras sprints e limitar o escopo ao núcleo funcional.  
+**Categoria:** Gestão
+**Descrição:** O volume de funcionalidades previstas pode ultrapassar a capacidade de entrega no prazo acadêmico.
+**Probabilidade:** Alta
+**Impacto:** Alto
+**Prevenção / Mitigação:** Definir o MVP logo nas primeiras sprints e limitar o escopo ao núcleo funcional.
 **Plano de contingência / Resposta:** Postergar itens secundários e concentrar esforço nos fluxos prioritários.
 
 #### R5 - Dashboard com indicadores pouco úteis para a tomada de decisão
 
-**Categoria:** Produto  
-**Descrição:** Existe o risco de construir dashboards tecnicamente corretos, porém pouco úteis para responder às necessidades concretas da gestão.  
-**Probabilidade:** Moderada  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Definir previamente quais perguntas o dashboard precisa responder e validar os indicadores com o parceiro.  
+**Categoria:** Produto
+**Descrição:** Existe o risco de construir dashboards tecnicamente corretos, porém pouco úteis para responder às necessidades concretas da gestão.
+**Probabilidade:** Moderada
+**Impacto:** Alto
+**Prevenção / Mitigação:** Definir previamente quais perguntas o dashboard precisa responder e validar os indicadores com o parceiro.
 **Plano de contingência / Resposta:** Reestruturar os painéis com foco em métricas acionáveis.
 
 #### R6 - Dificuldade de visualização do histórico completo do aluno
 
-**Categoria:** Usabilidade / Produto  
-**Descrição:** A página individual do aluno pode se tornar extensa ou pouco legível, dificultando a leitura da trajetória.  
-**Probabilidade:** Moderada  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Organizar informações por blocos de jornada e aplicar hierarquia visual clara.  
+**Categoria:** Usabilidade / Produto
+**Descrição:** A página individual do aluno pode se tornar extensa ou pouco legível, dificultando a leitura da trajetória.
+**Probabilidade:** Moderada
+**Impacto:** Alto
+**Prevenção / Mitigação:** Organizar informações por blocos de jornada e aplicar hierarquia visual clara.
 **Plano de contingência / Resposta:** Simplificar a visualização e priorizar resumos por categoria.
 
 #### R7 - Filtros e segmentações não atenderem às buscas operacionais
 
-**Categoria:** Produto / Negócio  
-**Descrição:** Os filtros podem não refletir os critérios de busca efetivamente utilizados pela equipe.  
-**Probabilidade:** Moderada  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Mapear previamente os critérios de segmentação mais recorrentes.  
+**Categoria:** Produto / Negócio
+**Descrição:** Os filtros podem não refletir os critérios de busca efetivamente utilizados pela equipe.
+**Probabilidade:** Moderada
+**Impacto:** Alto
+**Prevenção / Mitigação:** Mapear previamente os critérios de segmentação mais recorrentes.
 **Plano de contingência / Resposta:** Repriorizar filtros críticos e postergar segmentações complementares.
 
 #### R8 - Baixa qualidade ou incompletude dos dados alimentados no sistema
 
-**Categoria:** Dados / Operação  
-**Descrição:** Mesmo centralizados, os dados podem permanecer incompletos, desatualizados ou inconsistentes, reduzindo o valor analítico da solução.  
-**Probabilidade:** Alta  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Definir campos obrigatórios, padrões mínimos de preenchimento e validações nas entradas.  
+**Categoria:** Dados / Operação
+**Descrição:** Mesmo centralizados, os dados podem permanecer incompletos, desatualizados ou inconsistentes, reduzindo o valor analítico da solução.
+**Probabilidade:** Alta
+**Impacto:** Alto
+**Prevenção / Mitigação:** Definir campos obrigatórios, padrões mínimos de preenchimento e validações nas entradas.
 **Plano de contingência / Resposta:** Sinalizar registros incompletos e priorizar saneamento dos campos críticos.
 
 #### R9 - Dependência excessiva de conhecimento informal da equipe
 
-**Categoria:** Operação  
-**Descrição:** Parte da lógica institucional pode permanecer implícita, dificultando sua tradução em regras de sistema.  
-**Probabilidade:** Alta  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Formalizar regras de negócio, critérios de preenchimento e fluxos operacionais.  
+**Categoria:** Operação
+**Descrição:** Parte da lógica institucional pode permanecer implícita, dificultando sua tradução em regras de sistema.
+**Probabilidade:** Alta
+**Impacto:** Alto
+**Prevenção / Mitigação:** Formalizar regras de negócio, critérios de preenchimento e fluxos operacionais.
 **Plano de contingência / Resposta:** Conduzir refinamentos com o parceiro para explicitar regras tácitas.
 
 #### R10 - Tratamento inadequado de dados sensíveis ou restritos
 
-**Categoria:** Segurança / Conformidade  
-**Descrição:** O sistema lida com informações pessoais e registros potencialmente sensíveis, exigindo cuidado quanto à exposição e uso.  
-**Probabilidade:** Moderada  
-**Impacto:** Muito alto  
-**Prevenção / Mitigação:** Restringir dados sensíveis, limitar visibilidade por perfil e evitar exposição em ambientes públicos.  
+**Categoria:** Segurança / Conformidade
+**Descrição:** O sistema lida com informações pessoais e registros potencialmente sensíveis, exigindo cuidado quanto à exposição e uso.
+**Probabilidade:** Moderada
+**Impacto:** Muito alto
+**Prevenção / Mitigação:** Restringir dados sensíveis, limitar visibilidade por perfil e evitar exposição em ambientes públicos.
 **Plano de contingência / Resposta:** Remover imediatamente dados indevidos e substituí-los por registros fictícios ou mascarados.
 
 #### R11 - Interpretação equivocada das restrições de autenticação e permissão
 
-**Categoria:** Arquitetura / Segurança  
-**Descrição:** A simplificação do controle de acesso pode gerar inconsistências entre perfis e permissões.  
-**Probabilidade:** Moderada  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Definir previamente regras mínimas de autenticação e acesso por perfil.  
+**Categoria:** Arquitetura / Segurança
+**Descrição:** A simplificação do controle de acesso pode gerar inconsistências entre perfis e permissões.
+**Probabilidade:** Moderada
+**Impacto:** Alto
+**Prevenção / Mitigação:** Definir previamente regras mínimas de autenticação e acesso por perfil.
 **Plano de contingência / Resposta:** Reduzir perfis ativos no MVP e restringir acessos ao mínimo necessário.
 
 #### R12 - Complexidade excessiva na migração inicial de planilhas
 
-**Categoria:** Dados / Técnica  
-**Descrição:** A importação inicial pode consumir mais esforço do que o previsto em razão da heterogeneidade dos arquivos.  
-**Probabilidade:** Alta  
-**Impacto:** Moderado  
-**Prevenção / Mitigação:** Trabalhar com recortes de importação e validação progressiva.  
+**Categoria:** Dados / Técnica
+**Descrição:** A importação inicial pode consumir mais esforço do que o previsto em razão da heterogeneidade dos arquivos.
+**Probabilidade:** Alta
+**Impacto:** Moderado
+**Prevenção / Mitigação:** Trabalhar com recortes de importação e validação progressiva.
 **Plano de contingência / Resposta:** Suspender automações complexas e priorizar cargas essenciais.
 
 #### R13 - Portal do aluno gerar pouco valor percebido
 
-**Categoria:** Produto  
-**Descrição:** O portal pode não demonstrar valor suficiente ao estudante se entregar pouca utilidade prática.  
-**Probabilidade:** Moderada  
-**Impacto:** Moderado  
-**Prevenção / Mitigação:** Priorizar histórico, perfil e oportunidades como núcleo do portal.  
+**Categoria:** Produto
+**Descrição:** O portal pode não demonstrar valor suficiente ao estudante se entregar pouca utilidade prática.
+**Probabilidade:** Moderada
+**Impacto:** Moderado
+**Prevenção / Mitigação:** Priorizar histórico, perfil e oportunidades como núcleo do portal.
 **Plano de contingência / Resposta:** Simplificar o fluxo e concentrar a entrega em funcionalidades de valor direto.
 
 #### R14 - Falhas de comunicação entre front-end, back-end e banco
 
-**Categoria:** Técnica  
-**Descrição:** Divergências entre interface, API e persistência podem comprometer cadastros, consultas e atualizações.  
-**Probabilidade:** Alta  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Definir contratos de dados e realizar testes integrados continuamente.  
+**Categoria:** Técnica
+**Descrição:** Divergências entre interface, API e persistência podem comprometer cadastros, consultas e atualizações.
+**Probabilidade:** Alta
+**Impacto:** Alto
+**Prevenção / Mitigação:** Definir contratos de dados e realizar testes integrados continuamente.
 **Plano de contingência / Resposta:** Corrigir endpoints críticos e estabilizar primeiro o fluxo principal.
 
 #### R15 - Desempenho insuficiente em consultas históricas e filtros
 
-**Categoria:** Técnica / Produto  
-**Descrição:** Consultas extensas podem comprometer a fluidez de uso, especialmente em dashboards e históricos.  
-**Probabilidade:** Moderada  
-**Impacto:** Moderado  
-**Prevenção / Mitigação:** Otimizar consultas, modelagem e carregamento de dados.  
+**Categoria:** Técnica / Produto
+**Descrição:** Consultas extensas podem comprometer a fluidez de uso, especialmente em dashboards e históricos.
+**Probabilidade:** Moderada
+**Impacto:** Moderado
+**Prevenção / Mitigação:** Otimizar consultas, modelagem e carregamento de dados.
 **Plano de contingência / Resposta:** Paginar resultados e limitar consultas amplas no MVP.
 
 #### R16 - Interface pouco intuitiva para a equipe gestora
 
-**Categoria:** Usabilidade  
-**Descrição:** Uma interface pouco clara pode reduzir a adoção e aumentar o retrabalho operacional.  
-**Probabilidade:** Moderada  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Validar fluxos com usuários internos e aplicar princípios de usabilidade.  
+**Categoria:** Usabilidade
+**Descrição:** Uma interface pouco clara pode reduzir a adoção e aumentar o retrabalho operacional.
+**Probabilidade:** Moderada
+**Impacto:** Alto
+**Prevenção / Mitigação:** Validar fluxos com usuários internos e aplicar princípios de usabilidade.
 **Plano de contingência / Resposta:** Redesenhar as telas críticas com foco em clareza funcional.
 
 #### R17 - Atualização futura dificultada pela falta de flexibilidade estrutural
 
-**Categoria:** Arquitetura  
-**Descrição:** Uma estrutura rígida pode dificultar futuras expansões e ajustes da plataforma.  
-**Probabilidade:** Alta  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Modelar com foco em extensibilidade e documentar a estrutura de dados.  
+**Categoria:** Arquitetura
+**Descrição:** Uma estrutura rígida pode dificultar futuras expansões e ajustes da plataforma.
+**Probabilidade:** Alta
+**Impacto:** Alto
+**Prevenção / Mitigação:** Modelar com foco em extensibilidade e documentar a estrutura de dados.
 **Plano de contingência / Resposta:** Registrar limitações e prever pontos de expansão para versões futuras.
 
 #### R18 - Subestimação da complexidade dos feedbacks e registros qualitativos
 
-**Categoria:** Negócio / Produto  
-**Descrição:** Os registros qualitativos podem demandar maior refinamento estrutural e semântico do que o inicialmente previsto.  
-**Probabilidade:** Moderada  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Definir tipos, categorias e objetivos dos registros antes da implementação.  
+**Categoria:** Negócio / Produto
+**Descrição:** Os registros qualitativos podem demandar maior refinamento estrutural e semântico do que o inicialmente previsto.
+**Probabilidade:** Moderada
+**Impacto:** Alto
+**Prevenção / Mitigação:** Definir tipos, categorias e objetivos dos registros antes da implementação.
 **Plano de contingência / Resposta:** Simplificar o modelo de registro no MVP e documentar expansão futura.
 
 #### R19 - Falta de rastreabilidade entre requisitos, dados e funcionalidades
 
-**Categoria:** Gestão / Engenharia  
-**Descrição:** A ausência de vínculo claro entre requisitos, entidades e entregas pode comprometer a consistência do projeto.  
-**Probabilidade:** Moderada  
-**Impacto:** Alto  
-**Prevenção / Mitigação:** Manter rastreabilidade entre problema, requisito, dado e funcionalidade.  
+**Categoria:** Gestão / Engenharia
+**Descrição:** A ausência de vínculo claro entre requisitos, entidades e entregas pode comprometer a consistência do projeto.
+**Probabilidade:** Moderada
+**Impacto:** Alto
+**Prevenção / Mitigação:** Manter rastreabilidade entre problema, requisito, dado e funcionalidade.
 **Plano de contingência / Resposta:** Revisar WAD e backlog antes de cada entrega.
 
 #### R20 - Adoção limitada da plataforma pela equipe no curto prazo
 
-**Categoria:** Operação / Mudança  
-**Descrição:** A transição de planilhas para uma plataforma estruturada exige adaptação operacional e mudança de hábito.  
-**Probabilidade:** Moderada  
-**Impacto:** Moderado  
-**Prevenção / Mitigação:** Construir fluxos simples e aderentes à rotina da equipe.  
+**Categoria:** Operação / Mudança
+**Descrição:** A transição de planilhas para uma plataforma estruturada exige adaptação operacional e mudança de hábito.
+**Probabilidade:** Moderada
+**Impacto:** Moderado
+**Prevenção / Mitigação:** Construir fluxos simples e aderentes à rotina da equipe.
 **Plano de contingência / Resposta:** Concentrar adoção inicial em fluxos críticos e expandir gradualmente.
 
 ### Classificação sintética por criticidade
@@ -422,7 +478,11 @@ A análise foi organizada de modo a preservar coerência com o nível de detalha
 
 ### Oportunidades associadas ao projeto
 
+<div align="justify">
+
 Além dos riscos, identificaram-se oportunidades relevantes que podem ampliar o valor da solução caso sejam exploradas de forma consistente.
+
+</div>
 
 | ID  | Oportunidade                                            | Probabilidade | Impacto    |
 | --- | ------------------------------------------------------- | ------------- | ---------- |
@@ -435,43 +495,51 @@ Além dos riscos, identificaram-se oportunidades relevantes que podem ampliar o 
 
 #### O1 - Consolidação da SSOT institucional
 
-**Descrição:** A plataforma pode se consolidar como principal fonte de verdade institucional para histórico, acompanhamento e decisão.  
+**Descrição:** A plataforma pode se consolidar como principal fonte de verdade institucional para histórico, acompanhamento e decisão.
 **Plano de aproveitamento:** Priorizar consistência da base, clareza estrutural e confiabilidade dos dados desde o MVP.
 
 #### O2 - Melhoria da tomada de decisão baseada em dados
 
-**Descrição:** A centralização dos registros pode qualificar decisões e reduzir dependência de interpretações intuitivas.  
+**Descrição:** A centralização dos registros pode qualificar decisões e reduzir dependência de interpretações intuitivas.
 **Plano de aproveitamento:** Estruturar dashboards orientados a perguntas concretas da gestão.
 
 #### O3 - Personalização do atendimento ao jovem
 
-**Descrição:** O histórico consolidado permite acompanhamento mais individualizado, consultivo e preventivo.  
+**Descrição:** O histórico consolidado permite acompanhamento mais individualizado, consultivo e preventivo.
 **Plano de aproveitamento:** Estruturar páginas individuais com leitura longitudinal e registros relevantes.
 
 #### O4 - Fortalecimento da empregabilidade e da rede de talentos
 
-**Descrição:** Filtros e segmentações podem qualificar o vínculo entre jovens e oportunidades.  
+**Descrição:** Filtros e segmentações podem qualificar o vínculo entre jovens e oportunidades.
 **Plano de aproveitamento:** Priorizar campos e filtros relacionados à empregabilidade e trajetória.
 
 #### O5 - Redução de carga operacional da equipe
 
-**Descrição:** A redução da dependência de planilhas pode liberar tempo para acompanhamento mais estratégico.  
+**Descrição:** A redução da dependência de planilhas pode liberar tempo para acompanhamento mais estratégico.
 **Plano de aproveitamento:** Priorizar usabilidade, busca rápida e acesso direto ao histórico.
 
 #### O6 - Base para evolução futura da plataforma
 
-**Descrição:** A solução pode servir como base para novos módulos e futuras expansões.  
+**Descrição:** A solução pode servir como base para novos módulos e futuras expansões.
 **Plano de aproveitamento:** Documentar arquitetura, limitações e pontos de expansão desde a primeira versão.
 
 ### Síntese analítica
+
+<div align="justify">
 
 A análise evidencia que os principais pontos de atenção do projeto concentram-se em quatro frentes: consolidação dos dados legados, aderência da modelagem à jornada real dos jovens, controle de escopo frente ao prazo acadêmico e tratamento adequado de informações sensíveis. Esses elementos são decisivos porque sustentam diretamente a utilidade, a confiabilidade e o valor institucional da solução.
 
 Diante disso, conclui-se que a condução mais adequada consiste em priorizar um MVP aderente ao TAPI, concentrado na centralização dos perfis, no registro da jornada, na visualização consolidada do histórico, no dashboard gerencial e no portal básico do aluno. A partir dessa base, a solução tende a reduzir retrabalho operacional, ampliar capacidade analítica e sustentar evoluções futuras com maior consistência.
 
+</div>
+
 ## 2.2. Personas (sprint 1)
 
+<div align="justify">
+
 Personas: A persona é definida como uma descrição realista e detalhada do usuário ideal, sendo elaborada com base nos objetivos estratégicos do produto e sustentada por dados reais sobre o comportamento, necessidades e motivações do público-alvo. Nesse caso usamos Proto-Personas (Quando não sustentamos com dados reais.).
+
+</div>
 
 
 <div align="center">
@@ -491,7 +559,11 @@ Personas: A persona é definida como uma descrição realista e detalhada do usu
 
 ## 2.3. User Stories (sprints 1 a 5)
 
+<div align="justify">
+
 User Stories: As User Stories são definidas como descrições de uma funcionalidade, sob a perspectiva do usuário final. Por meio desta técnica, o foco do desenvolvimento é direcionado às necessidades reais dos usuários, em vez das percepções internas da equipe.
+
+</div>
 
 | Identificação        | US01                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -499,7 +571,7 @@ User Stories: As User Stories são definidas como descrições de uma funcionali
 | User Story           | como uma gestora eu busco ter uma visão geral do perfil do aluno de forma prática para avaliá-lo da melhor maneira                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | Critério de aceite 1 | CR1: Dado que a gestora acessa o dashboard, quando ela clica no perfil do aluno, então é exibido os dados do histórico do aluno.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | Critério de aceite 2 | CR2: dado que a gestora acesse a plataforma, quando ela abrir a aba “alunos”, então devem ser exibidos resumos sobre todos os alunos atingidos.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| Critérios INVEST     | INDEPENDENTE: Pode ser desenvolvida sem depender de outras histórias , utilizando dados pré-existentes no banco. <br><br> NEGOCIÁVEL: O formato de exibição dos dados no dashboard pode ser ajustado com o parceiro Pulse Mais. <br><br> VALIOSA: Resolve a dor real da fragmentação de dados e da dificuldade em visualizar a jornada do jovem. <br><br> ESTIMÁVEL: A equipe técnica consegue estimar o esforço de criação de uma interface de consulta conectada ao SQLite. <br><br> PEQUENA: A implementação de uma tela de consulta básica cabe dentro de uma sprint de desenvolvimento. <br><br> TESTÁVEL: Tem como saber que está pronta verificando se os dados do banco aparecem corretamente ao clicar no perfil. |
+| Critérios INVEST     | INDEPENDENTE: Pode ser desenvolvida sem depender de outras histórias , utilizando dados pré-existentes no banco. <br><br> NEGOCIÁVEL: O formato de exibição dos dados no dashboard pode ser ajustado com o parceiro Pulse Mais. <br><br> VALIOSA: Resolve a dor real da fragmentação de dados e da dificuldade em visualizar a jornada do jovem. <br><br> ESTIMÁVEL: A equipe técnica consegue estimar o esforço de criação de uma interface de consulta conectada ao PostgreSQL. <br><br> PEQUENA: A implementação de uma tela de consulta básica cabe dentro de uma sprint de desenvolvimento. <br><br> TESTÁVEL: Tem como saber que está pronta verificando se os dados do banco aparecem corretamente ao clicar no perfil. |
 
 | Identificação        | US02                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -507,7 +579,7 @@ User Stories: As User Stories são definidas como descrições de uma funcionali
 | User Story           | como uma gestora eu busco uma plataforma que unifique os dados para não perder informação relevante.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | Critério de aceite 1 | CR1: dado que a gestora acesse a plataforma, quando ela abrir a aba de insights, então devem ser exibidos indicadores sobre a performance dos jovens                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | Critério de aceite 2 | CR2: dado que a gestora acesse a plataforma, quando ela acessar a aba “funcionários”, então devem ser exibidos dados quantitativos sobre os funcionários.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| Critérios INVEST     | INDEPENDENTE: A plataforma de unificação pode ser estruturada como o núcleo central do sistema sem depender de módulos externos de comunicação. <br><br> NEGOCIÁVEL: Os indicadores de performance e os dados quantitativos exibidos nas abas de "insights" e "funcionários" podem ser refinados conforme a necessidade estratégica da Denise. <br><br> VALIOSA: Resolve o problema da fragmentação de dados em múltiplas planilhas centralizando o prontuário em uma única interface e com a organização do time. <br><br> ESTIMÁVEL: O esforço para consolidar os dados acadêmicos e de jornada em um banco de dados SQLite é mensurável pela equipe de desenvolvimento. <br><br> PEQUENA: A criação das abas principais para exibição de indicadores e dados quantitativos está delimitada ao escopo do MVP, sendo coerente para uma sprint. <br><br> TESTÁVEL: É possível validar a conclusão da tarefa ao verificar se os indicadores de performance que são exibidos corretamente na aba de insights ao acessar a plataforma. |
+| Critérios INVEST     | INDEPENDENTE: A plataforma de unificação pode ser estruturada como o núcleo central do sistema sem depender de módulos externos de comunicação. <br><br> NEGOCIÁVEL: Os indicadores de performance e os dados quantitativos exibidos nas abas de "insights" e "funcionários" podem ser refinados conforme a necessidade estratégica da Denise. <br><br> VALIOSA: Resolve o problema da fragmentação de dados em múltiplas planilhas centralizando o prontuário em uma única interface e com a organização do time. <br><br> ESTIMÁVEL: O esforço para consolidar os dados acadêmicos e de jornada em um banco de dados PostgreSQL é mensurável pela equipe de desenvolvimento. <br><br> PEQUENA: A criação das abas principais para exibição de indicadores e dados quantitativos está delimitada ao escopo do MVP, sendo coerente para uma sprint. <br><br> TESTÁVEL: É possível validar a conclusão da tarefa ao verificar se os indicadores de performance que são exibidos corretamente na aba de insights ao acessar a plataforma. |
 
 | Identificação        | US03                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -573,15 +645,23 @@ User Stories: As User Stories são definidas como descrições de uma funcionali
 
 ## 3.1. Requisitos do Sistema (sprints 1 a 5)
 
+<div align="justify">
+
 Esta seção formaliza o que o sistema deve fazer, sob quais regras de negócio deve operar e com quais atributos de qualidade deve atender. O conteúdo aqui apresentado é um documento vivo: a cada sprint, do levantamento inicial à entrega final, os requisitos serão revisados, adicionados, refinados ou reclassificados conforme as conversas com o parceiro Pulse Mais avançam e o entendimento técnico da solução amadurece. Mudanças de prioridade, status e escopo são esperadas e documentadas nesta própria seção ao longo do projeto.
 
 A seção está dividida em três blocos complementares: os Requisitos Funcionais (RF), que descrevem o que o sistema deve fazer do ponto de vista do usuário; as Regras de Negócio (RN), que formalizam as políticas e restrições impostas pela Pulse Mais que moldam a lógica do software; e os Requisitos Não Funcionais (RNF), que definem os atributos de qualidade que o sistema deve apresentar, organizados pelos eixos da norma ISO/IEC 25010.
 
 Cada requisito recebe um identificador único e estável (RF001, RN001, RNF001…) que é preservado mesmo quando o requisito é alterado ou refinado. Essa numeração é a base da rastreabilidade entre o levantamento inicial, o backlog do produto, os artefatos de design (casos de uso, modelagem do banco de dados, telas), os commits do repositório e os casos de teste. Alterações relevantes são registradas pelo versionamento do próprio WAD, mantendo o histórico auditável ao longo das cinco sprints do projeto.
 
+</div>
+
 ### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
+<div align="justify">
+
 Os requisitos funcionais a seguir foram extraídos do Termo de Abertura do Projeto Inteli (TAPI) da Pulse Mais e refinados a partir das conversas iniciais com os pontos focais do parceiro. A priorização (Alta, Média, Baixa) reflete o entendimento de que o núcleo da solução é a gestão centralizada da jornada do aluno pela equipe interna da Pulse Mais, sendo que funcionalidades voltadas ao aluno final ou a integrações e automações periféricas aparecem como prioridade secundária.
+
+</div>
 
 | ID    | Descrição                                                                                                                                                                                             | Prioridade | Status    |
 | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
@@ -610,9 +690,13 @@ Os requisitos funcionais a seguir foram extraídos do Termo de Abertura do Proje
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
+<div align="justify">
+
 As regras de negócio formalizam as políticas, condições e restrições que a Pulse Mais impõe ao funcionamento do sistema e que orientam a lógica de implementação dos requisitos funcionais. Diferentemente dos RFs, que descrevem comportamentos do sistema, as RNs descrevem decisões da organização que esses comportamentos devem respeitar. Cada RN está associada a um ou mais RFs, garantindo a rastreabilidade entre política institucional e funcionalidade implementada.
 
 A primeira versão a seguir consolida as regras já levantadas com o parceiro durante o coffee break inicial e a leitura do TAPI. Itens marcados como _A definir_ dependem de aprofundamento em conversas futuras com a Pulse Mais e serão refinados nas próximas sprints.
+
+</div>
 
 | ID    | Descrição                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | RF Associado                      |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
@@ -637,35 +721,44 @@ A primeira versão a seguir consolida as regras já levantadas com o parceiro du
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
+<div align="justify">
+
 Os requisitos não funcionais descrevem características de qualidade que o sistema deve apresentar, complementando os requisitos funcionais ao definir não o que o sistema faz, mas como ele se comporta. Esta seção é estruturada conforme os oito eixos de qualidade definidos pela norma ISO/IEC 25010, modelo internacionalmente reconhecido para avaliação da qualidade de produtos de software.
 
 A tabela abaixo apresenta a primeira versão dos RNFs do projeto (sprint 1), com critérios e métricas iniciais que serão refinados ao longo das próximas sprints. O contexto considerado é o de um MVP acadêmico desenvolvido em parceria com a Pulse Mais, executado em ambiente de homologação e não destinado a produção crítica antes de auditoria de segurança, conforme explicitado pelo TAPI. As métricas, portanto, refletem expectativas razoáveis para esse contexto e devem evoluir do conceitual (sprint 1) ao técnico mensurável (sprint 5).
 
 A coluna "Requisito" descreve o atributo de qualidade esperado em linguagem de negócio. A coluna "Métrica / Critério" define como esse atributo é medido ou verificado de forma objetiva. A coluna "Como atendido" indica as decisões técnicas e práticas que sustentam o atendimento ao requisito.
 
-| Eixo                       | Requisito                                                                                                                                                                                                                                                                       | Métrica / Critério                                                                                                                                                                                                                 | Como atendido                                                                                                                                                                                        |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| USAB: Usabilidade          | A interface da equipe e do portal do aluno deve ser responsiva, funcionando adequadamente em dispositivos mobile, tablet e desktop, dado que parte da equipe Pulse Mais utiliza desktop e a maior parte dos jovens (idade média 22 anos) acessa preferencialmente pelo celular. | Layout funcional e legível em viewports de 320px a 1920px de largura, sem rolagem horizontal indesejada, com elementos interativos com área de toque mínima de 44×44 px.                                                           | CSS responsivo com media queries; testes manuais nos breakpoints de mobile, tablet e desktop.                                                                                                        |
-| USAB: Usabilidade          | A interface deve adotar boas práticas de acessibilidade inspiradas na WCAG 2.1 nível AA, com foco em contraste de cores e suporte a daltonismo.                                                                                                                                 | Contraste mínimo de 4.5:1 para textos e 3:1 para elementos gráficos; informações de status nunca transmitidas exclusivamente por cor; pontuação mínima de 90 na categoria Accessibility do Google Lighthouse nas principais telas. | Paleta validada por ferramenta de contraste (ex.: WebAIM Contrast Checker); ícones e rótulos textuais associados a indicadores coloridos; auditoria via Lighthouse executada nas revisões de sprint. |
-| USAB: Usabilidade          | A interface deve apresentar curva de aprendizado curta para usuários da equipe Pulse Mais.                                                                                                                                                                                      | Um novo usuário da equipe deve conseguir realizar o cadastro completo de um aluno em até 5 minutos sem treinamento formal, apoiado apenas pelos rótulos e dicas da própria interface.                                              | Padrões visuais consistentes em todas as telas; rótulos claros em português; mensagens de erro orientadas à ação corretiva.                                                                          |
-| CONF: Confiabilidade       | O sistema deve utilizar identificador interno estável para cada aluno, independente de e-mail, CPF ou nome, resolvendo a dor atual de quebra de cruzamento de dados quando o aluno troca de e-mail.                                                                             | Todo aluno cadastrado recebe um código no formato `PM-AAAA-NNN`, único, imutável e gerado automaticamente; relacionamentos internos do sistema não dependem de e-mail ou nome.                                                     | Chave primária artificial na tabela de alunos; campo `codigo_pulse` único; constraints de integridade referencial no SQLite.                                                                         |
-| CONF: Confiabilidade       | O sistema deve preservar a integridade dos dados em caso de falha durante uma operação de escrita, evitando registros parciais ou inconsistentes.                                                                                                                               | Operações que envolvem múltiplas tabelas devem ser atômicas: ou completam por inteiro ou são desfeitas integralmente.                                                                                                              | Uso de transações do SQLite com `BEGIN`/`COMMIT`/`ROLLBACK` via biblioteca do Node.js; testes manuais simulando falha durante escrita.                                                               |
-| DES: Desempenho            | A listagem de alunos com critérios aplicados deve responder rapidamente, mesmo com o crescimento da base prevista (aprox. 600 alunos hoje, projeção de até 2000 ao longo dos próximos anos).                                                                                    | Tempo de resposta p95 < 2 segundos para listagem com até 2000 registros; p95 < 3 segundos para o dashboard agregado com os quatro indicadores principais.                                                                          | Índices nas colunas mais consultadas (ano, programa, categoria); queries SQL otimizadas; medição via testes de carga simples na sprint 5.                                                            |
-| DES: Desempenho            | A consulta ao histórico consolidado de um aluno deve carregar em tempo aceitável para uso diário pela equipe.                                                                                                                                                                   | Tempo de resposta p95 < 1.5 segundos para abertura do histórico completo de um aluno; pontuação mínima de 80 na categoria Performance do Google Lighthouse nas principais telas.                                                   | Consultas pré-otimizadas; agregações feitas no servidor; payload JSON enxuto entre back-end e front-end; auditoria via Lighthouse executada nas revisões de sprint.                                  |
-| SUP: Suportabilidade       | O código-fonte deve seguir um padrão arquitetural claro, com separação de responsabilidades entre apresentação, lógica de aplicação e persistência.                                                                                                                             | Cada camada do sistema deve ter responsabilidade única e bem delimitada; nenhuma lógica de acesso a dados deve estar misturada com a camada de apresentação.                                                                       | Adoção do padrão MVC com diretórios `views/`, `controllers/` e `models/`; revisões de pull request validando a separação; consultas SQL restritas à camada de Model.                                 |
-| SUP: Suportabilidade       | O sistema deve ser facilmente analisável, permitindo que um novo desenvolvedor ou docente entenda e contribua com o código.                                                                                                                                                     | Um novo colaborador deve conseguir realizar o setup local em até 10 minutos a partir da documentação; trechos de lógica não trivial devem estar comentados; nomenclatura consistente.                                              | README com passo a passo de instalação; revisão por pares; aderência ao guia de estilo do módulo.                                                                                                    |
-| SEG: Segurança             | O acesso às funcionalidades sensíveis deve ser controlado por níveis de permissão simples, sem autenticação formal (login/senha), conforme restrição do TAPI. As observações de saúde mental devem ser visíveis apenas para usuários com perfil de psicólogo.                   | Usuários sem o perfil adequado não devem conseguir acessar dados de saúde mental por nenhum caminho do sistema, incluindo tentativas de acesso direto.                                                                             | Middleware de verificação de perfil no Express; rotas protegidas por papel; testes de bloqueio em cada perfil.                                                                                       |
-| SEG: Segurança             | Dados pessoais e relatos qualitativos sensíveis dos jovens, em conformidade com a LGPD e com o "Conteúdo Restrito" definido no TAPI, não devem ser expostos publicamente nem incluídos em commits do repositório público.                                                       | Nenhum dado pessoal real presente no repositório; uso obrigatório de massa de dados fictícia para desenvolvimento e demonstração.                                                                                                  | Banco real e dumps incluídos no `.gitignore`; arquivo de seeds com dados fictícios; revisão manual de segredos antes de cada commit.                                                                 |
-| CAP: Capacidade            | O sistema deve suportar a carga prevista de uso pela equipe Pulse Mais e o volume estimado de alunos cadastrados.                                                                                                                                                               | Suporte a, no mínimo, 15 usuários simultâneos da equipe (margem confortável sobre os 7 colaboradores internos atuais); base de dados projetada para crescer até 2000 alunos cadastrados sem degradação perceptível.                | Banco SQLite com índices nas colunas críticas; arquitetura preparada para migração futura a outro SGBD caso o volume cresça além do previsto.                                                        |
-| CAP: Capacidade            | O portal do aluno deve suportar acessos eventuais distribuídos ao longo do dia, sem necessidade de alta concorrência.                                                                                                                                                           | Suporte a, no mínimo, 30 acessos simultâneos no portal do aluno sem degradação superior a 20% no tempo de resposta.                                                                                                                | Arquitetura stateless do back-end Node.js; consultas leves na rota pública do aluno.                                                                                                                 |
-| REST: Restrições de Design | Stack tecnológica obrigatória definida pelo Inteli e pelo TAPI: front-end em HTML, CSS e JavaScript; back-end em Node.js; banco de dados SQLite.                                                                                                                                | O front-end deve ser construído sem o uso de frameworks SPA (Single Page Application), como React, Vue, Angular ou similares; o back-end deve permanecer em Node.js e a persistência em SQLite.                                    | Verificação no `package.json` e na estrutura do projeto durante revisões de sprint; validação arquitetural com docente orientador.                                                                   |
-| REST: Restrições de Design | Não haverá sistema de autenticação tradicional (login/senha), nem integração em tempo real com APIs externas (ex.: WhatsApp, Google), conforme TAPI.                                                                                                                            | Ausência de fluxos de cadastro de senha, recuperação de senha, OAuth ou tokens externos; ausência de chamadas a Web APIs externas em runtime.                                                                                      | Definido na arquitetura inicial; validado em revisão arquitetural com docente orientador.                                                                                                            |
-| REST: Restrições de Design | A comunicação entre aluno e equipe (mentor, psicólogo) deve ocorrer fora da plataforma; o sistema apenas registra histórico de interações, não implementa chat em tempo real.                                                                                                   | Nenhum componente de chat ou comunicação em tempo real implementado; comunicação representada apenas por registros estruturados (mensagens, formulários, anotações).                                                               | Decisão arquitetural documentada; escopo do MVP alinhado com o parceiro.                                                                                                                             |
-| ORG: Organizacionais       | O projeto deve aderir ao processo Scrum adotado pelo Inteli, com entregas incrementais a cada sprint e este documento (WAD) atualizado ao final de cada uma delas.                                                                                                              | Cinco sprints planejadas; histórico de alterações do WAD versionado; backlog mantido em ferramenta visível ao parceiro e ao corpo docente.                                                                                         | Repositório no GitHub; reuniões de revisão a cada sprint com o parceiro; commits de atualização do WAD.                                                                                              |
-| ORG: Organizacionais       | O repositório do projeto deve ser público (conforme prática do Inteli), respeitando a lista de "Conteúdo Restrito" do TAPI: não devem ser commitados nomes, e-mails ou outros dados pessoais reais dos jovens, nem relatos qualitativos individuais de bem-estar.               | Nenhum dado pessoal real presente no repositório; apenas massa fictícia e exemplos genéricos em documentação.                                                                                                                      | Arquivo de exclusões do versionamento configurado; checklist de revisão antes de cada push relevante; uso de seeds com dados fictícios.                                                              |
-| ORG: Organizacionais       | A interface, mensagens, rótulos e documentação principal devem ser produzidas em português brasileiro, idioma da equipe Pulse Mais e dos alunos.                                                                                                                                | 100% das telas, mensagens de erro e textos visíveis ao usuário em pt-BR.                                                                                                                                                           | Validação visual nas revisões de sprint.                                                                                                                                                             |
+</div>
+
+
+| Eixo | Requisito | Métrica / Critério | Como atendido |
+|------|-----------|--------------------|----|
+| USAB: Usabilidade | A interface da equipe e do portal do aluno deve ser responsiva, funcionando adequadamente em dispositivos mobile, tablet e desktop, dado que parte da equipe Pulse Mais utiliza desktop e a maior parte dos jovens (idade média 22 anos) acessa preferencialmente pelo celular. | Layout funcional e legível em viewports de 320px a 1920px de largura, sem rolagem horizontal indesejada, com elementos interativos com área de toque mínima de 44×44 px. | CSS responsivo com media queries; testes manuais nos breakpoints de mobile, tablet e desktop. |
+| USAB: Usabilidade | A interface deve adotar boas práticas de acessibilidade inspiradas na WCAG 2.1 nível AA, com foco em contraste de cores e suporte a daltonismo. | Contraste mínimo de 4.5:1 para textos e 3:1 para elementos gráficos; informações de status nunca transmitidas exclusivamente por cor; pontuação mínima de 90 na categoria Accessibility do Google Lighthouse nas principais telas. | Paleta validada por ferramenta de contraste (ex.: WebAIM Contrast Checker); ícones e rótulos textuais associados a indicadores coloridos; auditoria via Lighthouse executada nas revisões de sprint. |
+| USAB: Usabilidade | A interface deve apresentar curva de aprendizado curta para usuários da equipe Pulse Mais. | Um novo usuário da equipe deve conseguir realizar o cadastro completo de um aluno em até 5 minutos sem treinamento formal, apoiado apenas pelos rótulos e dicas da própria interface. | Padrões visuais consistentes em todas as telas; rótulos claros em português; mensagens de erro orientadas à ação corretiva. |
+| CONF: Confiabilidade | O sistema deve utilizar identificador interno estável para cada aluno, independente de e-mail, CPF ou nome, resolvendo a dor atual de quebra de cruzamento de dados quando o aluno troca de e-mail. | Todo aluno cadastrado recebe um `id_aluno` único, imutável e gerado automaticamente; relacionamentos internos do sistema não dependem de e-mail ou nome. | Chave primária artificial `id_aluno` na tabela de alunos e constraints de integridade referencial no PostgreSQL. |
+| CONF: Confiabilidade | O sistema deve preservar a integridade dos dados em caso de falha durante uma operação de escrita, evitando registros parciais ou inconsistentes. | Operações que envolvem múltiplas tabelas devem ser atômicas: ou completam por inteiro ou são desfeitas integralmente. | Uso de transações do PostgreSQL com `BEGIN`/`COMMIT`/`ROLLBACK` via biblioteca do Node.js; testes manuais simulando falha durante escrita. |
+| DES: Desempenho | A listagem de alunos com critérios aplicados deve responder rapidamente, mesmo com o crescimento da base prevista (aprox. 600 alunos hoje, projeção de até 2000 ao longo dos próximos anos). | Tempo de resposta p95 < 2 segundos para listagem com até 2000 registros; p95 < 3 segundos para o dashboard agregado com os quatro indicadores principais. | Índices nas colunas mais consultadas (ano, programa, categoria); queries SQL otimizadas; medição via testes de carga simples na sprint 5. |
+| DES: Desempenho | A consulta ao histórico consolidado de um aluno deve carregar em tempo aceitável para uso diário pela equipe. | Tempo de resposta p95 < 1.5 segundos para abertura do histórico completo de um aluno; pontuação mínima de 80 na categoria Performance do Google Lighthouse nas principais telas. | Consultas pré-otimizadas; agregações feitas no servidor; payload JSON enxuto entre back-end e front-end; auditoria via Lighthouse executada nas revisões de sprint. |
+| SUP: Suportabilidade | O código-fonte deve seguir um padrão arquitetural claro, com separação de responsabilidades entre apresentação, lógica de aplicação e persistência. | Cada camada do sistema deve ter responsabilidade única e bem delimitada; nenhuma lógica de acesso a dados deve estar misturada com a camada de apresentação. | Adoção do padrão MVC com diretórios `views/`, `controllers/` e `models/`; revisões de pull request validando a separação; consultas SQL restritas à camada de Model. |
+| SUP: Suportabilidade | O sistema deve ser facilmente analisável, permitindo que um novo desenvolvedor ou docente entenda e contribua com o código. | Um novo colaborador deve conseguir realizar o setup local em até 10 minutos a partir da documentação; trechos de lógica não trivial devem estar comentados; nomenclatura consistente. | README com passo a passo de instalação; revisão por pares; aderência ao guia de estilo do módulo. |
+| SEG: Segurança | O acesso às funcionalidades sensíveis deve ser controlado por níveis de permissão simples, sem autenticação formal (login/senha), conforme restrição do TAPI. As observações de saúde mental devem ser visíveis apenas para usuários com perfil de psicólogo. | Usuários sem o perfil adequado não devem conseguir acessar dados de saúde mental por nenhum caminho do sistema, incluindo tentativas de acesso direto. | Middleware de verificação de perfil no Express; rotas protegidas por papel; testes de bloqueio em cada perfil. |
+| SEG: Segurança | Dados pessoais e relatos qualitativos sensíveis dos jovens, em conformidade com a LGPD e com o "Conteúdo Restrito" definido no TAPI, não devem ser expostos publicamente nem incluídos em commits do repositório público. | Nenhum dado pessoal real presente no repositório; uso obrigatório de massa de dados fictícia para desenvolvimento e demonstração. | Banco real e dumps incluídos no `.gitignore`; arquivo de seeds com dados fictícios; revisão manual de segredos antes de cada commit. |
+| CAP: Capacidade | O sistema deve suportar a carga prevista de uso pela equipe Pulse Mais e o volume estimado de alunos cadastrados. | Suporte a, no mínimo, 15 usuários simultâneos da equipe (margem confortável sobre os 7 colaboradores internos atuais); base de dados projetada para crescer até 2000 alunos cadastrados sem degradação perceptível. | Banco PostgreSQL com índices nas colunas críticas para facilitar operação e escalabilidade. |
+| CAP: Capacidade | O portal do aluno deve suportar acessos eventuais distribuídos ao longo do dia, sem necessidade de alta concorrência. | Suporte a, no mínimo, 30 acessos simultâneos no portal do aluno sem degradação superior a 20% no tempo de resposta. | Arquitetura stateless do back-end Node.js; consultas leves na rota pública do aluno. |
+| REST: Restrições de Design | Stack tecnológica obrigatória definida pelo Inteli e pelo TAPI: front-end em HTML, CSS e JavaScript; back-end em Node.js; banco de dados PostgreSQL. | O front-end deve ser construído sem o uso de frameworks SPA (Single Page Application), como React, Vue, Angular ou similares; o back-end deve permanecer em Node.js e a persistência em PostgreSQL. | Verificação no `package.json` e na estrutura do projeto durante revisões de sprint; validação arquitetural com docente orientador. |
+| REST: Restrições de Design | Não haverá sistema de autenticação tradicional (login/senha), nem integração em tempo real com APIs externas (ex.: WhatsApp, Google), conforme TAPI. | Ausência de fluxos de cadastro de senha, recuperação de senha, OAuth ou tokens externos; ausência de chamadas a Web APIs externas em runtime. | Definido na arquitetura inicial; validado em revisão arquitetural com docente orientador. |
+| REST: Restrições de Design | A comunicação entre aluno e equipe (mentor, psicólogo) deve ocorrer fora da plataforma; o sistema apenas registra histórico de interações, não implementa chat em tempo real. | Nenhum componente de chat ou comunicação em tempo real implementado; comunicação representada apenas por registros estruturados (mensagens, formulários, anotações). | Decisão arquitetural documentada; escopo do MVP alinhado com o parceiro. |
+| ORG: Organizacionais | O projeto deve aderir ao processo Scrum adotado pelo Inteli, com entregas incrementais a cada sprint e este documento (WAD) atualizado ao final de cada uma delas. | Cinco sprints planejadas; histórico de alterações do WAD versionado; backlog mantido em ferramenta visível ao parceiro e ao corpo docente. | Repositório no GitHub; reuniões de revisão a cada sprint com o parceiro; commits de atualização do WAD. |
+| ORG: Organizacionais | O repositório do projeto deve ser público (conforme prática do Inteli), respeitando a lista de "Conteúdo Restrito" do TAPI: não devem ser commitados nomes, e-mails ou outros dados pessoais reais dos jovens, nem relatos qualitativos individuais de bem-estar. | Nenhum dado pessoal real presente no repositório; apenas massa fictícia e exemplos genéricos em documentação. | Arquivo de exclusões do versionamento configurado; checklist de revisão antes de cada push relevante; uso de seeds com dados fictícios. |
+| ORG: Organizacionais | A interface, mensagens, rótulos e documentação principal devem ser produzidas em português brasileiro, idioma da equipe Pulse Mais e dos alunos. | 100% das telas, mensagens de erro e textos visíveis ao usuário em pt-BR. | Validação visual nas revisões de sprint. |
+
+<div align="justify">
 
 A próxima evolução desta seção (sprints 2 a 5) deve incluir o refinamento das métricas a partir de medições reais, a inclusão de novos RNFs descobertos durante o desenvolvimento e a transição dos status dos requisitos de "Planejado" para "Implementado" conforme a entrega avança.
+
+</div>
 
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
@@ -683,7 +776,7 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-<div align = "center">
+<div align="center">
 <sup>Figura 8: Diagrama Casos de Uso.</sup><br>
 <img src="./assets/diagramaUC.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -691,13 +784,19 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
+<div align="justify">
+
 O Diagrama de Classes de Domínio do sistema Pulse Mais estabelece a estrutura conceitual e lógica das entidades de negócio, definindo a organização dos dados e as regras de associação que regem o ecossistema da ONG. O modelo foi projetado para assegurar a integridade da informação e a rastreabilidade das interações entre os alunos e a equipe multidisciplinar, focando na unificação de dados provenientes de múltiplos contextos operacionais.
 
- <div align = "center">
+</div>
+
+<div align="center">
 <sup>Figura 3: Diagrama Classes de Domínio.</sup><br>
 <img src="./assets/Diagrama_Classes_Dominio.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
+
+<div align="justify">
 
 A entidade Aluno atua como o núcleo do domínio, consolidando atributos biográficos, acadêmicos e profissionais que servem como o ponto de unificação para os demais módulos. O acesso a esses dados é estruturado através de uma relação de Dependência com a classe Membro da Equipe, o que formaliza a capacidade de consulta e monitoramento administrativo sem estabelecer um vínculo de posse estrutural. Paralelamente, a classe Psicólogo detém a responsabilidade técnica sobre os registros sensíveis, conectando-se diretamente ao aluno para o acompanhamento clínico e evolutivo.
 
@@ -705,17 +804,25 @@ A gestão de eventos e a comunicação interna são operacionalizadas pelas clas
 
 No que tange aos registros de impacto e classificação, a classe Atividade armazena as instâncias de participação e engajamento em programas internos. A organização desses dados é refinada pela classe Label, que fornece uma taxonomia para categorização e filtragem eficiente. O tratamento de dados sensíveis é garantido pela Composição entre Aluno e Histórico Psicológico, uma relação que impõe integridade referencial forte; tecnicamente, o ciclo de vida do histórico é indissociável da entidade mestre, garantindo que o armazenamento e a exclusão de dados sensíveis ocorram em conformidade com as diretrizes de privacidade e governança de dados.
 
+</div>
+
 ### 3.2.4. Diagrama de Sequência UML
+
+<div align="justify">
 
 Esta seção apresenta cinco diagramas de sequência UML que descrevem como os principais fluxos do sistema Pulse Mais se desenrolam no tempo. Cada diagrama segue a mesma arquitetura em camadas (Tela, Controller, Service, Repository e Banco) e usa a notação UML padrão: linhas contínuas para mensagens síncronas, tracejadas para retornos, barras de ativação sobre as lifelines e fragmentos `alt` para fluxos alternativos. Os fluxos diagramados são UC-03 (Manter cadastro do aluno), UC-06 (Visualizar histórico consolidado do aluno), UC-08 (Registrar participação em atividade), UC-15 (Visualizar dashboard de impacto) e UC-22 (Manter registros de saúde mental), escolhidos por exercitarem todas as camadas e cobrirem os requisitos funcionais e regras de negócio mais críticos do MVP.
 
+</div>
+
 #### 3.2.4.1. UC-03 — Manter cadastro do aluno
 
-<div align = "center">
-<sup>Figura 4: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup>
-<img src="../docs/assets/diagrama-sequencia-1.png">
-<sub>Fonte: Autoria própria (2026). </sub>
-<br><br>
+<div align="center">
+<sup>Figura 4: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup><br>
+<img src="../docs/assets/diagrama-sequencia-1.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
+
+<div align="justify">
 
 O fluxo começa quando o membro da equipe preenche o formulário de cadastro na `:TelaCadastroAluno` e submete os dados ao `:AlunoController`, que os repassa ao `:AlunoService`. O service realiza a validação dos campos obrigatórios (RN002), e em caso de sucesso aciona o `:AlunoRepository` para persistir o registro no banco. Após o INSERT, o service deriva o código identificador no formato `PM-AAAA-NNN` a partir do `id_aluno` e do ano de ingresso — operação detalhada como caso de uso próprio (UC-04, incluído via `«include»`), cobrindo a RN001 — e dispara a mensagem de boas-vindas pelo `:EmailService`. A confirmação retorna pelas camadas até a tela, exibindo o código gerado ao usuário. Caso a validação inicial falhe, o fluxo segue pelo ramo alternativo do fragmento `alt`, devolvendo um erro 400 sem chegar ao banco. Esse diagrama atende ao RF001 e cobre as RN001 e RN002.
 
@@ -723,49 +830,57 @@ O fluxo começa quando o membro da equipe preenche o formulário de cadastro na 
 
 #### 3.2.4.2. UC-06 — Visualizar histórico consolidado do aluno
 
-<div align = "center">
-<sup>Figura 5: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup>
-<img src="../docs/assets/diagrama-sequencia-2.png">
-<sub>Fonte: Autoria própria (2026). </sub>
-<br><br>
+<div align="center">
+<sup>Figura 5: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
+<img src="../docs/assets/diagrama-sequencia-2.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
 
-A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoController` via `GET /alunos/{id}/historico`. O controller delega ao `:HistoricoService`, que coordena quatro consultas em sequência: dados gerais do aluno (`:AlunoRepository`), atividades em que ele participou (`:ParticipacaoRepository`, com `JOIN` entre `atividade` e `participacao`), notas obtidas (`:NotaRepository`, com `JOIN` via `idatividade`) e labels qualitativas (`:LabelRepository`). Após receber todas as respostas, o service consolida o histórico em uma única estrutura (auto-chamada `consolidarHistorico`) e devolve ao controller, que responde 200 com o objeto completo. A tela então renderiza o perfil consolidado. Vale notar que `HistoricoPsicologico` não aparece neste fluxo: o acesso a essa entidade é restrito ao perfil Psicólogo (RN012), e o fluxo correspondente está detalhado em 3.2.4.5. Esse diagrama atende ao RF004.
+<div align="justify">
+
+A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoController` via `GET /alunos/{id}/historico`. O controller delega ao `:HistoricoService`, que coordena três consultas em sequência: dados gerais do aluno (`:AlunoRepository`), atividades em que ele participou com suas respectivas notas (`:ParticipacaoRepository`, com `JOIN` entre `atividade` e `participacao` por `id_atividade`) e labels qualitativas (`:LabelRepository`). Após receber todas as respostas, o service consolida o histórico em uma única estrutura (auto-chamada `consolidarHistorico`) e devolve ao controller, que responde 200 com o objeto completo. A tela então renderiza o perfil consolidado. Vale notar que `HistoricoPsicologico` não aparece neste fluxo: o acesso a essa entidade é restrito ao perfil Psicólogo (RN012), e o fluxo correspondente está detalhado em 3.2.4.5. Esse diagrama atende ao RF004.
 
 </div>
 
 #### 3.2.4.3. UC-08 — Registrar participação em atividade
 
-<div align = "center">
-<sup>Figura 6: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup>
-<img src="../docs/assets/diagrama-sequencia-3.png">
-<sub>Fonte: Autoria própria (2026). </sub>
-<br><br>
+<div align="center">
+<sup>Figura 6: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup><br>
+<img src="../docs/assets/diagrama-sequencia-3.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
 
-O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e define o status da participação. A `:TelaParticipacao` envia `POST /participacoes` ao `:ParticipacaoController`, que delega ao `:ParticipacaoService`. O service executa duas validações em sequência: existência do aluno (`:AlunoRepository`) e existência da atividade (`:AtividadeRepository`). Quando ambas retornam verdadeiro, o ramo principal do fragmento `alt` é seguido: o `:ParticipacaoRepository` emite o `INSERT` na tabela `participacao`, registrando `idAluno`, `idatividade`, `data_part` e `status_part`, e a confirmação retorna pelas camadas até a tela. Quando qualquer das validações falha, o ramo alternativo devolve 404 sem chegar à escrita, preservando a integridade referencial. Diferente de um simples registro de frequência, este fluxo cria uma entrada completa de participação — com data e status próprios — que sustenta tanto a consulta de histórico (UC-06) quanto o cálculo de indicadores (UC-15). Esse diagrama atende ao RF005.
+<div align="justify">
+
+O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e define o status da participação. A `:TelaParticipacao` envia `POST /participacoes` ao `:ParticipacaoController`, que delega ao `:ParticipacaoService`. O service executa duas validações em sequência: existência do aluno (`:AlunoRepository`) e existência da atividade (`:AtividadeRepository`). Quando ambas retornam verdadeiro, o ramo principal do fragmento `alt` é seguido: o `:ParticipacaoRepository` emite o `INSERT` na tabela `participacao`, registrando `id_aluno`, `id_atividade`, `data_part`, `status_part` e, quando aplicável, `nota`, e a confirmação retorna pelas camadas até a tela. Quando qualquer das validações falha, o ramo alternativo devolve 404 sem chegar à escrita, preservando a integridade referencial. Diferente de um simples registro de frequência, este fluxo cria uma entrada completa de participação — com data, status e nota próprios — que sustenta tanto a consulta de histórico (UC-06) quanto o cálculo de indicadores (UC-15). Esse diagrama atende ao RF005.
 
 </div>
 
 #### 3.2.4.4. UC-15 — Visualizar dashboard de impacto
 
-<div align = "center">
-<sup>Figura 7: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup>
-<img src="../docs/assets/diagrama-sequencia-4.png">
-<sub>Fonte: Autoria própria (2026). </sub>
-<br><br>
+<div align="center">
+<sup>Figura 7: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
+<img src="../docs/assets/diagrama-sequencia-4.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
 
-A gestora abre o dashboard e a `:TelaDashboard` chama o `:DashboardController`, que delega ao `:IndicadorService` a tarefa de calcular todos os indicadores institucionais. O service emite cinco consultas a três repositórios distintos: três agregações (`GROUP BY`) ao `:AlunoRepository` para obter distribuições por status, ocupação e escolaridade; uma contagem ao `:ParticipacaoRepository` filtrando `status_part = 'concluido'`; e uma média ao `:NotaRepository` sobre o campo `valor`. Após receber todos os resultados, o service os reúne em uma estrutura única (auto-chamada `agruparIndicadores`) e devolve ao controller, que responde 200 com os KPIs. A tela renderiza o dashboard. A ocupação serve como proxy para empregabilidade e a escolaridade como proxy para acesso ao ensino superior, uma vez que o banco atual do MVP não modela explicitamente vínculos empregatícios ou matrículas em instituições de ensino superior — essas dimensões mais ricas estão previstas para iterações futuras. Esse diagrama atende aos RF014 a RF018.
+<div align="justify">
+
+A gestora abre o dashboard e a `:TelaDashboard` chama o `:DashboardController`, que delega ao `:IndicadorService` a tarefa de calcular todos os indicadores institucionais. O service emite cinco consultas a dois repositórios distintos: três agregações (`GROUP BY`) ao `:AlunoRepository` para obter distribuições por status, ocupação e escolaridade; uma contagem ao `:ParticipacaoRepository` filtrando `status_part = true`; e uma média ao `:ParticipacaoRepository` sobre o campo `nota`. Após receber todos os resultados, o service os reúne em uma estrutura única (auto-chamada `agruparIndicadores`) e devolve ao controller, que responde 200 com os KPIs. A tela renderiza o dashboard. A ocupação serve como proxy para empregabilidade e a escolaridade como proxy para acesso ao ensino superior, uma vez que o banco atual do MVP não modela explicitamente vínculos empregatícios ou matrículas em instituições de ensino superior — essas dimensões mais ricas estão previstas para iterações futuras. Esse diagrama atende aos RF014 a RF018.
 
 </div>
 
 #### 3.2.4.5. UC-22 — Manter registros de saúde mental
 
-<div align = "center">
-<sup>Figura 8: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup>
-<img src="../docs/assets/diagrama-sequencia-5.png">
-<sub>Fonte: Autoria própria (2026). </sub>
-<br><br>
+<div align="center">
+<sup>Figura 8: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
+<img src="../docs/assets/diagrama-sequencia-5.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
 
-O psicólogo seleciona um aluno, redige a observação clínica e atribui uma classificação. A `:TelaHistoricoPsicologico` envia `POST /historico-psicologico` ao `:HistoricoPsicologicoController`, que primeiro consulta o `:AutorizacaoService` passando o usuário atual; o serviço de autorização devolve um objeto contendo `ehPsicologo` (booleano) e `idPsicologo` (identificador do autor, quando aplicável). O fragmento `alt` seguinte separa dois caminhos: quando `ehPsicologo` é verdadeiro, o controller delega ao `:HistoricoPsicologicoService` passando os dados junto com o `idPsicologo`; o service repassa ao `:HistoricoPsicologicoRepository`, que executa o `INSERT` na tabela `HistoricoPsicologico` incluindo `idAluno` e `idPsicologo` como autor; e a confirmação volta até a tela. No ramo alternativo, quando o usuário não tem perfil de psicólogo, o controller lança `AcessoNegado` e responde 403, sem qualquer escrita. A modelagem explícita da verificação de permissão no diagrama — em vez de tratá-la como middleware oculto — é proposital: torna visível que o controle de acesso é parte intrínseca do fluxo, não um detalhe de configuração. Esse diagrama atende ao RF010 e cobre a RN012.
+<div align="justify">
+
+O psicólogo seleciona um aluno, redige a observação clínica e informa o título do registro. A `:TelaHistoricoPsicologico` envia `POST /historico-psicologico` ao `:HistoricoPsicologicoController`, que primeiro consulta o `:AutorizacaoService` passando o usuário atual; o serviço de autorização devolve um objeto contendo `ehPsicologo` (booleano) e `id_psi` (identificador do autor, quando aplicável). O fragmento `alt` seguinte separa dois caminhos: quando `ehPsicologo` é verdadeiro, o controller delega ao `:HistoricoPsicologicoService` passando os dados junto com o `id_psi`; o service repassa ao `:HistoricoPsicologicoRepository`, que executa o `INSERT` na tabela `historico_psicologico` incluindo `id_aluno` e `id_psi` como autor; e a confirmação volta até a tela. No ramo alternativo, quando o usuário não tem perfil de psicólogo, o controller lança `AcessoNegado` e responde 403, sem qualquer escrita. A modelagem explícita da verificação de permissão no diagrama — em vez de tratá-la como middleware oculto — é proposital: torna visível que o controle de acesso é parte intrínseca do fluxo, não um detalhe de configuração. Esse diagrama atende ao RF010 e cobre a RN012.
 
 </div>
 
@@ -787,7 +902,11 @@ _Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc
 Wireframes são esboços simples de telas, como sites e aplicativos. O objetivo é validar ideias, por isso eles não contêm informações detalhadas como cores, imagens e tipografia final. Desta forma, wireframes conseguem demonstrar de forma direta a estrutura das telas e o fluxo de navegação do sistema, focando apenas no que é essencial.
 </div>
 
+<div align="justify">
+
 Caso queira acessar os wireframes completos, acesse o link: https://www.canva.com/design/DAHJebfiO4A/NqxvsvUgwcbkv3LeEEnRwA/edit
+
+</div>
 
 <div align="center">
     <img src="assets/Wireframe1A.png" ><br>
@@ -880,7 +999,7 @@ A tela exibe o perfil de um aluno com navegação lateral (Início, Alunos, Dash
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe11.jpg" ><br>
+    <img src="assets/wireframe11.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -889,7 +1008,7 @@ Tela inicial do aluno está dividida em quatro seções: jornada de aprendizado 
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe12.jpg" ><br>
+    <img src="assets/wireframe12.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -897,8 +1016,8 @@ Tela inicial do aluno está dividida em quatro seções: jornada de aprendizado 
 Wireframe da tela agenda com calendário mensal navegável e botão "+ Evento" à esquerda, e dois painéis à direita: lista de próximos eventos com indicadores de tempo e um pop-up de alerta com opções "adiar" ou "abrir agora". Elementos de conteúdo são representados por retângulos cinzas em layout de duas colunas.
 </div>
 
-<div align="center">  
-    <img src="assets/Wireframe13.jpg" ><br>
+<div align="center">
+    <img src="assets/wireframe13.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -906,7 +1025,7 @@ Wireframe da tela agenda com calendário mensal navegável e botão "+ Evento" �
 Wireframe da tela notificações com uma lista à esquerda filtrada por abas (Todas, Alunos, Sistema), onde círculos indicam notificações não lidas, e um painel de detalhe à direita exibindo o conteúdo da notificação selecionada. As ações disponíveis no detalhe são abrir perfil, reenviar e marcar como lida.
 </div>
 
-<div align="center">  
+<div align="center">
     <img src="assets/Wireframe14.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -941,50 +1060,54 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-<div align = "justify">
-Um diagrama de Modelo Entidade-Relacionamento (MER) é uma representação visual da estrutura lógica de um banco de dados que descreve como os dados de um sistema estão organizados e se relacionam entre si. Ele é composto por três elementos fundamentais: Entidades, que representam os objetos ou conceitos do mundo real sobre os quais se deseja armazenar informações, como usuários, produtos ou pedidos; Atributos, que são as características ou propriedades que descrevem cada entidade, como nome, data de nascimento ou preço; e Relacionamentos, que expressam as associações existentes entre as entidades, podendo ser do tipo um-para-um, um-para-muitos ou muitos-para-muitos. Esse tipo de diagrama é amplamente utilizado na fase de modelagem de dados de um projeto, pois permite visualizar de forma clara e estruturada como as informações se conectam, facilitando o planejamento do banco de dados, a comunicação entre a equipe de desenvolvimento e a posterior implementação das tabelas e relações em um sistema gerenciador de banco de dados. 
+<div align="justify">
+Um diagrama de Modelo Entidade-Relacionamento (MER) é uma representação visual da estrutura lógica de um banco de dados que descreve como os dados de um sistema estão organizados e se relacionam entre si. Ele é composto por três elementos fundamentais: Entidades, que representam os objetos ou conceitos do mundo real sobre os quais se deseja armazenar informações, como usuários, produtos ou pedidos; Atributos, que são as características ou propriedades que descrevem cada entidade, como nome, data de nascimento ou preço; e Relacionamentos, que expressam as associações existentes entre as entidades, podendo ser do tipo um-para-um, um-para-muitos ou muitos-para-muitos. Esse tipo de diagrama é amplamente utilizado na fase de modelagem de dados de um projeto, pois permite visualizar de forma clara e estruturada como as informações se conectam, facilitando o planejamento do banco de dados, a comunicação entre a equipe de desenvolvimento e a posterior implementação das tabelas e relações em um sistema gerenciador de banco de dados.
 
 A partir destes conceitos e utilizando como base o TAPI e outros materiais disponibilizados pelo parceiro, foram mapeadas as entidades que serão a base para o desenvolvimento de novas funcionalidades do projeto, além de seus atributos, importantes para o funcionamento adequado das funcionalidades. Essas entidades e atributos estão explicitados na seguinte imagem:
-</div> 
+</div>
 
-<div align = "center">
+<div align="center">
 <sup>Figura 9: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
 <img src="./assets/mer.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
-</div> 
+</div>
 
-<div align = "justify">
+<div align="justify">
 Dentro do modelo conceitual, estão explicitadas as relações entre as entidades, sendo estas:
 
-##### `Membro da Equipe`
+</div>
 
-- Publica zero ou várias `oportunidades` (0, n), onde cada uma pode ser enviada por apenas um membro da equipe (1, 1);
+##### `membro_equipe`
+
+- Publica zero ou várias `oportunidades` (0, n), onde cada uma é publicada por apenas um membro da equipe (1, 1);
 - Registra zero ou várias `agendas` (0, n), onde cada uma pode ser registrada por apenas um membro da equipe (1, 1);
 - Envia zero ou várias `notificações` (0, n), onde cada uma pode ser enviada por apenas um remetente, este que pode ser membro da equipe ou psicólogo (1, 1).
 
 
-##### `Aluno`
+##### `aluno`
 
 - Acessa zero ou várias `agendas` (0, n), onde cada agenda é acessada por um aluno (1, 1);
-- Possui uma ou várias `labels` atribuídas (1, n), onde cada uma pode ser atribuída a zero ou vários alunos (0, n);
-- Recebe zero ou várias `notificações` (0, n), que podem ser recebidas por um ou vários alunos (1, n);
-- Possui zero ou várias `participações` (0, n), onde cada uma pertence a apenas um aluno (1, 1) e está vinculada a zero ou várias `atividades` (0, n);
+- Possui zero ou várias `labels` atribuídas (0, n), onde cada label pertence a apenas um aluno (1, 1);
+- Recebe zero ou várias `notificações` (0, n), onde cada notificação é direcionada a apenas um aluno (1, 1);
+- Possui zero ou várias `participações` (0, n), onde cada uma pertence a apenas um aluno (1, 1) e está vinculada a uma atividade (1, 1);
 - Possui zero ou vários `registros` psicológicos (0, n), onde cada um pertence a apenas um aluno (1, 1).
 
 
-##### `Psicólogo`
+##### `psicologo`
 
 - Registra zero ou vários `registros` psicológicos (0, n), os quais podem ser registrados por apenas um psicólogo (1, 1);
 - Gerencia zero ou várias `labels` (0, n), onde cada uma pode ser gerenciada por apenas um psicólogo (1, 1);
 - Envia zero ou várias `notificações` (0, n), onde cada uma pode ser enviada por apenas um remetente, este que pode ser membro da equipe ou psicólogo (1, 1).
 
+<div align="justify">
+
 Além disso, faz-se necessário explicar a importância de decisões específicas utilizadas na modelagem conceitual do modelo entidade-relacionamento. Assim, como pontos importantes têm-se as aplicações das relações com as entidades e cardinalidades e a utilização do símbolo de especialização/generalização.
 
 Na construção do modelo entidade-relacionamento, é utilizada a sinalização de retângulos para exemplificar as entidades utilizadas, futuramente representadas como tabelas no banco de dados; também são utilizadas elipses para explicitar os atributos destas entidades e, além disso, os losangos para visualização das relações existentes entre as entidades do modelo. Já as cardinalidades são utilizadas para identificar visualmente como funcionam as quantificações entre relações, como, por exemplo, quantas entidades participam de uma ação.
 
-Além disso, um novo conceito utilizado é a sinalização de um triângulo para explicitar que há uma superclasse (`remetente`), que se divide em duas subclasses (`membroEquipe` e `psicologo`), onde são utilizadas as letras (t, d) no triângulo que significam (total, disjoint), mostrando que todo elemento da superclasse pertence a pelo menos uma subclasse e que um elemento só pode pertencer a uma única subclasse por vez.
+Além disso, um novo conceito utilizado é a sinalização de um triângulo para explicitar que há uma superclasse (`remetente`), que se divide em duas subclasses (`membro_equipe` e `psicologo`), onde são utilizadas as letras (t, d) no triângulo que significam (total, disjoint), mostrando que todo elemento da superclasse pertence a pelo menos uma subclasse e que um elemento só pode pertencer a uma única subclasse por vez.
 
-Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras de Negócio anteriormente desenvolvidas, sendo definidas as seguintes relações: 
+Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras de Negócio anteriormente desenvolvidas, sendo definidas as seguintes relações:
 </div>
 
 | Entidade principal | Relacionamento com | RNs associadas | Justificativa |
@@ -993,7 +1116,7 @@ Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras
 | Membro da Equipe | Registro na agenda | RN011 | Pois toda a equipe interna tem permissão para registrar e editar dados no sistema, eliminando a dependência de uma única pessoa |
 | Membro da Equipe | Envio de notificações | RN011, RN016 | Pois a equipe interna tem autonomia no quesito de registros no sistema, além de ter que comunicar os alunos sobre atividades de mentores voluntários (não-usuários), já que estes não têm liberdade de alterações no sistema |
 | Aluno | Acesso de agenda | RN013 | Pois o aluno não tem permissão de alterar todos os dados do sistema, apenas dados essenciais, outros dados podem apenas ser acessados para verificação |
-| Aluno | Atribuição de labels | RN015 | Pois as labels podem ser criadas apenas por psicólogos/membros da equipe, assim, o aluno só se relaciona com elas no momento da atribuição |
+| Aluno | Atribuição de labels | RN015 | Pois as labels são vinculadas ao aluno acompanhado e, no DER atual, possuem psicólogo responsável por meio de `id_psi` |
 | Aluno | Recebimento de notificações | RN013, RN014 | Pois o aluno não tem permissão de alterar todos os dados do sistema, apenas dados essenciais, outros dados podem apenas ser acessados para verificação. Além disso, as notificações são um meio de enviar formulários para que os alunos atualizem seus dados |
 | Aluno | Participações dos alunos | RN004, RN009, RN007 | Pois o histórico de programas anteriores deve ser preservado para verificações futuras, algo permitido através do registro de participações. Além de este registro servir como base para a criação de alguns indicadores em dashboards e cálculos de variáveis |
 | Aluno | Registros psicológicos | RN012, RN010 | Pois registros voltados à saúde mental só podem ser criados e editados por psicólogos, sua ligação com o aluno se relaciona com a existência desta entidade no registro estudantil visto pela equipe especificada. Além disso, estes dados podem ser preservados para análises futuras dos profissionais |
@@ -1003,23 +1126,31 @@ Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras
 
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
- 
+
+<div align="justify">
+
 O Diagrama Entidade-Relacionamento (DER) do sistema PulseManager representa a estrutura lógica do banco de dados responsável por armazenar e organizar as informações relacionadas ao acompanhamento acadêmico, profissional e psicossocial dos alunos atendidos pela organização Pulse Mais. O modelo foi desenvolvido com base nos requisitos funcionais levantados ao longo da análise do sistema e está integralmente alinhado ao Diagrama de Classes do Domínio, garantindo consistência entre a modelagem conceitual orientada a objetos e a modelagem relacional.
- 
+
 O DER explicita as entidades do sistema, seus atributos, as respectivas chaves primárias (Primary Keys – PK), chaves estrangeiras (Foreign Keys – FK) e as cardinalidades de todos os relacionamentos, assegurando a integridade referencial e a correta representação das regras de negócio.
 
-<p align="center"><strong>Figura 6- Diagrama Entidade Relacionamento</strong></p>
+</div>
 
-<img align="center" src="./assets/diagram.png"><br>
+<div align="center">
+<sup>Figura 6: Diagrama Entidade-Relacionamento.</sup><br>
+<img src="./assets/diagram.png"><br>
+<sub>Fonte: Elaborado pela equipe (2026).</sub><br>
+</div>
 
-<p align="center"><em>Fonte: Elaborado pela equipe (2026).</em></p>
- 
-### Entidade Aluno
- 
-A entidade `Aluno` constitui o elemento central do modelo, pois representa os jovens acompanhados pela organização e concentra a maior parte dos relacionamentos do sistema.
- 
+### Entidade `aluno`
+
+<div align="justify">
+
+A entidade `aluno` constitui o elemento central do modelo, pois representa os jovens acompanhados pela organização e concentra a maior parte dos relacionamentos do sistema.
+
+</div>
+
 Seus atributos são:
- 
+
 - `id_aluno` (PK)
 - `nome`
 - `email`
@@ -1030,73 +1161,110 @@ Seus atributos são:
 - `data_ingresso`
 - `status`
 
+
+<div align="justify">
+
 Cada aluno pode participar de diversas atividades, registrar compromissos na agenda, acumular labels de acompanhamento e possuir diversos registros em seu histórico psicológico.
- 
-### Entidade MembroEquipe
- 
-A entidade `MembroEquipe` representa os colaboradores da organização responsáveis pela gestão administrativa e pedagógica do sistema, incluindo gestores e outros profissionais autorizados.
- 
+
+</div>
+
+### Entidade `membro_equipe`
+
+<div align="justify">
+
+A entidade `membro_equipe` representa os colaboradores da organização responsáveis pela gestão administrativa e pedagógica do sistema, incluindo gestores e outros profissionais autorizados.
+
+</div>
+
 Seus atributos são:
- 
+
 - `id_membro` (PK)
 - `nome`
 - `cargo`
 - `email`
 
+<div align="justify">
+
 Cada membro da equipe pode publicar oportunidades, registrar compromissos institucionais na agenda e enviar notificações.
- 
-### Entidade Psicólogo
- 
-A entidade `Psicologo` representa os profissionais responsáveis pelo acompanhamento psicossocial dos alunos.
- 
+
+</div>
+
+### Entidade `psicologo`
+
+<div align="justify">
+
+A entidade `psicologo` representa os profissionais responsáveis pelo acompanhamento psicossocial dos alunos.
+
+</div>
+
 Seus atributos são:
- 
+
 - `id_psi` (PK)
 - `nome_psi`
 - `cargo_psi`
 
-Cada psicólogo pode registrar históricos psicológicos, enviar notificações e acompanhar a evolução comportamental e emocional dos alunos.
- 
-### Entidade Atividade
- 
-A entidade `Atividade` foi concebida como uma entidade unificadora para representar cursos, eventos, mentorias e aulas em uma única estrutura. Essa decisão de modelagem reduz redundâncias e simplifica o tratamento das informações acadêmicas.
- 
+<div align="justify">
+
+Cada psicólogo pode registrar históricos psicológicos, criar labels, enviar notificações e acompanhar a evolução comportamental e emocional dos alunos.
+
+</div>
+
+### Entidade `atividade`
+
+<div align="justify">
+
+A entidade `atividade` foi concebida como uma abstração genérica para representar cursos, eventos, mentorias e aulas em uma única estrutura. Essa decisão de modelagem reduz redundâncias e simplifica o tratamento das informações acadêmicas.
+
+</div>
+
 Seus atributos são:
- 
+
 - `id_atividade` (PK)
 - `titulo`
 - `tipo`
 - `descricao`
 - `data`
 
+<div align="justify">
+
 O atributo `tipo` permite identificar a natureza da atividade, diferenciando cursos, eventos, mentorias e aulas dentro de uma estrutura unificada.
- 
-### Entidade Participacao
- 
-A entidade `Participacao` materializa o relacionamento entre `Aluno` e `Atividade`, registrando o envolvimento efetivo do aluno em cada atividade. O atributo nota registra o desempenho individual do aluno naquela atividade específica, refletindo que a avaliação é um atributo do vínculo entre aluno e atividade, e não da atividade em si.
- 
+
+</div>
+
+### Entidade `participacao`
+
+<div align="justify">
+
+A entidade `participacao` materializa o relacionamento entre `aluno` e `atividade`, registrando o envolvimento efetivo do aluno em cada atividade. O atributo `nota` registra o desempenho individual do aluno naquela atividade específica, refletindo que a avaliação é um atributo do vínculo entre aluno e atividade, e não da atividade em si.
+
+</div>
+
 Seus atributos são:
- 
+
 - `id_part` (PK)
 - `data_part`
 - `status_part`
-- `idAluno` (FK)
-- `idAtividade` (FK)
+- `id_aluno` (FK)
+- `id_atividade` (FK)
 - `nota`
 
 Cardinalidades:
- 
-- Um `Aluno` pode possuir zero ou muitas participações.
-- Cada `Participacao` pertence a um aluno.
-- Uma `Atividade` pode possuir zero ou muitas participações.
-- Cada `Participacao` refere-se a exatamente uma atividade.
 
-### Entidade Label
- 
-A entidade `Label` representa marcadores de acompanhamento atribuídos aos alunos, podendo ser gerados ou cadastrados manualmente por psicólogos.
- 
+- Um `aluno` pode possuir zero ou muitas participações.
+- Cada `participacao` pertence a exatamente um aluno.
+- Uma `atividade` pode possuir zero ou muitas participações.
+- Cada `participacao` refere-se a exatamente uma atividade.
+
+### Entidade `label`
+
+<div align="justify">
+
+A entidade `label` representa marcadores de acompanhamento atribuídos aos alunos, cadastrados por psicólogos para apoiar a leitura da situação de cada jovem.
+
+</div>
+
 Seus atributos são:
- 
+
 - `id_lbl` (PK)
 - `descricao`
 - `tipo_label`
@@ -1104,17 +1272,22 @@ Seus atributos são:
 - `id_psi` (FK)
 
 Cardinalidades:
- 
-- Um `Aluno` pode possuir zero ou muitas labels.
-- Cada `Label` está associada a um aluno.
-O atributo `id_psi` referencia o psicólogo responsável pela criação da label, podendo ser nulo quando a label for gerada automaticamente pelo sistema.
- 
-### Entidade HistoricoPsicologico
- 
-A entidade `HistoricoPsicologico` armazena observações qualitativas e classificações registradas pelos psicólogos durante o acompanhamento individual dos alunos.
- 
+
+- Um `aluno` pode possuir zero ou muitas labels.
+- Cada `label` está associada a exatamente um aluno.
+- Um `psicologo` pode criar zero ou muitas labels.
+- Cada `label` é associada a exatamente um psicólogo responsável.
+
+### Entidade `historico_psicologico`
+
+<div align="justify">
+
+A entidade `historico_psicologico` armazena observações qualitativas registradas pelos psicólogos durante o acompanhamento individual dos alunos.
+
+</div>
+
 Seus atributos são:
- 
+
 - `id_historico` (PK)
 - `observacao`
 - `titulo`
@@ -1122,19 +1295,23 @@ Seus atributos são:
 - `id_psi` (FK)
 
 Cardinalidades:
- 
-- Um `Aluno` pode possuir zero ou muitos registros psicológicos.
-- Cada `HistoricoPsicologico` pertence a exatamente um aluno.
-- Um `Psicologo` pode registrar zero ou muitos históricos.
-- Cada `HistoricoPsicologico` é elaborado por exatamente um psicólogo.
+
+- Um `aluno` pode possuir zero ou muitos registros psicológicos.
+- Cada `historico_psicologico` pertence a exatamente um aluno.
+- Um `psicologo` pode registrar zero ou muitos históricos.
+- Cada `historico_psicologico` é elaborado por exatamente um psicólogo.
 
 
-### Entidade Agenda
- 
-A entidade Agenda armazena registros de compromissos e acompanhamentos vinculados a alunos e membros da equipe.
- 
+### Entidade `agenda`
+
+<div align="justify">
+
+A entidade `agenda` armazena registros de compromissos e acompanhamentos vinculados a alunos e membros da equipe.
+
+</div>
+
 Seus atributos são:
- 
+
 - `id_agenda` (PK)
 - `tipo_user`
 - `registro`
@@ -1144,17 +1321,21 @@ Seus atributos são:
 - `id_aluno` (FK)
 
 Cardinalidades:
- 
-- Um `Aluno` pode possuir zero ou muitos registros na agenda.
-- Um `MembroEquipe` pode criar zero ou muitos compromissos.
+
+- Um `aluno` pode possuir zero ou muitos registros na agenda.
+- Um `membro_equipe` pode criar zero ou muitos compromissos.
 
 
-### Entidade Oportunidade
- 
-A entidade `Oportunidade` representa conteúdos disponibilizados pela equipe, como vagas de emprego, bolsas de estudo, cursos e eventos externos.
- 
+### Entidade `oportunidade`
+
+<div align="justify">
+
+A entidade `oportunidade` representa conteúdos disponibilizados pela equipe, como vagas de emprego, bolsas de estudo, cursos e eventos externos.
+
+</div>
+
 Seus atributos são:
- 
+
 - `id_oportunidade` (PK)
 - `titulo`
 - `descricao`
@@ -1163,17 +1344,21 @@ Seus atributos são:
 - `id_membro` (FK)
 
 Cardinalidades:
- 
-- Um `MembroEquipe` pode publicar zero ou muitas oportunidades.
-- Cada `Oportunidade` é publicada por exatamente um membro da equipe.
+
+- Um `membro_equipe` pode publicar zero ou muitas oportunidades.
+- Cada `oportunidade` é publicada por exatamente um membro da equipe.
 
 
-### Entidade Notificacao
- 
-A entidade `Notificacao` registra as comunicações enviadas pelos membros da equipe e psicólogos no sistema.
- 
+### Entidade `notificacao`
+
+<div align="justify">
+
+A entidade `notificacao` registra as comunicações enviadas pelos membros da equipe e psicólogos no sistema.
+
+</div>
+
 Seus atributos são:
- 
+
 - `id_notificacao` (PK)
 - `titulo`
 - `mensagem`
@@ -1185,55 +1370,497 @@ Seus atributos são:
 - `nome_remetente`
 
 Cardinalidades:
- 
-- Um `Aluno` pode receber zero ou muitas notificações.
-- Cada `Notificacao` está associada a exatamente um aluno.
-- Cada `Notificacao` é enviada por exatamente um remetente, identificado pelos campos `id_remetente` e `tipo_remetente`, que indicam respectivamente o identificador e o tipo do emissor (membro da equipe ou psicólogo).
+
+- Um `aluno` pode receber zero ou muitas notificações.
+- Cada `notificacao` está associada a exatamente um aluno.
+- Cada `notificacao` é enviada por exatamente um remetente, identificado pelos campos `id_remetente` e `tipo_remetente`, que indicam respectivamente o identificador e o tipo do emissor (membro da equipe ou psicólogo).
 
 
 ### Principais Relacionamentos e Cardinalidades
- 
+
+<div align="justify">
+
 Os principais relacionamentos definidos no DER são:
- 
-- `Aluno` 1:N `Participacao`
-- `Atividade` 1:N `Participacao`
-- `Aluno` 1:N `Label`
-- `Aluno` 1:N `Agenda`
-- `Aluno` 1:N `HistoricoPsicologico`
-- `MembroEquipe` 1:N `Oportunidade`
-- `MembroEquipe` 1:N `Agenda`
-- `Aluno` 1:N `Notificacao`
-- `Remetente` (polimórfico) 1:N `Notificacao`
-- `Psicologo` 1:N `HistoricoPsicologico`
+
+</div>
+
+- `aluno` 1:N `participacao`
+- `atividade` 1:N `participacao`
+- `aluno` 1:N `label`
+- `psicologo` 1:N `label`
+- `aluno` 1:N `agenda`
+- `aluno` 1:N `historico_psicologico`
+- `membro_equipe` 1:N `oportunidade`
+- `membro_equipe` 1:N `agenda`
+- `aluno` 1:N `notificacao`
+- `remetente` (polimórfico) 1:N `notificacao`
+- `psicologo` 1:N `historico_psicologico`
 
 
 
 ### Decisões de Modelagem
- 
-A principal decisão arquitetural foi a criação da entidade Atividade, responsável por unificar cursos, eventos, mentorias e aulas em uma estrutura única. O atributo nota foi posicionado na entidade Participacao, pois representa o desempenho individual de cada aluno em uma atividade específica, e não uma característica da atividade em si.. Essa abordagem reduz a redundância de dados e facilita a manutenção do sistema, uma vez que a entidade `Participacao` passa a referenciar um único tipo de objeto para registrar o vínculo entre alunos e atividades.
- 
-Outra decisão importante foi a adoção da entidade associativa Participacao, responsável por implementar o relacionamento muitos-para-muitos entre alunos e atividades, além de possibilitar o armazenamento de informações específicas da relação, como data e status da participação.
 
-O modelo foi construído respeitando a Terceira Forma Normal (3FN). Não há dependências transitivas entre atributos não-chave, e todos os atributos dependem exclusivamente de suas respectivas chaves primárias, contribuindo para a redução de redundâncias e para a integridade estrutural do banco de dados
- 
+<div align="justify">
+
+A principal decisão arquitetural foi a criação da entidade `atividade`, responsável por unificar cursos, eventos, mentorias e aulas em uma estrutura única. O atributo `nota` foi posicionado na entidade `participacao`, pois representa o desempenho individual de cada aluno em uma atividade específica, e não uma característica da atividade em si. Essa abordagem reduz a redundância de dados e facilita a manutenção do sistema, uma vez que a entidade `participacao` passa a referenciar um único tipo de objeto para registrar o vínculo entre alunos e atividades.
+
+Outra decisão importante foi a adoção da entidade associativa `participacao`, responsável por implementar o relacionamento muitos-para-muitos entre alunos e atividades, além de possibilitar o armazenamento de informações específicas da relação, como data, status e nota da participação.
+
+O modelo foi construído respeitando a Terceira Forma Normal (3FN). Não há dependências transitivas entre atributos não-chave, e todos os atributos dependem exclusivamente de suas respectivas chaves primárias, contribuindo para a redução de redundâncias e para a integridade estrutural do banco de dados.
+
+</div>
+
 ### Limitações Conhecidas do Modelo
+
+<div align="justify">
 
 A unificação de cursos, eventos, mentorias e aulas no atributo "tipo" da entidade Atividade simplifica o modelo e reduz redundâncias, porém implica perda de especificidade estrutural entre os tipos. Caso futuramente seja necessário armazenar atributos exclusivos de cada tipo, como carga horária para cursos ou palestrante para eventos, o modelo exigirá refatoração. Essa é uma limitação conhecida e aceita, justificada pelo escopo atual do sistema.
 
-A entidade `Notificacao` adota associação polimórfica para identificar o remetente, por meio dos campos `id_remetente` e `tipo_remetente`, em vez de uma superclasse `Remetente` formal. Essa abordagem simplifica a implementação, mas delega a integridade referencial à camada de aplicação.
+A entidade `notificacao` adota associação polimórfica para identificar o remetente por meio dos campos `id_remetente` e `tipo_remetente`, em vez de uma tabela física `remetente`. Essa abordagem simplifica a implementação, mas delega a validação do remetente à camada de aplicação.
 
-O campo `nome_remetente` em `Notificacao` representa uma desnormalização intencional, adotada para simplificar consultas decorrentes da associação polimórfica. Essa decisão implica redundância controlada e exige sincronização pelo código da aplicação em caso de atualização.
+O campo `nome_remetente` em `notificacao` representa uma desnormalização intencional, adotada para simplificar consultas decorrentes da associação polimórfica. Essa decisão implica redundância controlada e exige sincronização pelo código da aplicação em caso de atualização.
+
+</div>
 
 ### Conclusão
 
- 
+<div align="justify">
+
 O Diagrama Entidade-Relacionamento do PulseManager representa de forma estruturada, consistente e normalizada os dados necessários para o funcionamento do sistema. A identificação explícita de chaves primárias, chaves estrangeiras e cardinalidades garante integridade referencial e aderência às regras de negócio, estabelecendo uma base sólida para a construção do Modelo Relacional e do Modelo Físico do banco de dados.
+
+</div>
 
 
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
-_Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário._
+<div align="justify">
+
+Esta seção traduz o DER apresentado na seção 3.6.2 para o modelo relacional e para sua implementação física em PostgreSQL.
+
+O modelo relacional organiza os dados em tabelas com seus respectivos campos (Normando, 2024). As chaves primárias identificam de forma única cada registro, enquanto as chaves estrangeiras conectam uma tabela a outra e preservam os vínculos definidos na modelagem. Dessa forma, as entidades e relacionamentos do DER são convertidos em uma estrutura pronta para implementação no banco de dados.
+
+</div>
+
+#### Modelo Relacional - Pulse Manager
+
+<div align="justify">
+
+Com base na modelagem de dados do projeto, o modelo relacional foi definido para refletir as entidades atuais do sistema conforme o DER. A tabela `participacao` representa o relacionamento entre `aluno` e `atividade` e concentra os dados específicos desse vínculo, incluindo `nota`; `oportunidade` fica vinculada a `membro_equipe`; e os registros de agenda, notificações, labels e histórico psicológico mantêm vínculo com os usuários definidos na modelagem.
+
+</div>
+
+##### Representação Relacional
+
+| Tabela | Chave primária | Atributos | Chaves estrangeiras |
+|---|---|---|---|
+| `aluno` | `id_aluno` | `nome`, `email`, `idade`, `genero`, `ocupacao`, `escolaridade`, `data_ingresso`, `status` | - |
+| `membro_equipe` | `id_membro` | `nome`, `cargo`, `email` | - |
+| `psicologo` | `id_psi` | `nome_psi`, `cargo_psi` | - |
+| `atividade` | `id_atividade` | `titulo`, `tipo`, `descricao`, `data` | - |
+| `notificacao` | `id_notificacao` | `titulo`, `mensagem`, `data_envio`, `tipo`, `id_remetente`, `tipo_remetente`, `nome_remetente` | `id_aluno` |
+| `oportunidade` | `id_oportunidade` | `titulo`, `descricao`, `tipo`, `data_publicacao` | `id_membro` |
+| `agenda` | `id_agenda` | `tipo_user`, `registro`, `data`, `status` | `id_membro`, `id_aluno` |
+| `label` | `id_lbl` | `descricao`, `tipo_label` | `id_aluno`, `id_psi` |
+| `historico_psicologico` | `id_historico` | `observacao`, `titulo` | `id_aluno`, `id_psi` |
+| `participacao` | `id_part` | `data_part`, `status_part`, `nota` | `id_aluno`, `id_atividade` |
+
+##### Descrição das Tabelas
+
+###### Tabela aluno
+
+<div align="justify">
+
+A tabela `aluno` representa os jovens acompanhados pela Pulse Mais. Ela contém os dados principais do aluno e é a base para registros de agenda, notificações, labels, histórico psicológico e participação em atividades.
+
+</div>
+
+###### Tabela membro_equipe
+
+<div align="justify">
+
+A tabela `membro_equipe` armazena os profissionais da equipe responsáveis por registros administrativos, comunicações, oportunidades e compromissos. Ela se relaciona com `notificacao`, `oportunidade` e `agenda`.
+
+</div>
+
+###### Tabela psicologo
+
+<div align="justify">
+
+A tabela `psicologo` representa os profissionais responsáveis por registros e acompanhamentos psicológicos. Na modelagem, essa entidade se relaciona com `notificacao`, `label` e `historico_psicologico`, sendo que em `notificacao` o vínculo do remetente é polimórfico.
+
+</div>
+
+###### Tabela notificacao
+
+<div align="justify">
+
+A tabela `notificacao` armazena mensagens e avisos emitidos no sistema. O campo `id_aluno` associa a notificação ao aluno destinatário, enquanto `id_remetente`, `tipo_remetente` e `nome_remetente` identificam quem enviou a comunicação, podendo ser um membro da equipe ou um psicólogo.
+
+</div>
+
+###### Tabela oportunidade
+
+<div align="justify">
+
+A tabela `oportunidade` registra oportunidades acadêmicas, profissionais ou institucionais. Cada oportunidade é criada ou mantida por um membro da equipe, e não vinculada diretamente a um aluno.
+
+</div>
+
+###### Tabela agenda
+
+<div align="justify">
+
+A tabela `agenda` registra compromissos, eventos e acompanhamentos. Cada registro pode ser associado ao aluno envolvido e ao membro da equipe responsável, conforme os campos `id_aluno` e `id_membro` padronizados no modelo relacional.
+
+</div>
+
+###### Tabela label
+
+<div align="justify">
+
+A tabela `label` armazena classificações ou marcações vinculadas ao aluno. O campo `id_aluno` vincula a label ao aluno correspondente, enquanto `id_psi` identifica o psicólogo responsável pela marcação.
+
+</div>
+
+###### Tabela historico_psicologico
+
+<div align="justify">
+
+A tabela `historico_psicologico` registra informações de acompanhamento psicológico. Cada registro histórico possui uma observação e um título, ficando vinculado ao aluno acompanhado e ao psicólogo responsável.
+
+</div>
+
+###### Tabela atividade
+
+<div align="justify">
+
+A tabela `atividade` armazena cursos, eventos, mentorias e aulas em uma estrutura única. O DER atual não apresenta `nota` como atributo direto de `atividade`.
+
+</div>
+
+###### Tabela participacao
+
+<div align="justify">
+
+A tabela `participacao` é uma tabela lógica associativa entre `aluno` e `atividade`. Essa estrutura permite que um aluno participe de várias atividades e que uma atividade tenha vários alunos participantes. O campo `nota` pertence a essa tabela, pois a avaliação está ligada ao vínculo entre aluno e atividade.
+
+</div>
+
+#### Implementação de Chaves Estrangeiras
+
+<div align="justify">
+
+Com base nas cardinalidades descritas no DER, as chaves estrangeiras foram posicionadas nas tabelas dependentes de cada relacionamento. Esse mapeamento preserva a integridade entre os registros e impede que informações da jornada do aluno fiquem desconectadas no banco.
+
+</div>
+
+##### Mapeamento das Chaves Estrangeiras
+
+| Tabela | Chave estrangeira | Referência | Finalidade |
+|---|---|---|---|
+| `notificacao` | `id_aluno` | `aluno(id_aluno)` | Identificar o aluno destinatário da notificação. |
+| `oportunidade` | `id_membro` | `membro_equipe(id_membro)` | Indicar qual membro da equipe publicou ou administra a oportunidade. |
+| `agenda` | `id_membro` | `membro_equipe(id_membro)` | Registrar o responsável interno pelo compromisso ou acompanhamento. |
+| `agenda` | `id_aluno` | `aluno(id_aluno)` | Associar o compromisso ao aluno envolvido. |
+| `label` | `id_aluno` | `aluno(id_aluno)` | Vincular marcações e classificações ao aluno correspondente. |
+| `label` | `id_psi` | `psicologo(id_psi)` | Identificar o psicólogo responsável pela label. |
+| `historico_psicologico` | `id_aluno` | `aluno(id_aluno)` | Associar o registro psicológico ao aluno acompanhado. |
+| `historico_psicologico` | `id_psi` | `psicologo(id_psi)` | Associar o registro psicológico ao psicólogo responsável. |
+| `participacao` | `id_aluno` | `aluno(id_aluno)` | Indicar qual aluno participou de determinada atividade. |
+| `participacao` | `id_atividade` | `atividade(id_atividade)` | Indicar qual atividade recebeu a participação do aluno. |
+
+##### Regras de Negócio do Modelo Relacional
+
+<div align="justify">
+
+O modelo mantém `aluno` como entidade central, referenciada por notificações, agenda, labels, histórico psicológico e participações. Assim, os dados de acompanhamento ficam ligados ao aluno sem duplicação de informações pessoais em outras tabelas.
+
+O relacionamento entre `aluno` e `atividade` é resolvido por `participacao`, o que mantém o modelo normalizado e permite registrar dados próprios do vínculo, como `data_part`, `status_part` e `nota`. Como regra de negócio, um mesmo aluno não deve ser registrado mais de uma vez na mesma atividade.
+
+Como o DER atual não apresenta uma entidade separada para notas, `nota` permanece como atributo de `participacao`, mantendo a avaliação associada ao aluno em uma atividade específica.
+
+Os vínculos com `membro_equipe` e `psicologo` preservam a rastreabilidade dos responsáveis por oportunidades, notificações, labels e registros psicológicos, respeitando as relações representadas no DER.
+
+Como regra de acesso, o psicólogo não possui visão geral de todos os alunos. Sua visualização deve ser limitada aos alunos aos quais ele está relacionado por registros como `label` e `historico_psicologico`, que possuem simultaneamente `id_psi` e `id_aluno`, ou por notificações em que `tipo_remetente` seja `psicologo` e `id_remetente` corresponda ao seu `id_psi`. Já `membro_equipe` mantém acesso institucional mais amplo aos registros administrativos e acadêmicos dos alunos, respeitando a restrição de que informações sensíveis de acompanhamento psicológico só devem ser acessadas por usuários com perfil de psicólogo.
+
+</div>
+
+#### Codificação do Modelo Físico em PostgreSQL
+
+<div align="justify">
+
+A codificação a seguir representa o DDL do modelo físico em PostgreSQL. Esse script implementa o modelo relacional apresentado anteriormente, criando os tipos, as tabelas, as chaves primárias, as chaves estrangeiras e as restrições simples do sistema.
+
+Os identificadores principais usam `GENERATED ALWAYS AS IDENTITY`, recurso do PostgreSQL que gera automaticamente valores inteiros sequenciais para as chaves primárias. Os campos de domínio fechado foram representados com `ENUM`, e as restrições simples foram declaradas com `NOT NULL`, `UNIQUE`, `CHECK`, `PRIMARY KEY` e `FOREIGN KEY`.
+
+</div>
+
+```sql
+-- PostgreSQL
+
+DO $$
+BEGIN
+  CREATE TYPE genero_aluno_enum AS ENUM (
+    'feminino',
+    'masculino',
+    'nao_binario',
+    'outro',
+    'prefiro_nao_informar'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE TYPE status_aluno_enum AS ENUM (
+    'ativo',
+    'inativo',
+    'egresso',
+    'desligado',
+    'em_acompanhamento'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE TYPE cargo_membro_enum AS ENUM (
+    'gestor',
+    'coordenador',
+    'mentor',
+    'voluntario',
+    'administrativo',
+    'outro'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE TYPE cargo_psicologo_enum AS ENUM (
+    'psicologo',
+    'coordenador_psicologico',
+    'estagiario',
+    'outro'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE TYPE tipo_notificacao_enum AS ENUM (
+    'alerta',
+    'informativo',
+    'convite',
+    'urgente',
+    'outro'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE TYPE tipo_remetente_enum AS ENUM (
+    'membro_equipe',
+    'psicologo'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE TYPE tipo_oportunidade_enum AS ENUM (
+    'emprego',
+    'estagio',
+    'curso',
+    'evento',
+    'bolsa',
+    'voluntariado',
+    'outro'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE TYPE tipo_usuario_agenda_enum AS ENUM (
+    'aluno',
+    'membro_equipe'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE TYPE tipo_label_enum AS ENUM (
+    'risco',
+    'interesse',
+    'perfil',
+    'acompanhamento',
+    'prioridade',
+    'outro'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE TYPE tipo_atividade_enum AS ENUM (
+    'aula',
+    'mentoria',
+    'workshop',
+    'evento',
+    'avaliacao',
+    'outro'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+CREATE TABLE IF NOT EXISTS aluno (
+  id_aluno INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  nome VARCHAR(150) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  idade INTEGER CHECK (idade IS NULL OR (idade >= 0 AND idade <= 120)),
+  genero genero_aluno_enum,
+  ocupacao VARCHAR(150),
+  escolaridade VARCHAR(100),
+  data_ingresso DATE DEFAULT CURRENT_DATE,
+  status status_aluno_enum NOT NULL DEFAULT 'ativo'
+);
+
+CREATE TABLE IF NOT EXISTS membro_equipe (
+  id_membro INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  nome VARCHAR(150) NOT NULL,
+  cargo cargo_membro_enum NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS psicologo (
+  id_psi INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  nome_psi VARCHAR(150) NOT NULL,
+  cargo_psi cargo_psicologo_enum NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS atividade (
+  id_atividade INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  titulo VARCHAR(255) NOT NULL,
+  tipo tipo_atividade_enum NOT NULL,
+  descricao VARCHAR(500),
+  data DATE
+);
+
+CREATE TABLE IF NOT EXISTS notificacao (
+  id_notificacao INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  titulo VARCHAR(255) NOT NULL,
+  id_aluno INTEGER NOT NULL,
+  mensagem VARCHAR(500) NOT NULL,
+  data_envio DATE NOT NULL DEFAULT CURRENT_DATE,
+  tipo tipo_notificacao_enum NOT NULL,
+  id_remetente INTEGER NOT NULL,
+  tipo_remetente tipo_remetente_enum NOT NULL,
+  nome_remetente VARCHAR(150) NOT NULL,
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno)
+);
+
+CREATE TABLE IF NOT EXISTS oportunidade (
+  id_oportunidade INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  titulo VARCHAR(255) NOT NULL,
+  descricao VARCHAR(500),
+  tipo tipo_oportunidade_enum NOT NULL,
+  data_publicacao DATE DEFAULT CURRENT_DATE,
+  id_membro INTEGER NOT NULL,
+  FOREIGN KEY (id_membro) REFERENCES membro_equipe(id_membro)
+);
+
+CREATE TABLE IF NOT EXISTS agenda (
+  id_agenda INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  tipo_user tipo_usuario_agenda_enum NOT NULL,
+  registro VARCHAR(500) NOT NULL,
+  data DATE NOT NULL,
+  status INTEGER NOT NULL,
+  id_membro INTEGER NOT NULL,
+  id_aluno INTEGER NOT NULL,
+  FOREIGN KEY (id_membro) REFERENCES membro_equipe(id_membro),
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno)
+);
+
+CREATE TABLE IF NOT EXISTS label (
+  id_lbl INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  descricao VARCHAR(500) NOT NULL,
+  tipo_label tipo_label_enum NOT NULL,
+  id_aluno INTEGER NOT NULL,
+  id_psi INTEGER NOT NULL,
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno),
+  FOREIGN KEY (id_psi) REFERENCES psicologo(id_psi)
+);
+
+CREATE TABLE IF NOT EXISTS historico_psicologico (
+  id_historico INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  observacao VARCHAR(500) NOT NULL,
+  titulo VARCHAR(255) NOT NULL,
+  id_aluno INTEGER NOT NULL,
+  id_psi INTEGER NOT NULL,
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno),
+  FOREIGN KEY (id_psi) REFERENCES psicologo(id_psi)
+);
+
+CREATE TABLE IF NOT EXISTS participacao (
+  id_part INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  data_part DATE DEFAULT CURRENT_DATE,
+  status_part BOOLEAN NOT NULL DEFAULT FALSE,
+  id_aluno INTEGER NOT NULL,
+  id_atividade INTEGER NOT NULL,
+  nota DECIMAL(3,1) CHECK (nota >= 0 AND nota <= 10),
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno),
+  FOREIGN KEY (id_atividade) REFERENCES atividade(id_atividade),
+  UNIQUE (id_aluno, id_atividade)
+);
+```
+
+<div align="justify">
+
+As restrições `PRIMARY KEY` garantem identificação única para cada registro, enquanto `GENERATED ALWAYS AS IDENTITY` automatiza a geração dos identificadores. As restrições `NOT NULL` foram aplicadas aos campos obrigatórios para impedir registros incompletos nos dados essenciais. A restrição `UNIQUE` foi usada em campos que não devem se repetir, como `email`, e também em `participacao(id_aluno, id_atividade)`, evitando duplicidade de participação do mesmo aluno na mesma atividade.
+
+As restrições `CHECK` foram usadas em regras numéricas simples, como a validação da idade do aluno e da nota em `participacao`. A coluna `nota` foi definida como `DECIMAL(3,1)` para permitir avaliações de 0 a 10 com uma casa decimal, como `8.5` ou `10.0`, sem permitir valores fora da escala definida. Já os tipos `ENUM` limitam campos categóricos a valores previamente definidos, reduzindo inconsistências de preenchimento em campos como `status`, `cargo`, `tipo`, `tipo_user`, `tipo_label` e `tipo_remetente`.
+
+Na tabela `notificacao`, `id_remetente` foi mantido como identificador do remetente, sem chave estrangeira física, conforme o DER. O campo `tipo_remetente` indica se esse identificador se refere a um `membro_equipe` ou a um `psicologo`, enquanto `nome_remetente` preserva o nome exibido na comunicação.
+
+</div>
+
+#### Mapeamento da Ordem de Dependência
+
+<div align="justify">
+
+O mapeamento da ordem de dependência organiza a sequência correta para criação, manutenção e eventual remoção das estruturas do banco de dados. Como o modelo físico utiliza chaves estrangeiras, as tabelas referenciadas precisam existir antes das tabelas que dependem delas. Essa ordem evita erros de integridade referencial durante a execução do DDL e facilita a leitura do modelo por etapas.
+
+No modelo da solução, não há dependência circular entre as tabelas. As entidades `aluno`, `membro_equipe`, `psicologo` e `atividade` funcionam como bases do domínio, pois não possuem chaves estrangeiras. Já `notificacao`, `oportunidade`, `agenda`, `label`, `historico_psicologico` e `participacao` dependem dessas bases para manter os vínculos definidos no modelo.
+
+</div>
+
+##### Ordem Sugerida de Criação
+
+| Ordem | Estrutura | Depende de | Justificativa |
+|---|---|---|---|
+| 1 | Tipos `ENUM` | Nenhuma estrutura relacional | Os domínios categóricos precisam existir antes das tabelas que usam esses tipos em suas colunas. |
+| 2 | `aluno` | Nenhuma tabela | Entidade central da jornada do jovem, referenciada por notificações, agenda, label, histórico psicológico e participação. |
+| 3 | `membro_equipe` | Nenhuma tabela | Entidade base para registros administrativos, oportunidades, agenda e notificações. |
+| 4 | `psicologo` | Nenhuma tabela | Entidade base para notificações, labels e registros de acompanhamento psicológico. |
+| 5 | `atividade` | Nenhuma tabela | Entidade base das atividades realizadas ou acompanhadas pela plataforma. |
+| 6 | `notificacao` | `aluno` | Precisa do aluno destinatário; o remetente é identificado por `id_remetente`, `tipo_remetente` e `nome_remetente`, sem chave estrangeira física. |
+| 7 | `oportunidade` | `membro_equipe` | Precisa do membro da equipe responsável pela publicação ou administração da oportunidade. |
+| 8 | `agenda` | `membro_equipe`, `aluno` | Depende do aluno envolvido e do responsável interno pelo compromisso. |
+| 9 | `label` | `aluno`, `psicologo` | Depende do aluno e do psicólogo responsável para registrar marcações, classificações ou prioridades. |
+| 10 | `historico_psicologico` | `aluno`, `psicologo` | Depende do aluno acompanhado e do psicólogo responsável pelo registro. |
+| 11 | `participacao` | `aluno`, `atividade` | Representa a relação associativa entre alunos e atividades, por isso só pode ser criada após as duas tabelas-base. |
+
+<div align="justify">
+
+Essa sequência também orienta a ordem de carga inicial de dados. Primeiro devem ser cadastrados os registros-base, como alunos, membros da equipe, psicólogos e atividades. Em seguida, podem ser inseridos os registros dependentes, como agenda, labels, histórico psicológico, oportunidades, notificações e participações.
+
+Para exclusões estruturais, a ordem deve ser invertida: primeiro removem-se ou ajustam-se as tabelas dependentes e, somente depois, as tabelas-base. Dessa forma, evita-se quebrar vínculos ativos de chave estrangeira durante manutenções no banco.
+
+</div>
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
