@@ -1002,8 +1002,233 @@ Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras
 
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+ 
+O Diagrama Entidade-Relacionamento (DER) do sistema PulseManager representa a estrutura lógica do banco de dados responsável por armazenar e organizar as informações relacionadas ao acompanhamento acadêmico, profissional e psicossocial dos alunos atendidos pela organização Pulse Mais. O modelo foi desenvolvido com base nos requisitos funcionais levantados ao longo da análise do sistema e está integralmente alinhado ao Diagrama de Classes do Domínio, garantindo consistência entre a modelagem conceitual orientada a objetos e a modelagem relacional.
+ 
+O DER explicita as entidades do sistema, seus atributos, as respectivas chaves primárias (Primary Keys – PK), chaves estrangeiras (Foreign Keys – FK) e as cardinalidades de todos os relacionamentos, assegurando a integridade referencial e a correta representação das regras de negócio.
 
-_Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3)._
+<p align="center"><strong>Figura 6- Diagrama Entidade Relacionamento</strong></p>
+
+<img align="center" src="./assets/diagram.png"><br>
+
+<p align="center"><em>Fonte: Elaborado pela equipe (2026).</em></p>
+ 
+### Entidade Aluno
+ 
+A entidade `Aluno` constitui o elemento central do modelo, pois representa os jovens acompanhados pela organização e concentra a maior parte dos relacionamentos do sistema.
+ 
+Seus atributos são:
+ 
+- `id_aluno` (PK)
+- `nome`
+- `email`
+- `idade`
+- `genero`
+- `ocupacao`
+- `escolaridade`
+- `data_ingresso`
+- `status`
+
+Cada aluno pode participar de diversas atividades, registrar compromissos na agenda, acumular labels de acompanhamento e possuir diversos registros em seu histórico psicológico.
+ 
+### Entidade MembroEquipe
+ 
+A entidade `MembroEquipe` representa os colaboradores da organização responsáveis pela gestão administrativa e pedagógica do sistema, incluindo gestores e outros profissionais autorizados.
+ 
+Seus atributos são:
+ 
+- `id_membro` (PK)
+- `nome`
+- `cargo`
+- `email`
+
+Cada membro da equipe pode publicar oportunidades, registrar compromissos institucionais na agenda e enviar notificações.
+ 
+### Entidade Psicólogo
+ 
+A entidade `Psicologo` representa os profissionais responsáveis pelo acompanhamento psicossocial dos alunos.
+ 
+Seus atributos são:
+ 
+- `id_psi` (PK)
+- `nome_psi`
+- `cargo_psi`
+
+Cada psicólogo pode registrar históricos psicológicos, enviar notificações e acompanhar a evolução comportamental e emocional dos alunos.
+ 
+### Entidade Atividade
+ 
+A entidade `Atividade` foi concebida como uma entidade unificadora para representar cursos, eventos, mentorias e aulas em uma única estrutura. Essa decisão de modelagem reduz redundâncias e simplifica o tratamento das informações acadêmicas.
+ 
+Seus atributos são:
+ 
+- `id_atividade` (PK)
+- `titulo`
+- `tipo`
+- `descricao`
+- `data`
+
+O atributo `tipo` permite identificar a natureza da atividade, diferenciando cursos, eventos, mentorias e aulas dentro de uma estrutura unificada.
+ 
+### Entidade Participacao
+ 
+A entidade `Participacao` materializa o relacionamento entre `Aluno` e `Atividade`, registrando o envolvimento efetivo do aluno em cada atividade. O atributo nota registra o desempenho individual do aluno naquela atividade específica, refletindo que a avaliação é um atributo do vínculo entre aluno e atividade, e não da atividade em si.
+ 
+Seus atributos são:
+ 
+- `id_part` (PK)
+- `data_part`
+- `status_part`
+- `idAluno` (FK)
+- `idAtividade` (FK)
+- `nota`
+
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitas participações.
+- Cada `Participacao` pertence a um aluno.
+- Uma `Atividade` pode possuir zero ou muitas participações.
+- Cada `Participacao` refere-se a exatamente uma atividade.
+
+### Entidade Label
+ 
+A entidade `Label` representa marcadores de acompanhamento atribuídos aos alunos, podendo ser gerados ou cadastrados manualmente por psicólogos.
+ 
+Seus atributos são:
+ 
+- `id_lbl` (PK)
+- `descricao`
+- `tipo_label`
+- `id_aluno` (FK)
+- `id_psi` (FK)
+
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitas labels.
+- Cada `Label` está associada a um aluno.
+O atributo `id_psi` referencia o psicólogo responsável pela criação da label, podendo ser nulo quando a label for gerada automaticamente pelo sistema.
+ 
+### Entidade HistoricoPsicologico
+ 
+A entidade `HistoricoPsicologico` armazena observações qualitativas e classificações registradas pelos psicólogos durante o acompanhamento individual dos alunos.
+ 
+Seus atributos são:
+ 
+- `id_historico` (PK)
+- `observacao`
+- `titulo`
+- `id_aluno` (FK)
+- `id_psi` (FK)
+
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitos registros psicológicos.
+- Cada `HistoricoPsicologico` pertence a exatamente um aluno.
+- Um `Psicologo` pode registrar zero ou muitos históricos.
+- Cada `HistoricoPsicologico` é elaborado por exatamente um psicólogo.
+
+
+### Entidade Agenda
+ 
+A entidade Agenda armazena registros de compromissos e acompanhamentos vinculados a alunos e membros da equipe.
+ 
+Seus atributos são:
+ 
+- `id_agenda` (PK)
+- `tipo_user`
+- `registro`
+- `data`
+- `status`
+- `id_membro` (FK)
+- `id_aluno` (FK)
+
+Cardinalidades:
+ 
+- Um `Aluno` pode possuir zero ou muitos registros na agenda.
+- Um `MembroEquipe` pode criar zero ou muitos compromissos.
+
+
+### Entidade Oportunidade
+ 
+A entidade `Oportunidade` representa conteúdos disponibilizados pela equipe, como vagas de emprego, bolsas de estudo, cursos e eventos externos.
+ 
+Seus atributos são:
+ 
+- `id_oportunidade` (PK)
+- `titulo`
+- `descricao`
+- `tipo`
+- `data_publicacao`
+- `id_membro` (FK)
+
+Cardinalidades:
+ 
+- Um `MembroEquipe` pode publicar zero ou muitas oportunidades.
+- Cada `Oportunidade` é publicada por exatamente um membro da equipe.
+
+
+### Entidade Notificacao
+ 
+A entidade `Notificacao` registra as comunicações enviadas pelos membros da equipe e psicólogos no sistema.
+ 
+Seus atributos são:
+ 
+- `id_notificacao` (PK)
+- `titulo`
+- `mensagem`
+- `data_envio`
+- `tipo`
+- `id_aluno` (FK)
+- `id_remetente`
+- `tipo_remetente`
+- `nome_remetente`
+
+Cardinalidades:
+ 
+- Um `Aluno` pode receber zero ou muitas notificações.
+- Cada `Notificacao` está associada a exatamente um aluno.
+- Cada `Notificacao` é enviada por exatamente um remetente, identificado pelos campos `id_remetente` e `tipo_remetente`, que indicam respectivamente o identificador e o tipo do emissor (membro da equipe ou psicólogo).
+
+
+### Principais Relacionamentos e Cardinalidades
+ 
+Os principais relacionamentos definidos no DER são:
+ 
+- `Aluno` 1:N `Participacao`
+- `Atividade` 1:N `Participacao`
+- `Aluno` 1:N `Label`
+- `Aluno` 1:N `Agenda`
+- `Aluno` 1:N `HistoricoPsicologico`
+- `MembroEquipe` 1:N `Oportunidade`
+- `MembroEquipe` 1:N `Agenda`
+- `Aluno` 1:N `Notificacao`
+- `Remetente` (polimórfico) 1:N `Notificacao`
+- `Psicologo` 1:N `HistoricoPsicologico`
+
+
+
+### Decisões de Modelagem
+ 
+A principal decisão arquitetural foi a criação da entidade Atividade, responsável por unificar cursos, eventos, mentorias e aulas em uma estrutura única. O atributo nota foi posicionado na entidade Participacao, pois representa o desempenho individual de cada aluno em uma atividade específica, e não uma característica da atividade em si.. Essa abordagem reduz a redundância de dados e facilita a manutenção do sistema, uma vez que a entidade `Participacao` passa a referenciar um único tipo de objeto para registrar o vínculo entre alunos e atividades.
+ 
+Outra decisão importante foi a adoção da entidade associativa Participacao, responsável por implementar o relacionamento muitos-para-muitos entre alunos e atividades, além de possibilitar o armazenamento de informações específicas da relação, como data e status da participação.
+
+O modelo foi construído respeitando a Terceira Forma Normal (3FN). Não há dependências transitivas entre atributos não-chave, e todos os atributos dependem exclusivamente de suas respectivas chaves primárias, contribuindo para a redução de redundâncias e para a integridade estrutural do banco de dados
+ 
+### Limitações Conhecidas do Modelo
+
+A unificação de cursos, eventos, mentorias e aulas no atributo "tipo" da entidade Atividade simplifica o modelo e reduz redundâncias, porém implica perda de especificidade estrutural entre os tipos. Caso futuramente seja necessário armazenar atributos exclusivos de cada tipo, como carga horária para cursos ou palestrante para eventos, o modelo exigirá refatoração. Essa é uma limitação conhecida e aceita, justificada pelo escopo atual do sistema.
+
+A entidade `Notificacao` adota associação polimórfica para identificar o remetente, por meio dos campos `id_remetente` e `tipo_remetente`, em vez de uma superclasse `Remetente` formal. Essa abordagem simplifica a implementação, mas delega a integridade referencial à camada de aplicação.
+
+O campo `nome_remetente` em `Notificacao` representa uma desnormalização intencional, adotada para simplificar consultas decorrentes da associação polimórfica. Essa decisão implica redundância controlada e exige sincronização pelo código da aplicação em caso de atualização.
+
+### Conclusão
+
+ 
+O Diagrama Entidade-Relacionamento do PulseManager representa de forma estruturada, consistente e normalizada os dados necessários para o funcionamento do sistema. A identificação explícita de chaves primárias, chaves estrangeiras e cardinalidades garante integridade referencial e aderência às regras de negócio, estabelecendo uma base sólida para a construção do Modelo Relacional e do Modelo Físico do banco de dados.
+
+
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
