@@ -929,7 +929,7 @@ Seus atributos são:
 - `mensagem`
 - `data_envio`
 - `tipo`
-- `id_remetente` (FK lógica)
+- `id_remetente`
 - `tipo_remetente`
 - `nome_remetente`
 Cardinalidades:
@@ -972,7 +972,7 @@ O Diagrama Entidade-Relacionamento do PulseManager representa de forma estrutura
 
 <div align = "center">
 <sup>Figura 5: Diagrama Entidade-Relacionamento (DER)</sup><br>
-<img src="./assets/dernovo.jpeg"><br>
+<img src="./assets/DER.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -994,7 +994,7 @@ Com base na modelagem de dados do projeto, o modelo relacional foi definido para
 | `membro_equipe` | `id_membro` | `nome`, `cargo`, `email` | - |
 | `psicologo` | `id_psi` | `nome_psi`, `cargo_psi` | - |
 | `atividade` | `id_atividade` | `titulo`, `tipo`, `descricao`, `data` | - |
-| `notificacao` | `id_notificacao` | `titulo`, `mensagem`, `data_envio`, `tipo`, `tipo_remetente`, `nome_remetente` | `id_aluno`, `id_remetente` |
+| `notificacao` | `id_notificacao` | `titulo`, `mensagem`, `data_envio`, `tipo`, `id_remetente`, `tipo_remetente`, `nome_remetente` | `id_aluno` |
 | `oportunidade` | `id_oportunidade` | `titulo`, `descricao`, `tipo`, `data_publicacao` | `id_membro` |
 | `agenda` | `id_agenda` | `tipo_user`, `registro`, `data`, `status` | `id_membro`, `id_aluno` |
 | `label` | `id_lbl` | `descricao`, `tipo_label` | `id_aluno`, `id_psi` |
@@ -1042,7 +1042,6 @@ Com base nas cardinalidades descritas no DER, as chaves estrangeiras foram posic
 | Tabela | Chave estrangeira | Referência | Finalidade |
 |---|---|---|---|
 | `notificacao` | `id_aluno` | `aluno(id_aluno)` | Identificar o aluno destinatário da notificação. |
-| `notificacao` | `id_remetente` | `membro_equipe(id_membro)` ou `psicologo(id_psi)` | Identificar o remetente da notificação conforme o valor de `tipo_remetente`. |
 | `oportunidade` | `id_membro` | `membro_equipe(id_membro)` | Indicar qual membro da equipe publicou ou administra a oportunidade. |
 | `agenda` | `id_membro` | `membro_equipe(id_membro)` | Registrar o responsável interno pelo compromisso ou acompanhamento. |
 | `agenda` | `id_aluno` | `aluno(id_aluno)` | Associar o compromisso ao aluno envolvido. |
@@ -1238,34 +1237,6 @@ CREATE TABLE IF NOT EXISTS notificacao (
   FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno)
 );
 
-CREATE OR REPLACE FUNCTION validar_remetente_notificacao()
-RETURNS TRIGGER AS $$
-BEGIN
-  IF NEW.tipo_remetente = 'membro_equipe' THEN
-    IF NOT EXISTS (
-      SELECT 1 FROM membro_equipe WHERE id_membro = NEW.id_remetente
-    ) THEN
-      RAISE EXCEPTION 'Remetente membro_equipe % não encontrado', NEW.id_remetente;
-    END IF;
-  ELSIF NEW.tipo_remetente = 'psicologo' THEN
-    IF NOT EXISTS (
-      SELECT 1 FROM psicologo WHERE id_psi = NEW.id_remetente
-    ) THEN
-      RAISE EXCEPTION 'Remetente psicologo % não encontrado', NEW.id_remetente;
-    END IF;
-  END IF;
-
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS trg_validar_remetente_notificacao ON notificacao;
-
-CREATE TRIGGER trg_validar_remetente_notificacao
-BEFORE INSERT OR UPDATE ON notificacao
-FOR EACH ROW
-EXECUTE FUNCTION validar_remetente_notificacao();
-
 CREATE TABLE IF NOT EXISTS oportunidade (
   id_oportunidade INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   titulo VARCHAR(255) NOT NULL,
@@ -1325,7 +1296,7 @@ As restrições `PRIMARY KEY` garantem identificação única para cada registro
 
 As restrições `CHECK` foram usadas em regras numéricas simples, como a validação da idade do aluno e da nota em `participacao`. A coluna `nota` foi definida como `DECIMAL(3,1)` para permitir avaliações de 0 a 10 com uma casa decimal, como `8.5` ou `10.0`, sem permitir valores fora da escala definida. Já os tipos `ENUM` limitam campos categóricos a valores previamente definidos, reduzindo inconsistências de preenchimento em campos como `status`, `cargo`, `tipo`, `tipo_user`, `tipo_label` e `tipo_remetente`.
 
-Na tabela `notificacao`, `id_remetente` funciona como uma referência polimórfica: quando `tipo_remetente` é `membro_equipe`, o identificador deve existir em `membro_equipe(id_membro)`; quando é `psicologo`, deve existir em `psicologo(id_psi)`. Como o PostgreSQL não permite que uma única chave estrangeira convencional aponte condicionalmente para duas tabelas diferentes, essa validação foi representada no modelo físico por uma trigger.
+Na tabela `notificacao`, `id_remetente` foi mantido como identificador do remetente, sem chave estrangeira física, conforme o DER. O campo `tipo_remetente` indica se esse identificador se refere a um `membro_equipe` ou a um `psicologo`, enquanto `nome_remetente` preserva o nome exibido na comunicação.
 
 #### Mapeamento da Ordem de Dependência
 
@@ -1342,7 +1313,7 @@ No modelo da solução, não há dependência circular entre as tabelas. As enti
 | 3 | `membro_equipe` | Nenhuma tabela | Entidade base para registros administrativos, oportunidades, agenda e notificações. |
 | 4 | `psicologo` | Nenhuma tabela | Entidade base para notificações, labels e registros de acompanhamento psicológico. |
 | 5 | `atividade` | Nenhuma tabela | Entidade base das atividades realizadas ou acompanhadas pela plataforma. |
-| 6 | `notificacao` | `aluno`, `membro_equipe`, `psicologo` | Precisa do aluno destinatário e do remetente cadastrado, validado conforme `tipo_remetente`. |
+| 6 | `notificacao` | `aluno` | Precisa do aluno destinatário; o remetente é identificado por `id_remetente`, `tipo_remetente` e `nome_remetente`, sem chave estrangeira física. |
 | 7 | `oportunidade` | `membro_equipe` | Precisa do membro da equipe responsável pela publicação ou administração da oportunidade. |
 | 8 | `agenda` | `membro_equipe`, `aluno` | Depende do aluno envolvido e do responsável interno pelo compromisso. |
 | 9 | `label` | `aluno`, `psicologo` | Depende do aluno e do psicólogo responsável para registrar marcações, classificações ou prioridades. |
