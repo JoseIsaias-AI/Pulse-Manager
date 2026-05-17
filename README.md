@@ -10,7 +10,7 @@
 
 ## :student: Integrantes: 
 - <a href="https://www.linkedin.com/in/ana-carvalho-27268634b/">Ana Luiza Lima de Carvalho</a>
-- <a href="http://www.linkedin.com/in/felipe-sodr%C3%A9-pess%C3%B4a">Felipe  Sodré Pessôa</a> 
+- <a href="http://www.linkedin.com/in/felipe-sodr%C3%A9-pess%C3%B4a">Felipe Sodré Pessôa</a> 
 - <a href="https://www.linkedin.com/in/gabrielibattini/">Gabrieli Marques Battini</a> 
 - <a href="https://www.linkedin.com/in/joseisaias/">José Isaias Menezes Santos</a>
 - <a href="https://www.linkedin.com/in/nicolas-rigolin-carrascossa-4492b2261/">Nicolas Rigolin Carrascossa</a> 
