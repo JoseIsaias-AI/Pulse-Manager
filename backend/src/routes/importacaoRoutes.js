@@ -1,9 +1,3 @@
-const express = require("express");
+﻿// Placeholder: rotas futuras de importacao de dados
+// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
 
-const importacaoController = require("../controllers/importacaoController");
-
-const router = express.Router();
-
-router.post("/csv", importacaoController.importCsv);
-
-module.exports = router;

@@ -802,7 +802,7 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 
 <div align="center">
 <sup>Figura 8: Diagrama Casos de Uso.</sup><br>
-<img src="./assets/diagramaUC.png"><br>
+<img src="./assets/diagrama-casos-de-uso.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
