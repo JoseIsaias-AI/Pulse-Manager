@@ -908,6 +908,40 @@ Caso queira acessar os wireframes completos, acesse o link: https://www.canva.co
 
 </div>
 
+
+
+<div align="center">
+    <img src="assets/fluxo_Aluno.png" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+Neste fluxo, o aluno faz login com CPF e nome, acessa a tela inicial com jornada, eventos e oportunidades, e navega para Perfil, Dashboard (progresso/presenças), Agenda (calendário) ou Notificações.
+</div>
+
+
+
+<div align="center">
+    <img src="assets/Fluxo_gestor.png" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+O gestor faz login com e-mail e senha, acessa a tela inicial com visão geral da turma (alunos conectafos, transformados e evolução), e navega para Dashboard (performance/gráficos), Lista de Alunos (com filtros e acesso ao perfil individual), Agenda ou Notificações.
+</div>
+
+
+<div align="center">
+    <img src="assets/fluxo_psicologo.png" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+O psicólogo faz login com e-mail, nome e senha, acessa a tela inicial com foco em bem-estar (alunos acompanhados, em atenção, sessões e alertas com flags), e navega para lista de Alunos (com ação de notificar por card), Dashboard (saúde mental/bem-estar por curso e faixa) Agenda ou Notificações.
+</div>
+
+
+
 <div align="center">
     <img src="assets/Wireframe1A.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
