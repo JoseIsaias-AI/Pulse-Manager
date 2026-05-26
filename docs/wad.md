@@ -1190,6 +1190,94 @@ Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras
 | Psicólogo | Envio de notificações | RN011 | Pois a equipe interna tem autonomia no quesito de registros no sistema, assim, precisa utilizar notificações para a coleta de informações |
 | Psicólogo | Acesso ao desempenho acadêmico | RN020, RN017 | Pois o psicólogo pode consultar notas, frequência e indicadores acadêmicos apenas dos alunos que monitora, mantendo a restrição de acesso aos dados pessoais |
 
+### 3.6.1.1 Atualização do Modelo Entidade-Relacionamento
+
+Nesta sprint, o Modelo Entidade-Relacionamento (MER) foi atualizado para refletir as mudanças realizadas no banco de dados e no modelo físico da aplicação. A estrutura principal do MER foi mantida, preservando as entidades e relacionamentos já existentes, mas foram adicionados novos atributos para representar melhor a jornada do aluno, o acompanhamento das atividades, a gestão de oportunidades e o controle de agenda.
+
+As alterações realizadas não criaram novas entidades principais nem modificaram os relacionamentos centrais do modelo. O foco foi complementar entidades já existentes com dados que passaram a ser relevantes para a implementação no Supabase e para os fluxos previstos no sistema.
+
+#### Alterações realizadas na entidade `aluno`
+
+A entidade `aluno` recebeu novos atributos relacionados à jornada institucional do jovem dentro da Pulse Mais:
+
+- `nivel_jornada`;
+- `perfil_socioeconomico`;
+- `curso`;
+- `origem_participacao`.
+
+Esses atributos foram adicionados porque o aluno não deve ser representado apenas por dados cadastrais, como nome, e-mail, idade, gênero, ocupação e escolaridade. A partir da atualização, o MER também passa a representar informações ligadas à trajetória do aluno na instituição.
+
+O atributo `nivel_jornada` permite classificar o aluno conforme sua etapa na jornada da Pulse Mais, como conectado, capacitado ou transformado. O atributo `perfil_socioeconomico` registra uma informação importante sobre o público atendido pela organização. Já o atributo `curso` indica o curso ou programa principal associado ao aluno, enquanto `origem_participacao` permite identificar por qual iniciativa o jovem entrou na base da Pulse Mais.
+
+#### Alterações realizadas na entidade `atividade`
+
+A entidade `atividade` recebeu os atributos:
+
+- `modalidade`;
+- `carga_horaria`.
+
+Esses campos foram adicionados para detalhar melhor as atividades realizadas pela Pulse Mais. A `modalidade` indica se a atividade ocorre de forma presencial, online ou híbrida. A `carga_horaria` registra a duração da atividade em horas.
+
+Além disso, o atributo `nota`, que antes aparecia associado à atividade, foi realocado para a entidade `participacao`. Essa alteração foi necessária porque a nota não pertence à atividade de forma geral, mas sim à participação de um aluno em uma atividade específica.
+
+#### Alterações realizadas na entidade `participacao`
+
+A entidade `participacao` foi mantida como uma entidade associativa entre `aluno` e `atividade`, mas recebeu novos atributos para representar melhor essa relação:
+
+- `nota`;
+- `certificado`.
+
+A inclusão de `nota` em `participacao` torna o modelo mais correto, pois diferentes alunos podem ter notas diferentes em uma mesma atividade. Dessa forma, a nota deve estar vinculada à participação individual do aluno, e não à atividade em si.
+
+O atributo `certificado` foi adicionado para indicar se aquela participação gerou certificado para o aluno. Esse campo também pertence à relação entre aluno e atividade, pois uma mesma atividade pode gerar certificado para alguns alunos e não para outros.
+
+#### Alterações realizadas na entidade `oportunidade`
+
+A entidade `oportunidade` recebeu o atributo:
+
+- `prazo_inscricao`.
+
+Esse campo foi adicionado para registrar a data limite de inscrição em uma oportunidade. Com isso, o MER passa a representar melhor a gestão de oportunidades, como vagas, bolsas, cursos, eventos ou outras iniciativas divulgadas pela equipe da Pulse Mais.
+
+#### Alterações realizadas na entidade `agenda`
+
+A entidade `agenda` recebeu os atributos:
+
+- `hora_inicio`;
+- `hora_fim`.
+
+Na versão anterior, a agenda possuía apenas a data do compromisso. Com a atualização, passa a ser possível representar também o horário de início e término de reuniões, mentorias, atendimentos, eventos ou outros compromissos registrados no sistema.
+
+#### Alterações realizadas na entidade `historicoPsicologico`
+
+A entidade `historicoPsicologico` também foi ajustada para ficar mais coerente com o modelo físico atualizado. O atributo `classificacao` foi substituído por:
+
+- `titulo`.
+
+Essa alteração foi feita porque o modelo físico passou a representar o histórico psicológico com os atributos `id_historico`, `observacao` e `titulo`, mantendo a entidade mais simples e alinhada ao banco implementado.
+
+#### Relacionamentos mantidos
+
+Apesar da inclusão dos novos atributos, os relacionamentos principais do MER foram preservados. Permaneceram as relações entre:
+
+- `aluno` e `notificacao`;
+- `aluno` e `agenda`;
+- `aluno` e `label`;
+- `aluno` e `historicoPsicologico`;
+- `aluno` e `participacao`;
+- `participacao` e `atividade`;
+- `membroEquipe` e `oportunidade`;
+- `membroEquipe` e `agenda`;
+- `psicologo` e `label`;
+- `psicologo` e `historicoPsicologico`;
+- `remetente` e `notificacao`.
+
+A estrutura geral do modelo foi mantida para evitar aumento desnecessário de complexidade nesta sprint. Assim, a atualização concentrou-se em tornar as entidades mais completas, sem alterar a lógica central dos relacionamentos.
+
+Com as alterações realizadas, o MER passou a representar melhor a realidade operacional da Pulse Mais. A entidade `aluno` agora contempla informações de jornada e segmentação. A entidade `atividade` passou a representar formato e duração. A entidade `participacao` passou a registrar desempenho e certificação. A entidade `oportunidade` passou a controlar prazo de inscrição, e a entidade `agenda` passou a registrar horários.
+
+Essas atualizações fortalecem a coerência entre o MER, o DER, o modelo físico e a implementação no Supabase. Além disso, apoiam funcionalidades futuras do sistema, como filtros, dashboard, histórico do aluno, controle de atividades, gestão de oportunidades e acompanhamento da jornada dos jovens.
+
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
