@@ -1,12 +1,3 @@
-const express = require("express");
+﻿// Placeholder: rotas futuras do UC-03 e UC-06 para cadastro e perfil do aluno
+// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
 
-const alunoController = require("../controllers/alunoController");
-const { validateAlunoPayload } = require("../middlewares/validacao");
-
-const router = express.Router();
-
-router.get("/", alunoController.listAlunos);
-router.get("/:id", alunoController.getAlunoById);
-router.post("/", validateAlunoPayload, alunoController.createAluno);
-
-module.exports = router;
