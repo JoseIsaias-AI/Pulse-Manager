@@ -1461,6 +1461,60 @@ O Diagrama Entidade-Relacionamento do PulseManager representa de forma estrutura
 
 </div>
 
+### 3.6.2.1. Atualização do DER com novos atributos da Sprint
+
+Duarnte a sprint 03, o Diagrama Entidade-Relacionamento (DER) foi atualizado para refletir as alterações realizadas no escopo do banco de dados. A atualização teve como objetivo complementar a modelagem já existente, adicionando novos atributos em entidades previamente definidas, sem criar novas tabelas ou modificar os relacionamentos originais.
+
+A estrutura geral do DER foi mantida, preservando as entidades `aluno`, `atividade`, `participacao`, `oportunidade`, `agenda`, `notificacao`, `membro_equipe`, `psicologo`, `label` e `historico_psicologico`. As alterações realizadas foram pontuais e buscaram tornar o modelo mais aderente à jornada dos jovens atendidos pela Pulse Mais, ao acompanhamento de atividades, à gestão de oportunidades e ao controle de agenda.
+
+#### Alterações realizadas no DER
+
+| Entidade | Atributos adicionados | Tipo de dado | Justificativa |
+|---|---|---|---|
+| `aluno` | `nivel_jornada` | `VARCHAR` | Permite classificar o aluno conforme sua etapa na jornada institucional da Pulse Mais, como conectado, capacitado ou transformado. |
+| `aluno` | `perfil_socioeconomico` | `VARCHAR` | Registra uma informação relevante sobre o público atendido, apoiando análises de impacto social e segmentação. |
+| `aluno` | `curso` | `VARCHAR` | Permite indicar o curso ou programa principal associado ao aluno nesta etapa da modelagem. |
+| `aluno` | `origem_participacao` | `VARCHAR` | Identifica por qual iniciativa o aluno entrou ou se vinculou à Pulse Mais, como palestra, vivência, curso ou programa. |
+| `atividade` | `modalidade` | `VARCHAR` | Indica se a atividade ocorre de forma presencial, online ou híbrida. |
+| `atividade` | `carga_horaria` | `INT` | Registra a duração da atividade em horas. |
+| `participacao` | `certificado` | `BOOLEAN` | Indica se a participação do aluno em determinada atividade gerou certificado. |
+| `oportunidade` | `prazo_inscricao` | `DATE` | Registra a data limite para inscrição em uma oportunidade. |
+| `agenda` | `hora_inicio` | `TIME` | Registra o horário de início de um compromisso ou atendimento. |
+| `agenda` | `hora_fim` | `TIME` | Registra o horário de término de um compromisso ou atendimento. |
+
+#### Entidades atualizadas no DER
+
+A entidade `aluno` recebeu os atributos `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`. Esses campos ampliam a capacidade do sistema de representar a jornada do jovem, permitindo que a equipe da Pulse Mais identifique em qual estágio o aluno se encontra, qual seu perfil socioeconômico, qual curso ou programa está associado a ele e por qual iniciativa ocorreu sua entrada na organização.
+
+A entidade `atividade` foi atualizada com os atributos `modalidade` e `carga_horaria`. Essa alteração permite detalhar melhor as atividades registradas no sistema, diferenciando atividades presenciais, online ou híbridas, além de registrar sua duração.
+
+A entidade `participacao` recebeu o atributo `certificado`. Esse campo foi incluído porque a certificação depende da relação entre um aluno e uma atividade específica. Dessa forma, o certificado não foi adicionado diretamente em `aluno` nem em `atividade`, mas sim na entidade associativa `participacao`.
+
+A entidade `oportunidade` foi atualizada com o atributo `prazo_inscricao`, permitindo que o sistema registre a data limite para inscrição em vagas, bolsas, cursos, eventos ou outras oportunidades divulgadas pela equipe.
+
+A entidade `agenda` recebeu os atributos `hora_inicio` e `hora_fim`, complementando o campo `data` já existente. Com isso, a agenda passa a representar não apenas o dia do compromisso, mas também o intervalo de horário previsto para atendimentos, reuniões, mentorias ou eventos.
+
+#### Impacto das alterações na modelagem
+
+As alterações realizadas no DER não modificaram as cardinalidades nem os relacionamentos entre as entidades. O objetivo foi enriquecer o modelo existente com atributos que apoiem melhor os fluxos previstos no sistema.
+
+Com os novos campos, o DER passa a oferecer suporte mais claro para:
+
+- classificação dos alunos por etapa da jornada;
+- segmentação por perfil socioeconômico;
+- identificação do curso ou programa associado ao aluno;
+- rastreamento da origem de participação do jovem;
+- detalhamento de atividades por modalidade e carga horária;
+- controle de certificação por participação;
+- acompanhamento de prazos de oportunidades;
+- registro mais preciso de compromissos na agenda.
+
+#### Resultado da atualização
+
+A versão atualizada do DER mantém a estrutura original da modelagem, mas passa a representar informações mais específicas sobre a operação da Pulse Mais. As entidades centrais continuam as mesmas, porém agora carregam atributos mais úteis para filtros, dashboards, histórico do aluno, acompanhamento de oportunidades e organização de agenda.
+
+Essa atualização fortalece a coerência entre o banco de dados, o WAD e a implementação técnica no Supabase, além de demonstrar a evolução da modelagem ao longo da sprint.
+
 
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
