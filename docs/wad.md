@@ -1164,6 +1164,39 @@ Em casos onde a Lucide não oferecer o ícone necessário, as bibliotecas **Phos
 
 _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)_
 
+<div align="center">
+<sup>Figura X: Tela de login de gestores e psicólogos.</sup><br>
+<img src="./assets/login-gestor-psicologo.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+A tela de login de gestores e psicólogos é a porta de entrada da plataforma para esses perfis. Nela, o usuário se autentica com e-mail e senha para acessar as funcionalidades disponíveis ao seu perfil. O botão "Entrar" redireciona o usuário para a tela inicial correspondente.
+Esta tela está associada às User Stories US05 e US07, de acordo com o critério de aceite número 1 de cada uma. Isso porque o acesso controlado por credenciais garante que apenas profissionais autorizados visualizem e interajam com os dados dos alunos na plataforma.
+</div>
+
+<div align="center">
+<sup>Figura X: Tela de login do aluno.</sup><br>
+<img src="./assets/login-aluno.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+A tela de login do aluno é a página inicial da plataforma para o perfil estudante. Nela, o aluno se autentica com CPF e nome completo, sem necessidade de senha, facilitando o acesso para o público jovem atendido pela Pulse Mais. O botão "Entrar" redireciona o aluno para sua tela inicial personalizada.
+Esta tela está associada às User Stories US08 e US09, de acordo com o critério de aceite número 1 de cada uma. Isso porque o método de autenticação foi pensado para ser simples e acessível, garantindo que o aluno consiga entrar na plataforma e acompanhar seus resultados e eventos sem barreiras.
+</div>
+
+<div align="center">
+<sup>Figura X: Tela inicial do aluno.</sup><br>
+<img src="./assets/home_aluno.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+A tela inicial do aluno é onde o estudante tem uma visão geral da sua jornada na plataforma. Nela estão dispostos seus principais indicadores de desempenho, o progresso nos módulos do curso, os próximos eventos da Pulse Mais e um acesso rápido ao suporte de saúde mental. A navegação lateral permite que o aluno transite entre as demais seções da plataforma.
+Esta tela está associada às User Stories US08, US09 e US10, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza o acesso aos resultados pessoais do aluno, exibe os eventos e faltas de forma clara e disponibiliza o contato direto com o psicólogo, tornando a navegação intuitiva e completa para o estudante.
+</div>
+
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
