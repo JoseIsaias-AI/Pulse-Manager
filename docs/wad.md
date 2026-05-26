@@ -1175,6 +1175,17 @@ A tela de login de gestores e psicólogos é a porta de entrada da plataforma pa
 Esta tela está associada às User Stories US05 e US07, de acordo com o critério de aceite número 1 de cada uma. Isso porque o acesso controlado por credenciais garante que apenas profissionais autorizados visualizem e interajam com os dados dos alunos na plataforma.
 </div>
 
+<div align="center">
+<sup>Figura X: Tela de login do aluno.</sup><br>
+<img src="./assets/login-aluno.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+A tela de login do aluno é a página inicial da plataforma para o perfil estudante. Nela, o aluno se autentica com CPF e nome completo, sem necessidade de senha, facilitando o acesso para o público jovem atendido pela Pulse Mais. O botão "Entrar" redireciona o aluno para sua tela inicial personalizada.
+Esta tela está associada às User Stories US08 e US09, de acordo com o critério de aceite número 1 de cada uma. Isso porque o método de autenticação foi pensado para ser simples e acessível, garantindo que o aluno consiga entrar na plataforma e acompanhar seus resultados e eventos sem barreiras.
+</div>
+
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
