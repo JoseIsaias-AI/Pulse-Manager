@@ -209,7 +209,7 @@ A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, class
 </div>
 
 <div align="center">
-<sup>Figura 4: Matriz de Riscos da Pulse Manager.</sup><br>
+<sup>Figura 3: Matriz de Riscos da Pulse Manager.</sup><br>
 <img src="./assets/imagem.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
@@ -543,16 +543,16 @@ Personas: A persona é definida como uma descrição realista e detalhada do usu
 
 
 <div align="center">
-<sup>Figura 5: Persona 01.</sup><br>
+<sup>Figura 4: Persona 01.</sup><br>
     <img src="assets/personaUm.jpg" width="60%"><br>
 
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
-<sup>Figura 6: Persona 02.</sup><br>
+<sup>Figura 5: Persona 02.</sup><br>
     <img src="assets/personaDois.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
-<sup>Figura 7: Persona 03.</sup><br>
+<sup>Figura 6: Persona 03.</sup><br>
     <img src="assets/personaTres.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -801,7 +801,7 @@ _Posicione aqui o diagrama de arquitetura da solução, indicando as camadas pri
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
 <div align="center">
-<sup>Figura 8: Diagrama Casos de Uso.</sup><br>
+<sup>Figura 7: Diagrama Casos de Uso.</sup><br>
 <img src="./assets/diagrama-casos-de-uso.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -815,7 +815,7 @@ O Diagrama de Classes de Domínio do sistema Pulse Mais estabelece a estrutura c
 </div>
 
 <div align="center">
-<sup>Figura 3: Diagrama Classes de Domínio.</sup><br>
+<sup>Figura 8: Diagrama Classes de Domínio.</sup><br>
 <img src="./assets/Diagrama_Classes_Dominio.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -862,6 +862,12 @@ As relações principais entre as classes foram mantidas, preservando a estrutur
 
 Dessa forma, o Diagrama de Classes do Domínio passou a representar melhor a lógica do sistema, diferenciando corretamente as entidades principais, registros de apoio e classes associativas. Portanto, a atualização melhora a coerência entre o diagrama, o DER, o modelo físico e a implementação no Supabase.
 
+<div align="center">
+<sup>Figura 9: Diagrama de Classes do Domínio atualizado.</sup><br>
+<img src="../docs/assets/Diagrama_Classes_Dominio_atualizado.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
+
 ### 3.2.4. Diagrama de Sequência UML
 
 <div align="justify">
@@ -873,7 +879,7 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 #### 3.2.4.1. UC-03 — Manter cadastro do aluno
 
 <div align="center">
-<sup>Figura 4: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup><br>
+<sup>Figura 10: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup><br>
 <img src="../docs/assets/diagrama-sequencia-1.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -887,7 +893,7 @@ O fluxo começa quando o membro da equipe preenche o formulário de cadastro na 
 #### 3.2.4.2. UC-06 — Visualizar histórico consolidado do aluno
 
 <div align="center">
-<sup>Figura 5: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
+<sup>Figura 11: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
 <img src="../docs/assets/diagrama-sequencia-2.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -901,7 +907,7 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 #### 3.2.4.3. UC-08 — Registrar participação em atividade
 
 <div align="center">
-<sup>Figura 6: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup><br>
+<sup>Figura 12: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup><br>
 <img src="../docs/assets/diagrama-sequencia-3.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -915,7 +921,7 @@ O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e 
 #### 3.2.4.4. UC-15 — Visualizar dashboard de impacto
 
 <div align="center">
-<sup>Figura 7: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
+<sup>Figura 13: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
 <img src="../docs/assets/diagrama-sequencia-4.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -929,7 +935,7 @@ A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como 
 #### 3.2.4.5. UC-22 — Manter registros de saúde mental
 
 <div align="center">
-<sup>Figura 8: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
+<sup>Figura 14: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
 <img src="../docs/assets/diagrama-sequencia-5.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -1123,7 +1129,7 @@ A partir destes conceitos e utilizando como base o TAPI e outros materiais dispo
 </div>
 
 <div align="center">
-<sup>Figura 9: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
+<sup>Figura 15: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
 <img src="./assets/mer.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -1196,7 +1202,7 @@ O DER explicita as entidades do sistema, seus atributos, as respectivas chaves p
 </div>
 
 <div align="center">
-<sup>Figura 6: Diagrama Entidade-Relacionamento.</sup><br>
+<sup>Figura 16: Diagrama Entidade-Relacionamento.</sup><br>
 <img src="./assets/diagram.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
@@ -1498,7 +1504,7 @@ O Diagrama Entidade-Relacionamento do PulseManager representa de forma estrutura
 Duarnte a sprint 03, o Diagrama Entidade-Relacionamento (DER) foi atualizado para refletir as alterações realizadas no escopo do banco de dados. A atualização teve como objetivo complementar a modelagem já existente, adicionando novos atributos em entidades previamente definidas, sem criar novas tabelas ou modificar os relacionamentos originais.
 
 <div align="center">
-<sup>Figura 7: Diagrama Entidade-Relacionamento atualizado.</sup><br>
+<sup>Figura 17: Diagrama Entidade-Relacionamento atualizado.</sup><br>
 <img src="./assets/diagram_atualizado.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
@@ -2303,3 +2309,6 @@ SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia M
 # <a name="c9"></a>Anexos
 
 _Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
+
+
+
