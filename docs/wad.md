@@ -830,6 +830,38 @@ No que tange aos registros de impacto e classificação, a classe Atividade arma
 
 </div>
 
+### 3.2.3.1. Atualização do Diagrama de Classes do Domínio
+
+Nesta sprint, o Diagrama de Classes do Domínio foi atualizado para refletir melhor a estrutura atual da modelagem e as alterações realizadas no banco de dados. O objetivo principal foi alinhar o diagrama ao modelo físico implementado no Supabase, mantendo a organização geral já existente, mas corrigindo pontos que estavam simplificados ou inconsistentes.
+
+A principal mudança realizada foi a criação da classe `Participacao` como uma classe lógica/associativa entre `Aluno` e `Atividade`. Na versão anterior, a participação aparecia de forma simplificada dentro da classe `Atividade`, como se fosse um atributo booleano. Essa representação foi corrigida porque a participação não pertence apenas à atividade, mas sim à relação entre um aluno e uma atividade específica.
+
+Com isso, a classe `Participacao` passou a representar informações como:
+
+- `idPart`;
+- `dataPart`;
+- `statusPart`;
+- `idAluno`;
+- `idAtividade`;
+- `nota`;
+- `certificado`.
+
+Essa alteração torna o diagrama mais coerente com o banco de dados, já que a tabela `participacao` existe justamente para registrar quais alunos participaram de quais atividades, qual foi o status dessa participação, a nota obtida e se houve emissão de certificado.
+
+Além disso, foram adicionados ao diagrama os novos atributos criados nesta sprint. Na classe `Aluno`, foram incluídos os campos `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`, permitindo representar melhor a jornada do jovem dentro da Pulse Mais. Esses atributos ajudam a classificar o aluno, indicar seu contexto socioeconômico, registrar o curso ou programa associado e identificar sua origem de participação na instituição.
+
+Na classe `Atividade`, foram adicionados os atributos `modalidade` e `carga_horaria`. Esses campos permitem diferenciar se a atividade é presencial, online ou híbrida, além de registrar sua duração em horas.
+
+Na classe `Oportunidade`, foi incluído o atributo `prazo_inscricao`, permitindo representar a data limite para inscrição em vagas, cursos, bolsas, eventos ou outras oportunidades divulgadas pela equipe.
+
+Na classe `Agenda`, foram adicionados os atributos `hora_inicio` e `hora_fim`, tornando a representação dos compromissos mais completa. Antes, a agenda indicava apenas a data, mas agora também permite visualizar o intervalo de horário previsto para atendimentos, reuniões, mentorias ou eventos.
+
+Também foram feitos ajustes de coerência no diagrama. A classe `HistoricoPsicologico` foi revisada para manter os atributos alinhados ao modelo físico, utilizando `observacao`, `titulo` e `idHistorico`. A classe `Psicologo` também foi simplificada para representar apenas os dados previstos no banco atual.
+
+As relações principais entre as classes foram mantidas, preservando a estrutura do domínio. O aluno continua sendo a entidade central do modelo, relacionado a notificações, labels, histórico psicológico, agenda, oportunidades e participações. A diferença é que, agora, a participação em atividades aparece de forma mais adequada, por meio de uma classe própria.
+
+Dessa forma, o Diagrama de Classes do Domínio passou a representar melhor a lógica do sistema, diferenciando corretamente entidades principais, registros de apoio e classes associativas. A atualização melhora a coerência entre o diagrama, o DER, o modelo físico e a implementação no Supabase.
+
 ### 3.2.4. Diagrama de Sequência UML
 
 <div align="justify">
@@ -1689,7 +1721,6 @@ Os identificadores principais usam `GENERATED ALWAYS AS IDENTITY`, recurso do Po
 </div>
 
 ```sql
--- PostgreSQL
 
 DO $$
 BEGIN
