@@ -1,0 +1,10 @@
+﻿# Placeholder: arquivo para ignorar dependencias, builds, logs e variaveis locais.
+node_modules/
+backend/node_modules/
+dist/
+build/
+coverage/
+*.log
+.env
+.env.*.local
+

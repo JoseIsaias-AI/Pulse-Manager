@@ -1,10 +1,3 @@
-require("dotenv").config();
+﻿// Placeholder: ponto de inicializacao futuro do servidor HTTP
+// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
 
-const app = require("./src/app");
-const PORT = Number(process.env.PORT) || 3000;
-const databaseMode = process.env.DB_MODE || "memory";
-
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
-  console.log(`Modo de dados: ${databaseMode}`);
-});
