@@ -1465,6 +1465,12 @@ O Diagrama Entidade-Relacionamento do PulseManager representa de forma estrutura
 
 Duarnte a sprint 03, o Diagrama Entidade-Relacionamento (DER) foi atualizado para refletir as alterações realizadas no escopo do banco de dados. A atualização teve como objetivo complementar a modelagem já existente, adicionando novos atributos em entidades previamente definidas, sem criar novas tabelas ou modificar os relacionamentos originais.
 
+<div align="center">
+<sup>Figura 7: Diagrama Entidade-Relacionamento atualizado.</sup><br>
+<img src="./assets/diagram_atualizado.png"><br>
+<sub>Fonte: Elaborado pela equipe (2026).</sub><br>
+</div>
+
 A estrutura geral do DER foi mantida, preservando as entidades `aluno`, `atividade`, `participacao`, `oportunidade`, `agenda`, `notificacao`, `membro_equipe`, `psicologo`, `label` e `historico_psicologico`. As alterações realizadas foram pontuais e buscaram tornar o modelo mais aderente à jornada dos jovens atendidos pela Pulse Mais, ao acompanhamento de atividades, à gestão de oportunidades e ao controle de agenda.
 
 #### Alterações realizadas no DER
@@ -1950,6 +1956,151 @@ Essa sequência também orienta a ordem de carga inicial de dados. Primeiro deve
 Para exclusões estruturais, a ordem deve ser invertida: primeiro removem-se ou ajustam-se as tabelas dependentes e, somente depois, as tabelas-base. Dessa forma, evita-se quebrar vínculos ativos de chave estrangeira durante manutenções no banco.
 
 </div>
+
+### 3.6.3.1. Atualização do Modelo Físico de dados
+
+Nesta sprint, o modelo físico de dados foi atualizado para refletir as necessidades identificadas durante a implantação do banco no Supabase e o refinamento da jornada dos alunos da Pulse Mais. O modelo físico representa a estrutura concreta do banco de dados, incluindo tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e restrições utilizadas na persistência das informações.
+
+A atualização realizada teve como foco complementar tabelas já existentes, sem alterar a estrutura principal do banco. Dessa forma, não foram criadas novas entidades, nem modificados os relacionamentos previamente definidos. A decisão foi adicionar novos atributos em tabelas específicas para tornar o banco mais adequado ao acompanhamento dos alunos, atividades, participações, oportunidades e agenda.
+
+As alterações foram aplicadas diretamente nas tabelas `aluno`, `atividade`, `participacao`, `oportunidade` e `agenda`.
+
+---
+
+#### Objetivo da atualização
+
+O objetivo da atualização do modelo físico foi tornar a base de dados mais aderente aos fluxos reais da Pulse Mais, especialmente em relação a:
+
+- acompanhamento da jornada do aluno;
+- classificação dos jovens por nível de impacto;
+- registro do perfil socioeconômico;
+- identificação de curso ou programa associado;
+- rastreamento da origem de participação;
+- detalhamento das atividades;
+- controle de certificação;
+- gestão de prazos de oportunidades;
+- registro mais preciso de compromissos na agenda.
+
+Com isso, o banco passa a oferecer melhor suporte para funcionalidades previstas no sistema, como filtros, dashboard, histórico do aluno, gestão de oportunidades e acompanhamento institucional.
+
+---
+
+#### Alterações realizadas no modelo físico
+
+| Tabela | Atributo adicionado | Tipo físico | Justificativa |
+|---|---|---|---|
+| `aluno` | `nivel_jornada` | `VARCHAR(50)` | Permite classificar o aluno dentro da jornada da Pulse Mais, como conectado, capacitado ou transformado. |
+| `aluno` | `perfil_socioeconomico` | `VARCHAR(150)` | Registra informações relacionadas ao perfil social do aluno, apoiando análises de impacto e segmentação. |
+| `aluno` | `curso` | `VARCHAR(150)` | Permite registrar o curso ou programa principal associado ao aluno nesta etapa do projeto. |
+| `aluno` | `origem_participacao` | `VARCHAR(100)` | Identifica por qual iniciativa o aluno entrou ou se vinculou à Pulse Mais. |
+| `atividade` | `modalidade` | `VARCHAR(50)` | Indica se a atividade ocorre de forma presencial, online ou híbrida. |
+| `atividade` | `carga_horaria` | `INTEGER` | Registra a duração da atividade em horas. |
+| `participacao` | `certificado` | `BOOLEAN` | Indica se a participação do aluno em determinada atividade gerou certificado. |
+| `oportunidade` | `prazo_inscricao` | `DATE` | Registra a data limite para inscrição em uma oportunidade. |
+| `agenda` | `hora_inicio` | `TIME` | Registra o horário de início de um compromisso. |
+| `agenda` | `hora_fim` | `TIME` | Registra o horário de término de um compromisso. |
+
+---
+
+#### Justificativa das alterações por tabela
+
+##### Tabela `aluno`
+
+A tabela `aluno` é a entidade central do modelo, pois concentra os principais dados dos jovens acompanhados pela Pulse Mais. Na versão anterior do modelo físico, essa tabela armazenava principalmente dados cadastrais, como nome, e-mail, idade, gênero, ocupação, escolaridade, data de ingresso e status.
+
+Com a atualização, foram adicionados os campos `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`. Esses novos atributos permitem que o aluno seja analisado não apenas como um cadastro, mas como parte de uma jornada institucional.
+
+O campo `nivel_jornada` possibilita classificar o jovem de acordo com sua evolução dentro da Pulse Mais. Essa classificação pode apoiar filtros e indicadores relacionados a jovens conectados, capacitados e transformados.
+
+O campo `perfil_socioeconomico` foi incluído para registrar uma característica relevante do público atendido pela organização. Como a Pulse Mais atua com jovens de baixa renda, esse dado ajuda a manter coerência entre a base de dados e o perfil institucional da ONG.
+
+O campo `curso` foi adicionado como uma forma simples de registrar o curso ou programa principal associado ao aluno. Embora futuramente cursos possam ser representados em uma tabela própria, nesta sprint optou-se por manter o campo diretamente em `aluno` para preservar a simplicidade da implementação.
+
+O campo `origem_participacao` permite identificar por qual ação o jovem entrou na base da Pulse Mais, como palestra, vivência em empresa, curso de curta duração, Programa Pulse Mais, Programa de Mentoria ou Rede de Talentos.
+
+---
+
+##### Tabela `atividade`
+
+A tabela `atividade` representa ações realizadas pela Pulse Mais, como aulas, mentorias, eventos, workshops e avaliações. Na versão anterior, a tabela possuía campos como título, tipo, descrição e data.
+
+Foram adicionados os campos `modalidade` e `carga_horaria`.
+
+O campo `modalidade` permite indicar se a atividade foi realizada de forma presencial, online ou híbrida. Isso melhora a descrição operacional das atividades e pode apoiar futuras análises sobre formatos de participação.
+
+O campo `carga_horaria` registra a duração da atividade em horas. Esse dado é importante para mensurar o volume de formação oferecido aos alunos e pode ser utilizado futuramente em relatórios de impacto ou acompanhamento de cursos.
+
+---
+
+##### Tabela `participacao`
+
+A tabela `participacao` funciona como uma tabela associativa entre `aluno` e `atividade`, registrando a relação entre um jovem e uma atividade específica. Ela já armazenava dados como data da participação, status de participação, nota, aluno e atividade vinculados.
+
+Foi adicionado o campo `certificado`.
+
+Esse campo foi inserido nessa tabela porque a certificação depende da relação entre um aluno e uma atividade específica. Ou seja, uma atividade pode oferecer certificado, mas nem todos os alunos necessariamente receberão esse certificado. Por isso, o atributo foi posicionado em `participacao`, e não diretamente em `aluno` ou `atividade`.
+
+---
+
+##### Tabela `oportunidade`
+
+A tabela `oportunidade` armazena oportunidades disponibilizadas pela equipe da Pulse Mais, como vagas, bolsas, cursos, eventos ou outras possibilidades de desenvolvimento profissional e educacional.
+
+Foi adicionado o campo `prazo_inscricao`.
+
+Esse atributo permite registrar a data limite para inscrição em uma oportunidade. A inclusão desse campo torna a tabela mais útil para o gerenciamento de oportunidades, pois permite diferenciar oportunidades abertas, próximas do vencimento ou já encerradas.
+
+---
+
+##### Tabela `agenda`
+
+A tabela `agenda` registra compromissos vinculados a alunos e membros da equipe. Na versão anterior, ela continha a data do compromisso, mas não permitia especificar horário.
+
+Foram adicionados os campos `hora_inicio` e `hora_fim`.
+
+Esses atributos tornam o registro de agenda mais completo, pois permitem indicar o intervalo de tempo previsto para reuniões, mentorias, atendimentos, conversas de acompanhamento ou eventos. Com isso, a agenda deixa de registrar apenas o dia do compromisso e passa a registrar também sua duração temporal.
+
+---
+
+#### Tabelas não alteradas
+
+As demais tabelas do modelo físico foram mantidas sem alteração nesta sprint:
+
+- `notificacao`;
+- `membro_equipe`;
+- `psicologo`;
+- `label`;
+- `historico_psicologico`.
+
+Essas tabelas já atendiam ao escopo atual da modelagem e, por isso, não receberam novos atributos neste momento. A decisão de não alterá-las contribui para manter o modelo físico mais simples e evitar expansão desnecessária do escopo.
+
+---
+
+#### Script SQL aplicado no Supabase
+
+As alterações no modelo físico foram implementadas por meio do seguinte script SQL:
+
+```sql
+ALTER TABLE public.aluno
+ADD COLUMN IF NOT EXISTS nivel_jornada VARCHAR(50),
+ADD COLUMN IF NOT EXISTS perfil_socioeconomico VARCHAR(150),
+ADD COLUMN IF NOT EXISTS curso VARCHAR(150),
+ADD COLUMN IF NOT EXISTS origem_participacao VARCHAR(100);
+
+ALTER TABLE public.atividade
+ADD COLUMN IF NOT EXISTS modalidade VARCHAR(50),
+ADD COLUMN IF NOT EXISTS carga_horaria INTEGER;
+
+ALTER TABLE public.participacao
+ADD COLUMN IF NOT EXISTS certificado BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE public.oportunidade
+ADD COLUMN IF NOT EXISTS prazo_inscricao DATE;
+
+ALTER TABLE public.agenda
+ADD COLUMN IF NOT EXISTS hora_inicio TIME,
+ADD COLUMN IF NOT EXISTS hora_fim TIME;
+```
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
