@@ -860,7 +860,7 @@ Também foram feitos ajustes de coerência no diagrama. A classe `HistoricoPsico
 
 As relações principais entre as classes foram mantidas, preservando a estrutura do domínio. O aluno continua sendo a entidade central do modelo, relacionado a notificações, labels, histórico psicológico, agenda, oportunidades e participações. A diferença é que, agora, a participação em atividades aparece de forma mais adequada, por meio de uma classe própria.
 
-Dessa forma, o Diagrama de Classes do Domínio passou a representar melhor a lógica do sistema, diferenciando corretamente entidades principais, registros de apoio e classes associativas. A atualização melhora a coerência entre o diagrama, o DER, o modelo físico e a implementação no Supabase.
+Dessa forma, o Diagrama de Classes do Domínio passou a representar melhor a lógica do sistema, diferenciando corretamente entidades principais, registros de apoio e classes associativas. Portanto, a atualização melhora a coerência entre o diagrama, o DER, o modelo físico e a implementação no Supabase.
 
 ### 3.2.4. Diagrama de Sequência UML
 
