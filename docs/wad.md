@@ -1211,7 +1211,7 @@ Esta tela está associada às User Stories US01, US03 e US04, de acordo com os c
 
 <div align="center">
 <sup>Figura X: Tela de lista de alunos do psicólogo.</sup><br>
-<img src="./assets/lista_alunos_psicologo.png"><br>
+<img src="./assets/lista_alunos_psicologo_certo.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
