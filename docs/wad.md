@@ -1209,6 +1209,18 @@ A tela de lista de alunos é onde o gestor visualiza e gerencia todos os estudan
 Esta tela está associada às User Stories US01, US03 e US04, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza os dados de todos os alunos em um único lugar e permite à gestora buscar, filtrar e acessar perfis individuais com agilidade.
 </div>
 
+<div align="center">
+<sup>Figura X: Tela de lista de alunos do psicólogo.</sup><br>
+<img src="./assets/lista_alunos_psicologo.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+A tela de lista de alunos do psicólogo segue a mesma estrutura da tela do gestor, com busca, filtros e cards de alunos exibindo avatar, nome, curso, badge de status e barra de progresso. A diferença está no perfil de acesso: o psicólogo utiliza essa tela com foco no acompanhamento de saúde mental e bem-estar dos estudantes, identificando rapidamente alunos em situação de atenção ou risco para agir de forma proativa.
+
+Esta tela está associada às User Stories US06 e US07, de acordo com os critérios de aceite de cada uma. Isso porque a tela permite ao psicólogo visualizar todos os alunos com dificuldades em um único lugar e acessar o perfil individual para consultar histórico de notas e faltas antes de tomar uma ação de suporte.
+</div>
+
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
