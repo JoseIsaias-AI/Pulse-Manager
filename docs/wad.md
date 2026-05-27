@@ -2104,13 +2104,16 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 | Todos os usuários | RF010 | RN011, RN012, RN015, RN017, RN018, RN019, RN020 | A definir | Sistema (global) | A definir | Acesso restrito conforme perfil do usuário |
 | Equipe Pulse Mais | RF011 | RN015 | A definir | Busca / Filtros | A definir | Lista filtrada retornada pela API |
 | Gestora | RF012 | RN006, RN009 | A definir | Dashboard | A definir | KPIs exibidos no dashboard |
-| Gestora | RF013 | RN008, RN009 | `/api/impacto/resumo` | Dashboard | A definir | Indicador de empregabilidade |
-| Gestora | RF015 | RN007, RN009 | `/api/jornada/resumo` | Dashboard | A definir | Alertas e sinais de risco |
-| Gestora | RF016 | RN009 | `/api/impacto/resumo` | Dashboard | A definir | Indicador de ensino superior |
-| Equipe Pulse Mais | RF019 | - | `/api/comunicacao` | Comunicação | A definir | Comunicação cadastrada e listada |
-| Todos os usuários | RF020 | RN018 | Não implementado | Agenda | A definir | Visualização de agenda por perfil |
-| Gestora | RF021 | RN019 | Não implementado | Agenda | A definir | Item de agenda criado, editado ou cancelado |
-| Psicólogo | RF022 | RN020, RN017 | Não implementado | Perfil do aluno monitorado | A definir | Desempenho acadêmico exibido apenas para alunos monitorados |
+| Gestora | RF013 | RN008, RN009 | A definir | Dashboard | A definir | Indicador de empregabilidade |
+| Gestora | RF014 | RN005, RN006, RN009 | A definir | Dashboard | A definir | Indicador de conclusão de programa |
+| Gestora | RF015 | RN007, RN009 | A definir | Dashboard | A definir | Alertas e sinais de risco |
+| Gestora | RF016 | RN009 | A definir | Dashboard | A definir | Indicador de ensino superior |
+| Aluno | RF017 | RN013, RN017 | A definir | Portal do aluno | A definir | Dados cadastrais exibidos no portal |
+| Aluno | RF018 | RN013, RN014, RN017 | A definir | Portal do aluno | A definir | Atualização de contato realizada pelo aluno |
+| Equipe Pulse Mais | RF019 | - | A definir | Comunicação | A definir | Comunicação cadastrada e listada |
+| Todos os usuários | RF020 | RN018 | A definir | Agenda | A definir | Visualização de agenda por perfil |
+| Gestora | RF021 | RN019 | A definir | Agenda | A definir | Item de agenda criado, editado ou cancelado |
+| Psicólogo | RF022 | RN020, RN017 | A definir | Perfil do aluno monitorado | A definir | Desempenho acadêmico exibido apenas para alunos monitorados |
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
