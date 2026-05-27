@@ -1,3 +1,9 @@
-﻿// Placeholder: rotas futuras do UC-20 para registros de saude mental
-// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
+import { Router } from 'express';
+import { criar, listar } from '../controllers/saudeMentalController';
 
+const router = Router();
+
+router.get('/prontuarios', listar);
+router.post('/prontuarios', criar);
+
+export default router;
