@@ -1,5 +1,4 @@
-﻿# Placeholder: arquivo para ignorar dependencias, builds, logs e variaveis locais.
-node_modules/
+﻿node_modules/
 backend/node_modules/
 dist/
 build/
