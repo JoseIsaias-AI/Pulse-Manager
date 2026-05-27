@@ -1,17 +1,3 @@
-const { parseCsvText } = require("../utils/csvParser");
-const { createSuccessResponse, createErrorResponse } = require("../utils/helpers");
+﻿// Placeholder: entrada HTTP futura para importacao de dados
+// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
 
-function importCsv(request, response) {
-  const csvContent = String(request.body.csv || "");
-
-  if (!csvContent.trim()) {
-    return response.status(400).json(createErrorResponse("Envie o conteudo CSV em request.body.csv."));
-  }
-
-  const parsed = parseCsvText(csvContent);
-  return response.json(createSuccessResponse(parsed));
-}
-
-module.exports = {
-  importCsv
-};

@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS jornada (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  aluno_id INTEGER NOT NULL,
-  tipo TEXT NOT NULL,
-  descricao TEXT NOT NULL,
-  data_evento DATETIME NOT NULL,
-  FOREIGN KEY (aluno_id) REFERENCES alunos(id)
-);

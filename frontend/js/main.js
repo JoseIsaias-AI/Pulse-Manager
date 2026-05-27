@@ -1,7 +1,3 @@
-import { initDashboardPage } from "./pages/dashboard.js";
+﻿// Placeholder: bootstrap futuro do frontend
+// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
 
-const pageName = document.body.dataset.page;
-
-if (pageName === "dashboard") {
-  initDashboardPage();
-}

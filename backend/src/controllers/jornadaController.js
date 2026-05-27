@@ -1,10 +1,3 @@
-const jornadaModel = require("../models/jornadaModel");
-const { createSuccessResponse } = require("../utils/helpers");
+﻿// Placeholder: entrada HTTP futura para jornada do aluno
+// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
 
-function getResumo(_request, response) {
-  return response.json(createSuccessResponse(jornadaModel.getResumo()));
-}
-
-module.exports = {
-  getResumo
-};

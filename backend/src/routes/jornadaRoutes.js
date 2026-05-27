@@ -1,9 +1,3 @@
-const express = require("express");
+﻿// Placeholder: rotas futuras do UC-07 para jornada do aluno
+// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
 
-const jornadaController = require("../controllers/jornadaController");
-
-const router = express.Router();
-
-router.get("/resumo", jornadaController.getResumo);
-
-module.exports = router;

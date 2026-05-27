@@ -1,17 +1,6 @@
-{
-  "name": "pulse-mais-backend",
-  "version": "0.1.0",
+﻿{
+  "_comment": "Placeholder: dependencias e scripts futuros da API. Dependencias e scripts serao definidos pela equipe durante a implementacao.",
   "private": true,
-  "description": "API Express do Pulse Mais.",
-  "main": "server.js",
-  "scripts": {
-    "dev": "node --watch server.js",
-    "start": "node server.js",
-    "test": "node tests/app.test.js"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.2"
-  }
+  "scripts": {}
 }
+

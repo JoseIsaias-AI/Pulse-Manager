@@ -1,5 +1,0 @@
-CREATE TABLE IF NOT EXISTS programas (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  nome TEXT NOT NULL,
-  descricao TEXT
-);
