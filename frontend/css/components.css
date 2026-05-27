@@ -1,25 +1,3 @@
-.risk-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 5.5rem;
-  padding: 0.42rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-}
+﻿/* Placeholder: componentes visuais compartilhados futuros */
+/* Este arquivo ainda nao possui estilos funcionais; sera preenchido pela equipe durante o desenvolvimento do frontend. */
 
-.risk-chip--high {
-  background: var(--color-danger-bg);
-  color: var(--color-danger-text);
-}
-
-.risk-chip--medium {
-  background: var(--color-warning-bg);
-  color: var(--color-warning-text);
-}
-
-.risk-chip--low {
-  background: var(--color-success-bg);
-  color: var(--color-success-text);
-}
