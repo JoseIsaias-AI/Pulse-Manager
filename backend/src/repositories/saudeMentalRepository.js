@@ -1,3 +1,0 @@
-﻿// Placeholder: acesso futuro a registros psicologicos
-// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
-
