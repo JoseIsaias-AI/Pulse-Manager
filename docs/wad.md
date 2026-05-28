@@ -796,7 +796,7 @@ _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
-_Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário._
+
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
