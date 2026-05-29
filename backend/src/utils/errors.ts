@@ -1,26 +1,37 @@
 export class AppError extends Error {
-  public readonly statusCode: number;
-
-  constructor(message: string, statusCode = 400) {
+  constructor(
+    message: string,
+    public readonly statusCode: number
+  ) {
     super(message);
-    this.statusCode = statusCode;
+    this.name = 'AppError';
   }
 }
 
-export class BadRequestError extends AppError {
+export class PayloadValidationError extends AppError {
   constructor(message: string) {
     super(message, 400);
+    this.name = 'PayloadValidationError';
   }
 }
 
-export class ForbiddenError extends AppError {
+export class BusinessRuleError extends AppError {
   constructor(message: string) {
-    super(message, 403);
+    super(message, 422);
+    this.name = 'BusinessRuleError';
   }
 }
 
 export class NotFoundError extends AppError {
   constructor(message: string) {
     super(message, 404);
+    this.name = 'NotFoundError';
+  }
+}
+
+export class ConflictError extends AppError {
+  constructor(message: string) {
+    super(message, 409);
+    this.name = 'ConflictError';
   }
 }
