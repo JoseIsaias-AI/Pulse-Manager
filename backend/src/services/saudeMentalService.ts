@@ -1,58 +1,64 @@
-import * as repository from '../repositories/saudeMentalRepository';
-import type { CriarProntuarioInput, Prontuario, ProntuarioComAluno } from '../models/SaudeMentalModel';
-import { BadRequestError, ForbiddenError, NotFoundError } from '../utils/errors';
+﻿import { AlunoRepository } from '../repositories/alunoRepository';
+import { LabelPayload, SaudeMentalPayload, SaudeMentalRepository } from '../repositories/saudeMentalRepository';
+import { BusinessRuleError, NotFoundError, PayloadValidationError } from '../utils/errors';
+import { requiredString } from '../utils/validators';
 
-function validarPerfilPsicologo(ehPsicologo: boolean) {
-  if (!ehPsicologo) {
-    throw new ForbiddenError('Apenas psicologos podem acessar registros de saude mental');
-  }
-}
+const TIPOS_LABEL = ['risco', 'interesse', 'perfil', 'acompanhamento', 'prioridade', 'outro'];
 
-export async function criar(
-  dados: CriarProntuarioInput,
-  ehPsicologo: boolean
-): Promise<Prontuario> {
-  validarPerfilPsicologo(ehPsicologo);
+export class SaudeMentalService {
+  constructor(
+    private readonly repository: SaudeMentalRepository,
+    private readonly alunoRepository: AlunoRepository
+  ) {}
 
-  const idPsi = dados.id_psi ?? dados.id_psicologo;
-  const titulo = dados.titulo ?? dados.classificacao;
-
-  if (!dados.observacao || !titulo || !dados.id_aluno || !idPsi) {
-    throw new BadRequestError('Campos obrigatorios: observacao, titulo, id_aluno, id_psi');
+  async listar(filtros: { idAluno?: number; idPsi?: number }, perfil?: string) {
+    this.exigirPsicologo(perfil);
+    return { success: true, data: await this.repository.listar(filtros) };
   }
 
-  const alunoExiste = await repository.alunoExiste(dados.id_aluno);
-  if (!alunoExiste) {
-    throw new NotFoundError(`Aluno ${dados.id_aluno} nao encontrado`);
+  async criar(payload: SaudeMentalPayload, perfil?: string) {
+    this.exigirPsicologo(perfil);
+    const data = await this.validarRegistro(payload);
+    return { success: true, data: await this.repository.criar(data) };
   }
 
-  const psicologoExiste = await repository.psicologoExiste(idPsi);
-  if (!psicologoExiste) {
-    throw new NotFoundError(`Psicologo ${idPsi} nao encontrado`);
+  async listarLabels(filtros: { idAluno?: number; idPsi?: number }, perfil?: string) {
+    this.exigirPsicologo(perfil);
+    return { success: true, data: await this.repository.listarLabels(filtros) };
   }
 
-  return repository.criarProntuario({
-    observacao: dados.observacao,
-    titulo,
-    id_aluno: dados.id_aluno,
-    id_psi: idPsi,
-  });
-}
-
-export async function listar(
-  idPsi: number | undefined,
-  ehPsicologo: boolean
-): Promise<ProntuarioComAluno[]> {
-  validarPerfilPsicologo(ehPsicologo);
-
-  if (!idPsi) {
-    throw new BadRequestError('Informe id_psi para listar os prontuarios');
+  async criarLabel(payload: LabelPayload, perfil?: string) {
+    this.exigirPsicologo(perfil);
+    if (!TIPOS_LABEL.includes(payload.tipoLabel)) {
+      throw new PayloadValidationError('Tipo de label invalido.');
+    }
+    await this.garantirAluno(payload.idAluno);
+    return {
+      success: true,
+      data: await this.repository.criarLabel({
+        ...payload,
+        descricao: requiredString(payload.descricao, 'descricao', 3)
+      })
+    };
   }
 
-  const psicologoExiste = await repository.psicologoExiste(idPsi);
-  if (!psicologoExiste) {
-    throw new NotFoundError(`Psicologo ${idPsi} nao encontrado`);
+  private async validarRegistro(payload: SaudeMentalPayload): Promise<SaudeMentalPayload> {
+    await this.garantirAluno(payload.idAluno);
+    return {
+      ...payload,
+      titulo: requiredString(payload.titulo, 'titulo', 3),
+      observacao: requiredString(payload.observacao, 'observacao', 5)
+    };
   }
 
-  return repository.listarPorPsicologo(idPsi);
+  private async garantirAluno(idAluno: number) {
+    const aluno = await this.alunoRepository.findById(Number(idAluno));
+    if (!aluno) throw new NotFoundError('Aluno nao encontrado para registro psicologico.');
+  }
+
+  private exigirPsicologo(perfil?: string): void {
+    if (perfil !== 'psicologo') {
+      throw new BusinessRuleError('Registros de saude mental sao restritos ao perfil psicologo.');
+    }
+  }
 }
