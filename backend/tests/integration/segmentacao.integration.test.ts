@@ -5,7 +5,6 @@ import { AppDataSource, initializeDatabase } from '../../src/database/connection
 import { Aluno } from '../../src/models/alunoModel';
 import { registrarConsultaSegmentacao } from '../../src/integrations/auditoriaIntegration';
 
-<<<<<<< HEAD
 jest.mock('../../src/integrations/auditoriaIntegration', () => ({
   registrarConsultaSegmentacao: jest.fn().mockResolvedValue(undefined)
 }));
@@ -245,7 +244,3 @@ describe('UC-13 - GET /api/alunos/segmentacao', () => {
     expect(response.body.stack).toBeUndefined();
   });
 });
-=======
-test.todo('implementacao pendente');
-
->>>>>>> c11a4ca283a9b139398430206a6d47b58397ea7a

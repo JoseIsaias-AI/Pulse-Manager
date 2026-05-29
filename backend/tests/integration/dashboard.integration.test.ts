@@ -5,7 +5,6 @@ import { AppDataSource, initializeDatabase } from '../../src/database/connection
 import { Aluno } from '../../src/models/alunoModel';
 import { registrarConsultaDashboard } from '../../src/integrations/dashboardAuditoriaIntegration';
 
-<<<<<<< HEAD
 jest.mock('../../src/integrations/dashboardAuditoriaIntegration', () => ({
   registrarConsultaDashboard: jest.fn().mockResolvedValue(undefined)
 }));
@@ -492,7 +491,3 @@ describe('Dashboard UCs (14, 15, 16, 18, 19)', () => {
     });
   });
 });
-=======
-test.todo('implementacao pendente');
-
->>>>>>> c11a4ca283a9b139398430206a6d47b58397ea7a
