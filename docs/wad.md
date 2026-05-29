@@ -1166,12 +1166,12 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 
 <div align="center">
 <sup>Figura X: Tela de login de gestores e psicólogos.</sup><br>
-<img src="./assets/login-gestor-psicologo.png"><br>
+<img src="./assets/Login - Gestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
 <div align="justify">
-A tela de login de gestores e psicólogos é a porta de entrada da plataforma para esses perfis. Nela, o usuário se autentica com e-mail e senha para acessar as funcionalidades disponíveis ao seu perfil. O botão "Entrar" redireciona o usuário para a tela inicial correspondente.
+A tela de login de gestores é a porta de entrada da plataforma para esses perfis. Nela, o usuário se autentica com e-mail e senha para acessar as funcionalidades disponíveis ao seu perfil. O botão "Entrar" redireciona o usuário para a tela inicial correspondente.
 Esta tela está associada às User Stories US05 e US07, de acordo com o critério de aceite número 1 de cada uma. Isso porque o acesso controlado por credenciais garante que apenas profissionais autorizados visualizem e interajam com os dados dos alunos na plataforma.
 </div>
 
