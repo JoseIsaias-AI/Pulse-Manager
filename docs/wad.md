@@ -840,9 +840,11 @@ A arquitetura adotada segue uma separação em camadas, organizada em `Middlewar
 
 O fluxo arquitetural parte da interação do usuário com o front-end, passa pelo back-end e chega ao banco de dados PostgreSQL/Supabase. A comunicação entre o front-end e o back-end ocorre por meio de requisições HTTP. Já a comunicação com o banco é centralizada na camada de repository, que isola as operações de persistência.
 
-De forma simplificada, o fluxo pode ser representado da seguinte maneira:
-
-
+<div align="center">
+<sup>Figura 9: Diagrama de Classes Arquitetural.</sup><br>
+<img src="./assets/diagrama_arquitetural.jpeg"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
 
 Essa organização evita que uma única camada concentre responsabilidades demais. Cada parte da arquitetura possui uma função específica, o que torna o back-end mais compreensível, modular e preparado para evolução nas próximas sprints.
 
