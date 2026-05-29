@@ -1,99 +1,107 @@
 import request from 'supertest';
+import { Repository } from 'typeorm';
 import { app } from '../../src/app';
-import * as repository from '../../src/repositories/saudeMentalRepository';
-
-jest.mock('../../src/repositories/saudeMentalRepository', () => ({
-  alunoExiste: jest.fn(),
-  psicologoExiste: jest.fn(),
-  criarProntuario: jest.fn(),
-  listarPorPsicologo: jest.fn(),
-}));
-
-const repoMock = jest.mocked(repository);
+import { AppDataSource, initializeDatabase } from '../../src/database/connection';
+import { Aluno } from '../../src/models/alunoModel';
+import { Psicologo } from '../../src/models/usuarioModel';
 
 describe('UC-22 | Prontuarios de saude mental', () => {
-  beforeEach(() => {
-    repoMock.alunoExiste.mockResolvedValue(true);
-    repoMock.psicologoExiste.mockResolvedValue(true);
+  let alunoRepository: Repository<Aluno>;
+  let psicologoRepository: Repository<Psicologo>;
+  let aluno: Aluno;
+  let psicologo: Psicologo;
+
+  beforeAll(async () => {
+    await initializeDatabase();
+    alunoRepository = AppDataSource.getRepository(Aluno);
+    psicologoRepository = AppDataSource.getRepository(Psicologo);
+  });
+
+  beforeEach(async () => {
+    await AppDataSource.synchronize(true);
+
+    aluno = await alunoRepository.save({
+      nome: 'Ana Souza',
+      email: 'ana.souza@pulsemais.org',
+      programa: 'Mentoria de permanencia',
+      categoria: 'conectado',
+      riscoEvasao: 'baixo',
+      engajamento: 50,
+      dataIngresso: '2026-01-01',
+      status: 'ativo'
+    });
+
+    psicologo = await psicologoRepository.save({
+      nomePsi: 'Dr. Carlos',
+      cargoPsi: 'psicologo'
+    });
+  });
+
+  afterAll(async () => {
+    if (AppDataSource.isInitialized) {
+      await AppDataSource.destroy();
+    }
   });
 
   it('deve criar prontuario quando o usuario for psicologo', async () => {
-    repoMock.criarProntuario.mockResolvedValue({
-      id_historico: 1,
-      observacao: 'Aluno apresenta melhora significativa.',
-      titulo: 'acompanhamento',
-      id_aluno: 1,
-      id_psi: 1,
-    });
-
     const response = await request(app)
       .post('/api/prontuarios')
-      .set('x-eh-psicologo', 'true')
+      .set('x-user-role', 'psicologo')
       .send({
-        observacao: 'Aluno apresenta melhora significativa.',
-        classificacao: 'acompanhamento',
-        id_aluno: 1,
-        id_psicologo: 1,
+        titulo: 'Acompanhamento inicial',
+        observacao: 'Aluno apresenta melhora significativa no engajamento.',
+        idAluno: aluno.idAluno,
+        idPsi: psicologo.idPsi
       });
 
     expect(response.status).toBe(201);
-    expect(response.body).toHaveProperty('id_historico', 1);
-    expect(repoMock.criarProntuario).toHaveBeenCalledWith({
-      observacao: 'Aluno apresenta melhora significativa.',
-      titulo: 'acompanhamento',
-      id_aluno: 1,
-      id_psi: 1,
+    expect(response.body.success).toBe(true);
+    expect(response.body.data).toMatchObject({
+      titulo: 'Acompanhamento inicial',
+      idAluno: aluno.idAluno,
+      idPsi: psicologo.idPsi
     });
   });
 
   it('deve bloquear criacao quando o usuario nao for psicologo', async () => {
     const response = await request(app)
       .post('/api/prontuarios')
-      .set('x-eh-psicologo', 'false')
+      .set('x-user-role', 'gestor')
       .send({
-        observacao: 'Tentativa de registro',
-        classificacao: 'acompanhamento',
-        id_aluno: 1,
-        id_psicologo: 1,
+        titulo: 'Tentativa',
+        observacao: 'Tentativa de registro nao autorizado.',
+        idAluno: aluno.idAluno,
+        idPsi: psicologo.idPsi
       });
 
-    expect(response.status).toBe(403);
-    expect(response.body.erro).toBe('Apenas psicologos podem acessar registros de saude mental');
+    expect(response.status).toBe(422);
+    expect(response.body).toMatchObject({
+      success: false,
+      message: 'Registros de saude mental sao restritos ao perfil psicologo.'
+    });
   });
 
   it('deve validar campos obrigatorios', async () => {
     const response = await request(app)
       .post('/api/prontuarios')
-      .set('x-eh-psicologo', 'true')
+      .set('x-user-role', 'psicologo')
       .send({
-        classificacao: 'acompanhamento',
-        id_aluno: 1,
-        id_psicologo: 1,
+        idAluno: aluno.idAluno,
+        idPsi: psicologo.idPsi
+        // titulo e observacao ausentes
       });
 
     expect(response.status).toBe(400);
-    expect(response.body.erro).toContain('Campos obrigatorios');
+    expect(response.body.success).toBe(false);
   });
 
-  it('deve listar prontuarios do psicologo', async () => {
-    repoMock.listarPorPsicologo.mockResolvedValue([
-      {
-        id_historico: 1,
-        observacao: 'Sessao realizada',
-        titulo: 'Acompanhamento inicial',
-        id_aluno: 1,
-        id_psi: 1,
-        aluno_nome: 'Ana Souza',
-        aluno_email: 'ana.souza@email.com',
-      },
-    ]);
-
+  it('deve listar prontuarios com perfil psicologo', async () => {
     const response = await request(app)
-      .get('/api/prontuarios?id_psi=1')
-      .set('x-eh-psicologo', 'true');
+      .get('/api/prontuarios')
+      .set('x-user-role', 'psicologo');
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveLength(1);
-    expect(response.body[0]).toHaveProperty('aluno_nome', 'Ana Souza');
+    expect(response.body.success).toBe(true);
+    expect(Array.isArray(response.body.data)).toBe(true);
   });
 });

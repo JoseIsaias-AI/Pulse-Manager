@@ -7,11 +7,11 @@ import { AnotacaoQualitativa } from '../models/anotacaoQualitativaModel';
 import { Atividade } from '../models/atividadeModel';
 import { Participacao } from '../models/participacaoModel';
 import { Psicologo, MembroEquipe } from '../models/usuarioModel';
+import { HistoricoPsicologico } from '../models/SaudeMentalModel';
+import { Label } from '../models/LabelModel';
 // TODO: registrar as entities abaixo quando os models saírem de placeholder:
 // import { Agenda } from '../models/AgendaModel';
 // import { Notificacao, Oportunidade } from '../models/NotificacaoModel';
-// import { HistoricoPsicologico } from '../models/SaudeMentalModel';
-// import { Label } from '../models/LabelModel';
 
 const isTest = process.env.NODE_ENV === 'test';
 // Usa sqljs somente quando explicitado OU quando está em modo de teste
@@ -19,9 +19,7 @@ const dbType = process.env.DB_TYPE || (isTest ? 'sqljs' : 'postgres');
 const isSqlJs = dbType === 'sqljs';
 const appEntities = [
   Aluno, Atividade, Participacao, AnotacaoQualitativa,
-  Psicologo, MembroEquipe,
-  // Agenda, Psicologo, MembroEquipe, Notificacao, Oportunidade,
-  // HistoricoPsicologico, Label
+  Psicologo, MembroEquipe, HistoricoPsicologico, Label
 ];
 
 function buildDataSourceOptions(): DataSourceOptions {
