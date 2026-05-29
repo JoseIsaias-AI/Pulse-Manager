@@ -1267,6 +1267,15 @@ Esta tela está associada às User Stories US05 e US07, de acordo com o critéri
 
 O protótipo apresenta a tela inicial do painel do gestor na plataforma, projetada para consolidar indicadores de desempenho e o fluxo de atividades de uma turma específica em uma interface centralizada e de fácil leitura. Na lateral esquerda, há um menu de navegação persistente integrado a um bloco de contexto que exibe informações estáticas sobre o grupo monitorado, enquanto o cabeçalho superior traz ferramentas globais como barra de busca, notificações e perfil do usuário. O corpo principal da página destaca-se por três cartões de métricas no topo que resumem o engajamento e a evolução dos usuários por meio de dados percentuais e barras de progresso visuais. Abaixo, a interface se divide em duas áreas centrais de monitoramento: um gráfico de colunas interativo para mapear a distribuição dos usuários ao longo das diferentes etapas cronológicas do programa, contando com filtros temporais e legendas de status, e um feed dinâmico de últimas atividades ao lado, que lista logs cronológicos com avatares, descrições de ações, marcadores de tempo e tags coloridas de categorização, complementado por um sistema de paginação no rodapé.
 
+### Visão micro do gestor
+
+<div align="center">
+<img src="./assets/prototipo-8.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+O protótipo apresenta a tela de perfil individual do aluno na visão do gestor, estruturada para centralizar o gerenciamento de dados cadastrais e o acompanhamento do estudante por meio de uma interface organizada em abas. Mantendo a navegação lateral fixa para acesso às páginas do sistema e ao contexto da turma, além do cabeçalho global com busca e notificações, o núcleo da tela destaca um cartão principal com as informações básicas do aluno, incluindo avatar com indicador de status online, nome, e-mail institucional, curso e turma, acompanhados por tags de situação cadastral e botões de ação rápida para edição de dados e envio de notificações. Logo abaixo, um menu de navegação por abas horizontais permite alternar entre diferentes categorias de acompanhamento, como dados gerais, jornada, empregabilidade, ensino superior e observações, onde a aba ativa revela um formulário com campos de leitura e escrita dispostos em colunas que agrupam informações como nome completo, curso, categoria de bolsa, emprego atual, telefone e endereço, além de campos de dados sensíveis, como e-mail, CPF e data de nascimento, que contam com um ícone de cadeado indicando restrição de segurança ou campos bloqueados para edição direta.
+
 ### Tela de login do aluno
 <div align="center">
 <img src="./assets/login-aluno.png"><br>
@@ -1288,6 +1297,17 @@ Esta tela está associada às User Stories US08 e US09, de acordo com o critéri
 <div align="justify">
 A tela inicial do aluno é onde o estudante tem uma visão geral da sua jornada na plataforma. Nela estão dispostos seus principais indicadores de desempenho, o progresso nos módulos do curso, os próximos eventos da Pulse Mais e um acesso rápido ao suporte de saúde mental. A navegação lateral permite que o aluno transite entre as demais seções da plataforma.
 Esta tela está associada às User Stories US08, US09 e US10, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza o acesso aos resultados pessoais do aluno, exibe os eventos e faltas de forma clara e disponibiliza o contato direto com o psicólogo, tornando a navegação intuitiva e completa para o estudante.
+</div>
+
+### Visão geral do aluno
+
+<div align="center">
+<img src="./assets/prototipo-10.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+O protótipo apresenta a tela de visão geral do painel na perspetiva do aluno, desenvolvida para centralizar o acompanhamento do seu próprio progresso académico e ferramentas de bem-estar numa interface intuitiva. Preservando a navegação lateral com links de acesso e o bloco com informações da turma atual e dos próximos encontros, além do cabeçalho superior com pesquisa e notificações, a área de conteúdo principal exibe no topo três cartões de métricas individuais que destacam a frequência, os módulos concluídos e a nota média atual através de percentagens, valores absolutos e indicadores de variação. Abaixo, o ecrã divide-se em duas secções de monitorização, onde o lado esquerdo é dedicado à jornada académica do estudante, exibindo uma barra de progresso geral do curso, um seletor modular interativo com botões de navegação, o detalhe do progresso das sprints individuais por meio de barras de conclusão coloridas e um histórico com a listagem de tarefas recentes que exibe os prazos, as notas e os marcadores de estado de cada entrega. O lado direito complementa a experiência com uma funcionalidade interativa de saúde e bem-estar que permite ao aluno registar o seu estado emocional através de emojis e solicitar apoio especializado através de um botão de ação rápida, posicionada logo acima de um bloco cronológico que lista os próximos eventos do calendário com detalhes de formato, data, horário e etiquetas coloridas de identificação.
 </div>
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
