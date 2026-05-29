@@ -1284,7 +1284,7 @@ Esta tela está associada às User Stories US08, US09 e US10, de acordo com os c
 
 
 <div align="center">
-<sup>Figura X: Tela inicial do aluno.</sup><br>
+<sup>Figura X: Tela inicial do psicólogo.</sup><br>
 <img src="./assets/Protótipo8.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1295,7 +1295,7 @@ A tela inicial do psicólogo é onde o profissional tem uma visão consolidada d
 
 
 <div align="center">
-<sup>Figura X: Tela inicial do aluno.</sup><br>
+<sup>Figura X: Agenda do gestor.</sup><br>
 <img src="./assets/Protótipo12.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
