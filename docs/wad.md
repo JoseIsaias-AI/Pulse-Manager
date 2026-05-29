@@ -1411,6 +1411,12 @@ Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras
 
 Nesta sprint, o Modelo Entidade-Relacionamento (MER) foi atualizado para refletir as mudanças realizadas no banco de dados e no modelo físico da aplicação. A estrutura principal do MER foi mantida, preservando as entidades e relacionamentos já existentes, mas foram adicionados novos atributos para representar melhor a jornada do aluno, o acompanhamento das atividades, a gestão de oportunidades e o controle de agenda.
 
+<div align="center">
+<sup>Figura 15: Modelo Entidade-Relacionamento Atualizado.</sup><br>
+<img src="./assets/der_visual.jpeg"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
+
 As alterações realizadas não criaram novas entidades principais nem modificaram os relacionamentos centrais do modelo. O foco foi complementar entidades já existentes com dados que passaram a ser relevantes para a implementação no Supabase e para os fluxos previstos no sistema.
 
 #### Alterações realizadas na entidade `aluno`
