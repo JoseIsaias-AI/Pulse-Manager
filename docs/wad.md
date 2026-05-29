@@ -2127,9 +2127,20 @@ _Dica: edite a tabela verdade fora do markdown, para ter melhor controle_
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
-_Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema._
 
-_Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), header, body, formatos de response e os status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422, 500)._
+A documentação da WebAPI do Pulse Manager foi desenvolvida em HTML puro, seguindo o backend real implementado no projeto (SSOT). Nela estão descritos os endpoints disponíveis na aplicação, incluindo métodos HTTP, headers, parâmetros, status codes e organização dos módulos da API.
+
+### Acesso à documentação
+
+A documentação pode ser acessada diretamente pelo link abaixo:
+
+[Abrir documentação WebAPI](others/Documentacao-WebAPI.html)
+
+Caso o link não seja suportado pela plataforma de visualização, o arquivo também pode ser encontrado manualmente no seguinte caminho:
+
+docs/others/Documentacao-WebAPI.html
+
+
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
