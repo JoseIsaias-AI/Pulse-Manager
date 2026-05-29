@@ -780,7 +780,16 @@ _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 ### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
 
 
-A escolha desse padrão se justifica pela natureza do sistema — uma plataforma que integra múltiplos domínios (alunos, jornada, frequência, empregabilidade, saúde mental, ensino superior, agenda, notificações, entre outros) sob regras de negócio distintas — exigindo uma estrutura que permita escalar funcionalidades sem comprometer a manutenibilidade.
+
+<<div align="center">
+    <img src="assets/Camadas.png" ><br>
+    <sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<div align="justify">
+A Arquitetura em Camadas organiza o sistema em níveis hierárquicos com responsabilidades definidas, onde cada camada se comunica apenas com a camada adjacente. O padrão adotado é o Controller-Service-Repository, que separa o tratamento de requisições HTTP, as regras de negócio e o acesso ao banco de dados em camadas distintas.
+</div>
+
 
 **Visão Geral das Camadas**
 
