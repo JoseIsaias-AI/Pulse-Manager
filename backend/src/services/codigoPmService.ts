@@ -1,3 +1,7 @@
-﻿// Placeholder: regra futura do UC-04 para gerar codigo PM-AAAA-NNN
-// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
+export function formatarCodigoPm(ano: string, sequencial: number): string {
+  return `PM-${ano}-${String(sequencial).padStart(3, '0')}`;
+}
 
+export function extrairSequencial(codigoPm: string): number {
+  return parseInt(codigoPm.split('-')[2], 10) || 0;
+}
