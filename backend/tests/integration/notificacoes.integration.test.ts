@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { app } from '../../src/app';
 import { AppDataSource, initializeDatabase } from '../../src/database/connection';
 import { Aluno } from '../../src/models/alunoModel';
-import { MembroEquipe } from '../../src/models/UsuarioModel';
+import { MembroEquipe } from '../../src/models/usuarioModel';
 
 describe('RF019 - Comunicacao e Oportunidades', () => {
   let alunoRepository: Repository<Aluno>;
