@@ -2958,7 +2958,7 @@ Também houve desafios relacionados à organização do back-end. Como o projeto
 
 Outro ponto de dificuldade foi a integração com o banco de dados. A atualização do modelo físico exigiu atenção à criação de campos, tipos de dados, chaves estrangeiras, consistência entre tabelas e atualização das migrations. Além disso, foi necessário garantir que o banco refletisse corretamente o DER e o MER atualizados.
 
-A parte de SQL com lógica proposicional também exigiu cuidado, pois não bastava apresentar consultas SQL. Era necessário traduzir as condições das consultas para expressões lógicas, identificar corretamente os conectivos e construir tabelas-verdade coerentes com cada situação.
+A parte de SQL com lógica proposicional também exigiu cuidado, pois não bastava apresentar consultas SQL. Era necessário traduzir as condições das consultas para expressões lógicas, identificar corretamente os conectivos e construir tabelas-verdade coerentes em cada situação.
 
 ---
 
