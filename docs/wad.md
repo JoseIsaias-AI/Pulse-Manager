@@ -1617,7 +1617,7 @@ Dashboard de saúde mental. Exibe 4 KPIs no topo (humor médio, check-ins semana
 </div>
 
 <div align="justify">
-Tela de Agenda, no perfil de Gestor. Exibe um calendário mensal, com eventos coloridos por tipo — check-ins, reuniões, entregas de módulo e mentorias. Abaixo, um painel de próximos eventos lista os compromissos com prazo, e um pop-up de evento próximo alerta que o "Check-in Semana 8" começa em 15 minutos, com ações de adiar ou abrir.
+Tela de Agenda, no perfil de Gestor. Exibe um calendário mensal, com eventos coloridos por tipo, check-ins, reuniões, entregas de módulo e mentorias. Abaixo, um painel de próximos eventos lista os compromissos com prazo, e um pop-up de evento próximo alerta que o "Check-in Semana 8" começa em 15 minutos, com ações de adiar ou abrir.
 </div>
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
