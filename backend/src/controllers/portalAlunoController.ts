@@ -1,3 +1,54 @@
-﻿// Placeholder: entrada HTTP futura para perfil pessoal e contato do aluno
-// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
+import { NextFunction, Request, Response } from 'express';
+import { RequestComUsuario } from '../middlewares/authMiddleware';
+import { PortalAlunoService } from '../services/portalAlunoService';
+import { AppError } from '../utils/errors';
+import { positiveInteger } from '../utils/validators';
 
+export class PortalAlunoController {
+  constructor(private readonly service: PortalAlunoService) {}
+
+  visualizarPerfil = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const result = await this.service.visualizarPerfil(positiveInteger(req.params.idAluno, 'idAluno'));
+      res.status(200).json(result);
+    } catch (error) {
+      this.handle(error, res, next);
+    }
+  };
+
+  atualizarContato = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const result = await this.service.atualizarContato(positiveInteger(req.params.idAluno, 'idAluno'), req.body);
+      res.status(200).json(result);
+    } catch (error) {
+      this.handle(error, res, next);
+    }
+  };
+
+  listarNotificacoes = async (req: RequestComUsuario, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const idAluno = positiveInteger(req.params.idAluno, 'idAluno');
+      const result = await this.service.listarNotificacoes(idAluno, req.usuario?.id);
+      res.status(200).json(result);
+    } catch (error) {
+      this.handle(error, res, next);
+    }
+  };
+
+  listarOportunidades = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const result = await this.service.listarOportunidades();
+      res.status(200).json(result);
+    } catch (error) {
+      this.handle(error, res, next);
+    }
+  };
+
+  private handle(error: unknown, res: Response, next: NextFunction): void {
+    if (error instanceof AppError) {
+      res.status(error.statusCode).json({ success: false, message: error.message });
+      return;
+    }
+    next(error);
+  }
+}
