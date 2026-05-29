@@ -6,5 +6,3 @@ coverage/
 *.log
 .env
 .env.*.local
-nicolas/
-CONTEXT_NICOLAS.md
