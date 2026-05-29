@@ -1295,7 +1295,6 @@ Esta tela está associada às User Stories US06 e US07, de acordo com os critér
 A tela inicial do psicólogo é onde o profissional tem uma visão consolidada do estado de saúde mental e bem-estar dos alunos acompanhados. Nela estão dispostos os principais indicadores de monitoramento, humor médio da turma, check-ins realizados na semana, flags ativas de atenção e sessões já realizadas no mês, além do gráfico de bem-estar por módulo do curso, do engajamento por faixa de humor e do resumo semanal de evolução. A navegação lateral permite que o psicólogo transite entre o Dashboard, a lista de Alunos e os acessos rápidos à turma ativa, à próxima sessão agendada e às flags em aberto. Esta tela está associada às User Stories US05, US06 e US07, de acordo com os critérios de aceite de cada uma.
 </div>
 
-
 <div align="center">
 <sup>Figura X: Agenda do gestor.</sup><br>
 <img src="./assets/Protótipo12.png"><br>
@@ -1307,6 +1306,18 @@ A tela inicial do psicólogo é onde o profissional tem uma visão consolidada d
 A tela de agenda do gestor é onde a equipe Pulse Mais tem uma visão do calendário operacional da turma. Nela estão dispostos a visualização mensal com todos os compromissos categorizados por cor, check-ins semanais, reuniões de módulo, entregas, mentorias individuais e sprint reviews, a lista de próximos eventos com sua proximidade temporal e um pop-up de alerta para eventos iminentes, permitindo abrir ou adiar a atividade diretamente. A navegação lateral permite que o gestor transite entre o Início, Alunos, Dashboard e a Agenda, com acessos rápidos à turma ativa, ao módulo corrente e ao total de alunos vinculados, além do botão "+ Evento" para criação de novos compromissos.
 
 Esta tela está associada às User Stories US01, US02 e US04, de acordo com os critérios de aceite de cada uma.
+</div>
+
+<div align="center">
+<sup>Figura X: Tela de perfil do aluno.</sup><br>
+<img src="./assets/Perfil-do-aluno-Aluno.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+A tela de perfil do aluno exibe todas as informações cadastrais do estudante em um único lugar. No topo, um card com avatar, nome, e-mail, curso e turma identifica o aluno, acompanhado de badges de status e etapa atual. Abaixo, abas organizam os dados em categorias — Dados Gerais, Jornada, Empregabilidade, Ensino Superior e Observações. Na aba inicial, os campos exibem nome completo, categoria, e-mail, telefone, endereço, curso superior, emprego atual, CPF e data de nascimento. Botões de editar e notificar ficam disponíveis no canto superior direito.
+
+Esta tela está associada às User Stories US01, US04 e US05, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza todos os dados do aluno em um único lugar, permitindo à gestora e ao psicólogo acessar o perfil completo do estudante com agilidade e tomar as ações necessárias diretamente pela plataforma.
 </div>
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
