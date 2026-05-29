@@ -1600,6 +1600,26 @@ Esta tela está associada às User Stories US08, US09 e US10, de acordo com os c
 O protótipo apresenta a tela de visão geral do painel na perspetiva do aluno, desenvolvida para centralizar o acompanhamento do seu próprio progresso académico e ferramentas de bem-estar numa interface intuitiva. Preservando a navegação lateral com links de acesso e o bloco com informações da turma atual e dos próximos encontros, além do cabeçalho superior com pesquisa e notificações, a área de conteúdo principal exibe no topo três cartões de métricas individuais que destacam a frequência, os módulos concluídos e a nota média atual através de percentagens, valores absolutos e indicadores de variação. Abaixo, o ecrã divide-se em duas secções de monitorização, onde o lado esquerdo é dedicado à jornada académica do estudante, exibindo uma barra de progresso geral do curso, um seletor modular interativo com botões de navegação, o detalhe do progresso das sprints individuais por meio de barras de conclusão coloridas e um histórico com a listagem de tarefas recentes que exibe os prazos, as notas e os marcadores de estado de cada entrega. O lado direito complementa a experiência com uma funcionalidade interativa de saúde e bem-estar que permite ao aluno registar o seu estado emocional através de emojis e solicitar apoio especializado através de um botão de ação rápida, posicionada logo acima de um bloco cronológico que lista os próximos eventos do calendário com detalhes de formato, data, horário e etiquetas coloridas de identificação.
 </div>
 
+
+
+<div align="center">
+<img src="./assets/ProtótipoF.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+Dashboard de saúde mental. Exibe 4 KPIs no topo (humor médio, check-ins semanais, flags ativas e sessões realizadas), dois gráficos centrais — um de barras com bem-estar por módulo/turma e um de barras horizontais com engajamento por faixa de humor — além de um resumo semanal e acesso rápido à turma e próxima sessão na sidebar esquerda.
+</div>
+
+<div align="center">
+<img src="./assets/ProtótipoFE.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+Tela de Agenda, no perfil de Gestor. Exibe um calendário mensal, com eventos coloridos por tipo — check-ins, reuniões, entregas de módulo e mentorias. Abaixo, um painel de próximos eventos lista os compromissos com prazo, e um pop-up de evento próximo alerta que o "Check-in Semana 8" começa em 15 minutos, com ações de adiar ou abrir.
+</div>
+
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
