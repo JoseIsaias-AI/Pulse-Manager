@@ -209,7 +209,7 @@ A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, class
 </div>
 
 <div align="center">
-<sup>Figura 4: Matriz de Riscos da Pulse Manager.</sup><br>
+<sup>Figura 3: Matriz de Riscos da Pulse Manager.</sup><br>
 <img src="./assets/imagem.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
@@ -543,16 +543,16 @@ Personas: A persona é definida como uma descrição realista e detalhada do usu
 
 
 <div align="center">
-<sup>Figura 5: Persona 01.</sup><br>
+<sup>Figura 4: Persona 01.</sup><br>
     <img src="assets/personaUm.jpg" width="60%"><br>
 
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
-<sup>Figura 6: Persona 02.</sup><br>
+<sup>Figura 5: Persona 02.</sup><br>
     <img src="assets/personaDois.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
-<sup>Figura 7: Persona 03.</sup><br>
+<sup>Figura 6: Persona 03.</sup><br>
     <img src="assets/personaTres.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -866,7 +866,7 @@ O Diagrama de Classes de Domínio do sistema Pulse Mais estabelece a estrutura c
 </div>
 
 <div align="center">
-<sup>Figura 3: Diagrama Classes de Domínio.</sup><br>
+<sup>Figura 8: Diagrama Classes de Domínio.</sup><br>
 <img src="./assets/Diagrama_Classes_Dominio.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -881,6 +881,44 @@ No que tange aos registros de impacto e classificação, a classe Atividade arma
 
 </div>
 
+### 3.2.3.1. Atualização do Diagrama de Classes do Domínio
+
+Nesta sprint, o Diagrama de Classes do Domínio foi atualizado para refletir melhor a estrutura atual da modelagem e as alterações realizadas no banco de dados. O objetivo principal foi alinhar o diagrama ao modelo físico implementado no Supabase, mantendo a organização geral já existente, mas corrigindo pontos que estavam simplificados ou inconsistentes.
+
+A principal mudança realizada foi a criação da classe `Participacao` como uma classe lógica/associativa entre `Aluno` e `Atividade`. Na versão anterior, a participação aparecia de forma simplificada dentro da classe `Atividade`, como se fosse um atributo booleano. Essa representação foi corrigida porque a participação não pertence apenas à atividade, mas sim à relação entre um aluno e uma atividade específica.
+
+Com isso, a classe `Participacao` passou a representar informações como:
+
+- `idPart`;
+- `dataPart`;
+- `statusPart`;
+- `idAluno`;
+- `idAtividade`;
+- `nota`;
+- `certificado`.
+
+Essa alteração torna o diagrama mais coerente com o banco de dados, já que a tabela `participacao` existe justamente para registrar quais alunos participaram de quais atividades, qual foi o status dessa participação, a nota obtida e se houve emissão de certificado.
+
+Além disso, foram adicionados ao diagrama os novos atributos criados nesta sprint. Na classe `Aluno`, foram incluídos os campos `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`, permitindo representar melhor a jornada do jovem dentro da Pulse Mais. Esses atributos ajudam a classificar o aluno, indicar seu contexto socioeconômico, registrar o curso ou programa associado e identificar sua origem de participação na instituição.
+
+Na classe `Atividade`, foram adicionados os atributos `modalidade` e `carga_horaria`. Esses campos permitem diferenciar se a atividade é presencial, online ou híbrida, além de registrar sua duração em horas.
+
+Na classe `Oportunidade`, foi incluído o atributo `prazo_inscricao`, permitindo representar a data limite para inscrição em vagas, cursos, bolsas, eventos ou outras oportunidades divulgadas pela equipe.
+
+Na classe `Agenda`, foram adicionados os atributos `hora_inicio` e `hora_fim`, tornando a representação dos compromissos mais completa. Antes, a agenda indicava apenas a data, mas agora também permite visualizar o intervalo de horário previsto para atendimentos, reuniões, mentorias ou eventos.
+
+Também foram feitos ajustes de coerência no diagrama. A classe `HistoricoPsicologico` foi revisada para manter os atributos alinhados ao modelo físico, utilizando `observacao`, `titulo` e `idHistorico`. A classe `Psicologo` também foi simplificada para representar apenas os dados previstos no banco atual.
+
+As relações principais entre as classes foram mantidas, preservando a estrutura do domínio. O aluno continua sendo a entidade central do modelo, relacionado a notificações, labels, histórico psicológico, agenda, oportunidades e participações. A diferença é que, agora, a participação em atividades aparece de forma mais adequada, por meio de uma classe própria.
+
+Dessa forma, o Diagrama de Classes do Domínio passou a representar melhor a lógica do sistema, diferenciando corretamente as entidades principais, registros de apoio e classes associativas. Portanto, a atualização melhora a coerência entre o diagrama, o DER, o modelo físico e a implementação no Supabase.
+
+<div align="center">
+<sup>Figura 9: Diagrama de Classes do Domínio atualizado.</sup><br>
+<img src="../docs/assets/Diagrama_Classes_Dominio_atualizado.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
+
 ### 3.2.4. Diagrama de Sequência UML
 
 <div align="justify">
@@ -892,7 +930,7 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 #### 3.2.4.1. UC-03 — Manter cadastro do aluno
 
 <div align="center">
-<sup>Figura 4: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup><br>
+<sup>Figura 10: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup><br>
 <img src="../docs/assets/diagrama-sequencia-1.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -906,7 +944,7 @@ O fluxo começa quando o membro da equipe preenche o formulário de cadastro na 
 #### 3.2.4.2. UC-06 — Visualizar histórico consolidado do aluno
 
 <div align="center">
-<sup>Figura 5: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
+<sup>Figura 11: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
 <img src="../docs/assets/diagrama-sequencia-2.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -920,7 +958,7 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 #### 3.2.4.3. UC-08 — Registrar participação em atividade
 
 <div align="center">
-<sup>Figura 6: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup><br>
+<sup>Figura 12: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup><br>
 <img src="../docs/assets/diagrama-sequencia-3.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -934,7 +972,7 @@ O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e 
 #### 3.2.4.4. UC-15 — Visualizar dashboard de impacto
 
 <div align="center">
-<sup>Figura 7: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
+<sup>Figura 13: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
 <img src="../docs/assets/diagrama-sequencia-4.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -948,7 +986,7 @@ A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como 
 #### 3.2.4.5. UC-22 — Manter registros de saúde mental
 
 <div align="center">
-<sup>Figura 8: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
+<sup>Figura 14: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
 <img src="../docs/assets/diagrama-sequencia-5.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -967,9 +1005,61 @@ _Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escol
 
 _Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP._
 
-### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
+### 3.2.7. Padrões de Projeto Aplicados
 
-_Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto._
+<div align="justify">
+
+Um padrão de projeto é uma solução já testada e documentada para resolver um problema recorrente em projetos distintos. A adoção de padrões proporciona benefícios como aumento de produtividade, redução de complexidade, facilidade de manutenção e reaproveitamento de código. O backend do sistema Pulse Mais foi desenvolvido em TypeScript com Express, TypeORM e PostgreSQL via Supabase, e aplica os padrões descritos a seguir, cada um adotado com base em uma necessidade real do projeto.
+
+</div>
+
+#### MVC (Model-View-Controller)
+
+<div align="justify">
+
+O padrão MVC separa o projeto em três camadas independentes: Model, View e Controller. Essa separação reduz o acoplamento entre as classes e aumenta a coesão, fazendo com que cada parte do sistema tenha um único propósito bem definido. No Pulse Mais, a camada Model reúne as entidades do domínio como Aluno, Participacao e HistoricoPsicologico. A camada Controller atua como intermediária entre as requisições HTTP e a camada de negócio, sem conter lógica de processamento. As Routes mapeiam os endpoints aos controllers correspondentes. Esse padrão foi adotado para que os módulos de alunos, jornada, dashboard e saúde mental possam ser desenvolvidos e evoluídos de forma independente ao longo das cinco sprints.
+
+</div>
+
+#### DAO (Data Access Object) via TypeORM e Pool Nativo
+
+<div align="justify">
+
+O padrão DAO separa as classes de acesso a banco de dados das classes responsáveis pelas regras de negócio. No Pulse Mais, isso é feito por dois mecanismos paralelos: o arquivo connection.ts usa o TypeORM com mapeamento objeto-relacional via decorators para operações estruturadas, e o pool.ts usa o driver pg nativo com Pool de conexões para queries SQL diretas. Ambos se conectam ao PostgreSQL hospedado no Supabase. O controle de acesso por perfil fica centralizado em permissions.ts, onde se define que apenas o psicólogo acessa registros de saúde mental e apenas o gestor pode modificar a agenda, por exemplo.
+
+</div>
+
+#### Service Layer
+
+<div align="justify">
+
+A camada de Services concentra todas as regras de negócio da aplicação. Os controllers recebem a requisição e delegam integralmente o processamento para o service correspondente, instanciado via injeção no construtor. Regras críticas como a geração do código PM-AAAA-NNN, a validação de risco de evasão e o controle de acesso aos prontuários ficam centralizadas nos services, podendo ser testadas de forma isolada sem depender da camada HTTP.
+
+</div>
+
+#### Middleware Chain
+
+<div align="justify">
+
+O encadeamento de middlewares intercepta as requisições antes que cheguem aos controllers, centralizando responsabilidades transversais. O authMiddleware extrai os dados do usuário dos headers HTTP. O permissionMiddleware controla o acesso por perfil. O errorMiddleware centraliza o tratamento de exceções, respondendo com o status HTTP correto para cada tipo de erro. Esse padrão evita que lógica de verificação de perfil fique duplicada dentro de cada controller.
+
+</div>
+
+#### Error Object Hierarchy
+
+<div align="justify">
+
+Uma hierarquia de classes de erro foi implementada em errors.ts, com AppError como classe base e subclasses especializadas: PayloadValidationError para erros de validação de entrada com HTTP 400, BusinessRuleError para violações de regra de negócio com HTTP 422, NotFoundError para recursos não encontrados com HTTP 404 e ConflictError para conflitos de dados com HTTP 409. Todos os controllers seguem o mesmo contrato de tratamento, garantindo respostas semânticas e consistentes em toda a API.
+
+</div>
+
+#### Utility Module
+
+<div align="justify">
+
+Funções utilitárias reutilizáveis foram isoladas em módulos dedicados dentro de src/utils: validators.ts para validação e sanitização de parâmetros, errors.ts para a hierarquia de erros, response.ts para o envelope padronizado de respostas e date.ts para validação e formatação de datas ISO. Essa separação garante que a mesma lógica seja reutilizada de forma consistente em todos os controllers sem duplicação de código.
+
+</div>
 
 ## 3.3. Wireframes (sprint 2)
 
@@ -1254,8 +1344,8 @@ Em casos onde a Lucide não oferecer o ícone necessário, as bibliotecas **Phos
 </div>
 
 <div align="justify">
-A tela de login de gestores e psicólogos é a porta de entrada da plataforma para esses perfis. Nela, o usuário se autentica com e-mail e senha para acessar as funcionalidades disponíveis ao seu perfil. O botão "Entrar" redireciona o usuário para a tela inicial correspondente.
-Esta tela está associada às User Stories US05 e US07, de acordo com o critério de aceite número 1 de cada uma. Isso porque o acesso controlado por credenciais garante que apenas profissionais autorizados visualizem e interajam com os dados dos alunos na plataforma.
+A tela de login é a página inicial da plataforma para todos os perfis de usuário. Ela conta com um fundo azul institucional, o logo do Pulse Manager centralizado no topo e um card branco com os campos de autenticação — CPF e Nome Completo para alunos, e e-mail e senha para gestores e psicólogos — e o botão "Entrar", que redireciona cada usuário para sua tela inicial correspondente.
+Esta tela está associada às User Stories US05, US07, US08 e US09, de acordo com o critério de aceite número 1 de cada uma. Isso porque o acesso unificado e padronizado garante tanto a simplicidade para o aluno quanto o controle de acesso necessário para gestores e psicólogos visualizarem e interagirem com os dados da plataforma.
 </div>
 
 ### Tela inicial do gestor
@@ -1321,7 +1411,7 @@ A partir destes conceitos e utilizando como base o TAPI e outros materiais dispo
 </div>
 
 <div align="center">
-<sup>Figura 9: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
+<sup>Figura 15: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
 <img src="./assets/mer.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -1382,6 +1472,94 @@ Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras
 | Psicólogo | Envio de notificações | RN011 | Pois a equipe interna tem autonomia no quesito de registros no sistema, assim, precisa utilizar notificações para a coleta de informações |
 | Psicólogo | Acesso ao desempenho acadêmico | RN020, RN017 | Pois o psicólogo pode consultar notas, frequência e indicadores acadêmicos apenas dos alunos que monitora, mantendo a restrição de acesso aos dados pessoais |
 
+### 3.6.1.1 Atualização do Modelo Entidade-Relacionamento
+
+Nesta sprint, o Modelo Entidade-Relacionamento (MER) foi atualizado para refletir as mudanças realizadas no banco de dados e no modelo físico da aplicação. A estrutura principal do MER foi mantida, preservando as entidades e relacionamentos já existentes, mas foram adicionados novos atributos para representar melhor a jornada do aluno, o acompanhamento das atividades, a gestão de oportunidades e o controle de agenda.
+
+As alterações realizadas não criaram novas entidades principais nem modificaram os relacionamentos centrais do modelo. O foco foi complementar entidades já existentes com dados que passaram a ser relevantes para a implementação no Supabase e para os fluxos previstos no sistema.
+
+#### Alterações realizadas na entidade `aluno`
+
+A entidade `aluno` recebeu novos atributos relacionados à jornada institucional do jovem dentro da Pulse Mais:
+
+- `nivel_jornada`;
+- `perfil_socioeconomico`;
+- `curso`;
+- `origem_participacao`.
+
+Esses atributos foram adicionados porque o aluno não deve ser representado apenas por dados cadastrais, como nome, e-mail, idade, gênero, ocupação e escolaridade. A partir da atualização, o MER também passa a representar informações ligadas à trajetória do aluno na instituição.
+
+O atributo `nivel_jornada` permite classificar o aluno conforme sua etapa na jornada da Pulse Mais, como conectado, capacitado ou transformado. O atributo `perfil_socioeconomico` registra uma informação importante sobre o público atendido pela organização. Já o atributo `curso` indica o curso ou programa principal associado ao aluno, enquanto `origem_participacao` permite identificar por qual iniciativa o jovem entrou na base da Pulse Mais.
+
+#### Alterações realizadas na entidade `atividade`
+
+A entidade `atividade` recebeu os atributos:
+
+- `modalidade`;
+- `carga_horaria`.
+
+Esses campos foram adicionados para detalhar melhor as atividades realizadas pela Pulse Mais. A `modalidade` indica se a atividade ocorre de forma presencial, online ou híbrida. A `carga_horaria` registra a duração da atividade em horas.
+
+Além disso, o atributo `nota`, que antes aparecia associado à atividade, foi realocado para a entidade `participacao`. Essa alteração foi necessária porque a nota não pertence à atividade de forma geral, mas sim à participação de um aluno em uma atividade específica.
+
+#### Alterações realizadas na entidade `participacao`
+
+A entidade `participacao` foi mantida como uma entidade associativa entre `aluno` e `atividade`, mas recebeu novos atributos para representar melhor essa relação:
+
+- `nota`;
+- `certificado`.
+
+A inclusão de `nota` em `participacao` torna o modelo mais correto, pois diferentes alunos podem ter notas diferentes em uma mesma atividade. Dessa forma, a nota deve estar vinculada à participação individual do aluno, e não à atividade em si.
+
+O atributo `certificado` foi adicionado para indicar se aquela participação gerou certificado para o aluno. Esse campo também pertence à relação entre aluno e atividade, pois uma mesma atividade pode gerar certificado para alguns alunos e não para outros.
+
+#### Alterações realizadas na entidade `oportunidade`
+
+A entidade `oportunidade` recebeu o atributo:
+
+- `prazo_inscricao`.
+
+Esse campo foi adicionado para registrar a data limite de inscrição em uma oportunidade. Com isso, o MER passa a representar melhor a gestão de oportunidades, como vagas, bolsas, cursos, eventos ou outras iniciativas divulgadas pela equipe da Pulse Mais.
+
+#### Alterações realizadas na entidade `agenda`
+
+A entidade `agenda` recebeu os atributos:
+
+- `hora_inicio`;
+- `hora_fim`.
+
+Na versão anterior, a agenda possuía apenas a data do compromisso. Com a atualização, passa a ser possível representar também o horário de início e término de reuniões, mentorias, atendimentos, eventos ou outros compromissos registrados no sistema.
+
+#### Alterações realizadas na entidade `historicoPsicologico`
+
+A entidade `historicoPsicologico` também foi ajustada para ficar mais coerente com o modelo físico atualizado. O atributo `classificacao` foi substituído por:
+
+- `titulo`.
+
+Essa alteração foi feita porque o modelo físico passou a representar o histórico psicológico com os atributos `id_historico`, `observacao` e `titulo`, mantendo a entidade mais simples e alinhada ao banco implementado.
+
+#### Relacionamentos mantidos
+
+Apesar da inclusão dos novos atributos, os relacionamentos principais do MER foram preservados. Permaneceram as relações entre:
+
+- `aluno` e `notificacao`;
+- `aluno` e `agenda`;
+- `aluno` e `label`;
+- `aluno` e `historicoPsicologico`;
+- `aluno` e `participacao`;
+- `participacao` e `atividade`;
+- `membroEquipe` e `oportunidade`;
+- `membroEquipe` e `agenda`;
+- `psicologo` e `label`;
+- `psicologo` e `historicoPsicologico`;
+- `remetente` e `notificacao`.
+
+A estrutura geral do modelo foi mantida para evitar aumento desnecessário de complexidade nesta sprint. Assim, a atualização concentrou-se em tornar as entidades mais completas, sem alterar a lógica central dos relacionamentos.
+
+Com as alterações realizadas, o MER passou a representar melhor a realidade operacional da Pulse Mais. A entidade `aluno` agora contempla informações de jornada e segmentação. A entidade `atividade` passou a representar formato e duração. A entidade `participacao` passou a registrar desempenho e certificação. A entidade `oportunidade` passou a controlar prazo de inscrição, e a entidade `agenda` passou a registrar horários.
+
+Essas atualizações fortalecem a coerência entre o MER, o DER, o modelo físico e a implementação no Supabase. Além disso, apoiam funcionalidades futuras do sistema, como filtros, dashboard, histórico do aluno, controle de atividades, gestão de oportunidades e acompanhamento da jornada dos jovens.
+
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
@@ -1394,7 +1572,7 @@ O DER explicita as entidades do sistema, seus atributos, as respectivas chaves p
 </div>
 
 <div align="center">
-<sup>Figura 6: Diagrama Entidade-Relacionamento.</sup><br>
+<sup>Figura 16: Diagrama Entidade-Relacionamento.</sup><br>
 <img src="./assets/diagram.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
@@ -1691,6 +1869,66 @@ O Diagrama Entidade-Relacionamento do PulseManager representa de forma estrutura
 
 </div>
 
+### 3.6.2.1. Atualização do DER com novos atributos da Sprint
+
+Duarnte a sprint 03, o Diagrama Entidade-Relacionamento (DER) foi atualizado para refletir as alterações realizadas no escopo do banco de dados. A atualização teve como objetivo complementar a modelagem já existente, adicionando novos atributos em entidades previamente definidas, sem criar novas tabelas ou modificar os relacionamentos originais.
+
+<div align="center">
+<sup>Figura 17: Diagrama Entidade-Relacionamento atualizado.</sup><br>
+<img src="./assets/diagram_atualizado.png"><br>
+<sub>Fonte: Elaborado pela equipe (2026).</sub><br>
+</div>
+
+A estrutura geral do DER foi mantida, preservando as entidades `aluno`, `atividade`, `participacao`, `oportunidade`, `agenda`, `notificacao`, `membro_equipe`, `psicologo`, `label` e `historico_psicologico`. As alterações realizadas foram pontuais e buscaram tornar o modelo mais aderente à jornada dos jovens atendidos pela Pulse Mais, ao acompanhamento de atividades, à gestão de oportunidades e ao controle de agenda.
+
+#### Alterações realizadas no DER
+
+| Entidade | Atributos adicionados | Tipo de dado | Justificativa |
+|---|---|---|---|
+| `aluno` | `nivel_jornada` | `VARCHAR` | Permite classificar o aluno conforme sua etapa na jornada institucional da Pulse Mais, como conectado, capacitado ou transformado. |
+| `aluno` | `perfil_socioeconomico` | `VARCHAR` | Registra uma informação relevante sobre o público atendido, apoiando análises de impacto social e segmentação. |
+| `aluno` | `curso` | `VARCHAR` | Permite indicar o curso ou programa principal associado ao aluno nesta etapa da modelagem. |
+| `aluno` | `origem_participacao` | `VARCHAR` | Identifica por qual iniciativa o aluno entrou ou se vinculou à Pulse Mais, como palestra, vivência, curso ou programa. |
+| `atividade` | `modalidade` | `VARCHAR` | Indica se a atividade ocorre de forma presencial, online ou híbrida. |
+| `atividade` | `carga_horaria` | `INT` | Registra a duração da atividade em horas. |
+| `participacao` | `certificado` | `BOOLEAN` | Indica se a participação do aluno em determinada atividade gerou certificado. |
+| `oportunidade` | `prazo_inscricao` | `DATE` | Registra a data limite para inscrição em uma oportunidade. |
+| `agenda` | `hora_inicio` | `TIME` | Registra o horário de início de um compromisso ou atendimento. |
+| `agenda` | `hora_fim` | `TIME` | Registra o horário de término de um compromisso ou atendimento. |
+
+#### Entidades atualizadas no DER
+
+A entidade `aluno` recebeu os atributos `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`. Esses campos ampliam a capacidade do sistema de representar a jornada do jovem, permitindo que a equipe da Pulse Mais identifique em qual estágio o aluno se encontra, qual seu perfil socioeconômico, qual curso ou programa está associado a ele e por qual iniciativa ocorreu sua entrada na organização.
+
+A entidade `atividade` foi atualizada com os atributos `modalidade` e `carga_horaria`. Essa alteração permite detalhar melhor as atividades registradas no sistema, diferenciando atividades presenciais, online ou híbridas, além de registrar sua duração.
+
+A entidade `participacao` recebeu o atributo `certificado`. Esse campo foi incluído porque a certificação depende da relação entre um aluno e uma atividade específica. Dessa forma, o certificado não foi adicionado diretamente em `aluno` nem em `atividade`, mas sim na entidade associativa `participacao`.
+
+A entidade `oportunidade` foi atualizada com o atributo `prazo_inscricao`, permitindo que o sistema registre a data limite para inscrição em vagas, bolsas, cursos, eventos ou outras oportunidades divulgadas pela equipe.
+
+A entidade `agenda` recebeu os atributos `hora_inicio` e `hora_fim`, complementando o campo `data` já existente. Com isso, a agenda passa a representar não apenas o dia do compromisso, mas também o intervalo de horário previsto para atendimentos, reuniões, mentorias ou eventos.
+
+#### Impacto das alterações na modelagem
+
+As alterações realizadas no DER não modificaram as cardinalidades nem os relacionamentos entre as entidades. O objetivo foi enriquecer o modelo existente com atributos que apoiem melhor os fluxos previstos no sistema.
+
+Com os novos campos, o DER passa a oferecer suporte mais claro para:
+
+- classificação dos alunos por etapa da jornada;
+- segmentação por perfil socioeconômico;
+- identificação do curso ou programa associado ao aluno;
+- rastreamento da origem de participação do jovem;
+- detalhamento de atividades por modalidade e carga horária;
+- controle de certificação por participação;
+- acompanhamento de prazos de oportunidades;
+- registro mais preciso de compromissos na agenda.
+
+#### Resultado da atualização
+
+A versão atualizada do DER mantém a estrutura original da modelagem, mas passa a representar informações mais específicas sobre a operação da Pulse Mais. As entidades centrais continuam as mesmas, porém agora carregam atributos mais úteis para filtros, dashboards, histórico do aluno, acompanhamento de oportunidades e organização de agenda.
+
+Essa atualização fortalece a coerência entre o banco de dados, o WAD e a implementação técnica no Supabase, além de demonstrar a evolução da modelagem ao longo da sprint.
+
 
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
@@ -1859,7 +2097,6 @@ Os identificadores principais usam `GENERATED ALWAYS AS IDENTITY`, recurso do Po
 </div>
 
 ```sql
--- PostgreSQL
 
 DO $$
 BEGIN
@@ -2126,6 +2363,151 @@ Essa sequência também orienta a ordem de carga inicial de dados. Primeiro deve
 Para exclusões estruturais, a ordem deve ser invertida: primeiro removem-se ou ajustam-se as tabelas dependentes e, somente depois, as tabelas-base. Dessa forma, evita-se quebrar vínculos ativos de chave estrangeira durante manutenções no banco.
 
 </div>
+
+### 3.6.3.1. Atualização do Modelo Físico de dados
+
+Nesta sprint, o modelo físico de dados foi atualizado para refletir as necessidades identificadas durante a implantação do banco no Supabase e o refinamento da jornada dos alunos da Pulse Mais. O modelo físico representa a estrutura concreta do banco de dados, incluindo tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e restrições utilizadas na persistência das informações.
+
+A atualização realizada teve como foco complementar tabelas já existentes, sem alterar a estrutura principal do banco. Dessa forma, não foram criadas novas entidades, nem modificados os relacionamentos previamente definidos. A decisão foi adicionar novos atributos em tabelas específicas para tornar o banco mais adequado ao acompanhamento dos alunos, atividades, participações, oportunidades e agenda.
+
+As alterações foram aplicadas diretamente nas tabelas `aluno`, `atividade`, `participacao`, `oportunidade` e `agenda`.
+
+---
+
+#### Objetivo da atualização
+
+O objetivo da atualização do modelo físico foi tornar a base de dados mais aderente aos fluxos reais da Pulse Mais, especialmente em relação a:
+
+- acompanhamento da jornada do aluno;
+- classificação dos jovens por nível de impacto;
+- registro do perfil socioeconômico;
+- identificação de curso ou programa associado;
+- rastreamento da origem de participação;
+- detalhamento das atividades;
+- controle de certificação;
+- gestão de prazos de oportunidades;
+- registro mais preciso de compromissos na agenda.
+
+Com isso, o banco passa a oferecer melhor suporte para funcionalidades previstas no sistema, como filtros, dashboard, histórico do aluno, gestão de oportunidades e acompanhamento institucional.
+
+---
+
+#### Alterações realizadas no modelo físico
+
+| Tabela | Atributo adicionado | Tipo físico | Justificativa |
+|---|---|---|---|
+| `aluno` | `nivel_jornada` | `VARCHAR(50)` | Permite classificar o aluno dentro da jornada da Pulse Mais, como conectado, capacitado ou transformado. |
+| `aluno` | `perfil_socioeconomico` | `VARCHAR(150)` | Registra informações relacionadas ao perfil social do aluno, apoiando análises de impacto e segmentação. |
+| `aluno` | `curso` | `VARCHAR(150)` | Permite registrar o curso ou programa principal associado ao aluno nesta etapa do projeto. |
+| `aluno` | `origem_participacao` | `VARCHAR(100)` | Identifica por qual iniciativa o aluno entrou ou se vinculou à Pulse Mais. |
+| `atividade` | `modalidade` | `VARCHAR(50)` | Indica se a atividade ocorre de forma presencial, online ou híbrida. |
+| `atividade` | `carga_horaria` | `INTEGER` | Registra a duração da atividade em horas. |
+| `participacao` | `certificado` | `BOOLEAN` | Indica se a participação do aluno em determinada atividade gerou certificado. |
+| `oportunidade` | `prazo_inscricao` | `DATE` | Registra a data limite para inscrição em uma oportunidade. |
+| `agenda` | `hora_inicio` | `TIME` | Registra o horário de início de um compromisso. |
+| `agenda` | `hora_fim` | `TIME` | Registra o horário de término de um compromisso. |
+
+---
+
+#### Justificativa das alterações por tabela
+
+##### Tabela `aluno`
+
+A tabela `aluno` é a entidade central do modelo, pois concentra os principais dados dos jovens acompanhados pela Pulse Mais. Na versão anterior do modelo físico, essa tabela armazenava principalmente dados cadastrais, como nome, e-mail, idade, gênero, ocupação, escolaridade, data de ingresso e status.
+
+Com a atualização, foram adicionados os campos `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`. Esses novos atributos permitem que o aluno seja analisado não apenas como um cadastro, mas como parte de uma jornada institucional.
+
+O campo `nivel_jornada` possibilita classificar o jovem de acordo com sua evolução dentro da Pulse Mais. Essa classificação pode apoiar filtros e indicadores relacionados a jovens conectados, capacitados e transformados.
+
+O campo `perfil_socioeconomico` foi incluído para registrar uma característica relevante do público atendido pela organização. Como a Pulse Mais atua com jovens de baixa renda, esse dado ajuda a manter coerência entre a base de dados e o perfil institucional da ONG.
+
+O campo `curso` foi adicionado como uma forma simples de registrar o curso ou programa principal associado ao aluno. Embora futuramente cursos possam ser representados em uma tabela própria, nesta sprint optou-se por manter o campo diretamente em `aluno` para preservar a simplicidade da implementação.
+
+O campo `origem_participacao` permite identificar por qual ação o jovem entrou na base da Pulse Mais, como palestra, vivência em empresa, curso de curta duração, Programa Pulse Mais, Programa de Mentoria ou Rede de Talentos.
+
+---
+
+##### Tabela `atividade`
+
+A tabela `atividade` representa ações realizadas pela Pulse Mais, como aulas, mentorias, eventos, workshops e avaliações. Na versão anterior, a tabela possuía campos como título, tipo, descrição e data.
+
+Foram adicionados os campos `modalidade` e `carga_horaria`.
+
+O campo `modalidade` permite indicar se a atividade foi realizada de forma presencial, online ou híbrida. Isso melhora a descrição operacional das atividades e pode apoiar futuras análises sobre formatos de participação.
+
+O campo `carga_horaria` registra a duração da atividade em horas. Esse dado é importante para mensurar o volume de formação oferecido aos alunos e pode ser utilizado futuramente em relatórios de impacto ou acompanhamento de cursos.
+
+---
+
+##### Tabela `participacao`
+
+A tabela `participacao` funciona como uma tabela associativa entre `aluno` e `atividade`, registrando a relação entre um jovem e uma atividade específica. Ela já armazenava dados como data da participação, status de participação, nota, aluno e atividade vinculados.
+
+Foi adicionado o campo `certificado`.
+
+Esse campo foi inserido nessa tabela porque a certificação depende da relação entre um aluno e uma atividade específica. Ou seja, uma atividade pode oferecer certificado, mas nem todos os alunos necessariamente receberão esse certificado. Por isso, o atributo foi posicionado em `participacao`, e não diretamente em `aluno` ou `atividade`.
+
+---
+
+##### Tabela `oportunidade`
+
+A tabela `oportunidade` armazena oportunidades disponibilizadas pela equipe da Pulse Mais, como vagas, bolsas, cursos, eventos ou outras possibilidades de desenvolvimento profissional e educacional.
+
+Foi adicionado o campo `prazo_inscricao`.
+
+Esse atributo permite registrar a data limite para inscrição em uma oportunidade. A inclusão desse campo torna a tabela mais útil para o gerenciamento de oportunidades, pois permite diferenciar oportunidades abertas, próximas do vencimento ou já encerradas.
+
+---
+
+##### Tabela `agenda`
+
+A tabela `agenda` registra compromissos vinculados a alunos e membros da equipe. Na versão anterior, ela continha a data do compromisso, mas não permitia especificar horário.
+
+Foram adicionados os campos `hora_inicio` e `hora_fim`.
+
+Esses atributos tornam o registro de agenda mais completo, pois permitem indicar o intervalo de tempo previsto para reuniões, mentorias, atendimentos, conversas de acompanhamento ou eventos. Com isso, a agenda deixa de registrar apenas o dia do compromisso e passa a registrar também sua duração temporal.
+
+---
+
+#### Tabelas não alteradas
+
+As demais tabelas do modelo físico foram mantidas sem alteração nesta sprint:
+
+- `notificacao`;
+- `membro_equipe`;
+- `psicologo`;
+- `label`;
+- `historico_psicologico`.
+
+Essas tabelas já atendiam ao escopo atual da modelagem e, por isso, não receberam novos atributos neste momento. A decisão de não alterá-las contribui para manter o modelo físico mais simples e evitar expansão desnecessária do escopo.
+
+---
+
+#### Script SQL aplicado no Supabase
+
+As alterações no modelo físico foram implementadas por meio do seguinte script SQL:
+
+```sql
+ALTER TABLE public.aluno
+ADD COLUMN IF NOT EXISTS nivel_jornada VARCHAR(50),
+ADD COLUMN IF NOT EXISTS perfil_socioeconomico VARCHAR(150),
+ADD COLUMN IF NOT EXISTS curso VARCHAR(150),
+ADD COLUMN IF NOT EXISTS origem_participacao VARCHAR(100);
+
+ALTER TABLE public.atividade
+ADD COLUMN IF NOT EXISTS modalidade VARCHAR(50),
+ADD COLUMN IF NOT EXISTS carga_horaria INTEGER;
+
+ALTER TABLE public.participacao
+ADD COLUMN IF NOT EXISTS certificado BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE public.oportunidade
+ADD COLUMN IF NOT EXISTS prazo_inscricao DATE;
+
+ALTER TABLE public.agenda
+ADD COLUMN IF NOT EXISTS hora_inicio TIME,
+ADD COLUMN IF NOT EXISTS hora_fim TIME;
+```
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
@@ -2397,3 +2779,6 @@ SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia M
 # <a name="c9"></a>Anexos
 
 _Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
+
+
+

@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { app } from '../../src/app';
 import { AppDataSource, initializeDatabase } from '../../src/database/connection';
 import { Aluno } from '../../src/models/alunoModel';
-import { Psicologo } from '../../src/models/UsuarioModel';
+import { Psicologo } from '../../src/models/usuarioModel';
 
 describe('UC-20 - Saude Mental e Historico Psicologico', () => {
   let alunoRepository: Repository<Aluno>;

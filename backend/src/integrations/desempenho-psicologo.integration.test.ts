@@ -6,7 +6,7 @@ import { Aluno } from '../../src/models/alunoModel';
 import { Atividade } from '../../src/models/atividadeModel';
 import { Participacao } from '../../src/models/participacaoModel';
 import { HistoricoPsicologico } from '../../src/models/SaudeMentalModel';
-import { Psicologo } from '../../src/models/UsuarioModel';
+import { Psicologo } from '../../src/models/usuarioModel';
 
 describe('UC-23 - Acessar desempenho acadêmico dos alunos (Psicólogo)', () => {
   let alunoRepo: Repository<Aluno>;
