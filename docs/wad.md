@@ -722,7 +722,7 @@ A primeira versão a seguir consolida as regras já levantadas com o parceiro du
 | RN020 | O psicólogo só pode acessar o desempenho acadêmico dos alunos que monitora. Esse vínculo deve ser identificado por registros de acompanhamento, labels, histórico psicológico ou outro relacionamento formal entre psicólogo e aluno, evitando acesso amplo aos dados acadêmicos de toda a base.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | RF010, RF022                      |
 
 
-### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
+### 3.1.3. Requisitos Não Funcionais - 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
 <div align="justify">
 
@@ -830,7 +830,205 @@ No que tange aos registros de impacto e classificação, a classe Atividade arma
 
 </div>
 
-### 3.2.3.1. Atualização do Diagrama de Classes do Domínio
+### 3.2.X. Diagrama de Classes Arquitetural do Back-end
+
+Nesta sprint, o Diagrama de Classes Arquitetural do back-end foi atualizado para representar de forma mais fiel a organização técnica da aplicação. Diferentemente do Diagrama de Classes do Domínio, que descreve as entidades do problema, este diagrama tem como objetivo demonstrar como o código está estruturado internamente e como as camadas da aplicação se comunicam até chegar ao banco de dados.
+
+A arquitetura adotada segue uma separação em camadas, organizada em `Middleware`, `Controller`, `Service`, `Repository`, `Model` e `Banco de Dados`. Essa divisão melhora a organização do código, facilita a manutenção, contribui para a testabilidade e torna mais clara a rastreabilidade entre requisitos de negócio, endpoints, regras de negócio e persistência dos dados.
+
+#### Estrutura geral da arquitetura
+
+O fluxo arquitetural parte da interação do usuário com o front-end, passa pelo back-end e chega ao banco de dados PostgreSQL/Supabase. A comunicação entre o front-end e o back-end ocorre por meio de requisições HTTP. Já a comunicação com o banco é centralizada na camada de repository, que isola as operações de persistência.
+
+De forma simplificada, o fluxo pode ser representado da seguinte maneira:
+
+
+
+Essa organização evita que uma única camada concentre responsabilidades demais. Cada parte da arquitetura possui uma função específica, o que torna o back-end mais compreensível, modular e preparado para evolução nas próximas sprints.
+
+#### Camada Front-end
+
+A camada de front-end representa as telas e interações realizadas pelo usuário. No contexto do projeto da Pulse Mais, essa camada contempla funcionalidades como login, dashboard, perfil do aluno, agenda, notificações e segmentação de alunos.
+
+As telas não acessam diretamente o banco de dados. Elas realizam requisições HTTP para os endpoints do back-end, solicitando dados ou enviando informações para cadastro, atualização e consulta.
+
+Essa separação é importante porque mantém a lógica de negócio e o acesso aos dados concentrados no back-end, enquanto o front-end fica responsável pela interface e pela experiência do usuário.
+
+#### Camada Middleware
+
+A camada `Middleware` é responsável por interceptar as requisições antes que elas cheguem aos controllers. No back-end do projeto, essa camada representa pontos de controle ligados à segurança, validação e tratamento de erros.
+
+Entre os middlewares representados no diagrama, destacam-se:
+
+* `authMiddleware`, responsável por validar autenticação e contexto de sessão;
+* `permissionMiddleware`, responsável por controlar acesso conforme o perfil do usuário;
+* `validationMiddleware`, responsável por validar os dados recebidos nas requisições;
+* `errorMiddleware`, responsável por padronizar o tratamento de erros;
+* `asyncHandler`, responsável por encapsular execuções assíncronas e evitar repetição de blocos de tratamento de exceções.
+
+Essa camada se relaciona diretamente aos requisitos não funcionais de segurança, integridade e confiabilidade, pois garante que as requisições sejam verificadas antes de acionar as regras de negócio.
+
+#### Camada Controller
+
+A camada `Controller` é responsável por receber a requisição HTTP, extrair parâmetros, corpo da requisição e informações do usuário autenticado, além de devolver uma resposta adequada ao front-end.
+
+No diagrama, aparecem controllers relacionados aos principais módulos do sistema, como:
+
+* `alunoController`;
+* `agendaController`;
+* `dashboardController`;
+* `participacaoController`;
+* `notificacaoController`;
+* `saudeMentalController`;
+* `segmentacaoController`;
+* `portalAlunoController`;
+* `authController`;
+* `jornadaController`.
+
+A camada controller não deve concentrar regras de negócio complexas. Sua função principal é organizar a entrada e a saída dos dados, encaminhando a solicitação para o service correspondente.
+
+Por exemplo, quando o front-end solicita a listagem de alunos, a rota aciona o `alunoController`, que recebe a requisição e delega a operação para o `alunoService`.
+
+#### Camada Service
+
+A camada `Service` concentra a lógica de negócio da aplicação. É nela que as regras do sistema são aplicadas antes que os dados sejam persistidos, consultados ou retornados ao usuário.
+
+No contexto do projeto, os services são responsáveis por operações como:
+
+* validar regras relacionadas ao cadastro e atualização de alunos;
+* interpretar a jornada do aluno;
+* consolidar indicadores do dashboard;
+* validar horários e vínculos de agenda;
+* validar participação, presença, nota e certificação;
+* organizar notificações;
+* aplicar critérios de segmentação;
+* tratar fluxos relacionados a dados sensíveis de acompanhamento.
+
+Entre os services representados no diagrama, estão:
+
+* `alunoService`;
+* `agendaService`;
+* `dashboardService`;
+* `participacaoService`;
+* `notificacaoService`;
+* `saudeMentalService`;
+* `segmentacaoService`;
+* `portalAlunoService`;
+* `authService`;
+* `jornadaService`.
+
+Essa camada é central para a coerência com os requisitos de negócio, pois conecta as funcionalidades previstas no WAD com a execução técnica do sistema.
+
+#### Camada Repository
+
+A camada `Repository` é responsável por isolar o acesso ao banco de dados. Ela executa operações de consulta, inserção, atualização e recuperação de dados, sem expor os detalhes da persistência para as demais camadas.
+
+No diagrama, os repositories estão relacionados às principais tabelas e domínios do banco, como:
+
+* `alunoRepository`;
+* `agendaRepository`;
+* `dashboardRepository`;
+* `participacaoRepository`;
+* `notificacaoRepository`;
+* `labelRepository`;
+* `historicoPsicologicoRepository`;
+* `atividadeRepository`;
+* `oportunidadeRepository`;
+* `usuarioRepository`.
+
+Essa camada contribui para a organização do back-end porque separa as regras de negócio da forma como os dados são acessados. Assim, caso seja necessário alterar uma consulta SQL ou adaptar a comunicação com o banco, a mudança fica concentrada no repository correspondente.
+
+#### Camada Model
+
+A camada `Model` representa as principais estruturas de dados utilizadas pelo sistema. No diagrama atualizado, essa camada foi destacada com espaço para atributos e métodos, conforme solicitado na revisão da modelagem arquitetural.
+
+Os models representam entidades importantes do sistema, como:
+
+* `AlunoModel`;
+* `AgendaModel`;
+* `ParticipacaoModel`;
+* `AtividadeModel`;
+* `NotificacaoModel`;
+* `LabelModel`;
+* `HistoricoPsicologicoModel`;
+* `UsuarioModel`.
+
+A camada `Model` não é responsável por acessar diretamente o banco de dados. Essa responsabilidade pertence aos repositories. Os models atuam como estruturas de apoio para padronizar os dados utilizados pela aplicação, podendo conter métodos auxiliares de validação, conversão e formatação.
+
+Exemplos de métodos representados nos models incluem:
+
+* `validar()`;
+* `toResponse()`;
+* `toDatabase()`;
+* `validarHorario()`;
+* `registrarNota()`;
+* `definirCargaHoraria()`;
+* `prepararEnvio()`;
+* `temPermissao()`.
+
+A inclusão desses métodos torna o diagrama mais completo, pois mostra que os models podem apoiar a padronização dos dados trafegados entre services, repositories e respostas da API.
+
+#### Camada Banco de Dados
+
+A camada de banco de dados representa a persistência das informações no PostgreSQL/Supabase. O banco armazena as principais entidades utilizadas pela aplicação, como:
+
+* `aluno`;
+* `agenda`;
+* `participacao`;
+* `atividade`;
+* `oportunidade`;
+* `notificacao`;
+* `label`;
+* `historico_psicologico`.
+
+Essa camada está diretamente relacionada ao modelo físico atualizado nesta sprint. Os novos atributos adicionados ao banco, como `nivel_jornada`, `perfil_socioeconomico`, `curso`, `origem_participacao`, `modalidade`, `carga_horaria`, `certificado`, `prazo_inscricao`, `hora_inicio` e `hora_fim`, fortalecem a integração entre banco, back-end e requisitos do sistema.
+
+#### Relação com os requisitos de negócio
+
+A arquitetura representada no diagrama apoia diretamente os principais requisitos funcionais do projeto. A separação em camadas permite que cada requisito seja implementado de forma mais organizada, com responsabilidades bem distribuídas entre controller, service, repository, model e banco de dados.
+
+| Requisito                                        | Relação com a arquitetura                                                                                   |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `RF001` - Cadastro de alunos                     | Atendido pelo fluxo `alunoController → alunoService → alunoRepository → aluno`.                             |
+| `RF003` - Consulta e listagem de alunos          | Atendido pelos endpoints de consulta, com apoio do `alunoService` e `alunoRepository`.                      |
+| `RF004` - Histórico completo do aluno            | Apoiado pelos módulos de aluno, participação, agenda, jornada e histórico psicológico.                      |
+| `RF006` - Registro de participação em atividades | Atendido pelo fluxo `participacaoController → participacaoService → participacaoRepository → participacao`. |
+| `RF012` - Segmentação de alunos                  | Apoiado pelo `segmentacaoService`, pelos novos campos de aluno e pelas consultas ao banco.                  |
+| `RF014` - Dashboard e indicadores                | Atendido pelo `dashboardService`, que consolida dados de diferentes repositories.                           |
+| `RF021` - Oportunidades e convites               | Apoiado pelos módulos de oportunidade e notificação, além do campo `prazo_inscricao`.                       |
+
+Essa relação evidencia que a arquitetura não foi organizada apenas de forma técnica, mas também em alinhamento com os fluxos reais do produto e com as necessidades da Pulse Mais.
+
+#### Relação com as regras de negócio
+
+A camada `Service` é a principal responsável por aplicar as regras de negócio do sistema. Por isso, o diagrama arquitetural destaca essa camada como intermediária entre o recebimento da requisição e o acesso aos dados.
+
+Alguns exemplos de relação entre regras de negócio e arquitetura são:
+
+* a evolução do aluno na jornada pode ser tratada pelo `jornadaService` e refletida no campo `nivel_jornada`;
+* o controle de certificação depende da relação entre aluno e atividade, representada pela tabela `participacao` e pelo `participacaoService`;
+* a agenda exige validação de data e horário, apoiada pelo `agendaService` e pelo `AgendaModel`;
+* os dados sensíveis de acompanhamento psicológico são tratados por services e repositories específicos;
+* permissões e autenticação são tratadas antes da execução dos controllers, por meio dos middlewares.
+
+Dessa forma, o diagrama demonstra que as regras de negócio não estão espalhadas aleatoriamente pelo código, mas centralizadas em camadas adequadas.
+
+#### Contribuição da arquitetura para a manutenção do sistema
+
+A organização em camadas traz benefícios importantes para a continuidade do projeto. Como cada camada possui uma responsabilidade específica, torna-se mais simples localizar erros, adicionar funcionalidades e evoluir o sistema nas próximas sprints.
+
+Por exemplo, se for necessário alterar a regra de classificação do aluno, a mudança deve ocorrer principalmente no `alunoService` ou no `jornadaService`, sem necessidade de alterar diretamente o controller ou o repository. Da mesma forma, se for necessário modificar uma consulta SQL, a alteração fica concentrada no repository correspondente.
+
+Essa separação também facilita a escrita de testes, pois cada camada pode ser validada de forma mais isolada. Controllers podem ser testados pelo retorno HTTP, services pelas regras de negócio, e repositories pela persistência dos dados.
+
+#### Resultado da atualização
+
+Com a atualização do Diagrama de Classes Arquitetural, o WAD passa a representar de forma mais fiel a estrutura real do back-end desenvolvido na sprint. O diagrama evidencia a comunicação entre front-end, back-end e banco de dados, além de mostrar as responsabilidades internas das camadas de middleware, controller, service, repository e model.
+
+A principal melhoria em relação à versão anterior é que a camada `Model` passou a ter espaço para atributos e métodos, atendendo à orientação da professora e tornando o artefato mais completo. Além disso, o diagrama estabelece uma relação mais clara entre arquitetura técnica, requisitos funcionais, regras de negócio e modelo físico implementado no Supabase/PostgreSQL.
+
+
+### 3.2.3.2. Atualização do Diagrama de Classes do Domínio
 
 Nesta sprint, o Diagrama de Classes do Domínio foi atualizado para refletir melhor a estrutura atual da modelagem e as alterações realizadas no banco de dados. O objetivo principal foi alinhar o diagrama ao modelo físico implementado no Supabase, mantendo a organização geral já existente, mas corrigindo pontos que estavam simplificados ou inconsistentes.
 
@@ -876,7 +1074,7 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 
 </div>
 
-#### 3.2.4.1. UC-03 — Manter cadastro do aluno
+#### 3.2.4.1. UC-03 - Manter cadastro do aluno
 
 <div align="center">
 <sup>Figura 10: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup><br>
@@ -886,11 +1084,11 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 
 <div align="justify">
 
-O fluxo começa quando o membro da equipe preenche o formulário de cadastro na `:TelaCadastroAluno` e submete os dados ao `:AlunoController`, que os repassa ao `:AlunoService`. O service realiza a validação dos campos obrigatórios (RN002), e em caso de sucesso aciona o `:AlunoRepository` para persistir o registro no banco. Após o INSERT, o service deriva o código identificador no formato `PM-AAAA-NNN` a partir do `id_aluno` e do ano de ingresso — operação detalhada como caso de uso próprio (UC-04, incluído via `«include»`), cobrindo a RN001 — e dispara a mensagem de boas-vindas pelo `:EmailService`. A confirmação retorna pelas camadas até a tela, exibindo o código gerado ao usuário. Caso a validação inicial falhe, o fluxo segue pelo ramo alternativo do fragmento `alt`, devolvendo um erro 400 sem chegar ao banco. Esse diagrama atende ao RF001 e cobre as RN001 e RN002.
+O fluxo começa quando o membro da equipe preenche o formulário de cadastro na `:TelaCadastroAluno` e submete os dados ao `:AlunoController`, que os repassa ao `:AlunoService`. O service realiza a validação dos campos obrigatórios (RN002), e em caso de sucesso aciona o `:AlunoRepository` para persistir o registro no banco. Após o INSERT, o service deriva o código identificador no formato `PM-AAAA-NNN` a partir do `id_aluno` e do ano de ingresso - operação detalhada como caso de uso próprio (UC-04, incluído via `«include»`), cobrindo a RN001 - e dispara a mensagem de boas-vindas pelo `:EmailService`. A confirmação retorna pelas camadas até a tela, exibindo o código gerado ao usuário. Caso a validação inicial falhe, o fluxo segue pelo ramo alternativo do fragmento `alt`, devolvendo um erro 400 sem chegar ao banco. Esse diagrama atende ao RF001 e cobre as RN001 e RN002.
 
 </div>
 
-#### 3.2.4.2. UC-06 — Visualizar histórico consolidado do aluno
+#### 3.2.4.2. UC-06 - Visualizar histórico consolidado do aluno
 
 <div align="center">
 <sup>Figura 11: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
@@ -904,7 +1102,7 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 
 </div>
 
-#### 3.2.4.3. UC-08 — Registrar participação em atividade
+#### 3.2.4.3. UC-08 - Registrar participação em atividade
 
 <div align="center">
 <sup>Figura 12: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup><br>
@@ -914,11 +1112,11 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 
 <div align="justify">
 
-O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e define o status da participação. A `:TelaParticipacao` envia `POST /participacoes` ao `:ParticipacaoController`, que delega ao `:ParticipacaoService`. O service executa duas validações em sequência: existência do aluno (`:AlunoRepository`) e existência da atividade (`:AtividadeRepository`). Quando ambas retornam verdadeiro, o ramo principal do fragmento `alt` é seguido: o `:ParticipacaoRepository` emite o `INSERT` na tabela `participacao`, registrando `id_aluno`, `id_atividade`, `data_part`, `status_part` e, quando aplicável, `nota`, e a confirmação retorna pelas camadas até a tela. Quando qualquer das validações falha, o ramo alternativo devolve 404 sem chegar à escrita, preservando a integridade referencial. Diferente de um simples registro de frequência, este fluxo cria uma entrada completa de participação — com data, status e nota próprios — que sustenta tanto a consulta de histórico (UC-06) quanto o cálculo de indicadores (UC-15). Esse diagrama atende aos RF005 e RF006, mas o endpoint específico de participação ainda não está implementado no backend atual.
+O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e define o status da participação. A `:TelaParticipacao` envia `POST /participacoes` ao `:ParticipacaoController`, que delega ao `:ParticipacaoService`. O service executa duas validações em sequência: existência do aluno (`:AlunoRepository`) e existência da atividade (`:AtividadeRepository`). Quando ambas retornam verdadeiro, o ramo principal do fragmento `alt` é seguido: o `:ParticipacaoRepository` emite o `INSERT` na tabela `participacao`, registrando `id_aluno`, `id_atividade`, `data_part`, `status_part` e, quando aplicável, `nota`, e a confirmação retorna pelas camadas até a tela. Quando qualquer das validações falha, o ramo alternativo devolve 404 sem chegar à escrita, preservando a integridade referencial. Diferente de um simples registro de frequência, este fluxo cria uma entrada completa de participação - com data, status e nota próprios - que sustenta tanto a consulta de histórico (UC-06) quanto o cálculo de indicadores (UC-15). Esse diagrama atende aos RF005 e RF006, mas o endpoint específico de participação ainda não está implementado no backend atual.
 
 </div>
 
-#### 3.2.4.4. UC-15 — Visualizar dashboard de impacto
+#### 3.2.4.4. UC-15 - Visualizar dashboard de impacto
 
 <div align="center">
 <sup>Figura 13: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
@@ -928,11 +1126,11 @@ O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e 
 
 <div align="justify">
 
-A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como `/api/impacto/resumo` e `/api/jornada/resumo`, para apresentar os principais indicadores institucionais. A ocupação serve como proxy para empregabilidade e a escolaridade como proxy para acesso ao ensino superior, uma vez que o banco atual do MVP não modela explicitamente vínculos empregatícios ou matrículas em instituições de ensino superior — essas dimensões mais ricas estão previstas para iterações futuras. Esse fluxo atende parcialmente aos RF012, RF013, RF015 e RF016; o RF014 permanece planejado por depender de cálculo específico de conclusão de programa por período.
+A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como `/api/impacto/resumo` e `/api/jornada/resumo`, para apresentar os principais indicadores institucionais. A ocupação serve como proxy para empregabilidade e a escolaridade como proxy para acesso ao ensino superior, uma vez que o banco atual do MVP não modela explicitamente vínculos empregatícios ou matrículas em instituições de ensino superior - essas dimensões mais ricas estão previstas para iterações futuras. Esse fluxo atende parcialmente aos RF012, RF013, RF015 e RF016; o RF014 permanece planejado por depender de cálculo específico de conclusão de programa por período.
 
 </div>
 
-#### 3.2.4.5. UC-22 — Manter registros de saúde mental
+#### 3.2.4.5. UC-22 - Manter registros de saúde mental
 
 <div align="center">
 <sup>Figura 14: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
@@ -2259,7 +2457,7 @@ _Descreva o controle de sessão baseado em `session id` persistido em tabela pr�
 
 ### 3.8.3. Autorização
 
-_Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização._
+_Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend - o frontend nunca é fonte de verdade para autorização._
 
 ### 3.8.4. Estratégias de Resiliência
 
@@ -2267,7 +2465,7 @@ _Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, re
 
 ## 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
 
-_A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais._
+_A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia - mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais._
 
 | Persona | RF    | RN   | Endpoint    | Tela     | Teste | Evidência                          |
 | ------- | ----- | ---- | ----------- | -------- | ----- | ---------------------------------- |
@@ -2304,8 +2502,8 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 _Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:_
 
-- **_White-box_** _— testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação)._
-- **_Black-box_** _— testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna._
+- **_White-box_** _- testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação)._
+- **_Black-box_** _- testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna._
 
 _Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown)._
 
