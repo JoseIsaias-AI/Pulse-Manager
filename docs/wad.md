@@ -830,7 +830,7 @@ No que tange aos registros de impacto e classificação, a classe Atividade arma
 
 </div>
 
-### 3.2.X. Diagrama de Classes Arquitetural do Back-end
+### 3.2.3.1. Diagrama de Classes Arquitetural do Back-end
 
 Nesta sprint, o Diagrama de Classes Arquitetural do back-end foi atualizado para representar de forma mais fiel a organização técnica da aplicação. Diferentemente do Diagrama de Classes do Domínio, que descreve as entidades do problema, este diagrama tem como objetivo demonstrar como o código está estruturado internamente e como as camadas da aplicação se comunicam até chegar ao banco de dados.
 
