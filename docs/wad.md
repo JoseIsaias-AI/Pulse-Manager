@@ -1166,7 +1166,7 @@ _posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelid
 
 <div align="center">
 <sup>Figura X: Tela de login.</sup><br>
-<img src="./assets/Login - Gestor.png"><br>
+<img src="./assets/Login-Gestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1177,7 +1177,7 @@ Esta tela está associada às User Stories US05, US07, US08 e US09, de acordo co
 
 <div align="center">
 <sup>Figura X: Tela de lista de alunos.</sup><br>
-<img src="./assets/Lista de Alunos - Gestor.png"><br>
+<img src="./assets/Lista-de-Alunos-Gestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
