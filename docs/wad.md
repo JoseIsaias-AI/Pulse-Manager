@@ -830,221 +830,204 @@ No que tange aos registros de impacto e classificação, a classe Atividade arma
 
 </div>
 
-### 3.2.3.1. Diagrama de Classes Arquitetural
+### 3.2.3.1. Diagrama de Classes Arquitetural do Back-end
 
-Nesta sprint, o Diagrama de Classes foi revisado a partir do feedback docente, com o objetivo de tornar a modelagem mais aderente à UML e mais adequada à leitura técnica do sistema. Dessa forma, a modelagem foi reorganizada com base nos estereótipos `<<boundary>>`, `<<control>>` e `<<entity>>`. As classes de fronteira representam as telas e interfaces com as quais o usuário interage; as classes de controle representam a coordenação dos fluxos e casos de uso; e as classes de entidade representam os principais objetos persistentes e conceituais do domínio da aplicação.
+Nesta sprint, o Diagrama de Classes Arquitetural do back-end foi atualizado para representar de forma mais fiel a organização técnica da aplicação. Diferentemente do Diagrama de Classes do Domínio, que descreve as entidades do problema, este diagrama tem como objetivo demonstrar como o código está estruturado internamente e como as camadas da aplicação se comunicam até chegar ao banco de dados.
 
-A atualização também considerou a estrutura do repositório compactado do projeto, utilizando os módulos identificados no back-end e no front-end, como autenticação, portal do aluno, agenda, participação, frequência, saúde mental, notificações, dashboard, segmentação, empregabilidade, ensino superior, programas e jornada. Para evitar inferências incorretas, os diagramas não detalham métodos específicos não confirmados como implementados no código, priorizando a representação das responsabilidades, associações e entidades centrais do sistema.
+A arquitetura adotada segue uma separação em camadas, organizada em `Middleware`, `Controller`, `Service`, `Repository`, `Model` e `Banco de Dados`. Essa divisão melhora a organização do código, facilita a manutenção, contribui para a testabilidade e torna mais clara a rastreabilidade entre requisitos de negócio, endpoints, regras de negócio e persistência dos dados.
 
----
+#### Estrutura geral da arquitetura
 
-#### 3.2.3.1.1. Critério de organização dos diagramas
-
-A modelagem foi dividida em uma visão geral e em recortes menores por fluxo funcional. Essa decisão foi tomada porque concentrar todas as classes, atributos, relacionamentos e responsabilidades em uma única imagem tornaria o artefato pouco legível. Assim, a documentação passa a apresentar primeiro uma visão macro do sistema e, depois, diagramas específicos para os principais fluxos.
-
-A divisão adotada foi:
-
-* Visão geral do sistema;
-* Autenticação e Portal do Aluno;
-* Acompanhamento do Aluno;
-* Comunicação e Acompanhamento Psicossocial;
-* Gestão, Segmentação e Resultados.
-
-Essa organização permite analisar o sistema por partes, mantendo a coerência entre as telas, os controles e as entidades do domínio.
-
----
-
-#### 3.2.3.1.2 Visão geral do Diagrama de Classes
-
-A visão geral apresenta os principais fluxos do sistema organizados em três colunas: classes de interface, classes de controle e classes de entidade. Essa estrutura permite visualizar como as telas acionam controles específicos e como esses controles se relacionam com as entidades centrais do domínio.
-
-As classes de interface representam páginas ou telas do sistema, como `TelaLogin`, `TelaPortalAluno`, `TelaPerfilAluno`, `TelaAgenda`, `TelaJornadaAluno`, `TelaNotificacoes`, `TelaSaudeMental`, `TelaDashboard` e `TelaSegmentacao`.
-
-As classes de controle representam a coordenação dos fluxos da aplicação, como `ControleAutenticacao`, `ControlePortalAluno`, `ControleAluno`, `ControleImportacao`, `ControleAgenda`, `ControleParticipacao`, `ControleFrequencia`, `ControleJornada`, `ControleNotificacao`, `ControleSaudeMental`, `ControleDashboard`, `ControleSegmentacao`, `ControleEmpregabilidade` e `ControleEnsinoSuperior`.
-
-As classes de entidade representam os dados persistentes ou conceituais do sistema, como `Usuario`, `Aluno`, `Agenda`, `Participacao`, `Atividade`, `Frequencia`, `Notificacao`, `Label`, `SaudeMental`, `AnotacaoQualitativa`, `DashboardResumo`, `Empregabilidade`, `EnsinoSuperior`, `Programa` e `VinculoPrograma`.
+O fluxo arquitetural parte da interação do usuário com o front-end, passa pelo back-end e chega ao banco de dados PostgreSQL/Supabase. A comunicação entre o front-end e o back-end ocorre por meio de requisições HTTP. Já a comunicação com o banco é centralizada na camada de repository, que isola as operações de persistência.
 
 <div align="center">
-<sup>Figura 10: Diagrama de Classes Arquitetural.</sup><br>
-<img src="./assets/diagrama_arquitetural_.jpeg"><br>
+<sup>Figura 9: Diagrama de Classes Arquitetural.</sup><br>
+<img src="./assets/diagrama_arquitetural.jpeg"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
-A imagem apresenta uma visão consolidada dos principais módulos do sistema Pulse Mais. A organização em colunas evidencia a separação entre interface, controle e entidade, evitando que a modelagem seja interpretada apenas como uma arquitetura MVC. O primeiro grupo representa autenticação e portal; o segundo grupo representa o acompanhamento do aluno; e o terceiro grupo representa comunicação, gestão e resultados.
+Essa organização evita que uma única camada concentre responsabilidades demais. Cada parte da arquitetura possui uma função específica, o que torna o back-end mais compreensível, modular e preparado para evolução nas próximas sprints.
 
-Essa visão geral funciona como um mapa macro do sistema, mostrando como as telas acionam controles e como esses controles se conectam às entidades do domínio. Ela também indica que a entidade `Aluno` é central para vários fluxos, pois se relaciona com participação, frequência, jornada, notificações, acompanhamento psicossocial, empregabilidade e ensino superior.
+#### Camada Front-end
 
----
+A camada de front-end representa as telas e interações realizadas pelo usuário. No contexto do projeto da Pulse Mais, essa camada contempla funcionalidades como login, dashboard, perfil do aluno, agenda, notificações e segmentação de alunos.
 
-#### 3.2.3.1.3. Diagrama de Classes: Autenticação e Portal do Aluno
+As telas não acessam diretamente o banco de dados. Elas realizam requisições HTTP para os endpoints do back-end, solicitando dados ou enviando informações para cadastro, atualização e consulta.
 
-O diagrama de Autenticação e Portal do Aluno detalha os fluxos relacionados ao acesso ao sistema, consulta e atualização de informações do aluno, cadastro/importação e vínculo com programas. Esse recorte foi separado da visão geral para permitir maior clareza nos relacionamentos entre usuário, aluno, programa e vínculo com programa.
+Essa separação é importante porque mantém a lógica de negócio e o acesso aos dados concentrados no back-end, enquanto o front-end fica responsável pela interface e pela experiência do usuário.
 
-As classes de interface deste fluxo são:
+#### Camada Middleware
 
-* `TelaLogin`;
-* `TelaPortalAluno`;
-* `TelaPerfilAluno`;
-* `TelaAlunos`;
-* `TelaCadastroAluno`.
+A camada `Middleware` é responsável por interceptar as requisições antes que elas cheguem aos controllers. No back-end do projeto, essa camada representa pontos de controle ligados à segurança, validação e tratamento de erros.
 
-As classes de controle são:
+Entre os middlewares representados no diagrama, destacam-se:
 
-* `ControleAutenticacao`;
-* `ControlePortalAluno`;
-* `ControleAluno`;
-* `ControleImportacao`.
+* `authMiddleware`, responsável por validar autenticação e contexto de sessão;
+* `permissionMiddleware`, responsável por controlar acesso conforme o perfil do usuário;
+* `validationMiddleware`, responsável por validar os dados recebidos nas requisições;
+* `errorMiddleware`, responsável por padronizar o tratamento de erros;
+* `asyncHandler`, responsável por encapsular execuções assíncronas e evitar repetição de blocos de tratamento de exceções.
 
-As classes de entidade são:
+Essa camada se relaciona diretamente aos requisitos não funcionais de segurança, integridade e confiabilidade, pois garante que as requisições sejam verificadas antes de acionar as regras de negócio.
 
-* `Usuario`;
-* `Aluno`;
-* `Programa`;
-* `VinculoPrograma`.
+#### Camada Controller
 
-<div align="center">
-<sup>Figura 11: Diagrama de Classes Arquitetural.</sup><br>
-<img src="./assets/diagrama_arquitetural_aluno.jpeg"><br>
-<sub>Fonte: Autoria própria (2026). </sub><br>
-</div>
+A camada `Controller` é responsável por receber a requisição HTTP, extrair parâmetros, corpo da requisição e informações do usuário autenticado, além de devolver uma resposta adequada ao front-end.
 
-A imagem demonstra que o fluxo de autenticação parte da `TelaLogin`, passa pelo `ControleAutenticacao` e se relaciona com a entidade `Usuario`, responsável por representar os dados necessários ao acesso e perfil do usuário. Já as telas `TelaPortalAluno` e `TelaPerfilAluno` se conectam ao `ControlePortalAluno`, que centraliza a consulta e atualização das informações permitidas ao aluno.
+No diagrama, aparecem controllers relacionados aos principais módulos do sistema, como:
 
-As telas `TelaAlunos` e `TelaCadastroAluno` se relacionam com o `ControleAluno`, responsável pelo fluxo de cadastro, consulta e manutenção dos dados da entidade `Aluno`. O `ControleImportacao` aparece associado às entidades `Aluno`, `Programa` e `VinculoPrograma`, representando fluxos de importação ou associação de alunos a programas institucionais.
+* `alunoController`;
+* `agendaController`;
+* `dashboardController`;
+* `participacaoController`;
+* `notificacaoController`;
+* `saudeMentalController`;
+* `segmentacaoController`;
+* `portalAlunoController`;
+* `authController`;
+* `jornadaController`.
 
-A relação entre `Aluno`, `Programa` e `VinculoPrograma` indica que o vínculo entre aluno e programa é representado por uma entidade intermediária, permitindo registrar informações específicas dessa associação, como identificadores e status do vínculo.
+A camada controller não deve concentrar regras de negócio complexas. Sua função principal é organizar a entrada e a saída dos dados, encaminhando a solicitação para o service correspondente.
 
----
+Por exemplo, quando o front-end solicita a listagem de alunos, a rota aciona o `alunoController`, que recebe a requisição e delega a operação para o `alunoService`.
 
-#### 3.2.3.1.4. Diagrama de Classes: Acompanhamento do Aluno
+#### Camada Service
 
-O diagrama de Acompanhamento do Aluno detalha os fluxos relacionados à agenda, participação em atividades, frequência e jornada. Esse recorte é central para o sistema, pois representa o acompanhamento da trajetória do aluno dentro da Pulse Mais.
+A camada `Service` concentra a lógica de negócio da aplicação. É nela que as regras do sistema são aplicadas antes que os dados sejam persistidos, consultados ou retornados ao usuário.
 
-As classes de interface deste fluxo são:
+No contexto do projeto, os services são responsáveis por operações como:
 
-* `TelaAgenda`;
-* `TelaJornadaAluno`;
-* `TelaAlunos`.
+* validar regras relacionadas ao cadastro e atualização de alunos;
+* interpretar a jornada do aluno;
+* consolidar indicadores do dashboard;
+* validar horários e vínculos de agenda;
+* validar participação, presença, nota e certificação;
+* organizar notificações;
+* aplicar critérios de segmentação;
+* tratar fluxos relacionados a dados sensíveis de acompanhamento.
 
-As classes de controle são:
+Entre os services representados no diagrama, estão:
 
-* `ControleAgenda`;
-* `ControleParticipacao`;
-* `ControleFrequencia`;
-* `ControleJornada`;
-* `ControleUc07Jornada`.
+* `alunoService`;
+* `agendaService`;
+* `dashboardService`;
+* `participacaoService`;
+* `notificacaoService`;
+* `saudeMentalService`;
+* `segmentacaoService`;
+* `portalAlunoService`;
+* `authService`;
+* `jornadaService`.
 
-As classes de entidade são:
+Essa camada é central para a coerência com os requisitos de negócio, pois conecta as funcionalidades previstas no WAD com a execução técnica do sistema.
 
-* `Aluno`;
-* `Agenda`;
-* `Participacao`;
-* `Atividade`;
-* `Frequencia`;
-* `Uc07Jornada`.
+#### Camada Repository
 
-<div align="center">
-<sup>Figura 12: Diagrama de Classes Arquitetural em Fluxo.</sup><br>
-<img src="./assets/diagrama_arquitetural_trajetoria.jpeg"><br>
-<sub>Fonte: Autoria própria (2026). </sub><br>
-</div>
+A camada `Repository` é responsável por isolar o acesso ao banco de dados. Ela executa operações de consulta, inserção, atualização e recuperação de dados, sem expor os detalhes da persistência para as demais camadas.
 
-A imagem mostra que a `TelaAgenda` aciona o `ControleAgenda`, que se relaciona com as entidades `Aluno` e `Agenda`. Essa relação representa que um aluno pode possuir registros de agenda, como reuniões, mentorias, acompanhamentos ou compromissos institucionais.
+No diagrama, os repositories estão relacionados às principais tabelas e domínios do banco, como:
 
-A `TelaJornadaAluno` aciona controles relacionados à participação, frequência e jornada. O `ControleParticipacao` se conecta às entidades `Aluno`, `Participacao` e `Atividade`, indicando que a participação é a entidade que registra o vínculo entre aluno e atividade. Por isso, `Agenda` não foi conectada diretamente à `Participacao`, já que são fluxos diferentes: agenda representa compromissos e participação representa presença ou desempenho em atividades.
+* `alunoRepository`;
+* `agendaRepository`;
+* `dashboardRepository`;
+* `participacaoRepository`;
+* `notificacaoRepository`;
+* `labelRepository`;
+* `historicoPsicologicoRepository`;
+* `atividadeRepository`;
+* `oportunidadeRepository`;
+* `usuarioRepository`.
 
-A entidade `Frequencia` aparece associada ao acompanhamento de presença do aluno em atividades, enquanto `Uc07Jornada` representa uma estrutura específica de acompanhamento da jornada. A presença dessas entidades no diagrama reflete os módulos encontrados no repositório do projeto e reforça a coerência entre código, domínio e documentação.
+Essa camada contribui para a organização do back-end porque separa as regras de negócio da forma como os dados são acessados. Assim, caso seja necessário alterar uma consulta SQL ou adaptar a comunicação com o banco, a mudança fica concentrada no repository correspondente.
 
----
+#### Camada Model
 
-#### 3.2.3.1.5. Diagrama de Classes: Comunicação e Acompanhamento Psicossocial
+A camada `Model` representa as principais estruturas de dados utilizadas pelo sistema. No diagrama atualizado, essa camada foi destacada com espaço para atributos e métodos, conforme solicitado na revisão da modelagem arquitetural.
 
-O diagrama de Comunicação e Acompanhamento Psicossocial representa os fluxos associados a notificações, saúde mental, labels, anotações qualitativas e auditoria. Esse recorte foi separado por envolver informações sensíveis e registros de acompanhamento individual.
+Os models representam entidades importantes do sistema, como:
 
-As classes de interface deste fluxo são:
+* `AlunoModel`;
+* `AgendaModel`;
+* `ParticipacaoModel`;
+* `AtividadeModel`;
+* `NotificacaoModel`;
+* `LabelModel`;
+* `HistoricoPsicologicoModel`;
+* `UsuarioModel`.
 
-* `TelaNotificacoes`;
-* `TelaSaudeMental`;
-* `TelaPortalAluno`.
+A camada `Model` não é responsável por acessar diretamente o banco de dados. Essa responsabilidade pertence aos repositories. Os models atuam como estruturas de apoio para padronizar os dados utilizados pela aplicação, podendo conter métodos auxiliares de validação, conversão e formatação.
 
-As classes de controle são:
+Exemplos de métodos representados nos models incluem:
 
-* `ControleNotificacao`;
-* `ControleSaudeMental`;
-* `ControleAnotacaoQualitativa`.
+* `validar()`;
+* `toResponse()`;
+* `toDatabase()`;
+* `validarHorario()`;
+* `registrarNota()`;
+* `definirCargaHoraria()`;
+* `prepararEnvio()`;
+* `temPermissao()`.
 
-As classes de entidade são:
+A inclusão desses métodos torna o diagrama mais completo, pois mostra que os models podem apoiar a padronização dos dados trafegados entre services, repositories e respostas da API.
 
-* `Usuario`;
-* `Aluno`;
-* `Notificacao`;
-* `Label`;
-* `SaudeMental`;
-* `AnotacaoQualitativa`;
-* `Auditoria`.
+#### Camada Banco de Dados
 
-<div align="center">
-<sup>Figura 13: Diagrama de Classes Arquitetural.</sup><br>
-<img src="./assets/diagrama_arquitetural_comunicacao.jpeg"><br>
-<sub>Fonte: Autoria própria (2026). </sub><br>
-</div>
+A camada de banco de dados representa a persistência das informações no PostgreSQL/Supabase. O banco armazena as principais entidades utilizadas pela aplicação, como:
 
-A imagem representa a comunicação entre o sistema e o aluno por meio da entidade `Notificacao`, que se relaciona com `Usuario` e `Aluno`. A presença de `Usuario` indica o remetente ou ator do sistema, enquanto `Aluno` representa o destinatário da comunicação.
+* `aluno`;
+* `agenda`;
+* `participacao`;
+* `atividade`;
+* `oportunidade`;
+* `notificacao`;
+* `label`;
+* `historico_psicologico`.
 
-O fluxo de saúde mental é representado pelo `ControleSaudeMental`, que se relaciona com entidades voltadas ao acompanhamento psicossocial, como `SaudeMental`, `Label` e `AnotacaoQualitativa`. Essas entidades apoiam o registro de observações, classificações e informações qualitativas relacionadas à trajetória do aluno.
+Essa camada está diretamente relacionada ao modelo físico atualizado nesta sprint. Os novos atributos adicionados ao banco, como `nivel_jornada`, `perfil_socioeconomico`, `curso`, `origem_participacao`, `modalidade`, `carga_horaria`, `certificado`, `prazo_inscricao`, `hora_inicio` e `hora_fim`, fortalecem a integração entre banco, back-end e requisitos do sistema.
 
-A entidade `Auditoria` aparece como apoio ao registro de ações e eventos relevantes no sistema. Sua presença contribui para rastreabilidade, segurança e controle de operações sensíveis, especialmente em fluxos que lidam com informações individuais e psicossociais.
+#### Relação com os requisitos de negócio
 
----
+A arquitetura representada no diagrama apoia diretamente os principais requisitos funcionais do projeto. A separação em camadas permite que cada requisito seja implementado de forma mais organizada, com responsabilidades bem distribuídas entre controller, service, repository, model e banco de dados.
 
-#### 3.2.3.1.6 Diagrama de Classes: Gestão, Segmentação e Resultados
+| Requisito                                        | Relação com a arquitetura                                                                                   |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `RF001` - Cadastro de alunos                     | Atendido pelo fluxo `alunoController → alunoService → alunoRepository → aluno`.                             |
+| `RF003` - Consulta e listagem de alunos          | Atendido pelos endpoints de consulta, com apoio do `alunoService` e `alunoRepository`.                      |
+| `RF004` - Histórico completo do aluno            | Apoiado pelos módulos de aluno, participação, agenda, jornada e histórico psicológico.                      |
+| `RF006` - Registro de participação em atividades | Atendido pelo fluxo `participacaoController → participacaoService → participacaoRepository → participacao`. |
+| `RF012` - Segmentação de alunos                  | Apoiado pelo `segmentacaoService`, pelos novos campos de aluno e pelas consultas ao banco.                  |
+| `RF014` - Dashboard e indicadores                | Atendido pelo `dashboardService`, que consolida dados de diferentes repositories.                           |
+| `RF021` - Oportunidades e convites               | Apoiado pelos módulos de oportunidade e notificação, além do campo `prazo_inscricao`.                       |
 
-O diagrama de Gestão, Segmentação e Resultados representa os fluxos analíticos e gerenciais do sistema. Ele contempla dashboard, segmentação de alunos, empregabilidade, ensino superior, programas e vínculos institucionais.
+Essa relação evidencia que a arquitetura não foi organizada apenas de forma técnica, mas também em alinhamento com os fluxos reais do produto e com as necessidades da Pulse Mais.
 
-As classes de interface deste fluxo são:
+#### Relação com as regras de negócio
 
-* `TelaDashboard`;
-* `TelaSegmentacao`;
-* `TelaCadastroAluno`.
+A camada `Service` é a principal responsável por aplicar as regras de negócio do sistema. Por isso, o diagrama arquitetural destaca essa camada como intermediária entre o recebimento da requisição e o acesso aos dados.
 
-As classes de controle são:
+Alguns exemplos de relação entre regras de negócio e arquitetura são:
 
-* `ControleDashboard`;
-* `ControleSegmentacao`;
-* `ControleEmpregabilidade`;
-* `ControleEnsinoSuperior`;
-* `ControleImportacao`.
+* a evolução do aluno na jornada pode ser tratada pelo `jornadaService` e refletida no campo `nivel_jornada`;
+* o controle de certificação depende da relação entre aluno e atividade, representada pela tabela `participacao` e pelo `participacaoService`;
+* a agenda exige validação de data e horário, apoiada pelo `agendaService` e pelo `AgendaModel`;
+* os dados sensíveis de acompanhamento psicológico são tratados por services e repositories específicos;
+* permissões e autenticação são tratadas antes da execução dos controllers, por meio dos middlewares.
 
-As classes de entidade são:
+Dessa forma, o diagrama demonstra que as regras de negócio não estão espalhadas aleatoriamente pelo código, mas centralizadas em camadas adequadas.
 
-* `DashboardResumo`;
-* `Aluno`;
-* `Empregabilidade`;
-* `EnsinoSuperior`;
-* `Programa`;
-* `VinculoPrograma`.
+#### Contribuição da arquitetura para a manutenção do sistema
 
-<div align="center">
-<sup>Figura 14: Diagrama de Classes Arquitetural.</sup><br>
-<img src="./assets/diagrama_arquitetural_segmento.jpeg"><br>
-<sub>Fonte: Autoria própria (2026). </sub><br>
-</div>
+A organização em camadas traz benefícios importantes para a continuidade do projeto. Como cada camada possui uma responsabilidade específica, torna-se mais simples localizar erros, adicionar funcionalidades e evoluir o sistema nas próximas sprints.
 
-A imagem apresenta os fluxos responsáveis por consolidar e consultar dados estratégicos da aplicação. A `TelaDashboard` aciona o `ControleDashboard`, que se relaciona com entidades como `DashboardResumo` e `Aluno`, permitindo a visualização de indicadores gerais do sistema.
+Por exemplo, se for necessário alterar a regra de classificação do aluno, a mudança deve ocorrer principalmente no `alunoService` ou no `jornadaService`, sem necessidade de alterar diretamente o controller ou o repository. Da mesma forma, se for necessário modificar uma consulta SQL, a alteração fica concentrada no repository correspondente.
 
-A `TelaSegmentacao` aciona o `ControleSegmentacao`, que utiliza dados da entidade `Aluno` para permitir filtros e agrupamentos, como jornada, curso, perfil socioeconômico ou status. Esse fluxo apoia a tomada de decisão e a organização dos alunos em grupos de acompanhamento.
+Essa separação também facilita a escrita de testes, pois cada camada pode ser validada de forma mais isolada. Controllers podem ser testados pelo retorno HTTP, services pelas regras de negócio, e repositories pela persistência dos dados.
 
-As entidades `Empregabilidade` e `EnsinoSuperior` representam resultados posteriores ou paralelos à jornada do aluno. Já `Programa` e `VinculoPrograma` representam a participação do aluno em iniciativas específicas, permitindo registrar a associação entre alunos e programas institucionais.
+#### Resultado da atualização
 
+Com a atualização do Diagrama de Classes Arquitetural, o WAD passa a representar de forma mais fiel a estrutura real do back-end desenvolvido na sprint. O diagrama evidencia a comunicação entre front-end, back-end e banco de dados, além de mostrar as responsabilidades internas das camadas de middleware, controller, service, repository e model.
 
-#### 3.2.3.1.7. Relação com os requisitos do negócio
-
-A modelagem revisada contribui para demonstrar como os requisitos do negócio são sustentados pelas classes do sistema. O cadastro e consulta de alunos são representados pelos fluxos de `TelaAlunos`, `TelaCadastroAluno`, `ControleAluno` e `Aluno`. O portal do aluno é representado por `TelaPortalAluno`, `ControlePortalAluno` e `Aluno`. O acompanhamento da jornada é representado por `TelaJornadaAluno`, `ControleJornada`, `ControleUc07Jornada`, `Participacao`, `Frequencia` e `Atividade`.
-
-Os requisitos de comunicação e acompanhamento psicossocial são representados por `TelaNotificacoes`, `TelaSaudeMental`, `ControleNotificacao`, `ControleSaudeMental`, `Notificacao`, `SaudeMental`, `Label` e `AnotacaoQualitativa`. Já os requisitos de gestão, análise e resultados aparecem nos fluxos de `TelaDashboard`, `TelaSegmentacao`, `ControleDashboard`, `ControleSegmentacao`, `DashboardResumo`, `Empregabilidade` e `EnsinoSuperior`.
-
-Essa organização reforça a rastreabilidade entre interface, fluxo de controle, entidades do domínio e funcionalidades implementadas no sistema.
-
+A principal melhoria em relação à versão anterior é que a camada `Model` passou a ter espaço para atributos e métodos, atendendo à orientação da professora e tornando o artefato mais completo. Além disso, o diagrama estabelece uma relação mais clara entre arquitetura técnica, requisitos funcionais, regras de negócio e modelo físico implementado no Supabase/PostgreSQL.
 
 
 ### 3.2.3.2. Atualização do Diagrama de Classes do Domínio
@@ -1410,12 +1393,6 @@ Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras
 ### 3.6.1.1 Atualização do Modelo Entidade-Relacionamento
 
 Nesta sprint, o Modelo Entidade-Relacionamento (MER) foi atualizado para refletir as mudanças realizadas no banco de dados e no modelo físico da aplicação. A estrutura principal do MER foi mantida, preservando as entidades e relacionamentos já existentes, mas foram adicionados novos atributos para representar melhor a jornada do aluno, o acompanhamento das atividades, a gestão de oportunidades e o controle de agenda.
-
-<div align="center">
-<sup>Figura 15: Modelo Entidade-Relacionamento Atualizado.</sup><br>
-<img src="./assets/der_visual.jpeg"><br>
-<sub>Fonte: Autoria própria (2026). </sub><br>
-</div>
 
 As alterações realizadas não criaram novas entidades principais nem modificaram os relacionamentos centrais do modelo. O foco foi complementar entidades já existentes com dados que passaram a ser relevantes para a implementação no Supabase e para os fluxos previstos no sistema.
 
@@ -2511,102 +2488,7 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 
 ## 4.1. Primeira versão da aplicação web (sprint 3)
 
-## 4.1. Relatório de Desenvolvimento
-
-Nesta sprint, o grupo desenvolveu a primeira versão funcional do sistema web da Pulse Mais, com foco na consolidação da base técnica da aplicação. O trabalho envolveu a evolução do front-end, a estruturação do back-end, a integração com o banco de dados, a organização dos endpoints da WebAPI, a atualização da modelagem de dados e o refinamento da documentação técnica no WAD.
-
-O objetivo principal foi transformar os artefatos planejados nas sprints anteriores em uma primeira versão navegável, documentada e tecnicamente coerente do sistema. Para isso, foram trabalhadas tanto as telas de alta fidelidade quanto os componentes internos do back-end, buscando manter alinhamento entre requisitos funcionais, regras de negócio, banco de dados, endpoints, diagramas e documentação.
-
----
-
-### 4.1.1. Visão geral da primeira versão do sistema web
-
-A primeira versão do sistema web foi construída considerando os principais fluxos de uso da plataforma Pulse Mais. Entre eles, destacam-se o acesso ao sistema, a visualização de dashboard, a consulta de alunos, o acompanhamento da jornada, a organização de agenda, o envio de notificações, a segmentação de alunos e o acompanhamento psicossocial.
-
-A aplicação foi estruturada em duas frentes principais:
-
-* **Front-end**, responsável pela interface visual, organização das telas e experiência de navegação;
-* **Back-end**, responsável pela lógica da aplicação, endpoints, comunicação com o banco de dados e organização das regras de negócio.
-
-Além disso, a sprint também contemplou a atualização de artefatos de apoio, como o Guia de Estilos, o Protótipo de Alta Fidelidade, a Modelagem de Dados, o Diagrama de Classes, a documentação da WebAPI e a rastreabilidade entre requisitos e implementação.
-
----
-
-### 4.1.2. O que foi implementado
-
-Nesta sprint, foi implementada a primeira versão funcional do back-end com WebAPI operante. A estrutura do projeto foi organizada em camadas, contemplando rotas, controllers, services, repositories, models, middlewares e camada de banco de dados. Essa organização permitiu separar responsabilidades e facilitar a manutenção da aplicação.
-
-No back-end, foram estruturados módulos relacionados a alunos, agenda, participação, notificações, dashboard, saúde mental, segmentação, portal do aluno, autenticação, jornada, frequência, empregabilidade, ensino superior e importação de dados. Esses módulos representam os principais fluxos previstos para o sistema e foram organizados de forma a sustentar os requisitos funcionais priorizados na sprint.
-
-Também foram implementados endpoints para permitir a consulta, criação e atualização de dados. Esses endpoints foram documentados na WebAPI, com indicação de método HTTP, rota, parâmetros, corpo da requisição, resposta esperada e relação com os requisitos funcionais. A documentação da API foi pensada como um artefato técnico de apoio ao desenvolvimento, e não como uma interface final para o usuário.
-
-
-No front-end, foram evoluídas telas de alta fidelidade relacionadas aos principais fluxos do sistema. Foram consideradas telas como login, dashboard, listagem de alunos, perfil do aluno, agenda, notificações, saúde mental, segmentação e portal do aluno. Essas telas foram desenvolvidas com base no Guia de Estilos, garantindo maior consistência visual entre cores, tipografia, ícones, espaçamento e componentes.
-
-
-Na modelagem de dados, foram atualizados o MER, o DER e o modelo físico. A principal intenção foi alinhar o banco de dados às necessidades identificadas durante o desenvolvimento. Foram adicionados campos que permitem representar melhor a jornada dos alunos, como `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`. Também foram adicionados campos em outras entidades, como `modalidade` e `carga_horaria` em atividades, `certificado` em participação, `prazo_inscricao` em oportunidades e `hora_inicio` e `hora_fim` em agenda. Essas alterações melhoram a capacidade do sistema de registrar dados relevantes para acompanhamento, segmentação, dashboard e análise da trajetória dos alunos.
-
-Também foi reestruturado o Diagrama de Classes. A versão anterior estava mais próxima de uma arquitetura em camadas, enquanto a versão revisada passou a seguir melhor a lógica UML, utilizando os estereótipos `<<boundary>>`, `<<control>>` e `<<entity>>`. Para melhorar a leitura, o diagrama foi dividido em uma visão geral e em recortes por fluxo funcional, como autenticação e portal do aluno, acompanhamento do aluno, comunicação e acompanhamento psicossocial, e gestão, segmentação e resultados.
-
-Além disso, foram desenvolvidas consultas SQL com apoio de lógica proposicional e tabelas-verdade. Essa parte teve como objetivo demonstrar a relação entre condições SQL compostas e expressões lógicas, considerando conectivos como `AND`, `OR`, `NOT`, `LIKE` e `IN`.
-
-
----
-
-### 4.1.3. O que não foi concluído
-
-Apesar dos avanços, algumas partes do sistema ainda não foram concluídas integralmente. A primeira versão funcional do sistema já apresenta uma base importante de back-end, front-end, modelagem e documentação, mas ainda existem pontos que precisam de refinamento nas próximas sprints.
-
-A integração completa entre todas as telas do front-end e todos os endpoints do back-end ainda não foi finalizada. Algumas telas representam o fluxo esperado do usuário, mas ainda precisam consumir dados reais da API em todos os seus componentes. Em alguns casos, as telas ainda funcionam como representação visual de alta fidelidade, sem integração completa com dados dinâmicos.
-
-A documentação da WebAPI também precisa de uma revisão final para garantir que todos os endpoints declarados estejam, de fato, implementados, acessíveis e respondendo conforme o formato descrito. Essa etapa é importante para evitar divergências entre documentação e código.
-
-A matriz de rastreabilidade entre requisitos funcionais, regras de negócio, endpoints, entidades e tabelas foi atualizada, mas ainda demanda uma revisão de consistência. Como o projeto evoluiu em várias frentes ao mesmo tempo, é necessário conferir se todos os requisitos priorizados estão corretamente conectados aos endpoints e artefatos correspondentes.
-
-Também ainda não foi finalizada uma bateria completa de testes integrados envolvendo front-end, back-end e banco de dados. Foram estruturados testes e validações em partes do sistema, mas ainda é necessário ampliar a cobertura para garantir que os principais fluxos funcionem de ponta a ponta.
-
-Por fim, algumas áreas do sistema, como empregabilidade, ensino superior, jornada e importação de dados, ainda devem passar por validação funcional mais detalhada, principalmente para confirmar se os fluxos implementados atendem plenamente às regras de negócio previstas.
-
----
-
-### 4.1.4. Dificuldades técnicas enfrentadas
-
-Uma das principais dificuldades enfrentadas foi manter a coerência entre todos os artefatos do projeto. Durante a sprint, o grupo precisou atualizar código constantemente,além do banco de dados, endpoints, diagramas, protótipo, guia de estilos, documentação da API e seções do WAD. Como esses elementos estão diretamente relacionados, qualquer alteração em uma parte exigia revisão das demais.
-
-A modelagem de dados também exigiu bastante atenção. Foi necessário diferenciar corretamente atributos próprios de uma entidade e atributos que pertencem a um relacionamento. Um exemplo importante foi a entidade `participacao`, que representa o vínculo entre aluno e atividade. Informações como nota, certificado e status de participação não deveriam ficar diretamente em aluno ou atividade, mas sim na participação, pois dependem da relação entre os dois.
-
-Outra dificuldade relevante foi a reestruturação do Diagrama de Classes. Inicialmente, o grupo havia desenvolvido uma representação mais próxima da arquitetura técnica em camadas, com controller, service, repository e model. A partir do feedback docente, foi necessário reorganizar o artefato para seguir a lógica UML com classes de fronteira, controle e entidade. Essa mudança exigiu repensar a estrutura visual, os nomes das classes e a divisão do diagrama em recortes menores.
-
-Também houve desafios relacionados à organização do back-end. Como o projeto possui vários módulos, foi necessário garantir que os controllers, services, repositories e models estivessem coerentes entre si e com os requisitos funcionais. O grupo também precisou tomar cuidado para não documentar métodos, endpoints ou relações que não estivessem efetivamente previstos ou implementados.
-
-Outro ponto de dificuldade foi a integração com o banco de dados. A atualização do modelo físico exigiu atenção à criação de campos, tipos de dados, chaves estrangeiras, consistência entre tabelas e atualização das migrations. Além disso, foi necessário garantir que o banco refletisse corretamente o DER e o MER atualizados.
-
-A parte de SQL com lógica proposicional também exigiu cuidado, pois não bastava apresentar consultas SQL. Era necessário traduzir as condições das consultas para expressões lógicas, identificar corretamente os conectivos e construir tabelas-verdade coerentes com cada situação.
-
----
-
-### 4.1.5. Próximos passos
-
-Como próximos passos, o grupo deve priorizar a integração completa entre front-end e back-end. As telas de alta fidelidade devem passar a consumir dados reais da WebAPI, reduzindo o uso de dados estáticos e aproximando o sistema da experiência final esperada.
-
-Também será necessário revisar todos os endpoints implementados, garantindo que estejam acessíveis, documentados e relacionados corretamente aos requisitos funcionais. A documentação da WebAPI deve ser conferida em conjunto com o código para assegurar que não existam endpoints descritos de forma incorreta ou incompleta.
-
-Outro passo importante é ampliar os testes do sistema. A equipe deve validar os principais fluxos de ponta a ponta, incluindo login, consulta de alunos, atualização de dados, agenda, participação em atividades, notificações, dashboard e segmentação. Essa validação deve envolver back-end, banco de dados e, quando possível, a interface do usuário.
-
-A matriz de rastreabilidade também deve ser revisada. O objetivo é garantir que cada requisito funcional esteja relacionado às regras de negócio, endpoints, entidades, tabelas e artefatos correspondentes. Essa revisão ajudará a manter a consistência geral do WAD.
-
-Além disso, os requisitos não funcionais devem continuar sendo evoluídos. Segurança, desempenho, manutenibilidade, confiabilidade e integridade dos dados precisam ser conectados a decisões técnicas concretas, como uso de middlewares, tratamento de erros, validações, organização em camadas e controle de acesso.
-
-Por fim, a equipe deve continuar atualizando a modelagem de dados sempre que houver evolução da implementação. Novos campos, relações ou tabelas precisam ser refletidos no MER, DER, modelo físico, migrations e documentação do WAD, evitando divergências entre o sistema implementado e os artefatos técnicos. Feedbacks recebidos em Sprint Reviews também serão considerados e implementados sempre que necessário.
-
----
-
-### 4.1.6. Síntese da sprint
-
-De modo geral, a sprint 03 representou um avanço importante na construção da primeira versão do sistema web Pulse Manager. O grupo conseguiu estruturar uma base funcional de back-end, evoluir o front-end em alta fidelidade com  Figma, atualizar a modelagem de dados, reorganizar os diagramas técnicos, documentar a WebAPI e iniciar a consolidação da rastreabilidade entre requisitos e implementação.
-
-Ainda existem pontos a serem refinados, especialmente na integração completa entre front-end e back-end, na validação dos endpoints, na revisão da documentação e na ampliação dos testes. Mesmo assim, a sprint estabeleceu uma base técnica mais sólida para a continuidade do projeto, permitindo que as próximas etapas se concentrem na estabilização, integração e validação dos fluxos principais do sistema.
-
+_Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 
@@ -2707,11 +2589,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 _Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
 
 LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
-
-STACK OVERFLOW EM PORTUGUÊS. No Diagrama de Classes qual a diferença entre Classes de Fronteira, Entidade e Controle? Stack Overflow em Português, 2016.
-
-MASTER OF PUPPETS. Diagramas de classe. Desenho de Software 2019.2, 2019.
-
+SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
 
 INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
 SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
