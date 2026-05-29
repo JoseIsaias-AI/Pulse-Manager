@@ -1,6 +1,15 @@
 import { PayloadValidationError } from './errors';
 
 /**
+ * Converte um valor de query string para string trimmed, ou retorna undefined se ausente/vazio.
+ */
+export function optionalString(value: unknown): string | undefined {
+  if (value === undefined || value === null) return undefined;
+  const s = String(value).trim();
+  return s === '' ? undefined : s;
+}
+
+/**
  * Converte um valor de query string para number, ou retorna undefined se ausente.
  * Lança PayloadValidationError se o valor estiver presente mas não for numérico.
  */
