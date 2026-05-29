@@ -1189,14 +1189,14 @@ Esta tela está associada às User Stories US01, US03 e US04, de acordo com os c
 
 <div align="center">
 <sup>Figura X: Tela de lista de alunos do psicólogo.</sup><br>
-<img src="./assets/lista_alunos_psicologo_certo.png"><br>
+<img src="./assets/Lista-de-Alunos-Psicólogo.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
 <div align="justify">
-A tela de lista de alunos do psicólogo segue a mesma estrutura da tela do gestor, com busca, filtros e cards de alunos exibindo avatar, nome, curso, badge de status e barra de progresso. A diferença está no perfil de acesso: o psicólogo utiliza essa tela com foco no acompanhamento de saúde mental e bem-estar dos estudantes, identificando rapidamente alunos em situação de atenção ou risco para agir de forma proativa.
+A tela de lista de alunos do psicólogo segue a mesma estrutura da tela do gestor, com filtros por curso, status e engajamento. Os alunos são exibidos em cards com avatar, nome, curso, badge de status e barra de progresso do módulo atual. A sidebar traz acesso rápido à próxima sessão e às flags abertas, facilitando a priorização dos atendimentos. No rodapé, uma legenda resume os totais por status com paginação, e quatro cards exibem os principais indicadores da turma.
 
-Esta tela está associada às User Stories US06 e US07, de acordo com os critérios de aceite de cada uma. Isso porque a tela permite ao psicólogo visualizar todos os alunos com dificuldades em um único lugar e acessar o perfil individual para consultar histórico de notas e faltas antes de tomar uma ação de suporte.
+Esta tela está associada às User Stories US06 e US07, de acordo com os critérios de aceite de cada uma. Isso porque a tela permite ao psicólogo visualizar todos os alunos em um único lugar e identificar rapidamente quem precisa de suporte, com base nos badges de status e nas flags abertas exibidas na navegação lateral.
 </div>
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
