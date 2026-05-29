@@ -2891,6 +2891,119 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 ## 4.1. Primeira versão da aplicação web (sprint 3)
 
 _Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
+| Equipe Pulse Mais | RF001 | RN001, RN002 | `/api/alunos` | Cadastro | A definir | Registro retornado pela API |
+| Equipe Pulse Mais | RF003 | - | `/api/alunos`, `/api/alunos/:id` | Busca / Perfil do aluno | A definir | Lista e detalhe retornados pela API |
+| Equipe Pulse Mais | RF004 | RN004, RN010 | `/api/alunos/:id`, `/api/jornada/resumo` | Perfil do aluno | A definir | Histórico parcial exibido no perfil |
+| Psicólogo | RF009 | RN012, RN017 | `/api/prontuarios` | Prontuário | A definir | Listagem restrita de prontuários |
+| Gestora | RF012 | RN006, RN009 | `/api/impacto/resumo`, `/api/jornada/resumo` | Dashboard | A definir | KPIs exibidos no dashboard |
+| Gestora | RF013 | RN008, RN009 | `/api/impacto/resumo` | Dashboard | A definir | Indicador de empregabilidade |
+| Gestora | RF015 | RN007, RN009 | `/api/jornada/resumo` | Dashboard | A definir | Alertas e sinais de risco |
+| Gestora | RF016 | RN009 | `/api/impacto/resumo` | Dashboard | A definir | Indicador de ensino superior |
+| Equipe Pulse Mais | RF019 | - | `/api/comunicacao` | Comunicação | A definir | Comunicação cadastrada e listada |
+| Todos os usuários | RF020 | RN018 | Não implementado | Agenda | A definir | Visualização de agenda por perfil |
+| Gestora | RF021 | RN019 | Não implementado | Agenda | A definir | Item de agenda criado, editado ou cancelado |
+| Psicólogo | RF022 | RN020, RN017 | Não implementado | Perfil do aluno monitorado | A definir | Desempenho acadêmico exibido apenas para alunos monitorados |
+
+# <a name="c4"></a>4. Desenvolvimento da Aplicação Web
+
+## 4.1. Primeira versão da aplicação web (sprint 3)
+
+## 4.1. Relatório de Desenvolvimento
+
+Nesta sprint, o grupo desenvolveu a primeira versão funcional do sistema web da Pulse Mais, com foco na consolidação da base técnica da aplicação. O trabalho envolveu a evolução do front-end, a estruturação do back-end, a integração com o banco de dados, a organização dos endpoints da WebAPI, a atualização da modelagem de dados e o refinamento da documentação técnica no WAD.
+
+O objetivo principal foi transformar os artefatos planejados nas sprints anteriores em uma primeira versão navegável, documentada e tecnicamente coerente do sistema. Para isso, foram trabalhadas tanto as telas de alta fidelidade quanto os componentes internos do back-end, buscando manter alinhamento entre requisitos funcionais, regras de negócio, banco de dados, endpoints, diagramas e documentação.
+
+---
+
+### 4.1.1. Visão geral da primeira versão do sistema web
+
+A primeira versão do sistema web foi construída considerando os principais fluxos de uso da plataforma Pulse Mais. Entre eles, destacam-se o acesso ao sistema, a visualização de dashboard, a consulta de alunos, o acompanhamento da jornada, a organização de agenda, o envio de notificações, a segmentação de alunos e o acompanhamento psicossocial.
+
+A aplicação foi estruturada em duas frentes principais:
+
+* **Front-end**, responsável pela interface visual, organização das telas e experiência de navegação;
+* **Back-end**, responsável pela lógica da aplicação, endpoints, comunicação com o banco de dados e organização das regras de negócio.
+
+Além disso, a sprint também contemplou a atualização de artefatos de apoio, como o Guia de Estilos, o Protótipo de Alta Fidelidade, a Modelagem de Dados, o Diagrama de Classes, a documentação da WebAPI e a rastreabilidade entre requisitos e implementação.
+
+---
+
+### 4.1.2. O que foi implementado
+
+Nesta sprint, foi implementada a primeira versão funcional do back-end com WebAPI operante. A estrutura do projeto foi organizada em camadas, contemplando rotas, controllers, services, repositories, models, middlewares e camada de banco de dados. Essa organização permitiu separar responsabilidades e facilitar a manutenção da aplicação.
+
+No back-end, foram estruturados módulos relacionados a alunos, agenda, participação, notificações, dashboard, saúde mental, segmentação, portal do aluno, autenticação, jornada, frequência, empregabilidade, ensino superior e importação de dados. Esses módulos representam os principais fluxos previstos para o sistema e foram organizados de forma a sustentar os requisitos funcionais priorizados na sprint.
+
+Também foram implementados endpoints para permitir a consulta, criação e atualização de dados. Esses endpoints foram documentados na WebAPI, com indicação de método HTTP, rota, parâmetros, corpo da requisição, resposta esperada e relação com os requisitos funcionais. A documentação da API foi pensada como um artefato técnico de apoio ao desenvolvimento, e não como uma interface final para o usuário.
+
+
+No front-end, foram evoluídas telas de alta fidelidade relacionadas aos principais fluxos do sistema. Foram consideradas telas como login, dashboard, listagem de alunos, perfil do aluno, agenda, notificações, saúde mental, segmentação e portal do aluno. Essas telas foram desenvolvidas com base no Guia de Estilos, garantindo maior consistência visual entre cores, tipografia, ícones, espaçamento e componentes.
+
+
+Na modelagem de dados, foram atualizados o MER, o DER e o modelo físico. A principal intenção foi alinhar o banco de dados às necessidades identificadas durante o desenvolvimento. Foram adicionados campos que permitem representar melhor a jornada dos alunos, como `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`. Também foram adicionados campos em outras entidades, como `modalidade` e `carga_horaria` em atividades, `certificado` em participação, `prazo_inscricao` em oportunidades e `hora_inicio` e `hora_fim` em agenda. Essas alterações melhoram a capacidade do sistema de registrar dados relevantes para acompanhamento, segmentação, dashboard e análise da trajetória dos alunos.
+
+Também foi reestruturado o Diagrama de Classes. A versão anterior estava mais próxima de uma arquitetura em camadas, enquanto a versão revisada passou a seguir melhor a lógica UML, utilizando os estereótipos `<<boundary>>`, `<<control>>` e `<<entity>>`. Para melhorar a leitura, o diagrama foi dividido em uma visão geral e em recortes por fluxo funcional, como autenticação e portal do aluno, acompanhamento do aluno, comunicação e acompanhamento psicossocial, e gestão, segmentação e resultados.
+
+Além disso, foram desenvolvidas consultas SQL com apoio de lógica proposicional e tabelas-verdade. Essa parte teve como objetivo demonstrar a relação entre condições SQL compostas e expressões lógicas, considerando conectivos como `AND`, `OR`, `NOT`, `LIKE` e `IN`.
+
+
+---
+
+### 4.1.3. O que não foi concluído
+
+Apesar dos avanços, algumas partes do sistema ainda não foram concluídas integralmente. A primeira versão funcional do sistema já apresenta uma base importante de back-end, front-end, modelagem e documentação, mas ainda existem pontos que precisam de refinamento nas próximas sprints.
+
+A integração completa entre todas as telas do front-end e todos os endpoints do back-end ainda não foi finalizada. Algumas telas representam o fluxo esperado do usuário, mas ainda precisam consumir dados reais da API em todos os seus componentes. Em alguns casos, as telas ainda funcionam como representação visual de alta fidelidade, sem integração completa com dados dinâmicos.
+
+A documentação da WebAPI também precisa de uma revisão final para garantir que todos os endpoints declarados estejam, de fato, implementados, acessíveis e respondendo conforme o formato descrito. Essa etapa é importante para evitar divergências entre documentação e código.
+
+A matriz de rastreabilidade entre requisitos funcionais, regras de negócio, endpoints, entidades e tabelas foi atualizada, mas ainda demanda uma revisão de consistência. Como o projeto evoluiu em várias frentes ao mesmo tempo, é necessário conferir se todos os requisitos priorizados estão corretamente conectados aos endpoints e artefatos correspondentes.
+
+Também ainda não foi finalizada uma bateria completa de testes integrados envolvendo front-end, back-end e banco de dados. Foram estruturados testes e validações em partes do sistema, mas ainda é necessário ampliar a cobertura para garantir que os principais fluxos funcionem de ponta a ponta.
+
+Por fim, algumas áreas do sistema, como empregabilidade, ensino superior, jornada e importação de dados, ainda devem passar por validação funcional mais detalhada, principalmente para confirmar se os fluxos implementados atendem plenamente às regras de negócio previstas.
+
+---
+
+### 4.1.4. Dificuldades técnicas enfrentadas
+
+Uma das principais dificuldades enfrentadas foi manter a coerência entre todos os artefatos do projeto. Durante a sprint, o grupo precisou atualizar código constantemente,além do banco de dados, endpoints, diagramas, protótipo, guia de estilos, documentação da API e seções do WAD. Como esses elementos estão diretamente relacionados, qualquer alteração em uma parte exigia revisão das demais.
+
+A modelagem de dados também exigiu bastante atenção. Foi necessário diferenciar corretamente atributos próprios de uma entidade e atributos que pertencem a um relacionamento. Um exemplo importante foi a entidade `participacao`, que representa o vínculo entre aluno e atividade. Informações como nota, certificado e status de participação não deveriam ficar diretamente em aluno ou atividade, mas sim na participação, pois dependem da relação entre os dois.
+
+Outra dificuldade relevante foi a reestruturação do Diagrama de Classes. Inicialmente, o grupo havia desenvolvido uma representação mais próxima da arquitetura técnica em camadas, com controller, service, repository e model. A partir do feedback docente, foi necessário reorganizar o artefato para seguir a lógica UML com classes de fronteira, controle e entidade. Essa mudança exigiu repensar a estrutura visual, os nomes das classes e a divisão do diagrama em recortes menores.
+
+Também houve desafios relacionados à organização do back-end. Como o projeto possui vários módulos, foi necessário garantir que os controllers, services, repositories e models estivessem coerentes entre si e com os requisitos funcionais. O grupo também precisou tomar cuidado para não documentar métodos, endpoints ou relações que não estivessem efetivamente previstos ou implementados.
+
+Outro ponto de dificuldade foi a integração com o banco de dados. A atualização do modelo físico exigiu atenção à criação de campos, tipos de dados, chaves estrangeiras, consistência entre tabelas e atualização das migrations. Além disso, foi necessário garantir que o banco refletisse corretamente o DER e o MER atualizados.
+
+A parte de SQL com lógica proposicional também exigiu cuidado, pois não bastava apresentar consultas SQL. Era necessário traduzir as condições das consultas para expressões lógicas, identificar corretamente os conectivos e construir tabelas-verdade coerentes em cada situação.
+
+---
+
+### 4.1.5. Próximos passos
+
+Como próximos passos, o grupo deve priorizar a integração completa entre front-end e back-end. As telas de alta fidelidade devem passar a consumir dados reais da WebAPI, reduzindo o uso de dados estáticos e aproximando o sistema da experiência final esperada.
+
+Também será necessário revisar todos os endpoints implementados, garantindo que estejam acessíveis, documentados e relacionados corretamente aos requisitos funcionais. A documentação da WebAPI deve ser conferida em conjunto com o código para assegurar que não existam endpoints descritos de forma incorreta ou incompleta.
+
+Outro passo importante é ampliar os testes do sistema. A equipe deve validar os principais fluxos de ponta a ponta, incluindo login, consulta de alunos, atualização de dados, agenda, participação em atividades, notificações, dashboard e segmentação. Essa validação deve envolver back-end, banco de dados e, quando possível, a interface do usuário.
+
+A matriz de rastreabilidade também deve ser revisada. O objetivo é garantir que cada requisito funcional esteja relacionado às regras de negócio, endpoints, entidades, tabelas e artefatos correspondentes. Essa revisão ajudará a manter a consistência geral do WAD.
+
+Além disso, os requisitos não funcionais devem continuar sendo evoluídos: segurança, desempenho, manutenibilidade, confiabilidade e integridade dos dados precisam ser conectados a decisões técnicas concretas, como uso de middlewares, tratamento de erros, validações, organização em camadas e controle de acesso.
+
+Por fim, a equipe deve continuar atualizando a modelagem de dados sempre que houver evolução da implementação. Novos campos, relações ou tabelas precisam ser refletidos no MER, DER, modelo físico, migrations e documentação do WAD, evitando divergências entre o sistema implementado e os artefatos técnicos. Feedbacks recebidos em Sprint Reviews também serão considerados e implementados sempre que necessário.
+
+---
+
+### 4.1.6. Síntese da sprint
+
+De modo geral, a sprint 03 representou um avanço importante na construção da primeira versão do sistema web Pulse Manager. O grupo conseguiu estruturar uma base funcional de back-end, evoluir o front-end em alta fidelidade com  Figma, atualizar a modelagem de dados, reorganizar os diagramas técnicos, documentar a WebAPI e iniciar a consolidação da rastreabilidade entre requisitos e implementação.
+
+Ainda existem pontos a serem refinados, especialmente na integração completa entre front-end e back-end, na validação dos endpoints, na revisão da documentação e na ampliação dos testes. Mesmo assim, a sprint estabeleceu uma base técnica mais sólida para a continuidade do projeto, permitindo que as próximas etapas se concentrem na estabilização, integração e validação dos fluxos principais do sistema.
+
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 
