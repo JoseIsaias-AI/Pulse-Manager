@@ -1608,7 +1608,7 @@ O protótipo apresenta a tela de visão geral do painel na perspetiva do aluno, 
 </div>
 
 <div align="justify">
-Dashboard de saúde mental. Exibe 4 KPIs no topo (humor médio, check-ins semanais, flags ativas e sessões realizadas), dois gráficos centrais — um de barras com bem-estar por módulo/turma e um de barras horizontais com engajamento por faixa de humor — além de um resumo semanal e acesso rápido à turma e próxima sessão na sidebar esquerda.
+Dashboard de saúde mental. Exibe 4 KPIs no topo (humor médio, check-ins semanais, flags ativas e sessões realizadas), dois gráficos centrais — um de barras com bem-estar por módulo/turma e um de barras horizontais com engajamento por faixa de humor, além de um resumo semanal e acesso rápido à turma e próxima sessão na sidebar esquerda.
 </div>
 
 <div align="center">
