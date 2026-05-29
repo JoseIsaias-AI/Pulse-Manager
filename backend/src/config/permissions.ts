@@ -1,3 +1,9 @@
-﻿// Placeholder: matriz futura de permissoes por perfil de usuario
-// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
-
+export const PERMISSOES: Record<string, string[]> = {
+  visualizarAgenda: ['gestor', 'equipe', 'psicologo', 'aluno'],
+  modificarAgenda: ['gestor'],
+  acessarSaudeMental: ['psicologo'],
+  editarContatoAluno: ['aluno'],
+  editarCadastroAluno: ['gestor', 'equipe'],
+  criarCamposSegmentacao: ['gestor', 'psicologo'],
+  acessarDesempenhoAluno: ['psicologo']
+};

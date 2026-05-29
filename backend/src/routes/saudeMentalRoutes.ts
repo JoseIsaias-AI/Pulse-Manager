@@ -1,3 +1,17 @@
-﻿// Placeholder: rotas futuras do UC-20 para registros de saude mental
-// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
+﻿import { Router } from 'express';
+import { SaudeMentalController } from '../controllers/saudeMentalController';
+import { AlunoRepository } from '../repositories/alunoRepository';
+import { SaudeMentalRepository } from '../repositories/saudeMentalRepository';
+import { SaudeMentalService } from '../services/saudeMentalService';
 
+const router = Router();
+const controller = new SaudeMentalController(
+  new SaudeMentalService(new SaudeMentalRepository(), new AlunoRepository())
+);
+
+router.get('/prontuarios', controller.listar);
+router.post('/prontuarios', controller.criar);
+router.get('/labels', controller.listarLabels);
+router.post('/labels', controller.criarLabel);
+
+export default router;

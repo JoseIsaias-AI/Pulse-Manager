@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentação WebAPI - Pulse+</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --pulse-blue: #003870;
+      --pulse-green: #338458;
+      --pulse-yellow: #FFD927;
+
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-600: #475569;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+
+      --radius: 12px;
+      --shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--neutral-100);
+      color: var(--neutral-900);
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--pulse-blue), #0a4d94);
+      color: white;
+      padding: 56px 32px;
+      border-bottom: 6px solid var(--pulse-yellow);
+    }
+
+    header h1 {
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 1px;
+      font-size: 56px;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    header p {
+      font-size: 18px;
+      font-weight: 400;
+      max-width: 800px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 48px auto;
+      padding: 0 24px 80px;
+    }
+
+    .info {
+      background: white;
+      border-left: 6px solid var(--pulse-yellow);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 48px;
+      box-shadow: var(--shadow);
+    }
+
+    .info h3 {
+      color: var(--pulse-blue);
+      margin-bottom: 12px;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .info p {
+      margin-bottom: 8px;
+      color: var(--neutral-600);
+    }
+
+    section {
+      margin-bottom: 64px;
+    }
+
+    h2 {
+      background: var(--pulse-blue);
+      color: white;
+      padding: 18px 24px;
+      border-radius: var(--radius);
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .endpoint {
+      background: white;
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--neutral-200);
+      transition: transform 0.2s ease;
+    }
+
+    .endpoint:hover {
+      transform: translateY(-2px);
+    }
+
+    .method {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 90px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    .GET {
+      background: var(--pulse-green);
+    }
+
+    .POST {
+      background: var(--pulse-yellow);
+      color: var(--neutral-900);
+    }
+
+    .PATCH {
+      background: var(--pulse-blue);
+    }
+
+    .DELETE {
+      background: #dc2626;
+    }
+
+    h3 {
+      font-size: 26px;
+      color: var(--neutral-900);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    h4 {
+      margin-top: 24px;
+      margin-bottom: 12px;
+      color: var(--pulse-blue);
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    p {
+      color: var(--neutral-600);
+      font-size: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    th {
+      background: var(--pulse-blue);
+      color: white;
+      text-align: left;
+      padding: 14px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid var(--neutral-200);
+      background: white;
+      color: var(--neutral-600);
+      font-size: 15px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    pre {
+      background: var(--neutral-900);
+      color: #f8fafc;
+      padding: 20px;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: var(--neutral-200);
+      padding: 3px 7px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--pulse-blue);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 40px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      h3 {
+        font-size: 20px;
+      }
+
+      .endpoint {
+        padding: 20px;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Documentação WebAPI - Pulse+</h1>
+  <p>Documentação oficial alinhada ao backend real do projeto (SSOT).</p>
+</header>
+
+<main>
+
+  <div class="info">
+    <h3>Informações Gerais</h3>
+    <p><strong>Base URL:</strong> http://localhost:3000</p>
+    <p><strong>Formato:</strong> application/json</p>
+    <p><strong>Autenticação:</strong> Não implementada nesta sprint.</p>
+  </div>
+
+  <section>
+    <h2>Health Check</h2>
+
+    <div class="endpoint">
+      <div class="method GET">GET</div>
+      <h3>/health</h3>
+
+      <p>Verifica se a API está ativa.</p>
+
+      <h4>Headers</h4>
+      <table>
+        <tr>
+          <th>Header</th>
+          <th>Valor</th>
+        </tr>
+        <tr>
+          <td>Content-Type</td>
+          <td>application/json</td>
+        </tr>
+      </table>
+
+      <h4>Response</h4>
+      <pre>{
+  "status": "ok"
+}</pre>
+
+      <h4>Status Codes</h4>
+      <table>
+        <tr><th>Código</th><th>Descrição</th></tr>
+        <tr><td>200</td><td>API disponível</td></tr>
+        <tr><td>500</td><td>Erro interno</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Alunos</h2>
+
+    <div class="endpoint">
+      <div class="method GET">GET</div>
+      <h3>/alunos</h3>
+      <p>Lista alunos cadastrados.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="method POST">POST</div>
+      <h3>/alunos</h3>
+      <p>Cria um novo aluno.</p>
+
+      <h4>Status Codes</h4>
+      <table>
+        <tr><th>Código</th><th>Descrição</th></tr>
+        <tr><td>201</td><td>Aluno criado</td></tr>
+        <tr><td>400</td><td>Dados inválidos</td></tr>
+        <tr><td>500</td><td>Erro interno</td></tr>
+      </table>
+    </div>
+
+    <div class="endpoint">
+      <div class="method GET">GET</div>
+      <h3>/alunos/:idAluno</h3>
+      <p>Retorna um aluno específico.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="method PATCH">PATCH</div>
+      <h3>/alunos/:idAluno</h3>
+      <p>Atualiza parcialmente um aluno.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="method DELETE">DELETE</div>
+      <h3>/alunos/:idAluno</h3>
+      <p>Remove/inativa um aluno.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Portal do aluno</h2>
+
+    <div class="endpoint">
+      <div class="method GET">GET</div>
+      <h3>/portal/alunos/:idAluno</h3>
+      <p>Retorna os dados do portal do aluno.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="method PATCH">PATCH</div>
+      <h3>/portal/alunos/:idAluno/contato</h3>
+      <p>Atualiza informações de contato do aluno.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Jornada do aluno</h2>
+
+    <div class="endpoint">
+      <div class="method GET">GET</div>
+      <h3>/jornada/alunos/:idAluno</h3>
+      <p>Retorna dados completos da jornada do aluno.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="method POST">POST</div>
+      <h3>/frequencias</h3>
+      <p>Registra frequência do aluno.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="method POST">POST</div>
+      <h3>/participacoes</h3>
+      <p>Registra participação do aluno.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="method PATCH">PATCH</div>
+      <h3>/empregabilidade/:idAluno</h3>
+      <p>Atualiza dados de empregabilidade.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="method PATCH">PATCH</div>
+      <h3>/ensino-superior/:idAluno</h3>
+      <p>Atualiza dados de ensino superior.</p>
+    </div>
+
+    <div class="endpoint">
+      <div class="method POST">POST</div>
+      <h3>/anotacoes-qualitativas</h3>
+      <p>Cria anotação qualitativa para aluno.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Dashboard</h2>
+
+    <div class="endpoint"><div class="method GET">GET</div><h3>/impacto/resumo</h3></div>
+    <div class="endpoint"><div class="method GET">GET</div><h3>/jornada/resumo</h3></div>
+    <div class="endpoint"><div class="method GET">GET</div><h3>/impacto/alunos-empregados</h3></div>
+    <div class="endpoint"><div class="method GET">GET</div><h3>/impacto/conclusao-programas</h3></div>
+    <div class="endpoint"><div class="method GET">GET</div><h3>/impacto/acesso-ensino-superior</h3></div>
+    <div class="endpoint"><div class="method GET">GET</div><h3>/jornada/evasao-risco</h3></div>
+  </section>
+
+  <section>
+    <h2>Agenda</h2>
+
+    <div class="endpoint"><div class="method GET">GET</div><h3>/agenda</h3></div>
+    <div class="endpoint"><div class="method POST">POST</div><h3>/agenda</h3></div>
+    <div class="endpoint"><div class="method PATCH">PATCH</div><h3>/agenda/:idAgenda</h3></div>
+    <div class="endpoint"><div class="method DELETE">DELETE</div><h3>/agenda/:idAgenda</h3></div>
+  </section>
+
+  <section>
+    <h2>Comunicação / notificações</h2>
+
+    <div class="endpoint"><div class="method GET">GET</div><h3>/comunicacao</h3></div>
+    <div class="endpoint"><div class="method POST">POST</div><h3>/comunicacao</h3></div>
+    <div class="endpoint"><div class="method GET">GET</div><h3>/comunicacao/oportunidades</h3></div>
+    <div class="endpoint"><div class="method POST">POST</div><h3>/comunicacao/oportunidades</h3></div>
+  </section>
+
+  <section>
+    <h2>Saúde mental</h2>
+
+    <div class="endpoint"><div class="method GET">GET</div><h3>/prontuarios</h3></div>
+    <div class="endpoint"><div class="method POST">POST</div><h3>/prontuarios</h3></div>
+    <div class="endpoint"><div class="method GET">GET</div><h3>/labels</h3></div>
+    <div class="endpoint"><div class="method POST">POST</div><h3>/labels</h3></div>
+  </section>
+
+  <section>
+    <h2>Segmentação</h2>
+
+    <div class="endpoint">
+      <div class="method GET">GET</div>
+      <h3>/alunos/segmentacao</h3>
+      <p>Retorna segmentação de alunos.</p>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
