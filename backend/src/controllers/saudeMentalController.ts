@@ -1,25 +1,58 @@
-import { Request, Response, NextFunction } from 'express';
-import * as service from '../services/saudeMentalService';
+﻿import { NextFunction, Request, Response } from 'express';
+import { SaudeMentalService } from '../services/saudeMentalService';
+import { AppError } from '../utils/errors';
+import { optionalNumber } from '../utils/validators';
 
-function ehPsicologo(req: Request): boolean {
-  return req.headers['x-eh-psicologo'] === 'true';
-}
+export class SaudeMentalController {
+  constructor(private readonly service: SaudeMentalService) {}
 
-export async function criar(req: Request, res: Response, next: NextFunction) {
-  try {
-    const prontuario = await service.criar(req.body, ehPsicologo(req));
-    return res.status(201).json(prontuario);
-  } catch (error) {
-    return next(error);
+  listar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      res.status(200).json(await this.service.listar({
+        idAluno: optionalNumber(req.query.idAluno, 'idAluno'),
+        idPsi: optionalNumber(req.query.idPsi, 'idPsi')
+      }, this.perfil(req)));
+    } catch (error) {
+      this.handle(error, res, next);
+    }
+  };
+
+  criar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      res.status(201).json(await this.service.criar(req.body, this.perfil(req)));
+    } catch (error) {
+      this.handle(error, res, next);
+    }
+  };
+
+  listarLabels = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      res.status(200).json(await this.service.listarLabels({
+        idAluno: optionalNumber(req.query.idAluno, 'idAluno'),
+        idPsi: optionalNumber(req.query.idPsi, 'idPsi')
+      }, this.perfil(req)));
+    } catch (error) {
+      this.handle(error, res, next);
+    }
+  };
+
+  criarLabel = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      res.status(201).json(await this.service.criarLabel(req.body, this.perfil(req)));
+    } catch (error) {
+      this.handle(error, res, next);
+    }
+  };
+
+  private perfil(req: Request): string | undefined {
+    return (req.header('x-user-role') || req.query.perfil)?.toString();
   }
-}
 
-export async function listar(req: Request, res: Response, next: NextFunction) {
-  try {
-    const idPsi = req.query.id_psi ? Number(req.query.id_psi) : undefined;
-    const prontuarios = await service.listar(idPsi, ehPsicologo(req));
-    return res.status(200).json(prontuarios);
-  } catch (error) {
-    return next(error);
+  private handle(error: unknown, res: Response, next: NextFunction): void {
+    if (error instanceof AppError) {
+      res.status(error.statusCode).json({ success: false, message: error.message });
+      return;
+    }
+    next(error);
   }
 }

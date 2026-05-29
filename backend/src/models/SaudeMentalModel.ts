@@ -1,21 +1,19 @@
-export interface CriarProntuarioInput {
-  observacao?: string;
-  titulo?: string;
-  classificacao?: string;
-  id_aluno?: number;
-  id_psi?: number;
-  id_psicologo?: number;
-}
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-export interface Prontuario {
-  id_historico: number;
-  observacao: string;
-  titulo: string;
-  id_aluno: number;
-  id_psi: number;
-}
+@Entity('historico_psicologico')
+export class HistoricoPsicologico {
+  @PrimaryGeneratedColumn({ name: 'id_historico' })
+  idHistorico!: number;
 
-export interface ProntuarioComAluno extends Prontuario {
-  aluno_nome: string;
-  aluno_email: string;
+  @Column({ type: 'varchar', length: 255 })
+  titulo!: string;
+
+  @Column({ type: 'varchar', length: 500 })
+  observacao!: string;
+
+  @Column({ name: 'id_aluno', type: 'integer' })
+  idAluno!: number;
+
+  @Column({ name: 'id_psi', type: 'integer' })
+  idPsi!: number;
 }
