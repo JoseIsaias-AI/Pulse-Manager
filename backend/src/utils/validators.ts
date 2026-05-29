@@ -49,3 +49,10 @@ export function positiveInteger(value: unknown, campo: string): number {
   }
   return n;
 }
+
+/**
+ * Normaliza um texto: converte para minúsculas e remove espaços extras.
+ */
+export function normalizeText(value: string): string {
+  return value.trim().toLowerCase();
+}
