@@ -1320,6 +1320,26 @@ A tela de perfil do aluno exibe todas as informações cadastrais do estudante e
 Esta tela está associada às User Stories US01, US04 e US05, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza todos os dados do aluno em um único lugar, permitindo à gestora e ao psicólogo acessar o perfil completo do estudante com agilidade e tomar as ações necessárias diretamente pela plataforma.
 </div>
 
+
+
+<div align="center">
+<img src="./assets/ProtótipoF.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+Dashboard de saúde mental. Exibe 4 KPIs no topo (humor médio, check-ins semanais, flags ativas e sessões realizadas), dois gráficos centrais — um de barras com bem-estar por módulo/turma e um de barras horizontais com engajamento por faixa de humor, além de um resumo semanal e acesso rápido à turma e próxima sessão na sidebar esquerda.
+</div>
+
+<div align="center">
+<img src="./assets/ProtótipoFE.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+Tela de Agenda, no perfil de Gestor. Exibe um calendário mensal, com eventos coloridos por tipo, check-ins, reuniões, entregas de módulo e mentorias. Abaixo, um painel de próximos eventos lista os compromissos com prazo, e um pop-up de evento próximo alerta que o "Check-in Semana 8" começa em 15 minutos, com ações de adiar ou abrir.
+</div>
+
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
