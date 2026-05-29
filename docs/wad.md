@@ -2595,7 +2595,7 @@ Outro passo importante é ampliar os testes do sistema. A equipe deve validar os
 
 A matriz de rastreabilidade também deve ser revisada. O objetivo é garantir que cada requisito funcional esteja relacionado às regras de negócio, endpoints, entidades, tabelas e artefatos correspondentes. Essa revisão ajudará a manter a consistência geral do WAD.
 
-Além disso, os requisitos não funcionais devem continuar sendo evoluídos. Segurança, desempenho, manutenibilidade, confiabilidade e integridade dos dados precisam ser conectados a decisões técnicas concretas, como uso de middlewares, tratamento de erros, validações, organização em camadas e controle de acesso.
+Além disso, os requisitos não funcionais devem continuar sendo evoluídos: segurança, desempenho, manutenibilidade, confiabilidade e integridade dos dados precisam ser conectados a decisões técnicas concretas, como uso de middlewares, tratamento de erros, validações, organização em camadas e controle de acesso.
 
 Por fim, a equipe deve continuar atualizando a modelagem de dados sempre que houver evolução da implementação. Novos campos, relações ou tabelas precisam ser refletidos no MER, DER, modelo físico, migrations e documentação do WAD, evitando divergências entre o sistema implementado e os artefatos técnicos. Feedbacks recebidos em Sprint Reviews também serão considerados e implementados sempre que necessário.
 
