@@ -1,11 +1,11 @@
 ﻿import request from 'supertest';
 import { Repository } from 'typeorm';
-import { app } from '../../src/app';
-import { AppDataSource, initializeDatabase } from '../../src/database/connection';
-import { Aluno } from '../../src/models/alunoModel';
-import { registrarConsultaSegmentacao } from '../../src/integrations/auditoriaIntegration';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { Aluno } from '../../backend/models/alunoModel';
+import { registrarConsultaSegmentacao } from '../../backend/integrations/auditoriaIntegration';
 
-jest.mock('../../src/integrations/auditoriaIntegration', () => ({
+jest.mock('../../backend/integrations/auditoriaIntegration', () => ({
   registrarConsultaSegmentacao: jest.fn().mockResolvedValue(undefined)
 }));
 
