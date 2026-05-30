@@ -2491,7 +2491,7 @@ O MER, o DER e o modelo físico foram atualizados para refletir as necessidades 
 
 - **Importação de dados:** `importacaoRoutes.ts` é placeholder; a funcionalidade de importação em lote não foi desenvolvida.
 - **Rotas de participação e anotação qualitativa independentes:** `participacaoRoutes.ts` e `anotacaoQualitativaRoutes.ts` são placeholders (os endpoints equivalentes foram incorporados em `jornadaRoutes`).
-- **Integração front-end ↔ back-end:** as 12 telas ainda não consomem dados reais da API; a camada de serviços do front-end (`api.ts`) precisa ser conectada a cada página.
+- **Integração front-end <-> back-end:** as 12 telas ainda não consomem dados reais da API; a camada de serviços do front-end (`api.ts`) precisa ser conectada a cada página.
 - **Psicólogo fora do roteador principal:** `psicologoRoutes` não está registrado em `index.ts`, tornando o endpoint de desempenho inacessível em runtime.
 
 ---
