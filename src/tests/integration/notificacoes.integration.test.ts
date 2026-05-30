@@ -1,9 +1,9 @@
 ﻿import request from 'supertest';
 import { Repository } from 'typeorm';
-import { app } from '../../src/app';
-import { AppDataSource, initializeDatabase } from '../../src/database/connection';
-import { Aluno } from '../../src/models/alunoModel';
-import { MembroEquipe } from '../../src/models/usuarioModel';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { Aluno } from '../../backend/models/alunoModel';
+import { MembroEquipe } from '../../backend/models/usuarioModel';
 
 describe('RF019 - Comunicacao e Oportunidades', () => {
   let alunoRepository: Repository<Aluno>;

@@ -1,9 +1,9 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
-import { app } from '../../src/app';
-import { AppDataSource, initializeDatabase } from '../../src/database/connection';
-import { Aluno } from '../../src/models/alunoModel';
-import { Psicologo } from '../../src/models/usuarioModel';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { Aluno } from '../../backend/models/alunoModel';
+import { Psicologo } from '../../backend/models/usuarioModel';
 
 describe('UC-22 | Prontuarios de saude mental', () => {
   let alunoRepository: Repository<Aluno>;

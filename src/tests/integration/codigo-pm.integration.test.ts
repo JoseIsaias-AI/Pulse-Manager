@@ -1,6 +1,6 @@
 import request from 'supertest';
-import { app } from '../../src/app';
-import { AppDataSource, initializeDatabase } from '../../src/database/connection';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
 
 describe('UC-05 - RN001: Geração de código PM-AAAA-NNN com sequencial anual', () => {
   beforeAll(async () => {

@@ -1,12 +1,12 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
-import { app } from '../../src/app';
-import { AppDataSource, initializeDatabase } from '../../src/database/connection';
-import { Aluno } from '../../src/models/alunoModel';
-import { Atividade } from '../../src/models/atividadeModel';
-import { Participacao } from '../../src/models/participacaoModel';
-import { HistoricoPsicologico } from '../../src/models/SaudeMentalModel';
-import { Psicologo } from '../../src/models/usuarioModel';
+import { app } from '../app';
+import { AppDataSource, initializeDatabase } from '../database/connection';
+import { Aluno } from '../models/alunoModel';
+import { Atividade } from '../models/atividadeModel';
+import { Participacao } from '../models/participacaoModel';
+import { HistoricoPsicologico } from '../models/SaudeMentalModel';
+import { Psicologo } from '../models/usuarioModel';
 
 describe('UC-23 - Acessar desempenho acadêmico dos alunos (Psicólogo)', () => {
   let alunoRepo: Repository<Aluno>;

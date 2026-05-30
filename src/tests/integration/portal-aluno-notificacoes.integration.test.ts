@@ -1,9 +1,9 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
-import { app } from '../../src/app';
-import { AppDataSource, initializeDatabase } from '../../src/database/connection';
-import { Aluno } from '../../src/models/alunoModel';
-import { Notificacao, Oportunidade } from '../../src/models/NotificacaoModel';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { Aluno } from '../../backend/models/alunoModel';
+import { Notificacao, Oportunidade } from '../../backend/models/NotificacaoModel';
 
 describe('UC-03 - Visualizar notificações e oportunidades no portal do aluno', () => {
   let alunoRepository: Repository<Aluno>;
