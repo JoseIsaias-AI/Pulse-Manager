@@ -1,10 +1,10 @@
 ﻿import request from 'supertest';
 import { Repository } from 'typeorm';
-import { app } from '../../src/app';
-import { AppDataSource, initializeDatabase } from '../../src/database/connection';
-import { Aluno } from '../../src/models/alunoModel';
-import { Agenda } from '../../src/models/AgendaModel';
-import { MembroEquipe } from '../../src/models/usuarioModel';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { Aluno } from '../../backend/models/alunoModel';
+import { Agenda } from '../../backend/models/AgendaModel';
+import { MembroEquipe } from '../../backend/models/usuarioModel';
 
 describe('RF020/RF021 - Gestao de Agenda', () => {
   let alunoRepository: Repository<Aluno>;

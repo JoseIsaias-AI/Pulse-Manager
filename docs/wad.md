@@ -209,7 +209,7 @@ A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, class
 </div>
 
 <div align="center">
-<sup>Figura 3: Matriz de Riscos da Pulse Manager.</sup><br>
+<sup>Figura 4: Matriz de Riscos da Pulse Manager.</sup><br>
 <img src="./assets/imagem.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
@@ -543,16 +543,16 @@ Personas: A persona é definida como uma descrição realista e detalhada do usu
 
 
 <div align="center">
-<sup>Figura 4: Persona 01.</sup><br>
+<sup>Figura 5: Persona 01.</sup><br>
     <img src="assets/personaUm.jpg" width="60%"><br>
 
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
-<sup>Figura 5: Persona 02.</sup><br>
+<sup>Figura 6: Persona 02.</sup><br>
     <img src="assets/personaDois.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
-<sup>Figura 6: Persona 03.</sup><br>
+<sup>Figura 7: Persona 03.</sup><br>
     <img src="assets/personaTres.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -711,7 +711,7 @@ As regras de negócio formalizam as políticas, condições e restrições que a
 | RN015 | Mentores voluntários não são usuários do sistema na versão atual da plataforma. Suas atividades, quando relevantes para o histórico do aluno, são registradas pela equipe interna da Pulse Mais. | RF009, RF011                      |
 | RN016 | Em conformidade com a Lei Geral de Proteção de Dados (LGPD) e com o termo de uso de dados assinado pelos alunos, dados pessoais e relatos qualitativos sensíveis não podem ser expostos a perfis sem autorização específica, nem incluídos em exportações, logs públicos ou commits do repositório de código. | RF001, RF010, RF011               |
 
-### 3.1.3. Requisitos Não Funcionais - 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
+### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
 <div align="justify">
 
@@ -781,7 +781,7 @@ _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 
 
 
-<<div align="center">
+<div align="center">
     <img src="assets/Camadas.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -866,7 +866,7 @@ O Diagrama de Classes de Domínio do sistema Pulse Mais estabelece a estrutura c
 </div>
 
 <div align="center">
-<sup>Figura 8: Diagrama Classes de Domínio.</sup><br>
+<sup>Figura 3: Diagrama Classes de Domínio.</sup><br>
 <img src="./assets/Diagrama_Classes_Dominio.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -881,244 +881,6 @@ No que tange aos registros de impacto e classificação, a classe Atividade arma
 
 </div>
 
-### 3.2.3.1. Diagrama de Classes Arquitetural do Back-end
-
-Nesta sprint, o Diagrama de Classes Arquitetural do back-end foi atualizado para representar de forma mais fiel a organização técnica da aplicação. Diferentemente do Diagrama de Classes do Domínio, que descreve as entidades do problema, este diagrama tem como objetivo demonstrar como o código está estruturado internamente e como as camadas da aplicação se comunicam até chegar ao banco de dados.
-
-A arquitetura adotada segue uma separação em camadas, organizada em `Middleware`, `Controller`, `Service`, `Repository`, `Model` e `Banco de Dados`. Essa divisão melhora a organização do código, facilita a manutenção, contribui para a testabilidade e torna mais clara a rastreabilidade entre requisitos de negócio, endpoints, regras de negócio e persistência dos dados.
-
-#### Estrutura geral da arquitetura
-
-O fluxo arquitetural parte da interação do usuário com o front-end, passa pelo back-end e chega ao banco de dados PostgreSQL/Supabase. A comunicação entre o front-end e o back-end ocorre por meio de requisições HTTP. Já a comunicação com o banco é centralizada na camada de repository, que isola as operações de persistência.
-
-<div align="center">
-<sup>Figura 9: Diagrama de Classes Arquitetural.</sup><br>
-<img src="./assets/diagrama_arquitetural.jpeg"><br>
-<sub>Fonte: Autoria própria (2026). </sub><br>
-</div>
-
-Essa organização evita que uma única camada concentre responsabilidades demais. Cada parte da arquitetura possui uma função específica, o que torna o back-end mais compreensível, modular e preparado para evolução nas próximas sprints.
-
-#### Camada Front-end
-
-A camada de front-end representa as telas e interações realizadas pelo usuário. No contexto do projeto da Pulse Mais, essa camada contempla funcionalidades como login, dashboard, perfil do aluno, agenda, notificações e segmentação de alunos.
-
-As telas não acessam diretamente o banco de dados. Elas realizam requisições HTTP para os endpoints do back-end, solicitando dados ou enviando informações para cadastro, atualização e consulta.
-
-Essa separação é importante porque mantém a lógica de negócio e o acesso aos dados concentrados no back-end, enquanto o front-end fica responsável pela interface e pela experiência do usuário.
-
-#### Camada Middleware
-
-A camada `Middleware` é responsável por interceptar as requisições antes que elas cheguem aos controllers. No back-end do projeto, essa camada representa pontos de controle ligados à segurança, validação e tratamento de erros.
-
-Entre os middlewares representados no diagrama, destacam-se:
-
-* `authMiddleware`, responsável por validar autenticação e contexto de sessão;
-* `permissionMiddleware`, responsável por controlar acesso conforme o perfil do usuário;
-* `validationMiddleware`, responsável por validar os dados recebidos nas requisições;
-* `errorMiddleware`, responsável por padronizar o tratamento de erros;
-* `asyncHandler`, responsável por encapsular execuções assíncronas e evitar repetição de blocos de tratamento de exceções.
-
-Essa camada se relaciona diretamente aos requisitos não funcionais de segurança, integridade e confiabilidade, pois garante que as requisições sejam verificadas antes de acionar as regras de negócio.
-
-#### Camada Controller
-
-A camada `Controller` é responsável por receber a requisição HTTP, extrair parâmetros, corpo da requisição e informações do usuário autenticado, além de devolver uma resposta adequada ao front-end.
-
-No diagrama, aparecem controllers relacionados aos principais módulos do sistema, como:
-
-* `alunoController`;
-* `agendaController`;
-* `dashboardController`;
-* `participacaoController`;
-* `notificacaoController`;
-* `saudeMentalController`;
-* `segmentacaoController`;
-* `portalAlunoController`;
-* `authController`;
-* `jornadaController`.
-
-A camada controller não deve concentrar regras de negócio complexas. Sua função principal é organizar a entrada e a saída dos dados, encaminhando a solicitação para o service correspondente.
-
-Por exemplo, quando o front-end solicita a listagem de alunos, a rota aciona o `alunoController`, que recebe a requisição e delega a operação para o `alunoService`.
-
-#### Camada Service
-
-A camada `Service` concentra a lógica de negócio da aplicação. É nela que as regras do sistema são aplicadas antes que os dados sejam persistidos, consultados ou retornados ao usuário.
-
-No contexto do projeto, os services são responsáveis por operações como:
-
-* validar regras relacionadas ao cadastro e atualização de alunos;
-* interpretar a jornada do aluno;
-* consolidar indicadores do dashboard;
-* validar horários e vínculos de agenda;
-* validar participação, presença, nota e certificação;
-* organizar notificações;
-* aplicar critérios de segmentação;
-* tratar fluxos relacionados a dados sensíveis de acompanhamento.
-
-Entre os services representados no diagrama, estão:
-
-* `alunoService`;
-* `agendaService`;
-* `dashboardService`;
-* `participacaoService`;
-* `notificacaoService`;
-* `saudeMentalService`;
-* `segmentacaoService`;
-* `portalAlunoService`;
-* `authService`;
-* `jornadaService`.
-
-Essa camada é central para a coerência com os requisitos de negócio, pois conecta as funcionalidades previstas no WAD com a execução técnica do sistema.
-
-#### Camada Repository
-
-A camada `Repository` é responsável por isolar o acesso ao banco de dados. Ela executa operações de consulta, inserção, atualização e recuperação de dados, sem expor os detalhes da persistência para as demais camadas.
-
-No diagrama, os repositories estão relacionados às principais tabelas e domínios do banco, como:
-
-* `alunoRepository`;
-* `agendaRepository`;
-* `dashboardRepository`;
-* `participacaoRepository`;
-* `notificacaoRepository`;
-* `labelRepository`;
-* `historicoPsicologicoRepository`;
-* `atividadeRepository`;
-* `oportunidadeRepository`;
-* `usuarioRepository`.
-
-Essa camada contribui para a organização do back-end porque separa as regras de negócio da forma como os dados são acessados. Assim, caso seja necessário alterar uma consulta SQL ou adaptar a comunicação com o banco, a mudança fica concentrada no repository correspondente.
-
-#### Camada Model
-
-A camada `Model` representa as principais estruturas de dados utilizadas pelo sistema. No diagrama atualizado, essa camada foi destacada com espaço para atributos e métodos, conforme solicitado na revisão da modelagem arquitetural.
-
-Os models representam entidades importantes do sistema, como:
-
-* `AlunoModel`;
-* `AgendaModel`;
-* `ParticipacaoModel`;
-* `AtividadeModel`;
-* `NotificacaoModel`;
-* `LabelModel`;
-* `HistoricoPsicologicoModel`;
-* `UsuarioModel`.
-
-A camada `Model` não é responsável por acessar diretamente o banco de dados. Essa responsabilidade pertence aos repositories. Os models atuam como estruturas de apoio para padronizar os dados utilizados pela aplicação, podendo conter métodos auxiliares de validação, conversão e formatação.
-
-Exemplos de métodos representados nos models incluem:
-
-* `validar()`;
-* `toResponse()`;
-* `toDatabase()`;
-* `validarHorario()`;
-* `registrarNota()`;
-* `definirCargaHoraria()`;
-* `prepararEnvio()`;
-* `temPermissao()`.
-
-A inclusão desses métodos torna o diagrama mais completo, pois mostra que os models podem apoiar a padronização dos dados trafegados entre services, repositories e respostas da API.
-
-#### Camada Banco de Dados
-
-A camada de banco de dados representa a persistência das informações no PostgreSQL/Supabase. O banco armazena as principais entidades utilizadas pela aplicação, como:
-
-* `aluno`;
-* `agenda`;
-* `participacao`;
-* `atividade`;
-* `oportunidade`;
-* `notificacao`;
-* `label`;
-* `historico_psicologico`.
-
-Essa camada está diretamente relacionada ao modelo físico atualizado nesta sprint. Os novos atributos adicionados ao banco, como `nivel_jornada`, `perfil_socioeconomico`, `curso`, `origem_participacao`, `modalidade`, `carga_horaria`, `certificado`, `prazo_inscricao`, `hora_inicio` e `hora_fim`, fortalecem a integração entre banco, back-end e requisitos do sistema.
-
-#### Relação com os requisitos de negócio
-
-A arquitetura representada no diagrama apoia diretamente os principais requisitos funcionais do projeto. A separação em camadas permite que cada requisito seja implementado de forma mais organizada, com responsabilidades bem distribuídas entre controller, service, repository, model e banco de dados.
-
-| Requisito                                        | Relação com a arquitetura                                                                                   |
-| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
-| `RF001` - Cadastro de alunos                     | Atendido pelo fluxo `alunoController → alunoService → alunoRepository → aluno`.                             |
-| `RF003` - Consulta e listagem de alunos          | Atendido pelos endpoints de consulta, com apoio do `alunoService` e `alunoRepository`.                      |
-| `RF004` - Histórico completo do aluno            | Apoiado pelos módulos de aluno, participação, agenda, jornada e histórico psicológico.                      |
-| `RF006` - Registro de participação em atividades | Atendido pelo fluxo `participacaoController → participacaoService → participacaoRepository → participacao`. |
-| `RF012` - Segmentação de alunos                  | Apoiado pelo `segmentacaoService`, pelos novos campos de aluno e pelas consultas ao banco.                  |
-| `RF014` - Dashboard e indicadores                | Atendido pelo `dashboardService`, que consolida dados de diferentes repositories.                           |
-| `RF021` - Oportunidades e convites               | Apoiado pelos módulos de oportunidade e notificação, além do campo `prazo_inscricao`.                       |
-
-Essa relação evidencia que a arquitetura não foi organizada apenas de forma técnica, mas também em alinhamento com os fluxos reais do produto e com as necessidades da Pulse Mais.
-
-#### Relação com as regras de negócio
-
-A camada `Service` é a principal responsável por aplicar as regras de negócio do sistema. Por isso, o diagrama arquitetural destaca essa camada como intermediária entre o recebimento da requisição e o acesso aos dados.
-
-Alguns exemplos de relação entre regras de negócio e arquitetura são:
-
-* a evolução do aluno na jornada pode ser tratada pelo `jornadaService` e refletida no campo `nivel_jornada`;
-* o controle de certificação depende da relação entre aluno e atividade, representada pela tabela `participacao` e pelo `participacaoService`;
-* a agenda exige validação de data e horário, apoiada pelo `agendaService` e pelo `AgendaModel`;
-* os dados sensíveis de acompanhamento psicológico são tratados por services e repositories específicos;
-* permissões e autenticação são tratadas antes da execução dos controllers, por meio dos middlewares.
-
-Dessa forma, o diagrama demonstra que as regras de negócio não estão espalhadas aleatoriamente pelo código, mas centralizadas em camadas adequadas.
-
-#### Contribuição da arquitetura para a manutenção do sistema
-
-A organização em camadas traz benefícios importantes para a continuidade do projeto. Como cada camada possui uma responsabilidade específica, torna-se mais simples localizar erros, adicionar funcionalidades e evoluir o sistema nas próximas sprints.
-
-Por exemplo, se for necessário alterar a regra de classificação do aluno, a mudança deve ocorrer principalmente no `alunoService` ou no `jornadaService`, sem necessidade de alterar diretamente o controller ou o repository. Da mesma forma, se for necessário modificar uma consulta SQL, a alteração fica concentrada no repository correspondente.
-
-Essa separação também facilita a escrita de testes, pois cada camada pode ser validada de forma mais isolada. Controllers podem ser testados pelo retorno HTTP, services pelas regras de negócio, e repositories pela persistência dos dados.
-
-#### Resultado da atualização
-
-Com a atualização do Diagrama de Classes Arquitetural, o WAD passa a representar de forma mais fiel a estrutura real do back-end desenvolvido na sprint. O diagrama evidencia a comunicação entre front-end, back-end e banco de dados, além de mostrar as responsabilidades internas das camadas de middleware, controller, service, repository e model.
-
-A principal melhoria em relação à versão anterior é que a camada `Model` passou a ter espaço para atributos e métodos, atendendo à orientação da professora e tornando o artefato mais completo. Além disso, o diagrama estabelece uma relação mais clara entre arquitetura técnica, requisitos funcionais, regras de negócio e modelo físico implementado no Supabase/PostgreSQL.
-
-
-### 3.2.3.2. Atualização do Diagrama de Classes do Domínio
-
-Nesta sprint, o Diagrama de Classes do Domínio foi atualizado para refletir melhor a estrutura atual da modelagem e as alterações realizadas no banco de dados. O objetivo principal foi alinhar o diagrama ao modelo físico implementado no Supabase, mantendo a organização geral já existente, mas corrigindo pontos que estavam simplificados ou inconsistentes.
-
-A principal mudança realizada foi a criação da classe `Participacao` como uma classe lógica/associativa entre `Aluno` e `Atividade`. Na versão anterior, a participação aparecia de forma simplificada dentro da classe `Atividade`, como se fosse um atributo booleano. Essa representação foi corrigida porque a participação não pertence apenas à atividade, mas sim à relação entre um aluno e uma atividade específica.
-
-Com isso, a classe `Participacao` passou a representar informações como:
-
-- `idPart`;
-- `dataPart`;
-- `statusPart`;
-- `idAluno`;
-- `idAtividade`;
-- `nota`;
-- `certificado`.
-
-Essa alteração torna o diagrama mais coerente com o banco de dados, já que a tabela `participacao` existe justamente para registrar quais alunos participaram de quais atividades, qual foi o status dessa participação, a nota obtida e se houve emissão de certificado.
-
-Além disso, foram adicionados ao diagrama os novos atributos criados nesta sprint. Na classe `Aluno`, foram incluídos os campos `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`, permitindo representar melhor a jornada do jovem dentro da Pulse Mais. Esses atributos ajudam a classificar o aluno, indicar seu contexto socioeconômico, registrar o curso ou programa associado e identificar sua origem de participação na instituição.
-
-Na classe `Atividade`, foram adicionados os atributos `modalidade` e `carga_horaria`. Esses campos permitem diferenciar se a atividade é presencial, online ou híbrida, além de registrar sua duração em horas.
-
-Na classe `Oportunidade`, foi incluído o atributo `prazo_inscricao`, permitindo representar a data limite para inscrição em vagas, cursos, bolsas, eventos ou outras oportunidades divulgadas pela equipe.
-
-Na classe `Agenda`, foram adicionados os atributos `hora_inicio` e `hora_fim`, tornando a representação dos compromissos mais completa. Antes, a agenda indicava apenas a data, mas agora também permite visualizar o intervalo de horário previsto para atendimentos, reuniões, mentorias ou eventos.
-
-Também foram feitos ajustes de coerência no diagrama. A classe `HistoricoPsicologico` foi revisada para manter os atributos alinhados ao modelo físico, utilizando `observacao`, `titulo` e `idHistorico`. A classe `Psicologo` também foi simplificada para representar apenas os dados previstos no banco atual.
-
-As relações principais entre as classes foram mantidas, preservando a estrutura do domínio. O aluno continua sendo a entidade central do modelo, relacionado a notificações, labels, histórico psicológico, agenda, oportunidades e participações. A diferença é que, agora, a participação em atividades aparece de forma mais adequada, por meio de uma classe própria.
-
-Dessa forma, o Diagrama de Classes do Domínio passou a representar melhor a lógica do sistema, diferenciando corretamente as entidades principais, registros de apoio e classes associativas. Portanto, a atualização melhora a coerência entre o diagrama, o DER, o modelo físico e a implementação no Supabase.
-
-<div align="center">
-<sup>Figura 9: Diagrama de Classes do Domínio atualizado.</sup><br>
-<img src="../docs/assets/Diagrama_Classes_Dominio_atualizado.png"><br>
-<sub>Fonte: Autoria própria (2026). </sub><br>
-</div>
-
 ### 3.2.4. Diagrama de Sequência UML
 
 <div align="justify">
@@ -1127,25 +889,25 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 
 </div>
 
-#### 3.2.4.1. UC-03 - Manter cadastro do aluno
+#### 3.2.4.1. UC-03 — Manter cadastro do aluno
 
 <div align="center">
-<sup>Figura 10: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-1.png"><br>
+<sup>Figura 4: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup><br>
+<img src="./assets/diagrama-sequencia-1.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
 <div align="justify">
 
-O fluxo começa quando o membro da equipe preenche o formulário de cadastro na `:TelaCadastroAluno` e submete os dados ao `:AlunoController`, que os repassa ao `:AlunoService`. O service realiza a validação dos campos obrigatórios (RN002), e em caso de sucesso aciona o `:AlunoRepository` para persistir o registro no banco. Após o INSERT, o service deriva o código identificador no formato `PM-AAAA-NNN` a partir do `id_aluno` e do ano de ingresso - operação detalhada como caso de uso próprio (UC-04, incluído via `«include»`), cobrindo a RN001 - e dispara a mensagem de boas-vindas pelo `:EmailService`. A confirmação retorna pelas camadas até a tela, exibindo o código gerado ao usuário. Caso a validação inicial falhe, o fluxo segue pelo ramo alternativo do fragmento `alt`, devolvendo um erro 400 sem chegar ao banco. Esse diagrama atende ao RF001 e cobre as RN001 e RN002.
+O fluxo começa quando o membro da equipe preenche o formulário de cadastro na `:TelaCadastroAluno` e submete os dados ao `:AlunoController`, que os repassa ao `:AlunoService`. O service realiza a validação dos campos obrigatórios (RN002), e em caso de sucesso aciona o `:AlunoRepository` para persistir o registro no banco. Após o INSERT, o service deriva o código identificador no formato `PM-AAAA-NNN` a partir do `id_aluno` e do ano de ingresso — operação detalhada como caso de uso próprio (UC-04, incluído via `«include»`), cobrindo a RN001 — e dispara a mensagem de boas-vindas pelo `:EmailService`. A confirmação retorna pelas camadas até a tela, exibindo o código gerado ao usuário. Caso a validação inicial falhe, o fluxo segue pelo ramo alternativo do fragmento `alt`, devolvendo um erro 400 sem chegar ao banco. Esse diagrama atende ao RF001 e cobre as RN001 e RN002.
 
 </div>
 
-#### 3.2.4.2. UC-06 - Visualizar histórico consolidado do aluno
+#### 3.2.4.2. UC-06 — Visualizar histórico consolidado do aluno
 
 <div align="center">
-<sup>Figura 11: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-2.png"><br>
+<sup>Figura 5: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
+<img src="./assets/diagrama-sequencia-2.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -1155,39 +917,39 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 
 </div>
 
-#### 3.2.4.3. UC-08 - Registrar participação em atividade
+#### 3.2.4.3. UC-08 — Registrar participação em atividade
 
 <div align="center">
-<sup>Figura 12: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-3.png"><br>
+<sup>Figura 6: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup><br>
+<img src="./assets/diagrama-sequencia-3.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
 <div align="justify">
 
-O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e define o status da participação. A `:TelaParticipacao` envia `POST /participacoes` ao `:ParticipacaoController`, que delega ao `:ParticipacaoService`. O service executa duas validações em sequência: existência do aluno (`:AlunoRepository`) e existência da atividade (`:AtividadeRepository`). Quando ambas retornam verdadeiro, o ramo principal do fragmento `alt` é seguido: o `:ParticipacaoRepository` emite o `INSERT` na tabela `participacao`, registrando `id_aluno`, `id_atividade`, `data_part`, `status_part` e, quando aplicável, `nota`, e a confirmação retorna pelas camadas até a tela. Quando qualquer das validações falha, o ramo alternativo devolve 404 sem chegar à escrita, preservando a integridade referencial. Diferente de um simples registro de frequência, este fluxo cria uma entrada completa de participação - com data, status e nota próprios - que sustenta tanto a consulta de histórico (UC-06) quanto o cálculo de indicadores (UC-15). Esse diagrama atende aos RF005 e RF006, mas o endpoint específico de participação ainda não está implementado no backend atual.
+O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e define o status da participação. A `:TelaParticipacao` envia `POST /participacoes` ao `:ParticipacaoController`, que delega ao `:ParticipacaoService`. O service executa duas validações em sequência: existência do aluno (`:AlunoRepository`) e existência da atividade (`:AtividadeRepository`). Quando ambas retornam verdadeiro, o ramo principal do fragmento `alt` é seguido: o `:ParticipacaoRepository` emite o `INSERT` na tabela `participacao`, registrando `id_aluno`, `id_atividade`, `data_part`, `status_part` e, quando aplicável, `nota`, e a confirmação retorna pelas camadas até a tela. Quando qualquer das validações falha, o ramo alternativo devolve 404 sem chegar à escrita, preservando a integridade referencial. Diferente de um simples registro de frequência, este fluxo cria uma entrada completa de participação — com data, status e nota próprios — que sustenta tanto a consulta de histórico (UC-06) quanto o cálculo de indicadores (UC-15). Esse diagrama atende aos RF005 e RF006, mas o endpoint específico de participação ainda não está implementado no backend atual.
 
 </div>
 
-#### 3.2.4.4. UC-15 - Visualizar dashboard de impacto
+#### 3.2.4.4. UC-15 — Visualizar dashboard de impacto
 
 <div align="center">
-<sup>Figura 13: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-4.png"><br>
+<sup>Figura 7: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
+<img src="./assets/diagrama-sequencia-4.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
 <div align="justify">
 
-A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como `/api/impacto/resumo` e `/api/jornada/resumo`, para apresentar os principais indicadores institucionais. A ocupação serve como proxy para empregabilidade e a escolaridade como proxy para acesso ao ensino superior, uma vez que o banco atual do MVP não modela explicitamente vínculos empregatícios ou matrículas em instituições de ensino superior - essas dimensões mais ricas estão previstas para iterações futuras. Esse fluxo atende parcialmente aos RF012, RF013, RF015 e RF016; o RF014 permanece planejado por depender de cálculo específico de conclusão de programa por período.
+A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como `/api/impacto/resumo` e `/api/jornada/resumo`, para apresentar os principais indicadores institucionais. A ocupação serve como proxy para empregabilidade e a escolaridade como proxy para acesso ao ensino superior, uma vez que o banco atual do MVP não modela explicitamente vínculos empregatícios ou matrículas em instituições de ensino superior — essas dimensões mais ricas estão previstas para iterações futuras. Esse fluxo atende parcialmente aos RF012, RF013, RF015 e RF016; o RF014 permanece planejado por depender de cálculo específico de conclusão de programa por período.
 
 </div>
 
-#### 3.2.4.5. UC-22 - Manter registros de saúde mental
+#### 3.2.4.5. UC-22 — Manter registros de saúde mental
 
 <div align="center">
-<sup>Figura 14: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-5.png"><br>
+<sup>Figura 8: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
+<img src="./assets/diagrama-sequencia-5.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -1205,7 +967,7 @@ _Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escol
 
 _Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP._
 
-### 3.2.7. Padrões de Projeto Aplicados
+### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
 <div align="justify">
 
@@ -1535,11 +1297,14 @@ Em casos onde a Lucide não oferecer o ícone necessário, as bibliotecas **Phos
 
 </div>
 
-## 3.5 Protótipo de alta fidelidade 
+## 3.5 Protótipo de alta fidelidade (sprint 3)
 
-### Tela de login de gestores e psicólogos
+### Tela de Login
+
+
 <div align="center">
-<img src="./assets/login-gestor-psicologo.png"><br>
+<sup>Figura X: Tela de Login Geral.</sup><br>
+<img src="./assets/Login-Gestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1548,39 +1313,71 @@ A tela de login é a página inicial da plataforma para todos os perfis de usuá
 Esta tela está associada às User Stories US05, US07, US08 e US09, de acordo com o critério de aceite número 1 de cada uma. Isso porque o acesso unificado e padronizado garante tanto a simplicidade para o aluno quanto o controle de acesso necessário para gestores e psicólogos visualizarem e interagirem com os dados da plataforma.
 </div>
 
-### Tela inicial do gestor
+### Tela Inicial do Gestor
 
 <div align="center">
 <img src="./assets/prototipo-2a.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
+<div align="justify">
 O protótipo apresenta a tela inicial do painel do gestor na plataforma, projetada para consolidar indicadores de desempenho e o fluxo de atividades de uma turma específica em uma interface centralizada e de fácil leitura. Na lateral esquerda, há um menu de navegação persistente integrado a um bloco de contexto que exibe informações estáticas sobre o grupo monitorado, enquanto o cabeçalho superior traz ferramentas globais como barra de busca, notificações e perfil do usuário. O corpo principal da página destaca-se por três cartões de métricas no topo que resumem o engajamento e a evolução dos usuários por meio de dados percentuais e barras de progresso visuais. Abaixo, a interface se divide em duas áreas centrais de monitoramento: um gráfico de colunas interativo para mapear a distribuição dos usuários ao longo das diferentes etapas cronológicas do programa, contando com filtros temporais e legendas de status, e um feed dinâmico de últimas atividades ao lado, que lista logs cronológicos com avatares, descrições de ações, marcadores de tempo e tags coloridas de categorização, complementado por um sistema de paginação no rodapé.
+</div>
 
-### Visão micro do gestor
+### Lista de Alunos apresentada ao Gestor
+
+<div align="center">
+<img src="./assets/Lista-de-Alunos-Gestor.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+A tela de lista de alunos é onde o gestor visualiza e gerencia todos os estudantes da plataforma. Nela estão disponíveis filtros por curso, status e engajamento. Os alunos são exibidos em cards com avatar, nome, curso, badge de status e barra de progresso do módulo atual. No rodapé, uma legenda resume os totais por status com paginação, e quatro cards exibem os principais indicadores da turma.
+
+Esta tela está associada às User Stories US01, US03 e US04, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza os dados de todos os alunos em um único lugar e permite à gestora buscar, filtrar e acessar perfis individuais com agilidade.
+</div>
+
+### Perfil do Aluno apresentado ao Gestor
 
 <div align="center">
 <img src="./assets/prototipo-8.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
+<div align="justify">
 O protótipo apresenta a tela de perfil individual do aluno na visão do gestor, estruturada para centralizar o gerenciamento de dados cadastrais e o acompanhamento do estudante por meio de uma interface organizada em abas. Mantendo a navegação lateral fixa para acesso às páginas do sistema e ao contexto da turma, além do cabeçalho global com busca e notificações, o núcleo da tela destaca um cartão principal com as informações básicas do aluno, incluindo avatar com indicador de status online, nome, e-mail institucional, curso e turma, acompanhados por tags de situação cadastral e botões de ação rápida para edição de dados e envio de notificações. Logo abaixo, um menu de navegação por abas horizontais permite alternar entre diferentes categorias de acompanhamento, como dados gerais, jornada, empregabilidade, ensino superior e observações, onde a aba ativa revela um formulário com campos de leitura e escrita dispostos em colunas que agrupam informações como nome completo, curso, categoria de bolsa, emprego atual, telefone e endereço, além de campos de dados sensíveis, como e-mail, CPF e data de nascimento, que contam com um ícone de cadeado indicando restrição de segurança ou campos bloqueados para edição direta.
+</div>
 
-### Tela de login do aluno
+### Dashboard apresentado ao Gestor
+
 <div align="center">
-<img src="./assets/login-aluno.png"><br>
+<img src="./assets/prototipo3A.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
 <div align="justify">
-A tela de login do aluno é a página inicial da plataforma para o perfil estudante. Nela, o aluno se autentica com CPF e nome completo, sem necessidade de senha, facilitando o acesso para o público jovem atendido pela Pulse Mais. O botão "Entrar" redireciona o aluno para sua tela inicial personalizada.
-Esta tela está associada às User Stories US08 e US09, de acordo com o critério de aceite número 1 de cada uma. Isso porque o método de autenticação foi pensado para ser simples e acessível, garantindo que o aluno consiga entrar na plataforma e acompanhar seus resultados e eventos sem barreiras.
+O protótipo apresenta o painel principal do gestor na plataforma Pulse Manager, projetado para consolidar indicadores de desempenho e o acompanhamento de uma turma específica em uma interface centralizada e de leitura imediata. Na lateral esquerda, há um menu de navegação persistente com acesso às seções Início, Alunos, Dashboard e Agenda, integrado a um bloco de contexto que exibe informações estáticas sobre o grupo monitorado, como turma ativa, módulo atual e total de alunos. O cabeçalho superior traz ferramentas globais como barra de busca, notificações e perfil do usuário.
+O corpo principal da página destaca-se por quatro cartões de métricas no topo que resumem os principais indicadores da turma: alunos ativos, evasão, empregabilidade e engajamento médio, cada um com variação percentual em relação ao período anterior e codificação de cor por criticidade. Abaixo, a interface se divide em duas áreas de análise: um gráfico de colunas agrupadas que mapeia a distribuição dos alunos por curso com legendas de status (em andamento, concluído, em atraso), e um gráfico de barras horizontais segmentado que cruza o engajamento por tipo de dispositivo, desktop versus mobile, por área de conhecimento. Encerrando a tela, um funil de impacto em camadas ilustra a progressão da turma pelos estágios Conectados, Capacitados e Transformados, com percentuais de retenção, conversão e evasão destacados lateralmente.
 </div>
 
-### Tela inicial do aluno
+
+### Tela de Agenda do Gestor
 
 <div align="center">
-<img src="./assets/home_aluno.png"><br>
+<img src="./assets/ProtótipoFE.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+A tela de agenda do gestor é onde a equipe Pulse Mais tem uma visão do calendário operacional da turma. Nela estão dispostos a visualização mensal com todos os compromissos categorizados por cor, check-ins semanais, reuniões de módulo, entregas, mentorias individuais e sprint reviews, a lista de próximos eventos com sua proximidade temporal e um pop-up de alerta para eventos iminentes, permitindo abrir ou adiar a atividade diretamente. A navegação lateral permite que o gestor transite entre o Início, Alunos, Dashboard e a Agenda, com acessos rápidos à turma ativa, ao módulo corrente e ao total de alunos vinculados, além do botão "+ Evento" para criação de novos compromissos.
+
+Esta tela está associada às User Stories US01, US02 e US04, de acordo com os critérios de aceite de cada uma.
+</div>
+
+### Tela Inicial do Aluno
+
+<div align="center">
+<img src="./assets/prototipo-10.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1589,18 +1386,58 @@ A tela inicial do aluno é onde o estudante tem uma visão geral da sua jornada 
 Esta tela está associada às User Stories US08, US09 e US10, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza o acesso aos resultados pessoais do aluno, exibe os eventos e faltas de forma clara e disponibiliza o contato direto com o psicólogo, tornando a navegação intuitiva e completa para o estudante.
 </div>
 
-### Visão geral do aluno
+### Tela de Perfil apresentada para o Aluno
 
 <div align="center">
-<img src="./assets/prototipo-10.png"><br>
+<img src="./assets/Perfil-do-aluno-Aluno.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
 <div align="justify">
-O protótipo apresenta a tela de visão geral do painel na perspetiva do aluno, desenvolvida para centralizar o acompanhamento do seu próprio progresso académico e ferramentas de bem-estar numa interface intuitiva. Preservando a navegação lateral com links de acesso e o bloco com informações da turma atual e dos próximos encontros, além do cabeçalho superior com pesquisa e notificações, a área de conteúdo principal exibe no topo três cartões de métricas individuais que destacam a frequência, os módulos concluídos e a nota média atual através de percentagens, valores absolutos e indicadores de variação. Abaixo, o ecrã divide-se em duas secções de monitorização, onde o lado esquerdo é dedicado à jornada académica do estudante, exibindo uma barra de progresso geral do curso, um seletor modular interativo com botões de navegação, o detalhe do progresso das sprints individuais por meio de barras de conclusão coloridas e um histórico com a listagem de tarefas recentes que exibe os prazos, as notas e os marcadores de estado de cada entrega. O lado direito complementa a experiência com uma funcionalidade interativa de saúde e bem-estar que permite ao aluno registar o seu estado emocional através de emojis e solicitar apoio especializado através de um botão de ação rápida, posicionada logo acima de um bloco cronológico que lista os próximos eventos do calendário com detalhes de formato, data, horário e etiquetas coloridas de identificação.
+A tela de perfil do aluno exibe todas as informações cadastrais do estudante em um único lugar. No topo, um card com avatar, nome, e-mail, curso e turma identifica o aluno, acompanhado de badges de status e etapa atual. Abaixo, abas organizam os dados em categorias — Dados Gerais, Jornada, Empregabilidade, Ensino Superior e Observações. Na aba inicial, os campos exibem nome completo, categoria, e-mail, telefone, endereço, curso superior, emprego atual, CPF e data de nascimento. Botões de editar e notificar ficam disponíveis no canto superior direito.
+
+Esta tela está associada às User Stories US01, US04 e US05, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza todos os dados do aluno em um único lugar, permitindo à gestora e ao psicólogo acessar o perfil completo do estudante com agilidade e tomar as ações necessárias diretamente pela plataforma.
+</div>
+
+### Dashboard apresentado ao Aluno
+
+<div align="center">
+<img src="./assets/prototipo3B.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align = "justify">
+O protótipo apresenta o painel individual do aluno na plataforma, concebido para oferecer uma visão personalizada do próprio progresso acadêmico ao longo do programa. A estrutura de navegação lateral mantém a consistência visual do sistema, exibindo além do menu principal um bloco de acesso rápido com informações contextuais sobre a turma ativa, o próximo encontro e o próximo evento agendado. O cabeçalho repete o padrão global com busca, notificações e perfil.
+Os quatro cartões de métricas no topo sintetizam os dados mais relevantes para o acompanhamento pessoal: frequência acumulada, módulos concluídos, nota média e prazo da próxima entrega — este último com identificação direta da atividade pendente. A seção central divide-se em dois painéis analíticos: à esquerda, um gráfico de colunas exibe o índice de presença por bimestre com marcações visuais de atenção e referência à meta estabelecida, acompanhado de um resumo textual com média geral e comparativo em relação ao objetivo; à direita, um gráfico de linhas com área sombreada mostra a evolução da nota média e da frequência módulo a módulo ao longo do semestre, permitindo ao aluno identificar tendências de melhora ou queda no próprio desempenho.
+</div>
+
+### Tela Inicial do Aluno
+
+<div align="center">
+<img src="./assets/prototipo2B.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align ="justify">
+O protótipo apresenta o painel de acompanhamento socioemocional da plataforma, voltado exclusivamente para o profissional de psicologia responsável pela turma. A barra lateral mantém a identidade visual do sistema e exibe um bloco de acesso rápido com dados operacionais críticos: turma ativa, horário da próxima sessão e quantidade de flags abertas que demandam atenção imediata. O cabeçalho global repete os elementos padrão de busca e notificações.
+Os quatro cartões de métricas superiores apresentam os indicadores centrais do trabalho clínico: alunos acompanhados, casos em atenção, sessões realizadas na semana e notificações enviadas, todos com variação recente em destaque. O corpo da tela divide-se em dois blocos complementares: à esquerda, uma lista paginada de alertas de atenção classifica os alunos por nível de criticidade — crítico, atenção ou observação — com nome, motivo do alerta e um botão de ação direta para notificação, permitindo ao psicólogo agir sem sair da tela; à direita, um gráfico de área sobreposta acompanha a evolução semanal do bem-estar geral da turma, dos casos em atenção e das sessões realizadas, seguido por uma agenda cronológica do dia com horário, nome do aluno, tipo de sessão e modalidade de atendimento.
 </div>
 
 
+### Lista de Alunos apresentada ao Psicólogo
+
+<div align="center">
+<img src="./assets/Lista-de-Alunos-Psicologo.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+A tela de lista de alunos do psicólogo segue a mesma estrutura da tela do gestor, com filtros por curso, status e engajamento. Os alunos são exibidos em cards com avatar, nome, curso, badge de status e barra de progresso do módulo atual. A sidebar traz acesso rápido à próxima sessão e às flags abertas, facilitando a priorização dos atendimentos. No rodapé, uma legenda resume os totais por status com paginação, e quatro cards exibem os principais indicadores da turma.
+
+Esta tela está associada às User Stories US06 e US07, de acordo com os critérios de aceite de cada uma. Isso porque a tela permite ao psicólogo visualizar todos os alunos em um único lugar e identificar rapidamente quem precisa de suporte, com base nos badges de status e nas flags abertas exibidas na navegação lateral.
+</div>
+
+### Dashboard apresentado ao Psicólogo
 
 <div align="center">
 <img src="./assets/ProtótipoF.png"><br>
@@ -1609,16 +1446,12 @@ O protótipo apresenta a tela de visão geral do painel na perspetiva do aluno, 
 
 <div align="justify">
 Dashboard de saúde mental. Exibe 4 KPIs no topo (humor médio, check-ins semanais, flags ativas e sessões realizadas), dois gráficos centrais — um de barras com bem-estar por módulo/turma e um de barras horizontais com engajamento por faixa de humor, além de um resumo semanal e acesso rápido à turma e próxima sessão na sidebar esquerda.
+
+Para ter uma visão dos flows desenvolvidos para cada um dos segmentos (aluno, gestor e psicólogo), segue em anexo o link para a plataforma de desenvolvimento dos protótipos de alta fidelidade e sua linha de segmentação interativa.
+
+Link: https://www.figma.com/proto/txJwOwELjVHZt3YVdrjuo0/PulseMais---Prot%C3%B3tipos-de-Alta-Fidelidade?node-id=99-2&p=f&viewport=117%2C-854%2C0.36&t=CdCHM4sZQqs1BBos-1&scaling=contain&content-scaling=fixed&starting-point-node-id=212%3A2&show-proto-sidebar=1&page-id=0%3A1
 </div>
 
-<div align="center">
-<img src="./assets/ProtótipoFE.png"><br>
-<sub>Fonte: Autoria própria (2026).</sub><br>
-</div>
-
-<div align="justify">
-Tela de Agenda, no perfil de Gestor. Exibe um calendário mensal, com eventos coloridos por tipo, check-ins, reuniões, entregas de módulo e mentorias. Abaixo, um painel de próximos eventos lista os compromissos com prazo, e um pop-up de evento próximo alerta que o "Check-in Semana 8" começa em 15 minutos, com ações de adiar ou abrir.
-</div>
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
@@ -1631,7 +1464,7 @@ A partir destes conceitos e utilizando como base o TAPI e outros materiais dispo
 </div>
 
 <div align="center">
-<sup>Figura 15: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
+<sup>Figura 9: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
 <img src="./assets/mer.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -1692,94 +1525,6 @@ Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras
 | Psicólogo | Envio de notificações | RN011 | Pois a equipe interna tem autonomia no quesito de registros no sistema, assim, precisa utilizar notificações para a coleta de informações |
 | Psicólogo | Acesso ao desempenho acadêmico | RN020, RN017 | Pois o psicólogo pode consultar notas, frequência e indicadores acadêmicos apenas dos alunos que monitora, mantendo a restrição de acesso aos dados pessoais |
 
-### 3.6.1.1 Atualização do Modelo Entidade-Relacionamento
-
-Nesta sprint, o Modelo Entidade-Relacionamento (MER) foi atualizado para refletir as mudanças realizadas no banco de dados e no modelo físico da aplicação. A estrutura principal do MER foi mantida, preservando as entidades e relacionamentos já existentes, mas foram adicionados novos atributos para representar melhor a jornada do aluno, o acompanhamento das atividades, a gestão de oportunidades e o controle de agenda.
-
-As alterações realizadas não criaram novas entidades principais nem modificaram os relacionamentos centrais do modelo. O foco foi complementar entidades já existentes com dados que passaram a ser relevantes para a implementação no Supabase e para os fluxos previstos no sistema.
-
-#### Alterações realizadas na entidade `aluno`
-
-A entidade `aluno` recebeu novos atributos relacionados à jornada institucional do jovem dentro da Pulse Mais:
-
-- `nivel_jornada`;
-- `perfil_socioeconomico`;
-- `curso`;
-- `origem_participacao`.
-
-Esses atributos foram adicionados porque o aluno não deve ser representado apenas por dados cadastrais, como nome, e-mail, idade, gênero, ocupação e escolaridade. A partir da atualização, o MER também passa a representar informações ligadas à trajetória do aluno na instituição.
-
-O atributo `nivel_jornada` permite classificar o aluno conforme sua etapa na jornada da Pulse Mais, como conectado, capacitado ou transformado. O atributo `perfil_socioeconomico` registra uma informação importante sobre o público atendido pela organização. Já o atributo `curso` indica o curso ou programa principal associado ao aluno, enquanto `origem_participacao` permite identificar por qual iniciativa o jovem entrou na base da Pulse Mais.
-
-#### Alterações realizadas na entidade `atividade`
-
-A entidade `atividade` recebeu os atributos:
-
-- `modalidade`;
-- `carga_horaria`.
-
-Esses campos foram adicionados para detalhar melhor as atividades realizadas pela Pulse Mais. A `modalidade` indica se a atividade ocorre de forma presencial, online ou híbrida. A `carga_horaria` registra a duração da atividade em horas.
-
-Além disso, o atributo `nota`, que antes aparecia associado à atividade, foi realocado para a entidade `participacao`. Essa alteração foi necessária porque a nota não pertence à atividade de forma geral, mas sim à participação de um aluno em uma atividade específica.
-
-#### Alterações realizadas na entidade `participacao`
-
-A entidade `participacao` foi mantida como uma entidade associativa entre `aluno` e `atividade`, mas recebeu novos atributos para representar melhor essa relação:
-
-- `nota`;
-- `certificado`.
-
-A inclusão de `nota` em `participacao` torna o modelo mais correto, pois diferentes alunos podem ter notas diferentes em uma mesma atividade. Dessa forma, a nota deve estar vinculada à participação individual do aluno, e não à atividade em si.
-
-O atributo `certificado` foi adicionado para indicar se aquela participação gerou certificado para o aluno. Esse campo também pertence à relação entre aluno e atividade, pois uma mesma atividade pode gerar certificado para alguns alunos e não para outros.
-
-#### Alterações realizadas na entidade `oportunidade`
-
-A entidade `oportunidade` recebeu o atributo:
-
-- `prazo_inscricao`.
-
-Esse campo foi adicionado para registrar a data limite de inscrição em uma oportunidade. Com isso, o MER passa a representar melhor a gestão de oportunidades, como vagas, bolsas, cursos, eventos ou outras iniciativas divulgadas pela equipe da Pulse Mais.
-
-#### Alterações realizadas na entidade `agenda`
-
-A entidade `agenda` recebeu os atributos:
-
-- `hora_inicio`;
-- `hora_fim`.
-
-Na versão anterior, a agenda possuía apenas a data do compromisso. Com a atualização, passa a ser possível representar também o horário de início e término de reuniões, mentorias, atendimentos, eventos ou outros compromissos registrados no sistema.
-
-#### Alterações realizadas na entidade `historicoPsicologico`
-
-A entidade `historicoPsicologico` também foi ajustada para ficar mais coerente com o modelo físico atualizado. O atributo `classificacao` foi substituído por:
-
-- `titulo`.
-
-Essa alteração foi feita porque o modelo físico passou a representar o histórico psicológico com os atributos `id_historico`, `observacao` e `titulo`, mantendo a entidade mais simples e alinhada ao banco implementado.
-
-#### Relacionamentos mantidos
-
-Apesar da inclusão dos novos atributos, os relacionamentos principais do MER foram preservados. Permaneceram as relações entre:
-
-- `aluno` e `notificacao`;
-- `aluno` e `agenda`;
-- `aluno` e `label`;
-- `aluno` e `historicoPsicologico`;
-- `aluno` e `participacao`;
-- `participacao` e `atividade`;
-- `membroEquipe` e `oportunidade`;
-- `membroEquipe` e `agenda`;
-- `psicologo` e `label`;
-- `psicologo` e `historicoPsicologico`;
-- `remetente` e `notificacao`.
-
-A estrutura geral do modelo foi mantida para evitar aumento desnecessário de complexidade nesta sprint. Assim, a atualização concentrou-se em tornar as entidades mais completas, sem alterar a lógica central dos relacionamentos.
-
-Com as alterações realizadas, o MER passou a representar melhor a realidade operacional da Pulse Mais. A entidade `aluno` agora contempla informações de jornada e segmentação. A entidade `atividade` passou a representar formato e duração. A entidade `participacao` passou a registrar desempenho e certificação. A entidade `oportunidade` passou a controlar prazo de inscrição, e a entidade `agenda` passou a registrar horários.
-
-Essas atualizações fortalecem a coerência entre o MER, o DER, o modelo físico e a implementação no Supabase. Além disso, apoiam funcionalidades futuras do sistema, como filtros, dashboard, histórico do aluno, controle de atividades, gestão de oportunidades e acompanhamento da jornada dos jovens.
-
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
@@ -1792,7 +1537,7 @@ O DER explicita as entidades do sistema, seus atributos, as respectivas chaves p
 </div>
 
 <div align="center">
-<sup>Figura 16: Diagrama Entidade-Relacionamento.</sup><br>
+<sup>Figura 6: Diagrama Entidade-Relacionamento.</sup><br>
 <img src="./assets/diagram.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
@@ -2089,66 +1834,6 @@ O Diagrama Entidade-Relacionamento do PulseManager representa de forma estrutura
 
 </div>
 
-### 3.6.2.1. Atualização do DER com novos atributos da Sprint
-
-Duarnte a sprint 03, o Diagrama Entidade-Relacionamento (DER) foi atualizado para refletir as alterações realizadas no escopo do banco de dados. A atualização teve como objetivo complementar a modelagem já existente, adicionando novos atributos em entidades previamente definidas, sem criar novas tabelas ou modificar os relacionamentos originais.
-
-<div align="center">
-<sup>Figura 17: Diagrama Entidade-Relacionamento atualizado.</sup><br>
-<img src="./assets/diagram_atualizado.png"><br>
-<sub>Fonte: Elaborado pela equipe (2026).</sub><br>
-</div>
-
-A estrutura geral do DER foi mantida, preservando as entidades `aluno`, `atividade`, `participacao`, `oportunidade`, `agenda`, `notificacao`, `membro_equipe`, `psicologo`, `label` e `historico_psicologico`. As alterações realizadas foram pontuais e buscaram tornar o modelo mais aderente à jornada dos jovens atendidos pela Pulse Mais, ao acompanhamento de atividades, à gestão de oportunidades e ao controle de agenda.
-
-#### Alterações realizadas no DER
-
-| Entidade | Atributos adicionados | Tipo de dado | Justificativa |
-|---|---|---|---|
-| `aluno` | `nivel_jornada` | `VARCHAR` | Permite classificar o aluno conforme sua etapa na jornada institucional da Pulse Mais, como conectado, capacitado ou transformado. |
-| `aluno` | `perfil_socioeconomico` | `VARCHAR` | Registra uma informação relevante sobre o público atendido, apoiando análises de impacto social e segmentação. |
-| `aluno` | `curso` | `VARCHAR` | Permite indicar o curso ou programa principal associado ao aluno nesta etapa da modelagem. |
-| `aluno` | `origem_participacao` | `VARCHAR` | Identifica por qual iniciativa o aluno entrou ou se vinculou à Pulse Mais, como palestra, vivência, curso ou programa. |
-| `atividade` | `modalidade` | `VARCHAR` | Indica se a atividade ocorre de forma presencial, online ou híbrida. |
-| `atividade` | `carga_horaria` | `INT` | Registra a duração da atividade em horas. |
-| `participacao` | `certificado` | `BOOLEAN` | Indica se a participação do aluno em determinada atividade gerou certificado. |
-| `oportunidade` | `prazo_inscricao` | `DATE` | Registra a data limite para inscrição em uma oportunidade. |
-| `agenda` | `hora_inicio` | `TIME` | Registra o horário de início de um compromisso ou atendimento. |
-| `agenda` | `hora_fim` | `TIME` | Registra o horário de término de um compromisso ou atendimento. |
-
-#### Entidades atualizadas no DER
-
-A entidade `aluno` recebeu os atributos `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`. Esses campos ampliam a capacidade do sistema de representar a jornada do jovem, permitindo que a equipe da Pulse Mais identifique em qual estágio o aluno se encontra, qual seu perfil socioeconômico, qual curso ou programa está associado a ele e por qual iniciativa ocorreu sua entrada na organização.
-
-A entidade `atividade` foi atualizada com os atributos `modalidade` e `carga_horaria`. Essa alteração permite detalhar melhor as atividades registradas no sistema, diferenciando atividades presenciais, online ou híbridas, além de registrar sua duração.
-
-A entidade `participacao` recebeu o atributo `certificado`. Esse campo foi incluído porque a certificação depende da relação entre um aluno e uma atividade específica. Dessa forma, o certificado não foi adicionado diretamente em `aluno` nem em `atividade`, mas sim na entidade associativa `participacao`.
-
-A entidade `oportunidade` foi atualizada com o atributo `prazo_inscricao`, permitindo que o sistema registre a data limite para inscrição em vagas, bolsas, cursos, eventos ou outras oportunidades divulgadas pela equipe.
-
-A entidade `agenda` recebeu os atributos `hora_inicio` e `hora_fim`, complementando o campo `data` já existente. Com isso, a agenda passa a representar não apenas o dia do compromisso, mas também o intervalo de horário previsto para atendimentos, reuniões, mentorias ou eventos.
-
-#### Impacto das alterações na modelagem
-
-As alterações realizadas no DER não modificaram as cardinalidades nem os relacionamentos entre as entidades. O objetivo foi enriquecer o modelo existente com atributos que apoiem melhor os fluxos previstos no sistema.
-
-Com os novos campos, o DER passa a oferecer suporte mais claro para:
-
-- classificação dos alunos por etapa da jornada;
-- segmentação por perfil socioeconômico;
-- identificação do curso ou programa associado ao aluno;
-- rastreamento da origem de participação do jovem;
-- detalhamento de atividades por modalidade e carga horária;
-- controle de certificação por participação;
-- acompanhamento de prazos de oportunidades;
-- registro mais preciso de compromissos na agenda.
-
-#### Resultado da atualização
-
-A versão atualizada do DER mantém a estrutura original da modelagem, mas passa a representar informações mais específicas sobre a operação da Pulse Mais. As entidades centrais continuam as mesmas, porém agora carregam atributos mais úteis para filtros, dashboards, histórico do aluno, acompanhamento de oportunidades e organização de agenda.
-
-Essa atualização fortalece a coerência entre o banco de dados, o WAD e a implementação técnica no Supabase, além de demonstrar a evolução da modelagem ao longo da sprint.
-
 
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
@@ -2317,6 +2002,7 @@ Os identificadores principais usam `GENERATED ALWAYS AS IDENTITY`, recurso do Po
 </div>
 
 ```sql
+-- PostgreSQL
 
 DO $$
 BEGIN
@@ -2584,151 +2270,6 @@ Para exclusões estruturais, a ordem deve ser invertida: primeiro removem-se ou 
 
 </div>
 
-### 3.6.3.1. Atualização do Modelo Físico de dados
-
-Nesta sprint, o modelo físico de dados foi atualizado para refletir as necessidades identificadas durante a implantação do banco no Supabase e o refinamento da jornada dos alunos da Pulse Mais. O modelo físico representa a estrutura concreta do banco de dados, incluindo tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e restrições utilizadas na persistência das informações.
-
-A atualização realizada teve como foco complementar tabelas já existentes, sem alterar a estrutura principal do banco. Dessa forma, não foram criadas novas entidades, nem modificados os relacionamentos previamente definidos. A decisão foi adicionar novos atributos em tabelas específicas para tornar o banco mais adequado ao acompanhamento dos alunos, atividades, participações, oportunidades e agenda.
-
-As alterações foram aplicadas diretamente nas tabelas `aluno`, `atividade`, `participacao`, `oportunidade` e `agenda`.
-
----
-
-#### Objetivo da atualização
-
-O objetivo da atualização do modelo físico foi tornar a base de dados mais aderente aos fluxos reais da Pulse Mais, especialmente em relação a:
-
-- acompanhamento da jornada do aluno;
-- classificação dos jovens por nível de impacto;
-- registro do perfil socioeconômico;
-- identificação de curso ou programa associado;
-- rastreamento da origem de participação;
-- detalhamento das atividades;
-- controle de certificação;
-- gestão de prazos de oportunidades;
-- registro mais preciso de compromissos na agenda.
-
-Com isso, o banco passa a oferecer melhor suporte para funcionalidades previstas no sistema, como filtros, dashboard, histórico do aluno, gestão de oportunidades e acompanhamento institucional.
-
----
-
-#### Alterações realizadas no modelo físico
-
-| Tabela | Atributo adicionado | Tipo físico | Justificativa |
-|---|---|---|---|
-| `aluno` | `nivel_jornada` | `VARCHAR(50)` | Permite classificar o aluno dentro da jornada da Pulse Mais, como conectado, capacitado ou transformado. |
-| `aluno` | `perfil_socioeconomico` | `VARCHAR(150)` | Registra informações relacionadas ao perfil social do aluno, apoiando análises de impacto e segmentação. |
-| `aluno` | `curso` | `VARCHAR(150)` | Permite registrar o curso ou programa principal associado ao aluno nesta etapa do projeto. |
-| `aluno` | `origem_participacao` | `VARCHAR(100)` | Identifica por qual iniciativa o aluno entrou ou se vinculou à Pulse Mais. |
-| `atividade` | `modalidade` | `VARCHAR(50)` | Indica se a atividade ocorre de forma presencial, online ou híbrida. |
-| `atividade` | `carga_horaria` | `INTEGER` | Registra a duração da atividade em horas. |
-| `participacao` | `certificado` | `BOOLEAN` | Indica se a participação do aluno em determinada atividade gerou certificado. |
-| `oportunidade` | `prazo_inscricao` | `DATE` | Registra a data limite para inscrição em uma oportunidade. |
-| `agenda` | `hora_inicio` | `TIME` | Registra o horário de início de um compromisso. |
-| `agenda` | `hora_fim` | `TIME` | Registra o horário de término de um compromisso. |
-
----
-
-#### Justificativa das alterações por tabela
-
-##### Tabela `aluno`
-
-A tabela `aluno` é a entidade central do modelo, pois concentra os principais dados dos jovens acompanhados pela Pulse Mais. Na versão anterior do modelo físico, essa tabela armazenava principalmente dados cadastrais, como nome, e-mail, idade, gênero, ocupação, escolaridade, data de ingresso e status.
-
-Com a atualização, foram adicionados os campos `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`. Esses novos atributos permitem que o aluno seja analisado não apenas como um cadastro, mas como parte de uma jornada institucional.
-
-O campo `nivel_jornada` possibilita classificar o jovem de acordo com sua evolução dentro da Pulse Mais. Essa classificação pode apoiar filtros e indicadores relacionados a jovens conectados, capacitados e transformados.
-
-O campo `perfil_socioeconomico` foi incluído para registrar uma característica relevante do público atendido pela organização. Como a Pulse Mais atua com jovens de baixa renda, esse dado ajuda a manter coerência entre a base de dados e o perfil institucional da ONG.
-
-O campo `curso` foi adicionado como uma forma simples de registrar o curso ou programa principal associado ao aluno. Embora futuramente cursos possam ser representados em uma tabela própria, nesta sprint optou-se por manter o campo diretamente em `aluno` para preservar a simplicidade da implementação.
-
-O campo `origem_participacao` permite identificar por qual ação o jovem entrou na base da Pulse Mais, como palestra, vivência em empresa, curso de curta duração, Programa Pulse Mais, Programa de Mentoria ou Rede de Talentos.
-
----
-
-##### Tabela `atividade`
-
-A tabela `atividade` representa ações realizadas pela Pulse Mais, como aulas, mentorias, eventos, workshops e avaliações. Na versão anterior, a tabela possuía campos como título, tipo, descrição e data.
-
-Foram adicionados os campos `modalidade` e `carga_horaria`.
-
-O campo `modalidade` permite indicar se a atividade foi realizada de forma presencial, online ou híbrida. Isso melhora a descrição operacional das atividades e pode apoiar futuras análises sobre formatos de participação.
-
-O campo `carga_horaria` registra a duração da atividade em horas. Esse dado é importante para mensurar o volume de formação oferecido aos alunos e pode ser utilizado futuramente em relatórios de impacto ou acompanhamento de cursos.
-
----
-
-##### Tabela `participacao`
-
-A tabela `participacao` funciona como uma tabela associativa entre `aluno` e `atividade`, registrando a relação entre um jovem e uma atividade específica. Ela já armazenava dados como data da participação, status de participação, nota, aluno e atividade vinculados.
-
-Foi adicionado o campo `certificado`.
-
-Esse campo foi inserido nessa tabela porque a certificação depende da relação entre um aluno e uma atividade específica. Ou seja, uma atividade pode oferecer certificado, mas nem todos os alunos necessariamente receberão esse certificado. Por isso, o atributo foi posicionado em `participacao`, e não diretamente em `aluno` ou `atividade`.
-
----
-
-##### Tabela `oportunidade`
-
-A tabela `oportunidade` armazena oportunidades disponibilizadas pela equipe da Pulse Mais, como vagas, bolsas, cursos, eventos ou outras possibilidades de desenvolvimento profissional e educacional.
-
-Foi adicionado o campo `prazo_inscricao`.
-
-Esse atributo permite registrar a data limite para inscrição em uma oportunidade. A inclusão desse campo torna a tabela mais útil para o gerenciamento de oportunidades, pois permite diferenciar oportunidades abertas, próximas do vencimento ou já encerradas.
-
----
-
-##### Tabela `agenda`
-
-A tabela `agenda` registra compromissos vinculados a alunos e membros da equipe. Na versão anterior, ela continha a data do compromisso, mas não permitia especificar horário.
-
-Foram adicionados os campos `hora_inicio` e `hora_fim`.
-
-Esses atributos tornam o registro de agenda mais completo, pois permitem indicar o intervalo de tempo previsto para reuniões, mentorias, atendimentos, conversas de acompanhamento ou eventos. Com isso, a agenda deixa de registrar apenas o dia do compromisso e passa a registrar também sua duração temporal.
-
----
-
-#### Tabelas não alteradas
-
-As demais tabelas do modelo físico foram mantidas sem alteração nesta sprint:
-
-- `notificacao`;
-- `membro_equipe`;
-- `psicologo`;
-- `label`;
-- `historico_psicologico`.
-
-Essas tabelas já atendiam ao escopo atual da modelagem e, por isso, não receberam novos atributos neste momento. A decisão de não alterá-las contribui para manter o modelo físico mais simples e evitar expansão desnecessária do escopo.
-
----
-
-#### Script SQL aplicado no Supabase
-
-As alterações no modelo físico foram implementadas por meio do seguinte script SQL:
-
-```sql
-ALTER TABLE public.aluno
-ADD COLUMN IF NOT EXISTS nivel_jornada VARCHAR(50),
-ADD COLUMN IF NOT EXISTS perfil_socioeconomico VARCHAR(150),
-ADD COLUMN IF NOT EXISTS curso VARCHAR(150),
-ADD COLUMN IF NOT EXISTS origem_participacao VARCHAR(100);
-
-ALTER TABLE public.atividade
-ADD COLUMN IF NOT EXISTS modalidade VARCHAR(50),
-ADD COLUMN IF NOT EXISTS carga_horaria INTEGER;
-
-ALTER TABLE public.participacao
-ADD COLUMN IF NOT EXISTS certificado BOOLEAN DEFAULT FALSE;
-
-ALTER TABLE public.oportunidade
-ADD COLUMN IF NOT EXISTS prazo_inscricao DATE;
-
-ALTER TABLE public.agenda
-ADD COLUMN IF NOT EXISTS hora_inicio TIME,
-ADD COLUMN IF NOT EXISTS hora_fim TIME;
-```
-
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
 <div align = "justify">
@@ -2738,7 +2279,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#1 | ---
+\#1 | Enviar notificação de "Alerta: Cuidado com Faltas" para o aluno que possui ID 123 e possuem percentual de falta entre 10% e 15%
 --- | ---
 **Expressão SQL** | `INSERT INTO notificacoes (tipo, id_aluno) SELECT 'Alerta: Cuidado com Faltas', id_aluno FROM participacao WHERE id_aluno = 123 GROUP BY id_aluno HAVING (SUM(CASE WHEN participacao = FALSE THEN 1 ELSE 0 END) * 1.0 / COUNT(*)) BETWEEN 0.10 AND 0.15;`
 **Proposições lógicas** | $A$: A taxa de faltas do aluno é maior ou igual a 10% <br> $B$: A taxa de faltas do aluno é menor ou igual a 15% <br> $C$: O aluno recebe a notificação 'Alerta: Cuidado com Faltas'
@@ -2747,7 +2288,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#2 | ---
+\#2 | Selecionar alunos que possuem idade igual a 17, 18 ou 19
 --- | ---
 **Expressão SQL** | `SELECT * FROM alunos WHERE idade IN (17, 18, 19);`
 **Proposições lógicas** | $A$: A idade do aluno é 17 (idade = 17) <br> $B$: A idade do aluno é 18 (idade = 18) <br> $C$: A idade do aluno é 19 (idade = 19)
@@ -2756,7 +2297,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#3 | ---
+\#3 | Selecionar alunos que tem status de participação "Ativo" e curso como "Sistemas de Informação"
 --- | ---
 **Expressão SQL** | `SELECT * FROM alunos WHERE status = 'Ativo' AND NOT curso = 'Sistemas de Informação';`
 **Proposições lógicas** | $A$: O status do aluno é 'Ativo' (status = 'Ativo') <br> $B$: O curso do aluno é 'Sistemas de Informação' (curso = 'Sistemas de Informação')
@@ -2765,25 +2306,15 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#4 | ---
+\#4 | Apagar label do aluno que possui ID 123 e label "Inativo"
 --- | ---
 **Expressão SQL** | `DELETE FROM label_aluno WHERE id_aluno = 123 AND label = 'Inativo';`
 **Proposições lógicas** | $A$: O ID do aluno é 123 (id\_aluno = 123) <br> $B$: O label é 'Inativo' (label = 'Inativo')
 **Expressão lógica proposicional** | $A \land B$
 **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td></tr></tbody></table>
 
----
 
-\#5 | ---
---- | ---
-**Expressão SQL** | `SELECT * FROM alunos WHERE escolaridade = 'Ensino Superior' AND ocupacao = 'Estagiário';`
-**Proposições lógicas** | $A$: A escolaridade é 'Ensino Superior' (escolaridade = 'Ensino Superior') <br> $B$: A ocupação é 'Estagiário' (ocupacao = 'Estagiário')
-**Expressão lógica proposicional** | $A \land B$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td></tr></tbody></table>
-
----
-
-\#6 | ---
+\#5 | Inserir informações no histórico psicológico
 --- | ---
 **Expressão SQL** | `INSERT INTO historico_psicologico (id_aluno, observacao) VALUES (123, 'Aluno demonstra ótima evolução e engajamento.');`
 **Proposições lógicas** | $A$: O ID do aluno é 123 (id\_aluno = 123) <br> $B$: A observação é válida e não nula <br> $C$: O registro é inserido no histórico psicológico
@@ -2792,7 +2323,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#7 | ---
+\#6 | Apagar data na agenda que esteja com data ou ID em branco
 --- | ---
 **Expressão SQL** | `DELETE FROM agenda WHERE data IS NULL OR id_agenda IS NULL;`
 **Proposições lógicas** | $A$: A data é nula (data IS NULL) <br> $B$: O ID da agenda é nulo (id\_agenda IS NULL)
@@ -2801,7 +2332,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#8 | ---
+\#7 | Selecionar todos os alunos que possuem nome "João"
 --- | ---
 **Expressão SQL** | `SELECT * FROM alunos WHERE nome LIKE 'João%';`
 **Proposições lógicas** | $A$: O nome do aluno começa com 'João' (nome LIKE 'João%')
@@ -2810,7 +2341,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#9 | ---
+\#8 | Atualizar ocupação do aluno que possui ID 123 para "Desenvolvedor Júnior"
 --- | ---
 **Expressão SQL** | `UPDATE ocupacao_aluno SET ocupacao_aluno = 'Desenvolvedor Júnior' WHERE id_aluno = 123;`
 **Proposições lógicas** | $A$: O ID do aluno é 123 — condição WHERE (id\_aluno = 123) <br> $B$: A ocupação é atualizada para 'Desenvolvedor Júnior' — efeito do SET
@@ -2818,9 +2349,6 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \to B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td></tr></tbody></table>
 
 </div>
-
-
-_Dica: edite a tabela verdade fora do markdown, para ter melhor controle_
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
@@ -2851,7 +2379,7 @@ _Descreva o controle de sessão baseado em `session id` persistido em tabela pr�
 
 ### 3.8.3. Autorização
 
-_Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend - o frontend nunca é fonte de verdade para autorização._
+_Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização._
 
 ### 3.8.4. Estratégias de Resiliência
 
@@ -2859,7 +2387,7 @@ _Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, re
 
 ## 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
 
-_A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia - mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais._
+_A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais._
 
 | Persona | RF    | RN   | Endpoint    | Tela     | Teste | Evidência                          |
 | ------- | ----- | ---- | ----------- | -------- | ----- | ---------------------------------- |
@@ -2890,120 +2418,100 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 
 ## 4.1. Primeira versão da aplicação web (sprint 3)
 
-_Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
-| Equipe Pulse Mais | RF001 | RN001, RN002 | `/api/alunos` | Cadastro | A definir | Registro retornado pela API |
-| Equipe Pulse Mais | RF003 | - | `/api/alunos`, `/api/alunos/:id` | Busca / Perfil do aluno | A definir | Lista e detalhe retornados pela API |
-| Equipe Pulse Mais | RF004 | RN004, RN010 | `/api/alunos/:id`, `/api/jornada/resumo` | Perfil do aluno | A definir | Histórico parcial exibido no perfil |
-| Psicólogo | RF009 | RN012, RN017 | `/api/prontuarios` | Prontuário | A definir | Listagem restrita de prontuários |
-| Gestora | RF012 | RN006, RN009 | `/api/impacto/resumo`, `/api/jornada/resumo` | Dashboard | A definir | KPIs exibidos no dashboard |
-| Gestora | RF013 | RN008, RN009 | `/api/impacto/resumo` | Dashboard | A definir | Indicador de empregabilidade |
-| Gestora | RF015 | RN007, RN009 | `/api/jornada/resumo` | Dashboard | A definir | Alertas e sinais de risco |
-| Gestora | RF016 | RN009 | `/api/impacto/resumo` | Dashboard | A definir | Indicador de ensino superior |
-| Equipe Pulse Mais | RF019 | - | `/api/comunicacao` | Comunicação | A definir | Comunicação cadastrada e listada |
-| Todos os usuários | RF020 | RN018 | Não implementado | Agenda | A definir | Visualização de agenda por perfil |
-| Gestora | RF021 | RN019 | Não implementado | Agenda | A definir | Item de agenda criado, editado ou cancelado |
-| Psicólogo | RF022 | RN020, RN017 | Não implementado | Perfil do aluno monitorado | A definir | Desempenho acadêmico exibido apenas para alunos monitorados |
+### Novas implementações
 
-# <a name="c4"></a>4. Desenvolvimento da Aplicação Web
+**Back-end**
 
-## 4.1. Primeira versão da aplicação web (sprint 3)
+O back-end foi estruturado em camadas (routes → controllers → services → repositories → models), com os seguintes módulos ativos e registrados na aplicação:
 
-## 4.1. Relatório de Desenvolvimento
+| Módulo | Endpoints |
+|--------|-----------|
+| Alunos | `GET /alunos`, `POST /alunos`, `GET /alunos/:id`, `PATCH /alunos/:id`, `DELETE /alunos/:id` |
+| Segmentação | `GET /alunos/segmentacao` |
+| Dashboard | `GET /impacto/resumo`, `GET /jornada/resumo`, `GET /impacto/alunos-empregados`, `GET /impacto/conclusao-programas`, `GET /impacto/acesso-ensino-superior`, `GET /jornada/evasao-risco` |
+| Jornada | `GET /jornada/alunos/:id`, `POST /frequencias`, `POST /participacoes`, `PATCH /empregabilidade/:id`, `PATCH /ensino-superior/:id`, `POST /anotacoes-qualitativas` |
+| Saúde mental | `GET /prontuarios`, `POST /prontuarios`, `GET /labels`, `POST /labels` |
+| Agenda | `GET /agenda`, `POST /agenda`, `PATCH /agenda/:id`, `DELETE /agenda/:id` |
+| Comunicação | `GET /comunicacao`, `POST /comunicacao`, `GET /comunicacao/oportunidades`, `POST /comunicacao/oportunidades` |
+| Portal do aluno | `GET /portal/alunos/:id`, `PATCH /portal/alunos/:id/contato`, `GET /portal/alunos/:id/notificacoes`, `GET /portal/oportunidades` |
+| Psicólogo | `GET /psicologo/alunos/:id/desempenho` (com controle de permissão por perfil) |
 
-Nesta sprint, o grupo desenvolveu a primeira versão funcional do sistema web da Pulse Mais, com foco na consolidação da base técnica da aplicação. O trabalho envolveu a evolução do front-end, a estruturação do back-end, a integração com o banco de dados, a organização dos endpoints da WebAPI, a atualização da modelagem de dados e o refinamento da documentação técnica no WAD.
+Os endpoints de jornada, saúde mental, portal e psicólogo aplicam o `authMiddleware`, que lê os headers `x-user-id`, `x-user-role` e `x-user-name` e os anexa ao objeto de requisição — não há validação de token nesta versão. Foram implementados testes de integração para 10 módulos: alunos, código PM, dashboard, jornada, agenda, notificações, portal do aluno, saúde mental e segmentação.
 
-O objetivo principal foi transformar os artefatos planejados nas sprints anteriores em uma primeira versão navegável, documentada e tecnicamente coerente do sistema. Para isso, foram trabalhadas tanto as telas de alta fidelidade quanto os componentes internos do back-end, buscando manter alinhamento entre requisitos funcionais, regras de negócio, banco de dados, endpoints, diagramas e documentação.
+**Protótipos de Alta Fidelidade**
 
----
+Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os fluxos principais dos três perfis (gestora, psicóloga e aluno):
 
-### 4.1.1. Visão geral da primeira versão do sistema web
+<div align="center">
+<sup>Figura: Tela de login — perfil gestora.</sup><br>
+<img src="./assets/Login-Gestor.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
 
-A primeira versão do sistema web foi construída considerando os principais fluxos de uso da plataforma Pulse Mais. Entre eles, destacam-se o acesso ao sistema, a visualização de dashboard, a consulta de alunos, o acompanhamento da jornada, a organização de agenda, o envio de notificações, a segmentação de alunos e o acompanhamento psicossocial.
+<br>
 
-A aplicação foi estruturada em duas frentes principais:
+<div align="center">
+<sup>Figura: Dashboard — visão da gestora.</sup><br>
+<img src="./assets/prototipo-2a.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
 
-* **Front-end**, responsável pela interface visual, organização das telas e experiência de navegação;
-* **Back-end**, responsável pela lógica da aplicação, endpoints, comunicação com o banco de dados e organização das regras de negócio.
+<br>
 
-Além disso, a sprint também contemplou a atualização de artefatos de apoio, como o Guia de Estilos, o Protótipo de Alta Fidelidade, a Modelagem de Dados, o Diagrama de Classes, a documentação da WebAPI e a rastreabilidade entre requisitos e implementação.
+<div align="center">
+<sup>Figura: Listagem de alunos — perfil gestora.</sup><br>
+<img src="./assets/Lista-de-Alunos-Gestor.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
 
----
+<br>
 
-### 4.1.2. O que foi implementado
+<div align="center">
+<sup>Figura: Listagem de alunos — perfil psicóloga.</sup><br>
+<img src="./assets/Lista-de-Alunos-Psicologo.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
 
-Nesta sprint, foi implementada a primeira versão funcional do back-end com WebAPI operante. A estrutura do projeto foi organizada em camadas, contemplando rotas, controllers, services, repositories, models, middlewares e camada de banco de dados. Essa organização permitiu separar responsabilidades e facilitar a manutenção da aplicação.
+<br>
 
-No back-end, foram estruturados módulos relacionados a alunos, agenda, participação, notificações, dashboard, saúde mental, segmentação, portal do aluno, autenticação, jornada, frequência, empregabilidade, ensino superior e importação de dados. Esses módulos representam os principais fluxos previstos para o sistema e foram organizados de forma a sustentar os requisitos funcionais priorizados na sprint.
+<div align="center">
+<sup>Figura: Perfil do aluno — visão do aluno.</sup><br>
+<img src="./assets/Perfil-do-aluno-Aluno.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
 
-Também foram implementados endpoints para permitir a consulta, criação e atualização de dados. Esses endpoints foram documentados na WebAPI, com indicação de método HTTP, rota, parâmetros, corpo da requisição, resposta esperada e relação com os requisitos funcionais. A documentação da API foi pensada como um artefato técnico de apoio ao desenvolvimento, e não como uma interface final para o usuário.
+**Modelagem de dados**
 
-
-No front-end, foram evoluídas telas de alta fidelidade relacionadas aos principais fluxos do sistema. Foram consideradas telas como login, dashboard, listagem de alunos, perfil do aluno, agenda, notificações, saúde mental, segmentação e portal do aluno. Essas telas foram desenvolvidas com base no Guia de Estilos, garantindo maior consistência visual entre cores, tipografia, ícones, espaçamento e componentes.
-
-
-Na modelagem de dados, foram atualizados o MER, o DER e o modelo físico. A principal intenção foi alinhar o banco de dados às necessidades identificadas durante o desenvolvimento. Foram adicionados campos que permitem representar melhor a jornada dos alunos, como `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`. Também foram adicionados campos em outras entidades, como `modalidade` e `carga_horaria` em atividades, `certificado` em participação, `prazo_inscricao` em oportunidades e `hora_inicio` e `hora_fim` em agenda. Essas alterações melhoram a capacidade do sistema de registrar dados relevantes para acompanhamento, segmentação, dashboard e análise da trajetória dos alunos.
-
-Também foi reestruturado o Diagrama de Classes. A versão anterior estava mais próxima de uma arquitetura em camadas, enquanto a versão revisada passou a seguir melhor a lógica UML, utilizando os estereótipos `<<boundary>>`, `<<control>>` e `<<entity>>`. Para melhorar a leitura, o diagrama foi dividido em uma visão geral e em recortes por fluxo funcional, como autenticação e portal do aluno, acompanhamento do aluno, comunicação e acompanhamento psicossocial, e gestão, segmentação e resultados.
-
-Além disso, foram desenvolvidas consultas SQL com apoio de lógica proposicional e tabelas-verdade. Essa parte teve como objetivo demonstrar a relação entre condições SQL compostas e expressões lógicas, considerando conectivos como `AND`, `OR`, `NOT`, `LIKE` e `IN`.
-
-
----
-
-### 4.1.3. O que não foi concluído
-
-Apesar dos avanços, algumas partes do sistema ainda não foram concluídas integralmente. A primeira versão funcional do sistema já apresenta uma base importante de back-end, front-end, modelagem e documentação, mas ainda existem pontos que precisam de refinamento nas próximas sprints.
-
-A integração completa entre todas as telas do front-end e todos os endpoints do back-end ainda não foi finalizada. Algumas telas representam o fluxo esperado do usuário, mas ainda precisam consumir dados reais da API em todos os seus componentes. Em alguns casos, as telas ainda funcionam como representação visual de alta fidelidade, sem integração completa com dados dinâmicos.
-
-A documentação da WebAPI também precisa de uma revisão final para garantir que todos os endpoints declarados estejam, de fato, implementados, acessíveis e respondendo conforme o formato descrito. Essa etapa é importante para evitar divergências entre documentação e código.
-
-A matriz de rastreabilidade entre requisitos funcionais, regras de negócio, endpoints, entidades e tabelas foi atualizada, mas ainda demanda uma revisão de consistência. Como o projeto evoluiu em várias frentes ao mesmo tempo, é necessário conferir se todos os requisitos priorizados estão corretamente conectados aos endpoints e artefatos correspondentes.
-
-Também ainda não foi finalizada uma bateria completa de testes integrados envolvendo front-end, back-end e banco de dados. Foram estruturados testes e validações em partes do sistema, mas ainda é necessário ampliar a cobertura para garantir que os principais fluxos funcionem de ponta a ponta.
-
-Por fim, algumas áreas do sistema, como empregabilidade, ensino superior, jornada e importação de dados, ainda devem passar por validação funcional mais detalhada, principalmente para confirmar se os fluxos implementados atendem plenamente às regras de negócio previstas.
+O MER, o DER e o modelo físico foram atualizados para refletir as necessidades identificadas no desenvolvimento. Foram adicionados campos como `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao` em alunos; `modalidade` e `carga_horaria` em atividades; `certificado` em participação; `prazo_inscricao` em oportunidades; e `hora_inicio`/`hora_fim` em agenda.
 
 ---
 
-### 4.1.4. Dificuldades técnicas enfrentadas
+### Pendentes de conclusão
 
-Uma das principais dificuldades enfrentadas foi manter a coerência entre todos os artefatos do projeto. Durante a sprint, o grupo precisou atualizar código constantemente,além do banco de dados, endpoints, diagramas, protótipo, guia de estilos, documentação da API e seções do WAD. Como esses elementos estão diretamente relacionados, qualquer alteração em uma parte exigia revisão das demais.
 
-A modelagem de dados também exigiu bastante atenção. Foi necessário diferenciar corretamente atributos próprios de uma entidade e atributos que pertencem a um relacionamento. Um exemplo importante foi a entidade `participacao`, que representa o vínculo entre aluno e atividade. Informações como nota, certificado e status de participação não deveriam ficar diretamente em aluno ou atividade, mas sim na participação, pois dependem da relação entre os dois.
-
-Outra dificuldade relevante foi a reestruturação do Diagrama de Classes. Inicialmente, o grupo havia desenvolvido uma representação mais próxima da arquitetura técnica em camadas, com controller, service, repository e model. A partir do feedback docente, foi necessário reorganizar o artefato para seguir a lógica UML com classes de fronteira, controle e entidade. Essa mudança exigiu repensar a estrutura visual, os nomes das classes e a divisão do diagrama em recortes menores.
-
-Também houve desafios relacionados à organização do back-end. Como o projeto possui vários módulos, foi necessário garantir que os controllers, services, repositories e models estivessem coerentes entre si e com os requisitos funcionais. O grupo também precisou tomar cuidado para não documentar métodos, endpoints ou relações que não estivessem efetivamente previstos ou implementados.
-
-Outro ponto de dificuldade foi a integração com o banco de dados. A atualização do modelo físico exigiu atenção à criação de campos, tipos de dados, chaves estrangeiras, consistência entre tabelas e atualização das migrations. Além disso, foi necessário garantir que o banco refletisse corretamente o DER e o MER atualizados.
-
-A parte de SQL com lógica proposicional também exigiu cuidado, pois não bastava apresentar consultas SQL. Era necessário traduzir as condições das consultas para expressões lógicas, identificar corretamente os conectivos e construir tabelas-verdade coerentes em cada situação.
+- **Importação de dados:** `importacaoRoutes.ts` é placeholder; a funcionalidade de importação em lote não foi desenvolvida.
+- **Rotas de participação e anotação qualitativa independentes:** `participacaoRoutes.ts` e `anotacaoQualitativaRoutes.ts` são placeholders (os endpoints equivalentes foram incorporados em `jornadaRoutes`).
+- **Integração front-end <-> back-end:** as 12 telas ainda não consomem dados reais da API; a camada de serviços do front-end (`api.ts`) precisa ser conectada a cada página.
+- **Psicólogo fora do roteador principal:** `psicologoRoutes` não está registrado em `index.ts`, tornando o endpoint de desempenho inacessível em runtime.
 
 ---
 
-### 4.1.5. Próximos passos
+### Dificuldades técnicas enfrentadas
 
-Como próximos passos, o grupo deve priorizar a integração completa entre front-end e back-end. As telas de alta fidelidade devem passar a consumir dados reais da WebAPI, reduzindo o uso de dados estáticos e aproximando o sistema da experiência final esperada.
-
-Também será necessário revisar todos os endpoints implementados, garantindo que estejam acessíveis, documentados e relacionados corretamente aos requisitos funcionais. A documentação da WebAPI deve ser conferida em conjunto com o código para assegurar que não existam endpoints descritos de forma incorreta ou incompleta.
-
-Outro passo importante é ampliar os testes do sistema. A equipe deve validar os principais fluxos de ponta a ponta, incluindo login, consulta de alunos, atualização de dados, agenda, participação em atividades, notificações, dashboard e segmentação. Essa validação deve envolver back-end, banco de dados e, quando possível, a interface do usuário.
-
-A matriz de rastreabilidade também deve ser revisada. O objetivo é garantir que cada requisito funcional esteja relacionado às regras de negócio, endpoints, entidades, tabelas e artefatos correspondentes. Essa revisão ajudará a manter a consistência geral do WAD.
-
-Além disso, os requisitos não funcionais devem continuar sendo evoluídos: segurança, desempenho, manutenibilidade, confiabilidade e integridade dos dados precisam ser conectados a decisões técnicas concretas, como uso de middlewares, tratamento de erros, validações, organização em camadas e controle de acesso.
-
-Por fim, a equipe deve continuar atualizando a modelagem de dados sempre que houver evolução da implementação. Novos campos, relações ou tabelas precisam ser refletidos no MER, DER, modelo físico, migrations e documentação do WAD, evitando divergências entre o sistema implementado e os artefatos técnicos. Feedbacks recebidos em Sprint Reviews também serão considerados e implementados sempre que necessário.
+- **Coerência entre artefatos simultâneos:** qualquer alteração no banco exigia atualização em cascata no MER, DER, migrations, services, documentação da WebAPI e WAD, o que gerou retrabalho frequente ao longo da sprint.
+- **Modelagem da entidade `participacao`:** foi necessário compreender que atributos como nota, certificado e status de participação pertencem ao relacionamento aluno–atividade, e não às entidades isoladas, o que exigiu revisão do modelo físico e das migrations já criadas.
+- **Reestruturação do Diagrama de Classes:** o diagrama inicial refletia a arquitetura técnica em camadas (controller/service/repository); após feedback docente, foi necessário reescrevê-lo em notação UML com estereótipos `<<boundary>>`, `<<control>>` e `<<entity>>`.
+- **Conflitos de merge:** com múltiplos membros atuando em branches paralelas sobre os mesmos arquivos (`wad.md`, `migration.sql`, `index.ts`), os conflitos de merge demandaram tempo considerável de resolução manual.
 
 ---
 
-### 4.1.6. Síntese da sprint
+### Próximos passos
 
-De modo geral, a sprint 03 representou um avanço importante na construção da primeira versão do sistema web Pulse Manager. O grupo conseguiu estruturar uma base funcional de back-end, evoluir o front-end em alta fidelidade com  Figma, atualizar a modelagem de dados, reorganizar os diagramas técnicos, documentar a WebAPI e iniciar a consolidação da rastreabilidade entre requisitos e implementação.
-
-Ainda existem pontos a serem refinados, especialmente na integração completa entre front-end e back-end, na validação dos endpoints, na revisão da documentação e na ampliação dos testes. Mesmo assim, a sprint estabeleceu uma base técnica mais sólida para a continuidade do projeto, permitindo que as próximas etapas se concentrem na estabilização, integração e validação dos fluxos principais do sistema.
-
+- Implementar autenticação (login e validação de credenciais) e registrar `authRoutes` e `psicologoRoutes` no roteador principal.
+- Conectar as telas do front-end aos endpoints da API, eliminando dados estáticos e validando os fluxos de ponta a ponta para os três perfis.
+- Desenvolver as rotas de importação de dados e validar os módulos de frequência, participação e anotação qualitativa com testes de integração.
+- Ampliar a cobertura de testes para garantir que os fluxos principais (login, cadastro de aluno, dashboard, agenda, saúde mental) funcionem end-to-end.
+- Revisar a Matriz de Rastreabilidade (RTM) para eliminar os campos "A definir" na coluna de testes, associando cada RF a evidência concreta de teste.
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 
@@ -3019,8 +2527,8 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 _Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:_
 
-- **_White-box_** _- testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação)._
-- **_Black-box_** _- testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna._
+- **_White-box_** _— testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação)._
+- **_Black-box_** _— testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna._
 
 _Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown)._
 
@@ -3112,6 +2620,3 @@ SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia M
 # <a name="c9"></a>Anexos
 
 _Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
-
-
-
