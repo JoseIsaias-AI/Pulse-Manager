@@ -2442,6 +2442,8 @@ Os endpoints de jornada, saúde mental, portal e psicólogo aplicam o `authMiddl
 
 Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os fluxos principais dos três perfis (gestora, psicóloga e aluno):
 
+Protótipo desenvolvido para os três perfis:
+
 <div align="center">
 <sup>Figura: Tela de login — perfil gestora.</sup><br>
 <img src="./assets/Login-Gestor.png"><br>
