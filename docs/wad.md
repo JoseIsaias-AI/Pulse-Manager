@@ -781,7 +781,7 @@ _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 
 
 
-<<div align="center">
+<div align="center">
     <img src="assets/Camadas.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -893,7 +893,7 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 
 <div align="center">
 <sup>Figura 4: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-1.png"><br>
+<img src="./assets/diagrama-sequencia-1.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -907,7 +907,7 @@ O fluxo começa quando o membro da equipe preenche o formulário de cadastro na 
 
 <div align="center">
 <sup>Figura 5: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-2.png"><br>
+<img src="./assets/diagrama-sequencia-2.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -921,7 +921,7 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 
 <div align="center">
 <sup>Figura 6: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-3.png"><br>
+<img src="./assets/diagrama-sequencia-3.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -935,7 +935,7 @@ O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e 
 
 <div align="center">
 <sup>Figura 7: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-4.png"><br>
+<img src="./assets/diagrama-sequencia-4.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -949,7 +949,7 @@ A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como 
 
 <div align="center">
 <sup>Figura 8: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-5.png"><br>
+<img src="./assets/diagrama-sequencia-5.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -2366,7 +2366,100 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 
 ## 4.1. Primeira versão da aplicação web (sprint 3)
 
-_Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
+### Novas implementações
+
+**Back-end**
+
+O back-end foi estruturado em camadas (routes → controllers → services → repositories → models), com os seguintes módulos ativos e registrados na aplicação:
+
+| Módulo | Endpoints |
+|--------|-----------|
+| Alunos | `GET /alunos`, `POST /alunos`, `GET /alunos/:id`, `PATCH /alunos/:id`, `DELETE /alunos/:id` |
+| Segmentação | `GET /alunos/segmentacao` |
+| Dashboard | `GET /impacto/resumo`, `GET /jornada/resumo`, `GET /impacto/alunos-empregados`, `GET /impacto/conclusao-programas`, `GET /impacto/acesso-ensino-superior`, `GET /jornada/evasao-risco` |
+| Jornada | `GET /jornada/alunos/:id`, `POST /frequencias`, `POST /participacoes`, `PATCH /empregabilidade/:id`, `PATCH /ensino-superior/:id`, `POST /anotacoes-qualitativas` |
+| Saúde mental | `GET /prontuarios`, `POST /prontuarios`, `GET /labels`, `POST /labels` |
+| Agenda | `GET /agenda`, `POST /agenda`, `PATCH /agenda/:id`, `DELETE /agenda/:id` |
+| Comunicação | `GET /comunicacao`, `POST /comunicacao`, `GET /comunicacao/oportunidades`, `POST /comunicacao/oportunidades` |
+| Portal do aluno | `GET /portal/alunos/:id`, `PATCH /portal/alunos/:id/contato`, `GET /portal/alunos/:id/notificacoes`, `GET /portal/oportunidades` |
+| Psicólogo | `GET /psicologo/alunos/:id/desempenho` (com controle de permissão por perfil) |
+
+Os endpoints de jornada, saúde mental, portal e psicólogo aplicam o `authMiddleware`, que lê os headers `x-user-id`, `x-user-role` e `x-user-name` e os anexa ao objeto de requisição — não há validação de token nesta versão. Foram implementados testes de integração para 10 módulos: alunos, código PM, dashboard, jornada, agenda, notificações, portal do aluno, saúde mental e segmentação.
+
+**Protótipos de Alta Fidelidade**
+
+Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os fluxos principais dos três perfis (gestora, psicóloga e aluno):
+
+<div align="center">
+<sup>Figura: Tela de login — perfil gestora.</sup><br>
+<img src="./assets/Login-Gestor.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+<div align="center">
+<sup>Figura: Dashboard — visão da gestora.</sup><br>
+<img src="./assets/prototipo-2a.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+<div align="center">
+<sup>Figura: Listagem de alunos — perfil gestora.</sup><br>
+<img src="./assets/Lista-de-Alunos-Gestor.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+<div align="center">
+<sup>Figura: Listagem de alunos — perfil psicóloga.</sup><br>
+<img src="./assets/Lista-de-Alunos-Psicologo.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+<div align="center">
+<sup>Figura: Perfil do aluno — visão do aluno.</sup><br>
+<img src="./assets/Perfil-do-aluno-Aluno.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+**Modelagem de dados**
+
+O MER, o DER e o modelo físico foram atualizados para refletir as necessidades identificadas no desenvolvimento. Foram adicionados campos como `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao` em alunos; `modalidade` e `carga_horaria` em atividades; `certificado` em participação; `prazo_inscricao` em oportunidades; e `hora_inicio`/`hora_fim` em agenda.
+
+---
+
+### Pendentes de conclusão
+
+
+- **Importação de dados:** `importacaoRoutes.ts` é placeholder; a funcionalidade de importação em lote não foi desenvolvida.
+- **Rotas de participação e anotação qualitativa independentes:** `participacaoRoutes.ts` e `anotacaoQualitativaRoutes.ts` são placeholders (os endpoints equivalentes foram incorporados em `jornadaRoutes`).
+- **Integração front-end ↔ back-end:** as 12 telas ainda não consomem dados reais da API; a camada de serviços do front-end (`api.ts`) precisa ser conectada a cada página.
+- **Psicólogo fora do roteador principal:** `psicologoRoutes` não está registrado em `index.ts`, tornando o endpoint de desempenho inacessível em runtime.
+
+---
+
+### Dificuldades técnicas enfrentadas
+
+- **Coerência entre artefatos simultâneos:** qualquer alteração no banco exigia atualização em cascata no MER, DER, migrations, services, documentação da WebAPI e WAD, o que gerou retrabalho frequente ao longo da sprint.
+- **Modelagem da entidade `participacao`:** foi necessário compreender que atributos como nota, certificado e status de participação pertencem ao relacionamento aluno–atividade, e não às entidades isoladas, o que exigiu revisão do modelo físico e das migrations já criadas.
+- **Reestruturação do Diagrama de Classes:** o diagrama inicial refletia a arquitetura técnica em camadas (controller/service/repository); após feedback docente, foi necessário reescrevê-lo em notação UML com estereótipos `<<boundary>>`, `<<control>>` e `<<entity>>`.
+- **Conflitos de merge:** com múltiplos membros atuando em branches paralelas sobre os mesmos arquivos (`wad.md`, `migration.sql`, `index.ts`), os conflitos de merge demandaram tempo considerável de resolução manual.
+
+---
+
+### Próximos passos
+
+- Implementar autenticação (login e validação de credenciais) e registrar `authRoutes` e `psicologoRoutes` no roteador principal.
+- Conectar as telas do front-end aos endpoints da API, eliminando dados estáticos e validando os fluxos de ponta a ponta para os três perfis.
+- Desenvolver as rotas de importação de dados e validar os módulos de frequência, participação e anotação qualitativa com testes de integração.
+- Ampliar a cobertura de testes para garantir que os fluxos principais (login, cadastro de aluno, dashboard, agenda, saúde mental) funcionem end-to-end.
+- Revisar a Matriz de Rastreabilidade (RTM) para eliminar os campos "A definir" na coluna de testes, associando cada RF a evidência concreta de teste.
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 
