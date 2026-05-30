@@ -2227,7 +2227,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#1 | ---
+\#1 | Enviar notificação de "Alerta: Cuidado com Faltas" para o aluno que possui ID 123 e possuem percentual de falta entre 10% e 15%
 --- | ---
 **Expressão SQL** | `INSERT INTO notificacoes (tipo, id_aluno) SELECT 'Alerta: Cuidado com Faltas', id_aluno FROM participacao WHERE id_aluno = 123 GROUP BY id_aluno HAVING (SUM(CASE WHEN participacao = FALSE THEN 1 ELSE 0 END) * 1.0 / COUNT(*)) BETWEEN 0.10 AND 0.15;`
 **Proposições lógicas** | $A$: A taxa de faltas do aluno é maior ou igual a 10% <br> $B$: A taxa de faltas do aluno é menor ou igual a 15% <br> $C$: O aluno recebe a notificação 'Alerta: Cuidado com Faltas'
@@ -2236,7 +2236,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#2 | ---
+\#2 | Selecionar alunos que possuem idade igual a 17, 18 ou 19
 --- | ---
 **Expressão SQL** | `SELECT * FROM alunos WHERE idade IN (17, 18, 19);`
 **Proposições lógicas** | $A$: A idade do aluno é 17 (idade = 17) <br> $B$: A idade do aluno é 18 (idade = 18) <br> $C$: A idade do aluno é 19 (idade = 19)
@@ -2245,7 +2245,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#3 | ---
+\#3 | Selecionar alunos que tem status de participação "Ativo" e curso como "Sistemas de Informação"
 --- | ---
 **Expressão SQL** | `SELECT * FROM alunos WHERE status = 'Ativo' AND NOT curso = 'Sistemas de Informação';`
 **Proposições lógicas** | $A$: O status do aluno é 'Ativo' (status = 'Ativo') <br> $B$: O curso do aluno é 'Sistemas de Informação' (curso = 'Sistemas de Informação')
@@ -2254,25 +2254,15 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#4 | ---
+\#4 | Apagar label do aluno que possui ID 123 e label "Inativo"
 --- | ---
 **Expressão SQL** | `DELETE FROM label_aluno WHERE id_aluno = 123 AND label = 'Inativo';`
 **Proposições lógicas** | $A$: O ID do aluno é 123 (id\_aluno = 123) <br> $B$: O label é 'Inativo' (label = 'Inativo')
 **Expressão lógica proposicional** | $A \land B$
 **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td></tr></tbody></table>
 
----
 
-\#5 | ---
---- | ---
-**Expressão SQL** | `SELECT * FROM alunos WHERE escolaridade = 'Ensino Superior' AND ocupacao = 'Estagiário';`
-**Proposições lógicas** | $A$: A escolaridade é 'Ensino Superior' (escolaridade = 'Ensino Superior') <br> $B$: A ocupação é 'Estagiário' (ocupacao = 'Estagiário')
-**Expressão lógica proposicional** | $A \land B$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td></tr></tbody></table>
-
----
-
-\#6 | ---
+\#5 | Inserir informações no histórico psicológico
 --- | ---
 **Expressão SQL** | `INSERT INTO historico_psicologico (id_aluno, observacao) VALUES (123, 'Aluno demonstra ótima evolução e engajamento.');`
 **Proposições lógicas** | $A$: O ID do aluno é 123 (id\_aluno = 123) <br> $B$: A observação é válida e não nula <br> $C$: O registro é inserido no histórico psicológico
@@ -2281,7 +2271,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#7 | ---
+\#6 | Apagar data na agenda que esteja com data ou ID em branco
 --- | ---
 **Expressão SQL** | `DELETE FROM agenda WHERE data IS NULL OR id_agenda IS NULL;`
 **Proposições lógicas** | $A$: A data é nula (data IS NULL) <br> $B$: O ID da agenda é nulo (id\_agenda IS NULL)
@@ -2290,7 +2280,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#8 | ---
+\#7 | Selecionar todos os alunos que possuem nome "João"
 --- | ---
 **Expressão SQL** | `SELECT * FROM alunos WHERE nome LIKE 'João%';`
 **Proposições lógicas** | $A$: O nome do aluno começa com 'João' (nome LIKE 'João%')
@@ -2299,7 +2289,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#9 | ---
+\#8 | Atualizar ocupação do aluno que possui ID 123 para "Desenvolvedor Júnior"
 --- | ---
 **Expressão SQL** | `UPDATE ocupacao_aluno SET ocupacao_aluno = 'Desenvolvedor Júnior' WHERE id_aluno = 123;`
 **Proposições lógicas** | $A$: O ID do aluno é 123 — condição WHERE (id\_aluno = 123) <br> $B$: A ocupação é atualizada para 'Desenvolvedor Júnior' — efeito do SET
@@ -2307,9 +2297,6 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \to B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td></tr></tbody></table>
 
 </div>
-
-
-_Dica: edite a tabela verdade fora do markdown, para ter melhor controle_
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
