@@ -1388,7 +1388,7 @@ Esta tela está associada às User Stories US06 e US07, de acordo com os critér
 ### Dashboard apresentado ao Psicólogo
 
 <div align="center">
-<img src="./assets/Prototipo8.png"><br>
+<img src="./assets/ProtótipoF.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
