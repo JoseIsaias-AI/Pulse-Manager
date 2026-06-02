@@ -4,9 +4,9 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only backend/server.ts",
-    "migrate": "ts-node backend/src/database/migrate.ts",
-    "seed": "ts-node backend/src/database/seed.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "migrate": "ts-node src/backend/database/migrate.ts",
+    "seed": "ts-node src/backend/database/seed.ts",
     "test": "jest --runInBand",
     "build": "tsc",
     "start": "node dist/backend/server.js"

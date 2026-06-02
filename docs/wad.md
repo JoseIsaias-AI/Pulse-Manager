@@ -893,7 +893,7 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 
 <div align="center">
 <sup>Figura 4: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-1.png"><br>
+<img src="./assets/diagrama-sequencia-1.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -907,7 +907,7 @@ O fluxo começa quando o membro da equipe preenche o formulário de cadastro na 
 
 <div align="center">
 <sup>Figura 5: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-2.png"><br>
+<img src="./assets/diagrama-sequencia-2.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -921,7 +921,7 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 
 <div align="center">
 <sup>Figura 6: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-3.png"><br>
+<img src="./assets/diagrama-sequencia-3.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -935,7 +935,7 @@ O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e 
 
 <div align="center">
 <sup>Figura 7: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-4.png"><br>
+<img src="./assets/diagrama-sequencia-4.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -949,7 +949,7 @@ A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como 
 
 <div align="center">
 <sup>Figura 8: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-5.png"><br>
+<img src="./assets/diagrama-sequencia-5.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -969,7 +969,59 @@ _Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comun
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
-_Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto._
+<div align="justify">
+
+Um padrão de projeto é uma solução já testada e documentada para resolver um problema recorrente em projetos distintos. A adoção de padrões proporciona benefícios como aumento de produtividade, redução de complexidade, facilidade de manutenção e reaproveitamento de código. O backend do sistema Pulse Mais foi desenvolvido em TypeScript com Express, TypeORM e PostgreSQL via Supabase, e aplica os padrões descritos a seguir, cada um adotado com base em uma necessidade real do projeto.
+
+</div>
+
+#### MVC (Model-View-Controller)
+
+<div align="justify">
+
+O padrão MVC separa o projeto em três camadas independentes: Model, View e Controller. Essa separação reduz o acoplamento entre as classes e aumenta a coesão, fazendo com que cada parte do sistema tenha um único propósito bem definido. No Pulse Mais, a camada Model reúne as entidades do domínio como Aluno, Participacao e HistoricoPsicologico. A camada Controller atua como intermediária entre as requisições HTTP e a camada de negócio, sem conter lógica de processamento. As Routes mapeiam os endpoints aos controllers correspondentes. Esse padrão foi adotado para que os módulos de alunos, jornada, dashboard e saúde mental possam ser desenvolvidos e evoluídos de forma independente ao longo das cinco sprints.
+
+</div>
+
+#### DAO (Data Access Object) via TypeORM e Pool Nativo
+
+<div align="justify">
+
+O padrão DAO separa as classes de acesso a banco de dados das classes responsáveis pelas regras de negócio. No Pulse Mais, isso é feito por dois mecanismos paralelos: o arquivo connection.ts usa o TypeORM com mapeamento objeto-relacional via decorators para operações estruturadas, e o pool.ts usa o driver pg nativo com Pool de conexões para queries SQL diretas. Ambos se conectam ao PostgreSQL hospedado no Supabase. O controle de acesso por perfil fica centralizado em permissions.ts, onde se define que apenas o psicólogo acessa registros de saúde mental e apenas o gestor pode modificar a agenda, por exemplo.
+
+</div>
+
+#### Service Layer
+
+<div align="justify">
+
+A camada de Services concentra todas as regras de negócio da aplicação. Os controllers recebem a requisição e delegam integralmente o processamento para o service correspondente, instanciado via injeção no construtor. Regras críticas como a geração do código PM-AAAA-NNN, a validação de risco de evasão e o controle de acesso aos prontuários ficam centralizadas nos services, podendo ser testadas de forma isolada sem depender da camada HTTP.
+
+</div>
+
+#### Middleware Chain
+
+<div align="justify">
+
+O encadeamento de middlewares intercepta as requisições antes que cheguem aos controllers, centralizando responsabilidades transversais. O authMiddleware extrai os dados do usuário dos headers HTTP. O permissionMiddleware controla o acesso por perfil. O errorMiddleware centraliza o tratamento de exceções, respondendo com o status HTTP correto para cada tipo de erro. Esse padrão evita que lógica de verificação de perfil fique duplicada dentro de cada controller.
+
+</div>
+
+#### Error Object Hierarchy
+
+<div align="justify">
+
+Uma hierarquia de classes de erro foi implementada em errors.ts, com AppError como classe base e subclasses especializadas: PayloadValidationError para erros de validação de entrada com HTTP 400, BusinessRuleError para violações de regra de negócio com HTTP 422, NotFoundError para recursos não encontrados com HTTP 404 e ConflictError para conflitos de dados com HTTP 409. Todos os controllers seguem o mesmo contrato de tratamento, garantindo respostas semânticas e consistentes em toda a API.
+
+</div>
+
+#### Utility Module
+
+<div align="justify">
+
+Funções utilitárias reutilizáveis foram isoladas em módulos dedicados dentro de src/utils: validators.ts para validação e sanitização de parâmetros, errors.ts para a hierarquia de erros, response.ts para o envelope padronizado de respostas e date.ts para validação e formatação de datas ISO. Essa separação garante que a mesma lógica seja reutilizada de forma consistente em todos os controllers sem duplicação de código.
+
+</div>
 
 ## 3.3. Wireframes (sprint 2)
 
@@ -1296,6 +1348,19 @@ Esta tela está associada às User Stories US01, US03 e US04, de acordo com os c
 O protótipo apresenta a tela de perfil individual do aluno na visão do gestor, estruturada para centralizar o gerenciamento de dados cadastrais e o acompanhamento do estudante por meio de uma interface organizada em abas. Mantendo a navegação lateral fixa para acesso às páginas do sistema e ao contexto da turma, além do cabeçalho global com busca e notificações, o núcleo da tela destaca um cartão principal com as informações básicas do aluno, incluindo avatar com indicador de status online, nome, e-mail institucional, curso e turma, acompanhados por tags de situação cadastral e botões de ação rápida para edição de dados e envio de notificações. Logo abaixo, um menu de navegação por abas horizontais permite alternar entre diferentes categorias de acompanhamento, como dados gerais, jornada, empregabilidade, ensino superior e observações, onde a aba ativa revela um formulário com campos de leitura e escrita dispostos em colunas que agrupam informações como nome completo, curso, categoria de bolsa, emprego atual, telefone e endereço, além de campos de dados sensíveis, como e-mail, CPF e data de nascimento, que contam com um ícone de cadeado indicando restrição de segurança ou campos bloqueados para edição direta.
 </div>
 
+### Dashboard apresentado ao Gestor
+
+<div align="center">
+<img src="./assets/prototipo3A.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align="justify">
+O protótipo apresenta o painel principal do gestor na plataforma Pulse Manager, projetado para consolidar indicadores de desempenho e o acompanhamento de uma turma específica em uma interface centralizada e de leitura imediata. Na lateral esquerda, há um menu de navegação persistente com acesso às seções Início, Alunos, Dashboard e Agenda, integrado a um bloco de contexto que exibe informações estáticas sobre o grupo monitorado, como turma ativa, módulo atual e total de alunos. O cabeçalho superior traz ferramentas globais como barra de busca, notificações e perfil do usuário.
+O corpo principal da página destaca-se por quatro cartões de métricas no topo que resumem os principais indicadores da turma: alunos ativos, evasão, empregabilidade e engajamento médio, cada um com variação percentual em relação ao período anterior e codificação de cor por criticidade. Abaixo, a interface se divide em duas áreas de análise: um gráfico de colunas agrupadas que mapeia a distribuição dos alunos por curso com legendas de status (em andamento, concluído, em atraso), e um gráfico de barras horizontais segmentado que cruza o engajamento por tipo de dispositivo, desktop versus mobile, por área de conhecimento. Encerrando a tela, um funil de impacto em camadas ilustra a progressão da turma pelos estágios Conectados, Capacitados e Transformados, com percentuais de retenção, conversão e evasão destacados lateralmente.
+</div>
+
+
 ### Tela de Agenda do Gestor
 
 <div align="center">
@@ -1334,6 +1399,31 @@ A tela de perfil do aluno exibe todas as informações cadastrais do estudante e
 Esta tela está associada às User Stories US01, US04 e US05, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza todos os dados do aluno em um único lugar, permitindo à gestora e ao psicólogo acessar o perfil completo do estudante com agilidade e tomar as ações necessárias diretamente pela plataforma.
 </div>
 
+### Dashboard apresentado ao Aluno
+
+<div align="center">
+<img src="./assets/prototipo3B.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align = "justify">
+O protótipo apresenta o painel individual do aluno na plataforma, concebido para oferecer uma visão personalizada do próprio progresso acadêmico ao longo do programa. A estrutura de navegação lateral mantém a consistência visual do sistema, exibindo além do menu principal um bloco de acesso rápido com informações contextuais sobre a turma ativa, o próximo encontro e o próximo evento agendado. O cabeçalho repete o padrão global com busca, notificações e perfil.
+Os quatro cartões de métricas no topo sintetizam os dados mais relevantes para o acompanhamento pessoal: frequência acumulada, módulos concluídos, nota média e prazo da próxima entrega — este último com identificação direta da atividade pendente. A seção central divide-se em dois painéis analíticos: à esquerda, um gráfico de colunas exibe o índice de presença por bimestre com marcações visuais de atenção e referência à meta estabelecida, acompanhado de um resumo textual com média geral e comparativo em relação ao objetivo; à direita, um gráfico de linhas com área sombreada mostra a evolução da nota média e da frequência módulo a módulo ao longo do semestre, permitindo ao aluno identificar tendências de melhora ou queda no próprio desempenho.
+</div>
+
+### Tela Inicial do Aluno
+
+<div align="center">
+<img src="./assets/prototipo2B.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub><br>
+</div>
+
+<div align ="justify">
+O protótipo apresenta o painel de acompanhamento socioemocional da plataforma, voltado exclusivamente para o profissional de psicologia responsável pela turma. A barra lateral mantém a identidade visual do sistema e exibe um bloco de acesso rápido com dados operacionais críticos: turma ativa, horário da próxima sessão e quantidade de flags abertas que demandam atenção imediata. O cabeçalho global repete os elementos padrão de busca e notificações.
+Os quatro cartões de métricas superiores apresentam os indicadores centrais do trabalho clínico: alunos acompanhados, casos em atenção, sessões realizadas na semana e notificações enviadas, todos com variação recente em destaque. O corpo da tela divide-se em dois blocos complementares: à esquerda, uma lista paginada de alertas de atenção classifica os alunos por nível de criticidade — crítico, atenção ou observação — com nome, motivo do alerta e um botão de ação direta para notificação, permitindo ao psicólogo agir sem sair da tela; à direita, um gráfico de área sobreposta acompanha a evolução semanal do bem-estar geral da turma, dos casos em atenção e das sessões realizadas, seguido por uma agenda cronológica do dia com horário, nome do aluno, tipo de sessão e modalidade de atendimento.
+</div>
+
+
 ### Lista de Alunos apresentada ao Psicólogo
 
 <div align="center">
@@ -1350,13 +1440,18 @@ Esta tela está associada às User Stories US06 e US07, de acordo com os critér
 ### Dashboard apresentado ao Psicólogo
 
 <div align="center">
-<img src="./assets/Prototipo8.png"><br>
+<img src="./assets/ProtótipoF.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
 <div align="justify">
 Dashboard de saúde mental. Exibe 4 KPIs no topo (humor médio, check-ins semanais, flags ativas e sessões realizadas), dois gráficos centrais — um de barras com bem-estar por módulo/turma e um de barras horizontais com engajamento por faixa de humor, além de um resumo semanal e acesso rápido à turma e próxima sessão na sidebar esquerda.
+
+Para ter uma visão dos flows desenvolvidos para cada um dos segmentos (aluno, gestor e psicólogo), segue em anexo o link para a plataforma de desenvolvimento dos protótipos de alta fidelidade e sua linha de segmentação interativa.
+
+Link: https://www.figma.com/proto/txJwOwELjVHZt3YVdrjuo0/PulseMais---Prot%C3%B3tipos-de-Alta-Fidelidade?node-id=99-2&p=f&viewport=117%2C-854%2C0.36&t=CdCHM4sZQqs1BBos-1&scaling=contain&content-scaling=fixed&starting-point-node-id=212%3A2&show-proto-sidebar=1&page-id=0%3A1
 </div>
+
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
@@ -2184,7 +2279,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#1 | ---
+\#1 | Enviar notificação de "Alerta: Cuidado com Faltas" para o aluno que possui ID 123 e possuem percentual de falta entre 10% e 15%
 --- | ---
 **Expressão SQL** | `INSERT INTO notificacoes (tipo, id_aluno) SELECT 'Alerta: Cuidado com Faltas', id_aluno FROM participacao WHERE id_aluno = 123 GROUP BY id_aluno HAVING (SUM(CASE WHEN participacao = FALSE THEN 1 ELSE 0 END) * 1.0 / COUNT(*)) BETWEEN 0.10 AND 0.15;`
 **Proposições lógicas** | $A$: A taxa de faltas do aluno é maior ou igual a 10% <br> $B$: A taxa de faltas do aluno é menor ou igual a 15% <br> $C$: O aluno recebe a notificação 'Alerta: Cuidado com Faltas'
@@ -2193,7 +2288,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#2 | ---
+\#2 | Selecionar alunos que possuem idade igual a 17, 18 ou 19
 --- | ---
 **Expressão SQL** | `SELECT * FROM alunos WHERE idade IN (17, 18, 19);`
 **Proposições lógicas** | $A$: A idade do aluno é 17 (idade = 17) <br> $B$: A idade do aluno é 18 (idade = 18) <br> $C$: A idade do aluno é 19 (idade = 19)
@@ -2202,7 +2297,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#3 | ---
+\#3 | Selecionar alunos que tem status de participação "Ativo" e curso como "Sistemas de Informação"
 --- | ---
 **Expressão SQL** | `SELECT * FROM alunos WHERE status = 'Ativo' AND NOT curso = 'Sistemas de Informação';`
 **Proposições lógicas** | $A$: O status do aluno é 'Ativo' (status = 'Ativo') <br> $B$: O curso do aluno é 'Sistemas de Informação' (curso = 'Sistemas de Informação')
@@ -2211,25 +2306,15 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#4 | ---
+\#4 | Apagar label do aluno que possui ID 123 e label "Inativo"
 --- | ---
 **Expressão SQL** | `DELETE FROM label_aluno WHERE id_aluno = 123 AND label = 'Inativo';`
 **Proposições lógicas** | $A$: O ID do aluno é 123 (id\_aluno = 123) <br> $B$: O label é 'Inativo' (label = 'Inativo')
 **Expressão lógica proposicional** | $A \land B$
 **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td></tr></tbody></table>
 
----
 
-\#5 | ---
---- | ---
-**Expressão SQL** | `SELECT * FROM alunos WHERE escolaridade = 'Ensino Superior' AND ocupacao = 'Estagiário';`
-**Proposições lógicas** | $A$: A escolaridade é 'Ensino Superior' (escolaridade = 'Ensino Superior') <br> $B$: A ocupação é 'Estagiário' (ocupacao = 'Estagiário')
-**Expressão lógica proposicional** | $A \land B$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td></tr></tbody></table>
-
----
-
-\#6 | ---
+\#5 | Inserir informações no histórico psicológico
 --- | ---
 **Expressão SQL** | `INSERT INTO historico_psicologico (id_aluno, observacao) VALUES (123, 'Aluno demonstra ótima evolução e engajamento.');`
 **Proposições lógicas** | $A$: O ID do aluno é 123 (id\_aluno = 123) <br> $B$: A observação é válida e não nula <br> $C$: O registro é inserido no histórico psicológico
@@ -2238,7 +2323,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#7 | ---
+\#6 | Apagar data na agenda que esteja com data ou ID em branco
 --- | ---
 **Expressão SQL** | `DELETE FROM agenda WHERE data IS NULL OR id_agenda IS NULL;`
 **Proposições lógicas** | $A$: A data é nula (data IS NULL) <br> $B$: O ID da agenda é nulo (id\_agenda IS NULL)
@@ -2247,7 +2332,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#8 | ---
+\#7 | Selecionar todos os alunos que possuem nome "João"
 --- | ---
 **Expressão SQL** | `SELECT * FROM alunos WHERE nome LIKE 'João%';`
 **Proposições lógicas** | $A$: O nome do aluno começa com 'João' (nome LIKE 'João%')
@@ -2256,7 +2341,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#9 | ---
+\#8 | Atualizar ocupação do aluno que possui ID 123 para "Desenvolvedor Júnior"
 --- | ---
 **Expressão SQL** | `UPDATE ocupacao_aluno SET ocupacao_aluno = 'Desenvolvedor Júnior' WHERE id_aluno = 123;`
 **Proposições lógicas** | $A$: O ID do aluno é 123 — condição WHERE (id\_aluno = 123) <br> $B$: A ocupação é atualizada para 'Desenvolvedor Júnior' — efeito do SET
@@ -2264,9 +2349,6 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \to B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td></tr></tbody></table>
 
 </div>
-
-
-_Dica: edite a tabela verdade fora do markdown, para ter melhor controle_
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
@@ -2336,7 +2418,100 @@ _A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida
 
 ## 4.1. Primeira versão da aplicação web (sprint 3)
 
-_Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
+### Novas implementações
+
+**Back-end**
+
+O back-end foi estruturado em camadas (routes → controllers → services → repositories → models), com os seguintes módulos ativos e registrados na aplicação:
+
+| Módulo | Endpoints |
+|--------|-----------|
+| Alunos | `GET /alunos`, `POST /alunos`, `GET /alunos/:id`, `PATCH /alunos/:id`, `DELETE /alunos/:id` |
+| Segmentação | `GET /alunos/segmentacao` |
+| Dashboard | `GET /impacto/resumo`, `GET /jornada/resumo`, `GET /impacto/alunos-empregados`, `GET /impacto/conclusao-programas`, `GET /impacto/acesso-ensino-superior`, `GET /jornada/evasao-risco` |
+| Jornada | `GET /jornada/alunos/:id`, `POST /frequencias`, `POST /participacoes`, `PATCH /empregabilidade/:id`, `PATCH /ensino-superior/:id`, `POST /anotacoes-qualitativas` |
+| Saúde mental | `GET /prontuarios`, `POST /prontuarios`, `GET /labels`, `POST /labels` |
+| Agenda | `GET /agenda`, `POST /agenda`, `PATCH /agenda/:id`, `DELETE /agenda/:id` |
+| Comunicação | `GET /comunicacao`, `POST /comunicacao`, `GET /comunicacao/oportunidades`, `POST /comunicacao/oportunidades` |
+| Portal do aluno | `GET /portal/alunos/:id`, `PATCH /portal/alunos/:id/contato`, `GET /portal/alunos/:id/notificacoes`, `GET /portal/oportunidades` |
+| Psicólogo | `GET /psicologo/alunos/:id/desempenho` (com controle de permissão por perfil) |
+
+Os endpoints de jornada, saúde mental, portal e psicólogo aplicam o `authMiddleware`, que lê os headers `x-user-id`, `x-user-role` e `x-user-name` e os anexa ao objeto de requisição — não há validação de token nesta versão. Foram implementados testes de integração para 10 módulos: alunos, código PM, dashboard, jornada, agenda, notificações, portal do aluno, saúde mental e segmentação.
+
+**Protótipos de Alta Fidelidade**
+
+Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os fluxos principais dos três perfis (gestora, psicóloga e aluno):
+
+<div align="center">
+<sup>Figura: Tela de login — perfil gestora.</sup><br>
+<img src="./assets/Login-Gestor.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+<div align="center">
+<sup>Figura: Dashboard — visão da gestora.</sup><br>
+<img src="./assets/prototipo-2a.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+<div align="center">
+<sup>Figura: Listagem de alunos — perfil gestora.</sup><br>
+<img src="./assets/Lista-de-Alunos-Gestor.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+<div align="center">
+<sup>Figura: Listagem de alunos — perfil psicóloga.</sup><br>
+<img src="./assets/Lista-de-Alunos-Psicologo.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+<div align="center">
+<sup>Figura: Perfil do aluno — visão do aluno.</sup><br>
+<img src="./assets/Perfil-do-aluno-Aluno.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+**Modelagem de dados**
+
+O MER, o DER e o modelo físico foram atualizados para refletir as necessidades identificadas no desenvolvimento. Foram adicionados campos como `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao` em alunos; `modalidade` e `carga_horaria` em atividades; `certificado` em participação; `prazo_inscricao` em oportunidades; e `hora_inicio`/`hora_fim` em agenda.
+
+---
+
+### Pendentes de conclusão
+
+
+- **Importação de dados:** `importacaoRoutes.ts` é placeholder; a funcionalidade de importação em lote não foi desenvolvida.
+- **Rotas de participação e anotação qualitativa independentes:** `participacaoRoutes.ts` e `anotacaoQualitativaRoutes.ts` são placeholders (os endpoints equivalentes foram incorporados em `jornadaRoutes`).
+- **Integração front-end <-> back-end:** as 12 telas ainda não consomem dados reais da API; a camada de serviços do front-end (`api.ts`) precisa ser conectada a cada página.
+- **Psicólogo fora do roteador principal:** `psicologoRoutes` não está registrado em `index.ts`, tornando o endpoint de desempenho inacessível em runtime.
+
+---
+
+### Dificuldades técnicas enfrentadas
+
+- **Coerência entre artefatos simultâneos:** qualquer alteração no banco exigia atualização em cascata no MER, DER, migrations, services, documentação da WebAPI e WAD, o que gerou retrabalho frequente ao longo da sprint.
+- **Modelagem da entidade `participacao`:** foi necessário compreender que atributos como nota, certificado e status de participação pertencem ao relacionamento aluno–atividade, e não às entidades isoladas, o que exigiu revisão do modelo físico e das migrations já criadas.
+- **Reestruturação do Diagrama de Classes:** o diagrama inicial refletia a arquitetura técnica em camadas (controller/service/repository); após feedback docente, foi necessário reescrevê-lo em notação UML com estereótipos `<<boundary>>`, `<<control>>` e `<<entity>>`.
+- **Conflitos de merge:** com múltiplos membros atuando em branches paralelas sobre os mesmos arquivos (`wad.md`, `migration.sql`, `index.ts`), os conflitos de merge demandaram tempo considerável de resolução manual.
+
+---
+
+### Próximos passos
+
+- Implementar autenticação (login e validação de credenciais) e registrar `authRoutes` e `psicologoRoutes` no roteador principal.
+- Conectar as telas do front-end aos endpoints da API, eliminando dados estáticos e validando os fluxos de ponta a ponta para os três perfis.
+- Desenvolver as rotas de importação de dados e validar os módulos de frequência, participação e anotação qualitativa com testes de integração.
+- Ampliar a cobertura de testes para garantir que os fluxos principais (login, cadastro de aluno, dashboard, agenda, saúde mental) funcionem end-to-end.
+- Revisar a Matriz de Rastreabilidade (RTM) para eliminar os campos "A definir" na coluna de testes, associando cada RF a evidência concreta de teste.
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 

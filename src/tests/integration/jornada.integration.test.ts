@@ -1,11 +1,11 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
-import { app } from '../../src/app';
-import { AppDataSource, initializeDatabase } from '../../src/database/connection';
-import { Aluno } from '../../src/models/alunoModel';
-import { Atividade } from '../../src/models/atividadeModel';
-import { Participacao } from '../../src/models/participacaoModel';
-import { AnotacaoQualitativa } from '../../src/models/anotacaoQualitativaModel';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { Aluno } from '../../backend/models/alunoModel';
+import { Atividade } from '../../backend/models/atividadeModel';
+import { Participacao } from '../../backend/models/participacaoModel';
+import { AnotacaoQualitativa } from '../../backend/models/anotacaoQualitativaModel';
 
 describe('UC-07 a UC-12 - Jornada do aluno', () => {
   let alunoRepository: Repository<Aluno>;
