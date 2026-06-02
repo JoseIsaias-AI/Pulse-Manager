@@ -1351,7 +1351,7 @@ O protótipo apresenta a tela de perfil individual do aluno na visão do gestor,
 ### Dashboard apresentado ao Gestor
 
 <div align="center">
-<img src="./assets/prototipo3A.png"><br>
+<img src="./assets/dashboardGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1402,7 +1402,7 @@ Esta tela está associada às User Stories US01, US04 e US05, de acordo com os c
 ### Dashboard apresentado ao Aluno
 
 <div align="center">
-<img src="./assets/prototipo3B.png"><br>
+<img src="./assets/dashboardAluno.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1414,7 +1414,7 @@ Os quatro cartões de métricas no topo sintetizam os dados mais relevantes para
 ### Tela Inicial do Aluno
 
 <div align="center">
-<img src="./assets/prototipo2B.png"><br>
+<img src="./assets/inicioPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1440,7 +1440,7 @@ Esta tela está associada às User Stories US06 e US07, de acordo com os critér
 ### Dashboard apresentado ao Psicólogo
 
 <div align="center">
-<img src="./assets/ProtótipoF.png"><br>
+<img src="./assets/dashboardPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -2442,9 +2442,11 @@ Os endpoints de jornada, saúde mental, portal e psicólogo aplicam o `authMiddl
 
 Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os fluxos principais dos três perfis (gestora, psicóloga e aluno):
 
+Protótipo desenvolvido para os três perfis:
+
 <div align="center">
 <sup>Figura: Tela de login — perfil gestora.</sup><br>
-<img src="./assets/Login-Gestor.png"><br>
+<img src="./assets/loginGeral.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -2452,7 +2454,7 @@ Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os flux
 
 <div align="center">
 <sup>Figura: Dashboard — visão da gestora.</sup><br>
-<img src="./assets/prototipo-2a.png"><br>
+<img src="./assets/inicioGestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -2460,7 +2462,7 @@ Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os flux
 
 <div align="center">
 <sup>Figura: Listagem de alunos — perfil gestora.</sup><br>
-<img src="./assets/Lista-de-Alunos-Gestor.png"><br>
+<img src="./assets/listaAlunosGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -2468,7 +2470,7 @@ Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os flux
 
 <div align="center">
 <sup>Figura: Listagem de alunos — perfil psicóloga.</sup><br>
-<img src="./assets/Lista-de-Alunos-Psicologo.png"><br>
+<img src="./assets/listaAlunosPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -2476,7 +2478,7 @@ Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os flux
 
 <div align="center">
 <sup>Figura: Perfil do aluno — visão do aluno.</sup><br>
-<img src="./assets/Perfil-do-aluno-Aluno.png"><br>
+<img src="./assets/perfilAlunoAl.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
