@@ -852,7 +852,6 @@ O usuário, no navegador, dispara um `POST /frequencia` a partir de `frontend/js
 
 <div align="center">
 <sup>Figura 8: Diagrama Casos de Uso.</sup><br>
-<img src="./assets/diagrama_uc.png"><br>
 <img src="./assets/diagrama-casos-de-uso.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
