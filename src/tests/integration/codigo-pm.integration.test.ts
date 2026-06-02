@@ -1,0 +1,102 @@
+import request from 'supertest';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+
+describe('UC-05 - RN001: Geração de código PM-AAAA-NNN com sequencial anual', () => {
+  beforeAll(async () => {
+    await initializeDatabase();
+  });
+
+  beforeEach(async () => {
+    await AppDataSource.synchronize(true);
+  });
+
+  afterAll(async () => {
+    if (AppDataSource.isInitialized) {
+      await AppDataSource.destroy();
+    }
+  });
+
+  it('CT01 - primeiro aluno do ano deve receber sequencial 001', async () => {
+    const response = await request(app).post('/api/alunos').send({
+      nome: 'Alice Primeiro',
+      email: 'alice.primeiro@pulsemais.org',
+      dataIngresso: '2026-01-10',
+      programa: 'Jornada',
+      categoria: 'conectado',
+      riscoEvasao: 'baixo'
+    });
+
+    expect(response.status).toBe(201);
+    expect(response.body.data.codigoPm).toBe('PM-2026-001');
+  });
+
+  it('CT02 - segundo aluno do mesmo ano deve receber sequencial 002', async () => {
+    await request(app).post('/api/alunos').send({
+      nome: 'Alice Primeiro',
+      email: 'alice.primeiro@pulsemais.org',
+      dataIngresso: '2026-03-01',
+      programa: 'Jornada',
+      categoria: 'conectado',
+      riscoEvasao: 'baixo'
+    });
+
+    const response = await request(app).post('/api/alunos').send({
+      nome: 'Bruno Segundo',
+      email: 'bruno.segundo@pulsemais.org',
+      dataIngresso: '2026-05-15',
+      programa: 'Mentoria',
+      categoria: 'capacitado',
+      riscoEvasao: 'medio'
+    });
+
+    expect(response.status).toBe(201);
+    expect(response.body.data.codigoPm).toBe('PM-2026-002');
+  });
+
+  it('CT03 - primeiro aluno de ano diferente deve reiniciar sequencial em 001', async () => {
+    await request(app).post('/api/alunos').send({
+      nome: 'Alice 2026',
+      email: 'alice.2026@pulsemais.org',
+      dataIngresso: '2026-06-01',
+      programa: 'Jornada',
+      categoria: 'conectado',
+      riscoEvasao: 'baixo'
+    });
+
+    await request(app).post('/api/alunos').send({
+      nome: 'Bruno 2026',
+      email: 'bruno.2026@pulsemais.org',
+      dataIngresso: '2026-08-01',
+      programa: 'Mentoria',
+      categoria: 'capacitado',
+      riscoEvasao: 'medio'
+    });
+
+    const response = await request(app).post('/api/alunos').send({
+      nome: 'Carlos 2027',
+      email: 'carlos.2027@pulsemais.org',
+      dataIngresso: '2027-01-15',
+      programa: 'Jornada',
+      categoria: 'conectado',
+      riscoEvasao: 'baixo'
+    });
+
+    expect(response.status).toBe(201);
+    expect(response.body.data.codigoPm).toBe('PM-2027-001');
+  });
+
+  it('CT04 - codigo gerado deve seguir o formato PM-YYYY-NNN', async () => {
+    const response = await request(app).post('/api/alunos').send({
+      nome: 'Formato Teste',
+      email: 'formato.teste@pulsemais.org',
+      dataIngresso: '2025-11-20',
+      programa: 'Jornada',
+      categoria: 'conectado',
+      riscoEvasao: 'baixo'
+    });
+
+    expect(response.status).toBe(201);
+    expect(response.body.data.codigoPm).toMatch(/^PM-\d{4}-\d{3}$/);
+  });
+});
