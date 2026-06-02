@@ -1,4 +1,4 @@
-<img src="./assets/logointeli.png">
+﻿<img src="./assets/logointeli.png">
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
@@ -137,7 +137,7 @@ O sucesso será avaliado pela centralização dos dados, clareza da visualizaç�
 
 <div align="center">
 <sup>Figura 2: Canvas de Proposta de Valor da Pulse Manager.</sup><br>
-<img src="./assets/canvasvalor.png"><br>
+<img src="./assets/canvasValor.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026), com base no Value Proposition Canvas de Strategyzer.</sub><br>
 </div>
 
@@ -210,7 +210,7 @@ A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, class
 
 <div align="center">
 <sup>Figura 4: Matriz de Riscos da Pulse Manager.</sup><br>
-<img src="./assets/imagem.png"><br>
+<img src="./assets/matrizRiscos.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
 
@@ -544,16 +544,16 @@ Personas: A persona é definida como uma descrição realista e detalhada do usu
 
 <div align="center">
 <sup>Figura 5: Persona 01.</sup><br>
-    <img src="assets/personaUm.jpg" width="60%"><br>
+    <img src="assets/persUm.jpg" width="60%"><br>
 
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
 <sup>Figura 6: Persona 02.</sup><br>
-    <img src="assets/personaDois.jpg" width="60%"><br>
+    <img src="assets/persDois.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
 <sup>Figura 7: Persona 03.</sup><br>
-    <img src="assets/personaTres.jpg" width="60%"><br>
+    <img src="assets/persTres.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -782,7 +782,7 @@ _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 
 
 <<div align="center">
-    <img src="assets/Camadas.png" ><br>
+    <img src="assets/diagArquitetura.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -852,8 +852,8 @@ O usuário, no navegador, dispara um `POST /frequencia` a partir de `frontend/js
 
 <div align="center">
 <sup>Figura 8: Diagrama Casos de Uso.</sup><br>
-<img src="./assets/diagrama_uc.png"><br>
-<img src="./assets/diagrama-casos-de-uso.png"><br>
+
+<img src="./assets/diagCasosUso.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -867,7 +867,7 @@ O Diagrama de Classes de Domínio do sistema Pulse Mais estabelece a estrutura c
 
 <div align="center">
 <sup>Figura 3: Diagrama Classes de Domínio.</sup><br>
-<img src="./assets/Diagrama_Classes_Dominio.png"><br>
+<img src="./assets/diagClassesDominio.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -986,7 +986,7 @@ Caso queira acessar os wireframes completos, acesse o link: https://www.canva.co
 
 
 <div align="center">
-    <img src="assets/fluxo_Aluno.png" ><br>
+    <img src="assets/fluxoTelasAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -997,7 +997,7 @@ Neste fluxo, o aluno faz login com CPF e nome, acessa a tela inicial com jornada
 
 
 <div align="center">
-    <img src="assets/Fluxo_gestor.png" ><br>
+    <img src="assets/fluxoTelasGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1007,7 +1007,7 @@ O gestor faz login com e-mail e senha, acessa a tela inicial com visão geral da
 
 
 <div align="center">
-    <img src="assets/fluxo_psicologo.png" ><br>
+    <img src="assets/fluxoTelasPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1018,7 +1018,7 @@ O psicólogo faz login com e-mail, nome e senha, acessa a tela inicial com foco 
 
 
 <div align="center">
-    <img src="assets/Wireframe1A.png" ><br>
+    <img src="assets/wrfLoginGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1027,7 +1027,7 @@ Tela de login do sistema  dividida em dois painéis. O painel esquerdo (cinza) e
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe1B.png" ><br>
+    <img src="assets/wrfLoginAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1036,7 +1036,7 @@ Tela de login para Alunos do PULSE MAIS com layout dividido em dois painéis. O 
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe1C.png" ><br>
+    <img src="assets/wrfLoginPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1045,7 +1045,7 @@ Tela de login exclusiva para psicólogos da plataforma Pulse Mais. Dividida em d
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe2A.png" ><br>
+    <img src="assets/wrfInicialGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1054,7 +1054,7 @@ Tela inicial do gestor no Pulse Manager, com menu lateral contendo Início, Alun
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe2B.png" ><br>
+    <img src="assets/wrfInicialPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1063,7 +1063,7 @@ Tela inicial do psicólogo no Pulse Manager, com menu lateral contendo Início, 
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe3A.png" ><br>
+    <img src="assets/wrfDashboardGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1072,7 +1072,7 @@ Dashboard de performance da turma para o gestor no Pulse Manager. No topo, quatr
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe3B.png" ><br>
+    <img src="assets/wrfDashboardAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1081,7 +1081,7 @@ Dashboard de progresso pessoal do aluno no Pulse Manager. No topo, quatro cards 
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe8.jpg" ><br>
+    <img src="assets/wrfDashboardPsic.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1090,7 +1090,7 @@ A tela de Dashboard do Psicólogo apresenta uma barra de navegação lateral com
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe9.jpg" ><br>
+    <img src="assets/wrfListaAlunosPsic.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1099,7 +1099,7 @@ Tela de listagem de alunos do psicólogo no sistema Pulse Manager, exibindo card
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe10.jpg" ><br>
+    <img src="assets/wrfPerfilAlunoGest.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1108,7 +1108,7 @@ A tela exibe o perfil de um aluno com navegação lateral (Início, Alunos, Dash
 </div>
 
 <div align="center">
-    <img src="assets/wireframe11.jpg" ><br>
+    <img src="assets/wrfInicioAluno.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1117,7 +1117,7 @@ Tela inicial do aluno está dividida em quatro seções: jornada de aprendizado 
 </div>
 
 <div align="center">
-    <img src="assets/wireframe12.jpg" ><br>
+    <img src="assets/wrfAgenda.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1126,7 +1126,7 @@ Wireframe da tela agenda com calendário mensal navegável e botão "+ Evento" �
 </div>
 
 <div align="center">
-    <img src="assets/wireframe13.jpg" ><br>
+    <img src="assets/wrfWireframesGest.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1135,7 +1135,7 @@ Wireframe da tela notificações com uma lista à esquerda filtrada por abas (To
 </div>
 
 <div align="center">
-    <img src="assets/Wireframe14.jpg" ><br>
+    <img src="assets/wrfListaAlunosGest.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1165,7 +1165,7 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 
 <div align="center">
 <sup>Figura X: Azul Pulse - cor principal.</sup><br>
-<img src="./assets/azul-pulse.png" width="500"><br>
+<img src="./assets/azulPulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
 
@@ -1177,7 +1177,7 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 
 <div align="center">
 <sup>Figura X: Verde Pulse - cor secundária.</sup><br>
-<img src="./assets/verde-pulse.png" width="500"><br>
+<img src="./assets/verdePulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
 
@@ -1189,7 +1189,7 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 
 <div align="center">
 <sup>Figura X: Amarelo Pulse - cor de destaque.</sup><br>
-<img src="./assets/amarelo-pulse.png" width="500"><br>
+<img src="./assets/amareloPulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
 
@@ -1231,7 +1231,7 @@ O Pulse Manager adota a biblioteca **Lucide** como sistema de iconografia da pla
 
 <div align="center">
 <sup>Figura X: Grid de ícones representativos da plataforma - Lucide, outline, stroke 2px.</sup><br>
-<img src="./assets/grid-icones.png" width="600"><br>
+<img src="./assets/gridIcones.png" width="600"><br>
 <sub>Fonte: Gerado a partir da biblioteca Lucide (open source). Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
 
@@ -1252,7 +1252,7 @@ Em casos onde a Lucide não oferecer o ícone necessário, as bibliotecas **Phos
 
 <div align="center">
 <sup>Figura X: Tela de Login Geral.</sup><br>
-<img src="./assets/Login-Gestor.png"><br>
+<img src="./assets/loginGeral.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1264,7 +1264,7 @@ Esta tela está associada às User Stories US05, US07, US08 e US09, de acordo co
 ### Tela Inicial do Gestor
 
 <div align="center">
-<img src="./assets/prototipo-2a.png"><br>
+<img src="./assets/inicioGestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1275,7 +1275,7 @@ O protótipo apresenta a tela inicial do painel do gestor na plataforma, projeta
 ### Lista de Alunos apresentada ao Gestor
 
 <div align="center">
-<img src="./assets/Lista-de-Alunos-Gestor.png"><br>
+<img src="./assets/listaAlunosGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1288,7 +1288,7 @@ Esta tela está associada às User Stories US01, US03 e US04, de acordo com os c
 ### Perfil do Aluno apresentado ao Gestor
 
 <div align="center">
-<img src="./assets/prototipo-8.png"><br>
+<img src="./assets/perfilAlunoGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1299,7 +1299,7 @@ O protótipo apresenta a tela de perfil individual do aluno na visão do gestor,
 ### Tela de Agenda do Gestor
 
 <div align="center">
-<img src="./assets/ProtótipoFE.png"><br>
+<img src="./assets/agendaGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1312,7 +1312,7 @@ Esta tela está associada às User Stories US01, US02 e US04, de acordo com os c
 ### Tela Inicial do Aluno
 
 <div align="center">
-<img src="./assets/prototipo-10.png"><br>
+<img src="./assets/inicioAluno.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1324,7 +1324,7 @@ Esta tela está associada às User Stories US08, US09 e US10, de acordo com os c
 ### Tela de Perfil apresentada para o Aluno
 
 <div align="center">
-<img src="./assets/Perfil-do-aluno-Aluno.png"><br>
+<img src="./assets/perfilAlunoAl.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1337,7 +1337,7 @@ Esta tela está associada às User Stories US01, US04 e US05, de acordo com os c
 ### Lista de Alunos apresentada ao Psicólogo
 
 <div align="center">
-<img src="./assets/Lista-de-Alunos-Psicologo.png"><br>
+<img src="./assets/listaAlunosPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1443,7 +1443,7 @@ O DER explicita as entidades do sistema, seus atributos, as respectivas chaves p
 
 <div align="center">
 <sup>Figura 6: Diagrama Entidade-Relacionamento.</sup><br>
-<img src="./assets/diagram.png"><br>
+<img src="./assets/der.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
 
