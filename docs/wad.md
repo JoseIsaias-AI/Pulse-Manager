@@ -822,11 +822,11 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 
 </div>
 
-#### 3.2.4.1. UC-03 — Manter cadastro do aluno
+#### 3.2.4.1. UC-04 - Adicionar cadastro do aluno
 
 <div align="center">
-<sup>Figura 4: Diagrama de sequência do caso de uso Manter cadastro do aluno.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-1.png"><br>
+<sup>Figura 4: Diagrama de sequência do caso de uso Adicionar cadastro do aluno.</sup><br>
+<img src="../docs/assets/diagrama_sequencia_uc04.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -850,11 +850,11 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 
 </div>
 
-#### 3.2.4.3. UC-08 — Registrar participação em atividade
+#### 3.2.4.3. UC-07 — Manter jornada do aluno
 
 <div align="center">
-<sup>Figura 6: Diagrama de sequência do caso de uso Registrar participação em atividade.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-3.png"><br>
+<sup>Figura 6: Diagrama de sequência do caso de uso Manter jornada do aluno.</sup><br>
+<img src="../docs/assets/diagrama_sequencia07.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -864,11 +864,11 @@ O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e 
 
 </div>
 
-#### 3.2.4.4. UC-15 — Visualizar dashboard de impacto
+#### 3.2.4.4. UC-14 — Visualizar dashboard de impacto
 
 <div align="center">
 <sup>Figura 7: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
-<img src="../docs/assets/diagrama-sequencia-4.png"><br>
+<img src="../docs/assets/diagrama_sequencia_uc14.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
