@@ -1,12 +1,12 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
-import { app } from '../app';
-import { AppDataSource, initializeDatabase } from '../database/connection';
-import { Aluno } from '../models/alunoModel';
-import { Atividade } from '../models/atividadeModel';
-import { Participacao } from '../models/participacaoModel';
-import { HistoricoPsicologico } from '../models/SaudeMentalModel';
-import { Psicologo } from '../models/usuarioModel';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { Aluno } from '../../backend/models/alunoModel';
+import { Atividade } from '../../backend/models/atividadeModel';
+import { Participacao } from '../../backend/models/participacaoModel';
+import { HistoricoPsicologico } from '../../backend/models/SaudeMentalModel';
+import { Psicologo } from '../../backend/models/usuarioModel';
 
 describe('UC-23 - Acessar desempenho acadêmico dos alunos (Psicólogo)', () => {
   let alunoRepo: Repository<Aluno>;
@@ -116,7 +116,7 @@ describe('UC-23 - Acessar desempenho acadêmico dos alunos (Psicólogo)', () => 
 
     expect(response.status).toBe(403);
     expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe('Perfil sem permissao para executar esta acao.');
+    expect(response.body.message).toBe('Acesso nao permitido para este perfil.');
   });
 
   it('CT04 - deve retornar 400 para idAluno invalido', async () => {

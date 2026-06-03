@@ -1,9 +1,9 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
-import { app } from '../app';
-import { AppDataSource, initializeDatabase } from '../database/connection';
-import { Aluno } from '../models/alunoModel';
-import { Psicologo } from '../models/usuarioModel';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { Aluno } from '../../backend/models/alunoModel';
+import { Psicologo } from '../../backend/models/usuarioModel';
 
 describe('UC-20 - Saude Mental e Historico Psicologico', () => {
   let alunoRepository: Repository<Aluno>;
