@@ -2557,12 +2557,180 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 ## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
-_Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:_
+Os testes automatizados do backend foram implementados com **Jest**, contemplando duas abordagens complementares:
 
-- **_White-box_** _— testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação)._
-- **_Black-box_** _— testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna._
+- **_White-box_** — testes unitários de Service que exercitam ramos internos, exceções e regras de negócio com conhecimento da implementação.
+- **_Black-box_** — testes de integração dos endpoints via Jest + Supertest, verificando o contrato HTTP, status code, body e efeitos observáveis sem depender da implementação interna.
 
-_Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown)._
+Nesta etapa, além dos testes de integração já existentes, foram criados testes unitários específicos para a camada de `services/`, responsável por concentrar as regras de negócio do backend. Esses testes não acessam banco de dados real, Supabase, PostgreSQL, rotas ou controllers. As dependências externas, como repositories e integrações de auditoria, são simuladas por mocks com `jest.fn()`, garantindo isolamento da regra de negócio.
+
+### 5.1.1. Testes unitários de Service
+
+Os testes unitários de Service foram organizados em `src/tests/unit/services`, seguindo o padrão de nomenclatura `*.service.test.ts`. O objetivo foi validar os principais comportamentos dos services ligados aos endpoints ativos do backend, contemplando cenários de sucesso, erros de validação, regras de negócio, conflitos, registros inexistentes e chamadas corretas aos repositories mockados.
+
+| Service testado | Arquivo de teste | Quantidade de testes | Principais responsabilidades validadas |
+| --- | --- | ---: | --- |
+| `AlunoService` | `src/tests/unit/services/aluno.service.test.ts` | 13 | Cadastro, listagem, busca, atualização, inativação, validação de email, idade, data, duplicidade e risco de evasão. |
+| `SegmentacaoService` | `src/tests/unit/services/segmentacao.service.test.ts` | 9 | Segmentação de alunos, validação de filtros, limite máximo, status, risco de evasão, busca e auditoria. |
+| `DashboardService` | `src/tests/unit/services/dashboard.service.test.ts` | 14 | Cálculo de indicadores de impacto, jornada, evasão, risco, empregabilidade, conclusão, ensino superior, agrupamento por programa e auditoria. |
+| `JornadaService` | `src/tests/unit/services/jornada.service.test.ts` | 23 | Consolidação da jornada, frequência, participação em eventos, empregabilidade, ensino superior e anotações qualitativas. |
+| `AgendaService` | `src/tests/unit/services/agenda.service.test.ts` | 12 | Listagem, criação, atualização e cancelamento de agenda, validação de datas, perfil gestor, tipo de usuário e registros inexistentes. |
+| `NotificacaoService` | `src/tests/unit/services/notificacao.service.test.ts` | 15 | Listagem e criação de notificações, oportunidades, validação de aluno destinatário, tipos, remetente, perfil, datas e campos obrigatórios. |
+| `PortalAlunoService` | `src/tests/unit/services/portal-aluno.service.test.ts` | 13 | Visualização de perfil, atualização de contato, normalização de email/telefone, permissões de notificações e oportunidades do portal. |
+| `SaudeMentalService` | `src/tests/unit/services/saude-mental.service.test.ts` | 11 | Prontuários, labels, restrição ao perfil psicólogo, validação de aluno, tipo de label, título, observação e descrição. |
+| **Total** | **8 arquivos** | **110 testes** | **Cobertura unitária das principais regras de negócio da camada de Service.** |
+
+#### AlunoService
+
+Os testes do `AlunoService` validam o comportamento da camada de negócio responsável pela gestão de alunos. Foram contemplados os seguintes cenários:
+
+- Listagem de alunos com filtros.
+- Cadastro de aluno com payload válido.
+- Normalização de email para letras minúsculas.
+- Rejeição de nome, email, idade e data de ingresso inválidos.
+- Bloqueio de cadastro com email já existente.
+- Busca de perfil de aluno existente.
+- Tratamento de aluno inexistente.
+- Atualização de aluno existente.
+- Rejeição de atualização com dados inválidos.
+- Inativação de aluno existente.
+
+#### SegmentacaoService
+
+Os testes do `SegmentacaoService` validam as regras de filtragem e segmentação de alunos:
+
+- Segmentação com critério válido.
+- Retorno de total, filtros aplicados e lista de alunos.
+- Rejeição de segmentação sem critérios.
+- Validação de limite menor que 1, limite não inteiro e limite maior que 100.
+- Validação de status e risco de evasão.
+- Validação de busca com menos de 3 caracteres.
+- Registro de auditoria da consulta de segmentação.
+
+#### DashboardService
+
+Os testes do `DashboardService` verificam os cálculos usados nos indicadores gerenciais:
+
+- Cálculo do resumo de impacto.
+- Cálculo de percentuais com duas casas decimais.
+- Retorno de percentual zero quando não há alunos.
+- Agrupamento de impacto por programa.
+- Cálculo do resumo de jornada.
+- Identificação de alunos evadidos.
+- Retorno dos indicadores de alunos empregados, conclusão de programas e acesso ao ensino superior.
+- Retorno do resumo de evasão e risco sem o campo `porPrograma`.
+- Validação de filtros de programa, categoria e datas.
+- Registro de auditoria da consulta de dashboard.
+
+#### JornadaService
+
+Os testes do `JornadaService` cobrem a consolidação da jornada do aluno e os registros associados:
+
+- Validação de ID de aluno e tratamento de aluno inexistente.
+- Consolidação dos dados gerais da jornada.
+- Separação de frequências de atividades do tipo aula.
+- Separação de participações de atividades do tipo evento.
+- Mapeamento de anotações qualitativas.
+- Criação e atualização de frequência.
+- Rejeição de frequência para atividade que não seja aula.
+- Validação de nota e data de participação.
+- Registro e bloqueio de duplicidade em participação de evento.
+- Atualização de empregabilidade e ensino superior.
+- Validação de ocupação, renda mensal, escolaridade e data de ingresso no ensino superior.
+- Registro e validação de anotações qualitativas.
+
+#### AgendaService
+
+Os testes do `AgendaService` validam regras de compromisso e agenda:
+
+- Listagem de agenda com filtros.
+- Validação de datas.
+- Rejeição de data final anterior à data inicial.
+- Criação de item de agenda apenas para perfil gestor.
+- Rejeição de criação para perfil não autorizado.
+- Validação de tipo de usuário e registro.
+- Aplicação de status padrão.
+- Atualização e cancelamento de item existente.
+- Tratamento de item inexistente na atualização e no cancelamento.
+
+#### NotificacaoService
+
+Os testes do `NotificacaoService` validam comunicações e oportunidades:
+
+- Listagem geral de notificações.
+- Listagem de notificações por aluno.
+- Criação de notificação com payload válido.
+- Rejeição de notificação para aluno inexistente.
+- Validação de tipo de notificação e tipo de remetente.
+- Restrição de remetente psicólogo ao perfil psicólogo.
+- Validação de data de envio, título, mensagem e nome do remetente.
+- Listagem de oportunidades.
+- Criação de oportunidade com payload válido.
+- Validação de tipo de oportunidade.
+- Tratamento de título e descrição antes da persistência mockada.
+
+#### PortalAlunoService
+
+Os testes do `PortalAlunoService` validam as funcionalidades expostas ao portal do aluno:
+
+- Visualização do perfil resumido do aluno.
+- Tratamento de aluno inexistente.
+- Atualização de contato com email ou telefone.
+- Normalização de email antes da atualização.
+- Tratamento de telefone antes da atualização.
+- Rejeição de email inválido.
+- Rejeição de atualização sem email e sem telefone.
+- Listagem de notificações do próprio aluno.
+- Bloqueio de acesso a notificações de outro aluno.
+- Tratamento de aluno inexistente ao listar notificações.
+- Listagem de oportunidades disponíveis no portal.
+
+#### SaudeMentalService
+
+Os testes do `SaudeMentalService` validam as regras de acesso e registro de informações sensíveis:
+
+- Listagem de prontuários apenas para perfil psicólogo.
+- Bloqueio de listagem para perfil não autorizado.
+- Criação de prontuário com payload válido.
+- Rejeição de prontuário para aluno inexistente.
+- Validação de título e observação.
+- Listagem de labels apenas para perfil psicólogo.
+- Criação de label com payload válido.
+- Validação de tipo de label.
+- Rejeição de label para aluno inexistente.
+- Validação da descrição da label.
+
+### 5.1.2. Execução e resultado dos testes
+
+Os testes unitários de Service podem ser executados isoladamente com o comando:
+
+```bash
+npm run test -- src/tests/unit/services --runInBand
+```
+
+Resultado obtido:
+
+```text
+Test Suites: 8 passed, 8 total
+Tests: 110 passed, 110 total
+Snapshots: 0 total
+```
+
+Também foi executada a suíte completa do projeto, incluindo testes de integração e testes unitários de Service:
+
+```bash
+npm run test
+```
+
+Resultado obtido:
+
+```text
+Test Suites: 18 passed, 18 total
+Tests: 241 passed, 241 total
+Snapshots: 0 total
+```
+
+Com isso, a camada de Service passou a ter validação automatizada das principais regras de negócio do backend, enquanto os testes de integração continuam verificando os contratos HTTP dos endpoints já implementados.
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
