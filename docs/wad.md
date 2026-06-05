@@ -1,4 +1,4 @@
-<img src="./assets/logointeli.png">
+﻿<img src="./assets/logointeli.png">
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
@@ -2564,6 +2564,86 @@ Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
 - **Sem rede externa:** toda dependência que faria chamada real de rede é substituída por `jest.fn()`, impedindo falhas causadas por indisponibilidade de serviços externos.
 - **Sem dependência de relógio:** valores de data e hora são sempre definidos explicitamente no Arrange, nunca inferidos de `new Date()` em tempo de execução.
 - **Sem dados residuais:** cada teste é responsável por inserir os próprios dados; nenhum assume a existência de registros criados por outros testes ou por execuções anteriores.
+
+</div>
+
+### 5.1.3 Testes de Integração de Endpoints
+
+<div align="justify">
+
+Os testes de integração cobrem os endpoints principais da aplicação por meio de requisições HTTP reais via Supertest, com banco SQLite in-memory. Para cada endpoint, a cobertura segue quatro cenários-chave: sucesso (`200`/`201`), falha de validação (`400`/`422`), regra de negócio violada (`409`/`422`/`403`) e recurso não encontrado (`404`). Quando um cenário é marcado como N/A, significa que aquela categoria de erro não se aplica à lógica do endpoint — não é um gap de cobertura.
+
+A suíte completa totaliza **160 testes distribuídos em 13 arquivos**, todos executados via `npm test` sem falhas.
+
+**Módulo: Alunos**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `POST /api/alunos` | ✅ | ✅ email inválido, idade > 120 | ✅ 409 email duplicado | N/A |
+| `GET /api/alunos` | ✅ | N/A | N/A | N/A |
+| `GET /api/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+| `PATCH /api/alunos/:id` | ✅ | ✅ riscoEvasao inválido | N/A | ✅ |
+| `DELETE /api/alunos/:id` | ✅ | N/A | N/A | ✅ |
+| `GET /api/alunos/segmentacao` | ✅ | ✅ limite, risco, busca | ✅ 422 sem critério | N/A |
+
+**Módulo: Jornada**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/jornada/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+| `POST /api/frequencias` | ✅ | ✅ nota > 10 | ✅ 422 atividade não é aula | ✅ |
+| `POST /api/participacoes` | ✅ | ✅ idAtividade inválido | ✅ 409 duplicado, 422 tipo | ✅ |
+| `PATCH /api/empregabilidade/:id` | ✅ | ✅ ocupacao, rendaMensal | N/A | ✅ |
+| `PATCH /api/ensino-superior/:id` | ✅ | ✅ escolaridade, dataIngresso | N/A | ✅ |
+| `POST /api/anotacoes-qualitativas` | ✅ | ✅ descricao, dataRegistro | N/A | ✅ |
+
+**Módulo: Agenda**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/agenda` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+| `POST /api/agenda` | ✅ | ✅ tipoUser, formato data | ✅ 422 sem perfil gestor | N/A |
+| `PATCH /api/agenda/:id` | ✅ | ✅ id não numérico | ✅ 422 sem permissão | ✅ |
+| `DELETE /api/agenda/:id` | ✅ | N/A | ✅ 422 sem perfil gestor | ✅ |
+
+**Módulo: Dashboard**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/impacto/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+| `GET /api/jornada/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+| `GET /api/impacto/conclusao-programas` | ✅ | ✅ categoria < 3 chars | ✅ 422 intervalo inválido | N/A |
+| `GET /api/impacto/alunos-empregados` | ✅ | ✅ formato dataFim | ✅ 422 intervalo inválido | N/A |
+| `GET /api/impacto/acesso-ensino-superior` | ✅ | ✅ programa < 3 chars | ✅ 422 intervalo inválido | N/A |
+| `GET /api/jornada/evasao-risco` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+
+**Módulo: Comunicação**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/comunicacao` | ✅ | N/A | N/A | N/A |
+| `POST /api/comunicacao` | ✅ | ✅ tipo, tipoRemetente, dataEnvio | ✅ 403 psicólogo | ✅ |
+| `GET /api/comunicacao/oportunidades` | ✅ | N/A | N/A | N/A |
+| `POST /api/comunicacao/oportunidades` | ✅ | ✅ tipo, prazoInscricao | N/A | N/A |
+
+**Módulo: Portal do Aluno**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/portal/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+| `PATCH /api/portal/alunos/:id/contato` | ✅ | ✅ email inválido, nenhum campo informado | N/A | ✅ |
+| `GET /api/portal/alunos/:id/notificacoes` | ✅ | ✅ id não numérico | ✅ 403 aluno cruzado | ✅ |
+| `GET /api/portal/oportunidades` | ✅ | N/A | N/A | N/A |
+
+**Módulo: Saúde Mental**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/prontuarios` | ✅ | N/A | ✅ 422 sem perfil | N/A |
+| `POST /api/prontuarios` | ✅ | ✅ titulo, observacao ausentes | ✅ 422 sem perfil | ✅ |
+| `GET /api/labels` | ✅ | N/A | ✅ 422 sem perfil | N/A |
+| `POST /api/labels` | ✅ | ✅ tipoLabel inválido | ✅ 422 sem perfil | ✅ |
+| `GET /api/psicologo/alunos/:id/desempenho` | ✅ | ✅ id não numérico | ✅ 403 sem vínculo | ✅ |
 
 </div>
 
