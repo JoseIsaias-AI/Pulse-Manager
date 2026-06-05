@@ -129,4 +129,15 @@ describe('UC-23 - Acessar desempenho acadêmico dos alunos (Psicólogo)', () => 
     expect(response.body.success).toBe(false);
     expect(response.body.message).toBe('O campo idAluno deve ser um numero inteiro positivo.');
   });
+
+  it('CT05 - deve retornar 404 quando aluno nao existe', async () => {
+    const response = await request(app)
+      .get('/api/psicologo/alunos/9999/desempenho')
+      .set('x-user-id', String(psicologo.idPsi))
+      .set('x-user-role', 'psicologo');
+
+    expect(response.status).toBe(404);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('Aluno nao encontrado.');
+  });
 });

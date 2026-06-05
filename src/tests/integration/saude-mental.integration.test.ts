@@ -221,6 +221,16 @@ describe('UC-20 - Saude Mental e Historico Psicologico', () => {
         message: 'Registros de saude mental sao restritos ao perfil psicologo.'
       });
     });
+
+    it('CT06 - deve rejeitar listagem de labels sem perfil psicologo', async () => {
+      const response = await request(app).get('/api/labels');
+
+      expect(response.status).toBe(422);
+      expect(response.body).toMatchObject({
+        success: false,
+        message: 'Registros de saude mental sao restritos ao perfil psicologo.'
+      });
+    });
   });
 
   describe('RNF - Qualidade para UC-20', () => {
