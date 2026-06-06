@@ -209,9 +209,9 @@ A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, class
 </div>
 
 <div align="center">
-<sup>Figura 4: Matriz de Riscos da Pulse Manager.</sup><br>
+<sup>Figura 3: Matriz de Riscos da Pulse Manager.</sup><br>
 <img src="./assets/matrizRiscos.png"><br>
-<sub>Fonte: Elaborado pela equipe (2026).</sub><br>
+<sub>Fonte: Autoria Própria (2026).</sub><br>
 </div>
 
 <div align="justify">
@@ -543,16 +543,16 @@ Personas: A persona é definida como uma descrição realista e detalhada do usu
 
 
 <div align="center">
-<sup>Figura 5: Persona 01.</sup><br>
+<sup>Figura 4: Persona 01.</sup><br>
     <img src="assets/persUm.jpg" width="60%"><br>
 
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
-<sup>Figura 6: Persona 02.</sup><br>
+<sup>Figura 5: Persona 02.</sup><br>
     <img src="assets/persDois.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
-<sup>Figura 7: Persona 03.</sup><br>
+<sup>Figura 6: Persona 03.</sup><br>
     <img src="assets/persTres.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -782,6 +782,7 @@ _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 
 
 <div align="center">
+<sup>Figura 7: Diagrama de Arquitetura.</sup><br>
     <img src="assets/diagrama_arquitetura.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -851,8 +852,8 @@ O usuário, no navegador, dispara um `POST /frequencia` a partir de `frontend/js
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
 <div align="center">
-<sup>Figura 8: Diagrama Casos de Uso.</sup><br>
-<img src="./assets/diagrama-casos-de-uso.png"><br>
+<sup>Figura 8: Diagrama de Casos de Uso.</sup><br>
+<img src="./assets/diagCasosUso.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -865,7 +866,7 @@ O Diagrama de Classes de Domínio do sistema Pulse Mais estabelece a estrutura c
 </div>
 
 <div align="center">
-<sup>Figura 3: Diagrama Classes de Domínio.</sup><br>
+<sup>Figura 9: Diagrama de Classes de Domínio.</sup><br>
 <img src="./assets/diagClassesDominio.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -883,8 +884,8 @@ No que tange aos registros de impacto e classificação, a classe Atividade arma
 #### 3.2.3.1 Diagrama de Classes Arquitetural
 
 <div align="center">
-<sup>Figura 4: Diagrama Classes Arquitetural.</sup><br>
-<img src="./assets/diagrama_arquitetural.jpeg"><br>
+<sup>Figura 10: Diagrama de Classes Arquitetural.</sup><br>
+<img src="./assets/diagArquitetural.jpeg"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -922,7 +923,7 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 #### 3.2.4.1. UC-04 - Adicionar cadastro do aluno
 
 <div align="center">
-<sup>Figura 4: Diagrama de sequência do caso de uso Adicionar cadastro do aluno.</sup><br>
+<sup>Figura 11: Diagrama de sequência do caso de uso Adicionar cadastro do aluno.</sup><br>
 <img src="../docs/assets/diagrama_sequencia_uc04.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -936,7 +937,7 @@ O fluxo começa quando o membro da equipe preenche o formulário de cadastro na 
 #### 3.2.4.2. UC-06 — Visualizar histórico consolidado do aluno
 
 <div align="center">
-<sup>Figura 5: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
+<sup>Figura 12: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
 <img src="./assets/diagrama-sequencia-2.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -950,7 +951,7 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 #### 3.2.4.3. UC-07 — Manter jornada do aluno
 
 <div align="center">
-<sup>Figura 6: Diagrama de sequência do caso de uso Manter jornada do aluno.</sup><br>
+<sup>Figura 13: Diagrama de sequência do caso de uso Manter jornada do aluno.</sup><br>
 <img src="../docs/assets/diagrama_sequencia07.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -964,7 +965,7 @@ O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e 
 #### 3.2.4.4. UC-14 — Visualizar dashboard de impacto
 
 <div align="center">
-<sup>Figura 7: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
+<sup>Figura 14: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
 <img src="../docs/assets/diagrama_sequencia_uc14.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -978,7 +979,7 @@ A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como 
 #### 3.2.4.5. UC-22 — Manter registros de saúde mental
 
 <div align="center">
-<sup>Figura 8: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
+<sup>Figura 15: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
 <img src="./assets/diagrama-sequencia-5.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -1068,6 +1069,7 @@ Caso queira acessar os wireframes completos, acesse o link: https://www.canva.co
 
 
 <div align="center">
+<sup>Figura 16: Fluxo de telas do perfil Aluno.</sup><br>
     <img src="assets/fluxoTelasAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1079,6 +1081,7 @@ Neste fluxo, o aluno faz login com CPF e nome, acessa a tela inicial com jornada
 
 
 <div align="center">
+<sup>Figura 17: Fluxo de telas do perfil Gestor.</sup><br>
     <img src="assets/fluxoTelasGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1089,6 +1092,7 @@ O gestor faz login com e-mail e senha, acessa a tela inicial com visão geral da
 
 
 <div align="center">
+<sup>Figura 18: Fluxo de telas do perfil Psicólogo.</sup><br>
     <img src="assets/fluxoTelasPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1100,6 +1104,7 @@ O psicólogo faz login com e-mail, nome e senha, acessa a tela inicial com foco 
 
 
 <div align="center">
+<sup>Figura 19: Wireframe da tela de login do Gestor.</sup><br>
     <img src="assets/wrfLoginGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1109,6 +1114,7 @@ Tela de login do sistema  dividida em dois painéis. O painel esquerdo (cinza) e
 </div>
 
 <div align="center">
+<sup>Figura 20: Wireframe da tela de login do Aluno.</sup><br>
     <img src="assets/wrfLoginAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1118,6 +1124,7 @@ Tela de login para Alunos do PULSE MAIS com layout dividido em dois painéis. O 
 </div>
 
 <div align="center">
+<sup>Figura 21: Wireframe da tela de login do Psicólogo.</sup><br>
     <img src="assets/wrfLoginPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1127,6 +1134,7 @@ Tela de login exclusiva para psicólogos da plataforma Pulse Mais. Dividida em d
 </div>
 
 <div align="center">
+<sup>Figura 22: Wireframe da tela inicial do Gestor.</sup><br>
     <img src="assets/wrfInicialGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1136,6 +1144,7 @@ Tela inicial do gestor no Pulse Manager, com menu lateral contendo Início, Alun
 </div>
 
 <div align="center">
+<sup>Figura 23: Wireframe da tela inicial do Psicólogo.</sup><br>
     <img src="assets/wrfInicialPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1145,6 +1154,7 @@ Tela inicial do psicólogo no Pulse Manager, com menu lateral contendo Início, 
 </div>
 
 <div align="center">
+<sup>Figura 24: Wireframe do Dashboard do Gestor.</sup><br>
     <img src="assets/wrfDashboardGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1154,6 +1164,7 @@ Dashboard de performance da turma para o gestor no Pulse Manager. No topo, quatr
 </div>
 
 <div align="center">
+<sup>Figura 25: Wireframe do Dashboard do Aluno.</sup><br>
     <img src="assets/wrfDashboardAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1163,6 +1174,7 @@ Dashboard de progresso pessoal do aluno no Pulse Manager. No topo, quatro cards 
 </div>
 
 <div align="center">
+<sup>Figura 26: Wireframe do Dashboard do Psicólogo.</sup><br>
     <img src="assets/wrfDashboardPsic.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1172,6 +1184,7 @@ A tela de Dashboard do Psicólogo apresenta uma barra de navegação lateral com
 </div>
 
 <div align="center">
+<sup>Figura 27: Wireframe da lista de alunos do Psicólogo.</sup><br>
     <img src="assets/wrfListaAlunosPsic.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1181,6 +1194,7 @@ Tela de listagem de alunos do psicólogo no sistema Pulse Manager, exibindo card
 </div>
 
 <div align="center">
+<sup>Figura 28: Wireframe do perfil do aluno na visão do Gestor.</sup><br>
     <img src="assets/wrfPerfilAlunoGest.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1190,6 +1204,7 @@ A tela exibe o perfil de um aluno com navegação lateral (Início, Alunos, Dash
 </div>
 
 <div align="center">
+<sup>Figura 29: Wireframe da tela inicial do Aluno.</sup><br>
     <img src="assets/wrfInicioAluno.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1199,6 +1214,7 @@ Tela inicial do aluno está dividida em quatro seções: jornada de aprendizado 
 </div>
 
 <div align="center">
+<sup>Figura 30: Wireframe da tela de Agenda.</sup><br>
     <img src="assets/wrfAgenda.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1208,6 +1224,7 @@ Wireframe da tela agenda com calendário mensal navegável e botão "+ Evento" �
 </div>
 
 <div align="center">
+<sup>Figura 31: Wireframe da tela de Notificações do Gestor.</sup><br>
     <img src="./assets/wrfNotsGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1217,6 +1234,7 @@ Wireframe da tela notificações com uma lista à esquerda filtrada por abas (To
 </div>
 
 <div align="center">
+<sup>Figura 32: Wireframe da lista de alunos do Gestor.</sup><br>
     <img src="assets/wrfListaAlunosGest.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1246,7 +1264,7 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 </div>
 
 <div align="center">
-<sup>Figura X: Azul Pulse - cor principal.</sup><br>
+<sup>Figura 33: Azul Pulse - cor principal.</sup><br>
 <img src="./assets/azulPulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
@@ -1258,7 +1276,7 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 </div>
 
 <div align="center">
-<sup>Figura X: Verde Pulse - cor secundária.</sup><br>
+<sup>Figura 34: Verde Pulse - cor secundária.</sup><br>
 <img src="./assets/verdePulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
@@ -1270,7 +1288,7 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 </div>
 
 <div align="center">
-<sup>Figura X: Amarelo Pulse - cor de destaque.</sup><br>
+<sup>Figura 35: Amarelo Pulse - cor de destaque.</sup><br>
 <img src="./assets/amareloPulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
@@ -1312,7 +1330,7 @@ O Pulse Manager adota a biblioteca **Lucide** como sistema de iconografia da pla
 </div>
 
 <div align="center">
-<sup>Figura X: Grid de ícones representativos da plataforma - Lucide, outline, stroke 2px.</sup><br>
+<sup>Figura 36: Grid de ícones representativos da plataforma - Lucide, outline, stroke 2px.</sup><br>
 <img src="./assets/gridIcones.png" width="600"><br>
 <sub>Fonte: Gerado a partir da biblioteca Lucide (open source). Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
@@ -1333,7 +1351,7 @@ Em casos onde a Lucide não oferecer o ícone necessário, as bibliotecas **Phos
 
 
 <div align="center">
-<sup>Figura X: Tela de Login Geral.</sup><br>
+<sup>Figura 37: Tela de Login Geral.</sup><br>
 <img src="./assets/loginGeral.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1346,6 +1364,7 @@ Esta tela está associada às User Stories US05, US07, US08 e US09, de acordo co
 ### Tela Inicial do Gestor
 
 <div align="center">
+<sup>Figura 38: Tela Inicial do Gestor.</sup><br>
 <img src="./assets/inicioGestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1357,6 +1376,7 @@ O protótipo apresenta a tela inicial do painel do gestor na plataforma, projeta
 ### Lista de Alunos apresentada ao Gestor
 
 <div align="center">
+<sup>Figura 39: Lista de Alunos do Gestor.</sup><br>
 <img src="./assets/listaAlunosGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1370,6 +1390,7 @@ Esta tela está associada às User Stories US01, US03 e US04, de acordo com os c
 ### Perfil do Aluno apresentado ao Gestor
 
 <div align="center">
+<sup>Figura 40: Perfil do Aluno do Gestor.</sup><br>
 <img src="./assets/perfilAlunoGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1381,6 +1402,7 @@ O protótipo apresenta a tela de perfil individual do aluno na visão do gestor,
 ### Dashboard apresentado ao Gestor
 
 <div align="center">
+<sup>Figura 41: Dashboard do Gestor.</sup><br>
 <img src="./assets/dashboardGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1394,6 +1416,7 @@ O corpo principal da página destaca-se por quatro cartões de métricas no topo
 ### Tela de Agenda do Gestor
 
 <div align="center">
+<sup>Figura 42: Tela de Agenda do Gestor.</sup><br>
 <img src="./assets/agendaGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1407,6 +1430,7 @@ Esta tela está associada às User Stories US01, US02 e US04, de acordo com os c
 ### Tela Inicial do Aluno
 
 <div align="center">
+<sup>Figura 43: Tela Inicial do Aluno.</sup><br>
 <img src="./assets/inicioAluno.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1419,6 +1443,7 @@ Esta tela está associada às User Stories US08, US09 e US10, de acordo com os c
 ### Tela de Perfil apresentada para o Aluno
 
 <div align="center">
+<sup>Figura 44: Perfil do Aluno.</sup><br>
 <img src="./assets/perfilAlunoAl.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1432,6 +1457,7 @@ Esta tela está associada às User Stories US01, US04 e US05, de acordo com os c
 ### Dashboard apresentado ao Aluno
 
 <div align="center">
+<sup>Figura 45: Dashboard do Aluno.</sup><br>
 <img src="./assets/dashboardAluno.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1444,6 +1470,7 @@ Os quatro cartões de métricas no topo sintetizam os dados mais relevantes para
 ### Tela Inicial do Aluno
 
 <div align="center">
+<sup>Figura 46: Tela Inicial do Psicólogo.</sup><br>
 <img src="./assets/inicioPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1457,6 +1484,7 @@ Os quatro cartões de métricas superiores apresentam os indicadores centrais do
 ### Lista de Alunos apresentada ao Psicólogo
 
 <div align="center">
+<sup>Figura 47: Lista de Alunos do Psicólogo.</sup><br>
 <img src="./assets/listaAlunosPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1470,6 +1498,7 @@ Esta tela está associada às User Stories US06 e US07, de acordo com os critér
 ### Dashboard apresentado ao Psicólogo
 
 <div align="center">
+<sup>Figura 48: Dashboard do Psicólogo.</sup><br>
 <img src="./assets/dashboardPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1494,7 +1523,7 @@ A partir destes conceitos e utilizando como base o TAPI e outros materiais dispo
 </div>
 
 <div align="center">
-<sup>Figura 9: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
+<sup>Figura 49: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
 <img src="./assets/mer.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -1567,7 +1596,7 @@ O DER explicita as entidades do sistema, seus atributos, as respectivas chaves p
 </div>
 
 <div align="center">
-<sup>Figura 6: Diagrama Entidade-Relacionamento.</sup><br>
+<sup>Figura 50: Diagrama Entidade-Relacionamento.</sup><br>
 <img src="./assets/der.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
@@ -2475,7 +2504,7 @@ Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os flux
 Protótipo desenvolvido para os três perfis:
 
 <div align="center">
-<sup>Figura: Tela de login — perfil gestora.</sup><br>
+<sup>Figura 51: Tela de login — perfil gestora.</sup><br>
 <img src="./assets/loginGeral.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -2483,7 +2512,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura: Dashboard — visão da gestora.</sup><br>
+<sup>Figura 52: Dashboard — visão da gestora.</sup><br>
 <img src="./assets/inicioGestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -2491,7 +2520,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura: Listagem de alunos — perfil gestora.</sup><br>
+<sup>Figura 53: Listagem de alunos — perfil gestora.</sup><br>
 <img src="./assets/listaAlunosGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -2499,7 +2528,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura: Listagem de alunos — perfil psicóloga.</sup><br>
+<sup>Figura 54: Listagem de alunos — perfil psicóloga.</sup><br>
 <img src="./assets/listaAlunosPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -2507,7 +2536,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura: Perfil do aluno — visão do aluno.</sup><br>
+<sup>Figura 55: Perfil do aluno — visão do aluno.</sup><br>
 <img src="./assets/perfilAlunoAl.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
