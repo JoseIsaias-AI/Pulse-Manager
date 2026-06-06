@@ -1178,7 +1178,7 @@ Wireframe da tela agenda com calendário mensal navegável e botão "+ Evento" �
 </div>
 
 <div align="center">
-    <img src="assets/wrfWireframesGest.jpg" ><br>
+    <img src="./assets/wrfNotsGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
