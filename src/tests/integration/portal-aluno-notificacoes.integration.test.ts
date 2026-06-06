@@ -114,4 +114,14 @@ describe('UC-03 - Visualizar notificações e oportunidades no portal do aluno',
     expect(response.body.success).toBe(false);
     expect(response.body.message).toBe('O campo idAluno deve ser um numero inteiro positivo.');
   });
+
+  it('CT05 - deve retornar 404 quando aluno nao existe', async () => {
+    const response = await request(app)
+      .get('/api/portal/alunos/9999/notificacoes')
+      .set('x-user-id', '9999');
+
+    expect(response.status).toBe(404);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('Aluno nao encontrado no portal.');
+  });
 });

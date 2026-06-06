@@ -280,6 +280,30 @@ describe('RF020/RF021 - Gestao de Agenda', () => {
         message: 'Apenas usuarios com perfil gestor podem modificar a agenda.'
       });
     });
+
+    it('CT06 - deve rejeitar cancelamento sem perfil gestor (RN019)', async () => {
+      const response = await request(app)
+        .delete(`/api/agenda/${itemAgenda.idAgenda}`);
+
+      expect(response.status).toBe(422);
+      expect(response.body).toMatchObject({
+        success: false,
+        message: 'Apenas usuarios com perfil gestor podem modificar a agenda.'
+      });
+    });
+
+    it('CT07 - deve retornar 400 para idAgenda invalido no patch', async () => {
+      const response = await request(app)
+        .patch('/api/agenda/abc')
+        .set('x-user-role', 'gestor')
+        .send({ registro: 'Qualquer valor' });
+
+      expect(response.status).toBe(400);
+      expect(response.body).toMatchObject({
+        success: false,
+        message: 'O campo idAgenda deve ser um numero inteiro positivo.'
+      });
+    });
   });
 
   describe('RNF - Qualidade para agenda', () => {

@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
-import { app } from '../app';
-import { AppDataSource, initializeDatabase } from '../database/connection';
-import { Aluno } from '../models/alunoModel';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { Aluno } from '../../backend/models/alunoModel';
 
 describe('UC-24 - Restrição de remetente psicólogo em notificações', () => {
   let alunoRepository: Repository<Aluno>;
