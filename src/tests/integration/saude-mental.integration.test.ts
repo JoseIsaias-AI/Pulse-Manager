@@ -1,9 +1,9 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
-import { app } from '../app';
-import { AppDataSource, initializeDatabase } from '../database/connection';
-import { Aluno } from '../models/alunoModel';
-import { Psicologo } from '../models/usuarioModel';
+import { app } from '../../backend/app';
+import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { Aluno } from '../../backend/models/alunoModel';
+import { Psicologo } from '../../backend/models/usuarioModel';
 
 describe('UC-20 - Saude Mental e Historico Psicologico', () => {
   let alunoRepository: Repository<Aluno>;
@@ -214,6 +214,16 @@ describe('UC-20 - Saude Mental e Historico Psicologico', () => {
           descricao: 'Label sem permissao',
           tipoLabel: 'perfil'
         });
+
+      expect(response.status).toBe(422);
+      expect(response.body).toMatchObject({
+        success: false,
+        message: 'Registros de saude mental sao restritos ao perfil psicologo.'
+      });
+    });
+
+    it('CT06 - deve rejeitar listagem de labels sem perfil psicologo', async () => {
+      const response = await request(app).get('/api/labels');
 
       expect(response.status).toBe(422);
       expect(response.body).toMatchObject({

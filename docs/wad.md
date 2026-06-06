@@ -2564,6 +2564,119 @@ _Liste e descreva os testes automatizados dos endpoints criados e planejados par
 
 _Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown)._
 
+### 5.1.1 Estratégia de Testes
+<div align="justify">
+
+A suíte de testes automatizados da aplicação adota exclusivamente a abordagem de testes de integração via Supertest, cobrindo de forma unificada as camadas de Controller, Service e Repository em cada requisição. A decisão de não implementar testes unitários isolados de Service decorre de uma escolha arquitetural consciente: no contexto do projeto, um único teste de integração já percorre o fluxo completo - validação de rota, regra de negócio e query ao banco - oferecendo cobertura equivalente com menor complexidade de setup e manutenção.
+
+**Tipos de teste implementados**
+
+A suíte é organizada em dois tipos, diferenciados pelo uso ou não de mocks:
+
+- **Tipo 1 - Integração pura:** banco em memória, requisição HTTP real e nenhum mock. O arquivo `jornada.integration.test.ts` é o exemplo representativo desse tipo. Todos os efeitos observáveis - status HTTP, corpo da resposta e estado do banco - são verificados sem qualquer substituição de dependência.
+- **Tipo 2 - Integração com mock de dependência externa:** mesmo setup do Tipo 1, com a diferença de que `jest.mock()` é aplicado exclusivamente sobre integrações externas - serviços que fariam chamadas reais de rede em produção, como o módulo de auditoria. O arquivo `segmentacao.integration.test.ts` representa esse tipo: banco, HTTP, Controller, Service e Repository permanecem reais; apenas `registrarConsultaSegmentacao` é substituído por um `jest.fn()`. Além de verificar a resposta HTTP, esses testes também validam que a integração externa foi chamada com os parâmetros corretos via `toHaveBeenCalledWith`.
+
+**Padrão de escrita - AAA**
+
+Todos os casos de teste seguem o padrão Arrange, Act, Assert:
+
+- **Arrange:** inserção dos dados necessários no banco in-memory e definição dos parâmetros da requisição.
+- **Act:** disparo da requisição HTTP via `request(app)`.
+- **Assert:** verificação do status code, corpo da resposta e, quando aplicável, dos parâmetros recebidos pelas dependências mockadas.
+
+**Determinismo e isolamento**
+
+O determinismo da suíte é garantido pelo mecanismo configurado em `connection.ts`, ativado automaticamente quando `NODE_ENV=test` - valor definido por `setup.js` antes de qualquer teste, referenciado em `jest.config.ts` via `setupFiles`. Nesse modo, a aplicação instancia um DataSource com `type: 'sqljs'` - banco SQLite compilado em WebAssembly que existe exclusivamente em memória durante a execução do Jest, sem dependência de servidor externo. A flag `dropSchema: true` garante que o schema seja descartado na inicialização; o `beforeEach` de cada arquivo de teste executa `AppDataSource.synchronize(true)`, que dropa e recria todas as tabelas do zero antes de cada caso de teste individual.
+
+Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
+
+- **Independência de ordem:** nenhum teste depende de estado deixado por outro; a ordem de execução não afeta os resultados.
+- **Sem rede externa:** toda dependência que faria chamada real de rede é substituída por `jest.fn()`, impedindo falhas causadas por indisponibilidade de serviços externos.
+- **Sem dependência de relógio:** valores de data e hora são sempre definidos explicitamente no Arrange, nunca inferidos de `new Date()` em tempo de execução.
+- **Sem dados residuais:** cada teste é responsável por inserir os próprios dados; nenhum assume a existência de registros criados por outros testes ou por execuções anteriores.
+
+</div>
+
+  ### 5.1.3 Testes de Integração de Endpoints
+
+  <div align="justify">
+
+  Os testes de integração cobrem os endpoints principais da aplicação por meio de requisições HTTP reais via Supertest, com banco SQLite in-memory. Para cada endpoint, a cobertura segue quatro cenários-chave: sucesso (`200`/`201`), falha de validação (`400`/`422`), regra de negócio violada (`409`/`422`/`403`) e recurso não encontrado (`404`). Quando um cenário é marcado como N/A, significa que aquela categoria de erro não se aplica à lógica do endpoint — não é um gap de cobertura.
+
+  A suíte completa totaliza **160 testes distribuídos em 13 arquivos**, todos executados via `npm test` sem falhas.
+
+  **Módulo: Alunos**
+
+  | Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+  |---|---|---|---|---|
+  | `POST /api/alunos` | ✅ | ✅ email inválido, idade > 120 | ✅ 409 email duplicado | N/A |
+  | `GET /api/alunos` | ✅ | N/A | N/A | N/A |
+  | `GET /api/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+  | `PATCH /api/alunos/:id` | ✅ | ✅ riscoEvasao inválido | N/A | ✅ |
+  | `DELETE /api/alunos/:id` | ✅ | N/A | N/A | ✅ |
+  | `GET /api/alunos/segmentacao` | ✅ | ✅ limite, risco, busca | ✅ 422 sem critério | N/A |
+
+  **Módulo: Jornada**
+
+  | Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+  |---|---|---|---|---|
+  | `GET /api/jornada/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+  | `POST /api/frequencias` | ✅ | ✅ nota > 10 | ✅ 422 atividade não é aula | ✅ |
+  | `POST /api/participacoes` | ✅ | ✅ idAtividade inválido | ✅ 409 duplicado, 422 tipo | ✅ |
+  | `PATCH /api/empregabilidade/:id` | ✅ | ✅ ocupacao, rendaMensal | N/A | ✅ |
+  | `PATCH /api/ensino-superior/:id` | ✅ | ✅ escolaridade, dataIngresso | N/A | ✅ |
+  | `POST /api/anotacoes-qualitativas` | ✅ | ✅ descricao, dataRegistro | N/A | ✅ |
+
+  **Módulo: Agenda**
+
+  | Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+  |---|---|---|---|---|
+  | `GET /api/agenda` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+  | `POST /api/agenda` | ✅ | ✅ tipoUser, formato data | ✅ 422 sem perfil gestor | N/A |
+  | `PATCH /api/agenda/:id` | ✅ | ✅ id não numérico | ✅ 422 sem permissão | ✅ |
+  | `DELETE /api/agenda/:id` | ✅ | N/A | ✅ 422 sem perfil gestor | ✅ |
+
+  **Módulo: Dashboard**
+
+  | Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+  |---|---|---|---|---|
+  | `GET /api/impacto/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+  | `GET /api/jornada/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+  | `GET /api/impacto/conclusao-programas` | ✅ | ✅ categoria < 3 chars | ✅ 422 intervalo inválido | N/A |
+  | `GET /api/impacto/alunos-empregados` | ✅ | ✅ formato dataFim | ✅ 422 intervalo inválido | N/A |
+  | `GET /api/impacto/acesso-ensino-superior` | ✅ | ✅ programa < 3 chars | ✅ 422 intervalo inválido | N/A |
+  | `GET /api/jornada/evasao-risco` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+
+  **Módulo: Comunicação**
+
+  | Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+  |---|---|---|---|---|
+  | `GET /api/comunicacao` | ✅ | N/A | N/A | N/A |
+  | `POST /api/comunicacao` | ✅ | ✅ tipo, tipoRemetente, dataEnvio | ✅ 403 psicólogo | ✅ |
+  | `GET /api/comunicacao/oportunidades` | ✅ | N/A | N/A | N/A |
+  | `POST /api/comunicacao/oportunidades` | ✅ | ✅ tipo, prazoInscricao | N/A | N/A |
+
+  **Módulo: Portal do Aluno**
+
+  | Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+  |---|---|---|---|---|
+  | `GET /api/portal/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+  | `PATCH /api/portal/alunos/:id/contato` | ✅ | ✅ email inválido, nenhum campo informado | N/A | ✅ |
+  | `GET /api/portal/alunos/:id/notificacoes` | ✅ | ✅ id não numérico | ✅ 403 aluno cruzado | ✅ |
+  | `GET /api/portal/oportunidades` | ✅ | N/A | N/A | N/A |
+
+  **Módulo: Saúde Mental**
+
+  | Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+  |---|---|---|---|---|
+  | `GET /api/prontuarios` | ✅ | N/A | ✅ 422 sem perfil | N/A |
+  | `POST /api/prontuarios` | ✅ | ✅ titulo, observacao ausentes | ✅ 422 sem perfil | ✅ |
+  | `GET /api/labels` | ✅ | N/A | ✅ 422 sem perfil | N/A |
+  | `POST /api/labels` | ✅ | ✅ tipoLabel inválido | ✅ 422 sem perfil | ✅ |
+  | `GET /api/psicologo/alunos/:id/desempenho` | ✅ | ✅ id não numérico | ✅ 403 sem vínculo | ✅ |
+
+  </div>
+
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha

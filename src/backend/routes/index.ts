@@ -7,6 +7,7 @@ import portalAlunoRoutes from './portalAlunoRoutes';
 import segmentacaoRoutes from './segmentacaoRoutes';
 import alunoRoutes from './alunoRoutes';
 import dashboardRoutes from './dashboardRoutes';
+import psicologoRoutes from './psicologoRoutes';
 
 const router = Router();
 
@@ -24,5 +25,6 @@ router.use(saudeMentalRoutes);
 router.use(agendaRoutes);
 router.use(notificacaoRoutes);
 router.use(portalAlunoRoutes);
+router.use(psicologoRoutes);
 
 export default router;
