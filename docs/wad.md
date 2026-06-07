@@ -2816,17 +2816,32 @@ _Posicione aqui o relatório dos testes SUS realizados._
 
 ## 6.1 Resumo Executivo
 
-_Preencher com até 300 palavras, sem necessidade de fonte_
+O projeto Pulse Manager foi desenvolvido a partir de uma solicitação de serviço da ONG Pulse Mais, inserida no setor de organizações sociais voltadas à capacitação profissional de jovens em tecnologia. Observou-se que instituições desse segmento precisam comprovar impacto, acompanhar a jornada dos beneficiários e organizar informações institucionais de forma cada vez mais estruturada, especialmente em um contexto de crescimento do terceiro setor, da digitalização da educação e da maior exigência por governança de dados.
 
-_Apresente de forma clara e objetiva os principais destaques do projeto: oportunidades de mercado, diferenciais competitivos da aplicação web e os objetivos estratégicos pretendidos._
+O problema central atendido pela aplicação consiste na descentralização dos dados da Pulse Mais, atualmente distribuídos em planilhas, relatórios e registros dispersos. Essa fragmentação dificulta a visualização completa da trajetória dos jovens, reduz a eficiência da tomada de decisão, prejudica o acompanhamento individualizado e limita a capacidade da organização de comunicar seu impacto para parceiros, doadores e demais stakeholders.
+
+Diante desse cenário, foi proposta uma aplicação web voltada à centralização, organização e análise dos dados institucionais e dos alunos. O Pulse Manager atua como uma fonte única de verdade, reunindo cadastro, histórico de jornada, empregabilidade, ensino superior, participação em atividades, indicadores de impacto e registros de acompanhamento em um ambiente estruturado.
+
+Como diferenciais competitivos, destacam-se a adaptação ao fluxo real da Pulse Mais, a existência de dashboards gerenciais, a segmentação de alunos por critérios estratégicos, o portal do aluno, o controle de acesso por perfil e a criação de uma agenda integrada à plataforma. Dessa forma, a aplicação não se limita a armazenar dados, mas transforma registros operacionais em inteligência institucional.
+
+Os objetivos estratégicos pretendidos são: reduzir retrabalho operacional, melhorar a qualidade do acompanhamento dos jovens, apoiar decisões baseadas em dados, fortalecer a prestação de contas da organização e criar uma base escalável para futuras evoluções da plataforma.
 
 ## 6.2 Análise de Mercado
 
-_a) Visão Geral do Setor (até 250 palavras)_
-_Contextualize o setor no qual a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis._
+### 6.2.1 Visão Geral do Setor
 
-_b) Tamanho e Crescimento do Mercado (até 250 palavras)_
-_Apresente dados quantitativos sobre o tamanho atual e projeções de crescimento do mercado. Utilize fontes confiáveis._
+A aplicação está inserida na interseção entre terceiro setor, educação tecnológica, gestão de impacto social e soluções digitais de gestão. A Pulse Mais atua como organização sem fins lucrativos voltada à capacitação profissional de jovens para o setor de tecnologia, segmento que tem ganhado relevância diante da demanda por qualificação digital, da busca por inclusão produtiva e da necessidade de acompanhamento mais estruturado de trajetórias educacionais e profissionais.
+No Brasil, o terceiro setor apresenta grande capilaridade e relevância econômica. Segundo o Mapa das Organizações da Sociedade Civil, elaborado pelo Ipea, o país registrou 897.054 organizações da sociedade civil ativas em 2024, com crescimento de 2% em relação ao ano anterior e expansão acumulada de 16,83% na última década. Além disso, estudo divulgado pelo Mapa das OSCs aponta que as atividades do terceiro setor contribuem com 4,27% do valor adicionado ao PIB brasileiro, o que evidencia seu peso econômico para além de sua função social.
+Esse cenário indica um ambiente amplo e competitivo, no qual organizações sociais disputam recursos, visibilidade, voluntários, parceiros institucionais e capacidade de demonstrar impacto. Do ponto de vista tecnológico, observa-se a expansão de plataformas digitais, sistemas de gestão, dashboards e ferramentas de análise de dados aplicadas à educação e ao impacto social. A digitalização permite maior rastreabilidade, padronização de processos e comunicação de resultados.
+No campo regulatório, destaca-se a Lei Geral de Proteção de Dados, que estabelece princípios como finalidade, adequação, necessidade, segurança, prevenção e responsabilização. Como o Pulse Manager lida com dados de jovens, histórico acadêmico, empregabilidade e registros sensíveis de acompanhamento, torna-se necessário adotar controles de acesso, minimização de dados e proteção das informações armazenadas.
+
+### 6.2.2 Tamanho e crescimento do mercado
+
+O mercado potencial da solução pode ser observado por três dimensões complementares: o crescimento do terceiro setor, a expansão das edtechs e o avanço do mercado brasileiro de tecnologia. No terceiro setor, o Brasil possuía 897.054 organizações da sociedade civil ativas em 2024, segundo o Ipea. Esse volume demonstra a existência de um ecossistema amplo de organizações que, em diferentes níveis de maturidade, podem demandar ferramentas de gestão, monitoramento de impacto e organização de dados.
+No segmento educacional, o EdTech Report 2025, da Distrito, aponta a análise de mais de 1.300 startups de educação na América Latina, com destaque para inovação, inteligência artificial e novas tendências pedagógicas. Esse dado evidencia o crescimento do mercado de soluções digitais voltadas à educação, capacitação e gestão da aprendizagem. Ainda que o Pulse Manager não seja uma edtech tradicional voltada à venda direta de cursos, a aplicação se relaciona com esse mercado ao apoiar a gestão de jornadas formativas e indicadores educacionais.
+Além disso, o mercado brasileiro de tecnologia da informação segue em expansão. Segundo estudo da ABES/IDC, o mercado brasileiro de TI alcançou US$ 67,8 bilhões em receitas em 2025, com crescimento de 18,5% em relação a 2024. Esse avanço reforça a adoção crescente de soluções digitais, sistemas em nuvem, automação e ferramentas de dados por organizações de diferentes portes.
+Por fim, a demanda social também sustenta a relevância do projeto. O IBGE indicou que, em 2024, 18,5% dos jovens brasileiros de 15 a 29 anos não trabalhavam, não estudavam e nem se qualificavam. Esse cenário reforça a importância de organizações que promovem capacitação e empregabilidade juvenil, bem como de ferramentas que aumentem sua eficiência operacional e capacidade de acompanhamento.
+
 
 _c) Tendências de Mercado (até 300 palavras)_
 _Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis._
