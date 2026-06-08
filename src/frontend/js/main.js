@@ -1,9 +1,9 @@
-﻿// Placeholder: bootstrap futuro do frontend
-// Este arquivo ainda nao possui implementacao funcional; sera preenchido pela equipe durante o desenvolvimento.
+// Bootstrap leve para paginas que registram inicializadores globais.
+const frontendWindow = window as Window & {
+  pageName?: string;
+  initDashboardPage?: () => void;
+};
 
-if (pageName === "dashboard") {
-  initDashboardPage();
+if (frontendWindow.pageName === 'dashboard' && typeof frontendWindow.initDashboardPage === 'function') {
+  frontendWindow.initDashboardPage();
 }
-
-
-
