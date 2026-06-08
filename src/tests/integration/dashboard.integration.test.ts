@@ -186,6 +186,18 @@ describe('Dashboard UCs (14, 15, 16, 18, 19)', () => {
       expect(response.body.success).toBe(true);
       expect(response.body.data.totalAlunos).toBe(2);
     });
+
+    it('CT06 - deve rejeitar dataInicio invalida no resumo de jornada', async () => {
+      const response = await request(app)
+        .get('/api/jornada/resumo')
+        .query({ dataInicio: '2026/02/01' });
+
+      expect(response.status).toBe(400);
+      expect(response.body).toMatchObject({
+        success: false,
+        message: 'O parametro dataInicio deve estar no formato YYYY-MM-DD.'
+      });
+    });
   });
 
   describe('UC-15 - Consultar conclusao de programas', () => {
