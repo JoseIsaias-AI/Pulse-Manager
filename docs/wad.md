@@ -209,9 +209,9 @@ A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, class
 </div>
 
 <div align="center">
-<sup>Figura 4: Matriz de Riscos da Pulse Manager.</sup><br>
+<sup>Figura 3: Matriz de Riscos da Pulse Manager.</sup><br>
 <img src="./assets/matrizRiscos.png"><br>
-<sub>Fonte: Elaborado pela equipe (2026).</sub><br>
+<sub>Fonte: Autoria Própria (2026).</sub><br>
 </div>
 
 <div align="justify">
@@ -543,16 +543,16 @@ Personas: A persona é definida como uma descrição realista e detalhada do usu
 
 
 <div align="center">
-<sup>Figura 5: Persona 01.</sup><br>
+<sup>Figura 4: Persona 01.</sup><br>
     <img src="assets/persUm.jpg" width="60%"><br>
 
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
-<sup>Figura 6: Persona 02.</sup><br>
+<sup>Figura 5: Persona 02.</sup><br>
     <img src="assets/persDois.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
-<sup>Figura 7: Persona 03.</sup><br>
+<sup>Figura 6: Persona 03.</sup><br>
     <img src="assets/persTres.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -782,6 +782,7 @@ _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 
 
 <div align="center">
+<sup>Figura 7: Diagrama de Arquitetura.</sup><br>
     <img src="assets/diagrama_arquitetura.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -851,8 +852,8 @@ O usuário, no navegador, dispara um `POST /frequencia` a partir de `frontend/js
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
 <div align="center">
-<sup>Figura 8: Diagrama Casos de Uso.</sup><br>
-<img src="./assets/diagrama-casos-de-uso.png"><br>
+<sup>Figura 8: Diagrama de Casos de Uso.</sup><br>
+<img src="./assets/diagCasosUso.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -865,7 +866,7 @@ O Diagrama de Classes de Domínio do sistema Pulse Mais estabelece a estrutura c
 </div>
 
 <div align="center">
-<sup>Figura 3: Diagrama Classes de Domínio.</sup><br>
+<sup>Figura 9: Diagrama de Classes de Domínio.</sup><br>
 <img src="./assets/diagClassesDominio.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -883,8 +884,8 @@ No que tange aos registros de impacto e classificação, a classe Atividade arma
 #### 3.2.3.1 Diagrama de Classes Arquitetural
 
 <div align="center">
-<sup>Figura 4: Diagrama Classes Arquitetural.</sup><br>
-<img src="./assets/diagrama_arquitetural.jpeg"><br>
+<sup>Figura 10: Diagrama de Classes Arquitetural.</sup><br>
+<img src="./assets/diagArquitetural.jpeg"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -922,7 +923,7 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 #### 3.2.4.1. UC-04 - Adicionar cadastro do aluno
 
 <div align="center">
-<sup>Figura 4: Diagrama de sequência do caso de uso Adicionar cadastro do aluno.</sup><br>
+<sup>Figura 11: Diagrama de sequência do caso de uso Adicionar cadastro do aluno.</sup><br>
 <img src="../docs/assets/diagrama_sequencia_uc04.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -936,7 +937,7 @@ O fluxo começa quando o membro da equipe preenche o formulário de cadastro na 
 #### 3.2.4.2. UC-06 — Visualizar histórico consolidado do aluno
 
 <div align="center">
-<sup>Figura 5: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
+<sup>Figura 12: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
 <img src="./assets/diagrama-sequencia-2.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -950,7 +951,7 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 #### 3.2.4.3. UC-07 — Manter jornada do aluno
 
 <div align="center">
-<sup>Figura 6: Diagrama de sequência do caso de uso Manter jornada do aluno.</sup><br>
+<sup>Figura 13: Diagrama de sequência do caso de uso Manter jornada do aluno.</sup><br>
 <img src="../docs/assets/diagrama_sequencia07.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -964,7 +965,7 @@ O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e 
 #### 3.2.4.4. UC-14 — Visualizar dashboard de impacto
 
 <div align="center">
-<sup>Figura 7: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
+<sup>Figura 14: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
 <img src="../docs/assets/diagrama_sequencia_uc14.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -978,7 +979,7 @@ A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como 
 #### 3.2.4.5. UC-22 — Manter registros de saúde mental
 
 <div align="center">
-<sup>Figura 8: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
+<sup>Figura 15: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
 <img src="./assets/diagrama-sequencia-5.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -1068,6 +1069,7 @@ Caso queira acessar os wireframes completos, acesse o link: https://www.canva.co
 
 
 <div align="center">
+<sup>Figura 16: Fluxo de telas do perfil Aluno.</sup><br>
     <img src="assets/fluxoTelasAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1079,6 +1081,7 @@ Neste fluxo, o aluno faz login com CPF e nome, acessa a tela inicial com jornada
 
 
 <div align="center">
+<sup>Figura 17: Fluxo de telas do perfil Gestor.</sup><br>
     <img src="assets/fluxoTelasGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1089,6 +1092,7 @@ O gestor faz login com e-mail e senha, acessa a tela inicial com visão geral da
 
 
 <div align="center">
+<sup>Figura 18: Fluxo de telas do perfil Psicólogo.</sup><br>
     <img src="assets/fluxoTelasPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1100,6 +1104,7 @@ O psicólogo faz login com e-mail, nome e senha, acessa a tela inicial com foco 
 
 
 <div align="center">
+<sup>Figura 19: Wireframe da tela de login do Gestor.</sup><br>
     <img src="assets/wrfLoginGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1109,6 +1114,7 @@ Tela de login do sistema  dividida em dois painéis. O painel esquerdo (cinza) e
 </div>
 
 <div align="center">
+<sup>Figura 20: Wireframe da tela de login do Aluno.</sup><br>
     <img src="assets/wrfLoginAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1118,6 +1124,7 @@ Tela de login para Alunos do PULSE MAIS com layout dividido em dois painéis. O 
 </div>
 
 <div align="center">
+<sup>Figura 21: Wireframe da tela de login do Psicólogo.</sup><br>
     <img src="assets/wrfLoginPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1127,6 +1134,7 @@ Tela de login exclusiva para psicólogos da plataforma Pulse Mais. Dividida em d
 </div>
 
 <div align="center">
+<sup>Figura 22: Wireframe da tela inicial do Gestor.</sup><br>
     <img src="assets/wrfInicialGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1136,6 +1144,7 @@ Tela inicial do gestor no Pulse Manager, com menu lateral contendo Início, Alun
 </div>
 
 <div align="center">
+<sup>Figura 23: Wireframe da tela inicial do Psicólogo.</sup><br>
     <img src="assets/wrfInicialPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1145,6 +1154,7 @@ Tela inicial do psicólogo no Pulse Manager, com menu lateral contendo Início, 
 </div>
 
 <div align="center">
+<sup>Figura 24: Wireframe do Dashboard do Gestor.</sup><br>
     <img src="assets/wrfDashboardGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1154,6 +1164,7 @@ Dashboard de performance da turma para o gestor no Pulse Manager. No topo, quatr
 </div>
 
 <div align="center">
+<sup>Figura 25: Wireframe do Dashboard do Aluno.</sup><br>
     <img src="assets/wrfDashboardAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1163,6 +1174,7 @@ Dashboard de progresso pessoal do aluno no Pulse Manager. No topo, quatro cards 
 </div>
 
 <div align="center">
+<sup>Figura 26: Wireframe do Dashboard do Psicólogo.</sup><br>
     <img src="assets/wrfDashboardPsic.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1172,6 +1184,7 @@ A tela de Dashboard do Psicólogo apresenta uma barra de navegação lateral com
 </div>
 
 <div align="center">
+<sup>Figura 27: Wireframe da lista de alunos do Psicólogo.</sup><br>
     <img src="assets/wrfListaAlunosPsic.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1181,6 +1194,7 @@ Tela de listagem de alunos do psicólogo no sistema Pulse Manager, exibindo card
 </div>
 
 <div align="center">
+<sup>Figura 28: Wireframe do perfil do aluno na visão do Gestor.</sup><br>
     <img src="assets/wrfPerfilAlunoGest.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1190,6 +1204,7 @@ A tela exibe o perfil de um aluno com navegação lateral (Início, Alunos, Dash
 </div>
 
 <div align="center">
+<sup>Figura 29: Wireframe da tela inicial do Aluno.</sup><br>
     <img src="assets/wrfInicioAluno.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1199,6 +1214,7 @@ Tela inicial do aluno está dividida em quatro seções: jornada de aprendizado 
 </div>
 
 <div align="center">
+<sup>Figura 30: Wireframe da tela de Agenda.</sup><br>
     <img src="assets/wrfAgenda.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1208,7 +1224,8 @@ Wireframe da tela agenda com calendário mensal navegável e botão "+ Evento" �
 </div>
 
 <div align="center">
-    <img src="assets/wrfWireframesGest.jpg" ><br>
+<sup>Figura 31: Wireframe da tela de Notificações do Gestor.</sup><br>
+    <img src="./assets/wrfNotsGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1217,6 +1234,7 @@ Wireframe da tela notificações com uma lista à esquerda filtrada por abas (To
 </div>
 
 <div align="center">
+<sup>Figura 32: Wireframe da lista de alunos do Gestor.</sup><br>
     <img src="assets/wrfListaAlunosGest.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -1246,7 +1264,7 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 </div>
 
 <div align="center">
-<sup>Figura X: Azul Pulse - cor principal.</sup><br>
+<sup>Figura 33: Azul Pulse - cor principal.</sup><br>
 <img src="./assets/azulPulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
@@ -1258,7 +1276,7 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 </div>
 
 <div align="center">
-<sup>Figura X: Verde Pulse - cor secundária.</sup><br>
+<sup>Figura 34: Verde Pulse - cor secundária.</sup><br>
 <img src="./assets/verdePulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
@@ -1270,7 +1288,7 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 </div>
 
 <div align="center">
-<sup>Figura X: Amarelo Pulse - cor de destaque.</sup><br>
+<sup>Figura 35: Amarelo Pulse - cor de destaque.</sup><br>
 <img src="./assets/amareloPulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
@@ -1312,7 +1330,7 @@ O Pulse Manager adota a biblioteca **Lucide** como sistema de iconografia da pla
 </div>
 
 <div align="center">
-<sup>Figura X: Grid de ícones representativos da plataforma - Lucide, outline, stroke 2px.</sup><br>
+<sup>Figura 36: Grid de ícones representativos da plataforma - Lucide, outline, stroke 2px.</sup><br>
 <img src="./assets/gridIcones.png" width="600"><br>
 <sub>Fonte: Gerado a partir da biblioteca Lucide (open source). Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
@@ -1333,7 +1351,7 @@ Em casos onde a Lucide não oferecer o ícone necessário, as bibliotecas **Phos
 
 
 <div align="center">
-<sup>Figura X: Tela de Login Geral.</sup><br>
+<sup>Figura 37: Tela de Login Geral.</sup><br>
 <img src="./assets/loginGeral.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1346,6 +1364,7 @@ Esta tela está associada às User Stories US05, US07, US08 e US09, de acordo co
 ### Tela Inicial do Gestor
 
 <div align="center">
+<sup>Figura 38: Tela Inicial do Gestor.</sup><br>
 <img src="./assets/inicioGestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1357,6 +1376,7 @@ O protótipo apresenta a tela inicial do painel do gestor na plataforma, projeta
 ### Lista de Alunos apresentada ao Gestor
 
 <div align="center">
+<sup>Figura 39: Lista de Alunos do Gestor.</sup><br>
 <img src="./assets/listaAlunosGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1370,6 +1390,7 @@ Esta tela está associada às User Stories US01, US03 e US04, de acordo com os c
 ### Perfil do Aluno apresentado ao Gestor
 
 <div align="center">
+<sup>Figura 40: Perfil do Aluno do Gestor.</sup><br>
 <img src="./assets/perfilAlunoGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1381,6 +1402,7 @@ O protótipo apresenta a tela de perfil individual do aluno na visão do gestor,
 ### Dashboard apresentado ao Gestor
 
 <div align="center">
+<sup>Figura 41: Dashboard do Gestor.</sup><br>
 <img src="./assets/dashboardGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1394,6 +1416,7 @@ O corpo principal da página destaca-se por quatro cartões de métricas no topo
 ### Tela de Agenda do Gestor
 
 <div align="center">
+<sup>Figura 42: Tela de Agenda do Gestor.</sup><br>
 <img src="./assets/agendaGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1407,6 +1430,7 @@ Esta tela está associada às User Stories US01, US02 e US04, de acordo com os c
 ### Tela Inicial do Aluno
 
 <div align="center">
+<sup>Figura 43: Tela Inicial do Aluno.</sup><br>
 <img src="./assets/inicioAluno.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1419,6 +1443,7 @@ Esta tela está associada às User Stories US08, US09 e US10, de acordo com os c
 ### Tela de Perfil apresentada para o Aluno
 
 <div align="center">
+<sup>Figura 44: Perfil do Aluno.</sup><br>
 <img src="./assets/perfilAlunoAl.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1432,6 +1457,7 @@ Esta tela está associada às User Stories US01, US04 e US05, de acordo com os c
 ### Dashboard apresentado ao Aluno
 
 <div align="center">
+<sup>Figura 45: Dashboard do Aluno.</sup><br>
 <img src="./assets/dashboardAluno.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1444,6 +1470,7 @@ Os quatro cartões de métricas no topo sintetizam os dados mais relevantes para
 ### Tela Inicial do Aluno
 
 <div align="center">
+<sup>Figura 46: Tela Inicial do Psicólogo.</sup><br>
 <img src="./assets/inicioPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1457,6 +1484,7 @@ Os quatro cartões de métricas superiores apresentam os indicadores centrais do
 ### Lista de Alunos apresentada ao Psicólogo
 
 <div align="center">
+<sup>Figura 47: Lista de Alunos do Psicólogo.</sup><br>
 <img src="./assets/listaAlunosPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1470,6 +1498,7 @@ Esta tela está associada às User Stories US06 e US07, de acordo com os critér
 ### Dashboard apresentado ao Psicólogo
 
 <div align="center">
+<sup>Figura 48: Dashboard do Psicólogo.</sup><br>
 <img src="./assets/dashboardPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
@@ -1494,7 +1523,7 @@ A partir destes conceitos e utilizando como base o TAPI e outros materiais dispo
 </div>
 
 <div align="center">
-<sup>Figura 9: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
+<sup>Figura 49: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
 <img src="./assets/mer.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -1567,7 +1596,7 @@ O DER explicita as entidades do sistema, seus atributos, as respectivas chaves p
 </div>
 
 <div align="center">
-<sup>Figura 6: Diagrama Entidade-Relacionamento.</sup><br>
+<sup>Figura 50: Diagrama Entidade-Relacionamento.</sup><br>
 <img src="./assets/der.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
@@ -2415,34 +2444,36 @@ _Descreva as regras de autorização por rota e por operação, baseadas no perf
 
 _Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.)._
 
-## 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+## 3.9. Matriz de Rastreabilidade (RTM) 
 
-_A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais._
+A Matriz de Rastreabilidade (RTM) foi elaborada para relacionar os principais elementos do projeto, conectando personas, requisitos funcionais, regras de negócio, endpoints, telas, testes e evidências. Sua função é garantir que cada funcionalidade prevista tenha uma justificativa clara, uma implementação correspondente e uma forma de validação.
 
-| Persona | RF    | RN   | Endpoint    | Tela     | Teste | Evidência                          |
+No contexto do projeto, a RTM é importante porque permite verificar se os requisitos definidos nas etapas anteriores continuam coerentes com o que foi desenvolvido no sistema. Além disso, ela facilita a identificação de lacunas, como endpoints pendentes, testes ausentes ou artefatos sem evidência. Dessa forma, a matriz contribui para manter a documentação alinhada ao código, aos diagramas, à WebAPI e ao protótipo, fortalecendo a rastreabilidade e a qualidade técnica da entrega.
+
+| Persona | RF | RN | Endpoint | Tela | Teste | Evidência |
 | ------- | ----- | ---- | ----------- | -------- | ----- | ---------------------------------- |
-| Equipe Pulse Mais | RF001 | RN001, RN002, RN003, RN005, RN006, RN010, RN015, RN017 | `POST /api/alunos` | Cadastro | A definir | Registro retornado pela API |
-| Equipe Pulse Mais | RF002 | RN003, RN005, RN010, RN011, RN015 | Não implementado | Cadastro / Perfil do aluno | A definir | Formulário de edição de dados do aluno |
-| Equipe Pulse Mais | RF003 | - | `GET /api/alunos`, `GET /api/alunos/:id` | Busca / Perfil do aluno | A definir | Lista e detalhe retornados pela API |
-| Equipe Pulse Mais | RF004 | RN003, RN004, RN005, RN006, RN010, RN016 | `GET /api/alunos/:id`, `GET /api/jornada/resumo` | Perfil do aluno | A definir | Histórico parcial exibido no perfil |
-| Equipe Pulse Mais | RF005 | RN007, RN016 | Não implementado | Registro de frequência | A definir | Frequência registrada por aula |
-| Equipe Pulse Mais | RF006 | RN007, RN016 | Não implementado | Registro de eventos | A definir | Participação registrada por evento |
-| Equipe Pulse Mais | RF007 | RN008 | `GET /api/impacto/resumo` | Perfil do aluno | A definir | Dados de empregabilidade exibidos no perfil |
-| Equipe Pulse Mais | RF008 | - | `GET /api/impacto/resumo` | Perfil do aluno | A definir | Dados de ensino superior exibidos no perfil |
-| Psicólogo | RF009 | RN012, RN017 | `GET /api/prontuarios` | Prontuário | A definir | Listagem restrita de prontuários |
-| Todos os usuários | RF010 | RN011, RN012, RN015, RN017, RN018, RN019, RN020 | `GET /api/prontuarios` | Sistema (global) | A definir | Acesso restrito conforme perfil do usuário |
-| Equipe Pulse Mais | RF011 | RN015 | `GET /api/alunos` | Busca / Filtros | A definir | Lista filtrada retornada pela API |
-| Gestora | RF012 | RN006, RN009 | `GET /api/impacto/resumo`, `GET /api/jornada/resumo` | Dashboard | A definir | KPIs exibidos no dashboard |
-| Gestora | RF013 | RN008, RN009 | `GET /api/impacto/resumo` | Dashboard | A definir | Indicador de empregabilidade |
-| Gestora | RF014 | RN005, RN006, RN009 | Não implementado | Dashboard | A definir | Indicador de conclusão de programa |
-| Gestora | RF015 | RN007, RN009 | `GET /api/jornada/resumo` | Dashboard | A definir | Alertas e sinais de risco |
-| Gestora | RF016 | RN009 | `GET /api/impacto/resumo` | Dashboard | A definir | Indicador de ensino superior |
-| Aluno | RF017 | RN013, RN017 | Não implementado | Portal do aluno | A definir | Dados cadastrais exibidos no portal |
-| Aluno | RF018 | RN013, RN014, RN017 | Não implementado | Portal do aluno | A definir | Atualização de contato realizada pelo aluno |
-| Equipe Pulse Mais | RF019 | - | `GET /api/comunicacao`, `POST /api/comunicacao` | Comunicação | A definir | Comunicação cadastrada e listada |
-| Todos os usuários | RF020 | RN018 | Não implementado | Agenda | A definir | Visualização de agenda por perfil |
-| Gestora | RF021 | RN019 | Não implementado | Agenda | A definir | Item de agenda criado, editado ou cancelado |
-| Psicólogo | RF022 | RN020, RN017 | Não implementado | Perfil do aluno monitorado | A definir | Desempenho acadêmico exibido apenas para alunos monitorados |
+| Equipe Pulse Mais | RF001 | RN001, RN002, RN003, RN005, RN006, RN010, RN015, RN017 | `POST /api/alunos` | Cadastro | `src/tests/integration/alunos.integration.test.ts` - UC-03 CT01 a CT04; `src/tests/integration/codigo-pm.integration.test.ts` - CT01 a CT04; `src/tests/unit/services/aluno.service.test.ts` | Registro retornado pela API |
+| Equipe Pulse Mais | RF002 | RN003, RN005, RN010, RN011, RN015 | `PATCH /api/alunos/:idAluno` | Cadastro / Perfil do aluno | `src/tests/integration/alunos.integration.test.ts` - UC-05 CT01 a CT03; `src/tests/unit/services/aluno.service.test.ts` | Formulário de edição de dados do aluno |
+| Equipe Pulse Mais | RF003 | - | `GET /api/alunos`, `GET /api/alunos/:idAluno` | Busca / Perfil do aluno | `src/tests/integration/alunos.integration.test.ts` - UC-04 CT01 a CT05; `src/tests/unit/services/aluno.service.test.ts` | Lista e detalhe retornados pela API |
+| Equipe Pulse Mais | RF004 | RN003, RN004, RN005, RN006, RN010, RN016 | `GET /api/alunos/:idAluno`, `GET /api/jornada/resumo`, `GET /api/jornada/alunos/:idAluno` | Perfil do aluno | `src/tests/integration/jornada.integration.test.ts` - UC-07 CT01 a CT04; `src/tests/unit/services/jornada.service.test.ts` | Histórico parcial exibido no perfil |
+| Equipe Pulse Mais | RF005 | RN007, RN016 | `POST /api/frequencias` | Registro de frequência | `src/tests/integration/jornada.integration.test.ts` - UC-08 CT01 a CT05; `src/tests/unit/services/jornada.service.test.ts` | Frequência registrada por aula |
+| Equipe Pulse Mais | RF006 | RN007, RN016 | `POST /api/participacoes` | Registro de eventos | `src/tests/integration/jornada.integration.test.ts` - UC-09 CT01 a CT05; `src/tests/unit/services/jornada.service.test.ts` | Participação registrada por evento |
+| Equipe Pulse Mais | RF007 | RN008 | `PATCH /api/empregabilidade/:idAluno`, `GET /api/impacto/alunos-empregados` | Perfil do aluno | `src/tests/integration/jornada.integration.test.ts` - UC-10 CT01 a CT04; `src/tests/integration/dashboard.integration.test.ts` - UC-16 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Dados de empregabilidade exibidos no perfil |
+| Equipe Pulse Mais | RF008 | - | `PATCH /api/ensino-superior/:idAluno`, `GET /api/impacto/acesso-ensino-superior` | Perfil do aluno | `src/tests/integration/jornada.integration.test.ts` - UC-11 CT01 a CT04; `src/tests/integration/dashboard.integration.test.ts` - UC-18 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Dados de ensino superior exibidos no perfil |
+| Psicólogo | RF009 | RN012, RN017 | `GET /api/prontuarios`, `POST /api/prontuarios`, `GET /api/labels`, `POST /api/labels` | Prontuário | `src/tests/integration/saude-mental.integration.test.ts` - UC-20a CT01 a CT06; UC-20b CT01 a CT06; `src/tests/unit/services/saude-mental.service.test.ts` | Listagem restrita de prontuários |
+| Todos os usuários | RF010 | RN011, RN012, RN015, RN017, RN018, RN019, RN020 | `GET /api/prontuarios`, `POST /api/prontuarios`, `GET /api/agenda`, `POST /api/agenda`, `PATCH /api/agenda/:idAgenda`, `DELETE /api/agenda/:idAgenda` | Sistema global | `src/tests/integration/saude-mental.integration.test.ts`; `src/tests/integration/agenda.integration.test.ts`; `src/tests/integration/notificacao-psicologo.integration.test.ts` | Acesso restrito conforme perfil do usuário |
+| Equipe Pulse Mais | RF011 | RN015 | `GET /api/alunos/segmentacao` | Busca / Filtros | `src/tests/integration/segmentacao.integration.test.ts` - UC-13 CT01 a CT06; `src/tests/unit/services/segmentacao.service.test.ts` | Lista filtrada retornada pela API |
+| Gestora | RF012 | RN006, RN009 | `GET /api/impacto/resumo`, `GET /api/jornada/resumo` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-14 CT01 a CT06; `src/tests/unit/services/dashboard.service.test.ts` | KPIs exibidos no dashboard |
+| Gestora | RF013 | RN008, RN009 | `GET /api/impacto/alunos-empregados` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-16 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Indicador de empregabilidade |
+| Gestora | RF014 | RN005, RN006, RN009 | `GET /api/impacto/conclusao-programas` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-15 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Indicador de conclusão de programa |
+| Gestora | RF015 | RN007, RN009 | `GET /api/jornada/evasao-risco` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-19 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Alertas e sinais de risco |
+| Gestora | RF016 | RN009 | `GET /api/impacto/acesso-ensino-superior` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-18 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Indicador de ensino superior |
+| Aluno | RF017 | RN013, RN017 | `GET /api/portal/alunos/:idAluno` | Portal do aluno | `src/tests/integration/portal-aluno.integration.test.ts` - UC-01 CT01 a CT03; `src/tests/unit/services/portal-aluno.service.test.ts` | Dados cadastrais exibidos no portal |
+| Aluno | RF018 | RN013, RN014, RN017 | `PATCH /api/portal/alunos/:idAluno/contato` | Portal do aluno | `src/tests/integration/portal-aluno.integration.test.ts` - UC-02 CT01 a CT05; `src/tests/unit/services/portal-aluno.service.test.ts` | Atualização de contato realizada pelo aluno |
+| Equipe Pulse Mais | RF019 | - | `GET /api/comunicacao`, `POST /api/comunicacao`, `GET /api/comunicacao/oportunidades`, `POST /api/comunicacao/oportunidades`, `GET /api/portal/alunos/:idAluno/notificacoes`, `GET /api/portal/oportunidades` | Comunicação | `src/tests/integration/notificacoes.integration.test.ts` - RF019a CT01 a CT08 e RF019b CT01 a CT05; `src/tests/integration/notificacao-psicologo.integration.test.ts` - CT01 a CT04; `src/tests/integration/portal-aluno-notificacoes.integration.test.ts` - CT01 a CT05; `src/tests/unit/services/notificacao.service.test.ts` | Comunicação cadastrada e listada |
+| Todos os usuários | RF020 | RN018 | `GET /api/agenda` | Agenda | `src/tests/integration/agenda.integration.test.ts` - RF020 CT01 a CT05; `src/tests/unit/services/agenda.service.test.ts` | Visualização de agenda por perfil |
+| Gestora | RF021 | RN019 | `POST /api/agenda`, `PATCH /api/agenda/:idAgenda`, `DELETE /api/agenda/:idAgenda` | Agenda | `src/tests/integration/agenda.integration.test.ts` - RF021 CT01 a CT07; `src/tests/unit/services/agenda.service.test.ts` | Item de agenda criado, editado ou cancelado |
+| Psicólogo | RF022 | RN020, RN017 | `GET /api/psicologo/alunos/:idAluno/desempenho` | Perfil do aluno monitorado | `src/tests/integration/desempenho-psicologo.integration.test.ts` - UC-23 CT01 a CT05 | Desempenho acadêmico exibido apenas para alunos monitorados |
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
@@ -2466,7 +2497,7 @@ O back-end foi estruturado em camadas (routes → controllers → services → r
 | Portal do aluno | `GET /portal/alunos/:id`, `PATCH /portal/alunos/:id/contato`, `GET /portal/alunos/:id/notificacoes`, `GET /portal/oportunidades` |
 | Psicólogo | `GET /psicologo/alunos/:id/desempenho` (com controle de permissão por perfil) |
 
-Os endpoints de jornada, saúde mental, portal e psicólogo aplicam o `authMiddleware`, que lê os headers `x-user-id`, `x-user-role` e `x-user-name` e os anexa ao objeto de requisição — não há validação de token nesta versão. Foram implementados testes de integração para 10 módulos: alunos, código PM, dashboard, jornada, agenda, notificações, portal do aluno, saúde mental e segmentação.
+Os endpoints de jornada, saúde mental, portal e psicólogo aplicam o `authMiddleware`, que lê os headers `x-user-id`, `x-user-role` e `x-user-name` e os anexa ao objeto de requisição - não há validação de token nesta versão. Foram implementados testes de integração para 10 módulos: alunos, código PM, dashboard, jornada, agenda, notificações, portal do aluno, saúde mental e segmentação.
 
 **Protótipos de Alta Fidelidade**
 
@@ -2475,7 +2506,7 @@ Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os flux
 Protótipo desenvolvido para os três perfis:
 
 <div align="center">
-<sup>Figura: Tela de login — perfil gestora.</sup><br>
+<sup>Figura 51: Tela de login — perfil gestora.</sup><br>
 <img src="./assets/loginGeral.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -2483,7 +2514,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura: Dashboard — visão da gestora.</sup><br>
+<sup>Figura 52: Dashboard — visão da gestora.</sup><br>
 <img src="./assets/inicioGestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -2491,7 +2522,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura: Listagem de alunos — perfil gestora.</sup><br>
+<sup>Figura 53: Listagem de alunos — perfil gestora.</sup><br>
 <img src="./assets/listaAlunosGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -2499,7 +2530,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura: Listagem de alunos — perfil psicóloga.</sup><br>
+<sup>Figura 54: Listagem de alunos — perfil psicóloga.</sup><br>
 <img src="./assets/listaAlunosPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -2507,7 +2538,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura: Perfil do aluno — visão do aluno.</sup><br>
+<sup>Figura 55: Perfil do aluno — visão do aluno.</sup><br>
 <img src="./assets/perfilAlunoAl.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
@@ -2841,11 +2872,25 @@ _Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem 
 
 ## 6.4 Público-Alvo
 
-_a) Segmentação de Mercado (até 250 palavras)_
-_Descreva os principais segmentos de mercado a serem atendidos pela aplicação. Utilize bases de dados e fontes confiáveis._
+### a) Segmentação de Mercado
 
-_b) Perfil do Público-Alvo (até 250 palavras)_
-_Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias._
+A aplicação desenvolvida para a Pulse Mais está inserida no segmento de soluções digitais para organizações de impacto social, educação, empregabilidade e acompanhamento de jovens em situação de vulnerabilidade socioeconômica. Identificou-se como mercado prioritário o conjunto de organizações do terceiro setor, programas educacionais, iniciativas de formação profissional, redes de mentoria e instituições que atuam com inclusão produtiva de jovens.
+
+Esse segmento foi definido a partir da necessidade de centralizar informações, acompanhar trajetórias individuais, registrar participação em atividades, monitorar indicadores e gerar evidências de impacto. No contexto brasileiro, essa demanda é relevante porque ainda existe um número expressivo de jovens com dificuldades de permanência educacional e inserção produtiva. Dados do IBGE indicam que, em 2023, 19,8% da população brasileira de 15 a 29 anos não estudava nem estava ocupada. Além disso, em 2024, 8,7 milhões de jovens de 14 a 29 anos não haviam concluído o ensino médio.
+
+Assim, concluiu-se que a aplicação atende um segmento formado por organizações que precisam profissionalizar a gestão de dados sociais, educacionais e de empregabilidade, especialmente em iniciativas voltadas à juventude, tecnologia e redução de desigualdades.
+
+### b) Perfil do Público-Alvo
+
+O público-alvo direto da aplicação é composto pela equipe interna da Pulse Mais, incluindo gestores, coordenadores de programas, profissionais de operação, mentores e responsáveis pelo acompanhamento dos alunos. Esses usuários possuem necessidade de consultar, cadastrar, atualizar e analisar dados sobre jornada, frequência, participação, agenda, saúde mental, oportunidades, empregabilidade e ensino superior.
+
+Também foi identificado como público usuário o profissional de acompanhamento psicossocial, especialmente psicólogos responsáveis por registros sensíveis. Esse perfil demanda acesso controlado, organização de histórico, labels, anotações qualitativas e informações que apoiem decisões de cuidado e encaminhamento.
+
+O público indireto é formado por alunos e ex-alunos atendidos pela Pulse Mais. Demograficamente, trata-se de jovens em processo de formação educacional e profissional, com interesse em tecnologia, empregabilidade, mentoria e acesso a oportunidades. Psicograficamente, esse público tende a buscar desenvolvimento, pertencimento, orientação e maior previsibilidade sobre sua trajetória. Comportamentalmente, espera-se que utilize canais digitais para consultar agenda, notificações, eventos e informações pessoais.
+
+Foi observado que as principais dores envolvem dispersão de dados, dificuldade de acompanhamento individualizado, baixa visibilidade sobre evolução e ausência de indicadores consolidados. Portanto, a aplicação busca atender usuários que necessitam de uma solução clara, segura e orientada à gestão da jornada dos jovens.
+
+
 
 ## 6.5 Posicionamento
 
@@ -2877,15 +2922,14 @@ _Relacione os pontos de melhorias evidenciados nos testes com planos de ações 
 
 _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
 
-# <a name="c8"></a>8. Referências (sprints 1 a 5)
+# <a name="c8"></a>8. Referências 
 
-_Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
+IBGE- INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. **Uma em cada quatro mulheres de 15 a 29 anos não estudava e nem estava ocupada em 2023**. Agência IBGE Notícias, 2024. Disponível em: [https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/39531-uma-em-cada-quatro-mulheres-de-15-a-29-anos-nao-estudava-e-nem-estava-ocupada-em-2023](https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/39531-uma-em-cada-quatro-mulheres-de-15-a-29-anos-nao-estudava-e-nem-estava-ocupada-em-2023). Acesso em: 3 jun. 2026.
 
-LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
-SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
+IBGE- INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. **Indicadores educacionais avançam em 2024, mas atraso escolar aumenta**. Agência IBGE Notícias, 2025. Disponível em: [https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/43699-indicadores-educacionais-avancam-em-2024-mas-atraso-escolar-aumenta](https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/43699-indicadores-educacionais-avancam-em-2024-mas-atraso-escolar-aumenta). Acesso em: 8 jun. 2026.
 
-INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
-SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
+CETIC.BR- CENTRO REGIONAL DE ESTUDOS PARA O DESENVOLVIMENTO DA SOCIEDADE DA INFORMAÇÃO. **TIC Educação**. São Paulo: Cetic.br, [s.d.]. Disponível em: [https://cetic.br/pesquisa/educacao/](https://cetic.br/pesquisa/educacao/). Acesso em: 8 jun. 2026.
+
 
 # <a name="c9"></a>Anexos
 
