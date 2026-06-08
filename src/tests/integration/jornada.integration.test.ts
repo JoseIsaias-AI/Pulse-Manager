@@ -233,6 +233,20 @@ describe('UC-07 a UC-12 - Jornada do aluno', () => {
         message: 'O campo nota deve ser um numero entre 0 e 10.'
       });
     });
+
+    it('CT05 - deve retornar 404 quando atividade nao existe', async () => {
+      const response = await request(app).post('/api/frequencias').send({
+        idAluno: alunoMaria.idAluno,
+        idAtividade: 9999,
+        statusPart: true
+      });
+
+      expect(response.status).toBe(404);
+      expect(response.body).toMatchObject({
+        success: false,
+        message: 'Atividade nao encontrada.'
+      });
+    });
   });
 
   describe('UC-09 - Registrar participacao em eventos', () => {
@@ -297,6 +311,20 @@ describe('UC-07 a UC-12 - Jornada do aluno', () => {
       expect(response.body).toMatchObject({
         success: false,
         message: 'Atividade nao encontrada.'
+      });
+    });
+
+    it('CT05 - deve retornar 400 para idAtividade invalido', async () => {
+      const response = await request(app).post('/api/participacoes').send({
+        idAluno: alunoJoao.idAluno,
+        idAtividade: 0,
+        statusPart: true
+      });
+
+      expect(response.status).toBe(400);
+      expect(response.body).toMatchObject({
+        success: false,
+        message: 'O campo idAtividade deve ser um numero inteiro positivo.'
       });
     });
   });

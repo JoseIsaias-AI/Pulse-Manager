@@ -42,14 +42,14 @@ const ATIVIDADE_SELECT = `
 function mapParticipacao(row: Record<string, unknown>): ParticipacaoRecord {
   const atividade = row.atividadeTitulo
     ? {
-        idAtividade: row.idAtividade as number,
-        titulo: row.atividadeTitulo as string,
-        tipo: row.atividadeTipo as string,
-        descricao: row.atividadeDescricao as string | null,
-        data: row.atividadeData as string | null,
-        modalidade: row.atividadeModalidade as string | null,
-        cargaHoraria: row.atividadeCargaHoraria as number | null
-      }
+      idAtividade: row.idAtividade as number,
+      titulo: row.atividadeTitulo as string,
+      tipo: row.atividadeTipo as string,
+      descricao: row.atividadeDescricao as string | null,
+      data: row.atividadeData as string | null,
+      modalidade: row.atividadeModalidade as string | null,
+      cargaHoraria: row.atividadeCargaHoraria as number | null
+    }
     : undefined;
 
   // SQLite retorna booleanos como 0/1; forçar conversão para compatibilidade entre envs
