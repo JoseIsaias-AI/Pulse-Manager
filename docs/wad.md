@@ -2581,9 +2581,17 @@ _Caracterize o público-alvo com dados demográficos, psicográficos e comportam
 
 ## 6.5 Business Model Canvas
 
-_Apresente o Business Model Canvas (Canvas de Modelo de Negócios) da aplicação, contemplando os nove blocos de Osterwalder: Parcerias-chave, Atividades-chave, Recursos-chave, Proposta de Valor, Relacionamento com Clientes, Canais, Segmentos de Clientes, Estrutura de Custos e Fontes de Receita._
+<div align="justify">
 
-_Posicione aqui a imagem do canvas elaborado pela equipe (através de link ou transcrito para estrutura markdown)._
+O Business Model Canvas é uma ferramenta visual que descreve, de forma estruturada, como a Pulse Manager cria, entrega e captura valor, conectando os principais elementos do modelo de negócio em uma única representação.
+
+</div>
+
+<div align="center">
+<sup>Figura 10: Business Model Canvas da Pulse Manager.</sup><br>
+<img src="./assets/businessmodelcanvas.png"><br>
+<sub>Fonte: Elaborado pela equipe (2026), com base no Business Model Canvas de Strategyzer.</sub><br>
+</div>
 
 ## 6.6 Posicionamento
 
