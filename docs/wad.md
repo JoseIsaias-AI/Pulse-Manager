@@ -2892,7 +2892,21 @@ Foi observado que as principais dores envolvem dispersão de dados, dificuldade 
 
 
 
-## 6.5 Posicionamento
+## 6.5 Business Model Canvas
+
+<div align="justify">
+
+O Business Model Canvas é uma ferramenta visual que descreve, de forma estruturada, como a Pulse Manager cria, entrega e captura valor, conectando os principais elementos do modelo de negócio em uma única representação.
+
+</div>
+
+<div align="center">
+<sup>Figura 10: Business Model Canvas da Pulse Manager.</sup><br>
+<img src="./assets/businessmodelcanvas.png"><br>
+<sub>Fonte: Elaborado pela equipe (2026), com base no Business Model Canvas de Strategyzer.</sub><br>
+</div>
+
+## 6.6 Posicionamento
 
 _a) Proposta de Valor Única (até 250 palavras)_
 _Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado._
@@ -2900,7 +2914,7 @@ _Defina de maneira clara o que torna a sua aplicação única e valiosa para o m
 _b) Estratégia de Diferenciação (até 250 palavras)_
 _Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento._
 
-## 6.6 Estratégia de Marketing
+## 6.7 Estratégia de Marketing
 
 _a) Produto/Serviço (até 200 palavras)_
 _Descreva as funcionalidades, benefícios e diferenciais da aplicação_
