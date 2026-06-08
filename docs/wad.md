@@ -2579,7 +2579,13 @@ _Descreva os principais segmentos de mercado a serem atendidos pela aplicação.
 _b) Perfil do Público-Alvo (até 250 palavras)_
 _Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias._
 
-## 6.5 Posicionamento
+## 6.5 Business Model Canvas
+
+_Apresente o Business Model Canvas (Canvas de Modelo de Negócios) da aplicação, contemplando os nove blocos de Osterwalder: Parcerias-chave, Atividades-chave, Recursos-chave, Proposta de Valor, Relacionamento com Clientes, Canais, Segmentos de Clientes, Estrutura de Custos e Fontes de Receita._
+
+_Posicione aqui a imagem do canvas elaborado pela equipe (através de link ou transcrito para estrutura markdown)._
+
+## 6.6 Posicionamento
 
 _a) Proposta de Valor Única (até 250 palavras)_
 _Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado._
@@ -2587,7 +2593,7 @@ _Defina de maneira clara o que torna a sua aplicação única e valiosa para o m
 _b) Estratégia de Diferenciação (até 250 palavras)_
 _Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento._
 
-## 6.6 Estratégia de Marketing
+## 6.7 Estratégia de Marketing
 
 _a) Produto/Serviço (até 200 palavras)_
 _Descreva as funcionalidades, benefícios e diferenciais da aplicação_
