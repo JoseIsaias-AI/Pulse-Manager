@@ -2921,6 +2921,47 @@ SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publ
 INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
 SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
 
+ABES; IDC. Mercado de TI no Brasil cresce 18,5% em 2025, e País segue líder na América Latina. São Paulo: ABES, 2026. Disponível em: https://abes.org.br/mercado-de-ti-no-brasil-cresce-185-em-2025-e-pais-segue-lider-na-america-latina/. Acesso em: 8 jun. 2026.
+
+BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais (LGPD). Brasília, DF: Presidência da República, 2018. Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm. Acesso em: 8 jun. 2026.
+
+DISTRITO. EdTech Report 2024. São Paulo: Distrito, 2024. Disponível em: https://materiais.distrito.me/report/edtech-report-2024. Acesso em: 8 jun. 2026.
+
+DISTRITO. EdTech Report 2025. São Paulo: Distrito, 2025. Disponível em: https://materiais.distrito.me/report/edtech-report. Acesso em: 8 jun. 2026.
+
+EXPRESS. Express: Node.js web application framework. 2026. Disponível em: https://expressjs.com/en/. Acesso em: 8 jun. 2026.
+
+GOOGLE FONTS. Anton. 2026. Disponível em: https://fonts.google.com/specimen/Anton. Acesso em: 8 jun. 2026.
+
+GOOGLE FONTS. Poppins. 2026. Disponível em: https://fonts.google.com/specimen/Poppins. Acesso em: 8 jun. 2026.
+
+IBGE. Indicadores educacionais avançam em 2024, mas atraso escolar aumenta. Agência IBGE Notícias, Rio de Janeiro, 13 jun. 2025. Disponível em: https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/43699-indicadores-educacionais-avancam-em-2024-mas-atraso-escolar-aumenta. Acesso em: 8 jun. 2026.
+
+IPEA. Brasil possui mais de 897 mil organizações da sociedade civil ativas. Brasília, DF: Instituto de Pesquisa Econômica Aplicada, 5 fev. 2025. Disponível em: https://www.ipea.gov.br/portal/categorias/45-todas-as-noticias/noticias/15591-brasil-possui-mais-de-897-mil-organizacoes-da-sociedade-civil-ativas. Acesso em: 8 jun. 2026.
+
+IPEA. Estudo analisa a importância do terceiro setor para o PIB. Mapa das Organizações da Sociedade Civil, Brasília, DF: Instituto de Pesquisa Econômica Aplicada, 2023. Disponível em: https://mapaosc.ipea.gov.br/post/164/estudo-analisa-a-importancia-do-terceiro-setor-para-o-pib. Acesso em: 8 jun. 2026.
+
+ISO. ISO/IEC 25010:2011: Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models. Genebra: International Organization for Standardization, 2011. Disponível em: https://www.iso.org/standard/35733.html. Acesso em: 8 jun. 2026.
+
+JEST. Jest: delightful JavaScript testing. 2026. Disponível em: https://jestjs.io/. Acesso em: 8 jun. 2026.
+
+LUCIDE. Lucide Icons. 2026. Disponível em: https://lucide.dev/. Acesso em: 8 jun. 2026.
+
+NODE.JS. Node.js. 2026. Disponível em: https://nodejs.org/en. Acesso em: 8 jun. 2026.
+
+POSTGRESQL GLOBAL DEVELOPMENT GROUP. PostgreSQL Documentation. 2026. Disponível em: https://www.postgresql.org/docs/. Acesso em: 8 jun. 2026.
+
+STRATEGYZER. Value Proposition Canvas: download the official template. 2026. Disponível em: https://www.strategyzer.com/library/the-value-proposition-canvas. Acesso em: 8 jun. 2026.
+
+SUPERTEST. Supertest. npm, 2026. Disponível em: https://www.npmjs.com/package/supertest. Acesso em: 8 jun. 2026.
+
+TYPESCRIPT. TypeScript Documentation. 2026. Disponível em: https://www.typescriptlang.org/docs/. Acesso em: 8 jun. 2026.
+
+WEBAIM. Contrast Checker. 2026. Disponível em: https://webaim.org/resources/contrastchecker/. Acesso em: 8 jun. 2026.
+
+WORLD WIDE WEB CONSORTIUM. Web Content Accessibility Guidelines (WCAG) 2.1. W3C Recommendation, 2018. Disponível em: https://www.w3.org/TR/WCAG21/. Acesso em: 8 jun. 2026.
+
+
 # <a name="c9"></a>Anexos
 
 _Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
