@@ -2872,11 +2872,15 @@ _Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem 
 
 ## 6.4 Público-Alvo
 
-_a) Segmentação de Mercado (até 250 palavras)_
-_Descreva os principais segmentos de mercado a serem atendidos pela aplicação. Utilize bases de dados e fontes confiáveis._
+### a) Segmentação de Mercado
 
-_b) Perfil do Público-Alvo (até 250 palavras)_
-_Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias._
+A aplicação desenvolvida para a Pulse Mais está inserida no segmento de soluções digitais para organizações de impacto social, educação, empregabilidade e acompanhamento de jovens em situação de vulnerabilidade socioeconômica. Identificou-se como mercado prioritário o conjunto de organizações do terceiro setor, programas educacionais, iniciativas de formação profissional, redes de mentoria e instituições que atuam com inclusão produtiva de jovens.
+
+Esse segmento foi definido a partir da necessidade de centralizar informações, acompanhar trajetórias individuais, registrar participação em atividades, monitorar indicadores e gerar evidências de impacto. No contexto brasileiro, essa demanda é relevante porque ainda existe um número expressivo de jovens com dificuldades de permanência educacional e inserção produtiva. Dados do IBGE indicam que, em 2023, 19,8% da população brasileira de 15 a 29 anos não estudava nem estava ocupada. Além disso, em 2024, 8,7 milhões de jovens de 14 a 29 anos não haviam concluído o ensino médio.
+
+Assim, concluiu-se que a aplicação atende um segmento formado por organizações que precisam profissionalizar a gestão de dados sociais, educacionais e de empregabilidade, especialmente em iniciativas voltadas à juventude, tecnologia e redução de desigualdades.
+
+
 
 ## 6.5 Posicionamento
 
@@ -2908,15 +2912,14 @@ _Relacione os pontos de melhorias evidenciados nos testes com planos de ações 
 
 _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
 
-# <a name="c8"></a>8. Referências (sprints 1 a 5)
+# <a name="c8"></a>8. Referências 
 
-_Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
+IBGE- INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. **Uma em cada quatro mulheres de 15 a 29 anos não estudava e nem estava ocupada em 2023**. Agência IBGE Notícias, 2024. Disponível em: [https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/39531-uma-em-cada-quatro-mulheres-de-15-a-29-anos-nao-estudava-e-nem-estava-ocupada-em-2023](https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/39531-uma-em-cada-quatro-mulheres-de-15-a-29-anos-nao-estudava-e-nem-estava-ocupada-em-2023). Acesso em: 3 jun. 2026.
 
-LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
-SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
+IBGE- INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. **Indicadores educacionais avançam em 2024, mas atraso escolar aumenta**. Agência IBGE Notícias, 2025. Disponível em: [https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/43699-indicadores-educacionais-avancam-em-2024-mas-atraso-escolar-aumenta](https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/43699-indicadores-educacionais-avancam-em-2024-mas-atraso-escolar-aumenta). Acesso em: 8 jun. 2026.
 
-INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
-SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
+CETIC.BR- CENTRO REGIONAL DE ESTUDOS PARA O DESENVOLVIMENTO DA SOCIEDADE DA INFORMAÇÃO. **TIC Educação**. São Paulo: Cetic.br, [s.d.]. Disponível em: [https://cetic.br/pesquisa/educacao/](https://cetic.br/pesquisa/educacao/). Acesso em: 8 jun. 2026.
+
 
 # <a name="c9"></a>Anexos
 
