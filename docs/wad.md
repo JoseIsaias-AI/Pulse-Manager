@@ -2637,25 +2637,51 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## 5.1. Relatório de testes automatizados do backend (sprint 4)
 
 Os testes automatizados do backend foram implementados com **Jest**, contemplando duas abordagens complementares:
 
 - **_White-box_** — testes unitários de Service que exercitam ramos internos, exceções e regras de negócio com conhecimento da implementação.
 - **_Black-box_** — testes de integração dos endpoints via Jest + Supertest, verificando o contrato HTTP, status code, body e efeitos observáveis sem depender da implementação interna.
 
+O relatório abaixo consolida a estrutura real existente em `src/tests`, corrige a organização das evidências e explicita o escopo validado pela suíte automatizada.
+
+| Indicador | Resultado validado |
+|---|---:|
+| Arquivos de testes unitários de Service | 8 |
+| Casos de testes unitários de Service | 110 |
+| Arquivos de testes de integração de endpoints | 12 |
+| Casos de testes de integração de endpoints | 156 |
+| Total de arquivos automatizados | 20 |
+| Total de casos automatizados aprovados | 266 |
+| Comando principal de validação | `npm test` |
+
+Essa tabela apresenta uma visão geral da suíte automatizada, indicando o volume de arquivos, a quantidade de testes e o comando usado para validar o backend. Ela serve para mostrar rapidamente o tamanho da cobertura automatizada entregue.
+
 ### 5.1.1 Estratégia de Testes
 <div align="justify">
 
 A suíte de testes automatizados da aplicação combina testes de integração via Supertest e testes unitários de Service. Os testes de integração cobrem de forma unificada as camadas de Controller, Service e Repository em cada requisição, enquanto os testes unitários de Service validam regras de negócio de forma isolada, com repositories e integrações externas mockadas. Essa combinação permite verificar tanto o contrato HTTP dos endpoints quanto os ramos internos mais relevantes da camada de negócio.
 
+| Campo | Definição adotada |
+|---|---|
+| Framework de testes | Jest com `ts-jest` e ambiente `node`. |
+| Biblioteca de requisições HTTP | Supertest, usada nos arquivos com sufixo `.integration.test.ts`. |
+| Local dos testes unitários | `src/tests/unit/services`. |
+| Local dos testes de integração | `src/tests/integration`. |
+| Setup global | `src/tests/setup.js`, responsável por definir `NODE_ENV=test`. |
+| Banco usado na integração | `sqljs` em memória, configurado automaticamente para o ambiente de teste. |
+| Critério de aprovação | Todas as suítes executadas sem falhas, com status HTTP, body, exceções e efeitos observáveis validados. |
+
+Essa tabela explica a base técnica usada nos testes. Ela serve para deixar claro quais ferramentas, diretórios e critérios sustentam a execução automatizada.
+
 **Tipos de teste implementados**
 
 A suíte é organizada em três tipos, diferenciados pelo nível de isolamento e pelo uso de mocks:
 
-- **Tipo 1 - Testes unitários de Service:** validação isolada da camada de `services/`, sem acesso a banco de dados real, Supabase, PostgreSQL, rotas ou controllers. As dependências externas, como repositories e integrações de auditoria, são simuladas por mocks com `jest.fn()`.
-- **Tipo 2 - Integração pura:** banco em memória, requisição HTTP real e nenhum mock. O arquivo `jornada.integration.test.ts` é um exemplo representativo desse tipo. Todos os efeitos observáveis - status HTTP, corpo da resposta e estado do banco - são verificados sem substituição de dependência interna.
-- **Tipo 3 - Integração com mock de dependência externa:** mesmo setup do Tipo 2, com a diferença de que `jest.mock()` é aplicado exclusivamente sobre integrações externas, como serviços que fariam chamadas reais de rede em produção. O arquivo `segmentacao.integration.test.ts` representa esse tipo: banco, HTTP, Controller, Service e Repository permanecem reais; apenas `registrarConsultaSegmentacao` é substituído por um `jest.fn()`.
+- **Tipo 1 - Testes unitários de Service:** validação isolada da camada de `src/backend/services`, sem acesso a banco de dados real, Supabase, PostgreSQL, rotas ou controllers. As dependências externas, como repositories e integrações de auditoria, são simuladas por mocks com `jest.fn()`.
+- **Tipo 2 - Integração pura:** banco em memória, requisição HTTP real e nenhum mock. O arquivo `src/tests/integration/jornada.integration.test.ts` é um exemplo representativo desse tipo. Todos os efeitos observáveis - status HTTP, corpo da resposta e estado do banco - são verificados sem substituição de dependência interna.
+- **Tipo 3 - Integração com mock de dependência externa:** mesmo setup do Tipo 2, com a diferença de que `jest.mock()` é aplicado exclusivamente sobre integrações externas, como serviços que fariam chamadas reais de rede em produção. O arquivo `src/tests/integration/segmentacao.integration.test.ts` representa esse tipo: banco, HTTP, Controller, Service e Repository permanecem reais; apenas `registrarConsultaSegmentacao` é substituído por um `jest.fn()`.
 
 **Padrão de escrita - AAA**
 
@@ -2667,7 +2693,7 @@ Todos os casos de teste seguem o padrão Arrange, Act, Assert:
 
 **Determinismo e isolamento**
 
-O determinismo da suíte de integração é garantido pelo mecanismo configurado em `connection.ts`, ativado automaticamente quando `NODE_ENV=test` - valor definido por `setup.js` antes de qualquer teste, referenciado em `jest.config.ts` via `setupFiles`. Nesse modo, a aplicação instancia um DataSource com `type: 'sqljs'` - banco SQLite compilado em WebAssembly que existe exclusivamente em memória durante a execução do Jest, sem dependência de servidor externo. A flag `dropSchema: true` garante que o schema seja descartado na inicialização; o `beforeEach` de cada arquivo de teste executa `AppDataSource.synchronize(true)`, que dropa e recria todas as tabelas do zero antes de cada caso de teste individual.
+O determinismo da suíte de integração é garantido pelo mecanismo configurado em `src/backend/database/connection.ts`, ativado automaticamente quando `NODE_ENV=test` - valor definido por `src/tests/setup.js` antes de qualquer teste, referenciado em `jest.config.ts` via `setupFiles`. Nesse modo, a aplicação instancia um DataSource com `type: 'sqljs'` - banco SQLite compilado em WebAssembly que existe exclusivamente em memória durante a execução do Jest, sem dependência de servidor externo. A flag `dropSchema: true` garante que o schema seja descartado na inicialização; o `beforeEach` de cada arquivo de teste executa `AppDataSource.synchronize(true)`, que dropa e recria todas as tabelas do zero antes de cada caso de teste individual.
 
 Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
 
@@ -2681,7 +2707,7 @@ Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
 ### 5.1.2 Testes Unitários de Service
 <div align="justify">
 
-Os testes unitários de Service foram organizados em `src/tests/unit/services`, seguindo o padrão de nomenclatura `*.service.test.ts`. O objetivo foi validar os principais comportamentos dos services ligados aos endpoints ativos do backend, contemplando cenários de sucesso, erros de validação, regras de negócio, conflitos, registros inexistentes e chamadas corretas aos repositories mockados.
+Os testes unitários de Service foram organizados em `src/tests/unit/services`, seguindo o padrão de nomenclatura com sufixo `.service.test.ts`. O objetivo foi validar os principais comportamentos dos services ligados aos endpoints ativos do backend, contemplando cenários de sucesso, erros de validação, regras de negócio, conflitos, registros inexistentes e chamadas corretas aos repositories mockados.
 
 | Service testado | Arquivo de teste | Quantidade de testes | Principais responsabilidades validadas |
 | --- | --- | ---: | --- |
@@ -2694,6 +2720,8 @@ Os testes unitários de Service foram organizados em `src/tests/unit/services`, 
 | `PortalAlunoService` | `src/tests/unit/services/portal-aluno.service.test.ts` | 13 | Visualização de perfil, atualização de contato, normalização de email/telefone, permissões de notificações e oportunidades do portal. |
 | `SaudeMentalService` | `src/tests/unit/services/saude-mental.service.test.ts` | 11 | Prontuários, labels, restrição ao perfil psicólogo, validação de aluno, tipo de label, título, observação e descrição. |
 | **Total** | **8 arquivos** | **110 testes** | **Cobertura unitária das principais regras de negócio da camada de Service.** |
+
+Essa tabela organiza os testes unitários por Service. Ela serve para mostrar quais regras de negócio foram validadas de forma isolada e quantos testes existem para cada service.
 
 **AlunoService**
 
@@ -2732,79 +2760,78 @@ Os testes do `SaudeMentalService` validam listagem de prontuários apenas para p
 ### 5.1.3 Testes de Integração de Endpoints
 <div align="justify">
 
-Os testes de integração cobrem os endpoints principais da aplicação por meio de requisições HTTP reais via Supertest, com banco SQLite in-memory. Para cada endpoint, a cobertura segue quatro cenários-chave: sucesso (`200`/`201`), falha de validação (`400`/`422`), regra de negócio violada (`409`/`422`/`403`) e recurso não encontrado (`404`). Quando um cenário é marcado como N/A, significa que aquela categoria de erro não se aplica à lógica do endpoint - não é um gap de cobertura.
+Os testes de integração cobrem os endpoints principais da aplicação por meio de requisições HTTP reais via Supertest, com banco em memória. Para cada endpoint, a cobertura segue quatro cenários-chave: sucesso (`200`/`201`), falha de validação (`400`/`422`), regra de negócio violada (`409`/`422`/`403`) e recurso não encontrado (`404`). Quando um cenário é marcado como N/A, significa que aquela categoria de erro não se aplica à lógica do endpoint - não é um gap de cobertura.
 
 A suíte de integração totaliza **156 testes distribuídos em 12 arquivos**, todos executados via `npm test` sem falhas.
 
-**Módulo: Alunos**
+| Arquivo de integração                                                 | Módulo/Requisito coberto                    | Quantidade de testes | Escopo principal                                                                                                 |
+| --------------------------------------------------------------------- | ------------------------------------------- | -------------------: | ---------------------------------------------------------------------------------------------------------------- |
+| `src/tests/integration/alunos.integration.test.ts`                    | UC-03 a UC-06 / gestão de alunos            | 17                   | Cadastro, listagem, consulta, atualização, inativação, código PM, validações, duplicidade e RNF de qualidade.    |
+| `src/tests/integration/codigo-pm.integration.test.ts`                 | RN001 / geração de identificador interno    | 4                    | Sequencial anual `PM-AAAA-NNN`, reinício por ano e formato do código gerado.                                     |
+| `src/tests/integration/jornada.integration.test.ts`                   | UC-07 a UC-12 / jornada do aluno            | 28                   | Histórico consolidado, frequência, participação, empregabilidade, ensino superior, anotações qualitativas e RNF. |
+| `src/tests/integration/segmentacao.integration.test.ts`               | UC-13 / segmentação                         | 8                    | Filtros, busca, limite, risco de evasão, consulta persistida e auditoria mockada.                                |
+| `src/tests/integration/dashboard.integration.test.ts`                 | UC-14 a UC-19 / dashboards                  | 28                   | Impacto, jornada, conclusão, empregabilidade, ensino superior, evasão, filtros e RNF.                            |
+| `src/tests/integration/saude-mental.integration.test.ts`              | UC-20 / saúde mental                        | 14                   | Prontuários, labels, restrição de perfil psicólogo, validações e RNF.                                            |
+| `src/tests/integration/agenda.integration.test.ts`                    | RF020/RF021 / agenda                        | 18                   | Listagem, criação, atualização, cancelamento, permissão de gestor, validações e RNF.                             |
+| `src/tests/integration/notificacoes.integration.test.ts`              | RF019 / comunicação e oportunidades         | 15                   | Notificações, oportunidades, filtros, validações e RNF.                                                          |
+| `src/tests/integration/notificacao-psicologo.integration.test.ts`     | UC-24 / remetente psicólogo                 | 4                    | Permissão para envio como psicólogo e bloqueio de perfis indevidos.                                              |
+| `src/tests/integration/portal-aluno.integration.test.ts`              | UC-01/UC-02 / portal do aluno               | 10                   | Perfil do aluno, atualização de contato, validações, inexistência e RNF.                                         |
+| `src/tests/integration/portal-aluno-notificacoes.integration.test.ts` | UC-03 / portal do aluno                     | 5                    | Notificações próprias, bloqueio de acesso cruzado, oportunidades e validações.                                   |
+| `src/tests/integration/desempenho-psicologo.integration.test.ts`      | UC-23 / desempenho acadêmico para psicólogo | 5                    | Acesso por vínculo, bloqueio por perfil/vínculo, id inválido e aluno inexistente.                                |
+| **Total**                                                             | **12 arquivos de integração**               | **156 testes**       | **Cobertura automatizada dos endpoints principais do backend.**                                                  |
 
-| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
-|---|---|---|---|---|
-| `POST /api/alunos` | ✅ | ✅ email inválido, idade > 120 | ✅ 409 email duplicado | N/A |
-| `GET /api/alunos` | ✅ | N/A | N/A | N/A |
-| `GET /api/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
-| `PATCH /api/alunos/:id` | ✅ | ✅ riscoEvasao inválido | N/A | ✅ |
-| `DELETE /api/alunos/:id` | ✅ | N/A | N/A | ✅ |
-| `GET /api/alunos/segmentacao` | ✅ | ✅ limite, risco, busca | ✅ 422 sem critério | N/A |
+Essa tabela serve para identificar quais arquivos compõem a suíte de integração, quais módulos ou requisitos cada arquivo valida e quantos testes automatizados existem em cada parte do backend.
 
-**Módulo: Jornada**
+**Matriz consolidada de cenários por módulo**
 
-| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
-|---|---|---|---|---|
-| `GET /api/jornada/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
-| `POST /api/frequencias` | ✅ | ✅ nota > 10 | ✅ 422 atividade não é aula | ✅ |
-| `POST /api/participacoes` | ✅ | ✅ idAtividade inválido | ✅ 409 duplicado, 422 tipo | ✅ |
-| `PATCH /api/empregabilidade/:id` | ✅ | ✅ ocupacao, rendaMensal | N/A | ✅ |
-| `PATCH /api/ensino-superior/:id` | ✅ | ✅ escolaridade, dataIngresso | N/A | ✅ |
-| `POST /api/anotacoes-qualitativas` | ✅ | ✅ descricao, dataRegistro | N/A | ✅ |
+| Módulo / Escopo | Endpoint ou regra validada | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+| --------------- | -------------------------- | ------- | ----------------- | ----------------- | --- |
+| **Módulo: Alunos** | Cadastro, listagem, consulta, atualização, inativação e segmentação de alunos. | - | - | - | - |
+| Alunos | `POST /api/alunos` | ✅ | ✅ email inválido, idade > 120 | ✅ 409 email duplicado | N/A |
+| Alunos | `GET /api/alunos` | ✅ | N/A | N/A | N/A |
+| Alunos | `GET /api/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+| Alunos | `PATCH /api/alunos/:id` | ✅ | ✅ riscoEvasao inválido | N/A | ✅ |
+| Alunos | `DELETE /api/alunos/:id` | ✅ | N/A | N/A | ✅ |
+| Alunos | `GET /api/alunos/segmentacao` | ✅ | ✅ limite, risco, busca | ✅ 422 sem critério | N/A |
+| **Módulo: Código PM** | Regra de negócio de geração do identificador interno único do aluno. | - | - | - | - |
+| Código PM | `POST /api/alunos` com geração `PM-AAAA-NNN` | ✅ | N/A | ✅ sequencial anual e reinício por ano | N/A |
+| **Módulo: Jornada** | Histórico do aluno, frequência, participação, empregabilidade, ensino superior e anotações qualitativas. | - | - | - | - |
+| Jornada | `GET /api/jornada/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+| Jornada | `POST /api/frequencias` | ✅ | ✅ nota > 10 | ✅ 422 atividade não é aula | ✅ |
+| Jornada | `POST /api/participacoes` | ✅ | ✅ idAtividade inválido | ✅ 409 duplicado, 422 tipo | ✅ |
+| Jornada | `PATCH /api/empregabilidade/:id` | ✅ | ✅ ocupacao, rendaMensal | N/A | ✅ |
+| Jornada | `PATCH /api/ensino-superior/:id` | ✅ | ✅ escolaridade, dataIngresso | N/A | ✅ |
+| Jornada | `POST /api/anotacoes-qualitativas` | ✅ | ✅ descricao, dataRegistro | N/A | ✅ |
+| **Módulo: Agenda** | Listagem, criação, atualização e cancelamento de compromissos da agenda. | - | - | - | - |
+| Agenda | `GET /api/agenda` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+| Agenda | `POST /api/agenda` | ✅ | ✅ tipoUser, formato data | ✅ 422 sem perfil gestor | N/A |
+| Agenda | `PATCH /api/agenda/:id` | ✅ | ✅ id não numérico | ✅ 422 sem permissão | ✅ |
+| Agenda | `DELETE /api/agenda/:id` | ✅ | N/A | ✅ 422 sem perfil gestor | ✅ |
+| **Módulo: Dashboard** | Indicadores consolidados de impacto, jornada, conclusão, empregabilidade, ensino superior, evasão e risco. | - | - | - | - |
+| Dashboard | `GET /api/impacto/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+| Dashboard | `GET /api/jornada/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+| Dashboard | `GET /api/impacto/conclusao-programas` | ✅ | ✅ categoria < 3 chars | ✅ 422 intervalo inválido | N/A |
+| Dashboard | `GET /api/impacto/alunos-empregados` | ✅ | ✅ formato dataFim | ✅ 422 intervalo inválido | N/A |
+| Dashboard | `GET /api/impacto/acesso-ensino-superior` | ✅ | ✅ programa < 3 chars | ✅ 422 intervalo inválido | N/A |
+| Dashboard | `GET /api/jornada/evasao-risco` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+| **Módulo: Comunicação** | Notificações enviadas pela equipe e oportunidades exibidas aos alunos. | - | - | - | - |
+| Comunicação | `GET /api/comunicacao` | ✅ | N/A | N/A | N/A |
+| Comunicação | `POST /api/comunicacao` | ✅ | ✅ tipo, tipoRemetente, dataEnvio | ✅ 403 psicólogo | ✅ |
+| Comunicação | `GET /api/comunicacao/oportunidades` | ✅ | N/A | N/A | N/A |
+| Comunicação | `POST /api/comunicacao/oportunidades` | ✅ | ✅ tipo, prazoInscricao | N/A | N/A |
+| **Módulo: Portal do Aluno** | Perfil, contato, notificações próprias e oportunidades acessadas pelo aluno. | - | - | - | - |
+| Portal do Aluno | `GET /api/portal/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+| Portal do Aluno | `PATCH /api/portal/alunos/:id/contato` | ✅ | ✅ email inválido, nenhum campo informado | N/A | ✅ |
+| Portal do Aluno | `GET /api/portal/alunos/:id/notificacoes` | ✅ | ✅ id não numérico | ✅ 403 aluno cruzado | ✅ |
+| Portal do Aluno | `GET /api/portal/oportunidades` | ✅ | N/A | N/A | N/A |
+| **Módulo: Saúde Mental** | Prontuários, labels psicológicas e desempenho acadêmico acessado por psicólogo autorizado. | - | - | - | - |
+| Saúde Mental | `GET /api/prontuarios` | ✅ | N/A | ✅ 422 sem perfil | N/A |
+| Saúde Mental | `POST /api/prontuarios` | ✅ | ✅ titulo, observacao ausentes | ✅ 422 sem perfil | ✅ |
+| Saúde Mental | `GET /api/labels` | ✅ | N/A | ✅ 422 sem perfil | N/A |
+| Saúde Mental | `POST /api/labels` | ✅ | ✅ tipoLabel inválido | ✅ 422 sem perfil | ✅ |
+| Saúde Mental | `GET /api/psicologo/alunos/:id/desempenho` | ✅ | ✅ id não numérico | ✅ 403 sem vínculo | ✅ |
 
-**Módulo: Agenda**
-
-| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
-|---|---|---|---|---|
-| `GET /api/agenda` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
-| `POST /api/agenda` | ✅ | ✅ tipoUser, formato data | ✅ 422 sem perfil gestor | N/A |
-| `PATCH /api/agenda/:id` | ✅ | ✅ id não numérico | ✅ 422 sem permissão | ✅ |
-| `DELETE /api/agenda/:id` | ✅ | N/A | ✅ 422 sem perfil gestor | ✅ |
-
-**Módulo: Dashboard**
-
-| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
-|---|---|---|---|---|
-| `GET /api/impacto/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
-| `GET /api/jornada/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
-| `GET /api/impacto/conclusao-programas` | ✅ | ✅ categoria < 3 chars | ✅ 422 intervalo inválido | N/A |
-| `GET /api/impacto/alunos-empregados` | ✅ | ✅ formato dataFim | ✅ 422 intervalo inválido | N/A |
-| `GET /api/impacto/acesso-ensino-superior` | ✅ | ✅ programa < 3 chars | ✅ 422 intervalo inválido | N/A |
-| `GET /api/jornada/evasao-risco` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
-
-**Módulo: Comunicação**
-
-| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
-|---|---|---|---|---|
-| `GET /api/comunicacao` | ✅ | N/A | N/A | N/A |
-| `POST /api/comunicacao` | ✅ | ✅ tipo, tipoRemetente, dataEnvio | ✅ 403 psicólogo | ✅ |
-| `GET /api/comunicacao/oportunidades` | ✅ | N/A | N/A | N/A |
-| `POST /api/comunicacao/oportunidades` | ✅ | ✅ tipo, prazoInscricao | N/A | N/A |
-
-**Módulo: Portal do Aluno**
-
-| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
-|---|---|---|---|---|
-| `GET /api/portal/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
-| `PATCH /api/portal/alunos/:id/contato` | ✅ | ✅ email inválido, nenhum campo informado | N/A | ✅ |
-| `GET /api/portal/alunos/:id/notificacoes` | ✅ | ✅ id não numérico | ✅ 403 aluno cruzado | ✅ |
-| `GET /api/portal/oportunidades` | ✅ | N/A | N/A | N/A |
-
-**Módulo: Saúde Mental**
-
-| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
-|---|---|---|---|---|
-| `GET /api/prontuarios` | ✅ | N/A | ✅ 422 sem perfil | N/A |
-| `POST /api/prontuarios` | ✅ | ✅ titulo, observacao ausentes | ✅ 422 sem perfil | ✅ |
-| `GET /api/labels` | ✅ | N/A | ✅ 422 sem perfil | N/A |
-| `POST /api/labels` | ✅ | ✅ tipoLabel inválido | ✅ 422 sem perfil | ✅ |
-| `GET /api/psicologo/alunos/:id/desempenho` | ✅ | ✅ id não numérico | ✅ 403 sem vínculo | ✅ |
+Essa tabela serve para mostrar, por módulo, quais endpoints foram testados e quais tipos de cenário foram cobertos: sucesso, erro de validação, violação de regra de negócio/permissão e recurso inexistente. Ela ajuda a verificar se cada fluxo principal possui cobertura mínima de contrato HTTP e comportamento esperado.
 
 </div>
 
@@ -2818,6 +2845,8 @@ As evidências de execução dos testes foram registradas a partir da execução
 | Testes unitários de Service | `npm run test -- src/tests/unit/services --runInBand` | Validação isolada das regras de negócio dos services, com repositories e integrações mockadas. | 8 suítes executadas, 110 testes aprovados. |
 | Suíte completa do backend | `npm run test` | Validação conjunta dos testes unitários de Service e dos testes de integração de endpoints. | 20 suítes executadas, 266 testes aprovados. |
 
+Essa tabela resume as evidências de execução. Ela serve para registrar quais comandos foram rodados, qual escopo cada comando validou e qual foi o resultado obtido.
+
 **Evidência 1 - Testes unitários de Service**
 
 ```bash
@@ -2827,19 +2856,20 @@ npm run test -- src/tests/unit/services --runInBand
 Resultado obtido:
 
 ```text
-PASS src/tests/unit/services/segmentacao.service.test.ts
-PASS src/tests/unit/services/jornada.service.test.ts
-PASS src/tests/unit/services/aluno.service.test.ts
-PASS src/tests/unit/services/notificacao.service.test.ts
+PASS src/tests/unit/services/segmentacao.service.test.ts (8.62 s)
 PASS src/tests/unit/services/dashboard.service.test.ts
-PASS src/tests/unit/services/portal-aluno.service.test.ts
+PASS src/tests/unit/services/notificacao.service.test.ts
 PASS src/tests/unit/services/agenda.service.test.ts
+PASS src/tests/unit/services/jornada.service.test.ts
 PASS src/tests/unit/services/saude-mental.service.test.ts
+PASS src/tests/unit/services/aluno.service.test.ts
+PASS src/tests/unit/services/portal-aluno.service.test.ts
 
 Test Suites: 8 passed, 8 total
 Tests:       110 passed, 110 total
 Snapshots:   0 total
-Time:        9.445 s
+Time:        13.223 s
+Ran all test suites matching /src\\tests\\unit\\services/i.
 ```
 
 Essa execução comprova que os oito arquivos de testes unitários de Service foram executados com sucesso, validando regras de negócio de `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService` e `SaudeMentalService` sem acesso a banco real ou infraestrutura externa.
@@ -2853,34 +2883,46 @@ npm run test
 Resultado obtido:
 
 ```text
-PASS src/tests/integration/saude-mental.integration.test.ts
-PASS src/tests/integration/desempenho-psicologo.integration.test.ts
-PASS src/tests/integration/notificacao-psicologo.integration.test.ts
-PASS src/tests/integration/dashboard.integration.test.ts
-PASS src/tests/unit/services/segmentacao.service.test.ts
+PASS src/tests/integration/saude-mental.integration.test.ts (12.831 s)
 PASS src/tests/integration/jornada.integration.test.ts
-PASS src/tests/integration/alunos.integration.test.ts
+PASS src/tests/integration/dashboard.integration.test.ts
 PASS src/tests/integration/notificacoes.integration.test.ts
-PASS src/tests/integration/segmentacao.integration.test.ts
 PASS src/tests/integration/agenda.integration.test.ts
+PASS src/tests/integration/segmentacao.integration.test.ts
 PASS src/tests/integration/portal-aluno.integration.test.ts
+PASS src/tests/integration/alunos.integration.test.ts
+PASS src/tests/integration/notificacao-psicologo.integration.test.ts
+PASS src/tests/integration/desempenho-psicologo.integration.test.ts
 PASS src/tests/integration/portal-aluno-notificacoes.integration.test.ts
 PASS src/tests/integration/codigo-pm.integration.test.ts
-PASS src/tests/unit/services/aluno.service.test.ts
-PASS src/tests/unit/services/jornada.service.test.ts
-PASS src/tests/unit/services/agenda.service.test.ts
-PASS src/tests/unit/services/saude-mental.service.test.ts
-PASS src/tests/unit/services/portal-aluno.service.test.ts
+PASS src/tests/unit/services/segmentacao.service.test.ts
 PASS src/tests/unit/services/dashboard.service.test.ts
+PASS src/tests/unit/services/aluno.service.test.ts
+PASS src/tests/unit/services/agenda.service.test.ts
+PASS src/tests/unit/services/jornada.service.test.ts
+PASS src/tests/unit/services/portal-aluno.service.test.ts
 PASS src/tests/unit/services/notificacao.service.test.ts
+PASS src/tests/unit/services/saude-mental.service.test.ts
 
 Test Suites: 20 passed, 20 total
 Tests:       266 passed, 266 total
 Snapshots:   0 total
-Time:        53.384 s
+Time:        63.275 s
+Ran all test suites.
 ```
 
 A execução completa demonstra que os testes necessários para o backend estão passando. A suíte final validada contém 20 arquivos de teste e 266 cenários aprovados, cobrindo testes unitários de Service e testes de integração dos endpoints ativos.
+
+**Observações e lacunas registradas**
+
+| Item | Situação atual | Encaminhamento |
+|---|---|---|
+| Testes end-to-end de interface | Não fazem parte da suíte automatizada atual; a seção 5.1 cobre backend. | Manter como evolução futura junto aos testes de usabilidade da sprint 5. |
+| Módulos sem integração própria | Rotas de importação, frequência isolada, participação isolada e anotação qualitativa aparecem validadas dentro da jornada, mas ainda não possuem arquivo dedicado de integração. | Criar arquivos específicos caso esses módulos passem a ter regras próprias mais complexas. |
+| Dependências externas | Auditoria/integrações externas são mockadas em testes que poderiam disparar chamadas fora do processo. | Manter mocks para preservar determinismo e adicionar testes contratuais apenas se houver ambiente externo controlado. |
+| Helpers de teste | `src/tests/helpers/databaseTestHelper.ts` ainda está como placeholder e não é usado pela suíte atual. | Implementar apenas se houver duplicação relevante de setup; hoje o isolamento é feito diretamente nos `beforeEach` dos arquivos. |
+
+Essa tabela registra limitações e próximos cuidados da suíte. Ela serve para separar o que já está validado do que ainda pode evoluir em testes futuros.
 
 </div>
 
