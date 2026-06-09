@@ -1,9 +1,9 @@
 // Lógica da tela inicial do aluno (portal-aluno)
+// Gráficos renderizados via Chart.js (inline no HTML)
 
 document.addEventListener('DOMContentLoaded', () => {
   initEmojiSelector();
   initModuleTabs();
-  animateProgressBars();
 });
 
 function initEmojiSelector(): void {
@@ -38,17 +38,3 @@ function initModuleTabs(): void {
   });
 }
 
-function animateProgressBars(): void {
-  const bars = document.querySelectorAll<HTMLElement>('.progress-bar, .sprint-bar');
-
-  bars.forEach(bar => {
-    const target = bar.style.width;
-    bar.style.width = '0%';
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        bar.style.transition = 'width 0.6s ease';
-        bar.style.width = target;
-      }, 100);
-    });
-  });
-}

@@ -351,33 +351,38 @@ body {
   flex-direction: column;
 }
 
-/* Progress bar */
+/* Course progress chart */
 .progress-row {
   display: flex;
   align-items: center;
   gap: 12px;
   margin: 16px 0;
 }
-.progress-bar-wrap {
+.course-chart-wrap {
   flex: 1;
   height: 8px;
-  background: var(--neutral-100);
-  border-radius: 100px;
-  overflow: hidden;
+  position: relative;
 }
-.progress-bar {
-  height: 100%;
-  border-radius: 100px;
-  transition: width 0.4s ease;
-}
-.progress-bar-blue { background: var(--azul); }
 .progress-label {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-2);
   flex-shrink: 0;
-  min-width: 24px;
+  min-width: 32px;
   text-align: right;
+}
+
+/* Sprint chart */
+.sprint-chart-wrap {
+  height: 148px;
+  position: relative;
+  margin-bottom: 12px;
+}
+.sprint-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
 }
 
 /* Module tabs */
@@ -456,42 +461,6 @@ body {
   margin-bottom: 16px;
 }
 
-/* Sprint list */
-.sprint-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.sprint-item {
-  display: grid;
-  grid-template-columns: 68px 1fr 36px 96px;
-  align-items: center;
-  gap: 12px;
-}
-.sprint-name {
-  font-size: 14px;
-  color: var(--text-2);
-  white-space: nowrap;
-}
-.sprint-bar-wrap {
-  height: 8px;
-  background: var(--neutral-100);
-  border-radius: 100px;
-  overflow: hidden;
-}
-.sprint-bar {
-  height: 100%;
-  border-radius: 100px;
-  transition: width 0.4s ease;
-}
-.sprint-bar-green { background: var(--verde); }
-.sprint-bar-blue  { background: var(--azul); }
-.sprint-pct {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-2);
-  text-align: right;
-}
 .sprint-badge {
   font-size: 12px;
   font-weight: 600;
