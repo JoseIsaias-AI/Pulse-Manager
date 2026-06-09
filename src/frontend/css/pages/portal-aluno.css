@@ -49,8 +49,8 @@
   --radius-lg:     20px;   /* pills, modais */
 
   /* ── Layout ── */
-  --sidebar-w:     172px;
-  --topbar-h:      64px;
+  --sidebar-w:     220px;
+  --topbar-h:      80px;
   --content-px:    40px;   /* múltiplo de 8 */
 }
 
