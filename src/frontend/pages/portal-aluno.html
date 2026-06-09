@@ -1,3 +1,287 @@
-﻿<!-- Placeholder: tela futura do UC-01 e UC-02 -->
-<!-- Esta tela ainda nao possui HTML funcional; sera preenchida pela equipe durante o desenvolvimento do frontend. -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Início – Pulse Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/pages/portal-aluno.css">
+</head>
+<body>
+  <div class="app-layout">
 
+    <!-- SIDEBAR: será injetada pelo componente sidebar -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="page-wrapper">
+
+      <!-- ── TOP BAR ── -->
+      <header class="topbar">
+        <nav class="breadcrumb" aria-label="Navegação">
+          <a href="#" class="breadcrumb-link">Início</a>
+          <span class="breadcrumb-sep">/</span>
+        </nav>
+
+        <div class="topbar-search">
+          <i data-lucide="search" class="search-icon"></i>
+          <input type="text" placeholder="Buscar" aria-label="Buscar" />
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn-icon" aria-label="Notificações">
+            <i data-lucide="bell"></i>
+          </button>
+          <div class="avatar" aria-label="Marianne Oliveira">MO</div>
+        </div>
+      </header>
+
+      <!-- ── CONTENT ── -->
+      <main class="content" id="main-content">
+
+        <!-- Page header -->
+        <div class="page-header">
+          <h1 class="page-title">Visão Geral do Aluno</h1>
+          <p class="page-subtitle">Segunda-feira, 26 de abril de 2025 &middot; Semana 12 de 20</p>
+        </div>
+
+        <!-- ── KPI CARDS ── -->
+        <section class="kpi-row" aria-label="Indicadores">
+
+          <div class="kpi-card kpi-blue">
+            <div class="kpi-icon-wrap">
+              <i data-lucide="calendar-days"></i>
+            </div>
+            <div class="kpi-body">
+              <span class="kpi-label">Frequência</span>
+              <span class="kpi-value">92%</span>
+              <div class="kpi-footer">
+                <span class="kpi-badge kpi-badge-yellow">+3%</span>
+                <span class="kpi-sub">de 48 aulas</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-green">
+            <div class="kpi-icon-wrap">
+              <i data-lucide="book-open"></i>
+            </div>
+            <div class="kpi-body">
+              <span class="kpi-label">Módulos Concluídos</span>
+              <span class="kpi-value">3</span>
+              <div class="kpi-footer">
+                <span class="kpi-badge kpi-badge-yellow">+5%</span>
+                <span class="kpi-sub">de 7 total</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-amber">
+            <div class="kpi-icon-wrap">
+              <i data-lucide="trending-up"></i>
+            </div>
+            <div class="kpi-body">
+              <span class="kpi-label">Nota Média</span>
+              <span class="kpi-value">8,4</span>
+              <div class="kpi-footer">
+                <span class="kpi-badge kpi-badge-white">↑ Acima da média</span>
+              </div>
+            </div>
+            <a href="#" class="kpi-link">ver detalhes →</a>
+          </div>
+
+        </section>
+
+        <!-- ── MAIN GRID ── -->
+        <div class="main-grid">
+
+          <!-- ── LEFT COLUMN ── -->
+          <div class="col-left">
+            <section class="card jornada-card">
+
+              <h2 class="card-title">Minha Jornada</h2>
+              <p class="card-subtitle">Progresso no módulo atual &middot; Semana 12 de 20</p>
+              <p class="card-subtitle">Progresso geral no curso</p>
+
+              <!-- Course progress bar -->
+              <div class="progress-row">
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar progress-bar-blue" style="width: 58%"></div>
+                </div>
+                <span class="progress-label">58</span>
+              </div>
+
+              <!-- Module tabs -->
+              <div class="module-tabs">
+                <button class="mod-tab mod-done">✓ Mód. 1</button>
+                <button class="mod-tab mod-done">✓ Mód. 2</button>
+                <button class="mod-tab mod-done">✓ Mód. 3</button>
+                <button class="mod-tab mod-current">&#9654; Mód. 4 – atual</button>
+                <button class="mod-tab mod-pending">Mód. 5</button>
+                <button class="mod-tab mod-pending">Mód. 6</button>
+                <button class="mod-tab mod-pending">Mód. 7</button>
+                <button class="btn-continuar">&#9654; Continuar</button>
+              </div>
+
+              <!-- Módulo 4 -->
+              <div class="modulo-section">
+                <h3 class="section-title">Módulo 4 – Em andamento</h3>
+                <p class="section-subtitle">Sprint 3 de 4 &middot; Entrega: 31 de maio</p>
+
+                <div class="sprint-list">
+                  <div class="sprint-item">
+                    <span class="sprint-name">Sprint 1</span>
+                    <div class="sprint-bar-wrap">
+                      <div class="sprint-bar sprint-bar-green" style="width: 100%"></div>
+                    </div>
+                    <span class="sprint-pct">100%</span>
+                    <span class="sprint-badge badge-concluido">✓ Concluído</span>
+                  </div>
+                  <div class="sprint-item">
+                    <span class="sprint-name">Sprint 2</span>
+                    <div class="sprint-bar-wrap">
+                      <div class="sprint-bar sprint-bar-green" style="width: 100%"></div>
+                    </div>
+                    <span class="sprint-pct">100%</span>
+                    <span class="sprint-badge badge-concluido">✓ Concluído</span>
+                  </div>
+                  <div class="sprint-item sprint-current">
+                    <span class="sprint-name"><strong>Sprint 3</strong></span>
+                    <div class="sprint-bar-wrap">
+                      <div class="sprint-bar sprint-bar-blue" style="width: 63%"></div>
+                    </div>
+                    <span class="sprint-pct">63%</span>
+                    <span class="sprint-badge badge-atual">&#9642; Atual</span>
+                  </div>
+                  <div class="sprint-item sprint-disabled">
+                    <span class="sprint-name">Sprint 4</span>
+                    <div class="sprint-bar-wrap">
+                      <div class="sprint-bar" style="width: 0%"></div>
+                    </div>
+                    <span class="sprint-pct">—</span>
+                    <span class="sprint-badge badge-pendente">Pendente</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Atividades -->
+              <div class="atividades-section">
+                <h3 class="section-title">Atividades – Sprint</h3>
+                <div class="atividade-list">
+                  <div class="atividade-item border-green">
+                    <div class="atividade-info">
+                      <span class="atividade-nome">Projeto de Banco de Dados — Modelagem</span>
+                      <span class="atividade-meta">Entregue em 20 mai &middot; Nota: 9.0</span>
+                    </div>
+                    <span class="atividade-badge badge-entregue">✓ Entregue</span>
+                  </div>
+                  <div class="atividade-item border-green">
+                    <div class="atividade-info">
+                      <span class="atividade-nome">Desafio de Lógica — Algoritmos</span>
+                      <span class="atividade-meta">Entregue em 22 mai &middot; Nota: 8.5</span>
+                    </div>
+                    <span class="atividade-badge badge-entregue">✓ Entregue</span>
+                  </div>
+                  <div class="atividade-item border-blue">
+                    <div class="atividade-info">
+                      <span class="atividade-nome">Projeto Final – Sprint 3</span>
+                      <span class="atividade-meta">Prazo: 31 mai &middot; Em andamento</span>
+                    </div>
+                    <span class="atividade-badge badge-andamento">&#9632; Em andamento</span>
+                  </div>
+                  <div class="atividade-item border-gray atividade-disabled">
+                    <div class="atividade-info">
+                      <span class="atividade-nome">Quiz de Revisão — Sprint 4</span>
+                      <span class="atividade-meta">Disponível em: 01 jun</span>
+                    </div>
+                    <span class="atividade-badge badge-bloqueado">Bloqueado</span>
+                  </div>
+                </div>
+              </div>
+
+            </section>
+          </div>
+
+          <!-- ── RIGHT COLUMN ── -->
+          <div class="col-right">
+
+            <!-- Saúde e Bem-estar -->
+            <section class="card saude-card">
+              <div class="saude-header">
+                <h2 class="card-title">Saúde e Bem-estar</h2>
+                <span class="badge-novo">NOVO</span>
+              </div>
+              <p class="saude-question">Como você está se sentindo hoje?</p>
+              <div class="emoji-row" role="group" aria-label="Humor">
+                <button class="emoji-btn" aria-label="Muito mal">😟</button>
+                <button class="emoji-btn" aria-label="Mal">😕</button>
+                <button class="emoji-btn" aria-label="Neutro">😐</button>
+                <button class="emoji-btn" aria-label="Bem">🙂</button>
+                <button class="emoji-btn" aria-label="Muito bem">😄</button>
+              </div>
+              <button class="btn-psicologo">
+                <i data-lucide="flower-2"></i>
+                Falar com psicólogo
+              </button>
+              <p class="saude-registro">Último registro: ontem 18:32 🟡 Bem</p>
+            </section>
+
+            <!-- Próximos Eventos -->
+            <section class="card eventos-card">
+              <div class="eventos-header">
+                <h2 class="card-title">Próximos Eventos</h2>
+                <a href="#" class="ver-todos">Ver todos →</a>
+              </div>
+
+              <div class="evento-list">
+                <div class="evento-item">
+                  <div class="evento-date">
+                    <span class="evento-dia">28</span>
+                    <span class="evento-mes">MAI</span>
+                  </div>
+                  <div class="evento-info">
+                    <span class="evento-nome">Workshop de Soft Skills</span>
+                    <span class="evento-hora">14h00 – 16h00</span>
+                  </div>
+                  <span class="evento-badge badge-online">Online</span>
+                </div>
+
+                <div class="evento-item">
+                  <div class="evento-date">
+                    <span class="evento-dia">31</span>
+                    <span class="evento-mes">MAI</span>
+                  </div>
+                  <div class="evento-info">
+                    <span class="evento-nome">Entrega Sprint 3 – Módulo 4</span>
+                    <span class="evento-hora">até 23h59</span>
+                  </div>
+                  <span class="evento-badge badge-entrega">⚠ Entrega</span>
+                </div>
+
+                <div class="evento-item">
+                  <div class="evento-date">
+                    <span class="evento-dia">05</span>
+                    <span class="evento-mes">JUN</span>
+                  </div>
+                  <div class="evento-info">
+                    <span class="evento-nome">Feira de Oportunidades Pulse+</span>
+                    <span class="evento-hora">10h – 11h · Presencial</span>
+                  </div>
+                  <span class="evento-badge badge-presencial">Presencial</span>
+                </div>
+              </div>
+            </section>
+
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>lucide.createIcons();</script>
+  <script type="module" src="../js/pages/portal-aluno.js"></script>
+</body>
+</html>
