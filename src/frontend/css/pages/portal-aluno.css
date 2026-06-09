@@ -73,8 +73,7 @@ body {
 .sidebar {
   width: var(--sidebar-w);
   flex-shrink: 0;
-  background: var(--azul);
-  /* conteúdo injetado pelo componente sidebar */
+  background: #000;
 }
 
 .page-wrapper {
@@ -89,12 +88,7 @@ body {
 ───────────────────────────────────────── */
 .topbar {
   height: var(--topbar-h);
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  padding: 0 32px;
-  gap: 16px;
+  background: #6B21A8;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -273,8 +267,8 @@ body {
   gap: 2px;
 }
 .kpi-label {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 12px;        /* Micro — pg.12 */
+  font-weight: 400;
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.45;
 }
@@ -337,8 +331,8 @@ body {
   padding: 24px;
 }
 .card-title {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 20px;        /* H4 — pg.12 */
+  font-weight: 600;
   color: var(--azul);
   line-height: 1.2;
 }
@@ -399,8 +393,8 @@ body {
   border-radius: var(--radius-lg);  /* pill */
   border: 1px solid var(--border);
   font-family: inherit;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 12px;        /* Micro — pg.12 */
+  font-weight: 400;
   cursor: pointer;
   transition: background 0.15s;
   background: var(--white);
@@ -451,8 +445,8 @@ body {
   margin-bottom: 24px;
 }
 .section-title {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 20px;        /* H4 — pg.12 */
+  font-weight: 600;
   color: var(--text);
   margin-bottom: 4px;
 }
@@ -680,8 +674,8 @@ body {
   flex-shrink: 0;
 }
 .evento-dia {
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 18px;        /* Body Large — pg.12 */
+  font-weight: 700;
   color: var(--text);
   line-height: 1;
 }
