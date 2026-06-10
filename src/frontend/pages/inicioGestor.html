@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse Manager – Início</title>
+<!-- Base: layout sidebar + topbar (Gestor) -->
+<link rel="stylesheet" href="../css/themes/guiaGestor.css">
+<link rel="stylesheet" href="../css/components.css">
+<!-- Fontes e ícones -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<!-- Estilos da página -->
+<link rel="stylesheet" href="../css/pages/inicioGestor.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ========== MENU LATERAL ========== -->
+  <aside class="menuLateral" id="menuLateral">
+    <div class="menuLateral__logo">
+      <div class="menuLateral__logo-brand">
+        <img src="../assets/images/logoIcon.png" alt="Pulse Manager" class="menuLateral__logo-icon" />
+        <span class="menuLateral__logo-name">PULSE<br>MANAGER</span>
+      </div>
+      <span class="menuLateral__logo-role"></span>
+    </div>
+    <nav class="menuLateral__nav">
+      <span class="menuLateral__section-label">Menu Principal</span>
+      <ul class="menuLateral__menu"></ul>
+    </nav>
+    <footer class="menuLateral__footer">
+      <a href="#" class="menuLateral__settings menuLateral__link">
+        <i class="ti ti-settings menuLateral__icon"></i>
+        <span>Configurações</span>
+      </a>
+      <div class="menuLateral__user">
+        <div class="menuLateral__avatar"></div>
+        <div class="menuLateral__user-info">
+          <span class="menuLateral__user-name"></span>
+          <span class="menuLateral__user-role"></span>
+        </div>
+      </div>
+    </footer>
+  </aside>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <div class="paginaMain">
+
+    <!-- MENU SUPERIOR -->
+    <header class="menuSuperior" id="menuSuperior">
+      <span class="menuSuperior__breadcrumb"></span>
+      <div class="menuSuperior__search">
+        <i class="ti ti-search menuSuperior__search-icon"></i>
+        <input type="text" class="menuSuperior__search-input" placeholder="Buscar" autocomplete="off" />
+      </div>
+      <div class="menuSuperior__actions">
+        <button class="menuSuperior__bell" title="Notificações">
+          <i class="ti ti-bell"></i>
+        </button>
+        <button class="menuSuperior__avatar-btn" title="Perfil"></button>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO DA PÁGINA -->
+    <main class="paginaConteudo">
+
+      <div class="page-header">
+        <h1>Visão Geral da Turma</h1>
+        <p>Segunda-feira, 26 de abril de 2025 · Semana 12 de 20</p>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="stat-row">
+
+        <div class="stat-card stat-card--blue">
+          <div class="sc-header">
+            <div class="sc-label">Alunos Conectados</div>
+            <div class="sc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+          </div>
+          <div class="sc-value">42</div>
+          <div class="sc-footer">
+            <span class="badge-up">▲ +8%</span>
+            <span class="sc-sub">de 48 total</span>
+          </div>
+        </div>
+
+        <div class="stat-card stat-card--green">
+          <div class="sc-header">
+            <div class="sc-label">Alunos Transformados</div>
+            <div class="sc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                <polyline points="16 7 22 7 22 13"/>
+              </svg>
+            </div>
+          </div>
+          <div class="sc-value">31</div>
+          <div class="sc-footer">
+            <span class="badge-up">▲ +5%</span>
+            <span class="sc-sub">este mês</span>
+          </div>
+        </div>
+
+        <div class="stat-card stat-card--amber">
+          <div class="sc-header">
+            <div class="sc-label">Evolução da Turma</div>
+            <div class="sc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                <polyline points="16 7 22 7 22 13"/>
+              </svg>
+            </div>
+          </div>
+          <div class="sc-value">73<span class="unit">%</span></div>
+          <div class="sc-footer">
+            <span class="badge-up">▲ +12%</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Charts + Activity -->
+      <div class="charts-row">
+
+        <!-- Bar chart -->
+        <div class="chart-card">
+          <div class="chart-card__head">
+            <div>
+              <div class="chart-card__title">Alunos por Curso — Programa Pulse Mais</div>
+              <div class="chart-card__sub">Distribuição atual de alunos ativos por curso</div>
+            </div>
+            <button class="chart-btn">Mês</button>
+          </div>
+          <div style="flex:1;min-height:0;position:relative;">
+            <canvas id="barChart"></canvas>
+          </div>
+          <div class="legend-row">
+            <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>Prog. Pulse Mais</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#33B458"></div>Prog. Mentoria</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#FFD927"></div>Em transição</div>
+          </div>
+        </div>
+
+        <!-- Activity panel -->
+        <div class="chart-card activity-panel">
+          <div class="activity-head">
+            <h2>Últimas Atividades</h2>
+            <a href="#">Ver todas →</a>
+          </div>
+          <div class="activity-sub">Atualizações recentes da turma</div>
+
+          <div class="activity-list" id="activity-list"></div>
+
+          <div class="activity-pagination">
+            <span class="pg-total" id="pg-total">Exibindo 5 de 48 atividades</span>
+            <button class="pg-btn" id="pg-prev">‹</button>
+            <span id="pg-numbers"></span>
+            <button class="pg-btn" id="pg-next">›</button>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div><!-- fim .paginaMain -->
+
+<!-- config.js deve vir ANTES dos outros scripts -->
+<script src="../js/services/config.js"></script>
+<script src="../js/components/guiaGestor.js"></script>
+<script src="../js/components/menuSuperior.js"></script>
+<script src="../js/pages/inicioGestor.js"></script>
+</body>
+</html>
