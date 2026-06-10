@@ -1,3 +1,117 @@
-﻿/* Placeholder: componentes visuais compartilhados futuros */
-/* Este arquivo ainda nao possui estilos funcionais; sera preenchido pela equipe durante o desenvolvimento do frontend. */
+/* ============================================================
+   Pulse Manager – Menu Superior (barra de topo)
+   Altura fixa: 80px | Largura: preenche o espaço após o menu lateral
+   ============================================================ */
 
+/* Barra principal: flex horizontal, fundo branco, altura 80px */
+.menuSuperior {
+  height: 80px;
+  min-height: 80px;           /* impede que encolha em layouts flex */
+  background: #ffffff;
+  display: flex;
+  align-items: center;        /* centraliza os itens verticalmente */
+  padding: 0 40px;            /* espaço interno nas laterais */
+  gap: 24px;                  /* distância entre os grupos (breadcrumb, busca, ações) */
+  border-bottom: 1px solid #e8ecf0; /* linha divisória sutil na base da barra */
+  flex-shrink: 0;             /* impede que a barra encolha verticalmente */
+}
+
+/* ---- Breadcrumb (trilha de navegação) ---- */
+/* Exibe a página atual em texto itálico pequeno, ex: "Início /" */
+.menuSuperior__breadcrumb {
+  font-size: 12px;
+  font-style: italic;
+  color: #1A3353;
+  opacity: 0.65;              /* levemente transparente para não competir com o conteúdo */
+  white-space: nowrap;        /* impede quebra de linha */
+  min-width: 80px;
+}
+
+/* ---- Campo de busca ---- */
+/* Container em forma de pílula centralizado na barra */
+.menuSuperior__search {
+  flex: 1;                    /* ocupa todo o espaço disponível entre breadcrumb e ações */
+  max-width: 440px;           /* limita a largura máxima para não ficar enorme em telas grandes */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f0f3f8;        /* cinza claro de fundo */
+  border-radius: 100px;       /* formato de pílula */
+  padding: 0 18px;
+  height: 44px;               /* altura do campo dentro da barra de 80px */
+  margin: 0 auto;             /* centraliza horizontalmente quando há espaço sobrando */
+}
+
+/* Ícone de lupa dentro do campo de busca */
+.menuSuperior__search-icon {
+  color: #aab2c0;             /* cinza médio para ser discreto */
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* Input de texto do campo de busca */
+.menuSuperior__search-input {
+  flex: 1;                    /* ocupa o espaço restante dentro do container de busca */
+  border: none;
+  background: transparent;   /* herda o fundo cinza do container */
+  outline: none;              /* remove a borda de foco padrão do navegador */
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+/* Placeholder do input ("Buscar") em cinza claro */
+.menuSuperior__search-input::placeholder {
+  color: #aab2c0;
+}
+
+/* ---- Área de ações (sino + avatar) ---- */
+/* Empurra os ícones para o lado direito da barra */
+.menuSuperior__actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Botão do sino de notificações */
+.menuSuperior__bell {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;             /* cinza médio, neutro */
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: color 0.18s;   /* suaviza a mudança de cor no hover */
+}
+
+/* Sino fica mais escuro ao passar o cursor */
+.menuSuperior__bell:hover {
+  color: #1A3353;
+}
+
+/* Avatar circular do usuário no canto superior direito */
+/* Cor de fundo definida via JavaScript a partir de pulseConfig.topBar.avatarColor */
+.menuSuperior__avatar-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;         /* formato circular */
+  background: #1A56DB;        /* cor padrão — sobrescrita pelo JS via config */
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.18s;
+}
+
+/* Leve transparência ao passar o cursor */
+.menuSuperior__avatar-btn:hover {
+  opacity: 0.85;
+}
