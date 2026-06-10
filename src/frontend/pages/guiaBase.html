@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulse Manager</title>
+
+  <!-- Estilos do menu lateral -->
+  <link rel="stylesheet" href="../css/themes/guiaBase.css" />
+
+  <!-- Estilos do menu superior (barra de topo) -->
+  <link rel="stylesheet" href="../css/components.css" />
+
+  <!-- Pré-conexão com o Google Fonts para carregar mais rápido -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Fontes: Anton (logo "PULSE MANAGER") e Poppins (todo o restante da interface) -->
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Biblioteca de ícones Tabler Icons (usada nos itens do menu e na barra de topo) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+
+  <!-- ========== MENU LATERAL (sidebar esquerda, 200px) ========== -->
+  <aside class="menuLateral" id="menuLateral">
+
+    <!-- LOGO: ícone + nome do sistema + papel do usuário -->
+    <div class="menuLateral__logo">
+      <div class="menuLateral__logo-brand">
+        <!-- Ícone/escudo do sistema — arquivo compartilhado na raiz do projeto -->
+        <img src="../assets/images/logoIcon.png" alt="Pulse Manager" class="menuLateral__logo-icon" />
+
+        <!-- Nome do sistema em fonte Anton, dividido em duas linhas -->
+        <span class="menuLateral__logo-name">PULSE<br>MANAGER</span>
+      </div>
+
+      <!-- Papel do usuário — preenchido dinamicamente via config.js → pulseConfig.role -->
+      <span class="menuLateral__logo-role"></span>
+    </div>
+
+    <!-- MENU PRINCIPAL: itens gerados pelo guiaBase.js via pulseConfig.menu -->
+    <nav class="menuLateral__nav">
+      <span class="menuLateral__section-label">Menu Principal</span>
+
+      <!-- Lista vazia — os <li> são inseridos pelo JavaScript -->
+      <ul class="menuLateral__menu"></ul>
+    </nav>
+
+    <!-- RODAPÉ: link de configurações e perfil do usuário -->
+    <footer class="menuLateral__footer">
+
+      <!-- Link de configurações (fixo, não vem da config) -->
+      <a href="#" class="menuLateral__settings menuLateral__link">
+        <i class="ti ti-settings menuLateral__icon"></i>
+        <span>Configurações</span>
+      </a>
+
+      <!-- Bloco do perfil do usuário -->
+      <div class="menuLateral__user">
+        <!-- Avatar circular com iniciais — preenchido via pulseConfig.user.initials -->
+        <div class="menuLateral__avatar"></div>
+
+        <div class="menuLateral__user-info">
+          <!-- Nome completo — preenchido via pulseConfig.user.name -->
+          <span class="menuLateral__user-name"></span>
+
+          <!-- Cargo do usuário — preenchido via pulseConfig.user.role -->
+          <span class="menuLateral__user-role"></span>
+        </div>
+      </div>
+    </footer>
+
+  </aside>
+
+  <!-- ========== ÁREA PRINCIPAL (menu superior + conteúdo) ========== -->
+  <!-- Ocupa todo o espaço restante após o menu lateral -->
+  <div class="paginaMain">
+
+    <!-- MENU SUPERIOR (barra de topo, 80px de altura) -->
+    <header class="menuSuperior" id="menuSuperior">
+
+      <!-- Trilha de navegação — atualiza ao clicar nos itens do menu lateral -->
+      <span class="menuSuperior__breadcrumb"></span>
+
+      <!-- Campo de busca centralizado na barra -->
+      <div class="menuSuperior__search">
+        <i class="ti ti-search menuSuperior__search-icon"></i>
+        <input
+          type="text"
+          class="menuSuperior__search-input"
+          placeholder="Buscar"
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- Ações do lado direito: sino de notificações e avatar do usuário -->
+      <div class="menuSuperior__actions">
+
+        <!-- Botão de notificações com ícone de sino -->
+        <button class="menuSuperior__bell" title="Notificações">
+          <i class="ti ti-bell"></i>
+        </button>
+
+        <!-- Avatar circular com iniciais — cor e iniciais definidas via config.js -->
+        <button class="menuSuperior__avatar-btn" title="Perfil"></button>
+
+      </div>
+    </header>
+
+    <!-- CONTEÚDO DA PÁGINA (área principal, com scroll vertical) -->
+    <main class="paginaConteudo">
+      <!-- O conteúdo de cada página é inserido aqui -->
+    </main>
+
+  </div><!-- fim .paginaMain -->
+
+  <!-- config.js deve vir ANTES dos outros scripts pois define pulseConfig -->
+  <script src="../js/services/config.js"></script>
+
+  <!-- Renderiza o menu lateral a partir da config -->
+  <script src="../js/components/guiaBase.js"></script>
+
+  <!-- Renderiza o menu superior a partir da config -->
+  <script src="../js/components/menuSuperior.js"></script>
+
+</body>
+</html>
