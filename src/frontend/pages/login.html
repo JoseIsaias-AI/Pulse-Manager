@@ -1,3 +1,115 @@
-﻿<!-- Placeholder: tela futura de entrada por perfil -->
-<!-- Esta tela ainda nao possui HTML funcional; sera preenchida pela equipe durante o desenvolvimento do frontend. -->
+<!DOCTYPE html>
+<!-- Define o tipo do documento como HTML5 -->
+<html lang="pt-BR">
+<!-- Abre o documento HTML; lang="pt-BR" ajuda leitores de tela e SEO -->
 
+<head>
+  <!-- O <head> contém metadados: não aparece na tela, mas configura o documento -->
+
+  <meta charset="UTF-8">
+  <!-- Define a codificação de caracteres como UTF-8, permitindo acentos e emojis -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Garante que a página se adapte ao tamanho do celular (responsividade) -->
+
+  <title>Pulse Manager – Login</title>
+  <!-- Texto que aparece na aba do navegador -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- Abre conexão antecipada com o Google Fonts para carregar as fontes mais rápido -->
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap">
+  <!-- Importa as fontes Anton (logo) e Poppins (interface) do Google Fonts -->
+
+  <link rel="stylesheet" href="../css/global.css">
+  <!-- Carrega o design system global: variáveis de cor, tipografia, reset base -->
+
+  <link rel="stylesheet" href="../css/pages/login.css">
+  <!-- Carrega os estilos específicos desta tela: card de login, formulário, role-selector -->
+</head>
+
+<body>
+<!-- O <body> contém tudo que o usuário vê e interage -->
+
+  <div class="login-bg">
+  <!-- Container externo que ocupa 100% da tela e aplica o fundo azul escuro -->
+
+    <header class="login-header">
+    <!-- Barra superior com o logo da plataforma -->
+
+      <div class="logo-wrap">
+      <!-- Agrupa ícone SVG e texto do logo lado a lado -->
+
+        <div class="logo-icon">
+        <!-- Caixa branca arredondada que envolve o ícone do logo -->
+
+          <img src="../assets/images/logoIcon.png" alt="Pulse Manager Logo" style="width:44px;height:44px;object-fit:contain;">
+          <!-- Ícone do Pulse Manager — arquivo compartilhado na raiz do projeto -->
+
+        </div><!-- /.logo-icon -->
+
+        <div class="logo-text">PULSE<br>MANAGER</div>
+        <!-- Nome completo da plataforma em duas linhas ao lado do ícone (fonte Anton) -->
+
+      </div><!-- /.logo-wrap -->
+    </header><!-- /.login-header -->
+
+    <div class="login-card">
+    <!-- Card branco centralizado que contém o formulário de login -->
+
+      <h1>LOGIN</h1>
+      <!-- Título principal do card (fonte Poppins) -->
+
+      <div class="role-selector">
+      <!-- Botões de seleção rápida de perfil: Gestor, Psicólogo ou Aluno -->
+      <!-- O perfil selecionado determina para qual página o usuário será redirecionado -->
+
+        <button class="role-btn active" onclick="selectRole(this,'gestor')">Gestor</button>
+        <!-- Botão do perfil Gestor; começa com classe "active" (selecionado por padrão) -->
+
+        <button class="role-btn" onclick="selectRole(this,'psicologo')">Psicólogo</button>
+        <!-- Botão do perfil Psicólogo; inicia sem "active" -->
+
+        <button class="role-btn" onclick="selectRole(this,'aluno')">Aluno</button>
+        <!-- Botão do perfil Aluno; inicia sem "active" -->
+
+      </div><!-- /.role-selector -->
+
+      <div class="form-group">
+      <!-- Agrupa o label e o input do CPF em bloco separado para espaçamento correto -->
+
+        <label for="cpf">CPF:</label>
+        <!-- Label associado ao input via for="cpf"; clicar nele foca o campo -->
+
+        <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" autocomplete="off">
+        <!-- Campo de texto para o CPF; maxlength limita ao formato 000.000.000-00 -->
+
+      </div><!-- /.form-group -->
+
+      <div class="form-group">
+      <!-- Agrupa o label e o input do Nome Completo -->
+
+        <label for="nome">Nome Completo:</label>
+        <!-- Label associado ao input de nome -->
+
+        <input type="text" id="nome" placeholder="Seu nome completo" autocomplete="name">
+        <!-- Campo de texto para o nome completo -->
+
+      </div><!-- /.form-group -->
+
+      <button class="btn-entrar" id="btn-entrar">ENTRAR</button>
+      <!-- Botão de submit (fonte Poppins); id usado em login.js para o evento de clique -->
+
+    </div><!-- /.login-card -->
+
+    <p class="login-footer">Pulse Manager © 2025 · Todos os direitos reservados</p>
+    <!-- Rodapé discreto abaixo do card com informação de copyright -->
+
+  </div><!-- /.login-bg -->
+
+  <script src="../js/pages/login.js"></script>
+  <!-- Carrega o JS do login: máscara de CPF, validação e redirect por perfil -->
+  <!-- ATENÇÃO: mova logoIcon.png e logo.png para a pasta assets/ -->
+
+</body>
+</html>
