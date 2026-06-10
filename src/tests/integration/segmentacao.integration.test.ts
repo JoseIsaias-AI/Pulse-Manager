@@ -9,7 +9,7 @@ jest.mock('../../backend/integrations/auditoriaIntegration', () => ({
   registrarConsultaSegmentacao: jest.fn().mockResolvedValue(undefined)
 }));
 
-describe('UC-13 - GET /api/alunos/segmentacao', () => {
+describe('UC-13 - Segmentacao de alunos', () => {
   let alunoRepository: Repository<Aluno>;
 
   beforeAll(async () => {
@@ -149,7 +149,7 @@ describe('UC-13 - GET /api/alunos/segmentacao', () => {
     expect(registrarConsultaSegmentacao).not.toHaveBeenCalled();
   });
 
-  it('CT04 - deve consultar aluno persistido no banco real de teste com findOneBy', async () => {
+  it('CT04 - deve retornar aluno correto ao buscar por email', async () => {
     const alunoPersistido = await alunoRepository.findOneBy({
       email: 'carlos.henrique@pulsemais.org'
     });
