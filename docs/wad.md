@@ -2574,6 +2574,11 @@ _Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem 
 ## 6.4 Público-Alvo
 
 a) Segmentação de Mercado 
+A Pulse Manager atende o segmento de organizações sociais, institutos e projetos de impacto que atuam com formação, acompanhamento e inserção profissional de jovens em situação de vulnerabilidade socioeconômica. No contexto inicial do projeto, a aplicação é direcionada à Pulse Mais, organização que oferece formação técnica e comportamental, mentorias, oportunidades de vagas e bolsas de estudo gratuitas para jovens interessados em tecnologia (PULSE MAIS, 2026).
+
+Além da Pulse Mais, a solução pode atender iniciativas semelhantes que precisam centralizar dados de alunos, jornada formativa, presença, certificação, saúde mental, oportunidades, empregabilidade e indicadores de impacto. Portanto, a segmentação da Pulse Manager não está ligada a um mercado consumidor amplo, mas a um segmento institucional e operacional: organizações que acompanham jovens ao longo de programas educacionais e profissionais.
+
+Esse segmento possui uma dor clara: conforme aumenta o número de jovens, atividades, mentorias, oportunidades e registros, controles manuais e planilhas passam a dificultar a rastreabilidade dos dados. A Pulse Mais já alcançou mais de 650 jovens por meio de cursos, mentorias e bolsas de graduação, o que reforça a necessidade de uma ferramenta capaz de organizar histórico, evolução e indicadores de acompanhamento (OBSERVATÓRIO DO TERCEIRO SETOR, 2025).
 
 
 b) Perfil do Público-Alvo
