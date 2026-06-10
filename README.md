@@ -83,27 +83,163 @@ No diretório <b>frontend</b>:
 
 ## Configuração para desenvolvimento e execução do código
 
-*Acrescentar as informações necessárias sobre pré-requisitos (IDEs, bibliotecas, serviços etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o código e executar a aplicação a partir de sua máquina local.*
+Esta seção apresenta as instruções necessárias para configurar o ambiente de desenvolvimento e executar a primeira versão funcional do sistema web da Pulse Mais em máquina local.
 
-*exemplo de instruções*
+### Pré-requisitos
 
-Aqui encontram-se as instruções necessárias para a instalação de programas, bibliotecas e ferramentas imprescindíveis à configuração do ambiente de desenvolvimento.
+Antes de iniciar a execução do projeto, é necessário ter instalado:
 
-1. Baixar e instalar o node.js: [https://nodejs.org/pt-br/](https://nodejs.org/pt-br/) (versão 16.15.1 LTS)
-2. Clone o repositório em questão.
-3. No modo administrador, abra o prompt de comando ou o terminal e, em seguida, acesse a pasta `backend` no diretório raiz do repositório clonado.
+* **Node.js** em versão LTS;
+* **npm**, instalado junto ao Node.js;
+* **Git**, para clonar o repositório;
+* **PostgreSQL** ou acesso a um banco PostgreSQL/Supabase configurado;
+* Editor de código, preferencialmente **Visual Studio Code**.
+
+### 1. Clonar o repositório
+
+No terminal, execute:
+
+```sh
+git clone <link-do-repositorio>
+```
+
+Em seguida, acesse a pasta do projeto:
+
+```sh
+cd g03
+```
+
+### 2. Instalar as dependências
+
+Na raiz do projeto, instale as dependências necessárias:
 
 ```sh
 npm install
 ```
 
-4. Isso instalará todas as dependências definidas no arquivo <b>package.json</b> necessárias para executar o projeto. Para iniciar a aplicação, digite:
+Caso o projeto esteja organizado com um `package.json` específico dentro da pasta `backend`, acesse a pasta antes de instalar:
+
+```sh
+cd backend
+npm install
+```
+
+### 3. Configurar as variáveis de ambiente
+
+Crie um arquivo `.env` na pasta em que o backend é executado. Esse arquivo deve conter as informações de conexão com o banco de dados.
+
+Exemplo:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=sua_senha
+DB_NAME=pulse_mais
+PORT=3000
+```
+
+Caso o banco utilizado seja Supabase, as informações devem ser preenchidas conforme os dados de conexão do projeto no painel do Supabase.
+
+### 4. Executar as migrations
+
+As migrations são responsáveis por criar ou atualizar a estrutura do banco de dados. Para executá-las, utilize:
+
+```sh
+npm run migrate
+```
+
+Esse comando deve ser executado antes do seed, para garantir que as tabelas e colunas necessárias já existam no banco.
+
+### 5. Popular o banco com dados simulados
+
+Após executar as migrations, rode o seed para inserir dados fictícios no banco de desenvolvimento:
+
+```sh
+npm run seed
+```
+
+O seed inclui dados simulados para alunos, membros da equipe, psicólogos, atividades, participações, agendas, oportunidades, notificações, labels e históricos psicológicos. Esses dados são utilizados para testar consultas, endpoints, telas e indicadores do sistema.
+
+### 6. Executar o backend
+
+Para iniciar o servidor backend em ambiente de desenvolvimento, execute:
+
+```sh
+npm run dev
+```
+
+Caso o projeto utilize apenas o modo de produção/local simples, utilize:
 
 ```sh
 npm start
 ```
-5. Agora você pode acessar a aplicação no link `http://localhost:1234/`.
-6. O servidor estará online.
+
+Após a inicialização, a API estará disponível em:
+
+```sh
+http://localhost:3000
+```
+
+A porta pode variar de acordo com a configuração definida no arquivo `.env`.
+
+### 7. Executar o frontend
+
+O frontend está localizado na pasta `frontend` e contém as páginas HTML, arquivos CSS, scripts JavaScript e assets da interface.
+
+Caso as páginas sejam estáticas, elas podem ser abertas diretamente no navegador a partir da pasta `frontend/pages`.
+
+Também é possível utilizar uma extensão como **Live Server** no Visual Studio Code para visualizar as páginas localmente.
+
+Exemplo de acesso:
+
+```sh
+frontend/pages/login.html
+```
+
+### 8. Executar os testes
+
+Para executar os testes automatizados do projeto, utilize:
+
+```sh
+npm test
+```
+
+Os testes contemplam validações unitárias e de integração relacionadas aos principais módulos do sistema, como alunos, agenda, portal do aluno, notificações, saúde mental, dashboard, jornada, frequência, participação e segmentação.
+
+### 9. Fluxo recomendado de execução
+
+Para configurar o projeto do zero, recomenda-se seguir a ordem abaixo:
+
+```sh
+npm install
+npm run migrate
+npm run seed
+npm run dev
+```
+
+Em seguida, acesse a API em:
+
+```sh
+http://localhost:3000
+```
+
+E visualize o frontend pela pasta `frontend/pages` ou por meio do Live Server.
+
+### Observações importantes
+
+O arquivo `.env` não deve ser enviado ao repositório, pois contém informações sensíveis de conexão com o banco de dados.
+
+O comando `npm run seed` deve ser utilizado apenas em ambiente de desenvolvimento ou teste, pois ele pode limpar e recriar dados simulados no banco.
+
+Caso ocorra erro relacionado ao `ts-node`, instale as dependências de desenvolvimento com:
+
+```sh
+npm install --save-dev ts-node typescript @types/node
+```
+
+Caso ocorra erro de conexão com o banco, verifique se as variáveis do `.env` estão corretas e se o banco PostgreSQL/Supabase está ativo.
+
 
 ## Histórico de lançamentos
 

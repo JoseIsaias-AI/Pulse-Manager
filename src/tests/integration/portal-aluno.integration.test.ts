@@ -4,7 +4,7 @@ import { app } from '../../backend/app';
 import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
 import { Aluno } from '../../backend/models/alunoModel';
 
-describe('UC-01/UC-02 - Portal do Aluno', () => {
+describe('UC-01 a UC-02 - Portal do Aluno', () => {
   let alunoRepository: Repository<Aluno>;
   let aluno: Aluno;
 
