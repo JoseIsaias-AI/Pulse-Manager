@@ -4,9 +4,9 @@
 <a href= "https://www.inteli.edu.br/"><img src="./docs/assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
 </p>
 
-# Nome do projeto
+# Pulse Manager
 
-## Nome do grupo
+## Grupo 03
 
 ## :student: Integrantes: 
 - <a href="https://www.linkedin.com/in/ana-carvalho-27268634b/">Ana Luiza Lima de Carvalho</a>
@@ -34,52 +34,57 @@ _Descreva seu projeto (até 600 palavras)_
 ## Link de demonstração
 
 _Coloque aqui o link para o vídeo de demonstração do projeto_
+_A inserção do video sera feita na Sprint 05 com o projeto finalizado_
 
 ## Estrutura de pastas
 
 Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
-- <b>backend</b>: reúne a API em Node.js/Express, com rotas, controladores, modelos e utilitários.
-
-- <b>database</b>: contém migrations, seeds e o schema do banco de dados.
-
 - <b>docs</b>: reúne a documentação do projeto, incluindo setup, decisões técnicas, API e WAD.
 
-- <b>frontend</b>: concentra as páginas HTML, estilos CSS, scripts JavaScript e assets de interface.
+- <b>src</b>: contém o código-fonte principal da aplicação.
+
+- <b>.gitattributes</b>: define configurações de atributos específicos do repositório Git.
+
+- <b>.gitignore</b>: especifica arquivos e pastas que o Git deve ignorar no versionamento.
 
 - <b>README.md</b>: arquivo introdutório com visão geral do projeto e instruções de uso.
+
+- <b>jest.config.ts</b>: arquivo de configuração do framework de testes automatizados Jest.
+
+- <b>package-lock.json</b>: arquivo gerado automaticamente que mapeia a árvore exata de dependências instaladas.
+
+- <b>package.json</b>: manifesto do projeto Node.js que lista metadados, scripts de execução e dependências.
+
+- <b>tsconfig.json</b>: arquivo de configuração do compilador do TypeScript.
 
 
 Além das pastas na raiz do projeto, também estão presentes as pastas secundárias, definidas por:
 
-No diretório <b>backend</b>:
-
-- <b>src</b>: contém o código-fonte principal da aplicação.
-
-
-No diretório <b>database</b>:
-
-- <b>migrations</b>: reúne os scripts SQL responsáveis por criar e alterar a estrutura das tabelas do banco de dados de forma versionada.
-
-- <b>seeds</b>: armazena scripts destinados ao povoamento inicial do banco de dados com dados de teste ou pré-definidos.
-
 
 No diretório <b>docs</b>:
 
-- <b>assets</b>: concetra as imagens utilizadas na documentação.
+
+- <b>assets</b>: concentra as imagens utilizadas na documentação.
 
 - <b>others</b>: armazena arquivos complementares e apresentações de entregas (sprints) do projeto.
 
+- <b>wad.md</b>: documento contendo as definições de arquitetura da aplicação (Web Architecture Document).
 
-No diretório <b>frontend</b>:
 
-- <b>assets</b>: concentra as imagens utilizadas na parte visível do projeto.
+No diretório <b>src</b>:
 
-- <b>css</b>: concetra a página referente à estilização da plataforma.
 
-- <b>js</b>: centraliza a lógica de comportamento, organizada por funcionalidades como navegação, integração com serviços e funções auxiliares.
+- <b>backend</b>: reúne a API da aplicação, integrando rotas, controladores, modelos e banco de dados.
 
-- <b>pages</b>: armazena os documentos HTML que compõem as diferentes telas e interfaces da aplicação.
+- <b>frontend</b>: concentra os arquivos relacionados à interface de usuário e interação do lado do cliente.
+
+- <b>scripts</b>: armazena scripts auxiliares de automação ou integração do projeto.
+
+- <b>tests</b>: centraliza os arquivos e padronizações dedicados à realização de testes na aplicação.
+
+- <b>server.ts</b>: arquivo principal responsável por inicializar a execução do servidor.
+
 
 ## Configuração para desenvolvimento e execução do código
 
