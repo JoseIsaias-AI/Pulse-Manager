@@ -1,3 +1,64 @@
-﻿/* Placeholder: estilos globais futuros */
-/* Este arquivo ainda nao possui estilos funcionais; sera preenchido pela equipe durante o desenvolvimento do frontend. */
+/* =========================================
+   Pulse Manager – Design System (shared)
+   ========================================= */
 
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Blues — Escalas Tonais (Guia de Estilos) */
+  --blue-900: #00264D;
+  --blue-800: #002F62;
+  --blue-700: #003870;   /* Azul Pulse — cor institucional principal */
+  --blue-600: #0A4A89;
+  --blue-500: #1565A8;
+  --blue-300: #6A95C2;
+  --blue-100: #D6E2EF;
+  --blue-50:  #EDF2F8;
+
+  /* Neutrals — Escala Neutra (Guia de Estilos) */
+  --white:    #FFFFFF;
+  --n-50:     #F7F8FA;
+  --n-100:    #EEF1F4;
+  --n-200:    #DEE3EA;   /* Borda padrão */
+  --n-300:    #C2CAD4;
+  --n-400:    #97A1AE;   /* Desabilitado */
+  --n-500:    #6B7684;   /* Texto secundário */
+  --n-600:    #4D5663;   /* Texto primário */
+  --n-700:    #353D49;
+  --n-800:    #1F252E;
+  --n-900:    #11161D;   /* Texto primário escuro */
+  /* Legacy aliases */
+  --gray-50:  #F7F8FA;
+  --gray-100: #EEF1F4;
+  --gray-200: #DEE3EA;
+  --gray-300: #C2CAD4;
+  --gray-400: #97A1AE;
+  --gray-500: #6B7684;
+  --gray-600: #4D5663;
+  --gray-700: #353D49;
+  --gray-800: #1F252E;
+  --gray-900: #11161D;
+
+  /* Feedback / Status — Pulse Manager style guide */
+  --verde-pulse:   #33B458;  /* Verde Pulse — trilhas concluídas, indicadores positivos */
+  --amarelo-pulse: #FFD927;  /* Amarelo Pulse — brand yellow */
+  --acomp-pulse:   #FFC93D;  /* Status Acompanhar (shade de alerta) */
+  --risco-pulse:   #F08A2C;  /* Em risco */
+  --urgente-pulse: #E0413A;  /* Urgente */
+  --green-600: #33B458;
+  --red-600:   #E0413A;
+  --amber-500: #FFD927;
+
+  /* Typography */
+  --font-display: 'Anton', sans-serif;
+  --font-body:    'Poppins', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--gray-900);
+}

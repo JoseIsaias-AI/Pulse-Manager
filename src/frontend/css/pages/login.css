@@ -1,3 +1,171 @@
-﻿/* Placeholder: estilos futuros da tela de login */
-/* Este arquivo ainda nao possui estilos funcionais; sera preenchido pela equipe durante o desenvolvimento do frontend. */
+/* =========================================
+   Login – Estilos específicos
+   Depende de: css/shared.css (variáveis CSS)
+   ========================================= */
 
+/* ---------- FUNDO DA TELA ---------- */
+.login-bg {
+  min-height: 100vh;       /* ocupa no mínimo a altura total da janela */
+  background: var(--blue-800); /* fundo azul escuro em toda a tela */
+  display: flex;
+  flex-direction: column;  /* empilha header, card e footer na vertical */
+  align-items: center;     /* centraliza horizontalmente todos os filhos */
+}
+
+/* ---------- BARRA SUPERIOR COM O LOGO ---------- */
+.login-header {
+  width: 100%;             /* ocupa toda a largura da tela */
+  background: var(--blue-900); /* azul ainda mais escuro que o fundo */
+  border-bottom: 2px solid rgba(255, 255, 255, .08); /* linha divisória sutil */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centraliza o logo horizontalmente */
+  padding: 14px 24px;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px; /* espaço entre o ícone quadrado e o texto "PULSE MANAGER" */
+}
+
+.logo-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--white); /* fundo branco contrasta com a barra escura */
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text {
+  font-family: var(--font-display); /* Anton bold para o nome da plataforma */
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;  /* comprime o espaço entre "PULSE" e "MANAGER" */
+  letter-spacing: .02em;
+}
+
+/* ---------- CARD DE LOGIN ---------- */
+.login-card {
+  background: var(--white);
+  border-radius: 18px;              /* bordas bem arredondadas */
+  padding: 48px 44px 44px;
+  width: 100%;
+  max-width: 540px;                 /* limita a largura em telas grandes */
+  margin-top: 64px;                 /* espaço entre a barra do logo e o card */
+  box-shadow: 0 8px 48px rgba(0, 0, 0, .25); /* sombra pronunciada: card "flutua" sobre o fundo */
+}
+
+.login-card h1 {
+  font-family: var(--font-body); /* Poppins — apenas "PULSE MANAGER" usa Anton */
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--gray-900);
+  margin-bottom: 36px;
+  letter-spacing: .02em;
+}
+
+/* ---------- SELETOR DE PERFIL ----------
+   Três botões (Gestor, Psicólogo, Aluno) em linha.
+   O JS adiciona/remove a classe "active" ao clicar.
+   ---------------------------------------------------------------- */
+.role-selector {
+  display: flex;
+  gap: 8px;           /* espaço entre os três botões */
+  margin-bottom: 28px; /* espaço antes do primeiro campo do formulário */
+}
+
+.role-btn {
+  flex: 1;           /* cada botão ocupa 1/3 da largura disponível */
+  padding: 8px 4px;
+  border: 1.5px solid var(--gray-200); /* borda cinza no estado inativo */
+  border-radius: 8px;
+  background: var(--gray-50);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-500); /* texto cinza no estado inativo */
+  cursor: pointer;
+  text-align: center;
+  transition: all .15s; /* anima borda, fundo e cor ao selecionar */
+}
+
+.role-btn.active {
+  border-color: var(--blue-600); /* borda azul no estado selecionado */
+  background: #eff6ff;           /* fundo azul muito claro */
+  color: var(--blue-700);        /* texto azul */
+}
+
+/* ---------- GRUPOS DE CAMPOS ---------- */
+.form-group {
+  margin-bottom: 24px; /* espaço entre os campos do formulário */
+}
+
+.form-group label {
+  display: block;       /* ocupa linha própria acima do input */
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 8px;  /* espaço entre o label e o input */
+}
+
+.form-group input {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--gray-900);
+  background: var(--white);
+  outline: none;                         /* remove o outline padrão do navegador */
+  transition: border-color .2s, box-shadow .2s; /* animação suave ao focar */
+}
+
+.form-group input:focus {
+  border-color: var(--blue-600);                   /* borda azul ao focar */
+  box-shadow: 0 0 0 4px rgba(30, 77, 153, .12);   /* anel externo azul translúcido */
+}
+
+/* ---------- BOTÃO DE SUBMIT ---------- */
+.btn-entrar {
+  width: 100%;       /* ocupa toda a largura do card */
+  padding: 15px;
+  border: none;
+  border-radius: 50px;              /* formato de cápsula */
+  background: var(--blue-900);
+  color: var(--white);
+  font-family: var(--font-body); /* Poppins — apenas "PULSE MANAGER" usa Anton */
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .1em;             /* espaçamento entre letras maiúsculas */
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background .2s, transform .1s, box-shadow .2s;
+}
+
+.btn-entrar:hover {
+  background: var(--blue-700);
+  box-shadow: 0 4px 16px rgba(13, 35, 73, .3); /* sombra mais intensa no hover */
+  transform: translateY(-1px);                  /* sobe 1px para efeito de elevação */
+}
+
+.btn-entrar:active {
+  transform: translateY(0); /* volta à posição ao clicar */
+}
+
+.btn-entrar.error {
+  background: var(--red-600); /* fica vermelho quando há erro de validação */
+}
+
+/* ---------- RODAPÉ ---------- */
+.login-footer {
+  margin-top: 32px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, .4); /* texto semitransparente: pouco destaque intencional */
+  text-align: center;
+}

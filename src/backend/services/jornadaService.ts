@@ -37,7 +37,7 @@ function toParticipacaoView(item: ParticipacaoRecord): JornadaParticipacaoView {
 }
 
 export class JornadaService {
-  constructor(private readonly repository: JornadaRepository) {}
+  constructor(private readonly repository: JornadaRepository) { }
 
   async obterJornadaAluno(idAluno: number): Promise<SuccessResponse<JornadaAlunoResponseData>> {
     this.validarId(idAluno, 'idAluno');

@@ -22,7 +22,7 @@ function parseId(value: unknown, fieldName: string): number {
 }
 
 export class JornadaController {
-  constructor(private readonly service: JornadaService) {}
+  constructor(private readonly service: JornadaService) { }
 
   obterJornadaAluno = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {

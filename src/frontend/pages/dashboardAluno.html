@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse Manager – Dashboard</title>
+<!-- Base: layout sidebar + topbar (Aluno) -->
+<link rel="stylesheet" href="../css/themes/guiaAluno.css">
+<link rel="stylesheet" href="../css/components.css">
+<!-- Fontes e ícones -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<!-- Estilos da página -->
+<link rel="stylesheet" href="../css/pages/dashboardAluno.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ========== MENU LATERAL ========== -->
+  <aside class="menuLateral" id="menuLateral">
+    <div class="menuLateral__logo">
+      <div class="menuLateral__logo-brand">
+        <img src="../assets/images/logoIcon.png" alt="Pulse Manager" class="menuLateral__logo-icon" />
+        <span class="menuLateral__logo-name">PULSE<br>MANAGER</span>
+      </div>
+      <span class="menuLateral__logo-role"></span>
+    </div>
+    <nav class="menuLateral__nav">
+      <span class="menuLateral__section-label">Menu Principal</span>
+      <ul class="menuLateral__menu"></ul>
+    </nav>
+    <footer class="menuLateral__footer">
+      <a href="#" class="menuLateral__settings menuLateral__link">
+        <i class="ti ti-settings menuLateral__icon"></i>
+        <span>Configurações</span>
+      </a>
+      <div class="menuLateral__user">
+        <div class="menuLateral__avatar"></div>
+        <div class="menuLateral__user-info">
+          <span class="menuLateral__user-name"></span>
+          <span class="menuLateral__user-role"></span>
+        </div>
+      </div>
+    </footer>
+  </aside>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <div class="paginaMain">
+
+    <!-- MENU SUPERIOR -->
+    <header class="menuSuperior" id="menuSuperior">
+      <span class="menuSuperior__breadcrumb"></span>
+      <div class="menuSuperior__search">
+        <i class="ti ti-search menuSuperior__search-icon"></i>
+        <input type="text" class="menuSuperior__search-input" placeholder="Buscar" autocomplete="off" />
+      </div>
+      <div class="menuSuperior__actions">
+        <button class="menuSuperior__bell" title="Notificações">
+          <i class="ti ti-bell"></i>
+        </button>
+        <button class="menuSuperior__avatar-btn" title="Perfil"></button>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO DA PÁGINA -->
+    <main class="paginaConteudo">
+
+      <div class="page-header">
+        <h1>Dashboard – Visão geral</h1>
+        <p>Semana 12 de 20 · 4/5 módulos concluídos</p>
+      </div>
+
+      <div class="stat-grid">
+
+        <div class="stat-card stat-card--blue">
+          <div class="stat-card__header">
+            <div class="stat-card__label">Frequência</div>
+          </div>
+          <div class="stat-card__value">87<span class="stat-card__unit">%</span></div>
+          <div class="stat-card__footer">de 48 aulas</div>
+        </div>
+
+        <div class="stat-card stat-card--green">
+          <div class="stat-card__header">
+            <div class="stat-card__label">Módulos Concluídos — Let. Digital</div>
+          </div>
+          <div class="stat-card__value">4<span class="stat-card__unit">/5</span></div>
+          <div class="stat-card__footer">de 7 total</div>
+        </div>
+
+        <div class="stat-card stat-card--amber">
+          <div class="stat-card__header">
+            <div class="stat-card__label">Nota Média</div>
+          </div>
+          <div class="stat-card__value">7,6</div>
+          <div class="stat-card__footer">média da turma: 7,1</div>
+        </div>
+
+        <div class="stat-card stat-card--navy">
+          <div class="stat-card__header">
+            <div class="stat-card__label">Próxima Entrega</div>
+          </div>
+          <div class="stat-card__value">3<span class="stat-card__unit">dias</span></div>
+          <div class="stat-card__footer"><span class="badge badge--sub">Prog. Mentoria · Encontro 9 – Currículo e LinkedIn</span></div>
+        </div>
+
+      </div>
+
+      <div class="charts-grid">
+
+        <div class="chart-card">
+          <div class="chart-card__header">
+            <div>
+              <div class="chart-card__title">Presenças por bimestre</div>
+            </div>
+            <button class="chart-btn">Mês</button>
+          </div>
+          <div class="chart-body" style="height:272px"><canvas id="barChart"></canvas></div>
+          <div class="chart-footer">
+            <div class="legend-item"><div class="legend-dot" style="background:#33B458"></div>Acima da meta</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#FFD927"></div>Abaixo da meta</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>Bimestre atual</div>
+            <div class="legend-item"><div class="legend-dash" style="border-color:#C2CAD4"></div>Meta (85%)</div>
+          </div>
+          <div class="chart-stats">
+            <span>Média geral: <strong>89%</strong></span>
+            <span>Meta: <span class="warn">85%</span></span>
+            <span><span class="ok">Acima da meta em 3 de 4 bimestres</span></span>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card__header">
+            <div>
+              <div class="chart-card__title">Evolução ao longo do tempo</div>
+              <div class="chart-card__sub">Nota por módulo · Let. Digital · Módulo atual: 4/5</div>
+            </div>
+            <button class="chart-btn">Exportar</button>
+          </div>
+          <div class="chart-body" style="height:272px"><canvas id="lineChart"></canvas></div>
+          <div class="chart-footer">
+            <div class="legend-item"><div class="legend-line" style="background:#003870"></div>Nota média</div>
+            <div class="legend-item"><div class="legend-dash" style="border-color:#97A1AE"></div>Frequência</div>
+            <div class="legend-item"><div class="legend-dash" style="border-color:#DEE3EA"></div>Meta (7,0)</div>
+          </div>
+          <div class="chart-stats">
+            <span>Nota atual: <strong>7,6</strong></span>
+            <span>Variação: <span class="ok">+0,3 vs. semestre anterior</span></span>
+            <span>Média da turma: <strong>7,1</strong></span>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div><!-- fim .paginaMain -->
+
+<!-- config.js deve vir ANTES dos outros scripts -->
+<script src="../js/services/configAluno.js"></script>
+<script src="../js/components/guiaAluno.js"></script>
+<script src="../js/components/menuSuperior.js"></script>
+<script src="../js/pages/dashboardAluno.js"></script>
+</body>
+</html>
