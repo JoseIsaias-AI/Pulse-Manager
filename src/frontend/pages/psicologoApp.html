@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse Manager — Psicólogo</title>
+<!-- Layout base do Psicólogo -->
+<link rel="stylesheet" href="../css/themes/guiaPsicologo.css">
+<link rel="stylesheet" href="../css/components.css">
+<!-- Fontes e ícones -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="../css/pages/modalConfEquipe.css">
+<link rel="stylesheet" href="../css/pages/perfilAlunoHist.css">
+<style>
+  /* ── SPA: container de conteúdo ── */
+  .paginaConteudo {
+    padding: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: #EEF1F4 !important;
+  }
+
+  .spa-view {
+    flex: 1;
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    background: #EEF1F4;
+  }
+
+  /* ══ VIEW: INÍCIO ════════════════════════════════════════ */
+  #view-inicio { overflow-y: auto; padding: 28px 36px 36px; gap: 18px; }
+
+  .psi-page-title { font-size: 24px; font-weight: 700; color: #003870; line-height: 1.2; letter-spacing: -.01em; font-family: 'Poppins', sans-serif; }
+  .psi-page-sub   { font-size: 12px; color: #97A1AE; margin-top: 4px; font-family: 'Poppins', sans-serif; }
+
+  /* KPI row */
+  .psi-kpi-row {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; flex-shrink: 0;
+  }
+  .psi-kpi-card {
+    border-radius: 14px; border: 1px solid transparent;
+    box-shadow: 0 1px 4px rgba(0,56,112,.10);
+    padding: 18px 20px; display: flex; align-items: flex-start; gap: 14px;
+  }
+  .psi-kpi--dark  { background: #0F1E42; }
+  .psi-kpi--amber { background: #FFD927; }
+  .psi-kpi--green { background: #33B458; }
+  .psi-kpi--blue  { background: #003870; }
+  .psi-kpi-body  { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+  .psi-kpi-label { font-size: 11px; font-weight: 500; letter-spacing: 0; color: rgba(255,255,255,.7); }
+  .psi-kpi--amber .psi-kpi-label { color: rgba(0,56,112,.6); }
+  .psi-kpi-value { font-size: 32px; font-weight: 700; line-height: 1.1; color: #fff; }
+  .psi-kpi--amber .psi-kpi-value { color: #003870; }
+  .psi-kpi-sub   { font-size: 11px; color: rgba(255,255,255,.7); }
+  .psi-kpi--amber .psi-kpi-sub   { color: rgba(0,56,112,.55); }
+  .psi-kpi-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px;
+  }
+  .psi-kpi-badge--green { background: rgba(255,255,255,.22); color: #fff; }
+  .psi-kpi-badge--amber { background: rgba(0,56,112,.12); color: #003870; }
+  .psi-kpi-badge--blue  { background: rgba(255,255,255,.22); color: #fff; }
+
+  /* Main grid */
+  .psi-main-grid {
+    display: grid; grid-template-columns: 1fr 380px; gap: 16px; flex: 1; min-height: 0;
+  }
+
+  /* Cards */
+  .psi-card {
+    background: #fff; border-radius: 14px; border: 1px solid #DEE3EA;
+    box-shadow: 0 1px 4px rgba(0,56,112,.07);
+    padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto;
+  }
+  .psi-card-head {
+    display: flex; align-items: flex-start; justify-content: space-between; flex-shrink: 0;
+  }
+  .psi-card-title  { font-size: 15px; font-weight: 700; color: #11161D; }
+  .psi-card-sub    { font-size: 12px; color: #97A1AE; margin-top: 3px; }
+  .psi-ver-todos   { font-size: 11px; color: #003870; font-weight: 600; text-decoration: none; }
+  .psi-ver-todos:hover { opacity: .7; }
+
+  /* Alertas */
+  .alerta-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+  .alerta-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 10px; border-left: 3px solid transparent;
+    background: #F7F9FB;
+  }
+  .borda-critico { border-left-color: #E24B4A; }
+  .borda-atencao { border-left-color: #F4A261; }
+  .borda-obs     { border-left-color: #97A1AE; }
+  .alerta-avatar {
+    width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; font-family: 'Poppins', sans-serif; color: #fff;
+  }
+  .av-red    { background: #E24B4A; }
+  .av-purple { background: #7B4FD9; }
+  .av-teal   { background: #0E7490; }
+  .av-orange { background: #F4A261; color: #003870; }
+  .av-blue   { background: #003870; }
+  .alerta-info { flex: 1; min-width: 0; }
+  .alerta-nome { font-size: 12px; font-weight: 600; color: #11161D; display: block; }
+  .alerta-desc { font-size: 11px; color: #97A1AE; }
+  .alerta-badge {
+    font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 999px;
+    white-space: nowrap;
+  }
+  .badge-critico { background: rgba(226,75,74,.12); color: #C0392B; }
+  .badge-atencao { background: rgba(244,162,97,.18); color: #C25820; }
+  .badge-obs     { background: #F0F3F7; color: #97A1AE; }
+  .btn-notificar {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px; border-radius: 7px; border: 1px solid #DEE3EA;
+    background: #003870; color: #fff; font-size: 11px; font-weight: 600;
+    cursor: pointer; font-family: 'Poppins', sans-serif; transition: all .15s; white-space: nowrap;
+  }
+  .btn-notificar:hover { background: #004F96; }
+  .btn-notificar i { font-size: 12px; }
+
+  /* Paginação alertas */
+  .pag-alertas {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0; border-top: 1px solid #EEF1F4; padding-top: 10px;
+  }
+  .pag-info { font-size: 11px; color: #97A1AE; }
+  .pag-controls { display: flex; align-items: center; gap: 4px; }
+  .pag-btn {
+    width: 26px; height: 26px; border-radius: 6px; border: 1px solid #DEE3EA;
+    background: #fff; font-size: 12px; color: #6B7684; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif;
+    transition: all .15s;
+  }
+  .pag-btn:hover:not(:disabled) { border-color: #003870; color: #003870; }
+  .pag-btn.pag-active { background: #003870; color: #fff; border-color: #003870; font-weight: 600; }
+
+  /* Right col */
+  .psi-right-col { display: flex; flex-direction: column; gap: 14px; }
+
+  /* Bem-estar chart */
+  .psi-chart-wrap  { height: 180px; position: relative; flex-shrink: 0; }
+  .psi-chart-legend {
+    display: flex; gap: 14px; flex-shrink: 0; flex-wrap: wrap;
+  }
+  .psi-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #6B7684; }
+  .psi-legend-dot  { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Sessões */
+  .sessao-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+  .sessao-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; border-radius: 8px; background: #F7F9FB;
+  }
+  .sessao-hora { font-size: 12px; font-weight: 700; color: #003870; min-width: 38px; flex-shrink: 0; }
+  .sessao-info { flex: 1; min-width: 0; }
+  .sessao-nome { font-size: 12px; font-weight: 600; color: #11161D; display: block; }
+  .sessao-tipo { font-size: 11px; color: #97A1AE; }
+  .badge-hoje   { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 999px; letter-spacing: .04em; background: #003870; color: #fff; white-space: nowrap; }
+  .badge-amanha { background: #33B458; }
+  .btn-mais     { background: none; border: none; cursor: pointer; color: #97A1AE; font-size: 16px; padding: 2px 4px; line-height: 1; }
+  .btn-mais:hover { color: #6B7684; }
+
+  /* ══ VIEW: ALUNOS ════════════════════════════════════════ */
+  #view-alunos { padding: 22px 40px 18px !important; gap: 12px !important; }
+
+  .al-header { flex-shrink: 0; }
+  .al-header h1 { font-size: 24px; font-weight: 700; color: #003870; line-height: 1.2; letter-spacing: -.01em; margin-bottom: 4px; }
+  .al-subtitle   { font-size: 11px; color: #97A1AE; }
+  .al-subtitle .al-risk { color: #E24B4A; font-weight: 600; }
+  .al-subtitle .al-emp  { color: #33B458;  font-weight: 600; }
+
+  .al-filters { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .al-filter-btn {
+    padding: 5px 14px; border-radius: 8px; border: 1px solid #DEE3EA;
+    background: #fff; font-size: 11px; font-weight: 500; color: #6B7684;
+    cursor: pointer; font-family: 'Poppins', sans-serif; transition: all .15s;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .al-filter-btn:hover  { border-color: #003870; color: #003870; }
+  .al-filter-btn--active{ background: #003870; color: #fff; border-color: #003870; font-weight: 600; }
+  .al-import-btn {
+    margin-left: auto; font-size: 11px; font-weight: 600; color: #33B458;
+    background: none; border: none; cursor: pointer; font-family: 'Poppins', sans-serif;
+  }
+  .al-import-btn:hover { opacity: .7; }
+
+  .al-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; flex-shrink: 0; }
+
+  .al-card {
+    background: #fff; border-radius: 12px; border: 1px solid #DEE3EA;
+    padding: 14px 16px 12px; box-shadow: 0 1px 3px rgba(0,56,112,.05);
+    cursor: pointer; transition: box-shadow .15s, transform .12s;
+  }
+  .al-card:hover { box-shadow: 0 4px 16px rgba(0,56,112,.12); transform: translateY(-1px); }
+  .al-card-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .al-av {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; font-family: 'Poppins', sans-serif;
+  }
+  .al-info { flex: 1; min-width: 0; }
+  .al-name { font-size: 13px; font-weight: 600; color: #11161D; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .al-meta { font-size: 10px; color: #6B7684; margin-top: 2px; }
+  .al-id   { font-size: 10px; color: #97A1AE; }
+  .al-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px; border-radius: 999px; font-size: 10px;
+    font-weight: 600; flex-shrink: 0; white-space: nowrap;
+  }
+  .al-badge--risco   { background: #FFF3E0; color: #C2410C; }
+  .al-badge--atencao { background: #FFF3E0; color: #C2410C; }
+
+  .al-prog-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .al-module   { font-size: 11px; color: #6B7684; font-weight: 500; }
+  .al-pct      { font-size: 11px; font-weight: 600; color: #11161D; }
+  .al-bar      { height: 5px; border-radius: 3px; background: #EEF1F4; overflow: hidden; margin-bottom: 6px; }
+  .al-bar-inner{ height: 100%; border-radius: 3px; }
+  .al-bar-inner.c-green { background: #33B458; }
+  .al-bar-inner.c-amber { background: #F4A261; }
+  .al-bar-inner.c-red   { background: #E24B4A; }
+  .al-bar-inner.c-gray  { background: #C2CAD4; }
+
+  .al-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0; border-top: 1px solid #DEE3EA; padding-top: 10px;
+  }
+  .al-legend { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .al-leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; }
+  .al-leg-dot  { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .al-leg-label{ color: #6B7684; }
+  .al-leg-num  { font-weight: 700; color: #11161D; margin-left: 2px; }
+
+  .al-pag { display: flex; align-items: center; gap: 4px; }
+  .al-pag-info { font-size: 10px; color: #97A1AE; margin-right: 6px; white-space: nowrap; }
+  .al-pag-btn {
+    width: 26px; height: 26px; border-radius: 6px;
+    border: 1px solid #DEE3EA; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #6B7684; cursor: pointer; padding: 0;
+    transition: all .15s; font-family: 'Poppins', sans-serif;
+  }
+  .al-pag-btn:hover:not(:disabled) { border-color: #003870; color: #003870; }
+  .al-pag-btn:disabled { opacity: .35; cursor: default; }
+  .al-pag-btn.active   { background: #003870; color: #fff; border-color: #003870; font-weight: 600; }
+  #al-pag-nums { display: inline-flex; align-items: center; gap: 4px; }
+
+  .al-stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; flex-shrink: 0; }
+  .al-stat {
+    background: #fff; border-radius: 10px; border: 1px solid #DEE3EA;
+    padding: 10px 14px; display: flex; flex-direction: column; gap: 4px;
+  }
+  .al-stat-head  { display: flex; justify-content: space-between; align-items: center; }
+  .al-stat-label { font-size: 11px; color: #97A1AE; font-weight: 500; letter-spacing: 0; }
+  .al-stat-val   { font-size: 28px; font-weight: 800; color: #003870; line-height: 1; }
+  .al-sbadge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+  .al-sbadge--up   { background: #E8F8ED; color: #1D7A36; }
+  .al-sbadge--warn { background: #FFF3E0; color: #C2410C; }
+  .al-sbadge--emp  { background: rgba(255,217,39,.25); color: #003870; }
+  .al-sbadge--blue { background: #EDF3F9; color: #0A4A89; }
+
+  /* ══ VIEW: DASHBOARD ════════════════════════════════════ */
+  #view-dashboard { overflow-y: auto; padding: 28px 36px 36px; gap: 18px; align-items: stretch !important; justify-content: flex-start !important; }
+
+  .db-header-title { font-size: 24px; font-weight: 700; color: #003870; line-height: 1.2; letter-spacing: -.01em; font-family: 'Poppins', sans-serif; }
+  .db-header-sub   { font-size: 12px; color: #97A1AE; margin-top: 4px; font-family: 'Poppins', sans-serif; }
+
+  /* KPI row */
+  .db-kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; flex-shrink: 0; }
+  .db-kpi { border-radius: 14px; padding: 20px 22px; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .db-kpi--blue  { background: #003870; }
+  .db-kpi--dark  { background: #0F1E42; }
+  .db-kpi--green { background: #278545; }
+  .db-kpi--amber { background: #D4860A; }
+  .db-kpi-body   { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .db-kpi-label  { font-size: 11px; font-weight: 500; letter-spacing: 0; color: rgba(255,255,255,.8); }
+  .db-kpi-value  { font-size: 42px; font-weight: 800; line-height: 1.05; color: #fff; }
+  .db-kpi-footer { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+  .db-kpi-badge  { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: rgba(255,255,255,.2); color: #fff; white-space: nowrap; }
+  .db-kpi-sub    { font-size: 11px; color: rgba(255,255,255,.7); }
+  .db-kpi-icon   { width: 46px; height: 46px; border-radius: 10px; background: rgba(255,255,255,.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .db-kpi-icon i { font-size: 22px; color: #fff; }
+
+  /* Main grid */
+  .db-main-grid { display: grid; grid-template-columns: 1fr 400px; gap: 16px; flex: 1; min-height: 0; }
+
+  /* Cards */
+  .db-card { background: #fff; border-radius: 14px; border: 1px solid #DEE3EA; box-shadow: 0 1px 4px rgba(0,56,112,.07); padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; overflow: visible; }
+  .db-card-head  { display: flex; align-items: flex-start; justify-content: space-between; flex-shrink: 0; }
+  .db-card-title { font-size: 15px; font-weight: 700; color: #11161D; }
+  .db-card-sub   { font-size: 12px; color: #97A1AE; margin-top: 3px; }
+
+  /* Semana/Mês toggle */
+  .db-toggle     { display: flex; gap: 3px; background: #EEF1F4; border-radius: 8px; padding: 3px; flex-shrink: 0; }
+  .db-toggle-btn { padding: 4px 13px; border-radius: 6px; border: none; cursor: pointer; font-size: 11px; font-weight: 600; font-family: 'Poppins', sans-serif; color: #6B7684; background: none; transition: all .15s; }
+  .db-toggle-btn.active { background: #003870; color: #fff; }
+
+  /* Chart */
+  .db-chart-wrap { position: relative; height: 250px; flex-shrink: 0; }
+
+  /* Legend */
+  .db-legend { display: flex; gap: 16px; flex-shrink: 0; flex-wrap: wrap; }
+  .db-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #6B7684; }
+  .db-legend-dot  { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+
+  /* Chart footer */
+  .db-chart-footer     { background: #F7F9FB; border-radius: 8px; padding: 10px 14px; flex-shrink: 0; }
+  .db-chart-footer-main{ font-size: 12px; font-weight: 600; color: #11161D; line-height: 1.5; }
+  .db-chart-footer-sub { font-size: 11px; color: #97A1AE; margin-top: 2px; }
+
+  /* Engajamento bars */
+  .db-eng-list    { display: flex; flex-direction: column; gap: 9px; flex: 1; }
+  .db-eng-item    { display: flex; align-items: center; gap: 10px; }
+  .db-eng-label   { font-size: 11px; font-weight: 600; color: #4D5663; min-width: 116px; flex-shrink: 0; text-align: right; }
+  .db-eng-bar-wrap{ flex: 1; height: 20px; background: #EEF1F4; border-radius: 4px; overflow: hidden; }
+  .db-eng-bar     { height: 100%; border-radius: 4px; }
+  .db-eng-pct     { font-size: 11px; font-weight: 700; color: #11161D; min-width: 30px; }
+
+  /* Resumo */
+  .db-resumo       { background: #F7F9FB; border-radius: 10px; padding: 12px 16px; flex-shrink: 0; }
+  .db-resumo-title { font-size: 11px; font-weight: 600; color: #97A1AE; letter-spacing: 0; margin-bottom: 10px; }
+  .db-resumo-row   { display: flex; gap: 0; }
+  .db-resumo-item  { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .db-resumo-val   { font-size: 22px; font-weight: 800; color: #003870; line-height: 1; }
+  .db-resumo-val--up { font-size: 17px; font-weight: 800; color: #33B458; line-height: 1; }
+  .db-resumo-sub   { font-size: 11px; color: #97A1AE; }
+</style>
+</head>
+<body>
+
+  <!-- ========== MENU LATERAL ========== -->
+  <aside class="menuLateral" id="menuLateral">
+    <div class="menuLateral__logo">
+      <div class="menuLateral__logo-brand">
+        <img src="../assets/images/logoIcon.png" alt="Pulse Manager" class="menuLateral__logo-icon" />
+        <span class="menuLateral__logo-name">PULSE<br>MANAGER</span>
+      </div>
+      <span class="menuLateral__logo-role"></span>
+    </div>
+    <nav class="menuLateral__nav">
+      <span class="menuLateral__section-label">Menu Principal</span>
+      <ul class="menuLateral__menu"></ul>
+    </nav>
+    <footer class="menuLateral__footer">
+      <a href="#" class="menuLateral__settings menuLateral__link">
+        <i class="ti ti-settings menuLateral__icon"></i>
+        <span>Configurações</span>
+      </a>
+      <div class="menuLateral__user">
+        <div class="menuLateral__avatar"></div>
+        <div class="menuLateral__user-info">
+          <span class="menuLateral__user-name"></span>
+          <span class="menuLateral__user-role"></span>
+        </div>
+      </div>
+    </footer>
+  </aside>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <div class="paginaMain" id="main-content">
+
+    <header class="menuSuperior" id="menuSuperior">
+      <span class="menuSuperior__breadcrumb"></span>
+      <div class="menuSuperior__search" id="top-search" style="display:none;">
+        <i class="ti ti-search menuSuperior__search-icon"></i>
+        <input type="text" class="menuSuperior__search-input" id="search-input" placeholder="Buscar aluno..." autocomplete="off" />
+      </div>
+      <div class="menuSuperior__actions">
+        <button class="menuSuperior__avatar-btn" title="Perfil"></button>
+      </div>
+    </header>
+
+    <main class="paginaConteudo">
+
+      <!-- ══════════════════════════════════════════════════════
+           VIEW: INÍCIO
+      ══════════════════════════════════════════════════════ -->
+      <div id="view-inicio" class="spa-view">
+
+        <!-- Page header -->
+        <div style="flex-shrink:0;">
+          <div class="psi-page-title">Bem-estar dos Alunos</div>
+          <div class="psi-page-sub">Semana 15 · 3 sessões hoje</div>
+        </div>
+
+        <!-- KPI row -->
+        <div class="psi-kpi-row">
+          <div class="psi-kpi-card psi-kpi--dark">
+            <div class="psi-kpi-body">
+              <span class="psi-kpi-label">Alunos Acompanhados</span>
+              <span class="psi-kpi-value">23</span>
+              <div class="psi-kpi-sub">de 48 alunos</div>
+            </div>
+          </div>
+          <div class="psi-kpi-card psi-kpi--amber">
+            <div class="psi-kpi-body">
+              <span class="psi-kpi-label">Em Atenção</span>
+              <span class="psi-kpi-value">5</span>
+              <div class="psi-kpi-sub">esta semana</div>
+            </div>
+          </div>
+          <div class="psi-kpi-card psi-kpi--green">
+            <div class="psi-kpi-body">
+              <span class="psi-kpi-label">Sessões / Semana</span>
+              <span class="psi-kpi-value">11</span>
+              <div class="psi-kpi-sub">meta: 12 por semana</div>
+            </div>
+          </div>
+          <div class="psi-kpi-card psi-kpi--blue">
+            <div class="psi-kpi-body">
+              <span class="psi-kpi-label">Notificações Enviadas</span>
+              <span class="psi-kpi-value">19</span>
+              <div class="psi-kpi-sub">últimos 7 dias</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main grid -->
+        <div class="psi-main-grid">
+
+          <!-- Alertas -->
+          <section class="psi-card">
+            <div class="psi-card-head" style="flex-shrink:0;">
+              <div>
+                <div class="psi-card-title">Alertas de Atenção</div>
+                <div class="psi-card-sub">4 em atenção · 1 em observação</div>
+              </div>
+              <a href="#" class="psi-ver-todos">Ver histórico</a>
+            </div>
+
+            <ul class="alerta-list">
+              <li class="alerta-item borda-atencao">
+                <div class="alerta-avatar av-red">AS</div>
+                <div class="alerta-info">
+                  <span class="alerta-nome">Ana Silva</span>
+                  <span class="alerta-desc">Relato de crise de ansiedade</span>
+                </div>
+                <span class="alerta-badge badge-atencao">atenção</span>
+              </li>
+              <li class="alerta-item borda-atencao">
+                <div class="alerta-avatar av-purple">MN</div>
+                <div class="alerta-info">
+                  <span class="alerta-nome">Marcos Nunes</span>
+                  <span class="alerta-desc">Ausente em 3 sessões consecutivas</span>
+                </div>
+                <span class="alerta-badge badge-atencao">atenção</span>
+              </li>
+              <li class="alerta-item borda-atencao">
+                <div class="alerta-avatar av-teal">LR</div>
+                <div class="alerta-info">
+                  <span class="alerta-nome">Larissa Rocha</span>
+                  <span class="alerta-desc">Relato de ansiedade</span>
+                </div>
+                <span class="alerta-badge badge-atencao">atenção</span>
+              </li>
+              <li class="alerta-item borda-atencao">
+                <div class="alerta-avatar av-orange">CM</div>
+                <div class="alerta-info">
+                  <span class="alerta-nome">Carlos Mendes</span>
+                  <span class="alerta-desc">Relato de dificuldade com a turma</span>
+                </div>
+                <span class="alerta-badge badge-atencao">atenção</span>
+              </li>
+              <li class="alerta-item borda-obs">
+                <div class="alerta-avatar av-blue">BT</div>
+                <div class="alerta-info">
+                  <span class="alerta-nome">Beatriz Torres</span>
+                  <span class="alerta-desc">Relato de desmotivação</span>
+                </div>
+                <span class="alerta-badge badge-obs">observação</span>
+              </li>
+            </ul>
+
+            <div class="pag-alertas">
+              <span class="pag-info">Exibindo 5 de 5</span>
+              <div class="pag-controls">
+                <button class="pag-btn">‹</button>
+                <button class="pag-btn pag-active">1</button>
+                <button class="pag-btn">2</button>
+                <button class="pag-btn">›</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Right col: bem-estar + sessões -->
+          <div class="psi-right-col">
+
+            <!-- Bem-estar chart -->
+            <section class="psi-card">
+              <div class="psi-card-head">
+                <div>
+                  <div class="psi-card-title">Bem-estar geral dos alunos</div>
+                  <div class="psi-card-sub">Engenharia T4 · Últimos 30 dias</div>
+                </div>
+              </div>
+              <div class="psi-chart-wrap">
+                <canvas id="psi-bestar-chart"></canvas>
+              </div>
+              <div class="psi-chart-legend">
+                <div class="psi-legend-item"><div class="psi-legend-dot" style="background:#33B458;"></div>Bem-estar</div>
+                <div class="psi-legend-item"><div class="psi-legend-dot" style="background:#003870;"></div>Em atenção</div>
+                <div class="psi-legend-item"><div class="psi-legend-dot" style="background:#FFD927;"></div>Sessões</div>
+              </div>
+            </section>
+
+            <!-- Próximas sessões -->
+            <section class="psi-card">
+              <div class="psi-card-head">
+                <div class="psi-card-title">Próximas Sessões</div>
+              </div>
+              <ul class="sessao-list">
+                <li class="sessao-item">
+                  <span class="sessao-hora">14:30</span>
+                  <div class="sessao-info">
+                    <span class="sessao-nome">Ana Silva</span>
+                    <span class="sessao-tipo">Sessão individual · Online</span>
+                  </div>
+                  <span class="badge-hoje">HOJE</span>
+                  <button class="btn-mais"><i class="ti ti-dots"></i></button>
+                </li>
+                <li class="sessao-item">
+                  <span class="sessao-hora">15:30</span>
+                  <div class="sessao-info">
+                    <span class="sessao-nome">Larissa Rocha</span>
+                    <span class="sessao-tipo">Check-in semanal · Online</span>
+                  </div>
+                  <span class="badge-hoje">HOJE</span>
+                  <button class="btn-mais"><i class="ti ti-dots"></i></button>
+                </li>
+                <li class="sessao-item">
+                  <span class="sessao-hora">16:30</span>
+                  <div class="sessao-info">
+                    <span class="sessao-nome">Beatriz Torres</span>
+                    <span class="sessao-tipo">Sessão individual · Online</span>
+                  </div>
+                  <span class="badge-hoje">HOJE</span>
+                  <button class="btn-mais"><i class="ti ti-dots"></i></button>
+                </li>
+                <li class="sessao-item">
+                  <span class="sessao-hora">09:00</span>
+                  <div class="sessao-info">
+                    <span class="sessao-nome">Marcos Nunes</span>
+                    <span class="sessao-tipo">Check-in semanal · Online</span>
+                  </div>
+                  <span class="badge-hoje badge-amanha">AMH</span>
+                  <button class="btn-mais"><i class="ti ti-dots"></i></button>
+                </li>
+              </ul>
+            </section>
+
+          </div><!-- fim .psi-right-col -->
+        </div><!-- fim .psi-main-grid -->
+
+      </div><!-- fim #view-inicio -->
+
+      <!-- ══════════════════════════════════════════════════════
+           VIEW: ALUNOS
+      ══════════════════════════════════════════════════════ -->
+      <div id="view-alunos" class="spa-view">
+
+        <div class="al-header">
+          <h1>Alunos</h1>
+          <p class="al-subtitle">
+            18 alunos · <span class="al-risk">3 em risco</span> · <span class="al-emp">2 empregados</span>
+          </p>
+        </div>
+
+        <div class="al-filters">
+          <button class="al-filter-btn" id="btn-curso">Curso</button>
+          <button class="al-filter-btn" id="btn-desemp">Desempenho</button>
+          <button class="al-filter-btn" id="btn-nota">Nota Média</button>
+          <button class="al-filter-btn" id="btn-eng">Engajamento</button>
+          <button class="al-filter-btn" id="btn-ord">
+            <i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> Ordenar
+          </button>
+          <button class="al-import-btn">+ Importar CSV</button>
+        </div>
+
+        <div class="al-grid" id="al-grid"></div>
+
+        <div class="al-foot">
+          <div class="al-legend">
+            <div class="al-leg-item"><div class="al-leg-dot" style="background:#33B458"></div><span class="al-leg-label">Ativa</span><span class="al-leg-num">9</span></div>
+            <div class="al-leg-item"><div class="al-leg-dot" style="background:#E24B4A"></div><span class="al-leg-label">Em risco</span><span class="al-leg-num">3</span></div>
+            <div class="al-leg-item"><div class="al-leg-dot" style="background:#F4A261"></div><span class="al-leg-label">Atenção</span><span class="al-leg-num">2</span></div>
+            <div class="al-leg-item"><div class="al-leg-dot" style="background:#C2CAD4"></div><span class="al-leg-label">Inativo</span><span class="al-leg-num">2</span></div>
+            <div class="al-leg-item"><div class="al-leg-dot" style="background:#FFD927"></div><span class="al-leg-label">Empregado</span><span class="al-leg-num">2</span></div>
+          </div>
+          <div class="al-pag">
+            <span class="al-pag-info" id="al-pag-info">Exibindo 1–9 de 184 alunos</span>
+            <button class="al-pag-btn" id="al-prev" disabled>‹</button>
+            <span id="al-pag-nums"></span>
+            <button class="al-pag-btn" id="al-next">›</button>
+          </div>
+        </div>
+
+        <div class="al-stats-row">
+          <div class="al-stat">
+            <div class="al-stat-head">
+              <span class="al-stat-label">Alunos Ativos</span>
+            </div>
+            <div class="al-stat-val">18</div>
+          </div>
+          <div class="al-stat">
+            <div class="al-stat-head">
+              <span class="al-stat-label">Em Risco</span>
+            </div>
+            <div class="al-stat-val">3</div>
+          </div>
+          <div class="al-stat">
+            <div class="al-stat-head">
+              <span class="al-stat-label">Empregados</span>
+            </div>
+            <div class="al-stat-val">2</div>
+          </div>
+          <div class="al-stat">
+            <div class="al-stat-head">
+              <span class="al-stat-label">Engajamento Médio</span>
+              <span class="al-sbadge al-sbadge--blue">↑ Acima da meta</span>
+            </div>
+            <div class="al-stat-val">7,1</div>
+          </div>
+        </div>
+
+      </div><!-- fim #view-alunos -->
+
+      <!-- ══════════════════════════════════════════════════════
+           VIEW: DASHBOARD
+      ══════════════════════════════════════════════════════ -->
+      <div id="view-dashboard" class="spa-view">
+
+        <!-- Header -->
+        <div style="flex-shrink:0;">
+          <div class="db-header-title">Dashboard — Saúde Mental e Bem-estar</div>
+          <div class="db-header-sub">Semana 15 de 20 · 23 alunos acompanhados</div>
+        </div>
+
+        <!-- KPI row -->
+        <div class="db-kpi-row">
+          <div class="db-kpi db-kpi--blue">
+            <div class="db-kpi-body">
+              <span class="db-kpi-label">Humor Médio</span>
+              <span class="db-kpi-value">7,4</span>
+              <div class="db-kpi-footer">
+                <span class="db-kpi-sub">de 10</span>
+              </div>
+            </div>
+          </div>
+          <div class="db-kpi db-kpi--dark">
+            <div class="db-kpi-body">
+              <span class="db-kpi-label">Check-ins / Semana</span>
+              <span class="db-kpi-value">38</span>
+              <div class="db-kpi-footer">
+                <span class="db-kpi-sub">de 48</span>
+              </div>
+            </div>
+          </div>
+          <div class="db-kpi db-kpi--green">
+            <div class="db-kpi-body">
+              <span class="db-kpi-label">Flags Ativas</span>
+              <span class="db-kpi-value">7</span>
+              <div class="db-kpi-footer">
+                <span class="db-kpi-badge">↓ -2 hoje</span>
+                <span class="db-kpi-sub">alunos</span>
+              </div>
+            </div>
+          </div>
+          <div class="db-kpi db-kpi--amber">
+            <div class="db-kpi-body">
+              <span class="db-kpi-label">Sessões Realizadas</span>
+              <span class="db-kpi-value">24</span>
+              <div class="db-kpi-footer">
+                <span class="db-kpi-sub">este mês</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main grid -->
+        <div class="db-main-grid">
+
+          <!-- Bem-estar por módulo -->
+          <section class="db-card">
+            <div class="db-card-head">
+              <div>
+                <div class="db-card-title">Bem-estar por módulo</div>
+                <div class="db-card-sub">Índice médio de humor por módulo/curso</div>
+              </div>
+              <div class="db-toggle">
+                <button class="db-toggle-btn" id="db-btn-semana" onclick="dbToggle('semana')">Semana</button>
+                <button class="db-toggle-btn active" id="db-btn-mes" onclick="dbToggle('mes')">Mês</button>
+              </div>
+            </div>
+            <div class="db-chart-wrap">
+              <canvas id="db-bestar-chart"></canvas>
+            </div>
+            <div class="db-legend">
+              <div class="db-legend-item"><div class="db-legend-dot" style="background:#003870;"></div>Acima da meta</div>
+              <div class="db-legend-item"><div class="db-legend-dot" style="background:#33B458;"></div>Próximo da meta</div>
+              <div class="db-legend-item"><div class="db-legend-dot" style="background:#FFD927;"></div>Abaixo da meta</div>
+            </div>
+            <div class="db-chart-footer">
+              <div class="db-chart-footer-main">Média geral da turma <strong>7,4</strong> · vs. semana anterior: <strong>7,1</strong></div>
+              <div class="db-chart-footer-sub">Dados coletados via check-ins diários — semana 15</div>
+            </div>
+          </section>
+
+          <!-- Engajamento por Faixa -->
+          <section class="db-card">
+            <div class="db-card-head">
+              <div>
+                <div class="db-card-title">Engajamento por Faixa</div>
+                <div class="db-card-sub">% de engajamento semanal por faixa de humor</div>
+              </div>
+              <a href="#" class="psi-ver-todos">Exportar →</a>
+            </div>
+
+            <div class="db-eng-list">
+              <div class="db-eng-item">
+                <span class="db-eng-label">Muito Bem (9-10)</span>
+                <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:85%;background:#1D7A36;"></div></div>
+                <span class="db-eng-pct">85%</span>
+              </div>
+              <div class="db-eng-item">
+                <span class="db-eng-label">Bem (7-8)</span>
+                <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:72%;background:#33B458;"></div></div>
+                <span class="db-eng-pct">72%</span>
+              </div>
+              <div class="db-eng-item">
+                <span class="db-eng-label">Neutro (5-6)</span>
+                <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:58%;background:#5BC579;"></div></div>
+                <span class="db-eng-pct">58%</span>
+              </div>
+              <div class="db-eng-item">
+                <span class="db-eng-label">Cansado (4-5)</span>
+                <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:41%;background:#84CD99;"></div></div>
+                <span class="db-eng-pct">41%</span>
+              </div>
+              <div class="db-eng-item">
+                <span class="db-eng-label">Ansioso (3-4)</span>
+                <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:35%;background:#378ADD;"></div></div>
+                <span class="db-eng-pct">35%</span>
+              </div>
+              <div class="db-eng-item">
+                <span class="db-eng-label">Triste (2-3)</span>
+                <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:22%;background:#85B7EB;"></div></div>
+                <span class="db-eng-pct">22%</span>
+              </div>
+              <div class="db-eng-item">
+                <span class="db-eng-label">Muito Mal (1-2)</span>
+                <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:14%;background:#B5D4F4;"></div></div>
+                <span class="db-eng-pct">14%</span>
+              </div>
+            </div>
+
+            <!-- Resumo -->
+            <div class="db-resumo">
+              <div class="db-resumo-title">Resumo de engajamento — Semana 15</div>
+              <div class="db-resumo-row">
+                <div class="db-resumo-item">
+                  <span class="db-resumo-val">79%</span>
+                  <span class="db-resumo-sub">Humor positivo (≥7)</span>
+                </div>
+                <div class="db-resumo-item">
+                  <span class="db-resumo-val">3</span>
+                  <span class="db-resumo-sub">Faixas de atenção</span>
+                </div>
+                <div class="db-resumo-item">
+                  <span class="db-resumo-val--up">+6%</span>
+                  <span class="db-resumo-sub">vs. semana anterior</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div><!-- fim .db-main-grid -->
+
+      </div><!-- fim #view-dashboard -->
+
+    </main>
+  </div><!-- fim .paginaMain -->
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL: EQUIPE (modalConfEquipe) — mesmo HTML do gestorApp
+══════════════════════════════════════════════════════════ -->
+<div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+
+    <div class="modal-header">
+      <div class="mh-top">
+        <div class="modal-avatar" id="m-initials">JM</div>
+        <div>
+          <div class="modal-name" id="m-name">João Mário</div>
+          <div class="modal-meta" id="m-cargo-meta">Psicólogo · Pulse Manager</div>
+        </div>
+      </div>
+      <div class="modal-badges">
+        <span class="badge badge-cargo"><i class="ti ti-heart" style="font-size:11px;"></i> Psicólogo</span>
+        <span class="badge badge-id"><i class="ti ti-id-badge" style="font-size:11px;"></i> EQ-2024-012</span>
+      </div>
+      <button class="close-btn" onclick="closeModal()" aria-label="Fechar modal"><i class="ti ti-x"></i></button>
+    </div>
+
+    <div class="tab-strip">
+      <button class="tab-btn active" onclick="showTab('dados',this)"><i class="ti ti-user"></i> Dados</button>
+      <button class="tab-btn" onclick="showTab('contato',this)"><i class="ti ti-phone"></i> Contato</button>
+    </div>
+
+    <div class="modal-body">
+
+      <div id="tab-dados" class="tab-panel active">
+        <div class="sec-label">Identificação</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-id-badge"></i> ID membro</label>
+            <input type="text" value="EQ-2024-012" readonly>
+            <span class="field-hint">Identificador único da equipe</span>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-briefcase"></i> Cargo</label>
+            <select id="f-cargo" onchange="updateCargo()">
+              <option selected>Psicólogo</option>
+              <option>Gestor</option>
+              <option>Mentor</option>
+              <option>Coordenador</option>
+              <option>Administrador</option>
+            </select>
+          </div>
+          <div class="field span2">
+            <label><i class="ti ti-user"></i> Nome completo</label>
+            <input type="text" id="f-nome" value="João Mário" oninput="updateHeader()">
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-contato" class="tab-panel">
+        <div class="sec-label">Informações de contato</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-mail"></i> E-mail institucional</label>
+            <input type="email" value="joao.mario@pulsemais.org.br">
+          </div>
+          <div class="field">
+            <label><i class="ti ti-phone"></i> Telefone</label>
+            <input type="tel" value="(11) 91234-5678">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <div class="footer-left"><i class="ti ti-lock"></i> Última edição: hoje às 09:15</div>
+      <div class="footer-right">
+        <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveProfile()"><i class="ti ti-device-floppy"></i> Salvar alterações</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <i class="ti ti-circle-check"></i> Perfil atualizado com sucesso
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     OVERLAY: PERFIL DO ALUNO — com aba Hist. Psicológico
+══════════════════════════════════════════════════════════ -->
+<div class="overlay" id="perfil-hist-overlay" onclick="if(event.target===this)closeHistModal()">
+  <div class="modal" id="pf-hist-modal">
+
+    <div class="modal-header">
+      <div class="mh-top">
+        <div class="modal-avatar" id="pf-avatar">--</div>
+        <div>
+          <div class="modal-name" id="pf-name">—</div>
+          <div class="modal-meta" id="pf-meta">—</div>
+        </div>
+      </div>
+      <div class="modal-badges">
+        <span class="badge badge-ativo"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
+        <span class="badge badge-curso" id="pf-badge-curso"><i class="ti ti-code" style="font-size:11px;"></i> —</span>
+        <span class="badge badge-nivel">Capacitado</span>
+      </div>
+      <button class="close-btn" onclick="closeHistModal()" aria-label="Fechar"><i class="ti ti-x"></i></button>
+    </div>
+
+    <div class="tab-strip">
+      <button class="tab-btn active" onclick="showHistTab('pf-tab-dados',this)"><i class="ti ti-user"></i> Dados gerais</button>
+      <button class="tab-btn" onclick="showHistTab('pf-tab-socio',this)"><i class="ti ti-chart-pie"></i> Socioeconômico</button>
+      <button class="tab-btn" onclick="showHistTab('pf-tab-contato',this)"><i class="ti ti-phone"></i> Contato</button>
+      <button class="tab-btn" onclick="showHistTab('pf-tab-desempenho',this)"><i class="ti ti-chart-line"></i> Desempenho</button>
+      <button class="tab-btn" onclick="showHistTab('pf-tab-hist',this)"><i class="ti ti-notes-medical"></i> Hist. Psicológico</button>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- Aba: Dados gerais -->
+      <div id="pf-tab-dados" class="tab-panel active">
+        <div class="sec-label">Identificação</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-hash"></i> Código PM</label>
+            <input type="text" id="pf-code" value="—" readonly>
+          </div>
+          <div class="field span2">
+            <label><i class="ti ti-user"></i> Nome completo</label>
+            <input type="text" id="pf-fullname" value="—" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-id-badge-2"></i> CPF</label>
+            <input type="text" value="—" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-calendar-event"></i> Idade</label>
+            <input type="text" id="pf-age" value="—" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-gender-bigender"></i> Gênero</label>
+            <input type="text" value="Não informado" readonly>
+          </div>
+        </div>
+        <div class="sec-label">Formação</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-book"></i> Curso</label>
+            <input type="text" id="pf-course" value="—" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-certificate"></i> Escolaridade</label>
+            <input type="text" value="Ensino Médio Completo" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-briefcase"></i> Ocupação</label>
+            <input type="text" value="Estudante" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-notebook"></i> Programa</label>
+            <input type="text" value="Programa Pulse Mais" readonly>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aba: Socioeconômico -->
+      <div id="pf-tab-socio" class="tab-panel">
+        <div class="sec-label">Dados socioeconômicos</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-chart-pie"></i> Perfil socioeconômico</label>
+            <input type="text" value="Classe C" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-currency-dollar"></i> Renda mensal familiar</label>
+            <input type="text" value="R$ 1.800,00" readonly>
+          </div>
+          <div class="field span2">
+            <label>Nível de jornada</label>
+            <input type="text" value="Capacitado" readonly>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aba: Contato -->
+      <div id="pf-tab-contato" class="tab-panel">
+        <div class="sec-label">Informações de contato</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-mail"></i> E-mail</label>
+            <input type="text" value="—" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-phone"></i> Telefone</label>
+            <input type="text" value="(11) 98765-4321" readonly>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aba: Desempenho -->
+      <div id="pf-tab-desempenho" class="tab-panel">
+        <div class="sec-label">Indicadores</div>
+        <div class="perf-cards">
+          <div class="perf-card">
+            <div class="perf-card__label">Frequência</div>
+            <div class="perf-card__value" id="pf-freq-val">87%</div>
+            <div class="perf-bar"><div class="perf-bar__fill" id="pf-freq-bar" style="width:87%;background:var(--green-600)"></div></div>
+            <div class="perf-card__sub">Meta: 75% · <span style="color:var(--green-600);font-weight:600;">Acima da meta</span></div>
+          </div>
+          <div class="perf-card">
+            <div class="perf-card__label">Engajamento</div>
+            <div class="perf-card__value">— <span class="perf-card__unit">/ 10</span></div>
+            <div class="eng-stars" id="pf-eng-stars"></div>
+            <div class="perf-card__sub">Baseado em participação e entregas</div>
+          </div>
+          <div class="perf-card">
+            <div class="perf-card__label">Tipo de presença</div>
+            <div class="presence-badge ead">EAD</div>
+            <div class="perf-card__sub" style="margin-top:12px;">100% das aulas no formato online</div>
+          </div>
+        </div>
+        <div class="sec-label" id="pf-notas-label" style="margin-top:20px;">Notas — Módulos</div>
+        <div class="notas-grid" id="pf-notas-grid"></div>
+        <div class="nota-media-row">
+          <span class="nota-media-label">Nota média geral</span>
+          <span class="nota-media-val" id="pf-nota-media-val">—</span>
+        </div>
+        <div class="sec-label" style="margin-top:20px;">Jornada — Programa Pulse Mais</div>
+        <div class="journey" id="pf-journey"></div>
+        <div class="journey-legend">
+          <span><span class="jl-dot done"></span>Concluído</span>
+          <span><span class="jl-dot current"></span>Em andamento</span>
+          <span><span class="jl-dot pending"></span>Pendente</span>
+        </div>
+      </div>
+
+      <!-- Aba: Histórico Psicológico -->
+      <div id="pf-tab-hist" class="tab-panel">
+        <div class="sec-label">Nova anotação</div>
+        <div class="psico-form">
+          <div class="psico-form__row">
+            <div class="psico-field">
+              <label><i class="ti ti-calendar"></i> Data da consulta</label>
+              <input type="date" id="pf-data">
+            </div>
+            <div class="psico-field">
+              <label><i class="ti ti-stethoscope"></i> Tipo de atendimento</label>
+              <select id="pf-tipo">
+                <option value="">Selecione...</option>
+                <option>Sessão individual</option>
+                <option>Triagem inicial</option>
+                <option>Acompanhamento</option>
+                <option>Grupo de apoio</option>
+                <option>Orientação familiar</option>
+                <option>Encaminhamento</option>
+              </select>
+            </div>
+            <div class="psico-field">
+              <label><i class="ti ti-user-heart"></i> Psicólogo(a)</label>
+              <input type="text" id="pf-psi" placeholder="Nome do profissional">
+            </div>
+          </div>
+          <div class="psico-field psico-field--full">
+            <label><i class="ti ti-notes"></i> Anotação</label>
+            <textarea id="pf-texto" rows="4" placeholder="Registre as observações da consulta..."></textarea>
+          </div>
+          <div class="psico-field psico-field--full">
+            <label><i class="ti ti-tag"></i> Label</label>
+            <div class="psico-label-picker" id="pf-label-picker">
+              <button type="button" class="psico-label-btn selected" data-label="" onclick="pickLabel(this)">Nenhum</button>
+              <button type="button" class="psico-label-btn psico-label-btn--atencao" data-label="atencao" onclick="pickLabel(this)"><i class="ti ti-alert-triangle" style="font-size:11px;"></i> Atenção</button>
+              <button type="button" class="psico-label-btn psico-label-btn--observacao" data-label="observacao" onclick="pickLabel(this)"><i class="ti ti-eye" style="font-size:11px;"></i> Observação</button>
+            </div>
+            <input type="hidden" id="pf-label" value="">
+          </div>
+          <div class="psico-form__actions">
+            <span class="psico-form__hint"><i class="ti ti-lock" style="font-size:12px;"></i> Acesso restrito a profissionais autorizados</span>
+            <button class="btn btn-psico" onclick="registrarAnotacao()"><i class="ti ti-plus"></i> Registrar anotação</button>
+          </div>
+        </div>
+        <div class="sec-label" style="margin-top:20px;">Anotações anteriores</div>
+        <div class="psico-list" id="psico-list"></div>
+      </div>
+
+    </div><!-- /modal-body -->
+
+    <div class="modal-footer">
+      <div class="footer-left"><i class="ti ti-eye" style="font-size:13px;"></i> Visualização — dados somente leitura</div>
+      <div class="footer-right">
+        <button class="btn btn-primary" onclick="closeHistModal()"><i class="ti ti-x"></i> Fechar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast-hist">
+  <i class="ti ti-circle-check"></i> Anotação registrada com sucesso
+</div>
+
+<!-- Scripts — ordem importante -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/services/configPsicologo.js"></script>
+<script src="../js/components/guiaPsicologo.js"></script>
+<script src="../js/components/menuSuperior.js"></script>
+<script src="../js/components/modalConfEquipe.js"></script>
+<script src="../js/pages/spaPsicologo.js"></script>
+</body>
+</html>

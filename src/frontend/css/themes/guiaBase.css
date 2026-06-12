@@ -1,0 +1,277 @@
+/* ============================================================
+   Pulse Manager – Menu Lateral
+   Cores principais:
+     Fundo do menu      → #0F1E42  (azul escuro)
+     Cards / itens ativos → #1A3353 (azul médio)
+     Destaque (ícones)  → #4A9EFF  (azul claro)
+   Fonte: Poppins (Google Fonts)
+   ============================================================ */
+
+/* Zera margens e paddings e garante que bordas sejam incluídas no tamanho total */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Corpo da página: ocupa 100% da viewport (preenche qualquer resolução, incluindo 1920×1080) */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #e8ecf0;
+  display: flex;
+  width: 100vw;               /* preenche toda a largura do viewport */
+  height: 100vh;              /* preenche toda a altura do viewport */
+  overflow: hidden;           /* sem scroll na página — o scroll fica só na área de conteúdo */
+  margin: 0;
+  padding: 0;
+}
+
+/* Área principal à direita do menu lateral: ocupa o espaço restante */
+.paginaMain {
+  flex: 1;                    /* preenche os 1720px restantes (1920 - 200) */
+  display: flex;
+  flex-direction: column;     /* empilha o menu superior acima do conteúdo */
+  overflow: hidden;           /* necessário para o scroll funcionar só no conteúdo */
+  height: 100%;
+}
+
+/* Área de conteúdo abaixo do menu superior */
+.paginaConteudo {
+  flex: 1;                    /* ocupa tudo após o menu superior de 80px */
+  background: #e8ecf0;
+  overflow-y: auto;           /* permite scroll vertical no conteúdo */
+  padding: 32px;
+}
+
+/* ---- Menu Lateral ---- */
+.menuLateral {
+  width: 200px;          /* largura fixa da sidebar */
+  height: 100%;          /* ocupa toda a altura do body (1080px) */
+  background: #0F1E42;   /* fundo azul escuro */
+  display: flex;
+  flex-direction: column; /* empilha as seções verticalmente */
+  flex-shrink: 0;         /* impede que o menu encolha em telas menores */
+}
+
+/* ---- Logo ---- */
+.menuLateral__logo {
+  padding: 20px 16px 16px; /* espaço interno ao redor do logo */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07); /* divisória sutil abaixo do logo */
+}
+
+/* Container que alinha o ícone e o nome do sistema lado a lado */
+.menuLateral__logo-brand {
+  display: flex;
+  align-items: center; /* centraliza ícone e texto verticalmente */
+  gap: 12px;           /* espaço entre o ícone e o nome */
+}
+
+/* Ícone/escudo do sistema */
+.menuLateral__logo-icon {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;  /* mantém proporção sem cortar a imagem */
+  flex-shrink: 0;        /* impede que o ícone encolha */
+  border-radius: 12px;  /* cantos levemente arredondados */
+}
+
+/* Nome do sistema em fonte Anton (ex: "PULSE MANAGER") */
+.menuLateral__logo-name {
+  font-family: 'Anton', sans-serif;
+  font-size: 20px;
+  color: #fff;
+  line-height: 1.05;      /* espaçamento reduzido entre "PULSE" e "MANAGER" */
+  letter-spacing: 0.01em;
+}
+
+/* Papel do usuário exibido em itálico abaixo do logo (ex: "Gestor") */
+.menuLateral__logo-role {
+  display: block;
+  color: rgba(255, 255, 255, 0.35); /* branco semitransparente */
+  font-size: 10px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* ---- Labels de seção ("MENU PRINCIPAL", "ACESSO RÁPIDO") ---- */
+.menuLateral__section-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.3); /* texto bem discreto */
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em; /* espaçamento largo para o estilo "caixa alta" */
+  text-transform: uppercase;
+  padding: 0 8px;
+  margin-bottom: 6px;
+}
+
+/* ---- Nav / Menu ---- */
+.menuLateral__nav {
+  padding: 18px 12px 8px; /* espaço acima da nav e nas laterais */
+}
+
+/* Lista de itens do menu sem marcadores */
+.menuLateral__menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* pequeno espaço entre cada item */
+}
+
+/* Link de cada item do menu */
+.menuLateral__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;                        /* espaço entre ícone e texto */
+  padding: 9px 12px;                /* área clicável confortável */
+  border-radius: 10px;              /* cantos arredondados */
+  color: rgba(255, 255, 255, 0.5);  /* texto branco semitransparente (inativo) */
+  font-size: 12px;
+  font-weight: 400;
+  text-decoration: none;            /* remove sublinhado padrão do <a> */
+  transition: background 0.18s, color 0.18s; /* animação suave no hover */
+}
+
+/* Efeito ao passar o cursor: mesma aparência do item ativo */
+.menuLateral__link:hover {
+  background: #1A3353; /* fundo azul médio */
+  color: #fff;
+}
+
+/* Ícone fica azul claro quando o cursor está sobre o item */
+.menuLateral__link:hover .menuLateral__icon {
+  color: #4A9EFF;
+}
+
+/* Item marcado como ativo (clicado): fundo e texto em destaque */
+.menuLateral__item--active .menuLateral__link {
+  background: #1A3353; /* mesmo fundo do hover */
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Ícone do item ativo fica azul claro */
+.menuLateral__item--active .menuLateral__icon {
+  color: #4A9EFF;
+}
+
+/* Ícone padrão (inativo): branco bem discreto */
+.menuLateral__icon {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.4);
+  flex-shrink: 0; /* impede que o ícone encolha em linhas longas */
+}
+
+/* ---- Acesso Rápido ---- */
+.menuLateral__quick {
+  padding: 14px 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px; /* espaço entre os cards */
+}
+
+/* Cada card da seção de acesso rápido */
+.menuLateral__quick-card {
+  background: #1A3353;  /* fundo azul médio */
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+/* Variação do card com borda azul à esquerda (accent: true na config) */
+.menuLateral__quick-card--accent {
+  border-left: 3px solid #4A9EFF;
+}
+
+/* Label pequeno do card (ex: "TURMA ATIVA") */
+.menuLateral__quick-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+/* Valor principal do card (ex: "Engenharia T4") */
+.menuLateral__quick-value {
+  display: block;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ---- Espaçador ---- */
+/* flex: 1 faz a seção de acesso rápido crescer e empurrar o rodapé para baixo */
+.menuLateral__quick {
+  flex: 1 0 auto;
+  flex-direction: column;
+}
+
+/* Garante espaço entre a seção de acesso rápido e o rodapé */
+.menuLateral__quick + .menuLateral__footer {
+  margin-top: auto;
+}
+
+/* ---- Rodapé ---- */
+.menuLateral__footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.07); /* divisória sutil acima do rodapé */
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Link de configurações: mesmo estilo dos itens do menu */
+.menuLateral__settings {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+}
+
+/* ---- Perfil do usuário ---- */
+.menuLateral__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #1A3353; /* mesmo fundo azul médio dos cards */
+}
+
+/* Avatar circular com as iniciais do usuário */
+.menuLateral__avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;      /* forma circular */
+  background: #4A9EFF;     /* azul claro de destaque */
+  color: #0F1E42;          /* texto escuro sobre fundo azul claro */
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;           /* impede que o avatar encolha */
+}
+
+/* Container das informações de texto do perfil */
+.menuLateral__user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nome completo do usuário */
+.menuLateral__user-name {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Cargo do usuário abaixo do nome */
+.menuLateral__user-role {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 9px;
+}

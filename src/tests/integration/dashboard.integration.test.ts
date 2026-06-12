@@ -9,7 +9,7 @@ jest.mock('../../backend/integrations/dashboardAuditoriaIntegration', () => ({
   registrarConsultaDashboard: jest.fn().mockResolvedValue(undefined)
 }));
 
-describe('Dashboard UCs (14, 15, 16, 18, 19)', () => {
+describe('UC-14 a UC-19 - Dashboard de Impacto', () => {
   let alunoRepository: Repository<Aluno>;
 
   beforeAll(async () => {
