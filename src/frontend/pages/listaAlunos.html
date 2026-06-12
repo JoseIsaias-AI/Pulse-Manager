@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse Manager – Lista de Alunos</title>
+<!-- Base: layout sidebar + topbar (Gestor) -->
+<link rel="stylesheet" href="../css/themes/guiaGestor.css">
+<link rel="stylesheet" href="../css/components.css">
+<!-- Fontes e ícones -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<!-- Estilos da página -->
+<link rel="stylesheet" href="../css/pages/listaAlunos.css">
+</head>
+<body>
+
+  <!-- ========== MENU LATERAL ========== -->
+  <aside class="menuLateral" id="menuLateral">
+    <div class="menuLateral__logo">
+      <div class="menuLateral__logo-brand">
+        <img src="../assets/images/logoIcon.png" alt="Pulse Manager" class="menuLateral__logo-icon" />
+        <span class="menuLateral__logo-name">PULSE<br>MANAGER</span>
+      </div>
+      <span class="menuLateral__logo-role"></span>
+    </div>
+    <nav class="menuLateral__nav">
+      <span class="menuLateral__section-label">Menu Principal</span>
+      <ul class="menuLateral__menu"></ul>
+    </nav>
+    <footer class="menuLateral__footer">
+      <a href="#" class="menuLateral__settings menuLateral__link">
+        <i class="ti ti-settings menuLateral__icon"></i>
+        <span>Configurações</span>
+      </a>
+      <div class="menuLateral__user">
+        <div class="menuLateral__avatar"></div>
+        <div class="menuLateral__user-info">
+          <span class="menuLateral__user-name"></span>
+          <span class="menuLateral__user-role"></span>
+        </div>
+      </div>
+    </footer>
+  </aside>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <div class="paginaMain">
+
+    <!-- MENU SUPERIOR -->
+    <header class="menuSuperior" id="menuSuperior">
+      <span class="menuSuperior__breadcrumb"></span>
+      <div class="menuSuperior__search">
+        <i class="ti ti-search menuSuperior__search-icon"></i>
+        <input type="text" class="menuSuperior__search-input" placeholder="Buscar aluno..." autocomplete="off" />
+      </div>
+      <div class="menuSuperior__actions">
+        <button class="menuSuperior__bell" title="Notificações">
+          <i class="ti ti-bell"></i>
+        </button>
+        <button class="menuSuperior__avatar-btn" title="Perfil"></button>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO DA PÁGINA -->
+    <main class="paginaConteudo" style="padding: 22px 40px 18px; gap: 12px; overflow-y: auto;">
+
+      <!-- Cabeçalho -->
+      <div class="al-header">
+        <h1>Alunos</h1>
+        <p class="al-subtitle">
+          18 alunos · <span class="al-risk">3 em risco</span> · <span class="al-emp">2 empregados</span>
+        </p>
+      </div>
+
+      <!-- Filtros -->
+      <div class="al-filters">
+        <button class="al-filter-btn" id="btn-curso">Curso</button>
+        <button class="al-filter-btn" id="btn-desemp">Desempenho</button>
+        <button class="al-filter-btn" id="btn-nota">Nota Média</button>
+        <button class="al-filter-btn" id="btn-eng">Engajamento</button>
+        <button class="al-filter-btn" id="btn-ord">
+          <i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> Ordenar
+        </button>
+        <button class="al-import-btn">+ Importar CSV</button>
+      </div>
+
+      <!-- Grid de alunos (renderizado por JS) -->
+      <div class="al-grid" id="al-grid"></div>
+
+      <!-- Rodapé: legenda + paginação -->
+      <div class="al-foot">
+        <div class="al-legend">
+          <div class="al-leg-item"><div class="al-leg-dot" style="background:#33B458"></div><span class="al-leg-label">Ativa</span><span class="al-leg-num">9</span></div>
+          <div class="al-leg-item"><div class="al-leg-dot" style="background:#E24B4A"></div><span class="al-leg-label">Em risco</span><span class="al-leg-num">3</span></div>
+          <div class="al-leg-item"><div class="al-leg-dot" style="background:#F4A261"></div><span class="al-leg-label">Atenção</span><span class="al-leg-num">2</span></div>
+          <div class="al-leg-item"><div class="al-leg-dot" style="background:#C2CAD4"></div><span class="al-leg-label">Inativo</span><span class="al-leg-num">2</span></div>
+          <div class="al-leg-item"><div class="al-leg-dot" style="background:#FFD927"></div><span class="al-leg-label">Empregado</span><span class="al-leg-num">2</span></div>
+        </div>
+        <div class="al-pag">
+          <span class="al-pag-info" id="al-pag-info">Exibindo 1–9 de 184 alunos</span>
+          <button class="al-pag-btn" id="al-prev" disabled>‹</button>
+          <span id="al-pag-nums"></span>
+          <button class="al-pag-btn" id="al-next">›</button>
+        </div>
+      </div>
+
+      <!-- Resumo estatístico -->
+      <div class="al-stats-row">
+        <div class="al-stat">
+          <div class="al-stat-head">
+            <span class="al-stat-label">Alunos Ativos</span>
+          </div>
+          <div class="al-stat-val">18</div>
+        </div>
+        <div class="al-stat">
+          <div class="al-stat-head">
+            <span class="al-stat-label">Em Risco</span>
+          </div>
+          <div class="al-stat-val">3</div>
+        </div>
+        <div class="al-stat">
+          <div class="al-stat-head">
+            <span class="al-stat-label">Empregados</span>
+          </div>
+          <div class="al-stat-val">2</div>
+        </div>
+        <div class="al-stat">
+          <div class="al-stat-head">
+            <span class="al-stat-label">Engajamento Médio</span>
+            <span class="al-sbadge al-sbadge--blue">↑ Acima da meta</span>
+          </div>
+          <div class="al-stat-val">7,1</div>
+        </div>
+      </div>
+
+    </main>
+  </div><!-- fim .paginaMain -->
+
+<!-- config.js deve vir ANTES dos outros scripts -->
+<script src="../js/services/config.js"></script>
+<script src="../js/components/guiaGestor.js"></script>
+<script src="../js/components/menuSuperior.js"></script>
+<script src="../js/pages/listaAlunos.js"></script>
+</body>
+</html>
