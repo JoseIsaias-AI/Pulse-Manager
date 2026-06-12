@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse Manager – Agenda Gestor</title>
+<!-- Base: layout sidebar + topbar (Gestor) -->
+<link rel="stylesheet" href="../css/themes/guiaGestor.css">
+<link rel="stylesheet" href="../css/components.css">
+<!-- Fontes e ícones -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<!-- Estilos da página -->
+<link rel="stylesheet" href="../css/pages/agendaGestor.css">
+</head>
+<body>
+
+  <!-- ========== MENU LATERAL ========== -->
+  <aside class="menuLateral" id="menuLateral">
+    <div class="menuLateral__logo">
+      <div class="menuLateral__logo-brand">
+        <img src="../assets/images/logoIcon.png" alt="Pulse Manager" class="menuLateral__logo-icon" />
+        <span class="menuLateral__logo-name">PULSE<br>MANAGER</span>
+      </div>
+      <span class="menuLateral__logo-role"></span>
+    </div>
+    <nav class="menuLateral__nav">
+      <span class="menuLateral__section-label">Menu Principal</span>
+      <ul class="menuLateral__menu"></ul>
+    </nav>
+    <footer class="menuLateral__footer">
+      <a href="#" class="menuLateral__settings menuLateral__link">
+        <i class="ti ti-settings menuLateral__icon"></i>
+        <span>Configurações</span>
+      </a>
+      <div class="menuLateral__user">
+        <div class="menuLateral__avatar"></div>
+        <div class="menuLateral__user-info">
+          <span class="menuLateral__user-name"></span>
+          <span class="menuLateral__user-role"></span>
+        </div>
+      </div>
+    </footer>
+  </aside>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <div class="paginaMain">
+
+    <!-- MENU SUPERIOR -->
+    <header class="menuSuperior" id="menuSuperior">
+      <span class="menuSuperior__breadcrumb"></span>
+      <div class="menuSuperior__search">
+        <i class="ti ti-search menuSuperior__search-icon"></i>
+        <input type="text" class="menuSuperior__search-input" placeholder="Buscar" autocomplete="off" />
+      </div>
+      <div class="menuSuperior__actions">
+        <button class="menuSuperior__bell" title="Notificações">
+          <i class="ti ti-bell"></i>
+        </button>
+        <button class="menuSuperior__avatar-btn" title="Perfil"></button>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO DA PÁGINA -->
+    <main class="paginaConteudo" style="padding: 24px 40px; gap: 20px; overflow-y: auto; background: #EEF1F4;">
+
+      <div class="ag-layout">
+
+        <!-- Coluna principal: calendário + detalhe -->
+        <div class="ag-main">
+          <div class="ag-cal" id="ag-cal"><!-- renderizado pelo JS --></div>
+          <div class="ag-detail" id="ag-detail"><!-- detalhe do evento --></div>
+        </div>
+
+        <!-- Coluna lateral: formulário de novo evento -->
+        <div class="ag-sidebar">
+          <div class="ag-form-card">
+            <div class="ag-form-head">
+              <i class="ti ti-calendar-plus" style="font-size:18px;color:#FFD927;"></i>
+              <span class="ag-form-head-title">Adicionar Evento</span>
+            </div>
+            <div class="ag-form-body">
+              <div class="ag-field">
+                <label>Nome do evento</label>
+                <input type="text" id="ag-f-title" placeholder="Ex.: Sessão de boas-vindas">
+              </div>
+              <div class="ag-field">
+                <label>Responsável pela atividade</label>
+                <input type="text" id="ag-f-nome" placeholder="Ex.: Ana Clara">
+              </div>
+              <div class="ag-field">
+                <label>Ocupação</label>
+                <select id="ag-f-role">
+                  <option value="">Selecione...</option>
+                  <option>Psicólogo</option>
+                  <option>Gestor</option>
+                </select>
+              </div>
+              <div class="ag-field">
+                <label>Tipo de compromisso</label>
+                <select id="ag-f-type">
+                  <option value="">Selecione...</option>
+                  <option value="evento">Evento</option>
+                  <option value="consulta">Consulta</option>
+                  <option value="aula">Aula</option>
+                  <option value="mentoria">Mentoria</option>
+                </select>
+              </div>
+              <div class="ag-field-row">
+                <div class="ag-field">
+                  <label>Data</label>
+                  <input type="date" id="ag-f-date">
+                </div>
+                <div class="ag-field">
+                  <label>Hora</label>
+                  <input type="time" id="ag-f-time">
+                </div>
+              </div>
+              <div class="ag-field">
+                <label>Descrição da atividade</label>
+                <textarea id="ag-f-desc" placeholder="Descreva a atividade..."></textarea>
+              </div>
+              <div class="ag-field">
+                <label>Enviar para</label>
+                <select id="ag-f-target" onchange="agUpdateTargetField()">
+                  <option value="todos">Todos os alunos</option>
+                  <option value="especificos">Alunos específicos</option>
+                  <option value="aluno">Um aluno (por ID)</option>
+                </select>
+              </div>
+              <div id="ag-target-detail"></div>
+            </div>
+            <div class="ag-form-footer">
+              <button class="ag-submit-btn" onclick="agAddEvent()">
+                <i class="ti ti-plus"></i> Adicionar evento
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div><!-- fim .paginaMain -->
+
+<!-- config.js deve vir ANTES dos outros scripts -->
+<script src="../js/services/config.js"></script>
+<script src="../js/components/guiaGestor.js"></script>
+<script src="../js/components/menuSuperior.js"></script>
+<script src="../js/pages/agendaGestor.js"></script>
+</body>
+</html>

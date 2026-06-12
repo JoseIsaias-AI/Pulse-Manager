@@ -5,7 +5,7 @@ import { AppDataSource, initializeDatabase } from '../../backend/database/connec
 import { Aluno } from '../../backend/models/alunoModel';
 import { Notificacao, Oportunidade } from '../../backend/models/NotificacaoModel';
 
-describe('UC-03 - Visualizar notificações e oportunidades no portal do aluno', () => {
+describe('UC-03 - Visualizar notificacoes e oportunidades no portal do aluno', () => {
   let alunoRepository: Repository<Aluno>;
   let notificacaoRepository: Repository<Notificacao>;
   let oportunidadeRepository: Repository<Oportunidade>;
@@ -68,7 +68,7 @@ describe('UC-03 - Visualizar notificações e oportunidades no portal do aluno',
     }
   });
 
-  it('CT01 - aluno autenticado deve visualizar apenas suas proprias notificacoes', async () => {
+  it('CT01 - deve exibir apenas as notificacoes do proprio aluno autenticado', async () => {
     const response = await request(app)
       .get(`/api/portal/alunos/${aluno.idAluno}/notificacoes`)
       .set('x-user-id', String(aluno.idAluno));
@@ -81,7 +81,7 @@ describe('UC-03 - Visualizar notificações e oportunidades no portal do aluno',
     expect(response.body.data[0].titulo).toBe('Sessao agendada');
   });
 
-  it('CT02 - aluno nao pode visualizar notificacoes de outro aluno', async () => {
+  it('CT02 - deve rejeitar acesso a notificacoes de outro aluno', async () => {
     const response = await request(app)
       .get(`/api/portal/alunos/${outroAluno.idAluno}/notificacoes`)
       .set('x-user-id', String(aluno.idAluno));
@@ -93,7 +93,7 @@ describe('UC-03 - Visualizar notificações e oportunidades no portal do aluno',
     );
   });
 
-  it('CT03 - aluno autenticado pode listar oportunidades disponiveis', async () => {
+  it('CT03 - deve listar oportunidades disponiveis para aluno autenticado', async () => {
     const response = await request(app)
       .get('/api/portal/oportunidades')
       .set('x-user-id', String(aluno.idAluno));

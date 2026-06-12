@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bem-estar dos Alunos — Pulse Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/pages/inicioPsicologo.css">
+</head>
+<body>
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="menuLateral">
+
+    <div class="menuLateral__logo">
+      <div class="menuLateral__logo-brand">
+        <img src="../assets/images/logoIcon.png" alt="Pulse Manager" class="menuLateral__logo-icon" />
+        <span class="menuLateral__logo-name">PULSE<br>MANAGER</span>
+      </div>
+      <span class="menuLateral__logo-role">Portal do Psicólogo</span>
+    </div>
+
+    <nav class="menuLateral__nav">
+      <span class="menuLateral__section-label">Menu Principal</span>
+      <ul class="menuLateral__menu">
+        <li class="menuLateral__item--active">
+          <a href="#" class="menuLateral__link">
+            <i data-lucide="house" class="menuLateral__icon"></i>
+            <span>Início</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="menuLateral__link">
+            <i data-lucide="users" class="menuLateral__icon"></i>
+            <span>Alunos</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="menuLateral__link">
+            <i data-lucide="calendar-days" class="menuLateral__icon"></i>
+            <span>Sessões</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="menuLateral__link">
+            <i data-lucide="bar-chart-2" class="menuLateral__icon"></i>
+            <span>Relatórios</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="menuLateral__quick">
+      <span class="menuLateral__section-label">Acesso Rápido</span>
+      <div class="menuLateral__quick-card menuLateral__quick-card--accent">
+        <span class="menuLateral__quick-label">Turma</span>
+        <span class="menuLateral__quick-value">Engenharia T4</span>
+      </div>
+      <div class="menuLateral__quick-card">
+        <span class="menuLateral__quick-label">Sessões Hoje</span>
+        <span class="menuLateral__quick-value">3 sessões</span>
+      </div>
+    </div>
+
+    <footer class="menuLateral__footer">
+      <a href="#" class="menuLateral__settings">
+        <i data-lucide="settings" class="menuLateral__icon"></i>
+        <span>Configurações</span>
+      </a>
+      <div class="menuLateral__user">
+        <div class="menuLateral__avatar">JM</div>
+        <div class="menuLateral__user-info">
+          <span class="menuLateral__user-name">João Mário</span>
+          <span class="menuLateral__user-role">Psicólogo</span>
+        </div>
+      </div>
+    </footer>
+
+  </aside>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <div class="paginaMain">
+
+    <header class="menuSuperior">
+      <span class="menuSuperior__breadcrumb">Início / Bem-estar</span>
+      <div class="menuSuperior__actions">
+        <button class="menuSuperior__bell" title="Notificações">
+          <i data-lucide="bell"></i>
+        </button>
+        <button class="menuSuperior__avatar-btn" title="Perfil">JM</button>
+      </div>
+    </header>
+
+    <main class="paginaConteudo">
+
+      <!-- Page header -->
+      <div class="page-header">
+        <h1 class="page-title">Bem-estar dos alunos</h1>
+        <p class="page-subtitle">Semana 15 · 3 sessões agendadas hoje</p>
+      </div>
+
+      <!-- ── KPI CARDS ── -->
+      <section class="kpi-row" aria-label="Indicadores">
+
+        <div class="kpi-card kpi-dark">
+          <div class="kpi-body">
+            <span class="kpi-label">Alunos Acompanhados</span>
+            <span class="kpi-value">23</span>
+            <div class="kpi-footer">
+              <span class="kpi-sub">de 48 alunos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-card kpi-amber">
+          <div class="kpi-body">
+            <span class="kpi-label">Em Atenção</span>
+            <span class="kpi-value">5</span>
+            <div class="kpi-footer">
+              <span class="kpi-sub">esta semana</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-card kpi-green">
+          <div class="kpi-body">
+            <span class="kpi-label">Sessões / Semana</span>
+            <span class="kpi-value">11</span>
+            <div class="kpi-footer">
+              <span class="kpi-sub">meta: 12 por semana</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-card kpi-blue">
+          <div class="kpi-body">
+            <span class="kpi-label">Notificações Enviadas</span>
+            <span class="kpi-value">19</span>
+            <div class="kpi-footer">
+              <span class="kpi-sub">últimos 7 dias</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ── MAIN GRID ── -->
+      <div class="main-grid">
+
+        <!-- ── ALERTAS ── -->
+        <section class="card alertas-card">
+          <div class="alertas-header">
+            <div>
+              <h2 class="card-title">Alertas de atenção</h2>
+              <p class="card-subtitle">2 críticos &middot; 2 em atenção</p>
+            </div>
+            <a href="#" class="ver-todos">Ver histórico</a>
+          </div>
+
+          <ul class="alerta-list" id="alerta-list">
+            <li class="alerta-item borda-critico">
+              <div class="alerta-avatar av-red">AS</div>
+              <div class="alerta-info">
+                <span class="alerta-nome">Ana Silva</span>
+                <span class="alerta-desc">Relato de crise de ansiedade</span>
+              </div>
+              <span class="alerta-badge badge-critico">crítico</span>
+              <button class="btn-notificar" aria-label="Notificar Ana Silva">
+                <i data-lucide="send"></i> Notificar
+              </button>
+            </li>
+            <li class="alerta-item borda-critico">
+              <div class="alerta-avatar av-purple">MN</div>
+              <div class="alerta-info">
+                <span class="alerta-nome">Marcos Nunes</span>
+                <span class="alerta-desc">Ausente em 3 sessões consecutivas</span>
+              </div>
+              <span class="alerta-badge badge-critico">crítico</span>
+              <button class="btn-notificar" aria-label="Notificar Marcos Nunes">
+                <i data-lucide="send"></i> Notificar
+              </button>
+            </li>
+            <li class="alerta-item borda-atencao">
+              <div class="alerta-avatar av-teal">LR</div>
+              <div class="alerta-info">
+                <span class="alerta-nome">Larissa Rocha</span>
+                <span class="alerta-desc">Relato de ansiedade</span>
+              </div>
+              <span class="alerta-badge badge-atencao">atenção</span>
+              <button class="btn-notificar" aria-label="Notificar Larissa Rocha">
+                <i data-lucide="send"></i> Notificar
+              </button>
+            </li>
+            <li class="alerta-item borda-atencao">
+              <div class="alerta-avatar av-orange">CM</div>
+              <div class="alerta-info">
+                <span class="alerta-nome">Carlos Mendes</span>
+                <span class="alerta-desc">Relato de dificuldade com a turma</span>
+              </div>
+              <span class="alerta-badge badge-atencao">atenção</span>
+              <button class="btn-notificar" aria-label="Notificar Carlos Mendes">
+                <i data-lucide="send"></i> Notificar
+              </button>
+            </li>
+            <li class="alerta-item borda-obs">
+              <div class="alerta-avatar av-blue">BT</div>
+              <div class="alerta-info">
+                <span class="alerta-nome">Beatriz Torres</span>
+                <span class="alerta-desc">Relato de desmotivação</span>
+              </div>
+              <span class="alerta-badge badge-obs">Observação</span>
+              <button class="btn-notificar" aria-label="Notificar Beatriz Torres">
+                <i data-lucide="send"></i> Notificar
+              </button>
+            </li>
+          </ul>
+
+          <div class="pagination">
+            <span class="pag-info">Exibindo 5 de 5</span>
+            <div class="pag-controls">
+              <button class="pag-btn" aria-label="Anterior">‹</button>
+              <button class="pag-btn pag-active">1</button>
+              <button class="pag-btn">2</button>
+              <button class="pag-btn" aria-label="Próximo">›</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── BEM-ESTAR + SESSÕES ── -->
+        <section class="card bestar-card">
+          <h2 class="card-title">Bem-estar da turma + próximas sessões</h2>
+          <p class="card-subtitle">Engenharia T4 &middot; Últimos 30 dias</p>
+
+          <div class="chart-wrap">
+            <canvas id="bestar-chart"></canvas>
+          </div>
+
+          <div class="chart-legend">
+            <span class="legend-item">
+              <span class="legend-dot dot-green"></span>Bem-estar (turma)
+            </span>
+            <span class="legend-item">
+              <span class="legend-dot dot-blue"></span>Em atenção
+            </span>
+            <span class="legend-item">
+              <span class="legend-dot dot-amber"></span>Sessões realizadas
+            </span>
+          </div>
+
+          <ul class="sessao-list">
+            <li class="sessao-item">
+              <span class="sessao-hora">14:30</span>
+              <div class="sessao-info">
+                <span class="sessao-nome">Ana Silva</span>
+                <span class="sessao-tipo">Sessão individual &middot; Online</span>
+              </div>
+              <span class="badge-hoje">HOJE</span>
+              <button class="btn-mais" aria-label="Mais opções">
+                <i data-lucide="more-horizontal"></i>
+              </button>
+            </li>
+            <li class="sessao-item">
+              <span class="sessao-hora">15:30</span>
+              <div class="sessao-info">
+                <span class="sessao-nome">Larissa Rocha</span>
+                <span class="sessao-tipo">Check-in semanal &middot; Online</span>
+              </div>
+              <span class="badge-hoje">HOJE</span>
+              <button class="btn-mais" aria-label="Mais opções">
+                <i data-lucide="more-horizontal"></i>
+              </button>
+            </li>
+            <li class="sessao-item">
+              <span class="sessao-hora">16:30</span>
+              <div class="sessao-info">
+                <span class="sessao-nome">Beatriz Torres</span>
+                <span class="sessao-tipo">Sessão individual &middot; Online</span>
+              </div>
+              <span class="badge-hoje">HOJE</span>
+              <button class="btn-mais" aria-label="Mais opções">
+                <i data-lucide="more-horizontal"></i>
+              </button>
+            </li>
+            <li class="sessao-item">
+              <span class="sessao-hora">09:00</span>
+              <div class="sessao-info">
+                <span class="sessao-nome">Marcos Nunes</span>
+                <span class="sessao-tipo">Check-in semanal &middot; Online</span>
+              </div>
+              <span class="badge-hoje badge-amanha">AMH</span>
+              <button class="btn-mais" aria-label="Mais opções">
+                <i data-lucide="more-horizontal"></i>
+              </button>
+            </li>
+          </ul>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>lucide.createIcons();</script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var canvas = document.getElementById('bestar-chart');
+      if (!canvas) return;
+      new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+          datasets: [
+            {
+              type: 'line',
+              label: 'Bem-estar (turma)',
+              data: [52, 58, 63, 70, 72, 75, 80],
+              borderColor: '#33B458',
+              backgroundColor: 'rgba(51, 180, 88, 0.12)',
+              borderWidth: 2,
+              fill: true,
+              tension: 0.4,
+              pointRadius: 0,
+              order: 1,
+            },
+            {
+              type: 'line',
+              label: 'Em atenção',
+              data: [30, 32, 28, 35, 33, 30, 28],
+              borderColor: '#003870',
+              backgroundColor: 'transparent',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.4,
+              pointRadius: 0,
+              order: 2,
+            },
+            {
+              type: 'bar',
+              label: 'Sessões realizadas',
+              data: [8, 10, 7, 12, 9, 6, 11],
+              backgroundColor: 'rgba(255, 217, 39, 0.75)',
+              borderRadius: 4,
+              yAxisID: 'y2',
+              order: 3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#11161D',
+              titleFont: { family: 'Poppins', size: 11, weight: '600' },
+              bodyFont: { family: 'Poppins', size: 11 },
+              padding: 10,
+              cornerRadius: 8,
+            },
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { font: { family: 'Poppins', size: 11 }, color: '#97A1AE' },
+            },
+            y: {
+              min: 0, max: 100,
+              ticks: { stepSize: 25, font: { family: 'Poppins', size: 11 }, color: '#97A1AE' },
+              grid: { color: '#EEF1F4' },
+            },
+            y2: {
+              min: 0, max: 20,
+              display: false,
+              grid: { display: false },
+            },
+          },
+        },
+      });
+    });
+  </script>
+  <script src="../js/pages/inicioPsicologo.js" defer></script>
+</body>
+</html>
