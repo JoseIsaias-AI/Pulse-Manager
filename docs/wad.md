@@ -1,4 +1,4 @@
-<img src="./assets/logointeli.png">
+﻿<img src="./assets/logointeli.png">
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
@@ -2573,7 +2573,7 @@ _Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem 
 
 ## 6.4 Público-Alvo
 
-a) Segmentação de Mercado 
+### 6.4.1 Segmentação de Mercado 
 A Pulse Manager atende o segmento de organizações sociais, institutos e projetos de impacto que atuam com formação, acompanhamento e inserção profissional de jovens em situação de vulnerabilidade socioeconômica. No contexto inicial do projeto, a aplicação é direcionada à Pulse Mais, organização que oferece formação técnica e comportamental, mentorias, oportunidades de vagas e bolsas de estudo gratuitas para jovens interessados em tecnologia (PULSE MAIS, 2026).
 
 Além da Pulse Mais, a solução pode atender iniciativas semelhantes que precisam centralizar dados de alunos, jornada formativa, presença, certificação, saúde mental, oportunidades, empregabilidade e indicadores de impacto. Portanto, a segmentação da Pulse Manager não está ligada a um mercado consumidor amplo, mas a um segmento institucional e operacional: organizações que acompanham jovens ao longo de programas educacionais e profissionais.
@@ -2581,7 +2581,7 @@ Além da Pulse Mais, a solução pode atender iniciativas semelhantes que precis
 Esse segmento possui uma dor clara: conforme aumenta o número de jovens, atividades, mentorias, oportunidades e registros, controles manuais e planilhas passam a dificultar a rastreabilidade dos dados. A Pulse Mais já alcançou mais de 650 jovens por meio de cursos, mentorias e bolsas de graduação, o que reforça a necessidade de uma ferramenta capaz de organizar histórico, evolução e indicadores de acompanhamento (OBSERVATÓRIO DO TERCEIRO SETOR, 2025).
 
 
-b) Perfil do Público-Alvo
+### 6.4.2 Perfil do Público-Alvo
 O público-alvo final acompanhado pela Pulse Manager é composto por jovens de baixa renda, em geral entre 17 e 26 anos, residentes em São Paulo ou Região Metropolitana, com ensino médio cursando ou concluído em escola pública, ou como bolsistas em escola particular. Para participar do Programa Pulse Mais 2026, também são considerados o interesse em tecnologia, a disponibilidade para dedicação semanal e o desejo de conquistar novas oportunidades profissionais (ESG INSIDE, 2026).
 
 Esse público apresenta necessidades específicas: acesso à formação em tecnologia, desenvolvimento de habilidades comportamentais, orientação de carreira, acompanhamento individualizado, oportunidades de emprego, bolsas de estudo e suporte ao longo da jornada. Para a equipe da Pulse Mais, a principal dor está na gestão integrada desses dados; para o jovem, a expectativa é ter uma trajetória mais organizada, com acompanhamento próximo e acesso claro às oportunidades.
@@ -2594,7 +2594,7 @@ A dimensão operacional reforça a relevância da Pulse Manager: o Programa Puls
 
 _a) Proposta de Valor Única (até 250 palavras)_
 _Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado._
-
+de
 _b) Estratégia de Diferenciação (até 250 palavras)_
 _Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento._
 
