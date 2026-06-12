@@ -12,8 +12,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <!-- Estilos da view de dashboard -->
 <link rel="stylesheet" href="../css/pages/dashboardAluno.css">
-<!-- Estilos do modal -->
+<!-- Estilos dos modais -->
 <link rel="stylesheet" href="../css/pages/modalConfAluno.css">
+<link rel="stylesheet" href="../css/pages/modalNotifAluno.css">
 <style>
   /* ── SPA: container de conteúdo ── */
   .paginaConteudo {
@@ -38,7 +39,7 @@
     gap: 20px;
   }
   #view-inicio .welcome-banner {
-    background: linear-gradient(120deg, #003870 0%, #1565A8 100%);
+    background: #003870;
     border-radius: 16px;
     padding: 28px 32px;
     display: flex;
@@ -53,8 +54,8 @@
     font-size: 13px; color: rgba(255,255,255,.65); font-weight: 400;
   }
   #view-inicio .welcome-badge {
-    background: rgba(255,255,255,.15);
-    border: 1px solid rgba(255,255,255,.25);
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.18);
     border-radius: 10px;
     padding: 12px 20px;
     text-align: center;
@@ -75,7 +76,7 @@
     padding: 18px 20px 16px;
     display: flex; flex-direction: column; gap: 8px;
   }
-  #view-inicio .q-label { font-size: 11px; font-weight: 600; color: #97A1AE; text-transform: uppercase; letter-spacing: .06em; }
+  #view-inicio .q-label { font-size: 11px; font-weight: 500; color: #97A1AE; }
   #view-inicio .q-value { font-size: 28px; font-weight: 700; color: #003870; line-height: 1; }
   #view-inicio .q-sub   { font-size: 12px; color: #6B7684; }
   #view-inicio .q-tag   { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600;
@@ -83,6 +84,11 @@
   #view-inicio .q-tag--green { background: rgba(51,180,88,.15); color: #1D7A36; }
   #view-inicio .q-tag--blue  { background: rgba(0,56,112,.10);  color: #003870; }
   #view-inicio .q-tag--amber { background: rgba(255,217,39,.25); color: #854F0B; }
+  /* q-tags on colored KPI card backgrounds */
+  #view-inicio .ini-kpi--blue .q-tag,
+  #view-inicio .ini-kpi--green .q-tag,
+  #view-inicio .ini-kpi--navy .q-tag  { background: rgba(255,255,255,.22); color: #fff; }
+  #view-inicio .ini-kpi--amber .q-tag { background: rgba(0,56,112,.12); color: #003870; }
   #view-inicio .next-card {
     background: #fff; border-radius: 14px; border: 1px solid #DEE3EA;
     padding: 20px 24px; display: flex; align-items: center; gap: 16px; flex-shrink: 0;
@@ -104,19 +110,96 @@
     background: var(--n-50, #F7F8FA);
     padding: 28px 36px;
     gap: 20px;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-y: auto;
   }
-  #view-agenda .agenda-placeholder {
-    display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
+
+  /* Agenda — layout full-width (sem sidebar, só calendário) */
+  .ag-full { width: 100%; display: flex; flex-direction: column; gap: 20px; }
+
+  /* Cabeçalho da agenda */
+  .ag-header {
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
   }
-  #view-agenda .agenda-icon {
-    width: 72px; height: 72px; background: #EDF3F9; border-radius: 18px;
-    display: flex; align-items: center; justify-content: center;
+  .ag-title { font-size: 24px; font-weight: 700; color: #003870; line-height: 1.2; letter-spacing: -.01em; font-family: 'Poppins', sans-serif; }
+  .ag-month { font-size: 13px; color: #6B7684; font-weight: 500; }
+
+  /* Legenda de tipos */
+  .ag-legend {
+    display: flex; gap: 18px; align-items: center; flex-wrap: wrap;
   }
-  #view-agenda .agenda-icon i { font-size: 34px; color: #003870; }
-  #view-agenda h2 { font-size: 20px; font-weight: 700; color: #11161D; }
-  #view-agenda p  { font-size: 14px; color: #97A1AE; max-width: 360px; }
+  .ag-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6B7684; font-weight: 500; }
+  .ag-legend-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Calendário */
+  .ag-cal {
+    background: #fff; border: 1px solid #DEE3EA; border-radius: 16px; overflow: hidden; flex-shrink: 0;
+  }
+  .ag-dow-row {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    background: #F7F8FA; border-bottom: 1px solid #DEE3EA;
+  }
+  .ag-dow {
+    padding: 10px 0; text-align: center; font-size: 11px; font-weight: 700;
+    color: #97A1AE; text-transform: uppercase; letter-spacing: .06em;
+  }
+  .ag-week { border-bottom: 1px solid #F0F3F7; }
+  .ag-week:last-child { border-bottom: none; }
+  .ag-day-row { display: grid; grid-template-columns: repeat(7, 1fr); }
+  .ag-cell {
+    min-height: 72px; padding: 8px 10px 6px; border-right: 1px solid #F0F3F7;
+    position: relative; cursor: default;
+  }
+  .ag-cell:last-child { border-right: none; }
+  .ag-cell.other-month .ag-dn { color: #C2CAD4; }
+  .ag-cell.today .ag-dn {
+    background: #003870; color: #fff; width: 24px; height: 24px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  }
+  .ag-dn { font-size: 12px; font-weight: 600; color: #6B7684; margin-bottom: 4px; display: inline-flex; }
+  .ag-ev-row { display: grid; grid-template-columns: repeat(7, 1fr); min-height: 22px; }
+  .ag-ev {
+    margin: 1px 2px; border-radius: 4px; padding: 2px 6px;
+    font-size: 11px; font-weight: 600; color: #fff;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    cursor: pointer; transition: opacity .15s; user-select: none;
+  }
+  .ag-ev:hover { opacity: .82; }
+  .ag-ev.ev-tipo-evento   { background: #003870; }
+  .ag-ev.ev-tipo-consulta { background: #7B4FD9; }
+  .ag-ev.ev-tipo-aula     { background: #F4A261; color: #fff; }
+  .ag-ev.ev-tipo-mentoria { background: #33B458; }
+  .ag-ev.ev-tipo-formatura{ background: #FFD927; color: #003870; }
+
+  /* Painel de detalhe */
+  .ag-detail {
+    background: #fff; border: 1px solid #DEE3EA; border-radius: 16px; padding: 24px 28px;
+    display: none; flex-direction: column; gap: 14px;
+  }
+  .ag-detail.open { display: flex; }
+  .ag-det-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .ag-det-title { font-size: 16px; font-weight: 700; color: #11161D; }
+  .ag-det-close {
+    background: none; border: none; cursor: pointer; color: #97A1AE;
+    font-size: 18px; line-height: 1; padding: 0; flex-shrink: 0;
+  }
+  .ag-det-close:hover { color: #6B7684; }
+  .ag-det-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700;
+    color: #fff; width: fit-content;
+  }
+  .ag-det-badge.ev-tipo-evento   { background: #003870; }
+  .ag-det-badge.ev-tipo-consulta { background: #7B4FD9; }
+  .ag-det-badge.ev-tipo-aula     { background: #F4A261; }
+  .ag-det-badge.ev-tipo-mentoria { background: #33B458; }
+  .ag-det-badge.ev-tipo-formatura{ background: #FFD927; color: #003870; }
+  .ag-det-rows { display: flex; flex-direction: column; gap: 10px; }
+  .ag-det-row  { display: flex; gap: 8px; align-items: flex-start; }
+  .ag-det-row i { font-size: 15px; color: #97A1AE; margin-top: 1px; flex-shrink: 0; }
+  .ag-det-lbl  { font-size: 11px; font-weight: 500; color: #97A1AE; }
+  .ag-det-val  { font-size: 13px; color: #11161D; font-weight: 500; }
 
   /* ── VIEW DASHBOARD: herda dashboardAluno.css ── */
   #view-dashboard {
@@ -128,6 +211,130 @@
   /* ── Cursor no bloco de usuário do rodapé ── */
   .menuLateral__user { cursor: pointer; transition: opacity .15s; }
   .menuLateral__user:hover { opacity: .85; }
+
+  /* ══ VIEW INÍCIO: Portal do Aluno ═══════════════════════════ */
+  #view-inicio { overflow-y: auto; align-items: stretch !important; justify-content: flex-start !important; }
+
+  .ini-kpi-row {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; flex-shrink: 0;
+  }
+  .ini-kpi-card {
+    border-radius: 14px; border: 1px solid transparent;
+    box-shadow: 0 1px 4px rgba(0,56,112,.10);
+    padding: 18px 20px; display: flex; align-items: flex-start; gap: 14px;
+  }
+  .ini-kpi--blue  { background: #003870; }
+  .ini-kpi--green { background: #33B458; }
+  .ini-kpi--amber { background: #FFD927; }
+  .ini-kpi--navy  { background: #0F1E42; }
+  .ini-kpi-body  { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+  .ini-kpi-label { font-size: 11px; font-weight: 500; letter-spacing: 0; color: rgba(255,255,255,.7); }
+  .ini-kpi--amber .ini-kpi-label { color: rgba(0,56,112,.6); }
+  .ini-kpi-value { font-size: 32px; font-weight: 700; line-height: 1.1; color: #fff; }
+  .ini-kpi--amber .ini-kpi-value { color: #003870; }
+  .ini-kpi-unit  { font-size: 18px; font-weight: 600; color: rgba(255,255,255,.7); }
+  .ini-kpi--amber .ini-kpi-unit  { color: rgba(0,56,112,.55); }
+  .ini-kpi-sub   { font-size: 11px; color: rgba(255,255,255,.7); }
+  .ini-kpi--amber .ini-kpi-sub   { color: rgba(0,56,112,.55); }
+
+  .ini-main-grid {
+    display: grid; grid-template-columns: 1fr 330px; gap: 16px; flex: 1; min-height: 0;
+  }
+  .ini-card {
+    background: #fff; border-radius: 14px; border: 1px solid #DEE3EA;
+    box-shadow: 0 1px 4px rgba(0,56,112,.07);
+    padding: 20px 24px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .ini-card-head {
+    display: flex; align-items: flex-start; justify-content: space-between; flex-shrink: 0;
+  }
+  .ini-card-title { font-size: 15px; font-weight: 700; color: #11161D; }
+  .ini-card-sub   { font-size: 12px; color: #97A1AE; margin-top: 3px; }
+  .ini-progress-badge {
+    background: rgba(0,56,112,.08); color: #003870;
+    border-radius: 8px; padding: 5px 12px; font-size: 11px; font-weight: 700; white-space: nowrap;
+  }
+
+  .ini-mod-tabs { display: flex; flex-wrap: wrap; gap: 6px; flex-shrink: 0; }
+  .ini-mod-tab {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 600;
+    border: 1px solid #DEE3EA; background: #fff; cursor: pointer;
+    font-family: 'Poppins', sans-serif; transition: all .15s; color: #6B7684;
+  }
+  .ini-mod-done    { border-color: #33B458; color: #1D7A36; background: rgba(51,180,88,.08); }
+  .ini-mod-active  { border-color: #003870; color: #fff; background: #003870; }
+  .ini-mod-pending { border-color: #DEE3EA; color: #C2CAD4; cursor: default; }
+
+  .ini-course-prog        { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+  .ini-course-prog-label  { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #6B7684; }
+  .ini-pct-badge          { font-size: 11px; font-weight: 700; color: #003870; }
+  .ini-prog-bar           { height: 8px; border-radius: 4px; background: #EEF1F4; overflow: hidden; }
+  .ini-prog-inner         { height: 100%; border-radius: 4px; background: #003870; }
+  .ini-mod-labels         { display: flex; justify-content: space-between; font-size: 9px; color: #97A1AE; padding: 2px 0; }
+  .ini-sprint-label       { font-size: 11px; font-weight: 500; color: #97A1AE; }
+
+  .ini-ativ-label { font-size: 11px; font-weight: 500; color: #97A1AE; }
+  .ini-ativ-list  { display: flex; flex-direction: column; gap: 6px; }
+  .ini-ativ-item  {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; border-radius: 8px; background: #F7F9FB;
+    border-left: 3px solid transparent;
+  }
+  .ini-ativ-item.done   { border-left-color: #33B458; }
+  .ini-ativ-item.active { border-left-color: #003870; background: #EDF3F9; }
+  .ini-ativ-item.locked { border-left-color: #DEE3EA; opacity: .55; }
+  .ini-ativ-body { flex: 1; min-width: 0; }
+  .ini-ativ-nome { font-size: 12px; font-weight: 600; color: #11161D; }
+  .ini-ativ-meta { font-size: 11px; color: #97A1AE; margin-top: 1px; }
+  .ini-ativ-badge {
+    font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 999px; white-space: nowrap;
+  }
+  .ini-ativ-badge.done   { background: rgba(51,180,88,.12); color: #1D7A36; }
+  .ini-ativ-badge.active { background: rgba(0,56,112,.10); color: #003870; }
+  .ini-ativ-badge.locked { background: #F0F3F7; color: #C2CAD4; }
+
+  .ini-right-col { display: flex; flex-direction: column; gap: 14px; }
+
+  .ini-emoji-row  { display: flex; justify-content: space-between; gap: 6px; flex-shrink: 0; }
+  .ini-emoji-btn  {
+    width: 48px; height: 48px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; border-radius: 12px; border: 2px solid transparent;
+    background: #F7F9FB; cursor: pointer; transition: all .15s; line-height: 1;
+  }
+  .ini-emoji-btn:hover    { background: #EDF3F9; border-color: #003870; }
+  .ini-emoji-btn.ini-emoji-selected { background: rgba(0,56,112,.1); border-color: #003870; }
+  .ini-saude-msg  { font-size: 12px; color: #33B458; font-weight: 600; text-align: center; flex-shrink: 0; }
+  .ini-btn-psi {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 10px; border-radius: 8px; border: 1px solid #DEE3EA;
+    background: #fff; color: #003870; font-size: 12px; font-weight: 600;
+    cursor: pointer; font-family: 'Poppins', sans-serif; transition: all .15s;
+  }
+  .ini-btn-psi:hover { background: #EDF3F9; border-color: #003870; }
+  .ini-saude-last { font-size: 11px; color: #97A1AE; text-align: center; flex-shrink: 0; }
+
+  .ini-event-list { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+  .ini-event-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 0; border-bottom: 1px solid #F0F3F7;
+  }
+  .ini-event-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .ini-event-dot  { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .ini-event-body { flex: 1; min-width: 0; }
+  .ini-event-name { font-size: 12px; font-weight: 600; color: #11161D; display: block; }
+  .ini-event-time { font-size: 10px; color: #97A1AE; }
+  .ini-event-tag  {
+    font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 999px; white-space: nowrap;
+  }
+  .ini-tag-mentoria  { background: rgba(51,180,88,.12);  color: #1D7A36; }
+  .ini-tag-aula      { background: rgba(244,162,97,.15);  color: #C25820; }
+  .ini-tag-consulta  { background: rgba(123,79,217,.12);  color: #5B3AA8; }
+  .ini-tag-evento    { background: rgba(0,56,112,.10);    color: #003870; }
+  .ini-tag-formatura { background: rgba(255,217,39,.25);  color: #854F0B; }
+  .ini-ver-todos { font-size: 11px; color: #003870; font-weight: 600; text-decoration: none; }
+  .ini-ver-todos:hover { opacity: .7; }
 </style>
 </head>
 <body>
@@ -166,10 +373,6 @@
 
     <header class="menuSuperior" id="menuSuperior">
       <span class="menuSuperior__breadcrumb"></span>
-      <div class="menuSuperior__search">
-        <i class="ti ti-search menuSuperior__search-icon"></i>
-        <input type="text" class="menuSuperior__search-input" placeholder="Buscar" autocomplete="off" />
-      </div>
       <div class="menuSuperior__actions">
         <button class="menuSuperior__bell" title="Notificações"><i class="ti ti-bell"></i></button>
         <button class="menuSuperior__avatar-btn" title="Perfil"></button>
@@ -181,19 +384,213 @@
       <!-- ══════════════════════════════════════════════════════
            VIEW: INÍCIO
       ══════════════════════════════════════════════════════ -->
-      <div id="view-inicio" class="spa-view" style="align-items:center; justify-content:center; background:var(--n-50,#F7F8FA);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;">
-          <div style="width:72px;height:72px;background:#EDF3F9;border-radius:18px;display:flex;align-items:center;justify-content:center;">
-            <i class="ti ti-home" style="font-size:34px;color:#003870;"></i>
-          </div>
-          <h2 style="font-size:20px;font-weight:700;color:#11161D;font-family:'Poppins',sans-serif;">Início</h2>
-          <p style="font-size:14px;color:#97A1AE;max-width:380px;font-family:'Poppins',sans-serif;line-height:1.6;">
-            Esta tela está sendo desenvolvida pela equipe.<br>Em breve estará disponível no sistema.
-          </p>
-          <span style="display:inline-flex;align-items:center;gap:6px;background:#EDF3F9;border:1px solid #D6E2EF;border-radius:8px;padding:8px 18px;font-size:12px;font-weight:600;color:#003870;font-family:'Poppins',sans-serif;">
-            <i class="ti ti-tools"></i> Em desenvolvimento
-          </span>
+      <div id="view-inicio" class="spa-view" style="padding:28px 36px 36px; gap:18px; background:#EEF1F4;">
+
+        <!-- Page header -->
+        <div style="flex-shrink:0;">
+          <h1 style="font-size:24px;font-weight:700;color:#003870;line-height:1.2;letter-spacing:-.01em;font-family:'Poppins',sans-serif;">Visão Geral</h1>
+          <p style="font-size:12px;color:#97A1AE;margin-top:4px;font-family:'Poppins',sans-serif;">Semana 15 de 20 · Letramento Digital em andamento</p>
         </div>
+
+        <!-- KPI row -->
+        <div class="ini-kpi-row">
+          <div class="ini-kpi-card ini-kpi--blue">
+            <div class="ini-kpi-body">
+              <span class="ini-kpi-label">Frequência</span>
+              <span class="ini-kpi-value">87<span class="ini-kpi-unit">%</span></span>
+              <span class="ini-kpi-sub">de 48 aulas</span>
+            </div>
+          </div>
+          <div class="ini-kpi-card ini-kpi--green">
+            <div class="ini-kpi-body">
+              <span class="ini-kpi-label">Módulos Concluídos</span>
+              <span class="ini-kpi-value">3<span class="ini-kpi-unit">/5</span></span>
+              <span class="ini-kpi-sub"><span class="q-tag q-tag--blue">Let. Digital</span></span>
+            </div>
+          </div>
+          <div class="ini-kpi-card ini-kpi--amber">
+            <div class="ini-kpi-body">
+              <span class="ini-kpi-label">Nota Média</span>
+              <span class="ini-kpi-value">7,6</span>
+              <span class="ini-kpi-sub">média da turma: 7,1</span>
+            </div>
+          </div>
+          <div class="ini-kpi-card ini-kpi--navy">
+            <div class="ini-kpi-body">
+              <span class="ini-kpi-label">Próxima Atividade</span>
+              <span class="ini-kpi-value" style="font-size:22px;line-height:1.3;">Hoje</span>
+              <span class="ini-kpi-sub"><span class="q-tag q-tag--blue">Mentoria · 11:00</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main grid -->
+        <div class="ini-main-grid">
+
+          <!-- Jornada card -->
+          <section class="ini-card ini-jornada-card">
+            <div class="ini-card-head">
+              <div>
+                <div class="ini-card-title">Minha Jornada</div>
+                <div class="ini-card-sub">Letramento Digital · Módulo 4 de 5 · Sprint 3 de 4</div>
+              </div>
+              <span class="ini-progress-badge">58% concluído</span>
+            </div>
+
+            <!-- Module tabs -->
+            <div class="ini-mod-tabs" id="ini-mod-tabs">
+              <button class="ini-mod-tab ini-mod-done"    data-mod="0"><i class="ti ti-circle-check"></i> Intro. Digital</button>
+              <button class="ini-mod-tab ini-mod-done"    data-mod="1"><i class="ti ti-circle-check"></i> Seg. Online</button>
+              <button class="ini-mod-tab ini-mod-done"    data-mod="2"><i class="ti ti-circle-check"></i> Ferramentas</button>
+              <button class="ini-mod-tab ini-mod-active"  data-mod="3"><i class="ti ti-player-play"></i> Noções Dig.</button>
+              <button class="ini-mod-tab ini-mod-pending" data-mod="4"><i class="ti ti-lock"></i> Ger. Arquivos</button>
+            </div>
+
+            <!-- Course progress -->
+            <div class="ini-course-prog">
+              <div class="ini-course-prog-label">
+                <span>Progresso geral do curso</span>
+                <span class="ini-pct-badge">58%</span>
+              </div>
+              <div class="ini-prog-bar"><div class="ini-prog-inner" style="width:58%"></div></div>
+              <div class="ini-mod-labels">
+                <span>Intro. Digital</span>
+                <span>Seg. Online</span>
+                <span>Ferramentas</span>
+                <span style="color:#003870;font-weight:600;">Noções Dig.</span>
+                <span>Ger. Arquivos</span>
+              </div>
+            </div>
+
+            <!-- Sprint chart -->
+            <div style="flex-shrink:0;">
+              <div class="ini-sprint-label">Módulo 4 — Noções Digitais · Sprints</div>
+              <div style="height:150px;position:relative;margin-top:8px;">
+                <canvas id="ini-sprint-chart"></canvas>
+              </div>
+            </div>
+
+            <!-- Sprint badges -->
+            <div style="display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0;">
+              <span style="background:rgba(51,180,88,.12);color:#1D7A36;font-size:10px;font-weight:600;padding:3px 10px;border-radius:999px;">✓ Sprint 1 · 100%</span>
+              <span style="background:rgba(51,180,88,.12);color:#1D7A36;font-size:10px;font-weight:600;padding:3px 10px;border-radius:999px;">✓ Sprint 2 · 100%</span>
+              <span style="background:rgba(0,56,112,.10);color:#003870;font-size:10px;font-weight:600;padding:3px 10px;border-radius:999px;">▶ Sprint 3 · 63%</span>
+              <span style="background:#F0F3F7;color:#C2CAD4;font-size:10px;font-weight:600;padding:3px 10px;border-radius:999px;">Sprint 4 · 0%</span>
+            </div>
+
+            <!-- Activities -->
+            <div style="flex-shrink:0;">
+              <div class="ini-ativ-label">Atividades — Sprint 3</div>
+              <div class="ini-ativ-list" style="margin-top:8px;">
+                <div class="ini-ativ-item done">
+                  <div class="ini-ativ-body">
+                    <div class="ini-ativ-nome">Noções de Segurança Digital</div>
+                    <div class="ini-ativ-meta">Entregue em 01 jun · Nota: 9,0</div>
+                  </div>
+                  <span class="ini-ativ-badge done">✓ Entregue</span>
+                </div>
+                <div class="ini-ativ-item done">
+                  <div class="ini-ativ-body">
+                    <div class="ini-ativ-nome">Análise de Dados Básica</div>
+                    <div class="ini-ativ-meta">Entregue em 05 jun · Nota: 8,5</div>
+                  </div>
+                  <span class="ini-ativ-badge done">✓ Entregue</span>
+                </div>
+                <div class="ini-ativ-item active">
+                  <div class="ini-ativ-body">
+                    <div class="ini-ativ-nome">Projeto Final — Sprint 3</div>
+                    <div class="ini-ativ-meta">Prazo: 17 jun · Em andamento</div>
+                  </div>
+                  <span class="ini-ativ-badge active">▶ Em andamento</span>
+                </div>
+                <div class="ini-ativ-item locked">
+                  <div class="ini-ativ-body">
+                    <div class="ini-ativ-nome">Quiz de Revisão — Sprint 4</div>
+                    <div class="ini-ativ-meta">Disponível em: 18 jun</div>
+                  </div>
+                  <span class="ini-ativ-badge locked">Bloqueado</span>
+                </div>
+              </div>
+            </div>
+
+          </section><!-- fim ini-jornada-card -->
+
+          <!-- Right column -->
+          <div class="ini-right-col">
+
+            <!-- Saúde e Bem-estar -->
+            <section class="ini-card">
+              <div class="ini-card-head">
+                <div>
+                  <div class="ini-card-title">Saúde e Bem-estar</div>
+                  <div class="ini-card-sub">Registro de hoje</div>
+                </div>
+              </div>
+              <div class="ini-emoji-row" id="ini-emoji-row">
+                <button class="ini-emoji-btn" data-mood="1" title="Muito mal">😟</button>
+                <button class="ini-emoji-btn" data-mood="2" title="Mal">😕</button>
+                <button class="ini-emoji-btn" data-mood="3" title="Neutro">😐</button>
+                <button class="ini-emoji-btn ini-emoji-selected" data-mood="4" title="Bem">🙂</button>
+                <button class="ini-emoji-btn" data-mood="5" title="Muito bem">😄</button>
+              </div>
+              <p class="ini-saude-msg" id="ini-saude-msg">Que bom! Continue assim 👏</p>
+              <button class="ini-btn-psi"><i class="ti ti-plus"></i> Adicionar registro</button>
+              <p class="ini-saude-last">Última entrada: 10/06 · 🟡 Bem</p>
+            </section>
+
+            <!-- Próximos Eventos -->
+            <section class="ini-card">
+              <div class="ini-card-head">
+                <div class="ini-card-title">Próximos Eventos</div>
+                <a href="#" class="ini-ver-todos" onclick="window.__onMenuNav('agenda');return false;">Abrir agenda</a>
+              </div>
+              <ul class="ini-event-list" style="list-style:none;margin:0;padding:0;">
+                <li class="ini-event-item">
+                  <div class="ini-event-dot" style="background:#33B458;"></div>
+                  <div class="ini-event-body">
+                    <span class="ini-event-name">Mentoria Individual</span>
+                    <span class="ini-event-time">Hoje · 11:00 · João Mário</span>
+                  </div>
+                  <span class="ini-event-tag ini-tag-mentoria">Hoje</span>
+                </li>
+                <li class="ini-event-item">
+                  <div class="ini-event-dot" style="background:#003870;"></div>
+                  <div class="ini-event-body">
+                    <span class="ini-event-name">Evento de Networking</span>
+                    <span class="ini-event-time">10–12 Jun · 18:00 · Vitória Brandão</span>
+                  </div>
+                  <span class="ini-event-tag ini-tag-evento">Evento</span>
+                </li>
+                <li class="ini-event-item">
+                  <div class="ini-event-dot" style="background:#F4A261;"></div>
+                  <div class="ini-event-body">
+                    <span class="ini-event-name">Aula — AI-First na Prática</span>
+                    <span class="ini-event-time">15–16 Jun · 09:00 · Vitória Brandão</span>
+                  </div>
+                  <span class="ini-event-tag ini-tag-aula">Aula</span>
+                </li>
+                <li class="ini-event-item">
+                  <div class="ini-event-dot" style="background:#7B4FD9;"></div>
+                  <div class="ini-event-body">
+                    <span class="ini-event-name">Consulta Psicológica</span>
+                    <span class="ini-event-time">17 Jun · 14:30 · João Mário</span>
+                  </div>
+                  <span class="ini-event-tag ini-tag-consulta">Consulta</span>
+                </li>
+                <li class="ini-event-item">
+                  <div class="ini-event-dot" style="background:#FFD927;"></div>
+                  <div class="ini-event-body">
+                    <span class="ini-event-name">Formatura Turma T1</span>
+                    <span class="ini-event-time">20 Jun · 16:00 · Vitória Brandão</span>
+                  </div>
+                  <span class="ini-event-tag ini-tag-formatura">Formatura</span>
+                </li>
+              </ul>
+            </section>
+
+          </div><!-- fim .ini-right-col -->
+        </div><!-- fim .ini-main-grid -->
+
       </div><!-- fim #view-inicio -->
 
       <!-- ══════════════════════════════════════════════════════
@@ -203,7 +600,7 @@
 
         <div class="page-header">
           <h1>Dashboard – Visão geral</h1>
-          <p>Segunda-feira, 25 de abril de 2025 · Semana 12 de 20</p>
+          <p>Semana 12 de 20 · 4/5 módulos concluídos</p>
         </div>
 
         <div class="stat-grid">
@@ -211,54 +608,30 @@
           <div class="stat-card stat-card--blue">
             <div class="stat-card__header">
               <div class="stat-card__label">Frequência</div>
-              <div class="stat-card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="4" width="18" height="18" rx="2"/>
-                  <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
-                  <line x1="3" y1="10" x2="21" y2="10"/>
-                </svg>
-              </div>
             </div>
-            <div class="stat-card__value">92<span class="stat-card__unit">%</span></div>
-            <div class="stat-card__footer"><span class="badge badge--up">▲ +3%</span>de 48 alunos</div>
+            <div class="stat-card__value">87<span class="stat-card__unit">%</span></div>
+            <div class="stat-card__footer">de 48 aulas</div>
           </div>
 
           <div class="stat-card stat-card--green">
             <div class="stat-card__header">
               <div class="stat-card__label">Módulos Concluídos — Let. Digital</div>
-              <div class="stat-card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="9 11 12 14 22 4"/>
-                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-                </svg>
-              </div>
             </div>
             <div class="stat-card__value">4<span class="stat-card__unit">/5</span></div>
-            <div class="stat-card__footer"><span class="badge badge--up">▲ +1 este mês</span>de 7 total</div>
+            <div class="stat-card__footer">de 7 total</div>
           </div>
 
           <div class="stat-card stat-card--amber">
             <div class="stat-card__header">
               <div class="stat-card__label">Nota Média</div>
-              <div class="stat-card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </svg>
-              </div>
             </div>
-            <div class="stat-card__value">8,4</div>
-            <div class="stat-card__footer"><span class="badge badge--up">▲ Acima da média</span>este semestre</div>
+            <div class="stat-card__value">7,6</div>
+            <div class="stat-card__footer">média da turma: 7,1</div>
           </div>
 
           <div class="stat-card stat-card--navy">
             <div class="stat-card__header">
               <div class="stat-card__label">Próxima Entrega</div>
-              <div class="stat-card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"/>
-                  <polyline points="12 6 12 12 16 14"/>
-                </svg>
-              </div>
             </div>
             <div class="stat-card__value">3<span class="stat-card__unit">dias</span></div>
             <div class="stat-card__footer"><span class="badge badge--sub">Prog. Mentoria · Encontro 9 – Currículo e LinkedIn</span></div>
@@ -272,7 +645,6 @@
             <div class="chart-card__header">
               <div>
                 <div class="chart-card__title">Presenças por bimestre</div>
-                <div class="chart-card__sub">Índice de presença por bimestre · Engenharia T4</div>
               </div>
               <button class="chart-btn">Mês</button>
             </div>
@@ -286,7 +658,7 @@
             <div class="chart-stats">
               <span>Média geral: <strong>89%</strong></span>
               <span>Meta: <span class="warn">85%</span></span>
-              <span><span class="ok">▲ Acima da meta em 3 de 4 bimestres</span></span>
+              <span><span class="ok">Acima da meta em 3 de 4 bimestres</span></span>
             </div>
           </div>
 
@@ -305,9 +677,9 @@
               <div class="legend-item"><div class="legend-dash" style="border-color:#DEE3EA"></div>Meta (7,0)</div>
             </div>
             <div class="chart-stats">
-              <span>Nota atual: <strong>8,4</strong></span>
-              <span>Variação: <span class="ok">▲ +0,4</span></span>
-              <span>Máxima: <strong>8,4</strong></span>
+              <span>Nota atual: <strong>7,6</strong></span>
+              <span>Variação: <span class="ok">+0,3 vs. semestre anterior</span></span>
+              <span>Média da turma: <strong>7,1</strong></span>
             </div>
           </div>
 
@@ -318,18 +690,29 @@
       <!-- ══════════════════════════════════════════════════════
            VIEW: AGENDA
       ══════════════════════════════════════════════════════ -->
-      <div id="view-agenda" class="spa-view" style="align-items:center; justify-content:center; background:var(--n-50,#F7F8FA);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;">
-          <div style="width:72px;height:72px;background:#EDF3F9;border-radius:18px;display:flex;align-items:center;justify-content:center;">
-            <i class="ti ti-calendar" style="font-size:34px;color:#003870;"></i>
+      <div id="view-agenda" class="spa-view">
+        <div class="ag-full">
+
+          <div class="ag-header">
+            <div>
+              <div class="ag-title"><i class="ti ti-calendar" style="font-size:18px;vertical-align:-2px;margin-right:8px;color:#003870;"></i>Agenda</div>
+              <div class="ag-month">Junho de 2026</div>
+            </div>
+            <div class="ag-legend">
+              <div class="ag-legend-item"><div class="ag-legend-dot" style="background:#003870"></div>Evento</div>
+              <div class="ag-legend-item"><div class="ag-legend-dot" style="background:#7B4FD9"></div>Consulta</div>
+              <div class="ag-legend-item"><div class="ag-legend-dot" style="background:#F4A261"></div>Aula</div>
+              <div class="ag-legend-item"><div class="ag-legend-dot" style="background:#33B458"></div>Mentoria</div>
+              <div class="ag-legend-item"><div class="ag-legend-dot" style="background:#FFD927;border:1px solid #e0c000;"></div>Formatura</div>
+            </div>
           </div>
-          <h2 style="font-size:20px;font-weight:700;color:#11161D;font-family:'Poppins',sans-serif;">Agenda</h2>
-          <p style="font-size:14px;color:#97A1AE;max-width:380px;font-family:'Poppins',sans-serif;line-height:1.6;">
-            Esta tela está sendo desenvolvida pela equipe.<br>Em breve estará disponível no sistema.
-          </p>
-          <span style="display:inline-flex;align-items:center;gap:6px;background:#EDF3F9;border:1px solid #D6E2EF;border-radius:8px;padding:8px 18px;font-size:12px;font-weight:600;color:#003870;font-family:'Poppins',sans-serif;">
-            <i class="ti ti-tools"></i> Em desenvolvimento
-          </span>
+
+          <!-- Calendário gerado pelo JS -->
+          <div class="ag-cal" id="ag-cal"></div>
+
+          <!-- Detalhe do evento (aparece ao clicar) -->
+          <div class="ag-detail" id="ag-detail"></div>
+
         </div>
       </div><!-- fim #view-agenda -->
 
@@ -351,7 +734,7 @@
         <div class="modal-badges">
           <span class="badge badge-ativo"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
           <span class="badge badge-curso"><i class="ti ti-code" style="font-size:11px;"></i> Let. Digital</span>
-          <span class="badge badge-nivel"><i class="ti ti-trending-up" style="font-size:11px;"></i> Capacitado</span>
+          <span class="badge badge-nivel">Capacitado</span>
         </div>
         <button class="close-btn" onclick="closeModal()" aria-label="Fechar modal"><i class="ti ti-x"></i></button>
       </div>
@@ -445,7 +828,7 @@
               <input type="number" value="1800" min="0" step="100">
             </div>
             <div class="field span2">
-              <label><i class="ti ti-home"></i> Nível de jornada</label>
+              <label>Nível de jornada</label>
               <select>
                 <option>Conectado</option>
                 <option selected>Capacitado</option>
@@ -486,12 +869,48 @@
     <i class="ti ti-circle-check"></i> Perfil atualizado com sucesso
   </div>
 
+  <!-- ========== PAINEL: NOTIFICAÇÕES DO ALUNO ========== -->
+  <div class="notif-overlay" id="notif-overlay">
+    <div class="notif-panel" id="notif-panel">
+
+      <!-- Cabeçalho -->
+      <div class="notif-header">
+        <div class="notif-header-left">
+          <span class="notif-title">Notificações</span>
+          <span class="notif-count-badge" id="notif-count-badge">6</span>
+        </div>
+        <div class="notif-header-right">
+          <button class="notif-mark-all" id="notif-mark-all">Marcar todas como lidas</button>
+          <button class="notif-close-btn" id="notif-close" aria-label="Fechar painel">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabs de filtro -->
+      <div class="notif-tabs">
+        <button class="notif-tab active" data-filter="all">
+          Todas
+        </button>
+        <button class="notif-tab" data-filter="unread">
+          Não lidas
+          <span class="notif-tab-count" id="notif-tab-unread-count">3</span>
+        </button>
+      </div>
+
+      <!-- Lista (populada via JS) -->
+      <div class="notif-list" id="notif-list"></div>
+
+    </div>
+  </div><!-- fim .notif-overlay -->
+
 <!-- Scripts — ordem importante -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="../js/services/configAluno.js"></script>
 <script src="../js/components/guiaAluno.js"></script>
 <script src="../js/components/menuSuperior.js"></script>
 <script src="../js/components/modalConfAluno.js"></script>
+<script src="../js/components/modalNotifAluno.js"></script>
 <script src="../js/pages/spaAluno.js"></script>
 </body>
 </html>

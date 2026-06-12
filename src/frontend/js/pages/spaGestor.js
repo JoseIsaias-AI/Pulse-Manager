@@ -17,11 +17,17 @@
     if (!target) return;
     target.style.display = 'flex';
 
+    // Barra de busca: visível apenas na aba Alunos
+    const search = document.getElementById('top-search');
+    if (search) search.style.display = id === 'alunos' ? '' : 'none';
+
     // Inicializa gráficos na primeira exibição (só para views com gráficos)
     if (!chartInited[id]) {
       chartInited[id] = true;
       if (id === 'inicio')    initInicioView();
+      if (id === 'alunos')    initAlunosView();
       if (id === 'dashboard') initDashboardView();
+      if (id === 'agenda')    initAgendaView();
     }
   }
 
@@ -86,138 +92,265 @@
       }
     });
 
-    /* Paginação de Atividades */
-    const ACTIVITIES = [
-      { i:'AS', bg:'#003870',              name:'Ana Silva',       desc:'concluiu o Módulo 4 - Sprint 3',   time:'Há 12 minutos', tag:'tag--green', label:'✓ Concluído'  },
-      { i:'CM', bg:'#FFD927', c:'#003870', name:'Carlos Mendes',   desc:'atrasou entrega do Módulo 5',      time:'Há 38 minutos', tag:'tag--amber', label:'⚠ Em atraso'  },
-      { i:'LR', bg:'#33B458',              name:'Larissa Rocha',   desc:'subiu para o Módulo 5',            time:'Há 1 hora',     tag:'tag--blue',  label:'↑ Progresso'  },
-      { i:'BT', bg:'#003870',              name:'Beatriz Torres',  desc:'entregou projeto do Módulo 3',     time:'Há 3 horas',    tag:'tag--green', label:'✓ Entregue'   },
-      { i:'MN', bg:'#FFD927', c:'#003870', name:'Marcos Nunes',    desc:'ausente há 3 dias consecutivos',   time:'Há 4 horas',    tag:'tag--amber', label:'⚠ Ausente'    },
-      { i:'JP', bg:'#33B458',              name:'Julia Pereira',   desc:'concluiu o Módulo 3 - Sprint 2',   time:'Há 5 horas',    tag:'tag--green', label:'✓ Concluído'  },
-      { i:'RO', bg:'#003870',              name:'Rafael Oliveira', desc:'iniciou o Módulo 6',               time:'Há 6 horas',    tag:'tag--blue',  label:'↑ Progresso'  },
-      { i:'FS', bg:'#FFD927', c:'#003870', name:'Fernanda Santos', desc:'atrasou entrega do Módulo 4',      time:'Há 7 horas',    tag:'tag--amber', label:'⚠ Em atraso'  },
-      { i:'DL', bg:'#33B458',              name:'Diego Lima',      desc:'entregou projeto do Módulo 5',     time:'Há 8 horas',    tag:'tag--green', label:'✓ Entregue'   },
-      { i:'PA', bg:'#003870',              name:'Patricia Alves',  desc:'ausente há 2 dias consecutivos',   time:'Há 9 horas',    tag:'tag--amber', label:'⚠ Ausente'    },
-      { i:'TM', bg:'#FFD927', c:'#003870', name:'Thiago Martins',  desc:'concluiu o Módulo 2 - Sprint 1',   time:'Há 10 horas',   tag:'tag--green', label:'✓ Concluído'  },
-      { i:'CB', bg:'#33B458',              name:'Carolina Bastos', desc:'subiu para o Módulo 4',            time:'Há 11 horas',   tag:'tag--blue',  label:'↑ Progresso'  },
-      { i:'MF', bg:'#003870',              name:'Miguel Fonseca',  desc:'atrasou entrega do Módulo 3',      time:'Há 12 horas',   tag:'tag--amber', label:'⚠ Em atraso'  },
-      { i:'IS', bg:'#FFD927', c:'#003870', name:'Isabela Souza',   desc:'entregou projeto do Módulo 4',     time:'Ontem',         tag:'tag--green', label:'✓ Entregue'   },
-      { i:'VR', bg:'#33B458',              name:'Victor Ribeiro',  desc:'iniciou o Módulo 5',               time:'Ontem',         tag:'tag--blue',  label:'↑ Progresso'  },
-      { i:'GL', bg:'#003870',              name:'Gabriela Leal',   desc:'concluiu o Módulo 6 - Sprint 1',   time:'Ontem',         tag:'tag--green', label:'✓ Concluído'  },
-      { i:'HN', bg:'#FFD927', c:'#003870', name:'Hugo Novaes',     desc:'ausente há 4 dias consecutivos',   time:'Ontem',         tag:'tag--amber', label:'⚠ Ausente'    },
-      { i:'SM', bg:'#33B458',              name:'Sofia Moura',     desc:'subiu para o Módulo 7',            time:'Ontem',         tag:'tag--blue',  label:'↑ Progresso'  },
+    /* ── Próximos Eventos (mesmos da Agenda de Junho 2026) ── */
+    const AGENDA_EVENTS = [
+      { title:'Check-in Semanal',   start:'2026-06-03', type:'evento',   color:'#003870', sender:'Ana Clara',      role:'Gestora',   time:'09:00' },
+      { title:'Módulo 3 – Entrega', start:'2026-06-09', type:'aula',     color:'#F4A261', sender:'Carlos Mendes',  role:'Gestor',    time:'08:00' },
+      { title:'Reunião de Módulo',  start:'2026-06-11', type:'evento',   color:'#003870', sender:'Ana Clara',      role:'Gestora',   time:'14:00' },
+      { title:'Mentoria: Tiago R.', start:'2026-06-16', type:'mentoria', color:'#33B458', sender:'João Mário',     role:'Psicólogo', time:'10:00' },
+      { title:'Check-in Semanal',   start:'2026-06-17', type:'evento',   color:'#003870', sender:'Ana Clara',      role:'Gestora',   time:'09:00' },
+      { title:'Consulta: Sofia C.', start:'2026-06-18', type:'consulta', color:'#7B4FD9', sender:'João Mário',     role:'Psicólogo', time:'11:00' },
+      { title:'Check-in Semanal',   start:'2026-06-24', type:'evento',   color:'#003870', sender:'Ana Clara',      role:'Gestora',   time:'09:00' },
+      { title:'Sprint Review',      start:'2026-06-25', type:'evento',   color:'#33B458', sender:'Carlos Mendes',  role:'Gestor',    time:'15:00' },
+      { title:'Formatura T4',       start:'2026-06-30', type:'evento',   color:'#FFD927', sender:'Ana Clara',      role:'Gestora',   time:'18:00' },
     ];
+    const TODAY_STR  = '2026-06-11';
+    const TYPE_LABEL_EV = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria' };
+    const MONTH_ABREV = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
-    const PER_PAGE = 5, TOTAL = 48;
-    let curPage = 2;
-
-    function renderActivities(page) {
-      curPage = page;
-      const start = (page - 1) * PER_PAGE;
-      const slice = ACTIVITIES.slice(start, start + PER_PAGE);
-
-      document.getElementById('activity-list').innerHTML = slice.map(a => `
-        <div class="activity-item">
-          <div class="av" style="background:${a.bg};${a.c ? 'color:'+a.c+';' : ''}">${a.i}</div>
-          <div class="activity-body">
-            <div class="activity-name">${a.name} <span style="font-weight:400;color:#6B7684;font-size:11px;">${a.desc}</span></div>
-            <div class="activity-time">${a.time}</div>
-          </div>
-          <span class="tag ${a.tag}">${a.label}</span>
-        </div>`).join('');
-
-      const totalPages = Math.ceil(TOTAL / PER_PAGE);
-      document.getElementById('pg-total').textContent =
-        `Exibindo ${Math.min(PER_PAGE, TOTAL - start)} de ${TOTAL} atividades`;
-
-      let startP = Math.max(1, page - 1);
-      let endP   = Math.min(totalPages, startP + 2);
-      if (endP - startP < 2) startP = Math.max(1, endP - 2);
-
-      const nums = document.getElementById('pg-numbers');
-      nums.innerHTML = '';
-      for (let p = startP; p <= endP; p++) {
-        const btn = document.createElement('button');
-        btn.className = 'pg-btn pg-num' + (p === page ? ' active' : '');
-        btn.textContent = p;
-        btn.addEventListener('click', () => renderActivities(p));
-        nums.appendChild(btn);
-      }
-
-      document.getElementById('pg-prev').disabled = page === 1;
-      document.getElementById('pg-next').disabled = page >= totalPages;
+    function fmtEventDate(str) {
+      const [,m,d] = str.split('-');
+      return `${parseInt(d)} ${MONTH_ABREV[parseInt(m)-1]}`;
     }
 
-    document.getElementById('pg-prev').addEventListener('click', () => renderActivities(curPage - 1));
-    document.getElementById('pg-next').addEventListener('click', () => renderActivities(curPage + 1));
-    renderActivities(curPage);
+    const upcoming = AGENDA_EVENTS.filter(ev => ev.start >= TODAY_STR);
+
+    document.getElementById('activity-list').innerHTML = upcoming.map(ev => {
+      const isToday  = ev.start === TODAY_STR;
+      const dateLbl  = isToday ? 'Hoje' : fmtEventDate(ev.start);
+      const isYellow = ev.color === '#FFD927';
+      const tagColor = isYellow ? '#7a5a00' : ev.color;
+      const tagBg    = isYellow ? 'rgba(255,217,39,.2)' : ev.color + '18';
+      const occColor = ev.role === 'Psicólogo' ? '#7B4FD9' : '#003870';
+      const occBg    = ev.role === 'Psicólogo' ? 'rgba(123,79,217,.1)' : 'rgba(0,56,112,.1)';
+      return `
+        <div class="activity-item">
+          <div style="width:10px;height:10px;border-radius:50%;background:${ev.color};flex-shrink:0;margin-top:4px;"></div>
+          <div class="activity-body">
+            <div class="activity-name">${ev.title}</div>
+            <div class="activity-time">${dateLbl} · ${ev.time} &nbsp;·&nbsp; ${ev.sender} <span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:999px;background:${occBg};color:${occColor};margin-left:2px;">${ev.role}</span></div>
+          </div>
+          <span class="tag" style="background:${tagBg};color:${tagColor};border:1px solid ${tagColor}30;">${TYPE_LABEL_EV[ev.type]}</span>
+        </div>`;
+    }).join('');
+
+    document.getElementById('pg-total').textContent = `${upcoming.length} eventos em junho`;
   }
 
   /* ════════════════════════════════════════════════════════════
-     VIEW: DASHBOARD (dashboardGestor)
+     VIEW: ALUNOS
+  ════════════════════════════════════════════════════════════ */
+  function initAlunosView() {
+    const PER_PAGE = 9;
+    const TOTAL    = 18;
+    let curPage      = 1;
+    let filterCourse = 'all';
+    let desempSort   = 'none'; // 'none' | 'desc' | 'asc'  — ordena por pct
+    let notaSort     = 'none'; // 'none' | 'desc' | 'asc'  — ordena por nota média
+    let engSort      = 'none'; // 'none' | 'desc' | 'asc'  — ordena por engajamento
+    let nameSort     = 'none'; // 'none' | 'az'   | 'za'
+
+    const STUDENTS = [
+      { id:'PM-2024-474', name:'Mariana Costa',   ini:'MC', bg:'#E0E7FF', tc:'#4338CA', age:19, course:'Desenvolvimento AI-First na Prática',                    st:'ativa',     mod:'Módulo 5',             pct:84,  nota:8.4, eng:8, techCourse:'Engenharia de Software'          },
+      { id:'PM-2024-950', name:'Tiago Ribeiro',   ini:'TR', bg:'#FFE4E1', tc:'#DC2626', age:21, course:'Letramento Digital',                                     st:'risco',     mod:'Módulo 4',             pct:62,  nota:7.2, eng:5, techCourse:'Análise e Des. de Sistemas'      },
+      { id:'PM-2024-811', name:'Letícia Pires',   ini:'LP', bg:'#FEF9C3', tc:'#854D0E', age:22, course:'Autogestão no Mundo do Trabalho',                        st:'empregado', mod:'Módulo 5 · Concluído', pct:100, nota:9.5, eng:9, techCourse:'Sistemas de Informação'          },
+      { id:'PM-2024-137', name:'Bruno Ferraz',    ini:'BF', bg:'#F1F5F9', tc:'#475569', age:19, course:'Letramento Digital',                                     st:'inativo',   mod:'Módulo 3',             pct:48,  nota:6.3, eng:3, techCourse:''                                },
+      { id:'PM-2024-465', name:'Júlia Alves',     ini:'JA', bg:'#DCFCE7', tc:'#15803D', age:20, course:'Fortalecimento Emocional para Jovens',                   st:'ativa',     mod:'Módulo 5',             pct:85,  nota:8.5, eng:8, techCourse:''                                },
+      { id:'PM-2024-799', name:'Renato Dias',     ini:'RD', bg:'#FEF9C3', tc:'#854D0E', age:23, course:'Mercado de Trabalho: Preparação, Conexão e Vivências',   st:'atencao',   mod:'Módulo 4',             pct:65,  nota:7.6, eng:6, techCourse:'Tecnologia em Redes'             },
+      { id:'PM-2024-302', name:'Karen Souza',     ini:'KS', bg:'#CFFAFE', tc:'#0E7490', age:20, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:82,  nota:8.2, eng:7, techCourse:'Desenvolvimento Web'             },
+      { id:'PM-2024-618', name:'Pedro Lima',      ini:'PL', bg:'#FFE4E1', tc:'#DC2626', age:22, course:'Laboratório de Mentoria',                                st:'risco',     mod:'Módulo 3',             pct:42,  nota:5.9, eng:4, techCourse:''                                },
+      { id:'PM-2024-229', name:'Ana Martins',     ini:'AM', bg:'#DCFCE7', tc:'#15803D', age:19, course:'Autogestão no Mundo do Trabalho',                        st:'ativa',     mod:'Módulo 5',             pct:91,  nota:9.0, eng:9, techCourse:''                                },
+      { id:'PM-2024-531', name:'Felipe Santos',   ini:'FS', bg:'#E0E7FF', tc:'#4338CA', age:21, course:'Laboratório de Mentoria',                                st:'ativa',     mod:'Módulo 4',             pct:68,  nota:7.8, eng:7, techCourse:'Ciência da Computação'          },
+      { id:'PM-2024-388', name:'Camila Rocha',    ini:'CR', bg:'#FCE7F3', tc:'#9D174D', age:20, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:87,  nota:8.7, eng:8, techCourse:'Design Digital'                  },
+      { id:'PM-2024-712', name:'Diego Melo',      ini:'DM', bg:'#FFE4E1', tc:'#DC2626', age:24, course:'Letramento Digital',                                     st:'risco',     mod:'Módulo 2',             pct:31,  nota:5.1, eng:3, techCourse:''                                },
+      { id:'PM-2024-559', name:'Isabela Gomes',   ini:'IG', bg:'#F3E8FF', tc:'#7E22CE', age:19, course:'Fortalecimento Emocional para Jovens',                   st:'ativa',     mod:'Módulo 5',             pct:83,  nota:8.3, eng:8, techCourse:''                                },
+      { id:'PM-2024-244', name:'Lucas Ferreira',  ini:'LF', bg:'#FEF9C3', tc:'#854D0E', age:22, course:'Mercado de Trabalho: Preparação, Conexão e Vivências',   st:'empregado', mod:'Módulo 5 · Concluído', pct:100, nota:9.4, eng:9, techCourse:'Engenharia de Software'          },
+      { id:'PM-2024-876', name:'Sofia Carvalho',  ini:'SC', bg:'#FEF3C7', tc:'#92400E', age:20, course:'Autogestão no Mundo do Trabalho',                        st:'atencao',   mod:'Módulo 3',             pct:43,  nota:6.0, eng:5, techCourse:''                                },
+      { id:'PM-2024-193', name:'Gabriel Nunes',   ini:'GN', bg:'#CFFAFE', tc:'#0E7490', age:21, course:'Desenvolvimento AI-First na Prática',                    st:'ativa',     mod:'Módulo 5',             pct:86,  nota:8.6, eng:8, techCourse:'Análise e Des. de Sistemas'      },
+      { id:'PM-2024-647', name:'Patrícia Leal',   ini:'PL', bg:'#DCFCE7', tc:'#15803D', age:23, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:88,  nota:8.8, eng:9, techCourse:'Sistemas de Informação'          },
+      { id:'PM-2024-320', name:'Henrique Torres', ini:'HT', bg:'#F1F5F9', tc:'#475569', age:19, course:'Laboratório de Mentoria',                                st:'inativo',   mod:'Módulo 2',             pct:23,  nota:4.5, eng:2, techCourse:''                                },
+    ];
+
+    const COURSES = ['Todos', ...new Set(STUDENTS.map(s => s.techCourse || '—'))];
+    let courseIdx = 0;
+
+    const BAR  = { ativa:'c-green', risco:'c-red', empregado:'c-green', inativo:'c-gray', atencao:'c-amber' };
+    const SLBL = { risco:'⚠ em risco', atencao:'! atenção' };
+    const PROB = new Set(['risco', 'atencao']);
+
+    function getList() {
+      let list = STUDENTS.slice();
+      if (filterCourse !== 'all') list = list.filter(s => (s.techCourse || '—') === filterCourse);
+      if (desempSort === 'desc') list.sort((a, b) => b.pct  - a.pct);
+      if (desempSort === 'asc')  list.sort((a, b) => a.pct  - b.pct);
+      if (notaSort  === 'desc')  list.sort((a, b) => b.nota - a.nota);
+      if (notaSort  === 'asc')   list.sort((a, b) => a.nota - b.nota);
+      if (engSort   === 'desc')  list.sort((a, b) => b.eng  - a.eng);
+      if (engSort   === 'asc')   list.sort((a, b) => a.eng  - b.eng);
+      if (nameSort  === 'az')    list.sort((a, b) => a.name.localeCompare(b.name, 'pt'));
+      if (nameSort  === 'za')    list.sort((a, b) => b.name.localeCompare(a.name, 'pt'));
+      return list;
+    }
+
+    function renderPage(page) {
+      curPage = page;
+      const list  = getList();
+      const total = list.length || 1;
+      const start = (page - 1) * PER_PAGE;
+      const slice = list.slice(start, start + PER_PAGE);
+      const grid  = document.getElementById('al-grid');
+      if (!grid) return;
+
+      grid.innerHTML = slice.map(s => `
+        <div class="al-card" data-id="${s.id}">
+          <div class="al-card-top">
+            <div class="al-av" style="background:${s.bg};color:${s.tc};">${s.ini}</div>
+            <div class="al-info">
+              <div class="al-name">${s.name}</div>
+              <div class="al-meta">${s.age} anos · ${s.techCourse || '—'}</div>
+              <div class="al-id">${s.id}</div>
+            </div>
+            ${PROB.has(s.st) ? `<span class="al-badge al-badge--${s.st}">${SLBL[s.st]}</span>` : ''}
+          </div>
+          <div class="al-prog-row">
+            <span class="al-module">${s.mod}</span>
+            <span class="al-pct">${s.pct}%</span>
+          </div>
+          <div class="al-bar"><div class="al-bar-inner ${BAR[s.st]}" style="width:${s.pct}%"></div></div>
+        </div>
+      `).join('');
+
+      /* Click no card → overlay de perfil */
+      grid.querySelectorAll('.al-card').forEach((card, i) => {
+        card.addEventListener('click', function () {
+          openStudentProfile(slice[i]);
+        });
+      });
+
+      /* Paginação */
+      const totalPages = Math.ceil(total / PER_PAGE);
+      const info = document.getElementById('al-pag-info');
+      const displayTotal = filterCourse === 'all' ? TOTAL : total;
+      if (info) info.textContent =
+        `Exibindo ${start + 1}–${Math.min(start + PER_PAGE, total)} de ${displayTotal} alunos`;
+
+      const nums = document.getElementById('al-pag-nums');
+      if (nums) {
+        nums.innerHTML = '';
+        const show = new Set(
+          [1, page - 1, page, page + 1, totalPages]
+            .filter(p => p >= 1 && p <= totalPages)
+        );
+        let prev = 0;
+        [...show].sort((a, b) => a - b).forEach(p => {
+          if (prev && p - prev > 1) {
+            const ell = document.createElement('span');
+            ell.textContent = '…';
+            ell.style.cssText = 'font-size:11px;color:#97A1AE;padding:0 2px;line-height:26px;';
+            nums.appendChild(ell);
+          }
+          const btn = document.createElement('button');
+          btn.className = 'al-pag-btn' + (p === page ? ' active' : '');
+          btn.textContent = p;
+          btn.addEventListener('click', () => renderPage(p));
+          nums.appendChild(btn);
+          prev = p;
+        });
+      }
+
+      const prevBtn = document.getElementById('al-prev');
+      const nextBtn = document.getElementById('al-next');
+      if (prevBtn) prevBtn.disabled = page === 1;
+      if (nextBtn) nextBtn.disabled = page >= totalPages;
+    }
+
+    /* ── Botões de filtro e ordenação ──────────────────────── */
+    const btnCurso  = document.getElementById('btn-curso');
+    const btnDesemp = document.getElementById('btn-desemp');
+    const btnNota   = document.getElementById('btn-nota');
+    const btnEng    = document.getElementById('btn-eng');
+    const btnOrd    = document.getElementById('btn-ord');
+    let desempIdx = 0, notaIdx = 0, engIdx = 0, nameSortIdx = 0;
+
+    /* Reseta todos os sorts exceto o informado */
+    function resetSortBtns(except) {
+      if (except !== 'desemp') { desempSort = 'none'; desempIdx = 0; if (btnDesemp) { btnDesemp.textContent = 'Desempenho';  btnDesemp.classList.remove('al-filter-btn--active'); } }
+      if (except !== 'nota')   { notaSort   = 'none'; notaIdx   = 0; if (btnNota)   { btnNota.textContent   = 'Nota Média';  btnNota.classList.remove('al-filter-btn--active'); } }
+      if (except !== 'eng')    { engSort    = 'none'; engIdx    = 0; if (btnEng)    { btnEng.textContent    = 'Engajamento'; btnEng.classList.remove('al-filter-btn--active'); } }
+      if (except !== 'name')   { nameSort   = 'none'; nameSortIdx = 0;
+        if (btnOrd) { btnOrd.innerHTML = '<i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> Ordenar'; btnOrd.classList.remove('al-filter-btn--active'); }
+      }
+    }
+
+    /* Curso */
+    if (btnCurso) btnCurso.addEventListener('click', function () {
+      courseIdx    = (courseIdx + 1) % COURSES.length;
+      filterCourse = courseIdx === 0 ? 'all' : COURSES[courseIdx];
+      this.textContent = courseIdx === 0 ? 'Curso' : COURSES[courseIdx];
+      this.classList.toggle('al-filter-btn--active', courseIdx !== 0);
+      renderPage(1);
+    });
+
+    /* Desempenho — ordena por pct */
+    if (btnDesemp) btnDesemp.addEventListener('click', function () {
+      desempIdx  = (desempIdx + 1) % 3;
+      desempSort = ['none', 'desc', 'asc'][desempIdx];
+      resetSortBtns('desemp');
+      this.textContent = ['Desempenho', 'Desempenho ↑', 'Desempenho ↓'][desempIdx];
+      this.classList.toggle('al-filter-btn--active', desempIdx !== 0);
+      renderPage(1);
+    });
+
+    /* Nota Média — ordena por nota */
+    if (btnNota) btnNota.addEventListener('click', function () {
+      notaIdx  = (notaIdx + 1) % 3;
+      notaSort = ['none', 'desc', 'asc'][notaIdx];
+      resetSortBtns('nota');
+      this.textContent = ['Nota Média', 'Nota Média ↑', 'Nota Média ↓'][notaIdx];
+      this.classList.toggle('al-filter-btn--active', notaIdx !== 0);
+      renderPage(1);
+    });
+
+    /* Engajamento — ordena por eng */
+    if (btnEng) btnEng.addEventListener('click', function () {
+      engIdx  = (engIdx + 1) % 3;
+      engSort = ['none', 'desc', 'asc'][engIdx];
+      resetSortBtns('eng');
+      this.textContent = ['Engajamento', 'Engajamento ↑', 'Engajamento ↓'][engIdx];
+      this.classList.toggle('al-filter-btn--active', engIdx !== 0);
+      renderPage(1);
+    });
+
+    /* Ordenar por nome */
+    if (btnOrd) btnOrd.addEventListener('click', function () {
+      nameSortIdx = (nameSortIdx + 1) % 3;
+      nameSort    = ['none', 'az', 'za'][nameSortIdx];
+      resetSortBtns('name');
+      this.innerHTML = `<i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> ${['Ordenar', 'A → Z', 'Z → A'][nameSortIdx]}`;
+      this.classList.toggle('al-filter-btn--active', nameSortIdx !== 0);
+      renderPage(1);
+    });
+
+    /* ── Paginação ──────────────────────────────────────────── */
+    document.getElementById('al-prev').addEventListener('click', () => renderPage(curPage - 1));
+    document.getElementById('al-next').addEventListener('click', () => renderPage(curPage + 1));
+    renderPage(1);
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     VIEW: DASHBOARD (dashboardGestor) — Dados Pulse Mais 2022–2025
   ════════════════════════════════════════════════════════════ */
   function initDashboardView() {
-    /* Alunos por Curso */
-    new Chart(document.getElementById('g-barChartDash'), {
-      type: 'bar',
-      data: {
-        labels: ['Let. Digital', 'Ferramentas Prod.', 'AI-First',
-                 'Fort. Emocional', 'Autogestão', 'Mercado Trab.', 'Lab. Mentoria'],
-        datasets: [{
-          data: [42, 38, 35, 28, 20, 12, 6],
-          backgroundColor: ['#003870','#33B458','#FFD927','#003870','#33B458','#FFD927','#003870'],
-          borderRadius: 6,
-          borderSkipped: false,
-          barPercentage: 0.52
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: c => ` ${c.raw} alunos` } }
-        },
-        scales: {
-          x: { grid: { display: false }, ticks: { color: '#6B7684' }, border: { display: false } },
-          y: { min: 0, max: 50, ticks: { color: '#97A1AE', stepSize: 10 }, grid: { color: '#F0F3F7' }, border: { display: false } }
-        }
-      }
-    });
+    Chart.defaults.font.family = "'Poppins', sans-serif";
+    Chart.defaults.font.size   = 11;
 
-    /* Tipo de Presença — EAD vs Presencial */
-    new Chart(document.getElementById('g-presencaChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Let. Digital', 'Ferramentas Prod.', 'AI-First', 'Fort. Emocional', 'Autogestão'],
-        datasets: [
-          { label: 'EAD',       data: [72, 58, 65, 80, 55], backgroundColor: '#003870', borderRadius: 5, borderSkipped: false, barPercentage: 0.45 },
-          { label: 'Presencial',data: [28, 42, 35, 20, 45], backgroundColor: '#33B458', borderRadius: 5, borderSkipped: false, barPercentage: 0.45 }
-        ]
-      },
-      options: {
-        indexAxis: 'y',
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: c => ` ${c.raw}%` } }
-        },
-        scales: {
-          x: { min: 0, max: 100, ticks: { color: '#97A1AE', callback: v => v + '%' }, grid: { color: '#F0F3F7' }, border: { display: false } },
-          y: { grid: { display: false }, ticks: { color: '#6B7684', font: { size: 10 } }, border: { display: false },
-               afterFit(s) { s.width = 120; } }
-        }
-      }
-    });
-
-    /* Funil de Impacto */
+    /* ── Funil de Impacto (horizontal bar) ─────────────────── */
     new Chart(document.getElementById('g-funnelChart'), {
       type: 'bar',
       data: {
         labels: ['Conectados', 'Capacitados', 'Transformados'],
         datasets: [{
-          data: [184, 142, 89],
+          data: [528, 126, 60],
           backgroundColor: ['#003870', '#33B458', '#FFD927'],
           borderRadius: 8,
           borderSkipped: false,
@@ -230,15 +363,560 @@
         maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
-          tooltip: { callbacks: { label: c => ` ${c.raw} alunos` } }
+          tooltip: { callbacks: { label: c => ` ${c.raw} jovens` } }
         },
         scales: {
-          x: { min: 0, max: 220, ticks: { color: '#97A1AE', stepSize: 50 }, grid: { color: '#F0F3F7' }, border: { display: false } },
-          y: { grid: { display: false }, ticks: { color: '#6B7684', font: { weight: '500', size: 11 } }, border: { display: false },
-               afterFit(s) { s.width = 110; } }
+          x: { min: 0, max: 600, ticks: { color: '#97A1AE', stepSize: 100 }, grid: { color: '#F0F3F7' }, border: { display: false } },
+          y: { grid: { display: false }, ticks: { color: '#6B7684', font: { weight: '600', size: 11 } }, border: { display: false },
+               afterFit(s) { s.width = 115; } }
+        }
+      }
+    });
+
+    /* ── Jovens Atingidos — Histórico ──────────────────────── */
+    new Chart(document.getElementById('g-historicoChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2022', '2023', '2024', '2025'],
+        datasets: [{
+          data: [73, 46, 401, 605],
+          backgroundColor: ['#003870', '#7B4FD9', '#F4A261', '#FFD927'],
+          borderRadius: 8,
+          borderSkipped: false,
+          barPercentage: 0.55
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => ` ${c.raw} jovens` } }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#6B7684' }, border: { display: false } },
+          y: { min: 0, ticks: { color: '#97A1AE', stepSize: 150 }, grid: { color: '#F0F3F7' }, border: { display: false } }
+        }
+      }
+    });
+
+    /* ── Jovens Empregados — Evolução ──────────────────────── */
+    new Chart(document.getElementById('g-empregadosChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2023', '2024', '2025', 'Meta 2026'],
+        datasets: [{
+          data: [15, 26, 45, 65],
+          backgroundColor: ['#003870', '#003870', '#33B458', 'rgba(255,217,39,.65)'],
+          borderRadius: 8,
+          borderSkipped: false,
+          barPercentage: 0.55,
+          borderColor:   ['transparent','transparent','transparent','#FFD927'],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => ` ${c.raw} jovens` } }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#6B7684' }, border: { display: false } },
+          y: { min: 0, ticks: { color: '#97A1AE', stepSize: 20 }, grid: { color: '#F0F3F7' }, border: { display: false } }
+        }
+      }
+    });
+
+    /* ── Autodeclaração Racial (doughnut) ──────────────────── */
+    new Chart(document.getElementById('g-racialChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Parda', 'Branca', 'Preta', 'Não declarado', 'Amarela'],
+        datasets: [{
+          data: [43.9, 39.3, 13.1, 2.8, 0.9],
+          backgroundColor: ['#33B458', '#003870', '#E24B4A', '#97A1AE', '#FFD927'],
+          borderWidth: 2,
+          borderColor: '#fff',
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '62%',
+        plugins: {
+          legend: {
+            display: true,
+            position: 'right',
+            labels: {
+              font: { size: 10, family: "'Poppins', sans-serif" },
+              color: '#6B7684',
+              boxWidth: 10,
+              boxHeight: 10,
+              padding: 8,
+              generateLabels(chart) {
+                const data = chart.data;
+                return data.labels.map((label, i) => ({
+                  text: `${label}  ${data.datasets[0].data[i]}%`,
+                  fillStyle: data.datasets[0].backgroundColor[i],
+                  strokeStyle: '#fff',
+                  lineWidth: 2,
+                  index: i
+                }));
+              }
+            }
+          },
+          tooltip: { callbacks: { label: c => ` ${c.label}: ${c.raw}%` } }
+        }
+      }
+    });
+
+    /* ── Faixa de Renda Familiar (horizontal bar) ──────────── */
+    new Chart(document.getElementById('g-rendaChart'), {
+      type: 'bar',
+      data: {
+        labels: ['até 0,9 SM', '0,9 – 1,4 SM', '1,4 – 2,0 SM'],
+        datasets: [{
+          data: [44, 41, 16],
+          backgroundColor: ['#33B458', '#003870', '#FFD927'],
+          borderRadius: 6,
+          borderSkipped: false,
+          barPercentage: 0.55
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => ` ${c.raw}%` } }
+        },
+        scales: {
+          x: { min: 0, max: 55, ticks: { color: '#97A1AE', callback: v => v + '%' }, grid: { color: '#F0F3F7' }, border: { display: false } },
+          y: { grid: { display: false }, ticks: { color: '#6B7684', font: { size: 10 } }, border: { display: false },
+               afterFit(s) { s.width = 90; } }
         }
       }
     });
   }
+
+  /* ════════════════════════════════════════════════════════════
+     VIEW: AGENDA
+  ════════════════════════════════════════════════════════════ */
+  function initAgendaView() {
+    const MONTH_NAMES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const WD_LABELS   = ['D','S','T','Q','Q','S','S'];
+    const TYPE_COLOR  = { evento:'#003870', consulta:'#7B4FD9', aula:'#F4A261', mentoria:'#33B458' };
+    const TYPE_LABEL  = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria' };
+    const today       = new Date(2026, 5, 11); // data do sistema: 11 jun 2026
+
+    let viewYear  = 2026;
+    let viewMonth = 5; // junho
+    let selectedId = null;
+
+    let events = [
+      { id:1, title:'Check-in Semanal',    start:'2026-06-03', end:'2026-06-03', type:'evento',   color:'#003870', sender:'Ana Clara',      role:'Gestora',   time:'09:00', desc:'Check-in semanal com todos os alunos da turma T4.',              target:'todos'        },
+      { id:2, title:'Módulo 3 – Entrega',  start:'2026-06-09', end:'2026-06-13', type:'aula',     color:'#F4A261', sender:'Carlos Mendes',  role:'Gestor',    time:'08:00', desc:'Período de entrega das atividades do Módulo 3.',                 target:'todos'        },
+      { id:3, title:'Reunião de Módulo',   start:'2026-06-11', end:'2026-06-11', type:'evento',   color:'#003870', sender:'Ana Clara',      role:'Gestora',   time:'14:00', desc:'Reunião de alinhamento sobre o andamento do Módulo 3.',          target:'todos'        },
+      { id:4, title:'Mentoria: Tiago R.', start:'2026-06-16', end:'2026-06-16', type:'mentoria', color:'#33B458', sender:'João Mário',     role:'Psicólogo', time:'10:00', desc:'Sessão de mentoria individual com Tiago Ribeiro.',               target:'PM-2024-950'  },
+      { id:5, title:'Check-in Semanal',    start:'2026-06-17', end:'2026-06-17', type:'evento',   color:'#003870', sender:'Ana Clara',      role:'Gestora',   time:'09:00', desc:'Check-in semanal com todos os alunos da turma T4.',              target:'todos'        },
+      { id:6, title:'Consulta: Sofia C.', start:'2026-06-18', end:'2026-06-18', type:'consulta', color:'#7B4FD9', sender:'João Mário',     role:'Psicólogo', time:'11:00', desc:'Consulta psicológica individual com Sofia Carvalho.',            target:'PM-2024-876'  },
+      { id:7, title:'Check-in Semanal',    start:'2026-06-24', end:'2026-06-24', type:'evento',   color:'#003870', sender:'Ana Clara',      role:'Gestora',   time:'09:00', desc:'Check-in semanal com todos os alunos da turma T4.',              target:'todos'        },
+      { id:8, title:'Sprint Review',       start:'2026-06-25', end:'2026-06-25', type:'evento',   color:'#33B458', sender:'Carlos Mendes',  role:'Gestor',    time:'15:00', desc:'Sprint Review do ciclo 4 — apresentação dos projetos dos alunos.', target:'todos'       },
+      { id:9, title:'Formatura T4',        start:'2026-06-30', end:'2026-06-30', type:'evento',   color:'#FFD927', sender:'Ana Clara',      role:'Gestora',   time:'18:00', desc:'Cerimônia de formatura da Turma 4 do Programa Pulse Mais.',       target:'todos'        },
+    ];
+
+    function toDate(str) { const [y,m,d] = str.split('-').map(Number); return new Date(y,m-1,d); }
+    function toStr(d)    { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+    const todayStr = toStr(today);
+
+    function renderCal() {
+      const calEl = document.getElementById('ag-cal');
+      if (!calEl) return;
+
+      const firstDow   = new Date(viewYear, viewMonth, 1).getDay();
+      const daysInMon  = new Date(viewYear, viewMonth + 1, 0).getDate();
+      const daysInPrev = new Date(viewYear, viewMonth, 0).getDate();
+
+      /* Build 5–6 week rows of cells */
+      const cells = [];
+      for (let i = 0; i < firstDow; i++)
+        cells.push({ d: new Date(viewYear, viewMonth - 1, daysInPrev - firstDow + 1 + i), other: true });
+      for (let i = 1; i <= daysInMon; i++)
+        cells.push({ d: new Date(viewYear, viewMonth, i), other: false });
+      while (cells.length % 7 !== 0)
+        cells.push({ d: new Date(viewYear, viewMonth + 1, cells.length - firstDow - daysInMon + 1), other: true });
+
+      const weeks = [];
+      for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
+
+      /* For a given week, return event segments sorted by start col */
+      function weekSegments(week) {
+        const wS = toStr(week[0].d), wE = toStr(week[6].d);
+        const segs = [];
+        events.forEach(ev => {
+          if (ev.end < wS || ev.start > wE) return;
+          const segS = ev.start < wS ? wS : ev.start;
+          const segE = ev.end   > wE ? wE : ev.end;
+          const col  = week.findIndex(c => toStr(c.d) === segS);
+          const endC = week.findIndex(c => toStr(c.d) === segE);
+          if (col < 0) return;
+          const span = (endC < 0 ? 6 : endC) - col + 1;
+          segs.push({ ev, col, span, isFirst: ev.start === segS, isLast: ev.end === segE });
+        });
+        return segs;
+      }
+
+      /* Assign event rows (stack overlapping events) */
+      function assignRows(segs) {
+        const rows = []; // rows[r] = array<seg>
+        const occ  = []; // occ[r][col] = occupied?
+        segs.sort((a, b) => a.col - b.col).forEach(seg => {
+          let r = 0;
+          while (true) {
+            if (!occ[r]) occ[r] = new Array(7).fill(false);
+            const free = !Array.from({length: seg.span}, (_, k) => seg.col + k).some(c => occ[r][c]);
+            if (free) {
+              for (let k = 0; k < seg.span; k++) occ[r][seg.col + k] = true;
+              if (!rows[r]) rows[r] = [];
+              rows[r].push(seg);
+              break;
+            }
+            r++;
+          }
+        });
+        return rows;
+      }
+
+      let html = `
+        <div class="ag-cal-header">
+          <span class="ag-cal-title">${MONTH_NAMES[viewMonth]} ${viewYear}</span>
+          <div class="ag-cal-nav">
+            <button class="ag-cal-nav-btn" id="ag-prev"><i class="ti ti-chevron-left"></i></button>
+            <button class="ag-cal-nav-btn" id="ag-next"><i class="ti ti-chevron-right"></i></button>
+          </div>
+        </div>
+        <div class="ag-cal-weekdays">
+          ${WD_LABELS.map((w,i) => `<div class="ag-cal-wd${i===0||i===6?' weekend':''}">${w}</div>`).join('')}
+        </div>
+        <div class="ag-cal-body">`;
+
+      weeks.forEach(week => {
+        const segs = weekSegments(week);
+        const rows = assignRows(segs);
+
+        /* Day-number row */
+        html += `<div class="ag-week"><div class="ag-week-days">`;
+        week.forEach((cell, i) => {
+          const dStr   = toStr(cell.d);
+          const isToday = dStr === todayStr;
+          const isWkd  = i === 0 || i === 6;
+          html += `<div class="ag-cell${cell.other ? ' other-month' : ''}">
+            <div class="ag-day-num${isToday ? ' today' : ''}${isWkd && !isToday ? ' weekend' : ''}">${cell.d.getDate()}</div>
+          </div>`;
+        });
+        html += `</div>`; // .ag-week-days
+
+        /* Event rows */
+        html += `<div class="ag-week-events">`;
+        rows.forEach(rowSegs => {
+          html += `<div class="ag-ev-row">`;
+          let lastEnd = 0;
+          rowSegs.sort((a, b) => a.col - b.col).forEach(({ ev, col, span, isFirst, isLast }) => {
+            if (col > lastEnd) html += `<div style="grid-column:${lastEnd+1}/span ${col-lastEnd}"></div>`;
+            const isSingle   = isFirst && isLast;
+            const spanClass  = isSingle ? '' : isFirst ? ' span-start' : isLast ? ' span-end' : ' span-mid';
+            const textColor  = ev.color === '#FFD927' ? 'color:#003870;' : '';
+            const sel        = selectedId === ev.id ? ' selected' : '';
+            html += `<div class="ag-event${spanClass}${sel}" style="grid-column:${col+1}/span ${span};background:${ev.color};${textColor}" data-ev-id="${ev.id}">${isFirst ? ev.title : ''}</div>`;
+            lastEnd = col + span;
+          });
+          html += `</div>`; // .ag-ev-row
+        });
+        html += `</div></div>`; // .ag-week-events .ag-week
+      });
+
+      html += `</div><div class="ag-cal-footer">Hoje: ${today.getDate()} de ${MONTH_NAMES[today.getMonth()]} de ${today.getFullYear()}</div>`;
+      calEl.innerHTML = html;
+
+      calEl.querySelector('#ag-prev')?.addEventListener('click', () => {
+        if (--viewMonth < 0) { viewMonth = 11; viewYear--; } renderCal();
+      });
+      calEl.querySelector('#ag-next')?.addEventListener('click', () => {
+        if (++viewMonth > 11) { viewMonth = 0; viewYear++; } renderCal();
+      });
+      calEl.querySelectorAll('.ag-event').forEach(el => {
+        el.addEventListener('click', e => {
+          e.stopPropagation();
+          selectedId = parseInt(el.dataset.evId);
+          showDetail(selectedId);
+          renderCal();
+        });
+      });
+    }
+
+    function showDetail(id) {
+      const ev  = events.find(e => e.id === id);
+      const box = document.getElementById('ag-detail');
+      if (!ev || !box) return;
+
+      const startD  = toDate(ev.start), endD = toDate(ev.end);
+      const sameDay = ev.start === ev.end;
+      const dateStr = sameDay
+        ? `${startD.getDate()} de ${MONTH_NAMES[startD.getMonth()]} · ${ev.time}`
+        : `${startD.getDate()}–${endD.getDate()} de ${MONTH_NAMES[startD.getMonth()]}`;
+      const targetStr = ev.target === 'todos'  ? 'Todos os alunos'
+                      : ev.target.startsWith('PM-') ? `Aluno ${ev.target}`
+                      : ev.target;
+      const tc  = TYPE_COLOR[ev.type] || '#003870';
+      const tl  = TYPE_LABEL[ev.type] || ev.type;
+
+      box.innerHTML = `
+        <div class="ag-detail-header">
+          <div class="ag-detail-title">${ev.title}</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="ag-detail-type" style="background:${tc}20;color:${tc};">${tl}</span>
+            <button class="ag-detail-close" onclick="document.getElementById('ag-detail').classList.remove('open');"><i class="ti ti-x"></i></button>
+          </div>
+        </div>
+        <div class="ag-detail-row">
+          <div class="ag-detail-item"><i class="ti ti-calendar"></i>${dateStr}</div>
+          <div class="ag-detail-item"><i class="ti ti-user"></i>${ev.sender} · ${ev.role}</div>
+          <div class="ag-detail-item"><i class="ti ti-users"></i>${targetStr}</div>
+        </div>
+        <div class="ag-detail-desc">${ev.desc}</div>`;
+      box.classList.add('open');
+    }
+
+    renderCal();
+
+    /* ── Formulário: campo condicional de destinatário ── */
+    window.agUpdateTargetField = function () {
+      const val = document.getElementById('ag-f-target')?.value;
+      const td  = document.getElementById('ag-target-detail');
+      if (!td) return;
+      if (val === 'aluno') {
+        td.innerHTML = `<div class="ag-field"><label><i class="ti ti-hash" style="font-size:11px;"></i> ID do aluno</label><input type="text" id="ag-f-tid" placeholder="PM-2024-000"></div>`;
+      } else if (val === 'especificos') {
+        td.innerHTML = `<div class="ag-field"><label><i class="ti ti-list" style="font-size:11px;"></i> IDs separados por vírgula</label><input type="text" id="ag-f-tids" placeholder="PM-2024-000, PM-2024-001..."></div>`;
+      } else {
+        td.innerHTML = '';
+      }
+    };
+
+    /* ── Formulário: adicionar evento ── */
+    window.agAddEvent = function () {
+      const evtTitle = document.getElementById('ag-f-title')?.value.trim();
+      const nome = document.getElementById('ag-f-nome')?.value.trim();
+      const role = document.getElementById('ag-f-role')?.value;
+      const type = document.getElementById('ag-f-type')?.value;
+      const date = document.getElementById('ag-f-date')?.value;
+      const time = document.getElementById('ag-f-time')?.value;
+      const desc = document.getElementById('ag-f-desc')?.value.trim();
+      const tgtV = document.getElementById('ag-f-target')?.value;
+
+      /* Validação */
+      let ok = true;
+      [['ag-f-title', evtTitle], ['ag-f-nome', nome], ['ag-f-type', type], ['ag-f-date', date]].forEach(([id, v]) => {
+        const el = document.getElementById(id);
+        if (!v) { el?.classList.add('ag-val-err'); ok = false; }
+        else    el?.classList.remove('ag-val-err');
+      });
+      if (!ok) return;
+
+      const target = tgtV === 'aluno'       ? (document.getElementById('ag-f-tid')?.value.trim()  || 'todos')
+                   : tgtV === 'especificos' ? (document.getElementById('ag-f-tids')?.value.trim() || 'todos')
+                   : 'todos';
+
+      const newEv = {
+        id: Date.now(),
+        title: evtTitle,
+        start: date, end: date,
+        type, color: TYPE_COLOR[type] || '#003870',
+        sender: nome, role: role || '—', time: time || '—',
+        desc: desc || '—', target,
+      };
+      events.push(newEv);
+
+      /* Limpa formulário */
+      ['ag-f-title','ag-f-nome','ag-f-role','ag-f-type','ag-f-date','ag-f-time','ag-f-desc'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.value = '';
+      });
+      document.getElementById('ag-target-detail').innerHTML = '';
+      document.getElementById('ag-f-target').value = 'todos';
+
+      /* Navega para o mês do evento e seleciona */
+      const [y, m] = date.split('-').map(Number);
+      viewYear = y; viewMonth = m - 1;
+      selectedId = newEv.id;
+      renderCal();
+      showDetail(newEv.id);
+    };
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     OVERLAY: PERFIL DO ALUNO
+  ════════════════════════════════════════════════════════════ */
+  const COURSE_MODULES = {
+    'Letramento Digital':                                     ['Intro. ao Digital', 'Seg. Online', 'Ferramentas Web', 'Noções de Dados', 'Ger. de Arquivos'],
+    'Ferramentas de Produtividade':                           ['Fund. de Planilhas', 'Fórmulas Básicas', 'Fórmulas Avançadas', 'Visualização', 'Projeto Prático'],
+    'Desenvolvimento AI-First na Prática':                    ['Pens. Computacional', 'Fund. de IA', 'Prompt Engineering', 'IA Aplicada', 'Projeto com IA'],
+    'Fortalecimento Emocional para Jovens':                   ['Autoconhecimento', 'Autoconsciência', 'Autoconfiança', 'Habilidades Sociais', 'Projeto Pessoal'],
+    'Autogestão no Mundo do Trabalho':                        ['Foco e Atenção', 'Gestão do Tempo', 'Aprendizagem', 'Adaptabilidade', 'Plano de Ação'],
+    'Mercado de Trabalho: Preparação, Conexão e Vivências':   ['Currículo', 'Entrevistas', 'LinkedIn', 'Rede Profissional', 'Carreiras em TI'],
+    'Laboratório de Mentoria':                                ['Fund. de Mentoria', 'Papel do Mentorado', 'Etapas da Mentoria', 'Boas Práticas', 'Sessão Final'],
+  };
+
+  const COURSE_SHORT = {
+    'Letramento Digital':                                     'Let. Digital',
+    'Ferramentas de Produtividade':                           'Ferramentas Prod.',
+    'Desenvolvimento AI-First na Prática':                    'AI-First',
+    'Fortalecimento Emocional para Jovens':                   'Fort. Emocional',
+    'Autogestão no Mundo do Trabalho':                        'Autogestão',
+    'Mercado de Trabalho: Preparação, Conexão e Vivências':   'Mercado de Trabalho',
+    'Laboratório de Mentoria':                                'Lab. Mentoria',
+  };
+
+  const COURSE_ICON = {
+    'Letramento Digital':                                     'ti-device-laptop',
+    'Ferramentas de Produtividade':                           'ti-table',
+    'Desenvolvimento AI-First na Prática':                    'ti-brain',
+    'Fortalecimento Emocional para Jovens':                   'ti-heart',
+    'Autogestão no Mundo do Trabalho':                        'ti-target',
+    'Mercado de Trabalho: Preparação, Conexão e Vivências':   'ti-briefcase',
+    'Laboratório de Mentoria':                                'ti-users',
+  };
+
+  function openStudentProfile(s) {
+    const overlay = document.getElementById('perfil-overlay');
+    if (!overlay) return;
+
+    /* Avatar */
+    const av = document.getElementById('pf-avatar');
+    if (av) { av.textContent = s.ini; av.style.background = s.bg; av.style.color = s.tc; }
+
+    /* Nome e meta */
+    const nameEl = document.getElementById('pf-name');
+    if (nameEl) nameEl.textContent = s.name;
+
+    const metaEl = document.getElementById('pf-meta');
+    if (metaEl) metaEl.textContent = s.id + ' · Programa Pulse Mais · Turma T4';
+
+    /* Badge de curso */
+    const badgeCurso = document.getElementById('pf-badge-curso');
+    if (badgeCurso) {
+      const icon  = COURSE_ICON[s.course]  || 'ti-book';
+      const short = COURSE_SHORT[s.course] || s.course;
+      badgeCurso.innerHTML = `<i class="ti ${icon}" style="font-size:11px;"></i> ${short}`;
+    }
+
+    /* Campos do formulário */
+    const codeNum = s.id.split('-').pop();
+    const codeEl  = document.getElementById('pf-code');     if (codeEl)     codeEl.value    = codeNum;
+    const nameInp = document.getElementById('pf-fullname'); if (nameInp)    nameInp.value   = s.name;
+    const ageInp  = document.getElementById('pf-age');      if (ageInp)     ageInp.value    = s.age + ' anos';
+    const courseInp = document.getElementById('pf-course'); if (courseInp)  courseInp.value = s.techCourse || '—';
+
+    /* Frequência */
+    const freqVal = document.getElementById('pf-freq-val');
+    const freqBar = document.getElementById('pf-freq-bar');
+    if (freqVal) freqVal.textContent = s.pct + '%';
+    if (freqBar) { freqBar.style.width = s.pct + '%'; freqBar.style.background = s.pct < 60 ? '#E24B4A' : s.pct < 75 ? '#F4A261' : 'var(--green-600,#33B458)'; }
+
+    /* Estrelas de engajamento */
+    const stars = document.getElementById('pf-eng-stars');
+    if (stars) {
+      const score = Math.round(s.pct / 10);
+      stars.innerHTML = Array.from({length: 10}, (_, i) =>
+        `<i class="ti ti-star${i < score ? '-filled' : ''}" style="font-size:13px;color:${i < score ? '#FFD927' : '#DEE3EA'};"></i>`
+      ).join('');
+    }
+
+    /* ── Notas e Jornada dinâmicas ─────────────────────────── */
+    const modules    = COURSE_MODULES[s.course] || ['Módulo 1','Módulo 2','Módulo 3','Módulo 4','Módulo 5'];
+    const concluded  = s.mod.includes('Concluído');
+    const modNumMatch = s.mod.match(/Módulo (\d)/);
+    const currentMod = modNumMatch ? parseInt(modNumMatch[1]) : 5;
+    const doneMods   = concluded ? 5 : currentMod - 1;
+
+    /* grade determinística: varia por curso+módulo, centrada no pct do aluno */
+    const baseGrade  = 5.5 + (s.pct / 100) * 3.5;
+    const offsets    = [0.5, 0.2, 0, -0.2, -0.4];
+
+    /* Label */
+    const notasLabel = document.getElementById('pf-notas-label');
+    if (notasLabel) notasLabel.textContent = `Notas — ${s.course}`;
+
+    /* Grid de notas */
+    const notasGrid = document.getElementById('pf-notas-grid');
+    if (notasGrid) {
+      notasGrid.innerHTML = modules.map((name, i) => {
+        const modN    = i + 1;
+        const pending = !concluded && modN > currentMod;
+        if (pending) {
+          return `<div class="nota-item">
+            <span class="nota-modulo">${name}</span>
+            <div class="nota-bar-wrap"><div class="nota-bar"><div class="nota-bar__fill" style="width:0%"></div></div></div>
+            <span class="nota-val" style="color:#C0C7D0">—</span>
+          </div>`;
+        }
+        const g     = Math.round((baseGrade + offsets[i]) * 10) / 10;
+        const color = g >= 8 ? '#33B458' : g >= 7 ? '#EF9F27' : '#E24B4A';
+        const star  = g < 8 ? ' ★' : '';
+        return `<div class="nota-item">
+          <span class="nota-modulo">${name}</span>
+          <div class="nota-bar-wrap"><div class="nota-bar"><div class="nota-bar__fill" style="width:${g * 10}%;background:${color}"></div></div></div>
+          <span class="nota-val" style="color:${color}">${g.toFixed(1).replace('.', ',')}${star}</span>
+        </div>`;
+      }).join('');
+    }
+
+    /* Nota média (apenas módulos cursados) */
+    const gradedCount = concluded ? 5 : currentMod;
+    const grades      = Array.from({length: gradedCount}, (_, i) => Math.round((baseGrade + offsets[i]) * 10) / 10);
+    const avg         = grades.reduce((a, b) => a + b, 0) / grades.length;
+    const mediaEl     = document.getElementById('pf-nota-media-val');
+    if (mediaEl) mediaEl.textContent = avg.toFixed(1).replace('.', ',');
+
+    /* Jornada */
+    const journeyEl = document.getElementById('pf-journey');
+    if (journeyEl) {
+      journeyEl.innerHTML = modules.map((name, i) => {
+        const modN      = i + 1;
+        const isDone    = concluded || modN <= doneMods;
+        const isCurrent = !concluded && modN === currentMod;
+        const cls       = isDone ? 'done' : isCurrent ? 'current' : '';
+        const lineDone  = (isDone && !isCurrent) ? 'done' : '';
+        const line      = i < 4 ? `<div class="journey-line ${lineDone}"></div>` : '';
+        return `<div class="journey-step"><div class="journey-node ${cls}">${modN}</div><div class="journey-label">${name}</div></div>${line}`;
+      }).join('');
+    }
+
+    /* Reset para aba "Dados gerais" */
+    showPerfilTab('pf-tab-dados', overlay.querySelector('.tab-btn'));
+
+    /* Abre overlay */
+    overlay.classList.add('open');
+    document.body.classList.add('perfil-open');
+  }
+
+  window.closePerfilModal = function () {
+    const overlay = document.getElementById('perfil-overlay');
+    if (overlay) overlay.classList.remove('open');
+    document.body.classList.remove('perfil-open');
+  };
+
+  window.showPerfilTab = function (tabId, btn) {
+    const overlay = document.getElementById('perfil-overlay');
+    if (!overlay) return;
+    overlay.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    overlay.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    const panel = document.getElementById(tabId);
+    if (panel) panel.classList.add('active');
+    if (btn)   btn.classList.add('active');
+  };
 
 })();

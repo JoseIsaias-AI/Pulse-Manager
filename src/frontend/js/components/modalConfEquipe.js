@@ -22,10 +22,12 @@ function togglePerm(el) {
 }
 
 function updateHeader() {
-  const val = document.getElementById('f-nome').value;
-  document.getElementById('m-name').textContent = val || 'João Mário';
-  const parts = val.trim().split(' ');
-  const init = parts.length >= 2 ? parts[0][0] + parts[parts.length-1][0] : (parts[0][0] + (parts[0][1] || ''));
+  const input    = document.getElementById('f-nome');
+  const fallback = document.getElementById('m-name').textContent || '';
+  const val      = input ? input.value : fallback;
+  if (val) document.getElementById('m-name').textContent = val;
+  const parts = (val || fallback).trim().split(' ');
+  const init  = parts.length >= 2 ? parts[0][0] + parts[parts.length - 1][0] : (parts[0][0] + (parts[0][1] || ''));
   document.getElementById('m-initials').textContent = init.toUpperCase();
 }
 

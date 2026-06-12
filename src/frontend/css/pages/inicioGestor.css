@@ -11,7 +11,7 @@ body{
   background:#EEF1F4;
 }
 
-.page-header h1{font-size:24px;font-weight:700;color:#003870;letter-spacing:-.01em;margin-bottom:3px;}
+.page-header h1{font-size:24px;font-weight:700;color:#003870;line-height:1.2;letter-spacing:-.01em;margin-bottom:4px;}
 .page-header p{font-size:12px;color:#97A1AE;font-weight:400;}
 
 .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;flex-shrink:0;}
@@ -33,7 +33,7 @@ body{
 .stat-card--amber .sc-sub{color:rgba(0,56,112,.45);}
 
 .sc-header{display:flex;align-items:center;justify-content:space-between;}
-.sc-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.55);}
+.sc-label{font-size:11px;font-weight:500;letter-spacing:0;color:rgba(255,255,255,.65);}
 .sc-icon{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;}
 .sc-icon svg{width:18px;height:18px;color:rgba(255,255,255,.8);}
 .sc-value{font-size:44px;font-weight:700;color:#fff;line-height:1;letter-spacing:-.02em;}

@@ -39,8 +39,8 @@
 }
 
 html, body {
-  width: 1920px;
-  height: 1080px;
+  width: 100vw;
+  height: 100vh;
   font-family: 'Poppins', sans-serif;
   background: var(--white);
   color: var(--gray-700);
@@ -50,8 +50,8 @@ html, body {
 
 .app-shell {
   display: flex;
-  width: 1920px;
-  height: 1080px;
+  width: 100vw;
+  height: 100vh;
   position: relative;
   overflow: hidden;
 }

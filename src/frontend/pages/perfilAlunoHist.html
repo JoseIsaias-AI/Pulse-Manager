@@ -27,7 +27,7 @@
       <div class="modal-badges">
         <span class="badge badge-ativo"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
         <span class="badge badge-curso"><i class="ti ti-code" style="font-size:11px;"></i> Letramento Digital</span>
-        <span class="badge badge-nivel"><i class="ti ti-trending-up" style="font-size:11px;"></i> Capacitado</span>
+        <span class="badge badge-nivel">Capacitado</span>
       </div>
       <button class="close-btn" onclick="closeModal()" aria-label="Fechar"><i class="ti ti-x"></i></button>
     </div>
@@ -53,6 +53,10 @@
           <div class="field span2">
             <label><i class="ti ti-user"></i> Nome completo</label>
             <input type="text" value="Marianne Oliveira" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-id-badge-2"></i> CPF</label>
+            <input type="text" value="123.456.789-00" readonly>
           </div>
           <div class="field">
             <label><i class="ti ti-calendar-event"></i> Idade</label>
@@ -97,7 +101,7 @@
             <input type="text" value="R$ 1.800,00" readonly>
           </div>
           <div class="field span2">
-            <label><i class="ti ti-home"></i> Nível de jornada</label>
+            <label>Nível de jornada</label>
             <input type="text" value="Capacitado" readonly>
           </div>
         </div>
@@ -123,19 +127,19 @@
         <div class="sec-label">Indicadores</div>
         <div class="perf-cards">
           <div class="perf-card">
-            <div class="perf-card__label"><i class="ti ti-calendar-check"></i> Frequência</div>
+            <div class="perf-card__label">Frequência</div>
             <div class="perf-card__value">87%</div>
             <div class="perf-bar"><div class="perf-bar__fill" style="width:87%;background:var(--green-600)"></div></div>
             <div class="perf-card__sub">Meta: 75% · <span style="color:var(--green-600);font-weight:600;">Acima da meta</span></div>
           </div>
           <div class="perf-card">
-            <div class="perf-card__label"><i class="ti ti-star"></i> Engajamento</div>
+            <div class="perf-card__label">Engajamento</div>
             <div class="perf-card__value">7 <span class="perf-card__unit">/ 10</span></div>
             <div class="eng-stars" id="eng-stars-view"></div>
             <div class="perf-card__sub">Baseado em participação e entregas</div>
           </div>
           <div class="perf-card">
-            <div class="perf-card__label"><i class="ti ti-device-laptop"></i> Tipo de presença</div>
+            <div class="perf-card__label">Tipo de presença</div>
             <div class="presence-badge ead">EAD</div>
             <div class="perf-card__sub" style="margin-top:12px;">100% das aulas no formato online</div>
           </div>
@@ -202,6 +206,15 @@
           <div class="psico-field psico-field--full">
             <label><i class="ti ti-notes"></i> Anotação</label>
             <textarea id="pf-texto" rows="4" placeholder="Registre as observações da consulta..."></textarea>
+          </div>
+          <div class="psico-field psico-field--full">
+            <label><i class="ti ti-tag"></i> Label</label>
+            <div class="psico-label-picker" id="pf-label-picker">
+              <button type="button" class="psico-label-btn selected" data-label="" onclick="pickLabel(this)">Nenhum</button>
+              <button type="button" class="psico-label-btn psico-label-btn--atencao" data-label="atencao" onclick="pickLabel(this)"><i class="ti ti-alert-triangle" style="font-size:11px;"></i> Atenção</button>
+              <button type="button" class="psico-label-btn psico-label-btn--observacao" data-label="observacao" onclick="pickLabel(this)"><i class="ti ti-eye" style="font-size:11px;"></i> Observação</button>
+            </div>
+            <input type="hidden" id="pf-label" value="">
           </div>
           <div class="psico-form__actions">
             <span class="psico-form__hint"><i class="ti ti-lock" style="font-size:12px;"></i> Acesso restrito a profissionais autorizados</span>

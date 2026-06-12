@@ -27,7 +27,7 @@
       <div class="modal-badges">
         <span class="badge badge-ativo"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
         <span class="badge badge-curso"><i class="ti ti-code" style="font-size:11px;"></i> Let. Digital</span>
-        <span class="badge badge-nivel"><i class="ti ti-trending-up" style="font-size:11px;"></i> Capacitado</span>
+        <span class="badge badge-nivel">Capacitado</span>
       </div>
       <button class="close-btn" onclick="closeModal()" aria-label="Fechar modal"><i class="ti ti-x"></i></button>
     </div>
@@ -51,6 +51,10 @@
           <div class="field span2">
             <label><i class="ti ti-user"></i> Nome completo</label>
             <input type="text" id="f-nome" value="Marianne Oliveira" oninput="updateHeader()">
+          </div>
+          <div class="field">
+            <label><i class="ti ti-id-badge-2"></i> CPF</label>
+            <input type="text" value="123.456.789-00" maxlength="14" placeholder="000.000.000-00">
           </div>
           <div class="field">
             <label><i class="ti ti-calendar-event"></i> Idade</label>
@@ -129,7 +133,7 @@
             <input type="number" value="1800" min="0" step="100">
           </div>
           <div class="field span2">
-            <label><i class="ti ti-home"></i> Nível de jornada</label>
+            <label>Nível de jornada</label>
             <select>
               <option>Conectado</option>
               <option selected>Capacitado</option>

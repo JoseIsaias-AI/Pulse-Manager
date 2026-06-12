@@ -39,8 +39,8 @@
 }
 
 html, body {
-  width: 1920px;
-  height: 1080px;
+  width: 100vw;
+  height: 100vh;
   font-family: 'Poppins', sans-serif;
   background: var(--white);
   color: var(--gray-700);
@@ -184,13 +184,11 @@ html, body {
   padding: 16px 18px;
 }
 .perf-card__label {
-  font-size: 10px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--gray-400);
-  display: flex; align-items: center; gap: 5px; margin-bottom: 10px;
+  font-size: 11px; font-weight: 500; color: var(--gray-400);
+  margin-bottom: 10px;
 }
-.perf-card__label i { font-size: 13px; }
 .perf-card__value {
-  font-size: 28px; font-weight: 700; color: var(--gray-700); line-height: 1;
+  font-size: 30px; font-weight: 700; color: var(--gray-700); line-height: 1; letter-spacing: -0.02em;
 }
 .perf-card__unit { font-size: 14px; font-weight: 400; color: var(--gray-400); }
 .perf-card__sub  { font-size: 11px; color: var(--gray-400); margin-top: 6px; }

@@ -2598,7 +2598,6 @@ Protótipo desenvolvido para os três perfis:
 
 O MER, o DER e o modelo físico foram atualizados para refletir as necessidades identificadas no desenvolvimento. Foram adicionados campos como `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao` em alunos; `modalidade` e `carga_horaria` em atividades; `certificado` em participação; `prazo_inscricao` em oportunidades; e `hora_inicio`/`hora_fim` em agenda.
 
----
 
 ### Pendentes de conclusão
 
@@ -2608,7 +2607,6 @@ O MER, o DER e o modelo físico foram atualizados para refletir as necessidades 
 - **Integração front-end <-> back-end:** as 12 telas ainda não consomem dados reais da API; a camada de serviços do front-end (`api.ts`) precisa ser conectada a cada página.
 - **Psicólogo fora do roteador principal:** `psicologoRoutes` não está registrado em `index.ts`, tornando o endpoint de desempenho inacessível em runtime.
 
----
 
 ### Dificuldades técnicas enfrentadas
 
@@ -2617,7 +2615,6 @@ O MER, o DER e o modelo físico foram atualizados para refletir as necessidades 
 - **Reestruturação do Diagrama de Classes:** o diagrama inicial refletia a arquitetura técnica em camadas (controller/service/repository); após feedback docente, foi necessário reescrevê-lo em notação UML com estereótipos `<<boundary>>`, `<<control>>` e `<<entity>>`.
 - **Conflitos de merge:** com múltiplos membros atuando em branches paralelas sobre os mesmos arquivos (`wad.md`, `migration.sql`, `index.ts`), os conflitos de merge demandaram tempo considerável de resolução manual.
 
----
 
 ### Próximos passos
 
@@ -2629,7 +2626,52 @@ O MER, o DER e o modelo físico foram atualizados para refletir as necessidades 
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 
-_Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, com foco no que foi consolidado entre a primeira versão funcional e o sistema operacional integrado. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos._
+A Sprint 4 concentrou-se na construção das telas estáticas do front-end para os três perfis da aplicação (Aluno, Gestor e Psicólogo), na integração do backend com o Supabase, na implementação e documentação da suíte de testes automatizados e na conclusão do Artefato 12 de negócios.
+
+**Frontend**
+
+A interface foi estruturada como uma Single Page Application (SPA) com menu lateral (guia) adaptado por perfil de usuário. O menu base (`guiaBase.html`) define o layout estrutural e é especializado em variantes para Aluno (`guiaAluno.css`, `guiaAluno.js`), Gestor (`guiaGestor.css`, `guiaGestor.js`) e Psicólogo (`guiaPsicologo.css`, `guiaPsicologo.js`). Componentes compartilhados como `sidebar.js`, `menuSuperior.js`, `table.js` e `filters.js` são reutilizados entre os três perfis.
+
+Para o perfil Aluno foram desenvolvidos: tela de login (`login.html`), tela inicial (`inicioAluno.html`), dashboard (`dashboardAluno.html`), agenda (`agendaAluno.html`), modal de notificações (`modalNotifAluno.js`) e modal de configurações de conta (`modalConfAluno.html`). A SPA do aluno é gerenciada por `spaAluno.js` e `configAluno.js`, com o ponto de entrada em `alunoApp.html`.
+
+Para o perfil Gestor foram desenvolvidos: tela inicial (`inicioGestor.html`), dashboard (`dashboardGestor.html`), lista de alunos (`listaAlunos.html`), perfil detalhado do aluno (`perfilAluno.html`), agenda (`agendaGestor.html`) e modal de configurações de equipe (`modalConfEquipe.html`). A SPA do gestor é gerenciada por `spaGestor.js` e `config.js`, com o ponto de entrada em `gestorApp.html`.
+
+Para o perfil Psicólogo foram desenvolvidos: tela inicial (`inicioPsicologo.html`), dashboard (`dashboardPsicologo.html`) e perfil do aluno com histórico psicológico (`perfilAlunoHist.html`). A SPA do psicólogo é gerenciada por `spaPsicologo.js` e `configPsicologo.js`, com o ponto de entrada em `psicologoApp.html`. O serviço `auth.js` foi introduzido para centralizar o controle de autenticação no lado do cliente.
+
+O estilo global da aplicação é definido por `global.css`, `components.css` e `pulse-theme.css`.
+
+**Backend**
+
+A integração do backend com o Supabase foi implementada e documentada. O cliente centralizado de acesso ao Supabase foi criado em `src/backend/integrations/supabaseClient.ts`. A abstração de conexão com o banco de dados passou a contar com `src/backend/database/connection.ts` e `src/backend/database/pool.ts`. O script de migração foi consolidado em `src/backend/database/migration.sql` e o seed de dados simulados por usuário foi estruturado em `src/backend/database/seed.ts`. As configurações de ambiente foram centralizadas em `src/backend/config/database.ts` e `src/backend/config/env.ts`. Adicionalmente, a rota do psicólogo foi registrada em `src/backend/routes/psicologoRoutes.ts` e uma mensagem de erro incorreta no UC-23 foi corrigida.
+
+**Testes automatizados**
+
+Foram implementados 266 casos de teste automatizados distribuídos em 20 arquivos, cobrindo duas abordagens complementares. Os testes unitários de Service (`src/tests/unit/services/`), com 110 casos em 8 arquivos, validam de forma isolada as regras de negócio dos services `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService` e `SaudeMentalService`. Os testes de integração de endpoints (`src/tests/integration/`), com 156 casos em 12 arquivos, verificam o contrato HTTP das rotas utilizando banco SQLite em memória via `sqljs`. Ao longo da sprint foram também realizadas a auditoria e padronização da nomenclatura e semântica de todos os arquivos Jest, bem como a reorganização estrutural das pastas de testes.
+
+**Documentação**
+
+As seções 3.1.3 e 3.1.4 (casos de uso) e 3.2.1 a 3.2.7 (arquitetura do sistema) do WAD foram atualizadas. Na seção de testes, foram redigidas as seções 5.1.1 (estratégia e estrutura), 5.1.3 (mapeamento dos testes de integração) e 5.1.4 (evidências de execução). A Matriz de Rastreabilidade foi atualizada com os novos endpoints e as referências bibliográficas foram revisadas para o modelo ABNT. O processo de integração com o Supabase foi documentado em `docs/others/supabase-integration.md`.
+
+No Artefato 12 de negócios, foram produzidas as seguintes seções: Resumo Executivo (seção 6.1), com contextualização do problema da Pulse Mais, descrição da solução Pulse Manager, diferenciais competitivos e objetivos estratégicos; análise de mercado, cobrindo visão geral do setor, tamanho e crescimento, tendências, segmentação de mercado e perfil do público-alvo; Público-Alvo (seção 6.4), detalhando os usuários diretos (gestores, psicólogos e equipe operacional) e indiretos (alunos e ex-alunos); Business Model Canvas completo (atividades-chave, proposta de valor, recursos e parcerias principais, relacionamento com clientes, segmentos, canais, fontes de receita e estrutura de custos); e Estratégia de Marketing 4Ps.
+
+
+### Pendentes de conclusão
+
+- **Integração front-end e back-end:** as telas desenvolvidas consomem dados estáticos; a conexão com os endpoints da API não foi realizada nesta sprint.
+
+### Dificuldades técnicas enfrentadas
+
+- **Integração com Supabase:** a configuração exigiu gerenciamento cuidadoso de variáveis de ambiente, pool de conexões e tratamento de divergências entre o `seed.ts` e os dados esperados pelos testes de integração, o que gerou retrabalho na correção do seed.
+- **Determinismo nos testes de integração:** garantir isolamento completo entre os casos de teste — sem resíduos de dados entre execuções — exigiu a implementação do mecanismo `dropSchema + synchronize(true)` no `beforeEach` de cada arquivo de integração.
+- **Inconsistências de nomenclatura nos testes:** ao longo das entregas paralelas, os arquivos Jest acumularam variações de nomenclatura e semântica que demandaram auditoria e padronização antes do encerramento da sprint.
+- **Organização do SPA por perfil:** a reutilização de componentes de menu entre os três perfis exigiu refatoração da estrutura de arquivos CSS e JS para evitar conflitos de escopo visual entre as variantes do guia.
+
+
+### Próximos passos
+
+- Realizar a integração das telas front-end com os endpoints da API, substituindo os dados estáticos por chamadas reais ao backend.
+- Ampliar a cobertura de testes para os fluxos de importação de dados e os módulos de frequência, participação e anotação qualitativa.
+- Revisar a Matriz RTM para eliminar campos "A definir" na coluna de testes, associando cada requisito funcional a evidências concretas.
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
