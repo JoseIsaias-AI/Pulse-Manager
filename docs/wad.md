@@ -138,7 +138,6 @@ O sucesso será avaliado pela centralização dos dados, clareza da visualizaç�
 <div align="center">
 <sup>Figura 2: Canvas de Proposta de Valor da Pulse Manager.</sup><br>
 <img src="./assets/canvasValor.png"><br>
-<img src="./assets/canvasValor.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026), com base no Value Proposition Canvas de Strategyzer.</sub><br>
 </div>
 
@@ -210,9 +209,6 @@ A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, class
 </div>
 
 <div align="center">
-<sup>Figura 3: Matriz de Riscos da Pulse Manager.</sup><br>
-<img src="./assets/matrizRiscos.png"><br>
-<sub>Fonte: Autoria Própria (2026).</sub><br>
 <sup>Figura 3: Matriz de Riscos da Pulse Manager.</sup><br>
 <img src="./assets/matrizRiscos.png"><br>
 <sub>Fonte: Autoria Própria (2026).</sub><br>
@@ -549,19 +545,12 @@ Personas: A persona é definida como uma descrição realista e detalhada do usu
 <div align="center">
 <sup>Figura 4: Persona 01.</sup><br>
     <img src="assets/persUm.jpg" width="60%"><br>
-<sup>Figura 4: Persona 01.</sup><br>
-    <img src="assets/persUm.jpg" width="60%"><br>
-
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
 <sup>Figura 5: Persona 02.</sup><br>
     <img src="assets/persDois.jpg" width="60%"><br>
-<sup>Figura 5: Persona 02.</sup><br>
-    <img src="assets/persDois.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
-<sup>Figura 6: Persona 03.</sup><br>
-    <img src="assets/persTres.jpg" width="60%"><br>
 <sup>Figura 6: Persona 03.</sup><br>
     <img src="assets/persTres.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
@@ -818,7 +807,6 @@ Os requisitos não funcionais aqui definidos traduzem as escolhas de qualidade f
 
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
-_Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 
 | Metodo | Endpoint | RF | Entrada principal | Retorno esperado | Status principais |
 | --- | --- | --- | --- | --- | --- |
@@ -867,8 +855,6 @@ _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 
 
 <div align="center">
-<sup>Figura 7: Diagrama de Arquitetura.</sup><br>
-    <img src="assets/diagrama_arquitetura.png" ><br>
 <sup>Figura 7: Diagrama de Arquitetura.</sup><br>
     <img src="assets/diagrama_arquitetura.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -941,8 +927,6 @@ O usuário, no navegador, dispara um `POST /frequencia` a partir de `frontend/js
 <div align="center">
 <sup>Figura 8: Diagrama de Casos de Uso.</sup><br>
 <img src="./assets/diagCasosUso.png"><br>
-<sup>Figura 8: Diagrama de Casos de Uso.</sup><br>
-<img src="./assets/diagCasosUso.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -955,8 +939,6 @@ O Diagrama de Classes de Domínio do sistema Pulse Mais estabelece a estrutura c
 </div>
 
 <div align="center">
-<sup>Figura 9: Diagrama de Classes de Domínio.</sup><br>
-<img src="./assets/diagClassesDominio.png"><br>
 <sup>Figura 9: Diagrama de Classes de Domínio.</sup><br>
 <img src="./assets/diagClassesDominio.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -1008,7 +990,7 @@ As classes de entidade representam os dados persistentes ou conceituais do siste
 
 <div align="center">
 <sup>Figura 10: Diagrama de Classes Arquitetural.</sup><br>
-<img src="./assets/diagrama_arquitetural.jpeg"><br>
+<img src="./assets/diagArquitetural.jpeg"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -1223,7 +1205,7 @@ Dessa forma, o Diagrama de Classes do Domínio passou a representar melhor a ló
 
 <div align="center">
 <sup>Figura 9: Diagrama de Classes do Domínio atualizado.</sup><br>
-<img src="../docs/assets/Diagrama_Classes_Dominio_atualizado.png"><br>
+<img src="./assets/diagClassesDominio.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -1237,11 +1219,8 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 </div>
 
 #### 3.2.4.1. UC-04 - Adicionar cadastro do aluno
-#### 3.2.4.1. UC-04 - Adicionar cadastro do aluno
 
 <div align="center">
-<sup>Figura 11: Diagrama de sequência do caso de uso Adicionar cadastro do aluno.</sup><br>
-<img src="../docs/assets/diagrama_sequencia_uc04.png"><br>
 <sup>Figura 11: Diagrama de sequência do caso de uso Adicionar cadastro do aluno.</sup><br>
 <img src="../docs/assets/diagrama_sequencia_uc04.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -1257,7 +1236,6 @@ O fluxo começa quando o membro da equipe preenche o formulário de cadastro na 
 
 <div align="center">
 <sup>Figura 12: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
-<sup>Figura 12: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
 <img src="./assets/diagrama-sequencia-2.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -1269,11 +1247,8 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 </div>
 
 #### 3.2.4.3. UC-07 — Manter jornada do aluno
-#### 3.2.4.3. UC-07 — Manter jornada do aluno
 
 <div align="center">
-<sup>Figura 13: Diagrama de sequência do caso de uso Manter jornada do aluno.</sup><br>
-<img src="../docs/assets/diagrama_sequencia07.png"><br>
 <sup>Figura 13: Diagrama de sequência do caso de uso Manter jornada do aluno.</sup><br>
 <img src="../docs/assets/diagrama_sequencia07.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -1286,11 +1261,8 @@ O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e 
 </div>
 
 #### 3.2.4.4. UC-14 — Visualizar dashboard de impacto
-#### 3.2.4.4. UC-14 — Visualizar dashboard de impacto
 
 <div align="center">
-<sup>Figura 14: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
-<img src="../docs/assets/diagrama_sequencia_uc14.png"><br>
 <sup>Figura 14: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
 <img src="../docs/assets/diagrama_sequencia_uc14.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -1306,7 +1278,6 @@ A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como 
 
 <div align="center">
 <sup>Figura 15: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
-<sup>Figura 15: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
 <img src="./assets/diagrama-sequencia-5.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -1317,15 +1288,8 @@ O psicólogo seleciona um aluno e visualiza registros de acompanhamento no módu
 
 </div>
 
-### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
-_Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escolhida de forma consistente (sem misturar convenções)._
-
-### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
-
-_Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP._
-
-### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
+### 3.2.5. Padrões de Projeto Aplicados (sprints 3 a 5)
 
 <div align="justify">
 
@@ -1398,8 +1362,6 @@ Caso queira acessar os wireframes completos, acesse o link: https://www.canva.co
 <div align="center">
 <sup>Figura 16: Fluxo de telas do perfil Aluno.</sup><br>
     <img src="assets/fluxoTelasAluno.png" ><br>
-<sup>Figura 16: Fluxo de telas do perfil Aluno.</sup><br>
-    <img src="assets/fluxoTelasAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1412,8 +1374,6 @@ Neste fluxo, o aluno faz login com CPF e nome, acessa a tela inicial com jornada
 <div align="center">
 <sup>Figura 17: Fluxo de telas do perfil Gestor.</sup><br>
     <img src="assets/fluxoTelasGest.png" ><br>
-<sup>Figura 17: Fluxo de telas do perfil Gestor.</sup><br>
-    <img src="assets/fluxoTelasGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1423,8 +1383,6 @@ O gestor faz login com e-mail e senha, acessa a tela inicial com visão geral da
 
 
 <div align="center">
-<sup>Figura 18: Fluxo de telas do perfil Psicólogo.</sup><br>
-    <img src="assets/fluxoTelasPsic.png" ><br>
 <sup>Figura 18: Fluxo de telas do perfil Psicólogo.</sup><br>
     <img src="assets/fluxoTelasPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1439,8 +1397,6 @@ O psicólogo faz login com e-mail, nome e senha, acessa a tela inicial com foco 
 <div align="center">
 <sup>Figura 19: Wireframe da tela de login do Gestor.</sup><br>
     <img src="assets/wrfLoginGest.png" ><br>
-<sup>Figura 19: Wireframe da tela de login do Gestor.</sup><br>
-    <img src="assets/wrfLoginGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1449,8 +1405,6 @@ Tela de login do sistema  dividida em dois painéis. O painel esquerdo (cinza) e
 </div>
 
 <div align="center">
-<sup>Figura 20: Wireframe da tela de login do Aluno.</sup><br>
-    <img src="assets/wrfLoginAluno.png" ><br>
 <sup>Figura 20: Wireframe da tela de login do Aluno.</sup><br>
     <img src="assets/wrfLoginAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1463,8 +1417,6 @@ Tela de login para Alunos do PULSE MAIS com layout dividido em dois painéis. O 
 <div align="center">
 <sup>Figura 21: Wireframe da tela de login do Psicólogo.</sup><br>
     <img src="assets/wrfLoginPsic.png" ><br>
-<sup>Figura 21: Wireframe da tela de login do Psicólogo.</sup><br>
-    <img src="assets/wrfLoginPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1473,8 +1425,6 @@ Tela de login exclusiva para psicólogos da plataforma Pulse Mais. Dividida em d
 </div>
 
 <div align="center">
-<sup>Figura 22: Wireframe da tela inicial do Gestor.</sup><br>
-    <img src="assets/wrfInicialGest.png" ><br>
 <sup>Figura 22: Wireframe da tela inicial do Gestor.</sup><br>
     <img src="assets/wrfInicialGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1487,8 +1437,6 @@ Tela inicial do gestor no Pulse Manager, com menu lateral contendo Início, Alun
 <div align="center">
 <sup>Figura 23: Wireframe da tela inicial do Psicólogo.</sup><br>
     <img src="assets/wrfInicialPsic.png" ><br>
-<sup>Figura 23: Wireframe da tela inicial do Psicólogo.</sup><br>
-    <img src="assets/wrfInicialPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1498,9 +1446,7 @@ Tela inicial do psicólogo no Pulse Manager, com menu lateral contendo Início, 
 
 <div align="center">
 <sup>Figura 24: Wireframe do Dashboard do Gestor.</sup><br>
-    <img src="assets/wrfDashboardGest.png" ><br>
-<sup>Figura 24: Wireframe do Dashboard do Gestor.</sup><br>
-    <img src="assets/wrfDashboardGest.png" ><br>
+    <img src="./assets/wrfDashboardGestor.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1510,9 +1456,7 @@ Dashboard de performance da turma para o gestor no Pulse Manager. No topo, quatr
 
 <div align="center">
 <sup>Figura 25: Wireframe do Dashboard do Aluno.</sup><br>
-    <img src="assets/wrfDashboardAluno.png" ><br>
-<sup>Figura 25: Wireframe do Dashboard do Aluno.</sup><br>
-    <img src="assets/wrfDashboardAluno.png" ><br>
+    <img src="./assets/wrfDashboardAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1522,9 +1466,7 @@ Dashboard de progresso pessoal do aluno no Pulse Manager. No topo, quatro cards 
 
 <div align="center">
 <sup>Figura 26: Wireframe do Dashboard do Psicólogo.</sup><br>
-    <img src="assets/wrfDashboardPsic.jpg" ><br>
-<sup>Figura 26: Wireframe do Dashboard do Psicólogo.</sup><br>
-    <img src="assets/wrfDashboardPsic.jpg" ><br>
+    <img src="./assets/wrfDashboardPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1534,9 +1476,7 @@ A tela de Dashboard do Psicólogo apresenta uma barra de navegação lateral com
 
 <div align="center">
 <sup>Figura 27: Wireframe da lista de alunos do Psicólogo.</sup><br>
-    <img src="assets/wrfListaAlunosPsic.jpg" ><br>
-<sup>Figura 27: Wireframe da lista de alunos do Psicólogo.</sup><br>
-    <img src="assets/wrfListaAlunosPsic.jpg" ><br>
+    <img src="./assets/wrfListaAlunosPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1546,9 +1486,7 @@ Tela de listagem de alunos do psicólogo no sistema Pulse Manager, exibindo card
 
 <div align="center">
 <sup>Figura 28: Wireframe do perfil do aluno na visão do Gestor.</sup><br>
-    <img src="assets/wrfPerfilAlunoGest.jpg" ><br>
-<sup>Figura 28: Wireframe do perfil do aluno na visão do Gestor.</sup><br>
-    <img src="assets/wrfPerfilAlunoGest.jpg" ><br>
+    <img src="./assets/wrfPerfilAlunoGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1558,9 +1496,7 @@ A tela exibe o perfil de um aluno com navegação lateral (Início, Alunos, Dash
 
 <div align="center">
 <sup>Figura 29: Wireframe da tela inicial do Aluno.</sup><br>
-    <img src="assets/wrfInicioAluno.jpg" ><br>
-<sup>Figura 29: Wireframe da tela inicial do Aluno.</sup><br>
-    <img src="assets/wrfInicioAluno.jpg" ><br>
+    <img src="./assets/wrfInicioAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1570,9 +1506,7 @@ Tela inicial do aluno está dividida em quatro seções: jornada de aprendizado 
 
 <div align="center">
 <sup>Figura 30: Wireframe da tela de Agenda.</sup><br>
-    <img src="assets/wrfAgenda.jpg" ><br>
-<sup>Figura 30: Wireframe da tela de Agenda.</sup><br>
-    <img src="assets/wrfAgenda.jpg" ><br>
+    <img src="./assets/wrfAgenda.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1581,8 +1515,6 @@ Wireframe da tela agenda com calendário mensal navegável e botão "+ Evento" �
 </div>
 
 <div align="center">
-<sup>Figura 31: Wireframe da tela de Notificações do Gestor.</sup><br>
-    <img src="./assets/wrfNotsGest.png" ><br>
 <sup>Figura 31: Wireframe da tela de Notificações do Gestor.</sup><br>
     <img src="./assets/wrfNotsGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1594,9 +1526,7 @@ Wireframe da tela notificações com uma lista à esquerda filtrada por abas (To
 
 <div align="center">
 <sup>Figura 32: Wireframe da lista de alunos do Gestor.</sup><br>
-    <img src="assets/wrfListaAlunosGest.jpg" ><br>
-<sup>Figura 32: Wireframe da lista de alunos do Gestor.</sup><br>
-    <img src="assets/wrfListaAlunosGest.jpg" ><br>
+    <img src="./assets/wrfListaAlunosGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1627,8 +1557,6 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 <div align="center">
 <sup>Figura 33: Azul Pulse - cor principal.</sup><br>
 <img src="./assets/azulPulse.png" width="500"><br>
-<sup>Figura 33: Azul Pulse - cor principal.</sup><br>
-<img src="./assets/azulPulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
 
@@ -1641,8 +1569,6 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 <div align="center">
 <sup>Figura 34: Verde Pulse - cor secundária.</sup><br>
 <img src="./assets/verdePulse.png" width="500"><br>
-<sup>Figura 34: Verde Pulse - cor secundária.</sup><br>
-<img src="./assets/verdePulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
 
@@ -1653,8 +1579,6 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 </div>
 
 <div align="center">
-<sup>Figura 35: Amarelo Pulse - cor de destaque.</sup><br>
-<img src="./assets/amareloPulse.png" width="500"><br>
 <sup>Figura 35: Amarelo Pulse - cor de destaque.</sup><br>
 <img src="./assets/amareloPulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
@@ -1699,8 +1623,6 @@ O Pulse Manager adota a biblioteca **Lucide** como sistema de iconografia da pla
 <div align="center">
 <sup>Figura 36: Grid de ícones representativos da plataforma - Lucide, outline, stroke 2px.</sup><br>
 <img src="./assets/gridIcones.png" width="600"><br>
-<sup>Figura 36: Grid de ícones representativos da plataforma - Lucide, outline, stroke 2px.</sup><br>
-<img src="./assets/gridIcones.png" width="600"><br>
 <sub>Fonte: Gerado a partir da biblioteca Lucide (open source). Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
 
@@ -1722,8 +1644,6 @@ Em casos onde a Lucide não oferecer o ícone necessário, as bibliotecas **Phos
 <div align="center">
 <sup>Figura 37: Tela de Login Geral.</sup><br>
 <img src="./assets/loginGeral.png"><br>
-<sup>Figura 37: Tela de Login Geral.</sup><br>
-<img src="./assets/loginGeral.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1737,8 +1657,6 @@ Esta tela está associada às User Stories US05, US07, US08 e US09, de acordo co
 <div align="center">
 <sup>Figura 38: Tela Inicial do Gestor.</sup><br>
 <img src="./assets/inicioGestor.png"><br>
-<sup>Figura 38: Tela Inicial do Gestor.</sup><br>
-<img src="./assets/inicioGestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1749,8 +1667,7 @@ O protótipo apresenta a tela inicial do painel do gestor na plataforma, projeta
 ### Lista de Alunos apresentada ao Gestor
 
 <div align="center">
-<sup>Figura 39: Lista de Alunos do Gestor.</sup><br>
-<img src="./assets/listaAlunosGest.png"><br>
+
 <sup>Figura 39: Lista de Alunos do Gestor.</sup><br>
 <img src="./assets/listaAlunosGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1765,8 +1682,7 @@ Esta tela está associada às User Stories US01, US03 e US04, de acordo com os c
 ### Perfil do Aluno apresentado ao Gestor
 
 <div align="center">
-<sup>Figura 40: Perfil do Aluno do Gestor.</sup><br>
-<img src="./assets/perfilAlunoGest.png"><br>
+
 <sup>Figura 40: Perfil do Aluno do Gestor.</sup><br>
 <img src="./assets/perfilAlunoGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1779,8 +1695,7 @@ O protótipo apresenta a tela de perfil individual do aluno na visão do gestor,
 ### Dashboard apresentado ao Gestor
 
 <div align="center">
-<sup>Figura 41: Dashboard do Gestor.</sup><br>
-<img src="./assets/dashboardGest.png"><br>
+
 <sup>Figura 41: Dashboard do Gestor.</sup><br>
 <img src="./assets/dashboardGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1795,8 +1710,7 @@ O corpo principal da página destaca-se por quatro cartões de métricas no topo
 ### Tela de Agenda do Gestor
 
 <div align="center">
-<sup>Figura 42: Tela de Agenda do Gestor.</sup><br>
-<img src="./assets/agendaGest.png"><br>
+
 <sup>Figura 42: Tela de Agenda do Gestor.</sup><br>
 <img src="./assets/agendaGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1811,8 +1725,7 @@ Esta tela está associada às User Stories US01, US02 e US04, de acordo com os c
 ### Tela Inicial do Aluno
 
 <div align="center">
-<sup>Figura 43: Tela Inicial do Aluno.</sup><br>
-<img src="./assets/inicioAluno.png"><br>
+
 <sup>Figura 43: Tela Inicial do Aluno.</sup><br>
 <img src="./assets/inicioAluno.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1826,8 +1739,7 @@ Esta tela está associada às User Stories US08, US09 e US10, de acordo com os c
 ### Tela de Perfil apresentada para o Aluno
 
 <div align="center">
-<sup>Figura 44: Perfil do Aluno.</sup><br>
-<img src="./assets/perfilAlunoAl.png"><br>
+
 <sup>Figura 44: Perfil do Aluno.</sup><br>
 <img src="./assets/perfilAlunoAl.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1842,8 +1754,7 @@ Esta tela está associada às User Stories US01, US04 e US05, de acordo com os c
 ### Dashboard apresentado ao Aluno
 
 <div align="center">
-<sup>Figura 45: Dashboard do Aluno.</sup><br>
-<img src="./assets/dashboardAluno.png"><br>
+
 <sup>Figura 45: Dashboard do Aluno.</sup><br>
 <img src="./assets/dashboardAluno.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1857,8 +1768,7 @@ Os quatro cartões de métricas no topo sintetizam os dados mais relevantes para
 ### Tela Inicial do Aluno
 
 <div align="center">
-<sup>Figura 46: Tela Inicial do Psicólogo.</sup><br>
-<img src="./assets/inicioPsic.png"><br>
+
 <sup>Figura 46: Tela Inicial do Psicólogo.</sup><br>
 <img src="./assets/inicioPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1873,8 +1783,7 @@ Os quatro cartões de métricas superiores apresentam os indicadores centrais do
 ### Lista de Alunos apresentada ao Psicólogo
 
 <div align="center">
-<sup>Figura 47: Lista de Alunos do Psicólogo.</sup><br>
-<img src="./assets/listaAlunosPsic.png"><br>
+
 <sup>Figura 47: Lista de Alunos do Psicólogo.</sup><br>
 <img src="./assets/listaAlunosPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1889,8 +1798,7 @@ Esta tela está associada às User Stories US06 e US07, de acordo com os critér
 ### Dashboard apresentado ao Psicólogo
 
 <div align="center">
-<sup>Figura 48: Dashboard do Psicólogo.</sup><br>
-<img src="./assets/dashboardPsic.png"><br>
+
 <sup>Figura 48: Dashboard do Psicólogo.</sup><br>
 <img src="./assets/dashboardPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1916,7 +1824,6 @@ A partir destes conceitos e utilizando como base o TAPI e outros materiais dispo
 </div>
 
 <div align="center">
-<sup>Figura 49: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
 <sup>Figura 49: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
 <img src="./assets/mer.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -1990,8 +1897,7 @@ O DER explicita as entidades do sistema, seus atributos, as respectivas chaves p
 </div>
 
 <div align="center">
-<sup>Figura 50: Diagrama Entidade-Relacionamento.</sup><br>
-<img src="./assets/der.png"><br>
+
 <sup>Figura 50: Diagrama Entidade-Relacionamento.</sup><br>
 <img src="./assets/der.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
@@ -2902,8 +2808,7 @@ Foram desenvolvidas 12 protótipos de alta fidelidade no Figma, cobrindo os flux
 Protótipo desenvolvido para os três perfis:
 
 <div align="center">
-<sup>Figura 51: Tela de login — perfil gestora.</sup><br>
-<img src="./assets/loginGeral.png"><br>
+
 <sup>Figura 51: Tela de login — perfil gestora.</sup><br>
 <img src="./assets/loginGeral.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
@@ -2912,8 +2817,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura 52: Dashboard — visão da gestora.</sup><br>
-<img src="./assets/inicioGestor.png"><br>
+
 <sup>Figura 52: Dashboard — visão da gestora.</sup><br>
 <img src="./assets/inicioGestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
@@ -2922,8 +2826,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura 53: Listagem de alunos — perfil gestora.</sup><br>
-<img src="./assets/listaAlunosGest.png"><br>
+
 <sup>Figura 53: Listagem de alunos — perfil gestora.</sup><br>
 <img src="./assets/listaAlunosGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
@@ -2932,8 +2835,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura 54: Listagem de alunos — perfil psicóloga.</sup><br>
-<img src="./assets/listaAlunosPsic.png"><br>
+
 <sup>Figura 54: Listagem de alunos — perfil psicóloga.</sup><br>
 <img src="./assets/listaAlunosPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
@@ -2942,8 +2844,7 @@ Protótipo desenvolvido para os três perfis:
 <br>
 
 <div align="center">
-<sup>Figura 55: Perfil do aluno — visão do aluno.</sup><br>
-<img src="./assets/perfilAlunoAl.png"><br>
+
 <sup>Figura 55: Perfil do aluno — visão do aluno.</sup><br>
 <img src="./assets/perfilAlunoAl.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
@@ -3330,19 +3231,9 @@ No âmbito comportamental, foi observado que gestores, parceiros e financiadores
 Já na ótica metodológica, a competição entre organizações de impacto social tende a aumentar a importância da diferenciação institucional. ONGs, institutos e negócios de impacto competem por editais, doações, empresas parceiras, mentores e reconhecimento público. Nesse contexto, soluções capazes de organizar dados e demonstrar resultados podem se tornar vantagem estratégica.
 Também se destaca a crescente atenção à privacidade e à governança de dados. A LGPD exige que organizações tratem dados pessoais com finalidade clara, segurança e limitação de acesso. Dessa forma, plataformas que incorporam controle de permissões, organização da informação e proteção de dados tendem a ser mais adequadas ao cenário regulatório atual.
 
+## 6.3 Público-Alvo
 
-## 6.3 Análise da Concorrência
-
-_a) Principais Concorrentes (até 250 palavras)_
-_Liste os concorrentes diretos e indiretos, destacando suas principais características e posicionamento no mercado
-
-
-_b) Vantagens Competitivas da Aplicação Web (até 250 palavras)_
-_Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes._
-
-## 6.4 Público-Alvo
-
-### 6.4.1 Segmentação de Mercado 
+### 6.3.1 Segmentação de Mercado 
 A Pulse Manager atende o segmento de organizações sociais, institutos e projetos de impacto que atuam com formação, acompanhamento e inserção profissional de jovens em situação de vulnerabilidade socioeconômica. No contexto inicial do projeto, a aplicação é direcionada à Pulse Mais, organização que oferece formação técnica e comportamental, mentorias, oportunidades de vagas e bolsas de estudo gratuitas para jovens interessados em tecnologia (PULSE MAIS, 2026).
 
 Além da Pulse Mais, a solução pode atender iniciativas semelhantes que precisam centralizar dados de alunos, jornada formativa, presença, certificação, saúde mental, oportunidades, empregabilidade e indicadores de impacto. Portanto, a segmentação da Pulse Manager não está ligada a um mercado consumidor amplo, mas a um segmento institucional e operacional: organizações que acompanham jovens ao longo de programas educacionais e profissionais.
@@ -3350,7 +3241,7 @@ Além da Pulse Mais, a solução pode atender iniciativas semelhantes que precis
 Esse segmento possui uma dor clara: conforme aumenta o número de jovens, atividades, mentorias, oportunidades e registros, controles manuais e planilhas passam a dificultar a rastreabilidade dos dados. A Pulse Mais já alcançou mais de 650 jovens por meio de cursos, mentorias e bolsas de graduação, o que reforça a necessidade de uma ferramenta capaz de organizar histórico, evolução e indicadores de acompanhamento (OBSERVATÓRIO DO TERCEIRO SETOR, 2025).
 
 
-### 6.4.2 Perfil do Público-Alvo
+### 6.3.2 Perfil do Público-Alvo
 O público-alvo final acompanhado pela Pulse Manager é composto por jovens de baixa renda, em geral entre 17 e 26 anos, residentes em São Paulo ou Região Metropolitana, com ensino médio cursando ou concluído em escola pública, ou como bolsistas em escola particular. Para participar do Programa Pulse Mais 2026, também são considerados o interesse em tecnologia, a disponibilidade para dedicação semanal e o desejo de conquistar novas oportunidades profissionais (ESG INSIDE, 2026).
 
 Esse público apresenta necessidades específicas: acesso à formação em tecnologia, desenvolvimento de habilidades comportamentais, orientação de carreira, acompanhamento individualizado, oportunidades de emprego, bolsas de estudo e suporte ao longo da jornada. Para a equipe da Pulse Mais, a principal dor está na gestão integrada desses dados; para o jovem, a expectativa é ter uma trajetória mais organizada, com acompanhamento próximo e acesso claro às oportunidades.
@@ -3359,27 +3250,30 @@ A dimensão operacional reforça a relevância da Pulse Manager: o Programa Puls
 
 
 
-## 6.5 Posicionamento
+## 6.4 Posicionamento
 
-_a) Proposta de Valor Única (até 250 palavras)_
-_Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado._
-de
-_b) Estratégia de Diferenciação (até 250 palavras)_
-_Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento._
+### 6.4.1 Proposta de valor
 
-## 6.6 Estratégia de Marketing
 
-_a) Produto/Serviço (até 200 palavras)_
-_Descreva as funcionalidades, benefícios e diferenciais da aplicação_
+A proposta de valor do Pulse Manager consiste em centralizar, organizar e transformar os dados da jornada dos jovens atendidos pela Pulse Mais em informações acessíveis, seguras e acionáveis. A aplicação entrega valor ao reduzir a fragmentação de registros, facilitar o acompanhamento individualizado dos alunos e permitir que a equipe gestora tome decisões com base em dados consolidados.
+Para os gestores, o principal valor está na possibilidade de acessar uma visão única da trajetória de cada aluno, consultar indicadores institucionais, identificar padrões de engajamento, acompanhar empregabilidade, visualizar riscos de evasão e segmentar perfis para oportunidades específicas. Dessa forma, a plataforma reduz o tempo gasto em buscas manuais e aumenta a qualidade da gestão.
+Para os psicólogos, o valor está na organização dos registros de acompanhamento, respeitando restrições de acesso e permitindo uma leitura mais estruturada dos alunos acompanhados. Para os alunos, o valor está no acesso ao próprio histórico, à atualização de dados cadastrais e à visualização de oportunidades relacionadas à sua jornada.
+Assim, a aplicação se diferencia por atuar como uma infraestrutura de gestão de impacto social. O Pulse Manager não apenas armazena dados, mas qualifica o acompanhamento dos jovens, fortalece a governança institucional e amplia a capacidade da Pulse Mais de demonstrar resultados para parceiros e apoiadores.
 
-_b) Preço (até 200 palavras)_
-_Explique o modelo de precificação adotado e justifique com base nas análises anteriores._
 
-_c) Praça (Distribuição) (até 200 palavras)_
-_Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público._
+### 6.4.2 Posicionamento e Diferenciação
+O Pulse Manager pretende ser percebido como uma plataforma de gestão social inteligente, confiável e acolhedora, voltada à centralização da jornada de jovens em programas de capacitação tecnológica. Seu posicionamento combina seriedade técnica, impacto social e proximidade com os usuários, mantendo coerência com a identidade institucional da Pulse Mais.
+Entre os concorrentes diretos e indiretos, podem ser considerados sistemas genéricos de CRM, planilhas compartilhadas, plataformas de gestão educacional, ferramentas de BI e soluções internas desenvolvidas por outras organizações sociais. Embora essas alternativas possam atender partes do problema, muitas não são desenhadas especificamente para acompanhar a jornada completa de jovens em iniciativas de impacto social. Planilhas, por exemplo, oferecem flexibilidade, mas tendem a gerar retrabalho, inconsistências e baixa rastreabilidade. CRMs e sistemas educacionais genéricos podem ser robustos, porém menos aderentes ao contexto de organizações sem fins lucrativos e aos indicadores específicos de impacto, empregabilidade e acompanhamento socioemocional.
+A diferenciação do Pulse Manager está na combinação entre centralização de dados, leitura longitudinal da jornada do aluno, dashboards de impacto, segmentação estratégica, portal do aluno e controle de acesso por perfil. A aplicação foi pensada a partir das dores reais da Pulse Mais, o que permite maior aderência ao fluxo operacional da instituição.
+A marca deve ser percebida como confiável, clara, humana e orientada a impacto. A identidade pretendida é a de uma solução que aproxima tecnologia e transformação social, oferecendo à equipe mais controle sobre os dados e aos jovens maior visibilidade sobre sua trajetória. A percepção de valor desejada é a de uma plataforma essencial para transformar dados dispersos em acompanhamento qualificado, governança institucional e evidências concretas de impacto.
 
-_d) Promoção (até 200 palavras)_
-_Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas._
+## 6.5 Estratégia de Marketing
+
+Os 4Ps são um modelo de estratégia que organiza as principais decisões de marketing em 4 elementos diferentes, sendo eles: Produto, Preço, Praça e Promoção. O produto seria o que a pessoa está oferecendo, dentre um serviço/produto; o preço seria quanto a pessoa está cobrando por esse serviço/produto; a praça seria a localidade de onde o produto/serviço está sendo oferecido, sendo ela online ou física; e, por fim, a promoção seria como o dono do produto/serviço faz o contato com o cliente, seja por redes sociais, publicidade ou outros meios.
+Produto: Nosso grupo teve como solução a plataforma web Pulse Manager, que centraliza os dados institucionais e acadêmicos da Pulse Mais, atuando como uma Single Source of Truth. Entre as principais funcionalidades estão o cadastro, a edição de dados e a consulta de alunos e ex-alunos (RF001-RF003); a consolidação do histórico completo da jornada, formação, frequência, eventos, empregabilidade e ensino superior (RF004-RF008); o dashboard de indicadores de impacto, com métricas de empregabilidade, conclusão, evasão e acesso ao ensino superior (RF012-RF016); o portal do aluno para consulta e atualização do próprio perfil (RF017-RF018); e o módulo de saúde mental com acesso exclusivo ao psicólogo (RF009-RF022). O principal benefício é eliminar a fragmentação de informações dispersas em grandes planilhas, reduzindo o retrabalho e acelerando a tomada de decisão baseada em dados. Já os nossos diferenciais são: uma agenda institucional para os gestores (RF020-RF021), na qual eles podem se organizar melhor em seu dia a dia e, ao mesmo tempo, enviar as notificações de eventos, aulas obrigatórias e não obrigatórias para os alunos. Com isso, nosso outro diferencial é a aba de notificações aos alunos, na qual cada aluno consegue ter uma noção de quando será sua próxima aula ou evento e se deve participar ou não.
+Preço: A Pulse Manager não é monetizada junto aos seus usuários, pois opera em uma lógica de terceiro setor na qual quem usa não é quem paga. Há duas camadas de entregas gratuitas: primeiro, nós (alunos do Inteli), que entregamos a aplicação web à Pulse Mais sem custo, como projeto acadêmico; e a Pulse Mais, por sua vez, oferece o serviço gratuitamente aos jovens, coerentemente com a sua missão social. Portanto, nem o aluno nem a ONG pagam pelo uso do serviço. Quem sustenta a operação são terceiros, ou seja, doadores, empresas parceiras e até mesmo patrocinadores da ONG Pulse Mais.
+Praça: A Pulse Manager será distribuída como uma aplicação web acessível diretamente pelo navegador, sendo eles: Google Chrome, Edge, Firefox… E a interface é otimizada para o uso em desktop, ambiente predominante da equipe de trabalho da Pulse Mais. O acesso é segmentado por perfil: a equipe interna e os psicólogos utilizam as funcionalidades de gestão, enquanto alunos e ex-alunos acessam o portal restrito por meio de um link próprio. A distribuição ocorre de forma direta ao parceiro, ou seja, sem marketplace e lojas, aproveitando, assim, os próprios canais já existentes da ONG.
+Promoção: A divulgação dos produtos da ONG para os alunos é feita pelo onboarding e pelo treinamento da equipe Pulse Mais. A segunda estratégia é a divulgação do portal do aluno pela própria instituição, ou seja, por e-mail e redes sociais; e a terceira estratégia é uma estratégia de marketing e relacionamento, com conteúdo voltado a doadores e parceiros.
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
