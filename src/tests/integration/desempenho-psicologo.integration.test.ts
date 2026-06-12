@@ -8,7 +8,7 @@ import { Participacao } from '../../backend/models/participacaoModel';
 import { HistoricoPsicologico } from '../../backend/models/SaudeMentalModel';
 import { Psicologo } from '../../backend/models/usuarioModel';
 
-describe('UC-23 - Acessar desempenho acadêmico dos alunos (Psicólogo)', () => {
+describe('UC-23 - Acessar desempenho academico dos alunos (Psicologo)', () => {
   let alunoRepo: Repository<Aluno>;
   let psicologoRepo: Repository<Psicologo>;
   let atividadeRepo: Repository<Atividade>;
@@ -74,7 +74,7 @@ describe('UC-23 - Acessar desempenho acadêmico dos alunos (Psicólogo)', () => 
     }
   });
 
-  it('CT01 - psicologo com vinculo acessa desempenho do aluno com dados corretos', async () => {
+  it('CT01 - deve retornar desempenho do aluno para psicologo com vinculo', async () => {
     const response = await request(app)
       .get(`/api/psicologo/alunos/${aluno.idAluno}/desempenho`)
       .set('x-user-id', String(psicologo.idPsi))
@@ -92,7 +92,7 @@ describe('UC-23 - Acessar desempenho acadêmico dos alunos (Psicólogo)', () => 
     expect(response.body.data.resumo.mediaNotas).toBe(8.5);
   });
 
-  it('CT02 - psicologo sem vinculo e impedido de acessar desempenho do aluno', async () => {
+  it('CT02 - deve rejeitar acesso de psicologo sem vinculo com o aluno', async () => {
     const outroPsi = await psicologoRepo.save({
       nomePsi: 'Dr. Marcos Lima',
       cargoPsi: 'psicologo'
@@ -108,7 +108,7 @@ describe('UC-23 - Acessar desempenho acadêmico dos alunos (Psicólogo)', () => 
     expect(response.body.message).toBe('Psicologo nao possui vinculo com este aluno.');
   });
 
-  it('CT03 - perfil nao-psicologo e bloqueado pela verificacao de permissao', async () => {
+  it('CT03 - deve bloquear acesso para perfil nao autorizado como psicologo', async () => {
     const response = await request(app)
       .get(`/api/psicologo/alunos/${aluno.idAluno}/desempenho`)
       .set('x-user-id', '1')

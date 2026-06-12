@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse Manager – Dashboard Psicólogo</title>
+<!-- Base: layout sidebar + topbar (Psicólogo) -->
+<link rel="stylesheet" href="../css/themes/guiaPsicologo.css">
+<link rel="stylesheet" href="../css/components.css">
+<!-- Fontes e ícones -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<!-- Estilos da página -->
+<link rel="stylesheet" href="../css/pages/dashboardPsicologo.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ========== MENU LATERAL ========== -->
+  <aside class="menuLateral" id="menuLateral">
+    <div class="menuLateral__logo">
+      <div class="menuLateral__logo-brand">
+        <img src="../assets/images/logoIcon.png" alt="Pulse Manager" class="menuLateral__logo-icon" />
+        <span class="menuLateral__logo-name">PULSE<br>MANAGER</span>
+      </div>
+      <span class="menuLateral__logo-role"></span>
+    </div>
+    <nav class="menuLateral__nav">
+      <span class="menuLateral__section-label">Menu Principal</span>
+      <ul class="menuLateral__menu"></ul>
+    </nav>
+    <footer class="menuLateral__footer">
+      <a href="#" class="menuLateral__settings menuLateral__link">
+        <i class="ti ti-settings menuLateral__icon"></i>
+        <span>Configurações</span>
+      </a>
+      <div class="menuLateral__user">
+        <div class="menuLateral__avatar"></div>
+        <div class="menuLateral__user-info">
+          <span class="menuLateral__user-name"></span>
+          <span class="menuLateral__user-role"></span>
+        </div>
+      </div>
+    </footer>
+  </aside>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <div class="paginaMain">
+
+    <!-- MENU SUPERIOR -->
+    <header class="menuSuperior" id="menuSuperior">
+      <span class="menuSuperior__breadcrumb"></span>
+      <div class="menuSuperior__search">
+        <i class="ti ti-search menuSuperior__search-icon"></i>
+        <input type="text" class="menuSuperior__search-input" placeholder="Buscar" autocomplete="off" />
+      </div>
+      <div class="menuSuperior__actions">
+        <button class="menuSuperior__bell" title="Notificações">
+          <i class="ti ti-bell"></i>
+        </button>
+        <button class="menuSuperior__avatar-btn" title="Perfil"></button>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO DA PÁGINA -->
+    <main class="paginaConteudo" style="padding: 28px 36px; gap: 18px; overflow-y: auto;">
+
+      <!-- Header -->
+      <div style="flex-shrink:0;">
+        <div class="db-header-title">Dashboard — Saúde Mental e Bem-estar</div>
+        <div class="db-header-sub">Semana 15 de 20 · 23 alunos acompanhados</div>
+      </div>
+
+      <!-- KPI row -->
+      <div class="db-kpi-row">
+        <div class="db-kpi db-kpi--blue">
+          <div class="db-kpi-body">
+            <span class="db-kpi-label">Humor Médio</span>
+            <span class="db-kpi-value">7,4</span>
+            <div class="db-kpi-footer">
+              <span class="db-kpi-sub">de 10</span>
+            </div>
+          </div>
+        </div>
+        <div class="db-kpi db-kpi--dark">
+          <div class="db-kpi-body">
+            <span class="db-kpi-label">Check-ins / Semana</span>
+            <span class="db-kpi-value">38</span>
+            <div class="db-kpi-footer">
+              <span class="db-kpi-sub">de 48</span>
+            </div>
+          </div>
+        </div>
+        <div class="db-kpi db-kpi--green">
+          <div class="db-kpi-body">
+            <span class="db-kpi-label">Flags Ativas</span>
+            <span class="db-kpi-value">7</span>
+            <div class="db-kpi-footer">
+              <span class="db-kpi-badge">↓ -2 hoje</span>
+              <span class="db-kpi-sub">alunos</span>
+            </div>
+          </div>
+        </div>
+        <div class="db-kpi db-kpi--amber">
+          <div class="db-kpi-body">
+            <span class="db-kpi-label">Sessões Realizadas</span>
+            <span class="db-kpi-value">24</span>
+            <div class="db-kpi-footer">
+              <span class="db-kpi-sub">este mês</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main grid -->
+      <div class="db-main-grid">
+
+        <!-- Bem-estar por módulo -->
+        <section class="db-card">
+          <div class="db-card-head">
+            <div>
+              <div class="db-card-title">Bem-estar por módulo</div>
+              <div class="db-card-sub">Índice médio de humor por módulo/curso</div>
+            </div>
+            <div class="db-toggle">
+              <button class="db-toggle-btn" id="db-btn-semana" onclick="dbToggle('semana')">Semana</button>
+              <button class="db-toggle-btn active" id="db-btn-mes" onclick="dbToggle('mes')">Mês</button>
+            </div>
+          </div>
+          <div class="db-chart-wrap">
+            <canvas id="db-bestar-chart"></canvas>
+          </div>
+          <div class="db-legend">
+            <div class="db-legend-item"><div class="db-legend-dot" style="background:#003870;"></div>Acima da meta</div>
+            <div class="db-legend-item"><div class="db-legend-dot" style="background:#33B458;"></div>Próximo da meta</div>
+            <div class="db-legend-item"><div class="db-legend-dot" style="background:#FFD927;"></div>Abaixo da meta</div>
+          </div>
+          <div class="db-chart-footer">
+            <div class="db-chart-footer-main">Média geral da turma <strong>7,4</strong> · vs. semana anterior: <strong>7,1</strong></div>
+            <div class="db-chart-footer-sub">Dados coletados via check-ins diários — semana 15</div>
+          </div>
+        </section>
+
+        <!-- Engajamento por Faixa -->
+        <section class="db-card">
+          <div class="db-card-head">
+            <div>
+              <div class="db-card-title">Engajamento por Faixa</div>
+              <div class="db-card-sub">% de engajamento semanal por faixa de humor</div>
+            </div>
+            <a href="#" class="psi-ver-todos">Exportar →</a>
+          </div>
+
+          <div class="db-eng-list">
+            <div class="db-eng-item">
+              <span class="db-eng-label">Muito Bem (9-10)</span>
+              <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:85%;background:#1D7A36;"></div></div>
+              <span class="db-eng-pct">85%</span>
+            </div>
+            <div class="db-eng-item">
+              <span class="db-eng-label">Bem (7-8)</span>
+              <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:72%;background:#33B458;"></div></div>
+              <span class="db-eng-pct">72%</span>
+            </div>
+            <div class="db-eng-item">
+              <span class="db-eng-label">Neutro (5-6)</span>
+              <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:58%;background:#5BC579;"></div></div>
+              <span class="db-eng-pct">58%</span>
+            </div>
+            <div class="db-eng-item">
+              <span class="db-eng-label">Cansado (4-5)</span>
+              <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:41%;background:#84CD99;"></div></div>
+              <span class="db-eng-pct">41%</span>
+            </div>
+            <div class="db-eng-item">
+              <span class="db-eng-label">Ansioso (3-4)</span>
+              <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:35%;background:#378ADD;"></div></div>
+              <span class="db-eng-pct">35%</span>
+            </div>
+            <div class="db-eng-item">
+              <span class="db-eng-label">Triste (2-3)</span>
+              <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:22%;background:#85B7EB;"></div></div>
+              <span class="db-eng-pct">22%</span>
+            </div>
+            <div class="db-eng-item">
+              <span class="db-eng-label">Muito Mal (1-2)</span>
+              <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:14%;background:#B5D4F4;"></div></div>
+              <span class="db-eng-pct">14%</span>
+            </div>
+          </div>
+
+          <!-- Resumo -->
+          <div class="db-resumo">
+            <div class="db-resumo-title">Resumo de engajamento — Semana 15</div>
+            <div class="db-resumo-row">
+              <div class="db-resumo-item">
+                <span class="db-resumo-val">79%</span>
+                <span class="db-resumo-sub">Humor positivo (≥7)</span>
+              </div>
+              <div class="db-resumo-item">
+                <span class="db-resumo-val">3</span>
+                <span class="db-resumo-sub">Faixas de atenção</span>
+              </div>
+              <div class="db-resumo-item">
+                <span class="db-resumo-val--up">+6%</span>
+                <span class="db-resumo-sub">vs. semana anterior</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- fim .db-main-grid -->
+
+    </main>
+  </div><!-- fim .paginaMain -->
+
+<!-- config.js deve vir ANTES dos outros scripts -->
+<script src="../js/services/configPsicologo.js"></script>
+<script src="../js/components/guiaPsicologo.js"></script>
+<script src="../js/components/menuSuperior.js"></script>
+<script src="../js/pages/dashboardPsicologo.js"></script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+-- Schema PostgreSQL/Supabase alinhado aos models, repositories e testes de endpoints.
 
 DO $$
 BEGIN
@@ -112,22 +113,36 @@ BEGIN
     'workshop',
     'evento',
     'avaliacao',
+    'curso',
     'outro'
   );
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
 
+ALTER TYPE tipo_atividade_enum ADD VALUE IF NOT EXISTS 'curso';
+
 CREATE TABLE IF NOT EXISTS aluno (
   id_aluno INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  codigo_pm VARCHAR(20) UNIQUE,
   nome VARCHAR(150) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
+  telefone VARCHAR(30),
   idade INTEGER CHECK (idade IS NULL OR (idade >= 0 AND idade <= 120)),
   genero genero_aluno_enum,
   ocupacao VARCHAR(150),
+  tipo_vinculo_empregaticio VARCHAR(50),
+  renda_mensal DECIMAL(10,2) CHECK (renda_mensal IS NULL OR renda_mensal >= 0),
   escolaridade VARCHAR(100),
-  data_ingresso DATE DEFAULT CURRENT_DATE,
+  instituicao_ensino_superior VARCHAR(150),
+  curso_ensino_superior VARCHAR(150),
+  status_ensino_superior VARCHAR(50),
+  data_ingresso_ensino_superior DATE,
+  programa VARCHAR(120) NOT NULL DEFAULT 'nao_informado',
+  categoria VARCHAR(60) NOT NULL DEFAULT 'sem_categoria',
+  risco_evasao VARCHAR(20) NOT NULL DEFAULT 'baixo' CHECK (risco_evasao IN ('baixo', 'medio', 'alto')),
+  engajamento INTEGER NOT NULL DEFAULT 0 CHECK (engajamento >= 0 AND engajamento <= 100),
+  data_ingresso DATE NOT NULL DEFAULT CURRENT_DATE,
   status status_aluno_enum NOT NULL DEFAULT 'ativo',
-
   nivel_jornada VARCHAR(50),
   perfil_socioeconomico VARCHAR(150),
   curso VARCHAR(150),
@@ -153,7 +168,6 @@ CREATE TABLE IF NOT EXISTS atividade (
   tipo tipo_atividade_enum NOT NULL,
   descricao VARCHAR(500),
   data DATE,
-
   modalidade VARCHAR(50),
   carga_horaria INTEGER
 );
@@ -191,7 +205,7 @@ CREATE TABLE IF NOT EXISTS agenda (
   data DATE NOT NULL,
   hora_inicio TIME,
   hora_fim TIME,
-  status INTEGER NOT NULL,
+  status INTEGER NOT NULL DEFAULT 1,
   id_membro INTEGER NOT NULL,
   id_aluno INTEGER NOT NULL,
 
@@ -236,7 +250,30 @@ CREATE TABLE IF NOT EXISTS participacao (
   UNIQUE (id_aluno, id_atividade)
 );
 
+CREATE TABLE IF NOT EXISTS anotacao_qualitativa (
+  id_anotacao INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id_aluno INTEGER NOT NULL,
+  titulo VARCHAR(150) NOT NULL,
+  descricao VARCHAR(1000) NOT NULL,
+  autor VARCHAR(120) NOT NULL,
+  data_registro DATE NOT NULL DEFAULT CURRENT_DATE,
+
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno)
+);
+
 ALTER TABLE public.aluno
+ADD COLUMN IF NOT EXISTS codigo_pm VARCHAR(20),
+ADD COLUMN IF NOT EXISTS telefone VARCHAR(30),
+ADD COLUMN IF NOT EXISTS tipo_vinculo_empregaticio VARCHAR(50),
+ADD COLUMN IF NOT EXISTS renda_mensal DECIMAL(10,2),
+ADD COLUMN IF NOT EXISTS instituicao_ensino_superior VARCHAR(150),
+ADD COLUMN IF NOT EXISTS curso_ensino_superior VARCHAR(150),
+ADD COLUMN IF NOT EXISTS status_ensino_superior VARCHAR(50),
+ADD COLUMN IF NOT EXISTS data_ingresso_ensino_superior DATE,
+ADD COLUMN IF NOT EXISTS programa VARCHAR(120) DEFAULT 'nao_informado',
+ADD COLUMN IF NOT EXISTS categoria VARCHAR(60) DEFAULT 'sem_categoria',
+ADD COLUMN IF NOT EXISTS risco_evasao VARCHAR(20) DEFAULT 'baixo',
+ADD COLUMN IF NOT EXISTS engajamento INTEGER DEFAULT 0,
 ADD COLUMN IF NOT EXISTS nivel_jornada VARCHAR(50),
 ADD COLUMN IF NOT EXISTS perfil_socioeconomico VARCHAR(150),
 ADD COLUMN IF NOT EXISTS curso VARCHAR(150),
@@ -256,9 +293,63 @@ ALTER TABLE public.agenda
 ADD COLUMN IF NOT EXISTS hora_inicio TIME,
 ADD COLUMN IF NOT EXISTS hora_fim TIME;
 
+UPDATE public.aluno
+SET programa = COALESCE(programa, curso, origem_participacao, 'nao_informado')
+WHERE programa IS NULL;
+
+UPDATE public.aluno
+SET categoria = COALESCE(categoria, nivel_jornada, status::text, 'sem_categoria')
+WHERE categoria IS NULL;
+
+UPDATE public.aluno SET risco_evasao = 'baixo' WHERE risco_evasao IS NULL;
+UPDATE public.aluno SET engajamento = 0 WHERE engajamento IS NULL;
+UPDATE public.aluno SET data_ingresso = CURRENT_DATE WHERE data_ingresso IS NULL;
+
+ALTER TABLE public.aluno
+ALTER COLUMN programa SET DEFAULT 'nao_informado',
+ALTER COLUMN programa SET NOT NULL,
+ALTER COLUMN categoria SET DEFAULT 'sem_categoria',
+ALTER COLUMN categoria SET NOT NULL,
+ALTER COLUMN risco_evasao SET DEFAULT 'baixo',
+ALTER COLUMN risco_evasao SET NOT NULL,
+ALTER COLUMN engajamento SET DEFAULT 0,
+ALTER COLUMN engajamento SET NOT NULL,
+ALTER COLUMN data_ingresso SET DEFAULT CURRENT_DATE,
+ALTER COLUMN data_ingresso SET NOT NULL;
+
+ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_codigo_pm_key;
+ALTER TABLE public.aluno ADD CONSTRAINT aluno_codigo_pm_key UNIQUE (codigo_pm);
+
+ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_idade_check;
+ALTER TABLE public.aluno
+ADD CONSTRAINT aluno_idade_check CHECK (idade IS NULL OR (idade >= 0 AND idade <= 120));
+
+ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_renda_mensal_check;
+ALTER TABLE public.aluno
+ADD CONSTRAINT aluno_renda_mensal_check CHECK (renda_mensal IS NULL OR renda_mensal >= 0);
+
+ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_risco_evasao_check;
+ALTER TABLE public.aluno
+ADD CONSTRAINT aluno_risco_evasao_check CHECK (risco_evasao IN ('baixo', 'medio', 'alto'));
+
+ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_engajamento_check;
+ALTER TABLE public.aluno
+ADD CONSTRAINT aluno_engajamento_check CHECK (engajamento >= 0 AND engajamento <= 100);
+
+CREATE INDEX IF NOT EXISTS idx_aluno_codigo_pm
+ON aluno(codigo_pm);
 
 CREATE INDEX IF NOT EXISTS idx_aluno_status
 ON aluno(status);
+
+CREATE INDEX IF NOT EXISTS idx_aluno_programa
+ON aluno(programa);
+
+CREATE INDEX IF NOT EXISTS idx_aluno_categoria
+ON aluno(categoria);
+
+CREATE INDEX IF NOT EXISTS idx_aluno_risco_evasao
+ON aluno(risco_evasao);
 
 CREATE INDEX IF NOT EXISTS idx_aluno_nivel_jornada
 ON aluno(nivel_jornada);
@@ -292,3 +383,6 @@ ON label(id_aluno);
 
 CREATE INDEX IF NOT EXISTS idx_historico_psicologico_aluno
 ON historico_psicologico(id_aluno);
+
+CREATE INDEX IF NOT EXISTS idx_anotacao_qualitativa_aluno
+ON anotacao_qualitativa(id_aluno);

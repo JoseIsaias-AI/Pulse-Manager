@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visão Geral — Pulse Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/pages/inicioAluno.css">
+</head>
+<body>
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="menuLateral">
+
+    <div class="menuLateral__logo">
+      <div class="menuLateral__logo-brand">
+        <img src="../assets/images/logoIcon.png" alt="Pulse Manager" class="menuLateral__logo-icon" />
+        <span class="menuLateral__logo-name">PULSE<br>MANAGER</span>
+      </div>
+      <span class="menuLateral__logo-role">Portal do Aluno</span>
+    </div>
+
+    <nav class="menuLateral__nav">
+      <span class="menuLateral__section-label">Menu Principal</span>
+      <ul class="menuLateral__menu">
+        <li class="menuLateral__item--active">
+          <a href="#" class="menuLateral__link">
+            <i data-lucide="house" class="menuLateral__icon"></i>
+            <span>Início</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="menuLateral__link">
+            <i data-lucide="book-open" class="menuLateral__icon"></i>
+            <span>Jornada</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="menuLateral__link">
+            <i data-lucide="calendar" class="menuLateral__icon"></i>
+            <span>Agenda</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="menuLateral__link">
+            <i data-lucide="heart-handshake" class="menuLateral__icon"></i>
+            <span>Psicólogo</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="menuLateral__quick">
+      <span class="menuLateral__section-label">Acesso Rápido</span>
+      <div class="menuLateral__quick-card menuLateral__quick-card--accent">
+        <span class="menuLateral__quick-label">Turma Ativa</span>
+        <span class="menuLateral__quick-value">Engenharia T4</span>
+      </div>
+      <div class="menuLateral__quick-card">
+        <span class="menuLateral__quick-label">Módulo Atual</span>
+        <span class="menuLateral__quick-value">Módulo 4 · Sprint 3</span>
+      </div>
+    </div>
+
+    <footer class="menuLateral__footer">
+      <a href="#" class="menuLateral__settings">
+        <i data-lucide="settings" class="menuLateral__icon"></i>
+        <span>Configurações</span>
+      </a>
+      <div class="menuLateral__user">
+        <div class="menuLateral__avatar">MO</div>
+        <div class="menuLateral__user-info">
+          <span class="menuLateral__user-name">Maria Oliveira</span>
+          <span class="menuLateral__user-role">Aluno</span>
+        </div>
+      </div>
+    </footer>
+
+  </aside>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <div class="paginaMain">
+
+    <header class="menuSuperior">
+      <span class="menuSuperior__breadcrumb">Início / Visão Geral</span>
+      <div class="menuSuperior__actions">
+        <button class="menuSuperior__bell" title="Notificações">
+          <i data-lucide="bell"></i>
+        </button>
+        <button class="menuSuperior__avatar-btn" title="Perfil">MO</button>
+      </div>
+    </header>
+
+    <main class="paginaConteudo">
+
+      <!-- Page header -->
+      <div class="page-header">
+        <h1 class="page-title">Visão Geral do Aluno</h1>
+        <p class="page-subtitle">Semana 15 de 20 · Engenharia T4</p>
+      </div>
+
+      <!-- ── KPI CARDS ── -->
+      <section class="kpi-row" aria-label="Indicadores">
+
+        <div class="kpi-card kpi-blue">
+          <div class="kpi-body">
+            <span class="kpi-label">Frequência</span>
+            <span class="kpi-value">87%</span>
+            <div class="kpi-footer">
+              <span class="kpi-sub">de 48 aulas</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-card kpi-green">
+          <div class="kpi-body">
+            <span class="kpi-label">Módulos Concluídos</span>
+            <span class="kpi-value">3</span>
+            <div class="kpi-footer">
+              <span class="kpi-sub">de 7 total</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-card kpi-amber">
+          <div class="kpi-body">
+            <span class="kpi-label">Nota Média</span>
+            <span class="kpi-value">7,6</span>
+            <div class="kpi-footer">
+              <span class="kpi-sub">média da turma: 7,1</span>
+            </div>
+          </div>
+          <a href="#" class="kpi-link">ver detalhes →</a>
+        </div>
+
+      </section>
+
+      <!-- ── MAIN GRID ── -->
+      <div class="main-grid">
+
+        <!-- ── COLUNA ESQUERDA ── -->
+        <div class="col-left">
+          <section class="card jornada-card">
+
+            <h2 class="card-title">Minha Jornada</h2>
+            <p class="card-subtitle">Progresso no módulo atual &middot; Semana 12 de 20</p>
+            <p class="card-subtitle" style="margin-top:2px;">Progresso geral no curso</p>
+
+            <!-- Barra de progresso do curso -->
+            <div class="progress-row">
+              <div class="course-chart-wrap">
+                <canvas id="course-chart"></canvas>
+              </div>
+              <span class="progress-label">58%</span>
+            </div>
+
+            <!-- Tabs de módulos -->
+            <div class="module-tabs">
+              <button class="mod-tab mod-done">✓ Intro. Digital</button>
+              <button class="mod-tab mod-done">✓ Seg. Online</button>
+              <button class="mod-tab mod-done">✓ Ferramentas</button>
+              <button class="mod-tab mod-current">&#9654; Noções Dig. – atual</button>
+              <button class="mod-tab mod-pending">Ger. Arquivos</button>
+            </div>
+
+            <!-- Módulo 4 -->
+            <div class="modulo-section">
+              <h3 class="section-title">Módulo 4 — Noções Digitais – Em andamento</h3>
+              <p class="section-subtitle">Sprint 3 de 4 &middot; Entrega: 17 de junho</p>
+
+              <div class="sprint-chart-wrap">
+                <canvas id="sprint-chart"></canvas>
+              </div>
+              <div class="sprint-status-row">
+                <span class="sprint-badge badge-concluido">✓ Sprint 1 · 100%</span>
+                <span class="sprint-badge badge-concluido">✓ Sprint 2 · 100%</span>
+                <span class="sprint-badge badge-atual">&#9642; Sprint 3 · 63%</span>
+                <span class="sprint-badge badge-pendente sprint-disabled">Sprint 4 · 0%</span>
+              </div>
+            </div>
+
+            <!-- Atividades -->
+            <div class="atividades-section">
+              <h3 class="section-title">Atividades – Sprint</h3>
+              <div class="atividade-list">
+                <div class="atividade-item border-green">
+                  <div class="atividade-info">
+                    <span class="atividade-nome">Noções de Segurança Digital</span>
+                    <span class="atividade-meta">Entregue em 01 jun &middot; Nota: 9,0</span>
+                  </div>
+                  <span class="atividade-badge badge-entregue">✓ Entregue</span>
+                </div>
+                <div class="atividade-item border-green">
+                  <div class="atividade-info">
+                    <span class="atividade-nome">Análise de Dados Básica</span>
+                    <span class="atividade-meta">Entregue em 05 jun &middot; Nota: 8,5</span>
+                  </div>
+                  <span class="atividade-badge badge-entregue">✓ Entregue</span>
+                </div>
+                <div class="atividade-item border-blue">
+                  <div class="atividade-info">
+                    <span class="atividade-nome">Projeto Final — Sprint 3</span>
+                    <span class="atividade-meta">Prazo: 17 jun &middot; Em andamento</span>
+                  </div>
+                  <span class="atividade-badge badge-andamento">&#9632; Em andamento</span>
+                </div>
+                <div class="atividade-item border-gray atividade-disabled">
+                  <div class="atividade-info">
+                    <span class="atividade-nome">Quiz de Revisão — Sprint 4</span>
+                    <span class="atividade-meta">Disponível em: 18 jun</span>
+                  </div>
+                  <span class="atividade-badge badge-bloqueado">Bloqueado</span>
+                </div>
+              </div>
+            </div>
+
+          </section>
+        </div>
+
+        <!-- ── COLUNA DIREITA ── -->
+        <div class="col-right">
+
+          <!-- Saúde e Bem-estar -->
+          <section class="card saude-card">
+            <div class="saude-header">
+              <h2 class="card-title">Saúde e Bem-estar</h2>
+            </div>
+            <p class="saude-question">Como você está se sentindo hoje?</p>
+            <div class="emoji-row" role="group" aria-label="Humor">
+              <button class="emoji-btn" aria-label="Muito mal">😟</button>
+              <button class="emoji-btn" aria-label="Mal">😕</button>
+              <button class="emoji-btn" aria-label="Neutro">😐</button>
+              <button class="emoji-btn" aria-label="Bem">🙂</button>
+              <button class="emoji-btn" aria-label="Muito bem">😄</button>
+            </div>
+            <button class="btn-psicologo">
+              <i data-lucide="flower-2"></i>
+              Adicionar registro
+            </button>
+            <p class="saude-registro">Última entrada: 10/06 · 🟡 Bem</p>
+          </section>
+
+          <!-- Próximos Eventos -->
+          <section class="card eventos-card">
+            <div class="eventos-header">
+              <h2 class="card-title">Próximos Eventos</h2>
+              <a href="#" class="ver-todos">Abrir agenda</a>
+            </div>
+
+            <div class="evento-list">
+              <div class="evento-item">
+                <div class="evento-date">
+                  <span class="evento-dia">11</span>
+                  <span class="evento-mes">JUN</span>
+                </div>
+                <div class="evento-info">
+                  <span class="evento-nome">Mentoria Individual</span>
+                  <span class="evento-hora">11h00 · João Mário</span>
+                </div>
+                <span class="evento-badge badge-online">Hoje</span>
+              </div>
+
+              <div class="evento-item">
+                <div class="evento-date">
+                  <span class="evento-dia">15</span>
+                  <span class="evento-mes">JUN</span>
+                </div>
+                <div class="evento-info">
+                  <span class="evento-nome">Aula — AI-First na Prática</span>
+                  <span class="evento-hora">09h00 · Vitória Brandão</span>
+                </div>
+                <span class="evento-badge badge-presencial">Aula</span>
+              </div>
+
+              <div class="evento-item">
+                <div class="evento-date">
+                  <span class="evento-dia">17</span>
+                  <span class="evento-mes">JUN</span>
+                </div>
+                <div class="evento-info">
+                  <span class="evento-nome">Consulta Psicológica</span>
+                  <span class="evento-hora">14h30 · João Mário</span>
+                </div>
+                <span class="evento-badge badge-entrega">Consulta</span>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>lucide.createIcons();</script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // ── Progresso geral do curso ──
+      var courseCtx = document.getElementById('course-chart');
+      if (courseCtx) {
+        new Chart(courseCtx, {
+          type: 'bar',
+          data: {
+            labels: [''],
+            datasets: [{
+              data: [58],
+              backgroundColor: '#003870',
+              borderRadius: 100,
+              borderSkipped: false,
+            }],
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { min: 0, max: 100, display: false, grid: { display: false } },
+              y: { display: false, grid: { display: false } },
+            },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: { label: function (ctx) { return ' ' + ctx.raw + '% concluído'; } },
+              },
+            },
+          },
+        });
+      }
+
+      // ── Progresso dos sprints ──
+      var sprintCtx = document.getElementById('sprint-chart');
+      if (sprintCtx) {
+        new Chart(sprintCtx, {
+          type: 'bar',
+          data: {
+            labels: ['Sprint 1', 'Sprint 2', 'Sprint 3', 'Sprint 4'],
+            datasets: [{
+              data: [100, 100, 63, 0],
+              backgroundColor: ['#33B458', '#33B458', '#003870', '#DEE3EA'],
+              borderRadius: 4,
+              borderSkipped: false,
+            }],
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                min: 0, max: 100,
+                ticks: { font: { family: 'Poppins', size: 11 }, color: '#97A1AE', callback: function (v) { return v + '%'; } },
+                grid: { color: '#EEF1F4' },
+              },
+              y: {
+                ticks: { font: { family: 'Poppins', size: 11, weight: '500' }, color: '#4D5663' },
+                grid: { display: false },
+              },
+            },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: '#11161D',
+                titleFont: { family: 'Poppins', size: 11, weight: '600' },
+                bodyFont: { family: 'Poppins', size: 11 },
+                padding: 10,
+                cornerRadius: 8,
+                callbacks: { label: function (ctx) { return ' ' + ctx.raw + '%'; } },
+              },
+            },
+          },
+        });
+      }
+
+      // ── Tabs de módulo ──
+      var tabs = document.querySelectorAll('.mod-tab');
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.forEach(function (t) {
+            t.classList.remove('mod-current');
+            if (!t.textContent.includes('✓')) t.classList.add('mod-pending');
+          });
+          tab.classList.remove('mod-pending', 'mod-done');
+          tab.classList.add('mod-current');
+        });
+      });
+
+      // ── Seletor de humor ──
+      var emojis = document.querySelectorAll('.emoji-btn');
+      emojis.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          emojis.forEach(function (b) { b.classList.remove('emoji-selected'); });
+          btn.classList.add('emoji-selected');
+        });
+      });
+
+    });
+  </script>
+  <script src="../js/pages/inicioAluno.js" defer></script>
+</body>
+</html>

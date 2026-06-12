@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil do Aluno — Pulse Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<link rel="stylesheet" href="../css/pages/modalConfAluno.css">
+</head>
+<body>
+
+<div id="main-content"></div>
+
+<!-- Overlay + Modal -->
+<div class="overlay open" id="overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+
+    <div class="modal-header">
+      <div class="mh-top">
+        <div class="modal-avatar" id="m-initials">MO</div>
+        <div>
+          <div class="modal-name" id="m-name">Marianne Oliveira</div>
+          <div class="modal-meta" id="m-meta">PM-2024-465 · Programa Pulse Mais · Turma T4</div>
+        </div>
+      </div>
+      <div class="modal-badges">
+        <span class="badge badge-ativo"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
+        <span class="badge badge-curso"><i class="ti ti-code" style="font-size:11px;"></i> Let. Digital</span>
+        <span class="badge badge-nivel">Capacitado</span>
+      </div>
+      <button class="close-btn" onclick="closeModal()" aria-label="Fechar modal"><i class="ti ti-x"></i></button>
+    </div>
+
+    <div class="tab-strip">
+      <button class="tab-btn active" onclick="showTab('dados',this)"><i class="ti ti-user"></i> Dados gerais</button>
+      <button class="tab-btn" onclick="showTab('socio',this)"><i class="ti ti-chart-pie"></i> Socioeconômico</button>
+<button class="tab-btn" onclick="showTab('contato',this)"><i class="ti ti-phone"></i> Contato</button>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- Aba: Dados gerais -->
+      <div id="tab-dados" class="tab-panel active">
+        <div class="sec-label">Identificação</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-hash"></i> Código PM</label>
+            <input type="text" value="465">
+          </div>
+          <div class="field span2">
+            <label><i class="ti ti-user"></i> Nome completo</label>
+            <input type="text" id="f-nome" value="Marianne Oliveira" oninput="updateHeader()">
+          </div>
+          <div class="field">
+            <label><i class="ti ti-id-badge-2"></i> CPF</label>
+            <input type="text" value="123.456.789-00" maxlength="14" placeholder="000.000.000-00">
+          </div>
+          <div class="field">
+            <label><i class="ti ti-calendar-event"></i> Idade</label>
+            <input type="number" value="20" min="14" max="80">
+          </div>
+          <div class="field">
+            <label><i class="ti ti-gender-bigender"></i> Gênero</label>
+            <select>
+              <option selected>Feminino</option>
+              <option>Masculino</option>
+              <option>Não binário</option>
+              <option>Outro</option>
+              <option>Prefiro não informar</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sec-label">Formação</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-book"></i> Curso</label>
+            <select>
+              <option selected>Letramento Digital</option>
+              <option>Ferramentas de Produtividade</option>
+              <option>Desenvolvimento AI-First na Prática</option>
+              <option>Fortalecimento Emocional para Jovens</option>
+              <option>Autogestão no Mundo do Trabalho</option>
+              <option>Mercado de Trabalho: Preparação, Conexão e Vivências</option>
+              <option>Laboratório de Mentoria</option>
+            </select>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-certificate"></i> Escolaridade</label>
+            <select>
+              <option>Ensino Médio Incompleto</option>
+              <option selected>Ensino Médio Completo</option>
+              <option>Superior Incompleto</option>
+              <option>Superior Completo</option>
+              <option>Pós-graduação</option>
+            </select>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-briefcase"></i> Ocupação</label>
+            <select>
+              <option selected>Estudante</option>
+              <option>Estagiário</option>
+              <option>Empregado CLT</option>
+              <option>Autônomo/Freelancer</option>
+              <option>Desempregado</option>
+            </select>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-notebook"></i> Programa</label>
+            <input type="text" value="Programa Pulse Mais">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Aba: Socioeconômico -->
+      <div id="tab-socio" class="tab-panel">
+        <div class="sec-label">Dados socioeconômicos</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-chart-pie"></i> Perfil socioeconômico</label>
+            <select>
+              <option>Classe A</option>
+              <option>Classe B</option>
+              <option selected>Classe C</option>
+              <option>Classe D</option>
+              <option>Classe E</option>
+            </select>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-currency-dollar"></i> Renda mensal familiar (R$)</label>
+            <input type="number" value="1800" min="0" step="100">
+          </div>
+          <div class="field span2">
+            <label>Nível de jornada</label>
+            <select>
+              <option>Conectado</option>
+              <option selected>Capacitado</option>
+              <option>Transformado</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aba: Contato -->
+      <div id="tab-contato" class="tab-panel">
+        <div class="sec-label">Informações de contato</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-mail"></i> E-mail</label>
+            <input type="email" value="marianne@pulsemais.org.br">
+          </div>
+          <div class="field">
+            <label><i class="ti ti-phone"></i> Telefone</label>
+            <input type="tel" value="(11) 98765-4321">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <div class="footer-left">
+        <i class="ti ti-lock" style="font-size:13px;"></i>
+        Última edição: hoje às 10:32
+      </div>
+      <div class="footer-right">
+        <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveProfile()"><i class="ti ti-device-floppy"></i> Salvar alterações</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <i class="ti ti-circle-check"></i> Perfil atualizado com sucesso
+</div>
+
+<script src="../js/components/modalConfAluno.js"></script>
+</body>
+</html>

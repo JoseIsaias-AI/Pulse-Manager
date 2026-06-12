@@ -4,7 +4,7 @@ import { app } from '../../backend/app';
 import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
 import { Aluno } from '../../backend/models/alunoModel';
 
-describe('UC-24 - Restrição de remetente psicólogo em notificações', () => {
+describe('UC-24 - Restricao de remetente psicologo em notificacoes', () => {
   let alunoRepository: Repository<Aluno>;
   let aluno: Aluno;
 
@@ -34,7 +34,7 @@ describe('UC-24 - Restrição de remetente psicólogo em notificações', () => 
     }
   });
 
-  it('CT01 - psicologo pode enviar notificacao com tipoRemetente psicologo', async () => {
+  it('CT01 - deve permitir psicologo enviar notificacao com tipoRemetente psicologo', async () => {
     const response = await request(app)
       .post('/api/comunicacao')
       .set('x-user-role', 'psicologo')
@@ -52,7 +52,7 @@ describe('UC-24 - Restrição de remetente psicólogo em notificações', () => 
     expect(response.body.success).toBe(true);
   });
 
-  it('CT02 - membro_equipe nao pode enviar notificacao com tipoRemetente psicologo', async () => {
+  it('CT02 - deve rejeitar envio com tipoRemetente psicologo por membro_equipe', async () => {
     const response = await request(app)
       .post('/api/comunicacao')
       .set('x-user-role', 'equipe')
@@ -73,7 +73,7 @@ describe('UC-24 - Restrição de remetente psicólogo em notificações', () => 
     );
   });
 
-  it('CT03 - membro_equipe pode enviar notificacao com seu proprio tipoRemetente', async () => {
+  it('CT03 - deve permitir membro_equipe enviar notificacao com seu proprio tipoRemetente', async () => {
     const response = await request(app)
       .post('/api/comunicacao')
       .set('x-user-role', 'equipe')
@@ -91,7 +91,7 @@ describe('UC-24 - Restrição de remetente psicólogo em notificações', () => 
     expect(response.body.success).toBe(true);
   });
 
-  it('CT04 - requisicao sem perfil informado nao pode enviar com tipoRemetente psicologo', async () => {
+  it('CT04 - deve rejeitar envio com tipoRemetente psicologo quando perfil nao for informado', async () => {
     const response = await request(app)
       .post('/api/comunicacao')
       .send({

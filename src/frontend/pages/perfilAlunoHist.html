@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil do Aluno — Histórico Psicológico — Pulse Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<link rel="stylesheet" href="../css/pages/perfilAlunoHist.css">
+</head>
+<body>
+
+<div id="main-content"></div>
+
+<!-- Overlay + Modal -->
+<div class="overlay open" id="overlay">
+  <div class="modal" id="modal">
+
+    <div class="modal-header">
+      <div class="mh-top">
+        <div class="modal-avatar">MO</div>
+        <div>
+          <div class="modal-name">Marianne Oliveira</div>
+          <div class="modal-meta">PM-2024-465 · Programa Pulse Mais · Turma T4</div>
+        </div>
+      </div>
+      <div class="modal-badges">
+        <span class="badge badge-ativo"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
+        <span class="badge badge-curso"><i class="ti ti-code" style="font-size:11px;"></i> Letramento Digital</span>
+        <span class="badge badge-nivel">Capacitado</span>
+      </div>
+      <button class="close-btn" onclick="closeModal()" aria-label="Fechar"><i class="ti ti-x"></i></button>
+    </div>
+
+    <div class="tab-strip">
+      <button class="tab-btn active" onclick="showTab('dados',this)"><i class="ti ti-user"></i> Dados gerais</button>
+      <button class="tab-btn" onclick="showTab('socio',this)"><i class="ti ti-chart-pie"></i> Socioeconômico</button>
+      <button class="tab-btn" onclick="showTab('contato',this)"><i class="ti ti-phone"></i> Contato</button>
+      <button class="tab-btn" onclick="showTab('desempenho',this)"><i class="ti ti-chart-line"></i> Desempenho</button>
+      <button class="tab-btn" onclick="showTab('hist',this)"><i class="ti ti-notes-medical"></i> Hist. Psicológico</button>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- Aba: Dados gerais (somente leitura) -->
+      <div id="tab-dados" class="tab-panel active">
+        <div class="sec-label">Identificação</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-hash"></i> Código PM</label>
+            <input type="text" value="465" readonly>
+          </div>
+          <div class="field span2">
+            <label><i class="ti ti-user"></i> Nome completo</label>
+            <input type="text" value="Marianne Oliveira" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-id-badge-2"></i> CPF</label>
+            <input type="text" value="123.456.789-00" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-calendar-event"></i> Idade</label>
+            <input type="text" value="20 anos" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-gender-bigender"></i> Gênero</label>
+            <input type="text" value="Feminino" readonly>
+          </div>
+        </div>
+        <div class="sec-label">Formação</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-book"></i> Curso</label>
+            <input type="text" value="Letramento Digital" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-certificate"></i> Escolaridade</label>
+            <input type="text" value="Ensino Médio Completo" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-briefcase"></i> Ocupação</label>
+            <input type="text" value="Estudante" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-notebook"></i> Programa</label>
+            <input type="text" value="Programa Pulse Mais" readonly>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aba: Socioeconômico -->
+      <div id="tab-socio" class="tab-panel">
+        <div class="sec-label">Dados socioeconômicos</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-chart-pie"></i> Perfil socioeconômico</label>
+            <input type="text" value="Classe C" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-currency-dollar"></i> Renda mensal familiar</label>
+            <input type="text" value="R$ 1.800,00" readonly>
+          </div>
+          <div class="field span2">
+            <label>Nível de jornada</label>
+            <input type="text" value="Capacitado" readonly>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aba: Contato -->
+      <div id="tab-contato" class="tab-panel">
+        <div class="sec-label">Informações de contato</div>
+        <div class="field-grid">
+          <div class="field">
+            <label><i class="ti ti-mail"></i> E-mail</label>
+            <input type="text" value="marianne@pulsemais.org.br" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-phone"></i> Telefone</label>
+            <input type="text" value="(11) 98765-4321" readonly>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aba: Desempenho -->
+      <div id="tab-desempenho" class="tab-panel">
+        <div class="sec-label">Indicadores</div>
+        <div class="perf-cards">
+          <div class="perf-card">
+            <div class="perf-card__label">Frequência</div>
+            <div class="perf-card__value">87%</div>
+            <div class="perf-bar"><div class="perf-bar__fill" style="width:87%;background:var(--green-600)"></div></div>
+            <div class="perf-card__sub">Meta: 75% · <span style="color:var(--green-600);font-weight:600;">Acima da meta</span></div>
+          </div>
+          <div class="perf-card">
+            <div class="perf-card__label">Engajamento</div>
+            <div class="perf-card__value">7 <span class="perf-card__unit">/ 10</span></div>
+            <div class="eng-stars" id="eng-stars-view"></div>
+            <div class="perf-card__sub">Baseado em participação e entregas</div>
+          </div>
+          <div class="perf-card">
+            <div class="perf-card__label">Tipo de presença</div>
+            <div class="presence-badge ead">EAD</div>
+            <div class="perf-card__sub" style="margin-top:12px;">100% das aulas no formato online</div>
+          </div>
+        </div>
+        <div class="sec-label" style="margin-top:20px;">Notas — Letramento Digital</div>
+        <div class="notas-grid">
+          <div class="nota-item"><span class="nota-modulo">Intro. Digital</span><div class="nota-bar-wrap"><div class="nota-bar"><div class="nota-bar__fill" style="width:92%;background:var(--green-600)"></div></div></div><span class="nota-val" style="color:var(--green-600)">9,2</span></div>
+          <div class="nota-item"><span class="nota-modulo">Seg. Online</span><div class="nota-bar-wrap"><div class="nota-bar"><div class="nota-bar__fill" style="width:85%;background:var(--green-600)"></div></div></div><span class="nota-val" style="color:var(--green-600)">8,5</span></div>
+          <div class="nota-item"><span class="nota-modulo">Ferramentas</span><div class="nota-bar-wrap"><div class="nota-bar"><div class="nota-bar__fill" style="width:81%;background:var(--green-600)"></div></div></div><span class="nota-val" style="color:var(--green-600)">8,1</span></div>
+          <div class="nota-item"><span class="nota-modulo">Noções Dig.</span><div class="nota-bar-wrap"><div class="nota-bar"><div class="nota-bar__fill" style="width:78%;background:var(--green-600)"></div></div></div><span class="nota-val" style="color:var(--green-600)">7,8</span></div>
+          <div class="nota-item"><span class="nota-modulo">Ger. Arquivos</span><div class="nota-bar-wrap"><div class="nota-bar"><div class="nota-bar__fill" style="width:74%;background:var(--amber-500)"></div></div></div><span class="nota-val" style="color:var(--amber-700)">7,4 ★</span></div>
+        </div>
+        <div class="nota-media-row">
+          <span class="nota-media-label">Nota média geral</span>
+          <span class="nota-media-val">8,2</span>
+        </div>
+        <div class="sec-label" style="margin-top:20px;">Jornada — Programa Pulse Mais</div>
+        <div class="journey">
+          <div class="journey-step"><div class="journey-node done">1</div><div class="journey-label">Intro. Digital</div></div>
+          <div class="journey-line done"></div>
+          <div class="journey-step"><div class="journey-node done">2</div><div class="journey-label">Seg. Online</div></div>
+          <div class="journey-line done"></div>
+          <div class="journey-step"><div class="journey-node done">3</div><div class="journey-label">Ferramentas</div></div>
+          <div class="journey-line done"></div>
+          <div class="journey-step"><div class="journey-node done">4</div><div class="journey-label">Noções Dig.</div></div>
+          <div class="journey-line done"></div>
+          <div class="journey-step"><div class="journey-node current">5</div><div class="journey-label">Ger. Arquivos</div></div>
+        </div>
+        <div class="journey-legend">
+          <span><span class="jl-dot done"></span>Concluído</span>
+          <span><span class="jl-dot current"></span>Em andamento</span>
+          <span><span class="jl-dot pending"></span>Pendente</span>
+        </div>
+      </div>
+
+      <!-- Aba: Histórico Psicológico -->
+      <div id="tab-hist" class="tab-panel">
+
+        <!-- Formulário de nova anotação -->
+        <div class="sec-label">Nova anotação</div>
+        <div class="psico-form">
+          <div class="psico-form__row">
+            <div class="psico-field">
+              <label><i class="ti ti-calendar"></i> Data da consulta</label>
+              <input type="date" id="pf-data">
+            </div>
+            <div class="psico-field">
+              <label><i class="ti ti-stethoscope"></i> Tipo de atendimento</label>
+              <select id="pf-tipo">
+                <option value="">Selecione...</option>
+                <option>Sessão individual</option>
+                <option>Triagem inicial</option>
+                <option>Acompanhamento</option>
+                <option>Grupo de apoio</option>
+                <option>Orientação familiar</option>
+                <option>Encaminhamento</option>
+              </select>
+            </div>
+            <div class="psico-field">
+              <label><i class="ti ti-user-heart"></i> Psicólogo(a)</label>
+              <input type="text" id="pf-psi" placeholder="Nome do profissional">
+            </div>
+          </div>
+          <div class="psico-field psico-field--full">
+            <label><i class="ti ti-notes"></i> Anotação</label>
+            <textarea id="pf-texto" rows="4" placeholder="Registre as observações da consulta..."></textarea>
+          </div>
+          <div class="psico-field psico-field--full">
+            <label><i class="ti ti-tag"></i> Label</label>
+            <div class="psico-label-picker" id="pf-label-picker">
+              <button type="button" class="psico-label-btn selected" data-label="" onclick="pickLabel(this)">Nenhum</button>
+              <button type="button" class="psico-label-btn psico-label-btn--atencao" data-label="atencao" onclick="pickLabel(this)"><i class="ti ti-alert-triangle" style="font-size:11px;"></i> Atenção</button>
+              <button type="button" class="psico-label-btn psico-label-btn--observacao" data-label="observacao" onclick="pickLabel(this)"><i class="ti ti-eye" style="font-size:11px;"></i> Observação</button>
+            </div>
+            <input type="hidden" id="pf-label" value="">
+          </div>
+          <div class="psico-form__actions">
+            <span class="psico-form__hint"><i class="ti ti-lock" style="font-size:12px;"></i> Acesso restrito a profissionais autorizados</span>
+            <button class="btn btn-psico" onclick="registrarAnotacao()"><i class="ti ti-plus"></i> Registrar anotação</button>
+          </div>
+        </div>
+
+        <!-- Anotações anteriores -->
+        <div class="sec-label" style="margin-top:20px;">Anotações anteriores</div>
+        <div class="psico-list" id="psico-list">
+          <!-- preenchido pelo JS -->
+        </div>
+
+      </div>
+
+    </div><!-- /modal-body -->
+
+    <div class="modal-footer">
+      <div class="footer-left">
+        <i class="ti ti-eye" style="font-size:13px;"></i>
+        Visualização — dados somente leitura
+      </div>
+      <div class="footer-right">
+        <button class="btn btn-primary" onclick="closeModal()"><i class="ti ti-x"></i> Fechar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <i class="ti ti-circle-check"></i> Anotação registrada com sucesso
+</div>
+
+<script src="../js/pages/perfilAlunoHist.js"></script>
+</body>
+</html>

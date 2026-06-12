@@ -1,4 +1,4 @@
-﻿import { pool } from './pool';
+import { pool } from './pool';
 
 type AlunoRow = { id_aluno: number };
 type MembroRow = { id_membro: number };
@@ -14,7 +14,7 @@ async function seed() {
     await client.query('BEGIN');
 
     await client.query(`
-      TRUNCATE TABLE 
+      TRUNCATE TABLE
         participacao,
         notificacao,
         oportunidade,
@@ -99,126 +99,243 @@ async function seed() {
 
     const atividades = atividadesResult.rows.map((row: AtividadeRow) => row.id_atividade);
 
+    // -------------------------------------------------------------------------
+    // participacao — unnest para evitar mistura de $N com literais e NULL
+    // Mapeamento original: $1–$20 = alunos[0–19], $21–$26 = atividades[0–5]
+    // -------------------------------------------------------------------------
     await client.query(
-      `
-      INSERT INTO participacao (id_aluno, id_atividade, status_part, nota, certificado)
-      VALUES
-        ($1, $21, true, 8.7, true),
-        ($1, $22, true, 9.1, true),
-        ($2, $21, true, 7.8, true),
-        ($2, $23, true, 8.5, true),
-        ($3, $25, true, 9.4, true),
-        ($3, $24, true, 9.0, true),
-        ($4, $21, true, 7.2, false),
-        ($4, $24, false, NULL, false),
-        ($5, $22, true, 8.0, true),
-        ($5, $23, true, 8.3, true),
-        ($6, $25, true, 9.7, true),
-        ($6, $26, true, 9.2, true),
-        ($7, $22, true, 8.6, true),
-        ($7, $25, true, 8.9, true),
-        ($8, $26, true, 9.6, true),
-        ($8, $24, true, 9.1, true),
-        ($9, $21, true, 7.5, false),
-        ($10, $22, true, 8.8, true),
-        ($10, $23, true, 8.4, true),
-        ($11, $23, true, 7.9, true),
-        ($12, $21, true, 7.0, false),
-        ($12, $24, true, 8.1, true),
-        ($13, $25, true, 9.8, true),
-        ($13, $26, true, 9.3, true),
-        ($14, $22, true, 7.6, false),
-        ($15, $26, true, 9.5, true),
-        ($16, $22, true, 8.2, true),
-        ($17, $23, true, 8.0, true),
-        ($18, $21, true, 7.4, false),
-        ($20, $25, true, 9.0, true);
-      `,
-      [...alunos, ...atividades]
+      `INSERT INTO participacao (id_aluno, id_atividade, status_part, nota, certificado)
+       SELECT * FROM unnest($1::int[], $2::int[], $3::bool[], $4::numeric[], $5::bool[])`,
+      [
+        // id_aluno (30 linhas)
+        [
+          alunos[0],  alunos[0],  alunos[1],  alunos[1],  alunos[2],  alunos[2],
+          alunos[3],  alunos[3],  alunos[4],  alunos[4],  alunos[5],  alunos[5],
+          alunos[6],  alunos[6],  alunos[7],  alunos[7],  alunos[8],
+          alunos[9],  alunos[9],  alunos[10], alunos[11], alunos[11],
+          alunos[12], alunos[12], alunos[13], alunos[14], alunos[15],
+          alunos[16], alunos[17], alunos[19]
+        ],
+        // id_atividade (30 linhas)
+        [
+          atividades[0], atividades[1], atividades[0], atividades[2], atividades[4], atividades[3],
+          atividades[0], atividades[3], atividades[1], atividades[2], atividades[4], atividades[5],
+          atividades[1], atividades[4], atividades[5], atividades[3], atividades[0],
+          atividades[1], atividades[2], atividades[2], atividades[0], atividades[3],
+          atividades[4], atividades[5], atividades[1], atividades[5], atividades[1],
+          atividades[2], atividades[0], atividades[4]
+        ],
+        // status_part (30 linhas)
+        [
+          true,  true,  true,  true,  true,  true,
+          true,  false, true,  true,  true,  true,
+          true,  true,  true,  true,  true,
+          true,  true,  true,  true,  true,
+          true,  true,  true,  true,  true,
+          true,  true,  true
+        ],
+        // nota — null representa NULL no banco (30 linhas)
+        [
+          8.7,  9.1,  7.8,  8.5,  9.4,  9.0,
+          7.2,  null, 8.0,  8.3,  9.7,  9.2,
+          8.6,  8.9,  9.6,  9.1,  7.5,
+          8.8,  8.4,  7.9,  7.0,  8.1,
+          9.8,  9.3,  7.6,  9.5,  8.2,
+          8.0,  7.4,  9.0
+        ] as (number | null)[],
+        // certificado (30 linhas)
+        [
+          true,  true,  true,  true,  true,  true,
+          false, false, true,  true,  true,  true,
+          true,  true,  true,  true,  false,
+          true,  true,  true,  false, true,
+          true,  true,  false, true,  true,
+          true,  false, true
+        ]
+      ]
     );
 
+    // -------------------------------------------------------------------------
+    // oportunidade — unnest para evitar mistura de literais com $N não-sequenciais
+    // -------------------------------------------------------------------------
     await client.query(
-      `
-      INSERT INTO oportunidade (titulo, descricao, tipo, data_publicacao, prazo_inscricao, id_membro)
-      VALUES
-        ('Estágio em Dados na Parceira Aurora Tech', 'Vaga para jovens em formação inicial em dados e tecnologia.', 'estagio', CURRENT_DATE, '2026-06-30', $1),
-        ('Bolsa para Curso de Front-End', 'Bolsa integral para curso introdutório de HTML, CSS e JavaScript.', 'bolsa', CURRENT_DATE, '2026-07-10', $2),
-        ('Evento de Carreiras em Tecnologia', 'Encontro com empresas parceiras e profissionais de tecnologia.', 'evento', CURRENT_DATE, '2026-06-25', $3),
-        ('Voluntariado em Mentoria de LinkedIn', 'Oportunidade para apoiar colegas na construção de perfis profissionais.', 'voluntariado', CURRENT_DATE, '2026-07-15', $5),
-        ('Curso de SQL para Iniciantes', 'Curso prático para introdução a bancos de dados e consultas SQL.', 'curso', CURRENT_DATE, '2026-07-20', $2),
-        ('Vaga Júnior em Suporte Técnico', 'Oportunidade de primeiro emprego na área de tecnologia.', 'emprego', CURRENT_DATE, '2026-07-05', $1);
-      `,
-      membros
+      `INSERT INTO oportunidade (titulo, descricao, tipo, data_publicacao, prazo_inscricao, id_membro)
+       SELECT * FROM unnest($1::text[], $2::text[], $3::tipo_oportunidade_enum[], $4::date[], $5::date[], $6::int[])`,
+      [
+        [
+          'Estágio em Dados na Parceira Aurora Tech',
+          'Bolsa para Curso de Front-End',
+          'Evento de Carreiras em Tecnologia',
+          'Voluntariado em Mentoria de LinkedIn',
+          'Curso de SQL para Iniciantes',
+          'Vaga Júnior em Suporte Técnico'
+        ],
+        [
+          'Vaga para jovens em formação inicial em dados e tecnologia.',
+          'Bolsa integral para curso introdutório de HTML, CSS e JavaScript.',
+          'Encontro com empresas parceiras e profissionais de tecnologia.',
+          'Oportunidade para apoiar colegas na construção de perfis profissionais.',
+          'Curso prático para introdução a bancos de dados e consultas SQL.',
+          'Oportunidade de primeiro emprego na área de tecnologia.'
+        ],
+        ['estagio', 'bolsa', 'evento', 'voluntariado', 'curso', 'emprego'],
+        [null, null, null, null, null, null] as (string | null)[],
+        ['2026-06-30', '2026-07-10', '2026-06-25', '2026-07-15', '2026-07-20', '2026-07-05'],
+        [membros[0], membros[1], membros[2], membros[4], membros[1], membros[0]]
+      ]
     );
 
+    // -------------------------------------------------------------------------
+    // agenda — unnest para evitar mistura de $N com literais e o inteiro 1
+    // Mapeamento original: $1–$20 = alunos[0–19], $21–$25 = membros[0–4]
+    // -------------------------------------------------------------------------
     await client.query(
-      `
-      INSERT INTO agenda (tipo_user, registro, data, hora_inicio, hora_fim, status, id_membro, id_aluno)
-      VALUES
-        ('aluno', 'Mentoria individual sobre próximos passos de carreira', '2026-06-16', '14:00', '15:00', 1, $21, $1),
-        ('aluno', 'Acompanhamento de frequência e engajamento', '2026-06-17', '10:00', '10:45', 1, $22, $2),
-        ('membro_equipe', 'Reunião de revisão de indicadores do dashboard', '2026-06-18', '09:30', '10:30', 1, $21, $3),
-        ('aluno', 'Sessão de orientação para processo seletivo', '2026-06-19', '16:00', '17:00', 1, $23, $5),
-        ('aluno', 'Acompanhamento psicossocial preventivo', '2026-06-20', '11:00', '11:50', 1, $24, $11),
-        ('aluno', 'Revisão de currículo e perfil profissional', '2026-06-23', '15:00', '16:00', 1, $25, $16),
-        ('membro_equipe', 'Planejamento de atividades do mês', '2026-06-24', '13:30', '14:30', 1, $22, $7),
-        ('aluno', 'Check-in de jornada e atualização de status', '2026-06-25', '10:30', '11:15', 1, $21, $17),
-        ('aluno', 'Preparação para entrevista técnica', '2026-06-26', '17:00', '18:00', 1, $23, $20),
-        ('aluno', 'Reunião de acompanhamento de ex-aluno', '2026-06-27', '09:00', '09:45', 1, $21, $15);
-      `,
-      [...alunos, ...membros]
+      `INSERT INTO agenda (tipo_user, registro, data, hora_inicio, hora_fim, status, id_membro, id_aluno)
+       SELECT * FROM unnest($1::tipo_usuario_agenda_enum[], $2::text[], $3::date[], $4::time[], $5::time[], $6::int[], $7::int[], $8::int[])`,
+      [
+        // tipo_user (10 linhas)
+        ['aluno', 'aluno', 'membro_equipe', 'aluno', 'aluno', 'aluno', 'membro_equipe', 'aluno', 'aluno', 'aluno'],
+        // registro (10 linhas)
+        [
+          'Mentoria individual sobre próximos passos de carreira',
+          'Acompanhamento de frequência e engajamento',
+          'Reunião de revisão de indicadores do dashboard',
+          'Sessão de orientação para processo seletivo',
+          'Acompanhamento psicossocial preventivo',
+          'Revisão de currículo e perfil profissional',
+          'Planejamento de atividades do mês',
+          'Check-in de jornada e atualização de status',
+          'Preparação para entrevista técnica',
+          'Reunião de acompanhamento de ex-aluno'
+        ],
+        // data (10 linhas)
+        ['2026-06-16', '2026-06-17', '2026-06-18', '2026-06-19', '2026-06-20', '2026-06-23', '2026-06-24', '2026-06-25', '2026-06-26', '2026-06-27'],
+        // hora_inicio (10 linhas)
+        ['14:00', '10:00', '09:30', '16:00', '11:00', '15:00', '13:30', '10:30', '17:00', '09:00'],
+        // hora_fim (10 linhas)
+        ['15:00', '10:45', '10:30', '17:00', '11:50', '16:00', '14:30', '11:15', '18:00', '09:45'],
+        // status (10 linhas) — sempre 1 (ativo)
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        // id_membro (10 linhas)
+        [membros[0], membros[1], membros[0], membros[2], membros[3], membros[4], membros[1], membros[0], membros[2], membros[0]],
+        // id_aluno (10 linhas)
+        [alunos[0], alunos[1], alunos[2], alunos[4], alunos[10], alunos[15], alunos[6], alunos[16], alunos[19], alunos[14]]
+      ]
     );
 
+    // -------------------------------------------------------------------------
+    // notificacao — unnest para evitar mistura de $N com strings literais
+    // Mapeamento original: $1–$20 = alunos[0–19], $21–$25 = membros[0–4],
+    //                      $26–$30 = psicologos[0–4]
+    // -------------------------------------------------------------------------
     await client.query(
-      `
-      INSERT INTO notificacao (titulo, id_aluno, mensagem, tipo, id_remetente, tipo_remetente, nome_remetente)
-      VALUES
-        ('Convite para mentoria individual', $1, 'Você foi convidado para uma mentoria individual sobre planejamento de carreira.', 'convite', $23, 'membro_equipe', 'Bianca Nogueira'),
-        ('Alerta de acompanhamento', $2, 'Foi identificado um ponto de atenção em sua frequência. Procure a equipe para apoio.', 'alerta', $22, 'membro_equipe', 'Mateus Albuquerque'),
-        ('Oportunidade de estágio', $3, 'Uma nova oportunidade de estágio em dados foi publicada para seu perfil.', 'informativo', $21, 'membro_equipe', 'Helena Duarte'),
-        ('Sessão psicossocial agendada', $5, 'Sua sessão de acompanhamento foi agendada. Confira sua agenda.', 'informativo', $26, 'psicologo', 'Isadora Valença'),
-        ('Prazo de inscrição próximo', $7, 'O prazo para inscrição na bolsa de front-end está próximo do encerramento.', 'urgente', $22, 'membro_equipe', 'Mateus Albuquerque'),
-        ('Check-in de bem-estar', $11, 'Gostaríamos de saber como você está se sentindo nesta etapa da jornada.', 'informativo', $29, 'psicologo', 'Camila Furtado'),
-        ('Convite para evento de carreiras', $12, 'Você foi selecionado para participar do evento de carreiras em tecnologia.', 'convite', $23, 'membro_equipe', 'Bianca Nogueira'),
-        ('Atualização de perfil pendente', $14, 'Atualize seus dados para receber oportunidades mais aderentes ao seu momento.', 'alerta', $24, 'membro_equipe', 'Rafael Siqueira'),
-        ('Feedback disponível', $16, 'Seu feedback de participação no workshop já está disponível.', 'informativo', $25, 'membro_equipe', 'Clara Monteiro'),
-        ('Acompanhamento prioritário', $17, 'Foi aberta uma prioridade de acompanhamento para apoiar sua permanência na jornada.', 'urgente', $27, 'psicologo', 'André Lacerda');
-      `,
-      [...alunos, ...membros, ...psicologos]
+      `INSERT INTO notificacao (titulo, id_aluno, mensagem, tipo, id_remetente, tipo_remetente, nome_remetente)
+       SELECT * FROM unnest($1::text[], $2::int[], $3::text[], $4::tipo_notificacao_enum[], $5::int[], $6::tipo_remetente_enum[], $7::text[])`,
+      [
+        // titulo (10 linhas)
+        [
+          'Convite para mentoria individual',
+          'Alerta de acompanhamento',
+          'Oportunidade de estágio',
+          'Sessão psicossocial agendada',
+          'Prazo de inscrição próximo',
+          'Check-in de bem-estar',
+          'Convite para evento de carreiras',
+          'Atualização de perfil pendente',
+          'Feedback disponível',
+          'Acompanhamento prioritário'
+        ],
+        // id_aluno (10 linhas)
+        [alunos[0], alunos[1], alunos[2], alunos[4], alunos[6], alunos[10], alunos[11], alunos[13], alunos[15], alunos[16]],
+        // mensagem (10 linhas)
+        [
+          'Você foi convidado para uma mentoria individual sobre planejamento de carreira.',
+          'Foi identificado um ponto de atenção em sua frequência. Procure a equipe para apoio.',
+          'Uma nova oportunidade de estágio em dados foi publicada para seu perfil.',
+          'Sua sessão de acompanhamento foi agendada. Confira sua agenda.',
+          'O prazo para inscrição na bolsa de front-end está próximo do encerramento.',
+          'Gostaríamos de saber como você está se sentindo nesta etapa da jornada.',
+          'Você foi selecionado para participar do evento de carreiras em tecnologia.',
+          'Atualize seus dados para receber oportunidades mais aderentes ao seu momento.',
+          'Seu feedback de participação no workshop já está disponível.',
+          'Foi aberta uma prioridade de acompanhamento para apoiar sua permanência na jornada.'
+        ],
+        // tipo (10 linhas)
+        ['convite', 'alerta', 'informativo', 'informativo', 'urgente', 'informativo', 'convite', 'alerta', 'informativo', 'urgente'],
+        // id_remetente (10 linhas)
+        [membros[2], membros[1], membros[0], psicologos[0], membros[1], psicologos[3], membros[2], membros[3], membros[4], psicologos[1]],
+        // tipo_remetente (10 linhas)
+        ['membro_equipe', 'membro_equipe', 'membro_equipe', 'psicologo', 'membro_equipe', 'psicologo', 'membro_equipe', 'membro_equipe', 'membro_equipe', 'psicologo'],
+        // nome_remetente (10 linhas)
+        ['Bianca Nogueira', 'Mateus Albuquerque', 'Helena Duarte', 'Isadora Valença', 'Mateus Albuquerque', 'Camila Furtado', 'Bianca Nogueira', 'Rafael Siqueira', 'Clara Monteiro', 'André Lacerda']
+      ]
     );
 
+    // -------------------------------------------------------------------------
+    // label — unnest para evitar mistura de $N com strings literais
+    // Mapeamento original: $1–$20 = alunos[0–19], $21–$25 = psicologos[0–4]
+    // -------------------------------------------------------------------------
     await client.query(
-      `
-      INSERT INTO "label" (descricao, tipo_label, id_aluno, id_psi)
-      VALUES
-        ('Aluno com alto engajamento em atividades práticas', 'perfil', $1, $21),
-        ('Necessita acompanhamento por queda recente de frequência', 'risco', $2, $22),
-        ('Interesse declarado em carreira de dados', 'interesse', $3, $21),
-        ('Acompanhamento preventivo de adaptação à jornada', 'acompanhamento', $5, $24),
-        ('Prioridade para oportunidades de estágio', 'prioridade', $7, $22),
-        ('Perfil indicado para mentoria de entrevistas', 'perfil', $10, $23),
-        ('Atenção ao equilíbrio entre trabalho e estudos', 'risco', $11, $24),
-        ('Interesse em desenvolvimento front-end', 'interesse', $14, $21),
-        ('Acompanhamento de transição para egresso', 'acompanhamento', $15, $25),
-        ('Prioridade para rede de talentos', 'prioridade', $20, $22);
-      `,
-      [...alunos, ...psicologos]
+      `INSERT INTO "label" (descricao, tipo_label, id_aluno, id_psi)
+       SELECT * FROM unnest($1::text[], $2::tipo_label_enum[], $3::int[], $4::int[])`,
+      [
+        // descricao (10 linhas)
+        [
+          'Aluno com alto engajamento em atividades práticas',
+          'Necessita acompanhamento por queda recente de frequência',
+          'Interesse declarado em carreira de dados',
+          'Acompanhamento preventivo de adaptação à jornada',
+          'Prioridade para oportunidades de estágio',
+          'Perfil indicado para mentoria de entrevistas',
+          'Atenção ao equilíbrio entre trabalho e estudos',
+          'Interesse em desenvolvimento front-end',
+          'Acompanhamento de transição para egresso',
+          'Prioridade para rede de talentos'
+        ],
+        // tipo_label (10 linhas)
+        ['perfil', 'risco', 'interesse', 'acompanhamento', 'prioridade', 'perfil', 'risco', 'interesse', 'acompanhamento', 'prioridade'],
+        // id_aluno (10 linhas)
+        [alunos[0], alunos[1], alunos[2], alunos[4], alunos[6], alunos[9], alunos[10], alunos[13], alunos[14], alunos[19]],
+        // id_psi (10 linhas)
+        [psicologos[0], psicologos[1], psicologos[0], psicologos[3], psicologos[1], psicologos[2], psicologos[3], psicologos[0], psicologos[4], psicologos[1]]
+      ]
     );
 
+    // -------------------------------------------------------------------------
+    // historico_psicologico — unnest para evitar mistura de $N com strings
+    // Mapeamento original: $1–$20 = alunos[0–19], $21–$25 = psicologos[0–4]
+    // -------------------------------------------------------------------------
     await client.query(
-      `
-      INSERT INTO historico_psicologico (observacao, titulo, id_aluno, id_psi)
-      VALUES
-        ('Aluno relatou ansiedade antes de entrevistas, mas demonstrou boa abertura para estratégias de preparação.', 'Ansiedade em processo seletivo', $2, $22),
-        ('Aluna apresentou melhora na autoconfiança após participação em mentorias e oficinas.', 'Evolução de autoconfiança', $5, $21),
-        ('Registro de acompanhamento preventivo por sobrecarga entre estudos, estágio e atividades da Pulse Mais.', 'Sobrecarga de rotina', $7, $24),
-        ('Aluno demonstra necessidade de reforço na organização de prazos e tarefas da jornada.', 'Organização de rotina', $11, $23),
-        ('Aluna relatou maior segurança para interações profissionais após vivência em empresa parceira.', 'Segurança em ambiente profissional', $13, $21),
-        ('Aluno egresso em fase de adaptação ao primeiro emprego em tecnologia.', 'Adaptação ao primeiro emprego', $15, $25),
-        ('Registro de atenção por oscilação de frequência e participação nas últimas atividades.', 'Oscilação de engajamento', $17, $22),
-        ('Aluna demonstrou boa evolução emocional durante o programa de mentoria.', 'Evolução no programa de mentoria', $20, $24);
-      `,
-      [...alunos, ...psicologos]
+      `INSERT INTO historico_psicologico (observacao, titulo, id_aluno, id_psi)
+       SELECT * FROM unnest($1::text[], $2::text[], $3::int[], $4::int[])`,
+      [
+        // observacao (8 linhas)
+        [
+          'Aluno relatou ansiedade antes de entrevistas, mas demonstrou boa abertura para estratégias de preparação.',
+          'Aluna apresentou melhora na autoconfiança após participação em mentorias e oficinas.',
+          'Registro de acompanhamento preventivo por sobrecarga entre estudos, estágio e atividades da Pulse Mais.',
+          'Aluno demonstra necessidade de reforço na organização de prazos e tarefas da jornada.',
+          'Aluna relatou maior segurança para interações profissionais após vivência em empresa parceira.',
+          'Aluno egresso em fase de adaptação ao primeiro emprego em tecnologia.',
+          'Registro de atenção por oscilação de frequência e participação nas últimas atividades.',
+          'Aluna demonstrou boa evolução emocional durante o programa de mentoria.'
+        ],
+        // titulo (8 linhas)
+        [
+          'Ansiedade em processo seletivo',
+          'Evolução de autoconfiança',
+          'Sobrecarga de rotina',
+          'Organização de rotina',
+          'Segurança em ambiente profissional',
+          'Adaptação ao primeiro emprego',
+          'Oscilação de engajamento',
+          'Evolução no programa de mentoria'
+        ],
+        // id_aluno (8 linhas)
+        [alunos[1], alunos[4], alunos[6], alunos[10], alunos[12], alunos[14], alunos[16], alunos[19]],
+        // id_psi (8 linhas)
+        [psicologos[1], psicologos[0], psicologos[3], psicologos[2], psicologos[0], psicologos[4], psicologos[1], psicologos[3]]
+      ]
     );
 
     await client.query('COMMIT');
