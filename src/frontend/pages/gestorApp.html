@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse Manager — Gestor</title>
+<!-- Layout base do Gestor -->
+<link rel="stylesheet" href="../css/themes/guiaGestor.css">
+<link rel="stylesheet" href="../css/components.css">
+<!-- Fontes e ícones -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<!-- Estilos das views -->
+<link rel="stylesheet" href="../css/pages/inicioGestor.css">
+<link rel="stylesheet" href="../css/pages/dashboardGestor.css">
+<!-- Estilos do modal -->
+<link rel="stylesheet" href="../css/pages/modalConfEquipe.css">
+<style>
+  /* ── SPA: container de conteúdo sem padding próprio ── */
+  .paginaConteudo {
+    padding: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: #EEF1F4 !important;
+  }
+
+  /* ── Cada view ocupa todo o espaço e tem seu próprio padding ── */
+  .spa-view {
+    flex: 1;
+    overflow: hidden;
+    display: none;          /* padrão oculto */
+    flex-direction: column;
+    background: #EEF1F4;
+  }
+
+  /* ── Corrigir conflitos CSS entre inicioGestor e dashboardGestor ── */
+  /* dashboardGestor.css é carregado por último e vence; re-aplica os
+     valores do inicioGestor apenas dentro da sua view */
+  #view-inicio .stat-card  { padding: 16px 22px 14px; border-radius: 14px; }
+  #view-inicio .sc-value   { font-size: 44px; }
+  #view-inicio .charts-row { grid-template-columns: 1fr 420px; }
+</style>
+</head>
+<body>
+
+  <!-- ========== MENU LATERAL ========== -->
+  <aside class="menuLateral" id="menuLateral">
+    <div class="menuLateral__logo">
+      <div class="menuLateral__logo-brand">
+        <img src="../assets/images/logoIcon.png" alt="Pulse Manager" class="menuLateral__logo-icon" />
+        <span class="menuLateral__logo-name">PULSE<br>MANAGER</span>
+      </div>
+      <span class="menuLateral__logo-role"></span>
+    </div>
+    <nav class="menuLateral__nav">
+      <span class="menuLateral__section-label">Menu Principal</span>
+      <ul class="menuLateral__menu"></ul>
+    </nav>
+    <footer class="menuLateral__footer">
+      <a href="#" class="menuLateral__settings menuLateral__link">
+        <i class="ti ti-settings menuLateral__icon"></i>
+        <span>Configurações</span>
+      </a>
+      <div class="menuLateral__user">
+        <div class="menuLateral__avatar"></div>
+        <div class="menuLateral__user-info">
+          <span class="menuLateral__user-name"></span>
+          <span class="menuLateral__user-role"></span>
+        </div>
+      </div>
+    </footer>
+  </aside>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <div class="paginaMain" id="main-content">
+
+    <header class="menuSuperior" id="menuSuperior">
+      <span class="menuSuperior__breadcrumb"></span>
+      <div class="menuSuperior__search">
+        <i class="ti ti-search menuSuperior__search-icon"></i>
+        <input type="text" class="menuSuperior__search-input" placeholder="Buscar" autocomplete="off" />
+      </div>
+      <div class="menuSuperior__actions">
+        <button class="menuSuperior__bell" title="Notificações"><i class="ti ti-bell"></i></button>
+        <button class="menuSuperior__avatar-btn" title="Perfil"></button>
+      </div>
+    </header>
+
+    <main class="paginaConteudo">
+
+      <!-- ══════════════════════════════════════════════════════
+           VIEW: INÍCIO  (inicioGestor)
+      ══════════════════════════════════════════════════════ -->
+      <div id="view-inicio" class="spa-view" style="padding:22px 40px 16px; gap:16px;">
+
+        <div class="page-header">
+          <h1>Visão Geral da Turma</h1>
+          <p>Segunda-feira, 26 de abril de 2025 · Semana 12 de 20</p>
+        </div>
+
+        <div class="stat-row">
+
+          <div class="stat-card stat-card--blue">
+            <div class="sc-header">
+              <div class="sc-label">Alunos Conectados</div>
+              <div class="sc-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+            </div>
+            <div class="sc-value">42</div>
+            <div class="sc-footer"><span class="badge-up">▲ +8%</span><span class="sc-sub">de 48 total</span></div>
+          </div>
+
+          <div class="stat-card stat-card--green">
+            <div class="sc-header">
+              <div class="sc-label">Alunos Transformados</div>
+              <div class="sc-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                  <polyline points="16 7 22 7 22 13"/>
+                </svg>
+              </div>
+            </div>
+            <div class="sc-value">31</div>
+            <div class="sc-footer"><span class="badge-up">▲ +5%</span><span class="sc-sub">este mês</span></div>
+          </div>
+
+          <div class="stat-card stat-card--amber">
+            <div class="sc-header">
+              <div class="sc-label">Evolução da Turma</div>
+              <div class="sc-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                  <polyline points="16 7 22 7 22 13"/>
+                </svg>
+              </div>
+            </div>
+            <div class="sc-value">73<span class="unit">%</span></div>
+            <div class="sc-footer"><span class="badge-up">▲ +12%</span></div>
+          </div>
+
+        </div>
+
+        <div class="charts-row">
+
+          <div class="chart-card">
+            <div class="chart-card__head">
+              <div>
+                <div class="chart-card__title">Alunos por Curso — Programa Pulse Mais</div>
+                <div class="chart-card__sub">Distribuição atual de alunos ativos por curso</div>
+              </div>
+              <button class="chart-btn">Mês</button>
+            </div>
+            <div style="flex:1;min-height:0;position:relative;">
+              <canvas id="g-barChart"></canvas>
+            </div>
+            <div class="legend-row">
+              <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>Prog. Pulse Mais</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#33B458"></div>Prog. Mentoria</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#FFD927"></div>Em transição</div>
+            </div>
+          </div>
+
+          <div class="chart-card activity-panel">
+            <div class="activity-head">
+              <h2>Últimas Atividades</h2>
+              <a href="#">Ver todas →</a>
+            </div>
+            <div class="activity-sub">Atualizações recentes da turma</div>
+            <div class="activity-list" id="activity-list"></div>
+            <div class="activity-pagination">
+              <span class="pg-total" id="pg-total">Exibindo 5 de 48 atividades</span>
+              <button class="pg-btn" id="pg-prev">‹</button>
+              <span id="pg-numbers"></span>
+              <button class="pg-btn" id="pg-next">›</button>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- fim #view-inicio -->
+
+      <!-- ══════════════════════════════════════════════════════
+           VIEW: ALUNOS  (em desenvolvimento pelo colega)
+      ══════════════════════════════════════════════════════ -->
+      <div id="view-alunos" class="spa-view" style="align-items:center; justify-content:center; background:#EEF1F4;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;">
+          <div style="width:72px;height:72px;background:#EDF3F9;border-radius:18px;display:flex;align-items:center;justify-content:center;">
+            <i class="ti ti-users" style="font-size:34px;color:#003870;"></i>
+          </div>
+          <h2 style="font-size:20px;font-weight:700;color:#11161D;font-family:'Poppins',sans-serif;">Alunos</h2>
+          <p style="font-size:14px;color:#97A1AE;max-width:380px;font-family:'Poppins',sans-serif;line-height:1.6;">
+            Esta tela está sendo desenvolvida pela equipe.<br>Em breve estará disponível no sistema.
+          </p>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#EDF3F9;border:1px solid #D6E2EF;border-radius:8px;padding:8px 18px;font-size:12px;font-weight:600;color:#003870;font-family:'Poppins',sans-serif;">
+            <i class="ti ti-tools"></i> Em desenvolvimento
+          </span>
+        </div>
+      </div><!-- fim #view-alunos -->
+
+      <!-- ══════════════════════════════════════════════════════
+           VIEW: DASHBOARD  (dashboardGestor)
+      ══════════════════════════════════════════════════════ -->
+      <div id="view-dashboard" class="spa-view" style="padding:24px 40px 20px; gap:14px;">
+
+        <div class="page-header" style="flex-shrink:0;">
+          <h1>Dashboard – Performance da Turma</h1>
+          <p>Segunda-feira, 26 de abril de 2025 · Semana 12 de 20</p>
+        </div>
+
+        <div class="stat-grid">
+
+          <div class="stat-card stat-card--blue">
+            <div class="sc-header">
+              <div class="sc-label">Alunos Ativos</div>
+              <div class="sc-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+            </div>
+            <div class="sc-value">184</div>
+            <div class="sc-footer"><span class="badge-up">▲ +8%</span>este mês</div>
+          </div>
+
+          <div class="stat-card stat-card--red">
+            <div class="sc-header">
+              <div class="sc-label">Evasão</div>
+              <div class="sc-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+            </div>
+            <div class="sc-value">12</div>
+            <div class="sc-footer"><span class="badge-warn">▲ +3 esta sem.</span>em risco</div>
+          </div>
+
+          <div class="stat-card stat-card--green">
+            <div class="sc-header">
+              <div class="sc-label">Empregabilidade</div>
+              <div class="sc-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="7" width="20" height="14" rx="2"/>
+                  <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                </svg>
+              </div>
+            </div>
+            <div class="sc-value">22 <span class="unit">alunos</span></div>
+            <div class="sc-footer"><span class="badge-up">▲ +5%</span>este mês</div>
+          </div>
+
+          <div class="stat-card stat-card--amber">
+            <div class="sc-header">
+              <div class="sc-label">Engajamento Médio</div>
+              <div class="sc-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                  <polyline points="16 7 22 7 22 13"/>
+                </svg>
+              </div>
+            </div>
+            <div class="sc-value">7,1</div>
+            <div class="sc-footer"><span class="badge-up">↑ Acima da meta</span></div>
+          </div>
+
+        </div>
+
+        <div class="charts-row">
+
+          <div class="chart-card">
+            <div class="chart-card__head">
+              <div>
+                <div class="chart-card__title">Alunos por Curso</div>
+                <div class="chart-card__sub">Distribuição atual dos alunos ativos · Engenharia T4</div>
+              </div>
+              <button class="chart-btn">Mês</button>
+            </div>
+            <div class="canvas-wrap"><canvas id="g-barChartDash"></canvas></div>
+            <div class="legend-row">
+              <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>Em andamento</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#33B458"></div>Concluído</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#FFD927"></div>Em atraso</div>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-card__head">
+              <div>
+                <div class="chart-card__title">Tipo de Presença</div>
+                <div class="chart-card__sub">% de presença por curso — Programa Pulse Mais · EAD vs Presencial</div>
+              </div>
+              <button class="chart-btn">Exportar</button>
+            </div>
+            <div class="canvas-wrap"><canvas id="g-presencaChart"></canvas></div>
+            <div class="legend-row">
+              <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>EAD</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#33B458"></div>Presencial</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="chart-card" style="flex-shrink:0; height:180px;">
+          <div class="chart-card__head" style="flex-shrink:0;">
+            <div>
+              <div class="chart-card__title">Funil de Impacto</div>
+              <div class="chart-card__sub">Progresso da turma Engenharia T4 · Semana 12</div>
+            </div>
+          </div>
+          <div class="canvas-wrap"><canvas id="g-funnelChart"></canvas></div>
+        </div>
+
+      </div><!-- fim #view-dashboard -->
+
+      <!-- ══════════════════════════════════════════════════════
+           VIEW: AGENDA  (em desenvolvimento pelo colega)
+      ══════════════════════════════════════════════════════ -->
+      <div id="view-agenda" class="spa-view" style="align-items:center; justify-content:center; background:#EEF1F4;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;">
+          <div style="width:72px;height:72px;background:#EDF3F9;border-radius:18px;display:flex;align-items:center;justify-content:center;">
+            <i class="ti ti-calendar" style="font-size:34px;color:#003870;"></i>
+          </div>
+          <h2 style="font-size:20px;font-weight:700;color:#11161D;font-family:'Poppins',sans-serif;">Agenda</h2>
+          <p style="font-size:14px;color:#97A1AE;max-width:380px;font-family:'Poppins',sans-serif;line-height:1.6;">
+            Esta tela está sendo desenvolvida pela equipe.<br>Em breve estará disponível no sistema.
+          </p>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#EDF3F9;border:1px solid #D6E2EF;border-radius:8px;padding:8px 18px;font-size:12px;font-weight:600;color:#003870;font-family:'Poppins',sans-serif;">
+            <i class="ti ti-tools"></i> Em desenvolvimento
+          </span>
+        </div>
+      </div><!-- fim #view-agenda -->
+
+    </main>
+  </div><!-- fim .paginaMain -->
+
+  <!-- ========== MODAL: EQUIPE ========== -->
+  <div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+    <div class="modal" id="modal">
+
+      <div class="modal-header">
+        <div class="mh-top">
+          <div class="modal-avatar" id="m-initials">JM</div>
+          <div>
+            <div class="modal-name" id="m-name">João Mário</div>
+            <div class="modal-meta" id="m-cargo-meta">Psicólogo · Pulse Manager</div>
+          </div>
+        </div>
+        <div class="modal-badges">
+          <span class="badge badge-cargo"><i class="ti ti-heart" style="font-size:11px;"></i> Psicólogo</span>
+          <span class="badge badge-id"><i class="ti ti-id-badge" style="font-size:11px;"></i> EQ-2024-012</span>
+        </div>
+        <button class="close-btn" onclick="closeModal()" aria-label="Fechar modal"><i class="ti ti-x"></i></button>
+      </div>
+
+      <div class="tab-strip">
+        <button class="tab-btn active" onclick="showTab('dados',this)"><i class="ti ti-user"></i> Dados</button>
+        <button class="tab-btn" onclick="showTab('contato',this)"><i class="ti ti-phone"></i> Contato</button>
+      </div>
+
+      <div class="modal-body">
+
+        <div id="tab-dados" class="tab-panel active">
+          <div class="sec-label">Identificação</div>
+          <div class="field-grid">
+            <div class="field">
+              <label><i class="ti ti-id-badge"></i> ID membro</label>
+              <input type="text" value="EQ-2024-012" readonly>
+              <span class="field-hint">Identificador único da equipe</span>
+            </div>
+            <div class="field">
+              <label><i class="ti ti-briefcase"></i> Cargo</label>
+              <select id="f-cargo" onchange="updateCargo()">
+                <option selected>Psicólogo</option>
+                <option>Gestor</option>
+                <option>Mentor</option>
+                <option>Coordenador</option>
+                <option>Administrador</option>
+              </select>
+            </div>
+            <div class="field span2">
+              <label><i class="ti ti-user"></i> Nome completo</label>
+              <input type="text" id="f-nome" value="João Mário" oninput="updateHeader()">
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-contato" class="tab-panel">
+          <div class="sec-label">Informações de contato</div>
+          <div class="field-grid">
+            <div class="field">
+              <label><i class="ti ti-mail"></i> E-mail institucional</label>
+              <input type="email" value="joao.mario@pulsemais.org.br">
+            </div>
+            <div class="field">
+              <label><i class="ti ti-phone"></i> Telefone</label>
+              <input type="tel" value="(11) 91234-5678">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <div class="footer-left"><i class="ti ti-lock"></i> Última edição: hoje às 09:15</div>
+        <div class="footer-right">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+          <button class="btn btn-primary" onclick="saveProfile()"><i class="ti ti-device-floppy"></i> Salvar alterações</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <i class="ti ti-circle-check"></i> Perfil atualizado com sucesso
+  </div>
+
+<!-- Scripts — ordem importante -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/services/config.js"></script>
+<script src="../js/components/guiaGestor.js"></script>
+<script src="../js/components/menuSuperior.js"></script>
+<script src="../js/components/modalConfEquipe.js"></script>
+<script src="../js/pages/spaGestor.js"></script>
+</body>
+</html>

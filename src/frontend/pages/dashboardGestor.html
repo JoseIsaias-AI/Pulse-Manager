@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse Manager – Dashboard Performance</title>
+<!-- Base: layout sidebar + topbar (Gestor) -->
+<link rel="stylesheet" href="../css/themes/guiaGestor.css">
+<link rel="stylesheet" href="../css/components.css">
+<!-- Fontes e ícones -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<!-- Estilos da página -->
+<link rel="stylesheet" href="../css/pages/dashboardGestor.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ========== MENU LATERAL ========== -->
+  <aside class="menuLateral" id="menuLateral">
+    <div class="menuLateral__logo">
+      <div class="menuLateral__logo-brand">
+        <img src="../assets/images/logoIcon.png" alt="Pulse Manager" class="menuLateral__logo-icon" />
+        <span class="menuLateral__logo-name">PULSE<br>MANAGER</span>
+      </div>
+      <span class="menuLateral__logo-role"></span>
+    </div>
+    <nav class="menuLateral__nav">
+      <span class="menuLateral__section-label">Menu Principal</span>
+      <ul class="menuLateral__menu"></ul>
+    </nav>
+    <footer class="menuLateral__footer">
+      <a href="#" class="menuLateral__settings menuLateral__link">
+        <i class="ti ti-settings menuLateral__icon"></i>
+        <span>Configurações</span>
+      </a>
+      <div class="menuLateral__user">
+        <div class="menuLateral__avatar"></div>
+        <div class="menuLateral__user-info">
+          <span class="menuLateral__user-name"></span>
+          <span class="menuLateral__user-role"></span>
+        </div>
+      </div>
+    </footer>
+  </aside>
+
+  <!-- ========== ÁREA PRINCIPAL ========== -->
+  <div class="paginaMain">
+
+    <!-- MENU SUPERIOR -->
+    <header class="menuSuperior" id="menuSuperior">
+      <span class="menuSuperior__breadcrumb"></span>
+      <div class="menuSuperior__search">
+        <i class="ti ti-search menuSuperior__search-icon"></i>
+        <input type="text" class="menuSuperior__search-input" placeholder="Buscar" autocomplete="off" />
+      </div>
+      <div class="menuSuperior__actions">
+        <button class="menuSuperior__bell" title="Notificações">
+          <i class="ti ti-bell"></i>
+        </button>
+        <button class="menuSuperior__avatar-btn" title="Perfil"></button>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO DA PÁGINA -->
+    <main class="paginaConteudo">
+
+      <div class="page-header" style="flex-shrink:0;">
+        <h1>Dashboard – Performance da Turma</h1>
+        <p>Segunda-feira, 26 de abril de 2025 · Semana 12 de 20</p>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="stat-grid">
+
+        <div class="stat-card stat-card--blue">
+          <div class="sc-header">
+            <div class="sc-label">Alunos Ativos</div>
+            <div class="sc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+          </div>
+          <div class="sc-value">184</div>
+          <div class="sc-footer"><span class="badge-up">▲ +8%</span>este mês</div>
+        </div>
+
+        <div class="stat-card stat-card--red">
+          <div class="sc-header">
+            <div class="sc-label">Evasão</div>
+            <div class="sc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+          </div>
+          <div class="sc-value">12</div>
+          <div class="sc-footer"><span class="badge-warn">▲ +3 esta sem.</span>em risco</div>
+        </div>
+
+        <div class="stat-card stat-card--green">
+          <div class="sc-header">
+            <div class="sc-label">Empregabilidade</div>
+            <div class="sc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="7" width="20" height="14" rx="2"/>
+                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+              </svg>
+            </div>
+          </div>
+          <div class="sc-value">22 <span class="unit">alunos</span></div>
+          <div class="sc-footer"><span class="badge-up">▲ +5%</span>este mês</div>
+        </div>
+
+        <div class="stat-card stat-card--amber">
+          <div class="sc-header">
+            <div class="sc-label">Engajamento Médio</div>
+            <div class="sc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                <polyline points="16 7 22 7 22 13"/>
+              </svg>
+            </div>
+          </div>
+          <div class="sc-value">7,1</div>
+          <div class="sc-footer"><span class="badge-up">↑ Acima da meta</span></div>
+        </div>
+
+      </div>
+
+      <!-- Charts row -->
+      <div class="charts-row">
+
+        <!-- Alunos por Curso -->
+        <div class="chart-card">
+          <div class="chart-card__head">
+            <div>
+              <div class="chart-card__title">Alunos por Curso</div>
+              <div class="chart-card__sub">Distribuição atual dos alunos ativos · Engenharia T4</div>
+            </div>
+            <button class="chart-btn">Mês</button>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="barChart"></canvas>
+          </div>
+          <div class="legend-row">
+            <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>Em andamento</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#33B458"></div>Concluído</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#FFD927"></div>Em atraso</div>
+          </div>
+        </div>
+
+        <!-- Tipo de Presença -->
+        <div class="chart-card">
+          <div class="chart-card__head">
+            <div>
+              <div class="chart-card__title">Tipo de Presença</div>
+              <div class="chart-card__sub">% de presença por curso — Programa Pulse Mais · EAD vs Presencial</div>
+            </div>
+            <button class="chart-btn">Exportar</button>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="presencaChart"></canvas>
+          </div>
+          <div class="legend-row">
+            <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>EAD</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#33B458"></div>Presencial</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Funil de Impacto -->
+      <div class="chart-card" style="flex-shrink:0; height:180px;">
+        <div class="chart-card__head" style="flex-shrink:0;">
+          <div>
+            <div class="chart-card__title">Funil de Impacto</div>
+            <div class="chart-card__sub">Progresso da turma Engenharia T4 · Semana 12</div>
+          </div>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="funnelChart"></canvas>
+        </div>
+      </div>
+
+    </main>
+  </div><!-- fim .paginaMain -->
+
+<!-- config.js deve vir ANTES dos outros scripts -->
+<script src="../js/services/config.js"></script>
+<script src="../js/components/guiaGestor.js"></script>
+<script src="../js/components/menuSuperior.js"></script>
+<script src="../js/pages/dashboardGestor.js"></script>
+</body>
+</html>
