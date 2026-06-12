@@ -1,4 +1,4 @@
-﻿<img src="./assets/logointeli.png">
+<img src="./assets/logointeli.png">
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
@@ -137,7 +137,7 @@ O sucesso será avaliado pela centralização dos dados, clareza da visualizaç�
 
 <div align="center">
 <sup>Figura 2: Canvas de Proposta de Valor da Pulse Manager.</sup><br>
-<img src="./assets/canvasValor.png"><br>
+<img src="./assets/canvasvalor.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026), com base no Value Proposition Canvas de Strategyzer.</sub><br>
 </div>
 
@@ -1899,7 +1899,7 @@ O DER explicita as entidades do sistema, seus atributos, as respectivas chaves p
 <div align="center">
 
 <sup>Figura 50: Diagrama Entidade-Relacionamento.</sup><br>
-<img src="./assets/der.png"><br>
+<img src="./assets/DER.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
 </div>
 
