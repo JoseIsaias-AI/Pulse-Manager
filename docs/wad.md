@@ -3029,67 +3029,44 @@ _Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem 
 
 ## 6.4 Público-Alvo
 
-### a) Segmentação de Mercado
+### 6.4.1 Segmentação de Mercado 
+A Pulse Manager atende o segmento de organizações sociais, institutos e projetos de impacto que atuam com formação, acompanhamento e inserção profissional de jovens em situação de vulnerabilidade socioeconômica. No contexto inicial do projeto, a aplicação é direcionada à Pulse Mais, organização que oferece formação técnica e comportamental, mentorias, oportunidades de vagas e bolsas de estudo gratuitas para jovens interessados em tecnologia (PULSE MAIS, 2026).
 
-A aplicação desenvolvida para a Pulse Mais está inserida no segmento de soluções digitais para organizações de impacto social, educação, empregabilidade e acompanhamento de jovens em situação de vulnerabilidade socioeconômica. Identificou-se como mercado prioritário o conjunto de organizações do terceiro setor, programas educacionais, iniciativas de formação profissional, redes de mentoria e instituições que atuam com inclusão produtiva de jovens.
+Além da Pulse Mais, a solução pode atender iniciativas semelhantes que precisam centralizar dados de alunos, jornada formativa, presença, certificação, saúde mental, oportunidades, empregabilidade e indicadores de impacto. Portanto, a segmentação da Pulse Manager não está ligada a um mercado consumidor amplo, mas a um segmento institucional e operacional: organizações que acompanham jovens ao longo de programas educacionais e profissionais.
 
-Esse segmento foi definido a partir da necessidade de centralizar informações, acompanhar trajetórias individuais, registrar participação em atividades, monitorar indicadores e gerar evidências de impacto. No contexto brasileiro, essa demanda é relevante porque ainda existe um número expressivo de jovens com dificuldades de permanência educacional e inserção produtiva. Dados do IBGE indicam que, em 2023, 19,8% da população brasileira de 15 a 29 anos não estudava nem estava ocupada. Além disso, em 2024, 8,7 milhões de jovens de 14 a 29 anos não haviam concluído o ensino médio.
+Esse segmento possui uma dor clara: conforme aumenta o número de jovens, atividades, mentorias, oportunidades e registros, controles manuais e planilhas passam a dificultar a rastreabilidade dos dados. A Pulse Mais já alcançou mais de 650 jovens por meio de cursos, mentorias e bolsas de graduação, o que reforça a necessidade de uma ferramenta capaz de organizar histórico, evolução e indicadores de acompanhamento (OBSERVATÓRIO DO TERCEIRO SETOR, 2025).
 
-Assim, concluiu-se que a aplicação atende um segmento formado por organizações que precisam profissionalizar a gestão de dados sociais, educacionais e de empregabilidade, especialmente em iniciativas voltadas à juventude, tecnologia e redução de desigualdades.
 
-### b) Perfil do Público-Alvo
+### 6.4.2 Perfil do Público-Alvo
+O público-alvo final acompanhado pela Pulse Manager é composto por jovens de baixa renda, em geral entre 17 e 26 anos, residentes em São Paulo ou Região Metropolitana, com ensino médio cursando ou concluído em escola pública, ou como bolsistas em escola particular. Para participar do Programa Pulse Mais 2026, também são considerados o interesse em tecnologia, a disponibilidade para dedicação semanal e o desejo de conquistar novas oportunidades profissionais (ESG INSIDE, 2026).
 
-O público-alvo direto da aplicação é composto pela equipe interna da Pulse Mais, incluindo gestores, coordenadores de programas, profissionais de operação, mentores e responsáveis pelo acompanhamento dos alunos. Esses usuários possuem necessidade de consultar, cadastrar, atualizar e analisar dados sobre jornada, frequência, participação, agenda, saúde mental, oportunidades, empregabilidade e ensino superior.
+Esse público apresenta necessidades específicas: acesso à formação em tecnologia, desenvolvimento de habilidades comportamentais, orientação de carreira, acompanhamento individualizado, oportunidades de emprego, bolsas de estudo e suporte ao longo da jornada. Para a equipe da Pulse Mais, a principal dor está na gestão integrada desses dados; para o jovem, a expectativa é ter uma trajetória mais organizada, com acompanhamento próximo e acesso claro às oportunidades.
 
-Também foi identificado como público usuário o profissional de acompanhamento psicossocial, especialmente psicólogos responsáveis por registros sensíveis. Esse perfil demanda acesso controlado, organização de histórico, labels, anotações qualitativas e informações que apoiem decisões de cuidado e encaminhamento.
-
-O público indireto é formado por alunos e ex-alunos atendidos pela Pulse Mais. Demograficamente, trata-se de jovens em processo de formação educacional e profissional, com interesse em tecnologia, empregabilidade, mentoria e acesso a oportunidades. Psicograficamente, esse público tende a buscar desenvolvimento, pertencimento, orientação e maior previsibilidade sobre sua trajetória. Comportamentalmente, espera-se que utilize canais digitais para consultar agenda, notificações, eventos e informações pessoais.
-
-Foi observado que as principais dores envolvem dispersão de dados, dificuldade de acompanhamento individualizado, baixa visibilidade sobre evolução e ausência de indicadores consolidados. Portanto, a aplicação busca atender usuários que necessitam de uma solução clara, segura e orientada à gestão da jornada dos jovens.
+A dimensão operacional reforça a relevância da Pulse Manager: o Programa Pulse Mais 2026 registrou 513 pré-inscritos, 98 matrículas, 90 aprovados no primeiro curso e uma jornada formativa de 165 horas (ABRASCE, 2026). Assim, a aplicação se conecta diretamente ao público-alvo ao permitir que a organização acompanhe cada jovem de forma estruturada, rastreável e orientada a impacto.
 
 
 
-## 6.5 Business Model Canvas
+## 6.5 Posicionamento
 
-<div align="justify">
+_a) Proposta de Valor Única (até 250 palavras)_
+_Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado._
+de
+_b) Estratégia de Diferenciação (até 250 palavras)_
+_Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento._
 
-O Business Model Canvas é uma ferramenta visual que descreve, de forma estruturada, como a Pulse Manager cria, entrega e captura valor, conectando os principais elementos do modelo de negócio em uma única representação.
+## 6.6 Estratégia de Marketing
 
-</div>
+_a) Produto/Serviço (até 200 palavras)_
+_Descreva as funcionalidades, benefícios e diferenciais da aplicação_
 
-<div align="center">
-<sup>Figura 10: Business Model Canvas da Pulse Manager.</sup><br>
-<img src="./assets/businessmodelcanvas.png"><br>
-<sub>Fonte: Elaborado pela equipe (2026), com base no Business Model Canvas de Strategyzer.</sub><br>
-</div>
+_b) Preço (até 200 palavras)_
+_Explique o modelo de precificação adotado e justifique com base nas análises anteriores._
 
-## 6.6 Posicionamento
+_c) Praça (Distribuição) (até 200 palavras)_
+_Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público._
 
-### 6.5.1 Proposta de valor
-
-A proposta de valor do Pulse Manager consiste em centralizar, organizar e transformar os dados da jornada dos jovens atendidos pela Pulse Mais em informações acessíveis, seguras e acionáveis. A aplicação entrega valor ao reduzir a fragmentação de registros, facilitar o acompanhamento individualizado dos alunos e permitir que a equipe gestora tome decisões com base em dados consolidados.
-Para os gestores, o principal valor está na possibilidade de acessar uma visão única da trajetória de cada aluno, consultar indicadores institucionais, identificar padrões de engajamento, acompanhar empregabilidade, visualizar riscos de evasão e segmentar perfis para oportunidades específicas. Dessa forma, a plataforma reduz o tempo gasto em buscas manuais e aumenta a qualidade da gestão.
-Para os psicólogos, o valor está na organização dos registros de acompanhamento, respeitando restrições de acesso e permitindo uma leitura mais estruturada dos alunos acompanhados. Para os alunos, o valor está no acesso ao próprio histórico, à atualização de dados cadastrais e à visualização de oportunidades relacionadas à sua jornada.
-Assim, a aplicação se diferencia por atuar como uma infraestrutura de gestão de impacto social. O Pulse Manager não apenas armazena dados, mas qualifica o acompanhamento dos jovens, fortalece a governança institucional e amplia a capacidade da Pulse Mais de demonstrar resultados para parceiros e apoiadores.
-
-
-### 6.5.2 Posicionamento e Diferenciação
-
-O Pulse Manager pretende ser percebido como uma plataforma de gestão social inteligente, confiável e acolhedora, voltada à centralização da jornada de jovens em programas de capacitação tecnológica. Seu posicionamento combina seriedade técnica, impacto social e proximidade com os usuários, mantendo coerência com a identidade institucional da Pulse Mais.
-
-Entre os concorrentes diretos e indiretos, podem ser considerados sistemas genéricos de CRM, planilhas compartilhadas, plataformas de gestão educacional, ferramentas de BI e soluções internas desenvolvidas por outras organizações sociais. Embora essas alternativas possam atender partes do problema, muitas não são desenhadas especificamente para acompanhar a jornada completa de jovens em iniciativas de impacto social. Planilhas, por exemplo, oferecem flexibilidade, mas tendem a gerar retrabalho, inconsistências e baixa rastreabilidade. CRMs e sistemas educacionais genéricos podem ser robustos, porém menos aderentes ao contexto de organizações sem fins lucrativos e aos indicadores específicos de impacto, empregabilidade e acompanhamento socioemocional.
-
-A diferenciação do Pulse Manager está na combinação entre centralização de dados, leitura longitudinal da jornada do aluno, dashboards de impacto, segmentação estratégica, portal do aluno e controle de acesso por perfil. A aplicação foi pensada a partir das dores reais da Pulse Mais, o que permite maior aderência ao fluxo operacional da instituição.
-
-A marca deve ser percebida como confiável, clara, humana e orientada a impacto. A identidade pretendida é a de uma solução que aproxima tecnologia e transformação social, oferecendo à equipe mais controle sobre os dados e aos jovens maior visibilidade sobre sua trajetória. A percepção de valor desejada é a de uma plataforma essencial para transformar dados dispersos em acompanhamento qualificado, governança institucional e evidências concretas de impacto.
-
-## 6.7 Estratégia de Marketing
-
-Os 4Ps são um modelo de estratégia que organiza as principais decisões de marketing em 4 elementos diferentes, sendo eles: Produto, Preço, Praça e Promoção. O produto seria o que a pessoa está oferecendo, dentre um serviço/produto; o preço seria quanto a pessoa está cobrando por esse serviço/produto; a praça seria a localidade de onde o produto/serviço está sendo oferecido, sendo ela online ou física; e, por fim, a promoção seria como o dono do produto/serviço faz o contato com o cliente, seja por redes sociais, publicidade ou outros meios.
-Produto: Nosso grupo teve como solução a plataforma web Pulse Manager, que centraliza os dados institucionais e acadêmicos da Pulse Mais, atuando como uma Single Source of Truth. Entre as principais funcionalidades estão o cadastro, a edição de dados e a consulta de alunos e ex-alunos (RF001-RF003); a consolidação do histórico completo da jornada, formação, frequência, eventos, empregabilidade e ensino superior (RF004-RF008); o dashboard de indicadores de impacto, com métricas de empregabilidade, conclusão, evasão e acesso ao ensino superior (RF012-RF016); o portal do aluno para consulta e atualização do próprio perfil (RF017-RF018); e o módulo de saúde mental com acesso exclusivo ao psicólogo (RF009-RF022). O principal benefício é eliminar a fragmentação de informações dispersas em grandes planilhas, reduzindo o retrabalho e acelerando a tomada de decisão baseada em dados. Já os nossos diferenciais são: uma agenda institucional para os gestores (RF020-RF021), na qual eles podem se organizar melhor em seu dia a dia e, ao mesmo tempo, enviar as notificações de eventos, aulas obrigatórias e não obrigatórias para os alunos. Com isso, nosso outro diferencial é a aba de notificações aos alunos, na qual cada aluno consegue ter uma noção de quando será sua próxima aula ou evento e se deve participar ou não.
-Preço: A Pulse Manager não é monetizada junto aos seus usuários, pois opera em uma lógica de terceiro setor na qual quem usa não é quem paga. Há duas camadas de entregas gratuitas: primeiro, nós (alunos do Inteli), que entregamos a aplicação web à Pulse Mais sem custo, como projeto acadêmico; e a Pulse Mais, por sua vez, oferece o serviço gratuitamente aos jovens, coerentemente com a sua missão social. Portanto, nem o aluno nem a ONG pagam pelo uso do serviço. Quem sustenta a operação são terceiros, ou seja, doadores, empresas parceiras e até mesmo patrocinadores da ONG Pulse Mais.
-Praça: A Pulse Manager será distribuída como uma aplicação web acessível diretamente pelo navegador, sendo eles: Google Chrome, Edge, Firefox… E a interface é otimizada para o uso em desktop, ambiente predominante da equipe de trabalho da Pulse Mais. O acesso é segmentado por perfil: a equipe interna e os psicólogos utilizam as funcionalidades de gestão, enquanto alunos e ex-alunos acessam o portal restrito por meio de um link próprio. A distribuição ocorre de forma direta ao parceiro, ou seja, sem marketplace e lojas, aproveitando, assim, os próprios canais já existentes da ONG.
-Promoção: A divulgação dos produtos da ONG para os alunos é feita pelo onboarding e pelo treinamento da equipe Pulse Mais. A segunda estratégia é a divulgação do portal do aluno pela própria instituição, ou seja, por e-mail e redes sociais; e a terceira estratégia é uma estratégia de marketing e relacionamento, com conteúdo voltado a doadores e parceiros.
+_d) Promoção (até 200 palavras)_
+_Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas._
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
@@ -3099,55 +3076,15 @@ _Relacione os pontos de melhorias evidenciados nos testes com planos de ações 
 
 _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
 
-# <a name="c8"></a>8. Referências 
+# <a name="c8"></a>8. Referências (sprints 1 a 5)
 
-IBGE- INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. **Uma em cada quatro mulheres de 15 a 29 anos não estudava e nem estava ocupada em 2023**. Agência IBGE Notícias, 2024. Disponível em: [https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/39531-uma-em-cada-quatro-mulheres-de-15-a-29-anos-nao-estudava-e-nem-estava-ocupada-em-2023](https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/39531-uma-em-cada-quatro-mulheres-de-15-a-29-anos-nao-estudava-e-nem-estava-ocupada-em-2023). Acesso em: 3 jun. 2026.
+ABRASCE. Programa Pulse Mais 2026 inicia com alta adesão e reforça aposta na formação de jovens para o mercado de tecnologia. 2026. Disponível em: https://abrasce.com.br/espaco-do-associado/tecnologia/programa-pulse-mais-2026-inicia-com-alta-adesao-e-reforca-aposta-na-formacao-de-jovens-para-o-mercado-de-tecnologia/. Acesso em: 10 jun. 2026.
 
-IBGE- INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. **Indicadores educacionais avançam em 2024, mas atraso escolar aumenta**. Agência IBGE Notícias, 2025. Disponível em: [https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/43699-indicadores-educacionais-avancam-em-2024-mas-atraso-escolar-aumenta](https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/43699-indicadores-educacionais-avancam-em-2024-mas-atraso-escolar-aumenta). Acesso em: 8 jun. 2026.
+ESG INSIDE. Pulse Mais abre inscrições para programa gratuito que prepara jovens para carreiras em tecnologia. 2026. Disponível em: https://esginside.com.br/2026/01/23/pulse-mais-abre-inscricoes-para-programa-gratuito-que-prepara-jovens-para-carreiras-em-tecnologia/. Acesso em: 10 jun. 2026.
 
-CETIC.BR- CENTRO REGIONAL DE ESTUDOS PARA O DESENVOLVIMENTO DA SOCIEDADE DA INFORMAÇÃO. **TIC Educação**. São Paulo: Cetic.br, [s.d.]. Disponível em: [https://cetic.br/pesquisa/educacao/](https://cetic.br/pesquisa/educacao/). Acesso em: 8 jun. 2026.
+OBSERVATÓRIO DO TERCEIRO SETOR. Pulse Mais celebra 3 anos e amplia oportunidades para jovens na tecnologia. 2025. Disponível em: https://observatorio3setor.org.br/pulse-mais-celebra-3-anos-e-amplia-oportunidades-para-jovens-na-tecnologia/. Acesso em: 10 jun. 2026.
 
-
-ABES; IDC. Mercado de TI no Brasil cresce 18,5% em 2025, e País segue líder na América Latina. São Paulo: ABES, 2026. Disponível em: https://abes.org.br/mercado-de-ti-no-brasil-cresce-185-em-2025-e-pais-segue-lider-na-america-latina/. Acesso em: 8 jun. 2026.
-
-BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais (LGPD). Brasília, DF: Presidência da República, 2018. Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm. Acesso em: 8 jun. 2026.
-
-DISTRITO. EdTech Report 2024. São Paulo: Distrito, 2024. Disponível em: https://materiais.distrito.me/report/edtech-report-2024. Acesso em: 8 jun. 2026.
-
-DISTRITO. EdTech Report 2025. São Paulo: Distrito, 2025. Disponível em: https://materiais.distrito.me/report/edtech-report. Acesso em: 8 jun. 2026.
-
-EXPRESS. Express: Node.js web application framework. 2026. Disponível em: https://expressjs.com/en/. Acesso em: 8 jun. 2026.
-
-GOOGLE FONTS. Anton. 2026. Disponível em: https://fonts.google.com/specimen/Anton. Acesso em: 8 jun. 2026.
-
-GOOGLE FONTS. Poppins. 2026. Disponível em: https://fonts.google.com/specimen/Poppins. Acesso em: 8 jun. 2026.
-
-IBGE. Indicadores educacionais avançam em 2024, mas atraso escolar aumenta. Agência IBGE Notícias, Rio de Janeiro, 13 jun. 2025. Disponível em: https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/43699-indicadores-educacionais-avancam-em-2024-mas-atraso-escolar-aumenta. Acesso em: 8 jun. 2026.
-
-IPEA. Brasil possui mais de 897 mil organizações da sociedade civil ativas. Brasília, DF: Instituto de Pesquisa Econômica Aplicada, 5 fev. 2025. Disponível em: https://www.ipea.gov.br/portal/categorias/45-todas-as-noticias/noticias/15591-brasil-possui-mais-de-897-mil-organizacoes-da-sociedade-civil-ativas. Acesso em: 8 jun. 2026.
-
-IPEA. Estudo analisa a importância do terceiro setor para o PIB. Mapa das Organizações da Sociedade Civil, Brasília, DF: Instituto de Pesquisa Econômica Aplicada, 2023. Disponível em: https://mapaosc.ipea.gov.br/post/164/estudo-analisa-a-importancia-do-terceiro-setor-para-o-pib. Acesso em: 8 jun. 2026.
-
-ISO. ISO/IEC 25010:2011: Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models. Genebra: International Organization for Standardization, 2011. Disponível em: https://www.iso.org/standard/35733.html. Acesso em: 8 jun. 2026.
-
-JEST. Jest: delightful JavaScript testing. 2026. Disponível em: https://jestjs.io/. Acesso em: 8 jun. 2026.
-
-LUCIDE. Lucide Icons. 2026. Disponível em: https://lucide.dev/. Acesso em: 8 jun. 2026.
-
-NODE.JS. Node.js. 2026. Disponível em: https://nodejs.org/en. Acesso em: 8 jun. 2026.
-
-POSTGRESQL GLOBAL DEVELOPMENT GROUP. PostgreSQL Documentation. 2026. Disponível em: https://www.postgresql.org/docs/. Acesso em: 8 jun. 2026.
-
-STRATEGYZER. Value Proposition Canvas: download the official template. 2026. Disponível em: https://www.strategyzer.com/library/the-value-proposition-canvas. Acesso em: 8 jun. 2026.
-
-SUPERTEST. Supertest. npm, 2026. Disponível em: https://www.npmjs.com/package/supertest. Acesso em: 8 jun. 2026.
-
-TYPESCRIPT. TypeScript Documentation. 2026. Disponível em: https://www.typescriptlang.org/docs/. Acesso em: 8 jun. 2026.
-
-WEBAIM. Contrast Checker. 2026. Disponível em: https://webaim.org/resources/contrastchecker/. Acesso em: 8 jun. 2026.
-
-WORLD WIDE WEB CONSORTIUM. Web Content Accessibility Guidelines (WCAG) 2.1. W3C Recommendation, 2018. Disponível em: https://www.w3.org/TR/WCAG21/. Acesso em: 8 jun. 2026.
-
+PULSE MAIS. Pulse Mais. 2026. Disponível em: https://pulsemais.org.br/. Acesso em: 10 jun. 2026.
 
 # <a name="c9"></a>Anexos
 
