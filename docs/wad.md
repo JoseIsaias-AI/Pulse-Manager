@@ -3248,11 +3248,24 @@ Esse público apresenta necessidades específicas: acesso à formação em tecno
 
 A dimensão operacional reforça a relevância da Pulse Manager: o Programa Pulse Mais 2026 registrou 513 pré-inscritos, 98 matrículas, 90 aprovados no primeiro curso e uma jornada formativa de 165 horas (ABRASCE, 2026). Assim, a aplicação se conecta diretamente ao público-alvo ao permitir que a organização acompanhe cada jovem de forma estruturada, rastreável e orientada a impacto.
 
+## 6.4 Business Model Canvas
+
+<div align="justify">
+
+O Business Model Canvas é uma ferramenta visual que descreve, de forma estruturada, como a Pulse Manager cria, entrega e captura valor, conectando os principais elementos do modelo de negócio em uma única representação.
+
+</div>
+
+<div align="center">
+<sup>Figura 10: Business Model Canvas da Pulse Manager.</sup><br>
+<img src="./assets/businessmodelcanvas.png"><br>
+<sub>Fonte: Elaborado pela equipe (2026), com base no Business Model Canvas de Strategyzer.</sub><br>
+</div>
 
 
-## 6.4 Posicionamento
+## 6.5 Posicionamento
 
-### 6.4.1 Proposta de valor
+### 6.5.1 Proposta de valor
 
 
 A proposta de valor do Pulse Manager consiste em centralizar, organizar e transformar os dados da jornada dos jovens atendidos pela Pulse Mais em informações acessíveis, seguras e acionáveis. A aplicação entrega valor ao reduzir a fragmentação de registros, facilitar o acompanhamento individualizado dos alunos e permitir que a equipe gestora tome decisões com base em dados consolidados.
@@ -3261,13 +3274,13 @@ Para os psicólogos, o valor está na organização dos registros de acompanhame
 Assim, a aplicação se diferencia por atuar como uma infraestrutura de gestão de impacto social. O Pulse Manager não apenas armazena dados, mas qualifica o acompanhamento dos jovens, fortalece a governança institucional e amplia a capacidade da Pulse Mais de demonstrar resultados para parceiros e apoiadores.
 
 
-### 6.4.2 Posicionamento e Diferenciação
+### 6.5.2 Posicionamento e Diferenciação
 O Pulse Manager pretende ser percebido como uma plataforma de gestão social inteligente, confiável e acolhedora, voltada à centralização da jornada de jovens em programas de capacitação tecnológica. Seu posicionamento combina seriedade técnica, impacto social e proximidade com os usuários, mantendo coerência com a identidade institucional da Pulse Mais.
 Entre os concorrentes diretos e indiretos, podem ser considerados sistemas genéricos de CRM, planilhas compartilhadas, plataformas de gestão educacional, ferramentas de BI e soluções internas desenvolvidas por outras organizações sociais. Embora essas alternativas possam atender partes do problema, muitas não são desenhadas especificamente para acompanhar a jornada completa de jovens em iniciativas de impacto social. Planilhas, por exemplo, oferecem flexibilidade, mas tendem a gerar retrabalho, inconsistências e baixa rastreabilidade. CRMs e sistemas educacionais genéricos podem ser robustos, porém menos aderentes ao contexto de organizações sem fins lucrativos e aos indicadores específicos de impacto, empregabilidade e acompanhamento socioemocional.
 A diferenciação do Pulse Manager está na combinação entre centralização de dados, leitura longitudinal da jornada do aluno, dashboards de impacto, segmentação estratégica, portal do aluno e controle de acesso por perfil. A aplicação foi pensada a partir das dores reais da Pulse Mais, o que permite maior aderência ao fluxo operacional da instituição.
 A marca deve ser percebida como confiável, clara, humana e orientada a impacto. A identidade pretendida é a de uma solução que aproxima tecnologia e transformação social, oferecendo à equipe mais controle sobre os dados e aos jovens maior visibilidade sobre sua trajetória. A percepção de valor desejada é a de uma plataforma essencial para transformar dados dispersos em acompanhamento qualificado, governança institucional e evidências concretas de impacto.
 
-## 6.5 Estratégia de Marketing
+## 6.6 Estratégia de Marketing
 
 Os 4Ps são um modelo de estratégia que organiza as principais decisões de marketing em 4 elementos diferentes, sendo eles: Produto, Preço, Praça e Promoção. O produto seria o que a pessoa está oferecendo, dentre um serviço/produto; o preço seria quanto a pessoa está cobrando por esse serviço/produto; a praça seria a localidade de onde o produto/serviço está sendo oferecido, sendo ela online ou física; e, por fim, a promoção seria como o dono do produto/serviço faz o contato com o cliente, seja por redes sociais, publicidade ou outros meios.
 Produto: Nosso grupo teve como solução a plataforma web Pulse Manager, que centraliza os dados institucionais e acadêmicos da Pulse Mais, atuando como uma Single Source of Truth. Entre as principais funcionalidades estão o cadastro, a edição de dados e a consulta de alunos e ex-alunos (RF001-RF003); a consolidação do histórico completo da jornada, formação, frequência, eventos, empregabilidade e ensino superior (RF004-RF008); o dashboard de indicadores de impacto, com métricas de empregabilidade, conclusão, evasão e acesso ao ensino superior (RF012-RF016); o portal do aluno para consulta e atualização do próprio perfil (RF017-RF018); e o módulo de saúde mental com acesso exclusivo ao psicólogo (RF009-RF022). O principal benefício é eliminar a fragmentação de informações dispersas em grandes planilhas, reduzindo o retrabalho e acelerando a tomada de decisão baseada em dados. Já os nossos diferenciais são: uma agenda institucional para os gestores (RF020-RF021), na qual eles podem se organizar melhor em seu dia a dia e, ao mesmo tempo, enviar as notificações de eventos, aulas obrigatórias e não obrigatórias para os alunos. Com isso, nosso outro diferencial é a aba de notificações aos alunos, na qual cada aluno consegue ter uma noção de quando será sua próxima aula ou evento e se deve participar ou não.
