@@ -67,16 +67,31 @@ function renderLista() {
     const [y, m, d] = a.data.split('-');
     const dataFmt = `${d}/${m}/${y}`;
     const cls = tipoClass[a.tipo] || 'sessao';
+    const labelHtml = a.label === 'atencao'
+      ? '<span class="psico-label psico-label--atencao"><i class="ti ti-alert-triangle" style="font-size:10px;"></i> Atenção</span>'
+      : a.label === 'observacao'
+      ? '<span class="psico-label psico-label--observacao"><i class="ti ti-eye" style="font-size:10px;"></i> Observação</span>'
+      : '';
     return `
       <div class="psico-entry" id="entry-${idx}">
         <div class="psico-entry__head">
           <div class="psico-entry__date"><i class="ti ti-calendar-event"></i> ${dataFmt}</div>
           <span class="psico-tipo psico-tipo--${cls}">${a.tipo}</span>
+          ${labelHtml}
           <div class="psico-entry__psi"><i class="ti ti-user-heart"></i> ${a.psi}</div>
         </div>
         <div class="psico-entry__body">${a.texto}</div>
       </div>`;
   }).join('');
+}
+
+/* ── seletor de label ── */
+function pickLabel(btn) {
+  const picker = document.getElementById('pf-label-picker');
+  if (picker) picker.querySelectorAll('.psico-label-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const hiddenEl = document.getElementById('pf-label');
+  if (hiddenEl) hiddenEl.value = btn.dataset.label;
 }
 
 /* ── registrar nova anotação ── */
@@ -85,13 +100,14 @@ function registrarAnotacao() {
   const tipo  = document.getElementById('pf-tipo').value;
   const psi   = document.getElementById('pf-psi').value.trim();
   const texto = document.getElementById('pf-texto').value.trim();
+  const label = document.getElementById('pf-label')?.value || '';
 
   if (!data || !tipo || !psi || !texto) {
     showFormError('Preencha todos os campos antes de registrar.');
     return;
   }
 
-  anotacoes.push({ data, tipo, psi, texto });
+  anotacoes.push({ data, tipo, psi, texto, label });
   renderLista();
 
   /* limpar formulário */
@@ -99,6 +115,15 @@ function registrarAnotacao() {
   document.getElementById('pf-psi').value   = '';
   document.getElementById('pf-texto').value = '';
   document.getElementById('pf-data').value  = new Date().toISOString().split('T')[0];
+
+  /* reset label picker */
+  const picker = document.getElementById('pf-label-picker');
+  if (picker) {
+    picker.querySelectorAll('.psico-label-btn').forEach(b => b.classList.remove('selected'));
+    picker.querySelector('[data-label=""]')?.classList.add('selected');
+  }
+  const hiddenEl = document.getElementById('pf-label');
+  if (hiddenEl) hiddenEl.value = '';
 
   showSuccessToast();
 }

@@ -19,8 +19,8 @@ body {
   font-family: 'Poppins', sans-serif;
   background: #e8ecf0;
   display: flex;
-  width: 1920px;              /* largura fixa 1920×1080 */
-  height: 1080px;             /* altura fixa 1920×1080 */
+  width: 100vw;               /* preenche toda a largura do viewport */
+  height: 100vh;              /* preenche toda a altura do viewport */
   overflow: hidden;           /* sem scroll na página — o scroll fica só na área de conteúdo */
   margin: 0;
   padding: 0;

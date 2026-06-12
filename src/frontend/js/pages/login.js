@@ -6,8 +6,8 @@
 // Mapa de perfil → página de destino após login bem-sucedido
 const ROLE_PAGES = {
   gestor:    'gestorApp.html',    // Gestor vai para o SPA de gestão da turma
-  psicologo: 'gestorApp.html',   // Psicólogo usa o mesmo SPA do gestor por ora
-  aluno:     'alunoApp.html',    // Aluno vai para o SPA de visão geral pessoal
+  psicologo: 'psicologoApp.html', // Psicólogo vai para o SPA dedicado ao psicólogo
+  aluno:     'alunoApp.html',     // Aluno vai para o SPA de visão geral pessoal
 };
 
 // Armazena o perfil atualmente selecionado nos botões de role

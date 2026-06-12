@@ -27,7 +27,7 @@
       <div class="modal-badges">
         <span class="badge badge-ativo"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
         <span class="badge badge-curso"><i class="ti ti-code" style="font-size:11px;"></i> Letramento Digital</span>
-        <span class="badge badge-nivel"><i class="ti ti-trending-up" style="font-size:11px;"></i> Capacitado</span>
+        <span class="badge badge-nivel">Capacitado</span>
       </div>
       <button class="close-btn" onclick="closeModal()" aria-label="Fechar"><i class="ti ti-x"></i></button>
     </div>
@@ -52,6 +52,10 @@
           <div class="field span2">
             <label><i class="ti ti-user"></i> Nome completo</label>
             <input type="text" value="Marianne Oliveira" readonly>
+          </div>
+          <div class="field">
+            <label><i class="ti ti-id-badge-2"></i> CPF</label>
+            <input type="text" value="123.456.789-00" readonly>
           </div>
           <div class="field">
             <label><i class="ti ti-calendar-event"></i> Idade</label>
@@ -97,7 +101,7 @@
             <input type="text" value="R$ 1.800,00" readonly>
           </div>
           <div class="field span2">
-            <label><i class="ti ti-home"></i> Nível de jornada</label>
+            <label>Nível de jornada</label>
             <input type="text" value="Capacitado" readonly>
           </div>
         </div>
@@ -126,7 +130,7 @@
         <div class="perf-cards">
 
           <div class="perf-card">
-            <div class="perf-card__label"><i class="ti ti-calendar-check"></i> Frequência</div>
+            <div class="perf-card__label">Frequência</div>
             <div class="perf-card__value">87%</div>
             <div class="perf-bar">
               <div class="perf-bar__fill" style="width:87%;background:var(--green-600)"></div>
@@ -135,14 +139,14 @@
           </div>
 
           <div class="perf-card">
-            <div class="perf-card__label"><i class="ti ti-star"></i> Engajamento</div>
+            <div class="perf-card__label">Engajamento</div>
             <div class="perf-card__value">7 <span class="perf-card__unit">/ 10</span></div>
             <div class="eng-stars" id="eng-stars-view"></div>
             <div class="perf-card__sub">Baseado em participação e entregas</div>
           </div>
 
           <div class="perf-card">
-            <div class="perf-card__label"><i class="ti ti-device-laptop"></i> Tipo de presença</div>
+            <div class="perf-card__label">Tipo de presença</div>
             <div class="presence-badge ead">EAD</div>
             <div class="perf-card__sub" style="margin-top:12px;">100% das aulas no formato online</div>
           </div>
@@ -247,5 +251,45 @@
 </div>
 
 <script src="../js/pages/perfilAluno.js"></script>
+<script>
+  (function () {
+    const raw = sessionStorage.getItem('gestorSelectedStudent');
+    if (!raw) return;
+    const s = JSON.parse(raw);
+
+    /* Avatar */
+    const av = document.querySelector('.modal-avatar');
+    if (av) { av.textContent = s.ini; av.style.background = s.bg; av.style.color = s.tc; }
+
+    /* Nome e meta */
+    const nameEl = document.querySelector('.modal-name');
+    if (nameEl) nameEl.textContent = s.name;
+
+    const metaEl = document.querySelector('.modal-meta');
+    if (metaEl) metaEl.textContent = s.id + ' · Programa Pulse Mais · Turma T4';
+
+    /* Campos do formulário — Aba Dados gerais */
+    const inputs = document.querySelectorAll('#tab-dados input[readonly]');
+    const codeNum = s.id.split('-').pop();
+    const fieldMap = [
+      { label: 'Código PM',     value: codeNum },
+      { label: 'Nome completo', value: s.name },
+      { label: 'Idade',         value: s.age + ' anos' },
+      { label: 'Curso',         value: s.course },
+    ];
+    inputs.forEach(inp => {
+      const label = inp.closest('.field')?.querySelector('label')?.textContent?.trim() || '';
+      const match = fieldMap.find(f => label.includes(f.label));
+      if (match) inp.value = match.value;
+    });
+
+    /* Badge de curso */
+    const badgeCurso = document.querySelector('.badge-curso');
+    if (badgeCurso) badgeCurso.innerHTML = `<i class="ti ti-code" style="font-size:11px;"></i> ${s.course}`;
+
+    /* Limpa sessionStorage para não persistir na volta */
+    sessionStorage.removeItem('gestorSelectedStudent');
+  })();
+</script>
 </body>
 </html>

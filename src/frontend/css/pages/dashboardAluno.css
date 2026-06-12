@@ -47,13 +47,14 @@ body{
 .page-header h1{
   font-size:24px;
   font-weight:700;
-  color:var(--azul-700);
-  margin-bottom:4px;
+  color:#003870;
+  line-height:1.2;
   letter-spacing:-.01em;
+  margin-bottom:4px;
 }
 .page-header p{
   font-size:12px;
-  color:var(--n-400);
+  color:#97A1AE;
   font-weight:400;
 }
 
@@ -86,7 +87,7 @@ body{
 .stat-card--amber .badge--sub{background:rgba(0,56,112,.08);color:rgba(0,56,112,.65)}
 
 .stat-card__header{display:flex;align-items:center;justify-content:space-between}
-.stat-card__label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.stat-card__label{font-size:11px;font-weight:500;letter-spacing:0;color:rgba(255,255,255,.65)}
 .stat-card__icon{width:34px;height:34px;border-radius:var(--radius-sm);background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center}
 .stat-card__icon svg{width:17px;height:17px;color:rgba(255,255,255,.8)}
 .stat-card__value{font-size:44px;font-weight:700;color:#fff;line-height:1;display:flex;align-items:baseline;gap:5px;letter-spacing:-.02em}

@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="../css/pages/dashboardGestor.css">
 <!-- Estilos do modal -->
 <link rel="stylesheet" href="../css/pages/modalConfEquipe.css">
+<link rel="stylesheet" href="../css/pages/perfilAluno.css">
 <style>
   /* ── SPA: container de conteúdo sem padding próprio ── */
   .paginaConteudo {
@@ -40,6 +41,349 @@
   #view-inicio .stat-card  { padding: 16px 22px 14px; border-radius: 14px; }
   #view-inicio .sc-value   { font-size: 44px; }
   #view-inicio .charts-row { grid-template-columns: 1fr 420px; }
+
+  /* ══ DASHBOARD — layout scrollável ══════════════════════ */
+  #view-dashboard {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding: 26px 40px 52px !important;
+    gap: 18px !important;
+  }
+  #view-dashboard::-webkit-scrollbar { width: 5px; }
+  #view-dashboard::-webkit-scrollbar-track { background: #EEF1F4; }
+  #view-dashboard::-webkit-scrollbar-thumb { background: #C2CAD4; border-radius: 3px; }
+
+  /* Rótulo de seção */
+  .dsec-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0;
+    color: #97A1AE;
+    flex-shrink: 0; margin-top: 4px;
+  }
+
+  /* Funil: 4 stat cards com setas */
+  .funnel-row {
+    display: flex; align-items: flex-start; gap: 0; flex-shrink: 0;
+    align-self: flex-start; width: 100%;
+    background: #fff; border-radius: 16px; border: 1px solid #DEE3EA;
+    overflow: hidden;
+  }
+  .funnel-card {
+    flex: 1; padding: 7px 18px 9px; display: flex; flex-direction: column;
+    gap: 3px; position: relative; height: auto !important;
+  }
+  .funnel-card + .funnel-card { border-left: 1px solid #DEE3EA; }
+  .funnel-card--blue  { background: #003870; }
+  .funnel-card--green { background: #33B458; }
+  .funnel-card--amber { background: #FFD927; }
+  .funnel-card--white { background: #fff; }
+  .fc-num   { font-size: 38px; font-weight: 800; line-height: 1; }
+  .fc-title { font-size: 12px; font-weight: 700; margin-top: 4px; }
+  .fc-sub   { font-size: 10px; margin-top: 1px; }
+  .funnel-card--blue  .fc-num   { color: #fff; }
+  .funnel-card--blue  .fc-title { color: rgba(255,255,255,.85); }
+  .funnel-card--blue  .fc-sub   { color: rgba(255,255,255,.5); }
+  .funnel-card--green .fc-num   { color: #fff; }
+  .funnel-card--green .fc-title { color: rgba(255,255,255,.85); }
+  .funnel-card--green .fc-sub   { color: rgba(255,255,255,.5); }
+  .funnel-card--amber .fc-num   { color: #003870; }
+  .funnel-card--amber .fc-title { color: rgba(0,56,112,.8); }
+  .funnel-card--amber .fc-sub   { color: rgba(0,56,112,.55); }
+  .funnel-card--white .fc-num   { color: #003870; }
+  .funnel-card--white .fc-title { color: #6B7684; }
+  .funnel-card--white .fc-sub   { color: #97A1AE; }
+  .fc-arrow {
+    position: absolute; right: -11px; top: 50%; transform: translateY(-50%);
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #EEF1F4; border: 1px solid #DEE3EA;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #97A1AE; z-index: 2;
+  }
+
+  /* Linha de breakdowns */
+  .breakdown-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; flex-shrink: 0;
+  }
+  .breakdown-card {
+    background: #fff; border-radius: 14px; border: 1px solid #DEE3EA;
+    padding: 16px 18px;
+  }
+  .bk-head {
+    font-size: 11px; font-weight: 700; color: #11161D;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 7px;
+  }
+  .bk-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .bk-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 5px 0; border-bottom: 1px solid #F7F8FA;
+  }
+  .bk-item:last-of-type { border-bottom: none; }
+  .bk-num  { font-size: 18px; font-weight: 800; color: #003870; line-height: 1.2; min-width: 38px; flex-shrink: 0; }
+  .bk-text { font-size: 11px; color: #6B7684; line-height: 1.45; padding-top: 2px; }
+  .bk-note { font-size: 10px; color: #97A1AE; margin-top: 8px; }
+
+  /* Charts de evolução */
+  #view-dashboard .charts-row {
+    flex: none; min-height: 0; overflow: visible;
+    grid-template-columns: 1fr 1fr; flex-shrink: 0;
+  }
+  #view-dashboard .chart-card { overflow: visible; min-height: 0; }
+
+  /* Painel de custo/ROI ao lado do gráfico de empregados */
+  .emp-side {
+    display: flex; flex-direction: column; gap: 8px;
+    min-width: 190px; flex-shrink: 0;
+  }
+  .emp-info-card {
+    background: #EDF3F9; border: 1px solid #D6E2EF;
+    border-radius: 10px; padding: 10px 12px;
+  }
+  .emp-info-label {
+    font-size: 11px; font-weight: 600; color: #003870; margin-bottom: 5px;
+  }
+  .emp-info-line { font-size: 11px; color: #6B7684; line-height: 1.6; }
+
+  /* Impacto econômico */
+  .impact-row {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; flex-shrink: 0;
+  }
+  .impact-card { border-radius: 14px; padding: 20px 22px; }
+  .impact-card--roi       { background: #0F1E42; color:#fff; }
+  .impact-card--salary    { background: #1D7A36; color:#fff; }
+  .impact-card--injection { background: #FFD927; color: #003870; }
+  .impact-card--injection .ic-label { opacity: .6; color: #003870; }
+  .impact-card--injection .ic-value { color: #003870; }
+  .impact-card--injection .ic-sub   { opacity: .65; color: #003870; }
+  .ic-label { font-size: 11px; font-weight: 500; opacity: .8; margin-bottom: 8px; }
+  .ic-value { font-size: 30px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+  .ic-sub   { font-size: 11px; opacity: .75; line-height: 1.45; }
+
+  /* Diversidade */
+  .div-title {
+    font-size: 13px; font-weight: 700; color: #003870;
+    padding: 0 2px; flex-shrink: 0;
+  }
+  .div-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; flex-shrink: 0;
+  }
+  .gender-list { display: flex; flex-direction: column; gap: 2px; padding: 4px 0; }
+  .gender-item { display: flex; align-items: center; gap: 8px; padding: 6px 2px; }
+  .gi-pct  { font-size: 16px; font-weight: 700; color: #003870; min-width: 42px; }
+  .gi-badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 600;
+  }
+  .gi-blue   { background: #E6F1FB; color: #003870; }
+  .gi-green  { background: #E8F8ED; color: #1D7A36; }
+  .gi-amber  { background: rgba(255,217,39,.28); color: #854F0B; }
+  .gi-purple { background: rgba(123,79,217,.1); color: #5B3AA8; }
+  .gi-gray   { background: #F5F4F0; color: #6B7684; }
+  .pcd-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #E8F8ED; color: #1D7A36; border: 1px solid #B2E8C2;
+    border-radius: 999px; font-size: 12px; font-weight: 700;
+    padding: 5px 14px; margin-top: 10px;
+  }
+
+  /* Banner Resultados 2025 */
+  .results-banner {
+    background: #003870;
+    border-radius: 16px; padding: 24px 28px; flex-shrink: 0;
+  }
+  .rb-title {
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,.6);
+    margin-bottom: 16px;
+  }
+  .rb-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 10px;
+  }
+  .rb-card {
+    background: rgba(255,255,255,.1); border-radius: 10px;
+    padding: 14px 16px; border: 1px solid rgba(255,255,255,.1);
+  }
+  .rb-num   { font-size: 26px; font-weight: 800; color: #FFD927; line-height: 1; margin-bottom: 4px; }
+  .rb-label { font-size: 11px; color: rgba(255,255,255,.78); line-height: 1.4; }
+
+  /* ══ VIEW: ALUNOS ═══════════════════════════════════════ */
+  #view-alunos { padding: 22px 40px 18px !important; gap: 12px !important; }
+
+  .al-header { flex-shrink: 0; }
+  .al-header h1 { font-size: 24px; font-weight: 700; color: #003870; line-height: 1.2; letter-spacing: -.01em; margin-bottom: 4px; }
+  .al-subtitle   { font-size: 11px; color: #97A1AE; }
+  .al-subtitle .al-risk { color: #E24B4A; font-weight: 600; }
+  .al-subtitle .al-emp  { color: #33B458;  font-weight: 600; }
+
+  .al-filters { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .al-filter-btn {
+    padding: 5px 14px; border-radius: 8px; border: 1px solid #DEE3EA;
+    background: #fff; font-size: 11px; font-weight: 500; color: #6B7684;
+    cursor: pointer; font-family: 'Poppins', sans-serif; transition: all .15s;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .al-filter-btn:hover  { border-color: #003870; color: #003870; }
+  .al-filter-btn--active{ background: #003870; color: #fff; border-color: #003870; font-weight: 600; }
+  .al-import-btn {
+    margin-left: auto; font-size: 11px; font-weight: 600; color: #33B458;
+    background: none; border: none; cursor: pointer; font-family: 'Poppins', sans-serif;
+  }
+  .al-import-btn:hover { opacity: .7; }
+
+  .al-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; flex-shrink: 0; }
+
+  .al-card {
+    background: #fff; border-radius: 12px; border: 1px solid #DEE3EA;
+    padding: 14px 16px 12px; box-shadow: 0 1px 3px rgba(0,56,112,.05);
+  }
+  .al-card-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .al-av {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; font-family: 'Poppins', sans-serif;
+  }
+  .al-info { flex: 1; min-width: 0; }
+  .al-name { font-size: 13px; font-weight: 600; color: #11161D; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .al-meta { font-size: 10px; color: #6B7684; margin-top: 2px; }
+  .al-id   { font-size: 10px; color: #97A1AE; }
+
+  .al-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px; border-radius: 999px; font-size: 10px;
+    font-weight: 600; flex-shrink: 0; white-space: nowrap;
+  }
+  .al-badge--ativa     { background: #E8F8ED; color: #1D7A36; }
+  .al-badge--risco     { background: #FFF3E0; color: #C2410C; }
+  .al-badge--empregado { background: rgba(255,217,39,.28); color: #003870; }
+  .al-badge--inativo   { background: #F5F4F0; color: #97A1AE; }
+  .al-badge--atencao   { background: #FFF3E0; color: #C2410C; }
+
+  .al-prog-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .al-module   { font-size: 11px; color: #6B7684; font-weight: 500; }
+  .al-pct      { font-size: 11px; font-weight: 600; color: #11161D; }
+  .al-bar      { height: 5px; border-radius: 3px; background: #EEF1F4; overflow: hidden; margin-bottom: 6px; }
+  .al-bar-inner{ height: 100%; border-radius: 3px; }
+  .al-bar-inner.c-green { background: #33B458; }
+  .al-bar-inner.c-amber { background: #F4A261; }
+  .al-bar-inner.c-red   { background: #E24B4A; }
+  .al-bar-inner.c-gray  { background: #C2CAD4; }
+  .al-note { font-size: 10px; color: #97A1AE; line-height: 1.4; }
+
+  .al-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0; border-top: 1px solid #DEE3EA; padding-top: 10px;
+  }
+  .al-legend { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .al-leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; }
+  .al-leg-dot  { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .al-leg-label{ color: #6B7684; }
+  .al-leg-num  { font-weight: 700; color: #11161D; margin-left: 2px; }
+
+  .al-pag { display: flex; align-items: center; gap: 4px; }
+  .al-pag-info { font-size: 10px; color: #97A1AE; margin-right: 6px; white-space: nowrap; }
+  .al-pag-btn {
+    width: 26px; height: 26px; border-radius: 6px;
+    border: 1px solid #DEE3EA; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #6B7684; cursor: pointer; padding: 0;
+    transition: all .15s; font-family: 'Poppins', sans-serif;
+  }
+  .al-pag-btn:hover:not(:disabled) { border-color: #003870; color: #003870; }
+  .al-pag-btn:disabled { opacity: .35; cursor: default; }
+  .al-pag-btn.active   { background: #003870; color: #fff; border-color: #003870; font-weight: 600; }
+  #al-pag-nums { display: inline-flex; align-items: center; gap: 4px; }
+  .al-card { cursor: pointer; transition: box-shadow .15s, transform .12s; }
+  .al-card:hover { box-shadow: 0 4px 16px rgba(0,56,112,.12); transform: translateY(-1px); }
+
+  .al-stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; flex-shrink: 0; }
+  .al-stat {
+    background: #fff; border-radius: 10px; border: 1px solid #DEE3EA;
+    padding: 10px 14px; display: flex; flex-direction: column; gap: 4px;
+  }
+  .al-stat-head  { display: flex; justify-content: space-between; align-items: center; }
+  .al-stat-label { font-size: 11px; color: #97A1AE; font-weight: 500; letter-spacing: 0; }
+  .al-stat-val   { font-size: 28px; font-weight: 800; color: #003870; line-height: 1; }
+  .al-sbadge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+  .al-sbadge--up   { background: #E8F8ED; color: #1D7A36; }
+  .al-sbadge--warn { background: #FFF3E0; color: #C2410C; }
+  .al-sbadge--emp  { background: rgba(255,217,39,.25); color: #003870; }
+  .al-sbadge--blue { background: #EDF3F9; color: #0A4A89; }
+
+  /* ══ AGENDA VIEW ═══════════════════════════════════════ */
+  #view-agenda { overflow-y: auto !important; padding: 24px 40px; gap: 20px; flex-direction: column; background: #EEF1F4; }
+  .ag-layout { display: flex; gap: 20px; flex: 1; min-height: 0; }
+  .ag-main { flex: 1; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .ag-sidebar { width: 360px; flex-shrink: 0; }
+
+  /* Calendar */
+  .ag-cal { background: #fff; border-radius: 12px; border: 1px solid #DEE3EA; box-shadow: 0 1px 4px rgba(0,56,112,.07); overflow: hidden; }
+  .ag-cal-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #EEF1F4; }
+  .ag-cal-title { font-size: 17px; font-weight: 700; color: #003870; }
+  .ag-cal-nav { display: flex; align-items: center; gap: 6px; }
+  .ag-cal-nav-btn { width: 28px; height: 28px; border-radius: 7px; border: 1px solid #DEE3EA; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #6B7684; font-size: 12px; transition: background .12s; }
+  .ag-cal-nav-btn:hover { background: #EEF1F4; }
+  .ag-cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); border-bottom: 1px solid #EEF1F4; }
+  .ag-cal-wd { text-align: center; font-size: 10px; font-weight: 600; color: #97A1AE; padding: 7px 0; letter-spacing: .07em; text-transform: uppercase; }
+  .ag-cal-wd.weekend { color: #E24B4A; }
+  .ag-cal-body { display: flex; flex-direction: column; }
+  .ag-week { border-bottom: 1px solid #EEF1F4; }
+  .ag-week:last-child { border-bottom: none; }
+  .ag-week-days { display: grid; grid-template-columns: repeat(7, 1fr); }
+  .ag-cell { border-right: 1px solid #F0F3F7; padding: 6px 8px 2px; min-height: 30px; }
+  .ag-cell:last-child { border-right: none; }
+  .ag-cell.other-month .ag-day-num { color: #C0C7D0; }
+  .ag-day-num { font-size: 11px; font-weight: 500; color: #6B7684; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+  .ag-day-num.today { background: #003870; color: #fff; font-weight: 700; }
+  .ag-day-num.weekend { color: #E24B4A; }
+  .ag-week-events { padding: 2px 0 4px; }
+  .ag-ev-row { display: grid; grid-template-columns: repeat(7, 1fr); margin: 0 0 2px; }
+  .ag-event { border-radius: 4px; color: #fff; font-size: 10px; font-weight: 600; padding: 3px 6px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0 2px; transition: filter .12s; line-height: 1.4; }
+  .ag-event:hover { filter: brightness(1.12); }
+  .ag-event.span-start { border-radius: 4px 0 0 4px; margin-right: 0; }
+  .ag-event.span-mid { border-radius: 0; margin: 0; }
+  .ag-event.span-end { border-radius: 0 4px 4px 0; margin-left: 0; }
+  .ag-event.selected { outline: 2px solid rgba(0,56,112,.45); outline-offset: 1px; }
+  .ag-cal-footer { padding: 6px 14px; font-size: 11px; color: #97A1AE; border-top: 1px solid #EEF1F4; }
+
+  /* Event detail */
+  .ag-detail { background: #fff; border-radius: 12px; border: 1px solid #DEE3EA; box-shadow: 0 1px 4px rgba(0,56,112,.07); padding: 16px 20px; display: none; flex-direction: column; gap: 10px; }
+  .ag-detail.open { display: flex; }
+  .ag-detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .ag-detail-title { font-size: 15px; font-weight: 700; color: #11161D; }
+  .ag-detail-type { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; }
+  .ag-detail-close { width: 24px; height: 24px; border: none; background: #EEF1F4; border-radius: 50%; cursor: pointer; font-size: 13px; color: #6B7684; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ag-detail-row { display: flex; gap: 20px; flex-wrap: wrap; }
+  .ag-detail-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6B7684; }
+  .ag-detail-item i { font-size: 14px; color: #97A1AE; }
+  .ag-detail-desc { font-size: 12px; color: #444; line-height: 1.6; border-left: 3px solid #EEF1F4; padding-left: 10px; }
+
+  /* Sidebar form */
+  .ag-form-card { background: #fff; border-radius: 12px; border: 1px solid #DEE3EA; box-shadow: 0 1px 4px rgba(0,56,112,.07); overflow: hidden; display: flex; flex-direction: column; }
+  .ag-form-head { background: #003870; padding: 14px 18px; display: flex; align-items: center; gap: 10px; }
+  .ag-form-head-title { font-size: 13px; font-weight: 600; color: #fff; }
+  .ag-form-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 11px; }
+  .ag-field { display: flex; flex-direction: column; gap: 4px; }
+  .ag-field label { font-size: 11px; font-weight: 500; color: #6B7684; display: flex; align-items: center; gap: 5px; }
+  .ag-field input, .ag-field select, .ag-field textarea { width: 100%; padding: 7px 10px; border: 1px solid #DEE3EA; border-radius: 7px; font-family: 'Poppins', sans-serif; font-size: 12px; color: #11161D; background: #fff; outline: none; transition: border-color .12s; }
+  .ag-field input:focus, .ag-field select:focus, .ag-field textarea:focus { border-color: #003870; }
+  .ag-field textarea { resize: vertical; min-height: 60px; }
+  .ag-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .ag-form-footer { padding: 12px 18px; border-top: 1px solid #EEF1F4; }
+  .ag-submit-btn { width: 100%; padding: 10px; background: #003870; color: #fff; border: none; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: background .12s; }
+  .ag-submit-btn:hover { background: #004F96; }
+  .ag-val-err { border-color: #E24B4A !important; }
+  /* ══ PERFIL OVERLAY ═══════════════════════════════════════ */
+  .perfil-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0, 15, 40, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .perfil-overlay.open { display: flex; }
+  .perfil-overlay.open .modal { transform: translateY(0) scale(1); opacity: 1; }
+  body.perfil-open { overflow: hidden; }
 </style>
 </head>
 <body>
@@ -77,12 +421,11 @@
 
     <header class="menuSuperior" id="menuSuperior">
       <span class="menuSuperior__breadcrumb"></span>
-      <div class="menuSuperior__search">
+      <div class="menuSuperior__search" id="top-search" style="display:none;">
         <i class="ti ti-search menuSuperior__search-icon"></i>
-        <input type="text" class="menuSuperior__search-input" placeholder="Buscar" autocomplete="off" />
+        <input type="text" class="menuSuperior__search-input" placeholder="Buscar aluno..." autocomplete="off" />
       </div>
       <div class="menuSuperior__actions">
-        <button class="menuSuperior__bell" title="Notificações"><i class="ti ti-bell"></i></button>
         <button class="menuSuperior__avatar-btn" title="Perfil"></button>
       </div>
     </header>
@@ -96,7 +439,7 @@
 
         <div class="page-header">
           <h1>Visão Geral da Turma</h1>
-          <p>Segunda-feira, 26 de abril de 2025 · Semana 12 de 20</p>
+          <p>Semana 12 de 20 · Engenharia T4</p>
         </div>
 
         <div class="stat-row">
@@ -104,44 +447,25 @@
           <div class="stat-card stat-card--blue">
             <div class="sc-header">
               <div class="sc-label">Alunos Conectados</div>
-              <div class="sc-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-              </div>
             </div>
-            <div class="sc-value">42</div>
-            <div class="sc-footer"><span class="badge-up">▲ +8%</span><span class="sc-sub">de 48 total</span></div>
+            <div class="sc-value">39</div>
+            <div class="sc-footer"><span class="sc-sub">de 48 total</span></div>
           </div>
 
           <div class="stat-card stat-card--green">
             <div class="sc-header">
               <div class="sc-label">Alunos Transformados</div>
-              <div class="sc-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-                  <polyline points="16 7 22 7 22 13"/>
-                </svg>
-              </div>
             </div>
-            <div class="sc-value">31</div>
-            <div class="sc-footer"><span class="badge-up">▲ +5%</span><span class="sc-sub">este mês</span></div>
+            <div class="sc-value">27</div>
+            <div class="sc-footer"><span class="sc-sub">este mês</span></div>
           </div>
 
           <div class="stat-card stat-card--amber">
             <div class="sc-header">
               <div class="sc-label">Evolução da Turma</div>
-              <div class="sc-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-                  <polyline points="16 7 22 7 22 13"/>
-                </svg>
-              </div>
             </div>
-            <div class="sc-value">73<span class="unit">%</span></div>
-            <div class="sc-footer"><span class="badge-up">▲ +12%</span></div>
+            <div class="sc-value">71<span class="unit">%</span></div>
+            <div class="sc-footer"><span class="sc-sub">vs. 68% mês anterior</span></div>
           </div>
 
         </div>
@@ -152,7 +476,6 @@
             <div class="chart-card__head">
               <div>
                 <div class="chart-card__title">Alunos por Curso — Programa Pulse Mais</div>
-                <div class="chart-card__sub">Distribuição atual de alunos ativos por curso</div>
               </div>
               <button class="chart-btn">Mês</button>
             </div>
@@ -168,16 +491,13 @@
 
           <div class="chart-card activity-panel">
             <div class="activity-head">
-              <h2>Últimas Atividades</h2>
-              <a href="#">Ver todas →</a>
+              <h2>Próximos Eventos</h2>
+              <a href="#" onclick="window.__onMenuNav('agenda');return false;">Abrir agenda</a>
             </div>
-            <div class="activity-sub">Atualizações recentes da turma</div>
+            <div class="activity-sub">Junho 2026</div>
             <div class="activity-list" id="activity-list"></div>
             <div class="activity-pagination">
-              <span class="pg-total" id="pg-total">Exibindo 5 de 48 atividades</span>
-              <button class="pg-btn" id="pg-prev">‹</button>
-              <span id="pg-numbers"></span>
-              <button class="pg-btn" id="pg-next">›</button>
+              <span class="pg-total" id="pg-total"></span>
             </div>
           </div>
 
@@ -187,136 +507,348 @@
       <!-- ══════════════════════════════════════════════════════
            VIEW: ALUNOS  (em desenvolvimento pelo colega)
       ══════════════════════════════════════════════════════ -->
-      <div id="view-alunos" class="spa-view" style="align-items:center; justify-content:center; background:#EEF1F4;">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;">
-          <div style="width:72px;height:72px;background:#EDF3F9;border-radius:18px;display:flex;align-items:center;justify-content:center;">
-            <i class="ti ti-users" style="font-size:34px;color:#003870;"></i>
-          </div>
-          <h2 style="font-size:20px;font-weight:700;color:#11161D;font-family:'Poppins',sans-serif;">Alunos</h2>
-          <p style="font-size:14px;color:#97A1AE;max-width:380px;font-family:'Poppins',sans-serif;line-height:1.6;">
-            Esta tela está sendo desenvolvida pela equipe.<br>Em breve estará disponível no sistema.
+      <div id="view-alunos" class="spa-view">
+
+        <!-- Cabeçalho -->
+        <div class="al-header">
+          <h1>Alunos</h1>
+          <p class="al-subtitle">
+            18 alunos · <span class="al-risk">3 em risco</span> · <span class="al-emp">2 empregados</span>
           </p>
-          <span style="display:inline-flex;align-items:center;gap:6px;background:#EDF3F9;border:1px solid #D6E2EF;border-radius:8px;padding:8px 18px;font-size:12px;font-weight:600;color:#003870;font-family:'Poppins',sans-serif;">
-            <i class="ti ti-tools"></i> Em desenvolvimento
-          </span>
         </div>
+
+        <!-- Filtros -->
+        <div class="al-filters">
+          <button class="al-filter-btn" id="btn-curso">Curso</button>
+          <button class="al-filter-btn" id="btn-desemp">Desempenho</button>
+          <button class="al-filter-btn" id="btn-nota">Nota Média</button>
+          <button class="al-filter-btn" id="btn-eng">Engajamento</button>
+          <button class="al-filter-btn" id="btn-ord">
+            <i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> Ordenar
+          </button>
+          <button class="al-import-btn">+ Importar CSV</button>
+        </div>
+
+        <!-- Grid de alunos (renderizado por JS) -->
+        <div class="al-grid" id="al-grid"></div>
+
+        <!-- Rodapé: legenda + paginação -->
+        <div class="al-foot">
+          <div class="al-legend">
+            <div class="al-leg-item"><div class="al-leg-dot" style="background:#33B458"></div><span class="al-leg-label">Ativa</span><span class="al-leg-num">9</span></div>
+            <div class="al-leg-item"><div class="al-leg-dot" style="background:#E24B4A"></div><span class="al-leg-label">Em risco</span><span class="al-leg-num">3</span></div>
+            <div class="al-leg-item"><div class="al-leg-dot" style="background:#F4A261"></div><span class="al-leg-label">Atenção</span><span class="al-leg-num">2</span></div>
+            <div class="al-leg-item"><div class="al-leg-dot" style="background:#C2CAD4"></div><span class="al-leg-label">Inativo</span><span class="al-leg-num">2</span></div>
+            <div class="al-leg-item"><div class="al-leg-dot" style="background:#FFD927"></div><span class="al-leg-label">Empregado</span><span class="al-leg-num">2</span></div>
+          </div>
+          <div class="al-pag">
+            <span class="al-pag-info" id="al-pag-info">Exibindo 1–9 de 184 alunos</span>
+            <button class="al-pag-btn" id="al-prev" disabled>‹</button>
+            <span id="al-pag-nums"></span>
+            <button class="al-pag-btn" id="al-next">›</button>
+          </div>
+        </div>
+
+        <!-- Resumo estatístico -->
+        <div class="al-stats-row">
+          <div class="al-stat">
+            <div class="al-stat-head">
+              <span class="al-stat-label">Alunos Ativos</span>
+            </div>
+            <div class="al-stat-val">18</div>
+          </div>
+          <div class="al-stat">
+            <div class="al-stat-head">
+              <span class="al-stat-label">Em Risco</span>
+            </div>
+            <div class="al-stat-val">3</div>
+          </div>
+          <div class="al-stat">
+            <div class="al-stat-head">
+              <span class="al-stat-label">Empregados</span>
+            </div>
+            <div class="al-stat-val">2</div>
+          </div>
+          <div class="al-stat">
+            <div class="al-stat-head">
+              <span class="al-stat-label">Engajamento Médio</span>
+              <span class="al-sbadge al-sbadge--blue">↑ Acima da meta</span>
+            </div>
+            <div class="al-stat-val">7,1</div>
+          </div>
+        </div>
+
       </div><!-- fim #view-alunos -->
 
       <!-- ══════════════════════════════════════════════════════
            VIEW: DASHBOARD  (dashboardGestor)
       ══════════════════════════════════════════════════════ -->
-      <div id="view-dashboard" class="spa-view" style="padding:24px 40px 20px; gap:14px;">
+      <div id="view-dashboard" class="spa-view">
 
+        <!-- CABEÇALHO -->
         <div class="page-header" style="flex-shrink:0;">
-          <h1>Dashboard – Performance da Turma</h1>
-          <p>Segunda-feira, 26 de abril de 2025 · Semana 12 de 20</p>
+          <h1>Dashboard — Resultados de Impacto</h1>
+          <p>Programa Pulse Mais · Dados acumulados 2022–2025</p>
         </div>
 
-        <div class="stat-grid">
+        <!-- ══ FUNIL DE IMPACTO ══════════════════════════════════ -->
+        <div class="funnel-row">
+          <div class="funnel-card funnel-card--blue">
+            <div class="fc-num">528</div>
+            <div class="fc-title">Jovens Conectados</div>
+            <div class="fc-sub">Palestras, vivências e cursos</div>
+            <div class="fc-arrow"><i class="ti ti-chevron-right"></i></div>
+          </div>
+          <div class="funnel-card funnel-card--green">
+            <div class="fc-num">126</div>
+            <div class="fc-title">Jovens Capacitados</div>
+            <div class="fc-sub">Pulse Mais + Mentoria</div>
+            <div class="fc-arrow"><i class="ti ti-chevron-right"></i></div>
+          </div>
+          <div class="funnel-card funnel-card--amber">
+            <div class="fc-num">60</div>
+            <div class="fc-title">Jovens Transformados</div>
+            <div class="fc-sub">Emprego e/ou bolsa universitária</div>
+            <div class="fc-arrow"><i class="ti ti-chevron-right"></i></div>
+          </div>
+          <div class="funnel-card funnel-card--white">
+            <div class="fc-num">46</div>
+            <div class="fc-title">Computadores Doados</div>
+            <div class="fc-sub">Inclusão digital direta</div>
+          </div>
+        </div>
 
-          <div class="stat-card stat-card--blue">
-            <div class="sc-header">
-              <div class="sc-label">Alunos Ativos</div>
-              <div class="sc-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-              </div>
+        <!-- ══ BREAKDOWNS ════════════════════════════════════════ -->
+        <div class="breakdown-row">
+
+          <div class="breakdown-card">
+            <div class="bk-head">
+              <span class="bk-dot" style="background:#003870"></span>
+              Conectados · 528 jovens
             </div>
-            <div class="sc-value">184</div>
-            <div class="sc-footer"><span class="badge-up">▲ +8%</span>este mês</div>
+            <div class="bk-item">
+              <span class="bk-num">379</span>
+              <span class="bk-text">em 7 palestras em escolas públicas e IES*</span>
+            </div>
+            <div class="bk-item">
+              <span class="bk-num">121</span>
+              <span class="bk-text">em 4 vivências em empresas de tecnologia</span>
+            </div>
+            <div class="bk-item">
+              <span class="bk-num">28</span>
+              <span class="bk-text">em cursos de curta duração</span>
+            </div>
+            <div class="bk-note">* IES: Instituições de Ensino Superior</div>
           </div>
 
-          <div class="stat-card stat-card--red">
-            <div class="sc-header">
-              <div class="sc-label">Evasão</div>
-              <div class="sc-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0-3.42 0z"/>
-                  <line x1="12" y1="9" x2="12" y2="13"/>
-                  <line x1="12" y1="17" x2="12.01" y2="17"/>
-                </svg>
-              </div>
+          <div class="breakdown-card">
+            <div class="bk-head">
+              <span class="bk-dot" style="background:#33B458"></span>
+              Capacitados · 126 jovens
             </div>
-            <div class="sc-value">12</div>
-            <div class="sc-footer"><span class="badge-warn">▲ +3 esta sem.</span>em risco</div>
+            <div class="bk-item">
+              <span class="bk-num">69</span>
+              <span class="bk-text">no Programa Pulse Mais (7 cursos + 12 sessões de mentoria)</span>
+            </div>
+            <div class="bk-item">
+              <span class="bk-num">57</span>
+              <span class="bk-text">no Programa de Mentoria (1 curso + 12 sessões de mentoria)</span>
+            </div>
           </div>
 
-          <div class="stat-card stat-card--green">
-            <div class="sc-header">
-              <div class="sc-label">Empregabilidade</div>
-              <div class="sc-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="2" y="7" width="20" height="14" rx="2"/>
-                  <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
-                </svg>
-              </div>
+          <div class="breakdown-card">
+            <div class="bk-head">
+              <span class="bk-dot" style="background:#FFD927"></span>
+              Transformados · 60 jovens
             </div>
-            <div class="sc-value">22 <span class="unit">alunos</span></div>
-            <div class="sc-footer"><span class="badge-up">▲ +5%</span>este mês</div>
-          </div>
-
-          <div class="stat-card stat-card--amber">
-            <div class="sc-header">
-              <div class="sc-label">Engajamento Médio</div>
-              <div class="sc-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-                  <polyline points="16 7 22 7 22 13"/>
-                </svg>
-              </div>
+            <div class="bk-item">
+              <span class="bk-num">34</span>
+              <span class="bk-text">empregados</span>
             </div>
-            <div class="sc-value">7,1</div>
-            <div class="sc-footer"><span class="badge-up">↑ Acima da meta</span></div>
+            <div class="bk-item">
+              <span class="bk-num">10</span>
+              <span class="bk-text">empregados e com bolsa no ensino superior</span>
+            </div>
+            <div class="bk-item">
+              <span class="bk-num">16</span>
+              <span class="bk-text">conquistaram bolsas no ensino superior</span>
+            </div>
           </div>
 
         </div>
+
+        <!-- ══ FUNIL VISUAL ═══════════════════════════════════════ -->
+        <div class="chart-card" style="flex-shrink:0;">
+          <div class="chart-card__head">
+            <div>
+              <div class="chart-card__title">Funil de Impacto — Visualização</div>
+              <div class="chart-card__sub">Jornada dos jovens: Conectados → Capacitados → Transformados</div>
+            </div>
+          </div>
+          <div class="canvas-wrap" style="height:120px;">
+            <canvas id="g-funnelChart"></canvas>
+          </div>
+        </div>
+
+        <!-- ══ EVOLUÇÃO HISTÓRICA ════════════════════════════════ -->
+        <div class="dsec-label">Evolução Histórica</div>
 
         <div class="charts-row">
 
           <div class="chart-card">
             <div class="chart-card__head">
               <div>
-                <div class="chart-card__title">Alunos por Curso</div>
-                <div class="chart-card__sub">Distribuição atual dos alunos ativos · Engenharia T4</div>
+                <div class="chart-card__title">Jovens Atingidos — Histórico</div>
+                <div class="chart-card__sub">Total acumulado por ano · 2022–2025</div>
               </div>
-              <button class="chart-btn">Mês</button>
             </div>
-            <div class="canvas-wrap"><canvas id="g-barChartDash"></canvas></div>
-            <div class="legend-row">
-              <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>Em andamento</div>
-              <div class="legend-item"><div class="legend-dot" style="background:#33B458"></div>Concluído</div>
-              <div class="legend-item"><div class="legend-dot" style="background:#FFD927"></div>Em atraso</div>
+            <div class="canvas-wrap" style="height:180px;">
+              <canvas id="g-historicoChart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-card__head" style="align-items:flex-start;gap:12px;">
+              <div>
+                <div class="chart-card__title">Evolução Jovens Empregados</div>
+                <div class="chart-card__sub">Jovens com emprego formal após os programas</div>
+              </div>
+              <div class="emp-side">
+                <div class="emp-info-card">
+                  <div class="emp-info-label">Custo / Jovem Empregado</div>
+                  <div class="emp-info-line">• 2025: <strong>R$ 8,6 mil</strong></div>
+                  <div class="emp-info-line">• 2026: <strong>R$ 6,9 mil</strong></div>
+                </div>
+                <div class="emp-info-card">
+                  <div class="emp-info-label">Índice de ROI Social</div>
+                  <div class="emp-info-line">R$ 1 investido gera</div>
+                  <div class="emp-info-line" style="color:#1D7A36;font-weight:700;">R$ 2,71 na economia</div>
+                </div>
+              </div>
+            </div>
+            <div class="canvas-wrap" style="height:180px;">
+              <canvas id="g-empregadosChart"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ══ IMPACTO ECONÔMICO ══════════════════════════════════ -->
+        <div class="dsec-label">Impacto Econômico</div>
+
+        <div class="impact-row">
+          <div class="impact-card impact-card--roi">
+            <div class="ic-label">ROI Social</div>
+            <div class="ic-value">R$ 2,71</div>
+            <div class="ic-sub">retornam à economia para cada R$ 1,00<br>aplicado na Pulse Mais</div>
+          </div>
+          <div class="impact-card impact-card--salary">
+            <div class="ic-label">Salário Médio Mensal · 2025</div>
+            <div class="ic-value">R$ 1.960</div>
+            <div class="ic-sub">salário médio do grupo de jovens<br>empregados após os programas</div>
+          </div>
+          <div class="impact-card impact-card--injection">
+            <div class="ic-label">Injeção Projetada na Economia</div>
+            <div class="ic-value">R$ 1,03 mi</div>
+            <div class="ic-sub">via salários anualizados do grupo empregado<br>geração de renda e inclusão produtiva</div>
+          </div>
+        </div>
+
+        <!-- ══ DIVERSIDADE ════════════════════════════════════════ -->
+        <div class="div-title">Diversidade — Turma 2025 · Programa Pulse Mais</div>
+
+        <div class="div-grid">
+
+          <div class="chart-card">
+            <div class="chart-card__head">
+              <div>
+                <div class="chart-card__title">Autodeclaração Racial</div>
+                <div class="chart-card__sub">51,7% não brancos</div>
+              </div>
+            </div>
+            <div class="canvas-wrap" style="height:170px;">
+              <canvas id="g-racialChart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-card__head" style="justify-content:space-between;">
+              <div class="chart-card__title">Identidade de Gênero</div>
+              <span class="pcd-badge" style="margin-top:0;">
+                <i class="ti ti-accessible" style="font-size:13px;"></i>5% PCD
+              </span>
+            </div>
+            <div class="gender-list">
+              <div class="gender-item">
+                <span class="gi-pct">62%</span>
+                <span class="gi-badge gi-blue">Homem Cisgênero</span>
+              </div>
+              <div class="gender-item">
+                <span class="gi-pct">31%</span>
+                <span class="gi-badge gi-green">Mulher Cisgênero</span>
+              </div>
+              <div class="gender-item">
+                <span class="gi-pct">3%</span>
+                <span class="gi-badge gi-amber">Não Binárie</span>
+              </div>
+              <div class="gender-item">
+                <span class="gi-pct">1%</span>
+                <span class="gi-badge gi-blue">Homem Transgênero</span>
+              </div>
+              <div class="gender-item">
+                <span class="gi-pct">1%</span>
+                <span class="gi-badge gi-green">Mulher Transgênero</span>
+              </div>
+              <div class="gender-item">
+                <span class="gi-pct">3%</span>
+                <span class="gi-badge gi-gray">Prefiro não declarar</span>
+              </div>
             </div>
           </div>
 
           <div class="chart-card">
             <div class="chart-card__head">
               <div>
-                <div class="chart-card__title">Tipo de Presença</div>
-                <div class="chart-card__sub">% de presença por curso — Programa Pulse Mais · EAD vs Presencial</div>
+                <div class="chart-card__title">Faixa de Renda Familiar</div>
+                <div class="chart-card__sub">Salário Mínimo [SM] = R$ 1.509</div>
               </div>
-              <button class="chart-btn">Exportar</button>
             </div>
-            <div class="canvas-wrap"><canvas id="g-presencaChart"></canvas></div>
-            <div class="legend-row">
-              <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>EAD</div>
-              <div class="legend-item"><div class="legend-dot" style="background:#33B458"></div>Presencial</div>
+            <div class="canvas-wrap" style="height:120px;">
+              <canvas id="g-rendaChart"></canvas>
             </div>
           </div>
 
         </div>
 
-        <div class="chart-card" style="flex-shrink:0; height:180px;">
-          <div class="chart-card__head" style="flex-shrink:0;">
-            <div>
-              <div class="chart-card__title">Funil de Impacto</div>
-              <div class="chart-card__sub">Progresso da turma Engenharia T4 · Semana 12</div>
+        <!-- ══ RESULTADOS GERAIS 2025 ════════════════════════════ -->
+        <div class="results-banner">
+          <div class="rb-title">Resultados até dezembro de 2025</div>
+          <div class="rb-grid">
+            <div class="rb-card">
+              <div class="rb-num">+1.000</div>
+              <div class="rb-label">jovens atingidos</div>
+            </div>
+            <div class="rb-card">
+              <div class="rb-num">130</div>
+              <div class="rb-label">jovens formados em programas</div>
+            </div>
+            <div class="rb-card">
+              <div class="rb-num">32</div>
+              <div class="rb-label">bolsas para o ensino superior concedidas</div>
+            </div>
+            <div class="rb-card">
+              <div class="rb-num">+75</div>
+              <div class="rb-label">jovens empregados após os programas</div>
+            </div>
+            <div class="rb-card">
+              <div class="rb-num">300</div>
+              <div class="rb-label">participantes na rede de mentores</div>
+            </div>
+            <div class="rb-card">
+              <div class="rb-num">182</div>
+              <div class="rb-label">mentores formados</div>
             </div>
           </div>
-          <div class="canvas-wrap"><canvas id="g-funnelChart"></canvas></div>
         </div>
 
       </div><!-- fim #view-dashboard -->
@@ -324,18 +856,81 @@
       <!-- ══════════════════════════════════════════════════════
            VIEW: AGENDA  (em desenvolvimento pelo colega)
       ══════════════════════════════════════════════════════ -->
-      <div id="view-agenda" class="spa-view" style="align-items:center; justify-content:center; background:#EEF1F4;">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;">
-          <div style="width:72px;height:72px;background:#EDF3F9;border-radius:18px;display:flex;align-items:center;justify-content:center;">
-            <i class="ti ti-calendar" style="font-size:34px;color:#003870;"></i>
+      <div id="view-agenda" class="spa-view">
+        <div class="ag-layout">
+
+          <!-- Coluna principal: calendário + detalhe -->
+          <div class="ag-main">
+            <div class="ag-cal" id="ag-cal"><!-- renderizado pelo JS --></div>
+            <div class="ag-detail" id="ag-detail"><!-- detalhe do evento --></div>
           </div>
-          <h2 style="font-size:20px;font-weight:700;color:#11161D;font-family:'Poppins',sans-serif;">Agenda</h2>
-          <p style="font-size:14px;color:#97A1AE;max-width:380px;font-family:'Poppins',sans-serif;line-height:1.6;">
-            Esta tela está sendo desenvolvida pela equipe.<br>Em breve estará disponível no sistema.
-          </p>
-          <span style="display:inline-flex;align-items:center;gap:6px;background:#EDF3F9;border:1px solid #D6E2EF;border-radius:8px;padding:8px 18px;font-size:12px;font-weight:600;color:#003870;font-family:'Poppins',sans-serif;">
-            <i class="ti ti-tools"></i> Em desenvolvimento
-          </span>
+
+          <!-- Coluna lateral: formulário de novo evento -->
+          <div class="ag-sidebar">
+            <div class="ag-form-card">
+              <div class="ag-form-head">
+                <i class="ti ti-calendar-plus" style="font-size:18px;color:#FFD927;"></i>
+                <span class="ag-form-head-title">Adicionar Evento</span>
+              </div>
+              <div class="ag-form-body">
+                <div class="ag-field">
+                  <label>Nome do evento</label>
+                  <input type="text" id="ag-f-title" placeholder="Ex.: Sessão de boas-vindas">
+                </div>
+                <div class="ag-field">
+                  <label>Responsável pela atividade</label>
+                  <input type="text" id="ag-f-nome" placeholder="Ex.: Ana Clara">
+                </div>
+                <div class="ag-field">
+                  <label>Ocupação</label>
+                  <select id="ag-f-role">
+                    <option value="">Selecione...</option>
+                    <option>Psicólogo</option>
+                    <option>Gestor</option>
+                  </select>
+                </div>
+                <div class="ag-field">
+                  <label>Tipo de compromisso</label>
+                  <select id="ag-f-type">
+                    <option value="">Selecione...</option>
+                    <option value="evento">Evento</option>
+                    <option value="consulta">Consulta</option>
+                    <option value="aula">Aula</option>
+                    <option value="mentoria">Mentoria</option>
+                  </select>
+                </div>
+                <div class="ag-field-row">
+                  <div class="ag-field">
+                    <label>Data</label>
+                    <input type="date" id="ag-f-date">
+                  </div>
+                  <div class="ag-field">
+                    <label>Hora</label>
+                    <input type="time" id="ag-f-time">
+                  </div>
+                </div>
+                <div class="ag-field">
+                  <label>Descrição da atividade</label>
+                  <textarea id="ag-f-desc" placeholder="Descreva a atividade..."></textarea>
+                </div>
+                <div class="ag-field">
+                  <label>Enviar para</label>
+                  <select id="ag-f-target" onchange="agUpdateTargetField()">
+                    <option value="todos">Todos os alunos</option>
+                    <option value="especificos">Alunos específicos</option>
+                    <option value="aluno">Um aluno (por ID)</option>
+                  </select>
+                </div>
+                <div id="ag-target-detail"></div>
+              </div>
+              <div class="ag-form-footer">
+                <button class="ag-submit-btn" onclick="agAddEvent()">
+                  <i class="ti ti-plus"></i> Adicionar evento
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div><!-- fim #view-agenda -->
 
@@ -348,15 +943,15 @@
 
       <div class="modal-header">
         <div class="mh-top">
-          <div class="modal-avatar" id="m-initials">JM</div>
+          <div class="modal-avatar" id="m-initials">VB</div>
           <div>
-            <div class="modal-name" id="m-name">João Mário</div>
-            <div class="modal-meta" id="m-cargo-meta">Psicólogo · Pulse Manager</div>
+            <div class="modal-name" id="m-name">Vitória Brandão</div>
+            <div class="modal-meta" id="m-cargo-meta">Gestora · Pulse Manager</div>
           </div>
         </div>
         <div class="modal-badges">
-          <span class="badge badge-cargo"><i class="ti ti-heart" style="font-size:11px;"></i> Psicólogo</span>
-          <span class="badge badge-id"><i class="ti ti-id-badge" style="font-size:11px;"></i> EQ-2024-012</span>
+          <span class="badge badge-cargo"><i class="ti ti-briefcase" style="font-size:11px;"></i> Gestora</span>
+          <span class="badge badge-id"><i class="ti ti-id-badge" style="font-size:11px;"></i> EQ-2024-001</span>
         </div>
         <button class="close-btn" onclick="closeModal()" aria-label="Fechar modal"><i class="ti ti-x"></i></button>
       </div>
@@ -372,23 +967,23 @@
           <div class="sec-label">Identificação</div>
           <div class="field-grid">
             <div class="field">
-              <label><i class="ti ti-id-badge"></i> ID membro</label>
-              <input type="text" value="EQ-2024-012" readonly>
+              <label>ID membro</label>
+              <input type="text" value="EQ-2024-001" readonly>
               <span class="field-hint">Identificador único da equipe</span>
             </div>
             <div class="field">
-              <label><i class="ti ti-briefcase"></i> Cargo</label>
+              <label>Cargo</label>
               <select id="f-cargo" onchange="updateCargo()">
-                <option selected>Psicólogo</option>
-                <option>Gestor</option>
+                <option selected>Gestora</option>
+                <option>Psicólogo</option>
                 <option>Mentor</option>
                 <option>Coordenador</option>
                 <option>Administrador</option>
               </select>
             </div>
             <div class="field span2">
-              <label><i class="ti ti-user"></i> Nome completo</label>
-              <input type="text" id="f-nome" value="João Mário" oninput="updateHeader()">
+              <label>Nome completo</label>
+              <input type="text" id="f-nome" value="Vitória Brandão" oninput="updateHeader()">
             </div>
           </div>
         </div>
@@ -397,12 +992,12 @@
           <div class="sec-label">Informações de contato</div>
           <div class="field-grid">
             <div class="field">
-              <label><i class="ti ti-mail"></i> E-mail institucional</label>
-              <input type="email" value="joao.mario@pulsemais.org.br">
+              <label>E-mail institucional</label>
+              <input type="email" value="vitoria.brandao@pulsemais.org.br">
             </div>
             <div class="field">
-              <label><i class="ti ti-phone"></i> Telefone</label>
-              <input type="tel" value="(11) 91234-5678">
+              <label>Telefone</label>
+              <input type="tel" value="(11) 99876-5432">
             </div>
           </div>
         </div>
@@ -425,6 +1020,157 @@
   </div>
 
 <!-- Scripts — ordem importante -->
+<!-- Perfil do aluno — overlay embutido no SPA do gestor -->
+<div class="perfil-overlay" id="perfil-overlay">
+  <div class="modal" id="pf-modal">
+
+    <div class="modal-header">
+      <div class="mh-top">
+        <div class="modal-avatar" id="pf-avatar">--</div>
+        <div>
+          <div class="modal-name" id="pf-name">—</div>
+          <div class="modal-meta" id="pf-meta">—</div>
+        </div>
+      </div>
+      <div class="modal-badges">
+        <span class="badge badge-ativo"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
+        <span class="badge badge-curso" id="pf-badge-curso"><i class="ti ti-code" style="font-size:11px;"></i> —</span>
+        <span class="badge badge-nivel">Capacitado</span>
+      </div>
+      <button class="close-btn" onclick="closePerfilModal()" aria-label="Fechar"><i class="ti ti-x"></i></button>
+    </div>
+
+    <div class="tab-strip">
+      <button class="tab-btn active" onclick="showPerfilTab('pf-tab-dados',this)"><i class="ti ti-user"></i> Dados gerais</button>
+      <button class="tab-btn" onclick="showPerfilTab('pf-tab-socio',this)"><i class="ti ti-chart-pie"></i> Socioeconômico</button>
+      <button class="tab-btn" onclick="showPerfilTab('pf-tab-contato',this)"><i class="ti ti-phone"></i> Contato</button>
+      <button class="tab-btn" onclick="showPerfilTab('pf-tab-desempenho',this)"><i class="ti ti-chart-line"></i> Desempenho</button>
+    </div>
+
+    <div class="modal-body">
+
+      <div id="pf-tab-dados" class="tab-panel active">
+        <div class="sec-label">Identificação</div>
+        <div class="field-grid">
+          <div class="field">
+            <label>Código PM</label>
+            <input type="text" id="pf-code" value="—" readonly>
+          </div>
+          <div class="field span2">
+            <label>Nome completo</label>
+            <input type="text" id="pf-fullname" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>CPF</label>
+            <input type="text" id="pf-cpf" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>Idade</label>
+            <input type="text" id="pf-age" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>Gênero</label>
+            <input type="text" value="Não informado" readonly>
+          </div>
+        </div>
+        <div class="sec-label">Formação</div>
+        <div class="field-grid">
+          <div class="field">
+            <label>Curso</label>
+            <input type="text" id="pf-course" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>Escolaridade</label>
+            <input type="text" value="Ensino Médio Completo" readonly>
+          </div>
+          <div class="field">
+            <label>Ocupação</label>
+            <input type="text" value="Estudante" readonly>
+          </div>
+          <div class="field">
+            <label>Programa</label>
+            <input type="text" value="Programa Pulse Mais" readonly>
+          </div>
+        </div>
+      </div>
+
+      <div id="pf-tab-socio" class="tab-panel">
+        <div class="sec-label">Dados socioeconômicos</div>
+        <div class="field-grid">
+          <div class="field">
+            <label>Perfil socioeconômico</label>
+            <input type="text" value="Classe C" readonly>
+          </div>
+          <div class="field">
+            <label>Renda mensal familiar</label>
+            <input type="text" value="R$ 1.800,00" readonly>
+          </div>
+          <div class="field span2">
+            <label>Nível de jornada</label>
+            <input type="text" value="Capacitado" readonly>
+          </div>
+        </div>
+      </div>
+
+      <div id="pf-tab-contato" class="tab-panel">
+        <div class="sec-label">Informações de contato</div>
+        <div class="field-grid">
+          <div class="field">
+            <label>E-mail</label>
+            <input type="text" id="pf-email" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>Telefone</label>
+            <input type="text" value="(11) 98765-4321" readonly>
+          </div>
+        </div>
+      </div>
+
+      <div id="pf-tab-desempenho" class="tab-panel">
+        <div class="sec-label">Indicadores</div>
+        <div class="perf-cards">
+          <div class="perf-card">
+            <div class="perf-card__label">Frequência</div>
+            <div class="perf-card__value" id="pf-freq-val">87%</div>
+            <div class="perf-bar"><div class="perf-bar__fill" id="pf-freq-bar" style="width:87%;background:var(--green-600)"></div></div>
+            <div class="perf-card__sub">Meta: 75% · <span style="color:var(--green-600);font-weight:600;">Acima da meta</span></div>
+          </div>
+          <div class="perf-card">
+            <div class="perf-card__label">Engajamento</div>
+            <div class="perf-card__value">7 <span class="perf-card__unit">/ 10</span></div>
+            <div class="eng-stars" id="pf-eng-stars"></div>
+            <div class="perf-card__sub">Baseado em participação e entregas</div>
+          </div>
+          <div class="perf-card">
+            <div class="perf-card__label">Tipo de presença</div>
+            <div class="presence-badge ead">EAD</div>
+            <div class="perf-card__sub" style="margin-top:12px;">100% das aulas no formato online</div>
+          </div>
+        </div>
+        <div class="sec-label" id="pf-notas-label" style="margin-top:20px;">Notas — Módulos</div>
+        <div class="notas-grid" id="pf-notas-grid"></div>
+        <div class="nota-media-row"><span class="nota-media-label">Nota média geral</span><span class="nota-media-val" id="pf-nota-media-val">—</span></div>
+        <div class="sec-label" style="margin-top:20px;">Jornada — Programa Pulse Mais</div>
+        <div class="journey" id="pf-journey"></div>
+        <div class="journey-legend">
+          <span><span class="jl-dot done"></span>Concluído</span>
+          <span><span class="jl-dot current"></span>Em andamento</span>
+          <span><span class="jl-dot pending"></span>Pendente</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <div class="footer-left"><i class="ti ti-eye" style="font-size:13px;"></i> Visualização — dados somente leitura</div>
+      <div class="footer-right">
+        <button class="btn btn-primary" onclick="closePerfilModal()"><i class="ti ti-x"></i> Fechar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="../js/services/config.js"></script>
 <script src="../js/components/guiaGestor.js"></script>
