@@ -665,11 +665,11 @@ Os requisitos funcionais a seguir foram extraídos do Termo de Abertura do Proje
 | ID    | Descrição                                                                                                                                                                                             | Prioridade | Status    |
 | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
 | RF001 | O sistema deve permitir o cadastro de alunos e ex-alunos com dados pessoais, acadêmicos, de jornada na Pulse Mais, empregabilidade e engajamento.                                                     | Alta       | Parcial   |
-| RF002 | O sistema deve permitir a edição e atualização dos dados cadastrais de um aluno pela equipe Pulse Mais.                                                                                               | Alta       | Planejado |
+| RF002 | O sistema deve permitir a edição e atualização dos dados cadastrais de um aluno pela equipe Pulse Mais.                                                                                               | Alta       | Parcial   |
 | RF003 | O sistema deve permitir a consulta e listagem dos alunos cadastrados.                                                                                                                                 | Alta       | Implementado |
 | RF004 | O sistema deve consolidar e apresentar o histórico completo de cada aluno (dados gerais, programas, eventos, empregabilidade e renda) de forma integrada.                                             | Alta       | Parcial   |
-| RF005 | O sistema deve permitir o registro de frequência dos alunos em aulas.                                                                                                                                 | Alta       | Planejado |
-| RF006 | O sistema deve permitir o registro de participação dos alunos em eventos promovidos pela Pulse Mais.                                                                                                  | Alta       | Planejado |
+| RF005 | O sistema deve permitir o registro de frequência dos alunos em aulas.                                                                                                                                 | Alta       | Parcial   |
+| RF006 | O sistema deve permitir o registro de participação dos alunos em eventos promovidos pela Pulse Mais.                                                                                                  | Alta       | Parcial   |
 | RF007 | O sistema deve permitir cadastrar e atualizar informações sobre a empregabilidade do aluno.                                                                                                           | Alta       | Parcial   |
 | RF008 | O sistema deve permitir atualizar informações sobre o acesso do aluno no ensino superior.                                                                                                             | Alta       | Parcial   |
 | RF009 | O sistema deve permitir o registro de observações sobre saúde mental e bem-estar do aluno, com acesso restrito ao psicólogo da instituição que atende o aluno específico.                             | Alta       | Parcial   |
@@ -677,95 +677,95 @@ Os requisitos funcionais a seguir foram extraídos do Termo de Abertura do Proje
 | RF011 | O sistema deve permitir a localização e segmentação de alunos com base em múltiplos critérios combinados (ex.: identificação de perfis para oportunidades específicas ou de multiplicadores na rede). | Média      | Parcial   |
 | RF012 | O sistema deve apresentar um dashboard consolidando os principais indicadores de impacto da Pulse Mais.                                                                                               | Alta       | Parcial   |
 | RF013 | O sistema deve calcular e apresentar o total de alunos empregados em um período selecionado.                                                                                                          | Baixa      | Parcial   |
-| RF014 | O sistema deve calcular e apresentar o total de alunos que concluíram um programa em um período selecionado.                                                                                          | Média      | Planejado |
-| RF015 | O sistema deve calcular e apresentar indicadores de evasão e risco por programa ou turma.                                                                                                   | Média      | Parcial   |
-| RF015 | O sistema deve calcular e apresentar indicadores de evasão e risco por programa ou turma.                                                                                                   | Média      | Parcial   |
+| RF014 | O sistema deve calcular e apresentar o total de alunos que concluíram um programa em um período selecionado.                                                                                          | Média      | Parcial   |
+| RF015 | O sistema deve calcular e apresentar indicadores de evasão e risco por programa ou turma.                                                                                                             | Média      | Parcial   |
 | RF016 | O sistema deve calcular e apresentar indicadores de acesso ao ensino superior dentro da rede de alunos.                                                                                               | Média      | Parcial   |
 | RF017 | O sistema deve disponibilizar um portal restrito ao aluno no qual o próprio aluno possa visualizar seus dados cadastrais.                                                                             | Alta       | Parcial   |
-| RF018 | O sistema deve permitir que o aluno atualize informações do seu perfil como ex: (E-mail, telefone, cpf) pelo portal do aluno.                                                                                                          | Alta       | Planejado |
-| RF018 | O sistema deve permitir que o aluno atualize informações do seu perfil como ex: (E-mail, telefone, cpf) pelo portal do aluno.                                                                                                          | Alta       | Planejado |
+| RF018 | O sistema deve permitir que o aluno atualize informações do seu perfil, como e-mail, telefone e CPF, pelo portal do aluno.                                                                         | Alta       | Parcial   |
 | RF019 | O sistema deve permitir o envio de notificações informativas e convites para eventos.                                                                                                                 | Baixa      | Parcial   |
-| RF020 | O sistema deve permitir que somente gestores visualizem a agenda.                                                                                                                                    | Média      | Planejado |
-| RF020 | O sistema deve permitir que somente gestores visualizem a agenda.                                                                                                                                    | Média      | Planejado |
-| RF021 | O sistema deve permitir que o gestor modifique os itens presentes na agenda.                                                                                                                          | Alta       | Planejado |
-| RF022 | O sistema deve permitir ao psicólogo acessar o desempenho acadêmico dos alunos que monitora.                                                                                                          | Alta       | Planejado |
+| RF020 | O sistema deve permitir a visualização da agenda para gestor e aluno, com filtros por aluno, membro responsável e período.                                                                           | Média      | Parcial   |
+| RF021 | O sistema deve permitir que o gestor modifique os itens presentes na agenda.                                                                                                                          | Alta       | Parcial   |
+| RF022 | O sistema deve permitir ao psicólogo acessar o desempenho acadêmico dos alunos que monitora.                                                                                                          | Alta       | Parcial   |
 
 ### 3.1.2. Regras de Negócio
  
 As regras de negócio formalizam as políticas, condições e restrições que a Pulse Mais impõe ao funcionamento do sistema e que orientam a lógica de implementação dos requisitos funcionais. Diferentemente dos RFs, que descrevem comportamentos do sistema, as RNs descrevem decisões da organização que esses comportamentos devem respeitar. Cada RN está associada a um ou mais RFs, garantindo a rastreabilidade entre política institucional e funcionalidade implementada.
  
-| RN | Descricao | Evidencia no sistema |
+| ID    | Descrição | RF Associado |
+| ----- | --------- | ------------ |
+| RN001 | Todo aluno cadastrado deve receber um código identificador interno único, imutável e gerado automaticamente pelo sistema no formato `PM-AAAA-NNN`, com sequencial reiniciado a cada ano. Esse código é usado como chave estável de identificação do aluno e nunca é reutilizado. | RF001 |
+| RN002 | O cadastro de um aluno só pode ser efetivado se forem informados, no mínimo, nome completo e e-mail válido. | RF001 |
+| RN003 | Não pode existir mais de um cadastro de aluno com o mesmo e-mail; quando o aluno retornar em outro programa, o cadastro existente deve ser reaproveitado e enriquecido. | RF001, RF002 |
+| RN004 | Um aluno pode estar vinculado a múltiplos programas ao longo do tempo, e o histórico de programas e atividades anteriores deve ser preservado. | RF004, RF005, RF006 |
+| RN005 | O status do aluno deve refletir sua situação atual na jornada, sem apagar o histórico quando houver encerramento, retorno ou inativação. | RF001, RF002, RF004 |
+| RN006 | A categoria do aluno deve representar seu estágio na jornada Pulse Mais, como conectado, capacitado, empregado ou egresso. | RF001, RF012, RF014 |
+| RN007 | O risco de evasão deve ser classificado em níveis como baixo, médio ou alto a partir de sinais de frequência, notas, participação e engajamento. | RF011, RF015 |
+| RN008 | Para fins de dashboard, considera-se "aluno empregado" aquele que possui registro de trabalho formal ou informal, com incentivo ao detalhamento do tipo de vínculo. | RF007, RF013 |
+| RN009 | Indicadores de dashboard devem validar filtros de período e impedir consultas em que `dataFim` seja anterior a `dataInicio`. | RF012, RF013, RF014, RF015, RF016 |
+| RN010 | A exclusão definitiva de aluno não é permitida; encerramentos devem inativar o registro e preservar os dados históricos necessários à análise de impacto. | RF001, RF002 |
+| RN011 | Apenas perfis internos autorizados da Pulse Mais podem editar dados cadastrais gerais, publicar oportunidades e registrar informações institucionais. | RF002, RF011, RF019 |
+| RN012 | Registros de saúde mental e bem-estar só podem ser criados, editados ou visualizados por usuários com perfil de psicólogo e vínculo com o aluno acompanhado. | RF009, RF010, RF022 |
+| RN013 | Pelo portal do aluno, o próprio jovem pode atualizar somente informações de contato comuns, como e-mail, telefone e CPF, sem editar dados institucionais, acadêmicos ou sensíveis. | RF017, RF018 |
+| RN014 | Atualizações realizadas pelo aluno no portal devem ser rastreáveis quanto à origem e data da alteração. | RF018 |
+| RN015 | Mentores voluntários não são usuários do sistema na versão atual; suas atividades relevantes devem ser registradas pela equipe interna da Pulse Mais. | RF004, RF006, RF019 |
+| RN016 | Dados pessoais e relatos qualitativos sensíveis não podem ser expostos a perfis sem autorização nem incluídos em exportações, logs públicos ou commits do repositório. | RF001, RF009, RF010 |
+| RN017 | Operações autenticadas devem usar o perfil informado na requisição para decidir permissões no backend; o frontend não é fonte de verdade para autorização. | RF010, RF017, RF019, RF020, RF022 |
+| RN018 | A agenda pode ser consultada por gestor e aluno e filtrada por aluno, membro da equipe e período. Na Sprint 4, a distinção entre agenda do gestor e agenda do aluno está refletida principalmente nas telas estáticas. | RF020 |
+| RN019 | Apenas usuários com perfil `gestor` podem criar, atualizar ou cancelar itens da agenda. | RF021 |
+| RN020 | Psicólogos só podem acessar desempenho acadêmico de alunos com vínculo registrado em acompanhamento psicológico. | RF022 |
+
+Além das RNs principais, a implementação possui regras técnicas testáveis por módulo, usadas para detalhar validações, mensagens de erro e contratos dos endpoints.
+
+| RN técnica | Descrição | Evidência no sistema |
 | --- | --- | --- |
-| RN001 | Ao cadastrar aluno, o sistema deve gerar automaticamente `codigo_pm` no formato `PM-AAAA-NNN`, com sequencial anual. | `codigo-pm.integration.test.ts`, `alunos.integration.test.ts` |
-| RN002 | Nao pode existir mais de um aluno com o mesmo e-mail. | `AlunoService`, `alunos.integration.test.ts` |
-| RN008 | Para indicadores de empregabilidade, ocupacoes/vinculos considerados empregados devem entrar no calculo de alunos empregados. | `dashboard.integration.test.ts` |
-| RN009 | Consultas de dashboard com periodo devem validar datas e impedir `dataFim` anterior a `dataInicio`. | `DashboardService`, `dashboard.integration.test.ts` |
-| RN010 | Inativar aluno deve alterar status para `inativo`, sem remover o registro do banco. | `AlunoService`, `alunos.integration.test.ts` |
-| RN019 | Apenas usuarios com perfil `gestor` podem criar, atualizar ou cancelar itens da agenda. | `AgendaService`, `agenda.integration.test.ts` |
 | RN-PORTAL-01 | O id do aluno em rotas de portal deve ser inteiro positivo. | `PortalAlunoService`, `portal-aluno.integration.test.ts` |
-| RN-PORTAL-02 | Perfil inexistente no portal deve retornar erro de recurso nao encontrado. | `PortalAlunoService`, `portal-aluno.integration.test.ts` |
-| RN-PORTAL-03 | Atualizacao de contato deve aceitar somente e-mail valido quando e-mail for informado. | `PortalAlunoService`, `portal-aluno.integration.test.ts` |
-| RN-PORTAL-04 | Atualizacao de contato deve informar ao menos e-mail ou telefone. | `PortalAlunoService`, `portal-aluno.integration.test.ts` |
-| RN-PORTAL-05 | Aluno autenticado so pode visualizar as proprias notificacoes. | `PortalAlunoService`, `portal-aluno-notificacoes.integration.test.ts` |
-| RN-PORTAL-06 | Listagem de oportunidades do portal deve retornar oportunidades disponiveis sem exigir aluno especifico. | `PortalAlunoService`, `portal-aluno-notificacoes.integration.test.ts` |
+| RN-PORTAL-02 | Perfil inexistente no portal deve retornar erro de recurso não encontrado. | `PortalAlunoService`, `portal-aluno.integration.test.ts` |
+| RN-PORTAL-03 | Atualização de contato deve aceitar somente e-mail válido quando e-mail for informado. | `PortalAlunoService`, `portal-aluno.integration.test.ts` |
+| RN-PORTAL-04 | Atualização de contato deve informar ao menos e-mail ou telefone. | `PortalAlunoService`, `portal-aluno.integration.test.ts` |
+| RN-PORTAL-05 | Aluno autenticado só pode visualizar as próprias notificações. | `PortalAlunoService`, `portal-aluno-notificacoes.integration.test.ts` |
+| RN-PORTAL-06 | Listagem de oportunidades do portal deve retornar oportunidades disponíveis sem exigir aluno específico. | `PortalAlunoService`, `portal-aluno-notificacoes.integration.test.ts` |
+| RN-ALUNO-01 | Ao cadastrar aluno, o sistema deve gerar automaticamente `codigo_pm` no formato `PM-AAAA-NNN`, com sequencial anual. | `codigo-pm.integration.test.ts`, `alunos.integration.test.ts` |
+| RN-ALUNO-02 | Não pode existir mais de um aluno com o mesmo e-mail. | `AlunoService`, `alunos.integration.test.ts` |
 | RN-ALUNO-03 | Idade do aluno deve estar entre 0 e 120 quando informada. | `AlunoService`, `alunos.integration.test.ts` |
 | RN-ALUNO-04 | Consulta por id deve validar `idAluno` como inteiro positivo. | `AlunoController`, `alunos.integration.test.ts` |
-| RN-ALUNO-05 | Consulta de aluno inexistente deve retornar erro de recurso nao encontrado. | `AlunoService`, `alunos.integration.test.ts` |
-| RN-ALUNO-06 | Atualizacao de aluno deve validar valores de risco de evasao. | `AlunoService`, `alunos.integration.test.ts` |
-| RN-ALUNO-07 | Atualizacao de aluno inexistente deve retornar erro de recurso nao encontrado. | `AlunoService`, `alunos.integration.test.ts` |
+| RN-ALUNO-05 | Consulta de aluno inexistente deve retornar erro de recurso não encontrado. | `AlunoService`, `alunos.integration.test.ts` |
+| RN-ALUNO-06 | Atualização de aluno deve validar valores de risco de evasão. | `AlunoService`, `alunos.integration.test.ts` |
+| RN-ALUNO-07 | Atualização de aluno inexistente deve retornar erro de recurso não encontrado. | `AlunoService`, `alunos.integration.test.ts` |
 | RN-JORNADA-01 | Jornada consolidada deve validar `idAluno` como inteiro positivo. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-JORNADA-02 | Jornada de aluno inexistente deve retornar erro de recurso nao encontrado. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-JORNADA-03 | Frequencia so pode ser registrada para atividade do tipo `aula`. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-JORNADA-04 | Nota de frequencia deve estar entre 0 e 10 quando informada. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-JORNADA-05 | Atividade informada para frequencia deve existir. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-JORNADA-06 | Participacao so pode ser registrada para atividade do tipo `evento`. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-JORNADA-07 | Nao pode haver participacao duplicada para o mesmo aluno na mesma atividade. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-JORNADA-08 | Atividade informada para participacao deve existir. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-JORNADA-09 | Empregabilidade deve validar ocupacao com tamanho minimo e renda mensal nao negativa. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-JORNADA-10 | Ensino superior deve validar escolaridade com tamanho minimo. | `JornadaService`, `jornada.integration.test.ts` |
+| RN-JORNADA-02 | Jornada de aluno inexistente deve retornar erro de recurso não encontrado. | `JornadaService`, `jornada.integration.test.ts` |
+| RN-JORNADA-03 | Frequência só pode ser registrada para atividade do tipo `aula`. | `JornadaService`, `jornada.integration.test.ts` |
+| RN-JORNADA-04 | Nota de frequência deve estar entre 0 e 10 quando informada. | `JornadaService`, `jornada.integration.test.ts` |
+| RN-JORNADA-05 | Atividade informada para frequência deve existir. | `JornadaService`, `jornada.integration.test.ts` |
+| RN-JORNADA-06 | Participação só pode ser registrada para atividade do tipo `evento`. | `JornadaService`, `jornada.integration.test.ts` |
+| RN-JORNADA-07 | Não pode haver participação duplicada para o mesmo aluno na mesma atividade. | `JornadaService`, `jornada.integration.test.ts` |
+| RN-JORNADA-08 | Atividade informada para participação deve existir. | `JornadaService`, `jornada.integration.test.ts` |
+| RN-JORNADA-09 | Empregabilidade deve validar ocupação com tamanho mínimo e renda mensal não negativa. | `JornadaService`, `jornada.integration.test.ts` |
+| RN-JORNADA-10 | Ensino superior deve validar escolaridade com tamanho mínimo. | `JornadaService`, `jornada.integration.test.ts` |
 | RN-JORNADA-11 | Data de ingresso no ensino superior deve estar no formato `YYYY-MM-DD` quando informada. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-JORNADA-12 | Anotacao qualitativa deve validar titulo, descricao e autor com tamanho minimo. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-JORNADA-13 | Data de registro da anotacao deve estar no formato `YYYY-MM-DD` quando informada. | `JornadaService`, `jornada.integration.test.ts` |
-| RN-SEG-01 | Segmentacao deve receber ao menos um criterio de busca/filtro. | `SegmentacaoService`, `segmentacao.integration.test.ts` |
-| RN-SEG-02 | Limite de segmentacao deve ser inteiro positivo e nao pode ultrapassar 100 registros. | `SegmentacaoService`, `segmentacao.integration.test.ts` |
-| RN-SEG-03 | Segmentacao deve validar status, risco de evasao e busca com minimo de 3 caracteres. | `SegmentacaoService`, `segmentacao.integration.test.ts` |
-| RN-DASH-01 | Filtros de periodo do dashboard devem usar formato `YYYY-MM-DD`. | `DashboardService`, `dashboard.integration.test.ts` |
+| RN-JORNADA-12 | Anotação qualitativa deve validar título, descrição e autor com tamanho mínimo. | `JornadaService`, `jornada.integration.test.ts` |
+| RN-JORNADA-13 | Data de registro da anotação deve estar no formato `YYYY-MM-DD` quando informada. | `JornadaService`, `jornada.integration.test.ts` |
+| RN-SEG-01 | Segmentação deve receber ao menos um critério de busca/filtro. | `SegmentacaoService`, `segmentacao.integration.test.ts` |
+| RN-SEG-02 | Limite de segmentação deve ser inteiro positivo e não pode ultrapassar 100 registros. | `SegmentacaoService`, `segmentacao.integration.test.ts` |
+| RN-SEG-03 | Segmentação deve validar status, risco de evasão e busca com mínimo de 3 caracteres. | `SegmentacaoService`, `segmentacao.integration.test.ts` |
+| RN-DASH-01 | Filtros de período do dashboard devem usar formato `YYYY-MM-DD`. | `DashboardService`, `dashboard.integration.test.ts` |
 | RN-DASH-02 | Filtro `categoria` deve ter pelo menos 3 caracteres quando informado. | `DashboardService`, `dashboard.integration.test.ts` |
 | RN-DASH-03 | Filtro `programa` deve ter pelo menos 3 caracteres quando informado. | `DashboardService`, `dashboard.integration.test.ts` |
-| RN-COM-01 | Notificacao deve ser criada apenas para aluno destinatario existente. | `NotificacaoService`, `notificacoes.integration.test.ts` |
-| RN-COM-02 | Tipo de notificacao e tipo de remetente devem pertencer aos valores aceitos. | `NotificacaoService`, `notificacoes.integration.test.ts` |
-| RN-COM-03 | Somente perfil `psicologo` pode enviar notificacao com `tipoRemetente=psicologo`. | `NotificacaoService`, `notificacao-psicologo.integration.test.ts` |
+| RN-COM-01 | Notificação deve ser criada apenas para aluno destinatário existente. | `NotificacaoService`, `notificacoes.integration.test.ts` |
+| RN-COM-02 | Tipo de notificação e tipo de remetente devem pertencer aos valores aceitos. | `NotificacaoService`, `notificacoes.integration.test.ts` |
+| RN-COM-03 | Somente perfil `psicologo` pode enviar notificação com `tipoRemetente=psicologo`. | `NotificacaoService`, `notificacao-psicologo.integration.test.ts` |
 | RN-COM-04 | Tipo de oportunidade deve pertencer aos valores aceitos. | `NotificacaoService`, `notificacoes.integration.test.ts` |
-| RN-COM-05 | Prazo de inscricao de oportunidade deve estar no formato `YYYY-MM-DD` quando informado. | `NotificacaoService`, `notificacoes.integration.test.ts` |
-| RN-AGENDA-01 | Filtros de data da agenda devem usar `YYYY-MM-DD` e `dataFim` nao pode ser anterior a `dataInicio`. | `AgendaService`, `agenda.integration.test.ts` |
+| RN-COM-05 | Prazo de inscrição de oportunidade deve estar no formato `YYYY-MM-DD` quando informado. | `NotificacaoService`, `notificacoes.integration.test.ts` |
+| RN-AGENDA-01 | Filtros de data da agenda devem usar `YYYY-MM-DD` e `dataFim` não pode ser anterior a `dataInicio`. | `AgendaService`, `agenda.integration.test.ts` |
 | RN-AGENDA-02 | Agenda deve aceitar somente `tipoUser` igual a `aluno` ou `membro_equipe`. | `AgendaService`, `agenda.integration.test.ts` |
-| RN-AGENDA-03 | Atualizar ou cancelar item inexistente deve retornar erro de recurso nao encontrado. | `AgendaService`, `agenda.integration.test.ts` |
-| RN-SAUDE-01 | Registros de saude mental sao restritos ao perfil `psicologo`. | `SaudeMentalService`, `saude-mental.integration.test.ts` |
-| RN-SAUDE-02 | Historico psicologico deve ser criado somente para aluno existente. | `SaudeMentalService`, `saude-mental.integration.test.ts` |
-| RN-SAUDE-03 | Historico psicologico deve validar titulo e observacao obrigatorios. | `SaudeMentalService`, `saude-mental.integration.test.ts` |
-| RN-SAUDE-04 | Label psicologica deve ser criada somente para aluno existente. | `SaudeMentalService`, `saude-mental.integration.test.ts` |
+| RN-AGENDA-03 | Atualizar ou cancelar item inexistente deve retornar erro de recurso não encontrado. | `AgendaService`, `agenda.integration.test.ts` |
+| RN-SAUDE-01 | Registros de saúde mental são restritos ao perfil `psicologo`. | `SaudeMentalService`, `saude-mental.integration.test.ts` |
+| RN-SAUDE-02 | Histórico psicológico deve ser criado somente para aluno existente. | `SaudeMentalService`, `saude-mental.integration.test.ts` |
+| RN-SAUDE-03 | Histórico psicológico deve validar título e observação obrigatórios. | `SaudeMentalService`, `saude-mental.integration.test.ts` |
+| RN-SAUDE-04 | Label psicológica deve ser criada somente para aluno existente. | `SaudeMentalService`, `saude-mental.integration.test.ts` |
 | RN-SAUDE-05 | Tipo de label deve pertencer aos valores aceitos. | `SaudeMentalService`, `saude-mental.integration.test.ts` |
-| RN-PSI-01 | Apenas usuario com permissao de psicologo pode acessar desempenho academico de aluno nessa rota. | `permissionMiddleware`, `desempenho-psicologo.integration.test.ts` |
-| RN-PSI-02 | Psicologo so pode acessar desempenho de aluno com vinculo registrado. | `DesempenhoService`, `desempenho-psicologo.integration.test.ts` |
-| RN-INFRA-01 | Healthchecks devem retornar status de disponibilidade sem expor dados sensiveis. | `routes/index.ts` |
-| ID    | Descrição                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | RF Associado                      |
-| ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| RN001 | Todo aluno cadastrado deve receber um código identificador interno único, imutável e gerado automaticamente pelo sistema no momento do cadastro. O código segue o formato `PM-AAAA-NNN`, em que `PM` é prefixo fixo da Pulse Mais, `AAAA` é o ano em que o aluno foi cadastrado (4 dígitos) e `NNN` é um número sequencial daquele ano (3 dígitos, com reinício a cada novo ano). Exemplos: `PM-2024-001` representa o primeiro aluno cadastrado em 2024, `PM-2024-002` o segundo, e `PM-2025-001` o primeiro de 2025. Esse código é usado como chave estável de identificação do aluno em todo o sistema, substituindo o uso de e-mail ou nome (que são instáveis) para fins de cruzamento de dados. O código nunca é reutilizado, mesmo após inativação do aluno, e é mantido caso o aluno retorne para um novo programa. | RF001                             |
-| RN002 | O cadastro de um aluno só pode ser efetivado se forem informados, no mínimo, nome completo e e-mail. O CPF é opcional, mas seu preenchimento deve ser incentivado pela interface; quando ausente, o sistema pode solicitar uma justificativa textual. | RF001                             |
-| RN003 | Quando um aluno se vincula a um novo programa após já ter sido cadastrado anteriormente, o sistema deve recuperar o cadastro existente (mesmo `PM-AAAA-NNN`) e adicionar o novo vínculo ao histórico, sem criar duplicidade de cadastro. | RF001, RF002                      |
-| RN004 | Um aluno pode estar vinculado a múltiplos programas ao longo do tempo. Todo histórico de programas anteriores deve ser preservado e visível no cadastro do aluno, mesmo após o término. Programas encerrados são exibidos no histórico do aluno, mas não contabilizados no dashboards. | RF004                             |
-| RN005 | O status "ex-aluno" é atribuído automaticamente ao término do programa em que o aluno está vinculado. Caso o ex-aluno se vincule a um novo programa, o status retorna a "aluno ativo" e seu progresso volta a ser computado, mantendo o histórico anterior. | RF001, RF002                      |
-| RN006 | O aluno possui uma categoria que reflete seu estágio na jornada Pulse Mais (ex.: conectado, capacitado, empregado, ex-aluno). | RF001, RF014                      |
-| RN007 | O risco de evasão de um aluno deve ser calculado por uma fórmula composta que combina variáveis como frequência em aulas, notas, participação em eventos e engajamento geral, gerando um score que classifica o aluno em níveis de risco (ex.: baixo, médio, alto). Os níveis de risco serão exibidos na plataforma por meio de labels visuais ao lado de cada aluno, indicando se o risco é baixo, médio ou alto. | RF017                             |
-| RN008 | Para fins do dashboard, considera-se "aluno empregado" aquele que possui registro de trabalho, formal ou informal. A interface deve incentivar o registro do tipo de vínculo, priorizando o trabalho formalizado, mas sem excluir vínculos informais da contabilização. | RF007, RF015                      |
-| RN009 | Os indicadores do dashboard apresentam, por padrão, dados referentes ao módulo e à turma em andamento no momento da consulta. | RF014, RF015, RF016, RF017, RF018 |
-| RN010 | A exclusão definitiva de um aluno do sistema não é permitida. Quando a equipe Pulse Mais encerra o vínculo com um aluno, o registro é marcado como inativo, preservando todos os dados históricos para fins de análise de impacto e continuidade de coleta longitudinal. O sistema deve manter os dados dos alunos durante, no mínimo, 5 anos, seguindo as normas impostas pela LGPD. | RF001, RF002                      |
-| RN011 | Somente essa parte da equipe da Pulse Mais (gestão, administrativo, operações, coordenação de mentores) tem permissão para editar dados cadastrais gerais dos alunos, eliminando a dependência atual de uma única pessoa para alterações como troca de e-mail. | RF002, RF011                      |
-| RN012 | Registros relacionados à saúde mental e bem-estar do aluno só podem ser criados, editados ou visualizados por usuários com perfil de psicólogo, vinculado ao aluno. Demais perfis da equipe Pulse Mais não devem ter acesso a esse tipo de informação, em qualquer tela ou consulta do sistema. | RF010, RF011                      |
-| RN013 | Pelo portal do aluno, o próprio jovem pode atualizar apenas informações de contato comuns (ex.: telefone e e-mail). Dados como vínculo a programas, situação de empregabilidade, notas, frequência e observações da equipe não podem ser editados pelo aluno. | RF019, RF020                      |
-| RN014 | Atualizações realizadas pelo próprio aluno via portal devem ser identificáveis no sistema (ex.: data e origem da alteração), permitindo que a equipe Pulse distinga dados informados pelo aluno de dados inseridos pela equipe. | RF020                             |
-| RN015 | Mentores voluntários não são usuários do sistema na versão atual da plataforma. Suas atividades, quando relevantes para o histórico do aluno, são registradas pela equipe interna da Pulse Mais. | RF009, RF011                      |
-| RN016 | Em conformidade com a Lei Geral de Proteção de Dados (LGPD) e com o termo de uso de dados assinado pelos alunos, dados pessoais e relatos qualitativos sensíveis não podem ser expostos a perfis sem autorização específica, nem incluídos em exportações, logs públicos ou commits do repositório de código. | RF001, RF010, RF011               |
+| RN-PSI-01 | Apenas usuário com permissão de psicólogo pode acessar desempenho acadêmico de aluno nessa rota. | `permissionMiddleware`, `desempenho-psicologo.integration.test.ts` |
+| RN-PSI-02 | Psicólogo só pode acessar desempenho de aluno com vínculo registrado. | `DesempenhoService`, `desempenho-psicologo.integration.test.ts` |
+| RN-INFRA-01 | Healthchecks devem retornar status de disponibilidade sem expor dados sensíveis. | `routes/index.ts` |
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
@@ -810,43 +810,43 @@ Os requisitos não funcionais aqui definidos traduzem as escolhas de qualidade f
 
 | Metodo | Endpoint | RF | Entrada principal | Retorno esperado | Status principais |
 | --- | --- | --- | --- | --- | --- |
-| GET | `/api/health` | RF028 | N/A | Status da API | 200 |
-| GET | `/api/health/supabase` | RF028 | N/A | Status de conexao com banco/configuracao Supabase | 200, 503 |
-| GET | `/api/portal/alunos/:idAluno` | RF001 | `idAluno` path param | Perfil do aluno | 200, 400, 404 |
-| PATCH | `/api/portal/alunos/:idAluno/contato` | RF002 | `email`, `telefone` | Contato atualizado | 200, 400, 404 |
-| GET | `/api/portal/alunos/:idAluno/notificacoes` | RF003 | `idAluno`, headers de autenticacao | Notificacoes do aluno | 200, 400, 403, 404 |
-| GET | `/api/portal/oportunidades` | RF003 | N/A | Lista de oportunidades | 200 |
-| POST | `/api/alunos` | RF004 | Dados cadastrais do aluno | Aluno cadastrado | 201, 400, 409 |
-| GET | `/api/alunos` | RF005 | Filtros opcionais | Lista de alunos | 200 |
-| GET | `/api/alunos/:idAluno` | RF005 | `idAluno` path param | Dados do aluno | 200, 400, 404 |
-| PATCH | `/api/alunos/:idAluno` | RF006 | Campos parciais do aluno | Aluno atualizado | 200, 400, 404 |
-| DELETE | `/api/alunos/:idAluno` | RF007 | `idAluno` path param | Aluno inativado | 200, 404 |
-| GET | `/api/jornada/alunos/:idAluno` | RF008 | `idAluno` path param | Jornada consolidada | 200, 400, 404 |
-| POST | `/api/frequencias` | RF009 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Frequencia registrada | 200, 400, 404, 422 |
-| POST | `/api/participacoes` | RF010 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Participacao registrada | 200, 400, 404, 409, 422 |
-| PATCH | `/api/empregabilidade/:idAluno` | RF011 | `ocupacao`, `tipoVinculoEmpregaticio`, `rendaMensal` | Empregabilidade atualizada | 200, 400, 404 |
-| PATCH | `/api/ensino-superior/:idAluno` | RF012 | `escolaridade`, instituicao/curso/status/data | Ensino superior atualizado | 200, 400, 404 |
-| POST | `/api/anotacoes-qualitativas` | RF013 | `idAluno`, `titulo`, `descricao`, `autor`, `dataRegistro` | Anotacao registrada | 200, 400, 404 |
-| GET | `/api/alunos/segmentacao` | RF014 | Query params de filtros | Alunos segmentados | 200, 400, 422 |
-| GET | `/api/impacto/resumo` | RF015 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo de impacto | 200, 400, 422 |
-| GET | `/api/jornada/resumo` | RF016 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo da jornada | 200, 400, 422 |
-| GET | `/api/impacto/conclusao-programas` | RF017 | Filtros de dashboard | Indicador de conclusao | 200, 400, 422 |
-| GET | `/api/impacto/alunos-empregados` | RF018 | Filtros de dashboard | Indicador de empregados | 200, 400, 422 |
-| GET | `/api/impacto/acesso-ensino-superior` | RF019 | Filtros de dashboard | Indicador de ensino superior | 200, 400, 422 |
-| GET | `/api/jornada/evasao-risco` | RF020 | Filtros de dashboard | Indicador de evasao/risco | 200, 400, 422 |
-| GET | `/api/comunicacao` | RF021 | `idAluno` opcional | Lista de notificacoes | 200 |
-| POST | `/api/comunicacao` | RF021 | Dados da notificacao | Notificacao criada | 200, 400, 403, 404 |
-| GET | `/api/comunicacao/oportunidades` | RF022 | N/A | Lista de oportunidades | 200 |
-| POST | `/api/comunicacao/oportunidades` | RF022 | Dados da oportunidade | Oportunidade criada | 200, 400 |
-| GET | `/api/agenda` | RF023 | `idAluno`, `idMembro`, `dataInicio`, `dataFim` | Itens de agenda | 200, 400, 422 |
-| POST | `/api/agenda` | RF024 | Dados do item de agenda | Item criado | 200, 400, 422 |
-| PATCH | `/api/agenda/:idAgenda` | RF024 | Campos parciais do item | Item atualizado | 200, 400, 404, 422 |
-| DELETE | `/api/agenda/:idAgenda` | RF024 | `idAgenda` path param | Item cancelado | 200, 404, 422 |
-| GET | `/api/prontuarios` | RF025 | `idAluno`, `idPsi`, perfil | Lista de prontuarios | 200, 422 |
-| POST | `/api/prontuarios` | RF025 | `idAluno`, `idPsi`, `titulo`, `observacao`, perfil | Prontuario criado | 200, 400, 404, 422 |
-| GET | `/api/labels` | RF026 | `idAluno`, `idPsi`, perfil | Lista de labels | 200, 422 |
-| POST | `/api/labels` | RF026 | `idAluno`, `idPsi`, `descricao`, `tipoLabel`, perfil | Label criada | 200, 400, 404, 422 |
-| GET | `/api/psicologo/alunos/:idAluno/desempenho` | RF027 | `idAluno`, headers de autenticacao/permissao | Desempenho do aluno | 200, 400, 403, 404 |
+| GET | `/api/health` | N/A | N/A | Status da API | 200 |
+| GET | `/api/health/supabase` | N/A | N/A | Status de conexão com banco/configuração Supabase | 200, 503 |
+| GET | `/api/portal/alunos/:idAluno` | RF017 | `idAluno` path param | Perfil do aluno | 200, 400, 404 |
+| PATCH | `/api/portal/alunos/:idAluno/contato` | RF018 | `email`, `telefone` | Contato atualizado | 200, 400, 404 |
+| GET | `/api/portal/alunos/:idAluno/notificacoes` | RF019 | `idAluno`, headers de autenticação | Notificações do aluno | 200, 400, 403, 404 |
+| GET | `/api/portal/oportunidades` | RF019 | N/A | Lista de oportunidades | 200 |
+| POST | `/api/alunos` | RF001 | Dados cadastrais do aluno | Aluno cadastrado | 201, 400, 409 |
+| GET | `/api/alunos` | RF003 | Filtros opcionais | Lista de alunos | 200 |
+| GET | `/api/alunos/:idAluno` | RF003, RF004 | `idAluno` path param | Dados do aluno | 200, 400, 404 |
+| PATCH | `/api/alunos/:idAluno` | RF002 | Campos parciais do aluno | Aluno atualizado | 200, 400, 404 |
+| DELETE | `/api/alunos/:idAluno` | RF002 | `idAluno` path param | Aluno inativado | 200, 404 |
+| GET | `/api/jornada/alunos/:idAluno` | RF004 | `idAluno` path param | Jornada consolidada | 200, 400, 404 |
+| POST | `/api/frequencias` | RF005 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Frequência registrada | 200, 400, 404, 422 |
+| POST | `/api/participacoes` | RF006 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Participação registrada | 200, 400, 404, 409, 422 |
+| PATCH | `/api/empregabilidade/:idAluno` | RF007 | `ocupacao`, `tipoVinculoEmpregaticio`, `rendaMensal` | Empregabilidade atualizada | 200, 400, 404 |
+| PATCH | `/api/ensino-superior/:idAluno` | RF008 | `escolaridade`, instituição/curso/status/data | Ensino superior atualizado | 200, 400, 404 |
+| POST | `/api/anotacoes-qualitativas` | RF004 | `idAluno`, `titulo`, `descricao`, `autor`, `dataRegistro` | Anotação registrada | 201, 400, 404 |
+| GET | `/api/alunos/segmentacao` | RF011 | Query params de filtros | Alunos segmentados | 200, 400, 422 |
+| GET | `/api/impacto/resumo` | RF012 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo de impacto | 200, 400, 422 |
+| GET | `/api/jornada/resumo` | RF004, RF012 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo da jornada | 200, 400, 422 |
+| GET | `/api/impacto/conclusao-programas` | RF014 | Filtros de dashboard | Indicador de conclusão | 200, 400, 422 |
+| GET | `/api/impacto/alunos-empregados` | RF013 | Filtros de dashboard | Indicador de empregados | 200, 400, 422 |
+| GET | `/api/impacto/acesso-ensino-superior` | RF016 | Filtros de dashboard | Indicador de ensino superior | 200, 400, 422 |
+| GET | `/api/jornada/evasao-risco` | RF015 | Filtros de dashboard | Indicador de evasão/risco | 200, 400, 422 |
+| GET | `/api/comunicacao` | RF019 | `idAluno` opcional | Lista de notificações | 200 |
+| POST | `/api/comunicacao` | RF019 | Dados da notificação | Notificação criada | 201, 400, 403, 404 |
+| GET | `/api/comunicacao/oportunidades` | RF019 | N/A | Lista de oportunidades | 200 |
+| POST | `/api/comunicacao/oportunidades` | RF019 | Dados da oportunidade | Oportunidade criada | 201, 400 |
+| GET | `/api/agenda` | RF020 | `idAluno`, `idMembro`, `dataInicio`, `dataFim` | Itens de agenda | 200, 400, 422 |
+| POST | `/api/agenda` | RF021 | Dados do item de agenda | Item criado | 201, 400, 422 |
+| PATCH | `/api/agenda/:idAgenda` | RF021 | Campos parciais do item | Item atualizado | 200, 400, 404, 422 |
+| DELETE | `/api/agenda/:idAgenda` | RF021 | `idAgenda` path param | Item cancelado | 200, 404, 422 |
+| GET | `/api/prontuarios` | RF009, RF010 | `idAluno`, `idPsi`, perfil | Lista de prontuários | 200, 422 |
+| POST | `/api/prontuarios` | RF009, RF010 | `idAluno`, `idPsi`, `titulo`, `observacao`, perfil | Prontuário criado | 201, 400, 404, 422 |
+| GET | `/api/labels` | RF009, RF010 | `idAluno`, `idPsi`, perfil | Lista de labels | 200, 422 |
+| POST | `/api/labels` | RF009, RF010 | `idAluno`, `idPsi`, `descricao`, `tipoLabel`, perfil | Label criada | 201, 400, 404, 422 |
+| GET | `/api/psicologo/alunos/:idAluno/desempenho` | RF022 | `idAluno`, headers de autenticação/permissão | Desempenho do aluno | 200, 400, 403, 404 |
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
@@ -2201,7 +2201,7 @@ O Diagrama Entidade-Relacionamento do PulseManager representa de forma estrutura
 
 <div align="justify">
 
-Esta seção traduz o DER apresentado na seção 3.6.2 para o modelo relacional e para sua implementação física em PostgreSQL.
+Esta seção traduz o DER apresentado na seção 3.6.2 para o modelo relacional e para sua implementação física em PostgreSQL. Como a modelagem foi revisada ao longo do desenvolvimento, as tabelas abaixo representam a versão consolidada após as atualizações da Sprint 4, e não apenas o recorte inicial produzido na Sprint 2.
 
 O modelo relacional organiza os dados em tabelas com seus respectivos campos (Normando, 2024). As chaves primárias identificam de forma única cada registro, enquanto as chaves estrangeiras conectam uma tabela a outra e preservam os vínculos definidos na modelagem. Dessa forma, as entidades e relacionamentos do DER são convertidos em uma estrutura pronta para implementação no banco de dados.
 
@@ -2211,7 +2211,7 @@ O modelo relacional organiza os dados em tabelas com seus respectivos campos (No
 
 <div align="justify">
 
-Com base na modelagem de dados do projeto, o modelo relacional foi definido para refletir as entidades atuais do sistema conforme o DER. A tabela `participacao` representa o relacionamento entre `aluno` e `atividade` e concentra os dados específicos desse vínculo, incluindo `nota`; `oportunidade` fica vinculada a `membro_equipe`; e os registros de agenda, notificações, labels e histórico psicológico mantêm vínculo com os usuários definidos na modelagem.
+Com base na modelagem de dados do projeto, o modelo relacional foi definido para refletir as entidades atuais do sistema conforme o DER e a migration consolidada. A tabela `participacao` representa o relacionamento entre `aluno` e `atividade` e concentra os dados específicos desse vínculo, incluindo `nota` e `certificado`; `oportunidade` fica vinculada a `membro_equipe`; `agenda` fica vinculada a `aluno` e `membro_equipe`; e os registros sensíveis de `label` e `historico_psicologico` mantêm vínculo com `psicologo`.
 
 </div>
 
@@ -2219,16 +2219,17 @@ Com base na modelagem de dados do projeto, o modelo relacional foi definido para
 
 | Tabela | Chave primária | Atributos | Chaves estrangeiras |
 |---|---|---|---|
-| `aluno` | `id_aluno` | `nome`, `email`, `idade`, `genero`, `ocupacao`, `escolaridade`, `data_ingresso`, `status` | - |
+| `aluno` | `id_aluno` | `codigo_pm`, `nome`, `email`, `telefone`, `idade`, `genero`, `ocupacao`, `tipo_vinculo_empregaticio`, `renda_mensal`, `escolaridade`, `instituicao_ensino_superior`, `curso_ensino_superior`, `status_ensino_superior`, `data_ingresso_ensino_superior`, `programa`, `categoria`, `risco_evasao`, `engajamento`, `data_ingresso`, `status`, `nivel_jornada`, `perfil_socioeconomico`, `curso`, `origem_participacao` | - |
 | `membro_equipe` | `id_membro` | `nome`, `cargo`, `email` | - |
 | `psicologo` | `id_psi` | `nome_psi`, `cargo_psi` | - |
-| `atividade` | `id_atividade` | `titulo`, `tipo`, `descricao`, `data` | - |
+| `atividade` | `id_atividade` | `titulo`, `tipo`, `descricao`, `data`, `modalidade`, `carga_horaria` | - |
 | `notificacao` | `id_notificacao` | `titulo`, `mensagem`, `data_envio`, `tipo`, `id_remetente`, `tipo_remetente`, `nome_remetente` | `id_aluno` |
-| `oportunidade` | `id_oportunidade` | `titulo`, `descricao`, `tipo`, `data_publicacao` | `id_membro` |
-| `agenda` | `id_agenda` | `tipo_user`, `registro`, `data`, `status` | `id_membro`, `id_aluno`, `id_psi` |
+| `oportunidade` | `id_oportunidade` | `titulo`, `descricao`, `tipo`, `data_publicacao`, `prazo_inscricao` | `id_membro` |
+| `agenda` | `id_agenda` | `tipo_user`, `registro`, `data`, `hora_inicio`, `hora_fim`, `status` | `id_membro`, `id_aluno` |
 | `label` | `id_lbl` | `descricao`, `tipo_label` | `id_aluno`, `id_psi` |
 | `historico_psicologico` | `id_historico` | `observacao`, `titulo` | `id_aluno`, `id_psi` |
-| `participacao` | `id_part` | `data_part`, `status_part`, `nota` | `id_aluno`, `id_atividade` |
+| `participacao` | `id_part` | `data_part`, `status_part`, `nota`, `certificado` | `id_aluno`, `id_atividade` |
+| `anotacao_qualitativa` | `id_anotacao` | `titulo`, `descricao`, `autor`, `data_registro` | `id_aluno` |
 
 ##### Descrição das Tabelas
 
@@ -2276,7 +2277,7 @@ A tabela `oportunidade` registra oportunidades acadêmicas, profissionais ou ins
 
 <div align="justify">
 
-A tabela `agenda` registra compromissos, eventos e acompanhamentos. Cada registro pode ser associado ao aluno envolvido, ao membro da equipe responsável e, quando aplicável, ao psicólogo relacionado ao acompanhamento, conforme os campos `id_aluno`, `id_membro` e `id_psi` padronizados no modelo relacional.
+A tabela `agenda` registra compromissos, eventos e acompanhamentos. Na versão consolidada da Sprint 4, cada registro é associado ao aluno envolvido e ao membro da equipe responsável, conforme os campos `id_aluno` e `id_membro`; compromissos conduzidos por psicólogos podem ser representados no conteúdo do evento, mas não possuem chave estrangeira direta para `psicologo` nessa tabela.
 
 </div>
 
@@ -2312,6 +2313,14 @@ A tabela `participacao` é uma tabela lógica associativa entre `aluno` e `ativi
 
 </div>
 
+###### Tabela anotacao_qualitativa
+
+<div align="justify">
+
+A tabela `anotacao_qualitativa` registra observações textuais sobre a jornada do aluno. Ela depende de `aluno` por meio de `id_aluno` e complementa o histórico individual sem se confundir com registros psicológicos sensíveis, que permanecem em `historico_psicologico`.
+
+</div>
+
 #### Implementação de Chaves Estrangeiras
 
 <div align="justify">
@@ -2328,13 +2337,13 @@ Com base nas cardinalidades descritas no DER, as chaves estrangeiras foram posic
 | `oportunidade` | `id_membro` | `membro_equipe(id_membro)` | Indicar qual membro da equipe publicou ou administra a oportunidade. |
 | `agenda` | `id_membro` | `membro_equipe(id_membro)` | Registrar o responsável interno pelo compromisso ou acompanhamento. |
 | `agenda` | `id_aluno` | `aluno(id_aluno)` | Associar o compromisso ao aluno envolvido. |
-| `agenda` | `id_psi` | `psicologo(id_psi)` | Associar o compromisso ao psicólogo relacionado, quando houver acompanhamento psicológico. |
 | `label` | `id_aluno` | `aluno(id_aluno)` | Vincular marcações e classificações ao aluno correspondente. |
 | `label` | `id_psi` | `psicologo(id_psi)` | Identificar o psicólogo responsável pela label. |
 | `historico_psicologico` | `id_aluno` | `aluno(id_aluno)` | Associar o registro psicológico ao aluno acompanhado. |
 | `historico_psicologico` | `id_psi` | `psicologo(id_psi)` | Associar o registro psicológico ao psicólogo responsável. |
 | `participacao` | `id_aluno` | `aluno(id_aluno)` | Indicar qual aluno participou de determinada atividade. |
 | `participacao` | `id_atividade` | `atividade(id_atividade)` | Indicar qual atividade recebeu a participação do aluno. |
+| `anotacao_qualitativa` | `id_aluno` | `aluno(id_aluno)` | Associar a anotação qualitativa ao aluno acompanhado. |
 
 ##### Regras de Negócio do Modelo Relacional
 
@@ -2346,7 +2355,7 @@ O relacionamento entre `aluno` e `atividade` é resolvido por `participacao`, o 
 
 Como o DER atual não apresenta uma entidade separada para notas, `nota` permanece como atributo de `participacao`, mantendo a avaliação associada ao aluno em uma atividade específica.
 
-Os vínculos com `membro_equipe` e `psicologo` preservam a rastreabilidade dos responsáveis por oportunidades, notificações, labels e registros psicológicos, respeitando as relações representadas no DER.
+Os vínculos com `membro_equipe` e `psicologo` preservam a rastreabilidade dos responsáveis por oportunidades, notificações, labels e registros psicológicos, respeitando as relações representadas no DER. A agenda, especificamente, preserva vínculo físico com `membro_equipe` e `aluno`; a participação de psicólogos em compromissos aparece no fluxo de agenda do aluno como informação de evento, sem FK própria nessa tabela.
 
 Como regra de acesso, o psicólogo não possui visão geral de todos os alunos. Sua visualização deve ser limitada aos alunos aos quais ele está relacionado por registros como `label` e `historico_psicologico`, que possuem simultaneamente `id_psi` e `id_aluno`, ou por notificações em que `tipo_remetente` seja `psicologo` e `id_remetente` corresponda ao seu `id_psi`. Para esses alunos monitorados, o psicólogo pode consultar dados de desempenho acadêmico necessários ao acompanhamento, como notas, frequência e participação em atividades. Já `membro_equipe` mantém acesso institucional mais amplo aos registros administrativos e acadêmicos dos alunos, respeitando a restrição de que informações sensíveis de acompanhamento psicológico só devem ser acessadas por usuários com perfil de psicólogo.
 
@@ -2452,8 +2461,7 @@ DO $$
 BEGIN
   CREATE TYPE tipo_usuario_agenda_enum AS ENUM (
     'aluno',
-    'membro_equipe',
-    'psicologo'
+    'membro_equipe'
   );
 EXCEPTION WHEN duplicate_object THEN NULL;
 END $$;
@@ -2479,6 +2487,7 @@ BEGIN
     'workshop',
     'evento',
     'avaliacao',
+    'curso',
     'outro'
   );
 EXCEPTION WHEN duplicate_object THEN NULL;
@@ -2486,14 +2495,30 @@ END $$;
 
 CREATE TABLE IF NOT EXISTS aluno (
   id_aluno INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  codigo_pm VARCHAR(20) UNIQUE,
   nome VARCHAR(150) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
+  telefone VARCHAR(30),
   idade INTEGER CHECK (idade IS NULL OR (idade >= 0 AND idade <= 120)),
   genero genero_aluno_enum,
   ocupacao VARCHAR(150),
+  tipo_vinculo_empregaticio VARCHAR(50),
+  renda_mensal DECIMAL(10,2) CHECK (renda_mensal IS NULL OR renda_mensal >= 0),
   escolaridade VARCHAR(100),
-  data_ingresso DATE DEFAULT CURRENT_DATE,
-  status status_aluno_enum NOT NULL DEFAULT 'ativo'
+  instituicao_ensino_superior VARCHAR(150),
+  curso_ensino_superior VARCHAR(150),
+  status_ensino_superior VARCHAR(50),
+  data_ingresso_ensino_superior DATE,
+  programa VARCHAR(120) NOT NULL DEFAULT 'nao_informado',
+  categoria VARCHAR(60) NOT NULL DEFAULT 'sem_categoria',
+  risco_evasao VARCHAR(20) NOT NULL DEFAULT 'baixo' CHECK (risco_evasao IN ('baixo', 'medio', 'alto')),
+  engajamento INTEGER NOT NULL DEFAULT 0 CHECK (engajamento >= 0 AND engajamento <= 100),
+  data_ingresso DATE NOT NULL DEFAULT CURRENT_DATE,
+  status status_aluno_enum NOT NULL DEFAULT 'ativo',
+  nivel_jornada VARCHAR(50),
+  perfil_socioeconomico VARCHAR(150),
+  curso VARCHAR(150),
+  origem_participacao VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS membro_equipe (
@@ -2514,7 +2539,9 @@ CREATE TABLE IF NOT EXISTS atividade (
   titulo VARCHAR(255) NOT NULL,
   tipo tipo_atividade_enum NOT NULL,
   descricao VARCHAR(500),
-  data DATE
+  data DATE,
+  modalidade VARCHAR(50),
+  carga_horaria INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS notificacao (
@@ -2536,6 +2563,7 @@ CREATE TABLE IF NOT EXISTS oportunidade (
   descricao VARCHAR(500),
   tipo tipo_oportunidade_enum NOT NULL,
   data_publicacao DATE DEFAULT CURRENT_DATE,
+  prazo_inscricao DATE,
   id_membro INTEGER NOT NULL,
   FOREIGN KEY (id_membro) REFERENCES membro_equipe(id_membro)
 );
@@ -2545,13 +2573,13 @@ CREATE TABLE IF NOT EXISTS agenda (
   tipo_user tipo_usuario_agenda_enum NOT NULL,
   registro VARCHAR(500) NOT NULL,
   data DATE NOT NULL,
-  status INTEGER NOT NULL,
+  hora_inicio TIME,
+  hora_fim TIME,
+  status INTEGER NOT NULL DEFAULT 1,
   id_membro INTEGER NOT NULL,
   id_aluno INTEGER NOT NULL,
-  id_psi INTEGER,
   FOREIGN KEY (id_membro) REFERENCES membro_equipe(id_membro),
-  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno),
-  FOREIGN KEY (id_psi) REFERENCES psicologo(id_psi)
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno)
 );
 
 CREATE TABLE IF NOT EXISTS label (
@@ -2580,10 +2608,21 @@ CREATE TABLE IF NOT EXISTS participacao (
   status_part BOOLEAN NOT NULL DEFAULT FALSE,
   id_aluno INTEGER NOT NULL,
   id_atividade INTEGER NOT NULL,
-  nota DECIMAL(3,1) CHECK (nota >= 0 AND nota <= 10),
+  nota DECIMAL(3,1) CHECK (nota IS NULL OR (nota >= 0 AND nota <= 10)),
+  certificado BOOLEAN DEFAULT FALSE,
   FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno),
   FOREIGN KEY (id_atividade) REFERENCES atividade(id_atividade),
   UNIQUE (id_aluno, id_atividade)
+);
+
+CREATE TABLE IF NOT EXISTS anotacao_qualitativa (
+  id_anotacao INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id_aluno INTEGER NOT NULL,
+  titulo VARCHAR(150) NOT NULL,
+  descricao VARCHAR(1000) NOT NULL,
+  autor VARCHAR(120) NOT NULL,
+  data_registro DATE NOT NULL DEFAULT CURRENT_DATE,
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno)
 );
 ```
 
@@ -2591,7 +2630,7 @@ CREATE TABLE IF NOT EXISTS participacao (
 
 As restrições `PRIMARY KEY` garantem identificação única para cada registro, enquanto `GENERATED ALWAYS AS IDENTITY` automatiza a geração dos identificadores. As restrições `NOT NULL` foram aplicadas aos campos obrigatórios para impedir registros incompletos nos dados essenciais. A restrição `UNIQUE` foi usada em campos que não devem se repetir, como `email`, e também em `participacao(id_aluno, id_atividade)`, evitando duplicidade de participação do mesmo aluno na mesma atividade.
 
-As restrições `CHECK` foram usadas em regras numéricas simples, como a validação da idade do aluno e da nota em `participacao`. A coluna `nota` foi definida como `DECIMAL(3,1)` para permitir avaliações de 0 a 10 com uma casa decimal, como `8.5` ou `10.0`, sem permitir valores fora da escala definida. Já os tipos `ENUM` limitam campos categóricos a valores previamente definidos, reduzindo inconsistências de preenchimento em campos como `status`, `cargo`, `tipo`, `tipo_user`, `tipo_label` e `tipo_remetente`.
+As restrições `CHECK` foram usadas em regras numéricas simples, como a validação da idade, da renda mensal, do engajamento e da nota em `participacao`. A coluna `nota` foi definida como `DECIMAL(3,1)` para permitir avaliações de 0 a 10 com uma casa decimal, como `8.5` ou `10.0`, sem permitir valores fora da escala definida. Já os tipos `ENUM` limitam campos categóricos a valores previamente definidos, reduzindo inconsistências de preenchimento em campos como `status`, `cargo`, `tipo`, `tipo_user`, `tipo_label` e `tipo_remetente`.
 
 Na tabela `notificacao`, `id_remetente` foi mantido como identificador do remetente, sem chave estrangeira física, conforme o DER. O campo `tipo_remetente` indica se esse identificador se refere a um `membro_equipe` ou a um `psicologo`, enquanto `nome_remetente` preserva o nome exibido na comunicação.
 
@@ -2603,7 +2642,7 @@ Na tabela `notificacao`, `id_remetente` foi mantido como identificador do remete
 
 O mapeamento da ordem de dependência organiza a sequência correta para criação, manutenção e eventual remoção das estruturas do banco de dados. Como o modelo físico utiliza chaves estrangeiras, as tabelas referenciadas precisam existir antes das tabelas que dependem delas. Essa ordem evita erros de integridade referencial durante a execução do DDL e facilita a leitura do modelo por etapas.
 
-No modelo da solução, não há dependência circular entre as tabelas. As entidades `aluno`, `membro_equipe`, `psicologo` e `atividade` funcionam como bases do domínio, pois não possuem chaves estrangeiras. Já `notificacao`, `oportunidade`, `agenda`, `label`, `historico_psicologico` e `participacao` dependem dessas bases para manter os vínculos definidos no modelo.
+No modelo da solução, não há dependência circular entre as tabelas. As entidades `aluno`, `membro_equipe`, `psicologo` e `atividade` funcionam como bases do domínio, pois não possuem chaves estrangeiras. Já `notificacao`, `oportunidade`, `agenda`, `label`, `historico_psicologico`, `participacao` e `anotacao_qualitativa` dependem dessas bases para manter os vínculos definidos no modelo.
 
 </div>
 
@@ -2618,14 +2657,15 @@ No modelo da solução, não há dependência circular entre as tabelas. As enti
 | 5 | `atividade` | Nenhuma tabela | Entidade base das atividades realizadas ou acompanhadas pela plataforma. |
 | 6 | `notificacao` | `aluno` | Precisa do aluno destinatário; o remetente é identificado por `id_remetente`, `tipo_remetente` e `nome_remetente`, sem chave estrangeira física. |
 | 7 | `oportunidade` | `membro_equipe` | Precisa do membro da equipe responsável pela publicação ou administração da oportunidade. |
-| 8 | `agenda` | `membro_equipe`, `aluno`, `psicologo` | Depende do aluno envolvido, do responsável interno pelo compromisso e, quando aplicável, do psicólogo relacionado ao acompanhamento. |
+| 8 | `agenda` | `membro_equipe`, `aluno` | Depende do aluno envolvido e do membro da equipe responsável pelo compromisso. |
 | 9 | `label` | `aluno`, `psicologo` | Depende do aluno e do psicólogo responsável para registrar marcações, classificações ou prioridades. |
 | 10 | `historico_psicologico` | `aluno`, `psicologo` | Depende do aluno acompanhado e do psicólogo responsável pelo registro. |
 | 11 | `participacao` | `aluno`, `atividade` | Representa a relação associativa entre alunos e atividades, por isso só pode ser criada após as duas tabelas-base. |
+| 12 | `anotacao_qualitativa` | `aluno` | Depende do aluno para registrar observações qualitativas vinculadas ao histórico individual. |
 
 <div align="justify">
 
-Essa sequência também orienta a ordem de carga inicial de dados. Primeiro devem ser cadastrados os registros-base, como alunos, membros da equipe, psicólogos e atividades. Em seguida, podem ser inseridos os registros dependentes, como agenda, labels, histórico psicológico, oportunidades, notificações e participações.
+Essa sequência também orienta a ordem de carga inicial de dados. Primeiro devem ser cadastrados os registros-base, como alunos, membros da equipe, psicólogos e atividades. Em seguida, podem ser inseridos os registros dependentes, como agenda, labels, histórico psicológico, oportunidades, notificações, participações e anotações qualitativas.
 
 Para exclusões estruturais, a ordem deve ser invertida: primeiro removem-se ou ajustam-se as tabelas dependentes e, somente depois, as tabelas-base. Dessa forma, evita-se quebrar vínculos ativos de chave estrangeira durante manutenções no banco.
 
@@ -2763,7 +2803,7 @@ No contexto do projeto, a RTM é importante porque permite verificar se os requi
 | Equipe Pulse Mais | RF007 | RN008 | `PATCH /api/empregabilidade/:idAluno`, `GET /api/impacto/alunos-empregados` | Perfil do aluno | `src/tests/integration/jornada.integration.test.ts` - UC-10 CT01 a CT04; `src/tests/integration/dashboard.integration.test.ts` - UC-16 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Dados de empregabilidade exibidos no perfil |
 | Equipe Pulse Mais | RF008 | - | `PATCH /api/ensino-superior/:idAluno`, `GET /api/impacto/acesso-ensino-superior` | Perfil do aluno | `src/tests/integration/jornada.integration.test.ts` - UC-11 CT01 a CT04; `src/tests/integration/dashboard.integration.test.ts` - UC-18 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Dados de ensino superior exibidos no perfil |
 | Psicólogo | RF009 | RN012, RN017 | `GET /api/prontuarios`, `POST /api/prontuarios`, `GET /api/labels`, `POST /api/labels` | Prontuário | `src/tests/integration/saude-mental.integration.test.ts` - UC-20a CT01 a CT06; UC-20b CT01 a CT06; `src/tests/unit/services/saude-mental.service.test.ts` | Listagem restrita de prontuários |
-| Todos os usuários | RF010 | RN011, RN012, RN015, RN017, RN018, RN019, RN020 | `GET /api/prontuarios`, `POST /api/prontuarios`, `GET /api/agenda`, `POST /api/agenda`, `PATCH /api/agenda/:idAgenda`, `DELETE /api/agenda/:idAgenda` | Sistema global | `src/tests/integration/saude-mental.integration.test.ts`; `src/tests/integration/agenda.integration.test.ts`; `src/tests/integration/notificacao-psicologo.integration.test.ts` | Acesso restrito conforme perfil do usuário |
+| Todos os usuários | RF010 | RN011, RN012, RN017, RN019, RN020 | `GET /api/prontuarios`, `POST /api/prontuarios`, `POST /api/agenda`, `PATCH /api/agenda/:idAgenda`, `DELETE /api/agenda/:idAgenda`, `GET /api/psicologo/alunos/:idAluno/desempenho` | Sistema global | `src/tests/integration/saude-mental.integration.test.ts`; `src/tests/integration/agenda.integration.test.ts`; `src/tests/integration/notificacao-psicologo.integration.test.ts`; `src/tests/integration/desempenho-psicologo.integration.test.ts` | Restrições aplicadas nas operações sensíveis de saúde mental, agenda e desempenho |
 | Equipe Pulse Mais | RF011 | RN015 | `GET /api/alunos/segmentacao` | Busca / Filtros | `src/tests/integration/segmentacao.integration.test.ts` - UC-13 CT01 a CT06; `src/tests/unit/services/segmentacao.service.test.ts` | Lista filtrada retornada pela API |
 | Gestora | RF012 | RN006, RN009 | `GET /api/impacto/resumo`, `GET /api/jornada/resumo` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-14 CT01 a CT06; `src/tests/unit/services/dashboard.service.test.ts` | KPIs exibidos no dashboard |
 | Gestora | RF013 | RN008, RN009 | `GET /api/impacto/alunos-empregados` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-16 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Indicador de empregabilidade |
@@ -2773,7 +2813,7 @@ No contexto do projeto, a RTM é importante porque permite verificar se os requi
 | Aluno | RF017 | RN013, RN017 | `GET /api/portal/alunos/:idAluno` | Portal do aluno | `src/tests/integration/portal-aluno.integration.test.ts` - UC-01 CT01 a CT03; `src/tests/unit/services/portal-aluno.service.test.ts` | Dados cadastrais exibidos no portal |
 | Aluno | RF018 | RN013, RN014, RN017 | `PATCH /api/portal/alunos/:idAluno/contato` | Portal do aluno | `src/tests/integration/portal-aluno.integration.test.ts` - UC-02 CT01 a CT05; `src/tests/unit/services/portal-aluno.service.test.ts` | Atualização de contato realizada pelo aluno |
 | Equipe Pulse Mais | RF019 | - | `GET /api/comunicacao`, `POST /api/comunicacao`, `GET /api/comunicacao/oportunidades`, `POST /api/comunicacao/oportunidades`, `GET /api/portal/alunos/:idAluno/notificacoes`, `GET /api/portal/oportunidades` | Comunicação | `src/tests/integration/notificacoes.integration.test.ts` - RF019a CT01 a CT08 e RF019b CT01 a CT05; `src/tests/integration/notificacao-psicologo.integration.test.ts` - CT01 a CT04; `src/tests/integration/portal-aluno-notificacoes.integration.test.ts` - CT01 a CT05; `src/tests/unit/services/notificacao.service.test.ts` | Comunicação cadastrada e listada |
-| Todos os usuários | RF020 | RN018 | `GET /api/agenda` | Agenda | `src/tests/integration/agenda.integration.test.ts` - RF020 CT01 a CT05; `src/tests/unit/services/agenda.service.test.ts` | Visualização de agenda por perfil |
+| Gestor e Aluno | RF020 | RN018 | `GET /api/agenda` | Agenda do gestor / Agenda do aluno | `src/tests/integration/agenda.integration.test.ts` - RF020 CT01 a CT05; `src/tests/unit/services/agenda.service.test.ts` | Listagem e filtros da agenda; no frontend, gestor tem agenda gerenciável e aluno tem agenda somente leitura |
 | Gestora | RF021 | RN019 | `POST /api/agenda`, `PATCH /api/agenda/:idAgenda`, `DELETE /api/agenda/:idAgenda` | Agenda | `src/tests/integration/agenda.integration.test.ts` - RF021 CT01 a CT07; `src/tests/unit/services/agenda.service.test.ts` | Item de agenda criado, editado ou cancelado |
 | Psicólogo | RF022 | RN020, RN017 | `GET /api/psicologo/alunos/:idAluno/desempenho` | Perfil do aluno monitorado | `src/tests/integration/desempenho-psicologo.integration.test.ts` - UC-23 CT01 a CT05 | Desempenho acadêmico exibido apenas para alunos monitorados |
 
