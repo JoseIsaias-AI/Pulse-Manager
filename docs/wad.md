@@ -138,6 +138,7 @@ O sucesso será avaliado pela centralização dos dados, clareza da visualizaç�
 <div align="center">
 <sup>Figura 2: Canvas de Proposta de Valor da Pulse Manager.</sup><br>
 <img src="./assets/canvasValor.png"><br>
+<img src="./assets/canvasValor.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026), com base no Value Proposition Canvas de Strategyzer.</sub><br>
 </div>
 
@@ -209,6 +210,9 @@ A Matriz de Riscos do projeto foi elaborada com o objetivo de identificar, class
 </div>
 
 <div align="center">
+<sup>Figura 3: Matriz de Riscos da Pulse Manager.</sup><br>
+<img src="./assets/matrizRiscos.png"><br>
+<sub>Fonte: Autoria Própria (2026).</sub><br>
 <sup>Figura 3: Matriz de Riscos da Pulse Manager.</sup><br>
 <img src="./assets/matrizRiscos.png"><br>
 <sub>Fonte: Autoria Própria (2026).</sub><br>
@@ -545,13 +549,19 @@ Personas: A persona é definida como uma descrição realista e detalhada do usu
 <div align="center">
 <sup>Figura 4: Persona 01.</sup><br>
     <img src="assets/persUm.jpg" width="60%"><br>
+<sup>Figura 4: Persona 01.</sup><br>
+    <img src="assets/persUm.jpg" width="60%"><br>
 
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
 <sup>Figura 5: Persona 02.</sup><br>
     <img src="assets/persDois.jpg" width="60%"><br>
+<sup>Figura 5: Persona 02.</sup><br>
+    <img src="assets/persDois.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
+<sup>Figura 6: Persona 03.</sup><br>
+    <img src="assets/persTres.jpg" width="60%"><br>
 <sup>Figura 6: Persona 03.</sup><br>
     <img src="assets/persTres.jpg" width="60%"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
@@ -680,10 +690,13 @@ Os requisitos funcionais a seguir foram extraídos do Termo de Abertura do Proje
 | RF013 | O sistema deve calcular e apresentar o total de alunos empregados em um período selecionado.                                                                                                          | Baixa      | Parcial   |
 | RF014 | O sistema deve calcular e apresentar o total de alunos que concluíram um programa em um período selecionado.                                                                                          | Média      | Planejado |
 | RF015 | O sistema deve calcular e apresentar indicadores de evasão e risco por programa ou turma.                                                                                                   | Média      | Parcial   |
+| RF015 | O sistema deve calcular e apresentar indicadores de evasão e risco por programa ou turma.                                                                                                   | Média      | Parcial   |
 | RF016 | O sistema deve calcular e apresentar indicadores de acesso ao ensino superior dentro da rede de alunos.                                                                                               | Média      | Parcial   |
 | RF017 | O sistema deve disponibilizar um portal restrito ao aluno no qual o próprio aluno possa visualizar seus dados cadastrais.                                                                             | Alta       | Parcial   |
 | RF018 | O sistema deve permitir que o aluno atualize informações do seu perfil como ex: (E-mail, telefone, cpf) pelo portal do aluno.                                                                                                          | Alta       | Planejado |
+| RF018 | O sistema deve permitir que o aluno atualize informações do seu perfil como ex: (E-mail, telefone, cpf) pelo portal do aluno.                                                                                                          | Alta       | Planejado |
 | RF019 | O sistema deve permitir o envio de notificações informativas e convites para eventos.                                                                                                                 | Baixa      | Parcial   |
+| RF020 | O sistema deve permitir que somente gestores visualizem a agenda.                                                                                                                                    | Média      | Planejado |
 | RF020 | O sistema deve permitir que somente gestores visualizem a agenda.                                                                                                                                    | Média      | Planejado |
 | RF021 | O sistema deve permitir que o gestor modifique os itens presentes na agenda.                                                                                                                          | Alta       | Planejado |
 | RF022 | O sistema deve permitir ao psicólogo acessar o desempenho acadêmico dos alunos que monitora.                                                                                                          | Alta       | Planejado |
@@ -746,6 +759,24 @@ As regras de negócio formalizam as políticas, condições e restrições que a
 | RN-PSI-01 | Apenas usuario com permissao de psicologo pode acessar desempenho academico de aluno nessa rota. | `permissionMiddleware`, `desempenho-psicologo.integration.test.ts` |
 | RN-PSI-02 | Psicologo so pode acessar desempenho de aluno com vinculo registrado. | `DesempenhoService`, `desempenho-psicologo.integration.test.ts` |
 | RN-INFRA-01 | Healthchecks devem retornar status de disponibilidade sem expor dados sensiveis. | `routes/index.ts` |
+| ID    | Descrição                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | RF Associado                      |
+| ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| RN001 | Todo aluno cadastrado deve receber um código identificador interno único, imutável e gerado automaticamente pelo sistema no momento do cadastro. O código segue o formato `PM-AAAA-NNN`, em que `PM` é prefixo fixo da Pulse Mais, `AAAA` é o ano em que o aluno foi cadastrado (4 dígitos) e `NNN` é um número sequencial daquele ano (3 dígitos, com reinício a cada novo ano). Exemplos: `PM-2024-001` representa o primeiro aluno cadastrado em 2024, `PM-2024-002` o segundo, e `PM-2025-001` o primeiro de 2025. Esse código é usado como chave estável de identificação do aluno em todo o sistema, substituindo o uso de e-mail ou nome (que são instáveis) para fins de cruzamento de dados. O código nunca é reutilizado, mesmo após inativação do aluno, e é mantido caso o aluno retorne para um novo programa. | RF001                             |
+| RN002 | O cadastro de um aluno só pode ser efetivado se forem informados, no mínimo, nome completo e e-mail. O CPF é opcional, mas seu preenchimento deve ser incentivado pela interface; quando ausente, o sistema pode solicitar uma justificativa textual. | RF001                             |
+| RN003 | Quando um aluno se vincula a um novo programa após já ter sido cadastrado anteriormente, o sistema deve recuperar o cadastro existente (mesmo `PM-AAAA-NNN`) e adicionar o novo vínculo ao histórico, sem criar duplicidade de cadastro. | RF001, RF002                      |
+| RN004 | Um aluno pode estar vinculado a múltiplos programas ao longo do tempo. Todo histórico de programas anteriores deve ser preservado e visível no cadastro do aluno, mesmo após o término. Programas encerrados são exibidos no histórico do aluno, mas não contabilizados no dashboards. | RF004                             |
+| RN005 | O status "ex-aluno" é atribuído automaticamente ao término do programa em que o aluno está vinculado. Caso o ex-aluno se vincule a um novo programa, o status retorna a "aluno ativo" e seu progresso volta a ser computado, mantendo o histórico anterior. | RF001, RF002                      |
+| RN006 | O aluno possui uma categoria que reflete seu estágio na jornada Pulse Mais (ex.: conectado, capacitado, empregado, ex-aluno). | RF001, RF014                      |
+| RN007 | O risco de evasão de um aluno deve ser calculado por uma fórmula composta que combina variáveis como frequência em aulas, notas, participação em eventos e engajamento geral, gerando um score que classifica o aluno em níveis de risco (ex.: baixo, médio, alto). Os níveis de risco serão exibidos na plataforma por meio de labels visuais ao lado de cada aluno, indicando se o risco é baixo, médio ou alto. | RF017                             |
+| RN008 | Para fins do dashboard, considera-se "aluno empregado" aquele que possui registro de trabalho, formal ou informal. A interface deve incentivar o registro do tipo de vínculo, priorizando o trabalho formalizado, mas sem excluir vínculos informais da contabilização. | RF007, RF015                      |
+| RN009 | Os indicadores do dashboard apresentam, por padrão, dados referentes ao módulo e à turma em andamento no momento da consulta. | RF014, RF015, RF016, RF017, RF018 |
+| RN010 | A exclusão definitiva de um aluno do sistema não é permitida. Quando a equipe Pulse Mais encerra o vínculo com um aluno, o registro é marcado como inativo, preservando todos os dados históricos para fins de análise de impacto e continuidade de coleta longitudinal. O sistema deve manter os dados dos alunos durante, no mínimo, 5 anos, seguindo as normas impostas pela LGPD. | RF001, RF002                      |
+| RN011 | Somente essa parte da equipe da Pulse Mais (gestão, administrativo, operações, coordenação de mentores) tem permissão para editar dados cadastrais gerais dos alunos, eliminando a dependência atual de uma única pessoa para alterações como troca de e-mail. | RF002, RF011                      |
+| RN012 | Registros relacionados à saúde mental e bem-estar do aluno só podem ser criados, editados ou visualizados por usuários com perfil de psicólogo, vinculado ao aluno. Demais perfis da equipe Pulse Mais não devem ter acesso a esse tipo de informação, em qualquer tela ou consulta do sistema. | RF010, RF011                      |
+| RN013 | Pelo portal do aluno, o próprio jovem pode atualizar apenas informações de contato comuns (ex.: telefone e e-mail). Dados como vínculo a programas, situação de empregabilidade, notas, frequência e observações da equipe não podem ser editados pelo aluno. | RF019, RF020                      |
+| RN014 | Atualizações realizadas pelo próprio aluno via portal devem ser identificáveis no sistema (ex.: data e origem da alteração), permitindo que a equipe Pulse distinga dados informados pelo aluno de dados inseridos pela equipe. | RF020                             |
+| RN015 | Mentores voluntários não são usuários do sistema na versão atual da plataforma. Suas atividades, quando relevantes para o histórico do aluno, são registradas pela equipe interna da Pulse Mais. | RF009, RF011                      |
+| RN016 | Em conformidade com a Lei Geral de Proteção de Dados (LGPD) e com o termo de uso de dados assinado pelos alunos, dados pessoais e relatos qualitativos sensíveis não podem ser expostos a perfis sem autorização específica, nem incluídos em exportações, logs públicos ou commits do repositório de código. | RF001, RF010, RF011               |
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
@@ -760,6 +791,7 @@ A coluna "Requisito" descreve o atributo de qualidade esperado em linguagem de n
 | Eixo | Requisito | Métrica / Critério | Como atendido |
 |------|-----------|--------------------|----|
 | USAB: Usabilidade | A interface da equipe e do portal do aluno deve ser responsiva, funcionando adequadamente  em desktop, dado que parte da equipe Pulse Mais utiliza desktop e estão com programas de doação para os seus alunos.| Layout funcional e legível em viewports de 1920px a 1080px | CSS responsivo com interface adequeada e telas desktop; responsividade feita a partir do HTML também; testes manuais nos breakpoints de desktop |
+| USAB: Usabilidade | A interface da equipe e do portal do aluno deve ser responsiva, funcionando adequadamente  em desktop, dado que parte da equipe Pulse Mais utiliza desktop e estão com programas de doação para os seus alunos.| Layout funcional e legível em viewports de 1920px a 1080px | CSS responsivo com interface adequeada e telas desktop; responsividade feita a partir do HTML também; testes manuais nos breakpoints de desktop |
 | USAB: Usabilidade | A interface deve adotar boas práticas de acessibilidade inspiradas na WCAG 2.1 nível AA, com foco em contraste de cores e suporte a daltonismo. | Contraste mínimo de 4.5:1 para textos e 3:1 para elementos gráficos; informações de status nunca transmitidas exclusivamente por cor; pontuação mínima de 90 na categoria Accessibility do Google Lighthouse nas principais telas. | Paleta validada por ferramenta de contraste (ex.: WebAIM Contrast Checker); ícones e rótulos textuais associados a indicadores coloridos; auditoria via Lighthouse executada nas revisões de sprint. |
 | USAB: Usabilidade | A interface deve apresentar curva de aprendizado curta para usuários da equipe Pulse Mais. | Um novo usuário da equipe deve conseguir realizar o cadastro completo de um aluno em até 5 minutos sem treinamento formal, apoiado apenas pelos rótulos e dicas da própria interface. | Padrões visuais consistentes em todas as telas; rótulos claros em português; mensagens de erro orientadas à ação corretiva. |
 | CONF: Confiabilidade | O sistema deve utilizar identificador interno estável para cada aluno, independente de e-mail, CPF ou nome, resolvendo a dor atual de quebra de cruzamento de dados quando o aluno troca de e-mail. | Todo aluno cadastrado recebe um `id_aluno` único, imutável e gerado automaticamente; relacionamentos internos do sistema não dependem de e-mail ou nome. | Chave primária artificial `id_aluno` na tabela de alunos e constraints de integridade referencial no Banco de Dados. |
@@ -767,11 +799,13 @@ A coluna "Requisito" descreve o atributo de qualidade esperado em linguagem de n
 | DES: Desempenho | A listagem de alunos com critérios aplicados deve responder rapidamente, mesmo com o crescimento da base prevista (aprox. 600 alunos hoje, projeção de até 2000 ao longo dos próximos anos). | Tempo de resposta p95 < 2 segundos para listagem com até 2000 registros; p95 < 3 segundos para o dashboard agregado com os quatro indicadores principais. | Índices nas colunas mais consultadas (ano, programa, categoria); queries SQL otimizadas. |
 | DES: Desempenho | A consulta ao histórico consolidado de um aluno deve carregar em tempo aceitável para uso diário pela equipe. | Tempo de resposta p95 < 1.5 segundos para abertura do histórico completo de um aluno; pontuação mínima de 80 na categoria Performance do Google Lighthouse nas principais telas. | Consultas pré-otimizadas; agregações feitas no servidor; payload JSON enxuto entre back-end e front-end; auditoria via Lighthouse executada nas revisões de sprint. |
 | SUP: Suportabilidade | O código-fonte deve seguir um padrão arquitetural claro, com separação de responsabilidades entre apresentação, lógica de aplicação e persistência. | Cada camada do sistema deve ter responsabilidade única e bem delimitada; nenhuma lógica de acesso a dados deve estar misturada com a camada de apresentação. | Adoção do padrão MVC com diretórios `controllers/`, `service/` e `repository/`; revisões de pull request validando a separação; consultas SQL restritas à camada de Model. |
+| SUP: Suportabilidade | O código-fonte deve seguir um padrão arquitetural claro, com separação de responsabilidades entre apresentação, lógica de aplicação e persistência. | Cada camada do sistema deve ter responsabilidade única e bem delimitada; nenhuma lógica de acesso a dados deve estar misturada com a camada de apresentação. | Adoção do padrão MVC com diretórios `controllers/`, `service/` e `repository/`; revisões de pull request validando a separação; consultas SQL restritas à camada de Model. |
 | SUP: Suportabilidade | O sistema deve ser facilmente analisável, permitindo que um novo desenvolvedor ou docente entenda e contribua com o código. | Um novo colaborador deve conseguir realizar o setup local em até 10 minutos a partir da documentação; trechos de lógica não trivial devem estar comentados; nomenclatura consistente. | README com passo a passo de instalação; revisão por pares; aderência ao guia de estilo do módulo. |
 | SEG: Segurança | O acesso às funcionalidades sensíveis deve ser controlado por níveis de permissão simples, sem autenticação formal (login/senha), conforme restrição do TAPI. As observações de saúde mental devem ser visíveis apenas para usuários com perfil de psicólogo. | Usuários sem o perfil adequado não devem conseguir acessar dados de saúde mental por nenhum caminho do sistema, incluindo tentativas de acesso direto. | Middleware de verificação de perfil no Express; rotas protegidas por papel; testes de bloqueio em cada perfil. |
 | SEG: Segurança | Dados pessoais e relatos qualitativos sensíveis dos jovens, em conformidade com a LGPD e com o "Conteúdo Restrito" definido no TAPI, não devem ser expostos publicamente nem incluídos em commits do repositório público. | Nenhum dado pessoal real presente no repositório; uso obrigatório de massa de dados fictícia para desenvolvimento e demonstração. | Banco real e dumps incluídos no `.gitignore`; arquivo de seeds com dados fictícios; revisão manual de segredos antes de cada commit. |
 | CAP: Capacidade | O sistema deve suportar a carga prevista de uso pela equipe Pulse Mais e o volume estimado de alunos cadastrados. | Suporte a, no mínimo, 15 usuários simultâneos da equipe (margem confortável sobre os 7 colaboradores internos atuais); base de dados projetada para crescer até 2000 alunos cadastrados sem degradação perceptível. | Banco PostgreSQL com índices nas colunas críticas para facilitar operação e escalabilidade. |
 | CAP: Capacidade | O portal do aluno deve suportar acessos eventuais distribuídos ao longo do dia, sem necessidade de alta concorrência. | Suporte a, no mínimo, 30 acessos simultâneos no portal do aluno sem degradação superior a 20% no tempo de resposta. | Arquitetura stateless do back-end Node.js; consultas leves na rota pública do aluno. |
+| REST: Restrições de Design | Stack tecnológica obrigatória definida pelo Inteli e pelo TAPI: front-end em HTML, CSS,JavaScript e TypeScript; back-end em Node.js; banco de dados PostgreSQL. | O front-end deve ser construído sem o uso de frameworks SPA (Single Page Application), como React, Vue, Angular ou similares; o back-end deve permanecer em Node.js e a persistência em PostgreSQL. | Verificação no `package.json` e na estrutura do projeto durante revisões de sprint; validação arquitetural com docente orientador. |
 | REST: Restrições de Design | Stack tecnológica obrigatória definida pelo Inteli e pelo TAPI: front-end em HTML, CSS,JavaScript e TypeScript; back-end em Node.js; banco de dados PostgreSQL. | O front-end deve ser construído sem o uso de frameworks SPA (Single Page Application), como React, Vue, Angular ou similares; o back-end deve permanecer em Node.js e a persistência em PostgreSQL. | Verificação no `package.json` e na estrutura do projeto durante revisões de sprint; validação arquitetural com docente orientador. |
 | REST: Restrições de Design | Não haverá sistema de autenticação tradicional (login/senha), nem integração em tempo real com APIs externas (ex.: WhatsApp, Google), conforme TAPI. | Ausência de fluxos de cadastro de senha, recuperação de senha, OAuth ou tokens externos; ausência de chamadas a Web APIs externas em runtime. | Estrutura simples de if e else validando credenciais registradas no sistema. |
 | REST: Restrições de Design | A comunicação entre aluno e equipe (mentor, psicólogo) deve ocorrer fora da plataforma; o sistema apenas registra histórico de interações, não implementa chat em tempo real. | Nenhum componente de chat ou comunicação em tempo real implementado; comunicação representada apenas por registros estruturados (mensagens, formulários, anotações). | Decisão arquitetural documentada; escopo do MVP alinhado com o parceiro. |
@@ -833,6 +867,8 @@ _Matriz de cobertura mostrando quais RN e endpoints implementam cada RF._
 
 
 <div align="center">
+<sup>Figura 7: Diagrama de Arquitetura.</sup><br>
+    <img src="assets/diagrama_arquitetura.png" ><br>
 <sup>Figura 7: Diagrama de Arquitetura.</sup><br>
     <img src="assets/diagrama_arquitetura.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -905,6 +941,8 @@ O usuário, no navegador, dispara um `POST /frequencia` a partir de `frontend/js
 <div align="center">
 <sup>Figura 8: Diagrama de Casos de Uso.</sup><br>
 <img src="./assets/diagCasosUso.png"><br>
+<sup>Figura 8: Diagrama de Casos de Uso.</sup><br>
+<img src="./assets/diagCasosUso.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
@@ -917,6 +955,8 @@ O Diagrama de Classes de Domínio do sistema Pulse Mais estabelece a estrutura c
 </div>
 
 <div align="center">
+<sup>Figura 9: Diagrama de Classes de Domínio.</sup><br>
+<img src="./assets/diagClassesDominio.png"><br>
 <sup>Figura 9: Diagrama de Classes de Domínio.</sup><br>
 <img src="./assets/diagClassesDominio.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -932,36 +972,261 @@ No que tange aos registros de impacto e classificação, a classe Atividade arma
 
 </div>
 
-#### 3.2.3.1 Diagrama de Classes Arquitetural
+### 3.2.3.1. Diagrama de Classes Arquitetural
+
+Nesta sprint, o Diagrama de Classes foi revisado a partir do feedback docente, com o objetivo de tornar a modelagem mais aderente à UML e mais adequada à leitura técnica do sistema. Dessa forma, a modelagem foi reorganizada com base nos estereótipos `<<boundary>>`, `<<control>>` e `<<entity>>`. As classes de fronteira representam as telas e interfaces com as quais o usuário interage; as classes de controle representam a coordenação dos fluxos e casos de uso; e as classes de entidade representam os principais objetos persistentes e conceituais do domínio da aplicação.
+
+A atualização também considerou a estrutura do repositório compactado do projeto, utilizando os módulos identificados no back-end e no front-end, como autenticação, portal do aluno, agenda, participação, frequência, saúde mental, notificações, dashboard, segmentação, empregabilidade, ensino superior, programas e jornada. Para evitar inferências incorretas, os diagramas não detalham métodos específicos não confirmados como implementados no código, priorizando a representação das responsabilidades, associações e entidades centrais do sistema.
+
+---
+
+#### 3.2.3.1.1. Critério de organização dos diagramas
+
+A modelagem foi dividida em uma visão geral e em recortes menores por fluxo funcional. Essa decisão foi tomada porque concentrar todas as classes, atributos, relacionamentos e responsabilidades em uma única imagem tornaria o artefato pouco legível. Assim, a documentação passa a apresentar primeiro uma visão macro do sistema e, depois, diagramas específicos para os principais fluxos.
+
+A divisão adotada foi:
+
+* Visão geral do sistema;
+* Autenticação e Portal do Aluno;
+* Acompanhamento do Aluno;
+* Comunicação e Acompanhamento Psicossocial;
+* Gestão, Segmentação e Resultados.
+
+Essa organização permite analisar o sistema por partes, mantendo a coerência entre as telas, os controles e as entidades do domínio.
+
+---
+
+#### 3.2.3.1.2 Visão geral do Diagrama de Classes
+
+A visão geral apresenta os principais fluxos do sistema organizados em três colunas: classes de interface, classes de controle e classes de entidade. Essa estrutura permite visualizar como as telas acionam controles específicos e como esses controles se relacionam com as entidades centrais do domínio.
+
+As classes de interface representam páginas ou telas do sistema, como `TelaLogin`, `TelaPortalAluno`, `TelaPerfilAluno`, `TelaAgenda`, `TelaJornadaAluno`, `TelaNotificacoes`, `TelaSaudeMental`, `TelaDashboard` e `TelaSegmentacao`.
+
+As classes de controle representam a coordenação dos fluxos da aplicação, como `ControleAutenticacao`, `ControlePortalAluno`, `ControleAluno`, `ControleImportacao`, `ControleAgenda`, `ControleParticipacao`, `ControleFrequencia`, `ControleJornada`, `ControleNotificacao`, `ControleSaudeMental`, `ControleDashboard`, `ControleSegmentacao`, `ControleEmpregabilidade` e `ControleEnsinoSuperior`.
+
+As classes de entidade representam os dados persistentes ou conceituais do sistema, como `Usuario`, `Aluno`, `Agenda`, `Participacao`, `Atividade`, `Frequencia`, `Notificacao`, `Label`, `SaudeMental`, `AnotacaoQualitativa`, `DashboardResumo`, `Empregabilidade`, `EnsinoSuperior`, `Programa` e `VinculoPrograma`.
 
 <div align="center">
 <sup>Figura 10: Diagrama de Classes Arquitetural.</sup><br>
-<img src="./assets/diagArquitetural.jpeg"><br>
+<img src="./assets/diagrama_arquitetural.jpeg"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
 
-<div>
-O diagrama de classes arquitetural representa a organização lógica da aplicação, evidenciando a separação entre as camadas de front-end, back-end e banco de dados. A arquitetura foi estruturada de forma modular, buscando separar responsabilidades, facilitar a manutenção do sistema e permitir maior escalabilidade conforme novas funcionalidades forem adicionadas.
+A imagem apresenta uma visão consolidada dos principais módulos do sistema Pulse Mais. A organização em colunas evidencia a separação entre interface, controle e entidade, evitando que a modelagem seja interpretada apenas como uma arquitetura MVC. O primeiro grupo representa autenticação e portal; o segundo grupo representa o acompanhamento do aluno; e o terceiro grupo representa comunicação, gestão e resultados.
 
-No front-end, o usuário interage com os principais módulos da plataforma, como Login, Dashboard, Perfil do Aluno, Agenda, Notificações e Segmentação. Essa camada é responsável pela interface visual e pela comunicação com o back-end por meio de requisições HTTP. Cada funcionalidade do front-end representa uma área de interação do usuário com o sistema, permitindo autenticação, consulta de informações, visualização de indicadores, gerenciamento de compromissos, recebimento de comunicados e aplicação de filtros ou agrupamentos de alunos.
+Essa visão geral funciona como um mapa macro do sistema, mostrando como as telas acionam controles e como esses controles se conectam às entidades do domínio. Ela também indica que a entidade `Aluno` é central para vários fluxos, pois se relaciona com participação, frequência, jornada, notificações, acompanhamento psicossocial, empregabilidade e ensino superior.
 
-O back-end concentra a regra de negócio da aplicação e está organizado em cinco camadas principais: Middleware, Controller, Service, Repository e Model. Essa divisão segue uma lógica comum em aplicações web modernas, na qual cada camada possui uma responsabilidade específica dentro do fluxo de processamento das requisições.
+---
 
-A camada de Middleware atua antes da execução das rotas principais, sendo responsável por tarefas transversais do sistema. Nela estão concentradas funções como validação de autenticação e sessão, controle de permissões por perfil, validação dos dados de entrada, padronização de erros e encapsulamento de execuções assíncronas. Dessa forma, os middlewares ajudam a garantir segurança, consistência e tratamento adequado das requisições antes que elas cheguem às regras de negócio.
+#### 3.2.3.1.3. Diagrama de Classes: Autenticação e Portal do Aluno
 
-A camada de Controller recebe as requisições vindas do front-end e direciona cada operação para o serviço correspondente. Os controllers organizam os pontos de entrada da API, como operações relacionadas a alunos, agenda, dashboard, participações, notificações, saúde mental, segmentação, portal do aluno, autenticação e jornada do aluno. Sua função principal é intermediar a comunicação entre a interface e a lógica de negócio, sem concentrar regras complexas.
+O diagrama de Autenticação e Portal do Aluno detalha os fluxos relacionados ao acesso ao sistema, consulta e atualização de informações do aluno, cadastro/importação e vínculo com programas. Esse recorte foi separado da visão geral para permitir maior clareza nos relacionamentos entre usuário, aluno, programa e vínculo com programa.
 
-A camada de Service concentra as regras de negócio da aplicação. É nela que são realizadas validações, consolidações de informações e operações específicas de cada domínio do sistema. Por exemplo, o alunoService trata regras relacionadas ao cadastro e informações dos alunos; o agendaService valida horários, vínculos e consistência de eventos; o dashboardService consolida métricas e indicadores; e o segmentacaoService aplica critérios de filtros e agrupamentos. Essa camada garante que as decisões do sistema fiquem centralizadas e não sejam misturadas com a lógica de interface ou persistência.
+As classes de interface deste fluxo são:
 
-A camada de Repository é responsável pela comunicação com o banco de dados. Ela abstrai as operações de consulta, criação, atualização e recuperação de dados, acessando entidades como aluno, agenda, participação, notificação, atividade, oportunidade, label e histórico psicológico. Essa separação evita que as regras de negócio acessem diretamente o banco, tornando o sistema mais organizado e facilitando futuras alterações na forma de persistência.
+* `TelaLogin`;
+* `TelaPortalAluno`;
+* `TelaPerfilAluno`;
+* `TelaAlunos`;
+* `TelaCadastroAluno`.
 
-A camada de Model representa as principais entidades do domínio da aplicação. Cada model define a estrutura e os comportamentos associados a uma entidade do sistema, como AlunoModel, AgendaModel, ParticipacaoModel, AtividadeModel, NotificacaoModel, LabelModel, HistoricoPsicologicoModel e UsuarioModel. Esses modelos refletem os objetos centrais manipulados pela aplicação e ajudam a manter a coerência dos dados ao longo do sistema.
+As classes de controle são:
 
-Por fim, a aplicação utiliza um banco de dados PostgreSQL/Supabase, acessado pelo back-end por meio de comandos SQL. As principais entidades persistidas são: aluno, agenda, participacao, atividade, oportunidade, notificacao, label e historico_psicologico. Essas tabelas armazenam os dados essenciais para o funcionamento da plataforma, servindo como base para as consultas, indicadores, registros de acompanhamento e demais funcionalidades do sistema.
+* `ControleAutenticacao`;
+* `ControlePortalAluno`;
+* `ControleAluno`;
+* `ControleImportacao`.
 
-De forma geral, o diagrama evidencia uma arquitetura em camadas, na qual o usuário interage com o front-end, que se comunica com o back-end via HTTP. O back-end processa a requisição passando por middlewares, controllers, services e repositories, até acessar o banco de dados. Essa estrutura favorece a organização do código, a separação de responsabilidades, a reutilização de componentes e a evolução da aplicação de maneira mais segura e controlada.
+As classes de entidade são:
 
+* `Usuario`;
+* `Aluno`;
+* `Programa`;
+* `VinculoPrograma`.
+
+<div align="center">
+<sup>Figura 11: Diagrama de Classes Arquitetural.</sup><br>
+<img src="./assets/diagrama_arquitetural_aluno.jpeg"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
+
+A imagem demonstra que o fluxo de autenticação parte da `TelaLogin`, passa pelo `ControleAutenticacao` e se relaciona com a entidade `Usuario`, responsável por representar os dados necessários ao acesso e perfil do usuário. Já as telas `TelaPortalAluno` e `TelaPerfilAluno` se conectam ao `ControlePortalAluno`, que centraliza a consulta e atualização das informações permitidas ao aluno.
+
+As telas `TelaAlunos` e `TelaCadastroAluno` se relacionam com o `ControleAluno`, responsável pelo fluxo de cadastro, consulta e manutenção dos dados da entidade `Aluno`. O `ControleImportacao` aparece associado às entidades `Aluno`, `Programa` e `VinculoPrograma`, representando fluxos de importação ou associação de alunos a programas institucionais.
+
+A relação entre `Aluno`, `Programa` e `VinculoPrograma` indica que o vínculo entre aluno e programa é representado por uma entidade intermediária, permitindo registrar informações específicas dessa associação, como identificadores e status do vínculo.
+
+---
+
+#### 3.2.3.1.4. Diagrama de Classes: Acompanhamento do Aluno
+
+O diagrama de Acompanhamento do Aluno detalha os fluxos relacionados à agenda, participação em atividades, frequência e jornada. Esse recorte é central para o sistema, pois representa o acompanhamento da trajetória do aluno dentro da Pulse Mais.
+
+As classes de interface deste fluxo são:
+
+* `TelaAgenda`;
+* `TelaJornadaAluno`;
+* `TelaAlunos`.
+
+As classes de controle são:
+
+* `ControleAgenda`;
+* `ControleParticipacao`;
+* `ControleFrequencia`;
+* `ControleJornada`;
+* `ControleUc07Jornada`.
+
+As classes de entidade são:
+
+* `Aluno`;
+* `Agenda`;
+* `Participacao`;
+* `Atividade`;
+* `Frequencia`;
+* `Uc07Jornada`.
+
+<div align="center">
+<sup>Figura 12: Diagrama de Classes Arquitetural em Fluxo.</sup><br>
+<img src="./assets/diagrama_arquitetural_trajetoria.jpeg"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
+
+A imagem mostra que a `TelaAgenda` aciona o `ControleAgenda`, que se relaciona com as entidades `Aluno` e `Agenda`. Essa relação representa que um aluno pode possuir registros de agenda, como reuniões, mentorias, acompanhamentos ou compromissos institucionais.
+
+A `TelaJornadaAluno` aciona controles relacionados à participação, frequência e jornada. O `ControleParticipacao` se conecta às entidades `Aluno`, `Participacao` e `Atividade`, indicando que a participação é a entidade que registra o vínculo entre aluno e atividade. Por isso, `Agenda` não foi conectada diretamente à `Participacao`, já que são fluxos diferentes: agenda representa compromissos e participação representa presença ou desempenho em atividades.
+
+A entidade `Frequencia` aparece associada ao acompanhamento de presença do aluno em atividades, enquanto `Uc07Jornada` representa uma estrutura específica de acompanhamento da jornada. A presença dessas entidades no diagrama reflete os módulos encontrados no repositório do projeto e reforça a coerência entre código, domínio e documentação.
+
+---
+
+#### 3.2.3.1.5. Diagrama de Classes: Comunicação e Acompanhamento Psicossocial
+
+O diagrama de Comunicação e Acompanhamento Psicossocial representa os fluxos associados a notificações, saúde mental, labels, anotações qualitativas e auditoria. Esse recorte foi separado por envolver informações sensíveis e registros de acompanhamento individual.
+
+As classes de interface deste fluxo são:
+
+* `TelaNotificacoes`;
+* `TelaSaudeMental`;
+* `TelaPortalAluno`.
+
+As classes de controle são:
+
+* `ControleNotificacao`;
+* `ControleSaudeMental`;
+* `ControleAnotacaoQualitativa`.
+
+As classes de entidade são:
+
+* `Usuario`;
+* `Aluno`;
+* `Notificacao`;
+* `Label`;
+* `SaudeMental`;
+* `AnotacaoQualitativa`;
+* `Auditoria`.
+
+<div align="center">
+<sup>Figura 13: Diagrama de Classes Arquitetural.</sup><br>
+<img src="./assets/diagrama_arquitetural_comunicacao.jpeg"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
+
+A imagem representa a comunicação entre o sistema e o aluno por meio da entidade `Notificacao`, que se relaciona com `Usuario` e `Aluno`. A presença de `Usuario` indica o remetente ou ator do sistema, enquanto `Aluno` representa o destinatário da comunicação.
+
+O fluxo de saúde mental é representado pelo `ControleSaudeMental`, que se relaciona com entidades voltadas ao acompanhamento psicossocial, como `SaudeMental`, `Label` e `AnotacaoQualitativa`. Essas entidades apoiam o registro de observações, classificações e informações qualitativas relacionadas à trajetória do aluno.
+
+A entidade `Auditoria` aparece como apoio ao registro de ações e eventos relevantes no sistema. Sua presença contribui para rastreabilidade, segurança e controle de operações sensíveis, especialmente em fluxos que lidam com informações individuais e psicossociais.
+
+---
+
+#### 3.2.3.1.6 Diagrama de Classes: Gestão, Segmentação e Resultados
+
+O diagrama de Gestão, Segmentação e Resultados representa os fluxos analíticos e gerenciais do sistema. Ele contempla dashboard, segmentação de alunos, empregabilidade, ensino superior, programas e vínculos institucionais.
+
+As classes de interface deste fluxo são:
+
+* `TelaDashboard`;
+* `TelaSegmentacao`;
+* `TelaCadastroAluno`.
+
+As classes de controle são:
+
+* `ControleDashboard`;
+* `ControleSegmentacao`;
+* `ControleEmpregabilidade`;
+* `ControleEnsinoSuperior`;
+* `ControleImportacao`.
+
+As classes de entidade são:
+
+* `DashboardResumo`;
+* `Aluno`;
+* `Empregabilidade`;
+* `EnsinoSuperior`;
+* `Programa`;
+* `VinculoPrograma`.
+
+<div align="center">
+<sup>Figura 14: Diagrama de Classes Arquitetural.</sup><br>
+<img src="./assets/diagrama_arquitetural_segmento.jpeg"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
+
+A imagem apresenta os fluxos responsáveis por consolidar e consultar dados estratégicos da aplicação. A `TelaDashboard` aciona o `ControleDashboard`, que se relaciona com entidades como `DashboardResumo` e `Aluno`, permitindo a visualização de indicadores gerais do sistema.
+
+A `TelaSegmentacao` aciona o `ControleSegmentacao`, que utiliza dados da entidade `Aluno` para permitir filtros e agrupamentos, como jornada, curso, perfil socioeconômico ou status. Esse fluxo apoia a tomada de decisão e a organização dos alunos em grupos de acompanhamento.
+
+As entidades `Empregabilidade` e `EnsinoSuperior` representam resultados posteriores ou paralelos à jornada do aluno. Já `Programa` e `VinculoPrograma` representam a participação do aluno em iniciativas específicas, permitindo registrar a associação entre alunos e programas institucionais.
+
+
+#### 3.2.3.1.7. Relação com os requisitos do negócio
+
+A modelagem revisada contribui para demonstrar como os requisitos do negócio são sustentados pelas classes do sistema. O cadastro e consulta de alunos são representados pelos fluxos de `TelaAlunos`, `TelaCadastroAluno`, `ControleAluno` e `Aluno`. O portal do aluno é representado por `TelaPortalAluno`, `ControlePortalAluno` e `Aluno`. O acompanhamento da jornada é representado por `TelaJornadaAluno`, `ControleJornada`, `ControleUc07Jornada`, `Participacao`, `Frequencia` e `Atividade`.
+
+Os requisitos de comunicação e acompanhamento psicossocial são representados por `TelaNotificacoes`, `TelaSaudeMental`, `ControleNotificacao`, `ControleSaudeMental`, `Notificacao`, `SaudeMental`, `Label` e `AnotacaoQualitativa`. Já os requisitos de gestão, análise e resultados aparecem nos fluxos de `TelaDashboard`, `TelaSegmentacao`, `ControleDashboard`, `ControleSegmentacao`, `DashboardResumo`, `Empregabilidade` e `EnsinoSuperior`.
+
+Essa organização reforça a rastreabilidade entre interface, fluxo de controle, entidades do domínio e funcionalidades implementadas no sistema.
+
+
+
+### 3.2.3.2. Atualização do Diagrama de Classes do Domínio
+
+Nesta sprint, o Diagrama de Classes do Domínio foi atualizado para refletir melhor a estrutura atual da modelagem e as alterações realizadas no banco de dados. O objetivo principal foi alinhar o diagrama ao modelo físico implementado no Supabase, mantendo a organização geral já existente, mas corrigindo pontos que estavam simplificados ou inconsistentes.
+
+A principal mudança realizada foi a criação da classe `Participacao` como uma classe lógica/associativa entre `Aluno` e `Atividade`. Na versão anterior, a participação aparecia de forma simplificada dentro da classe `Atividade`, como se fosse um atributo booleano. Essa representação foi corrigida porque a participação não pertence apenas à atividade, mas sim à relação entre um aluno e uma atividade específica.
+
+Com isso, a classe `Participacao` passou a representar informações como:
+
+- `idPart`;
+- `dataPart`;
+- `statusPart`;
+- `idAluno`;
+- `idAtividade`;
+- `nota`;
+- `certificado`.
+
+Essa alteração torna o diagrama mais coerente com o banco de dados, já que a tabela `participacao` existe justamente para registrar quais alunos participaram de quais atividades, qual foi o status dessa participação, a nota obtida e se houve emissão de certificado.
+
+Além disso, foram adicionados ao diagrama os novos atributos criados nesta sprint. Na classe `Aluno`, foram incluídos os campos `nivel_jornada`, `perfil_socioeconomico`, `curso` e `origem_participacao`, permitindo representar melhor a jornada do jovem dentro da Pulse Mais. Esses atributos ajudam a classificar o aluno, indicar seu contexto socioeconômico, registrar o curso ou programa associado e identificar sua origem de participação na instituição.
+
+Na classe `Atividade`, foram adicionados os atributos `modalidade` e `carga_horaria`. Esses campos permitem diferenciar se a atividade é presencial, online ou híbrida, além de registrar sua duração em horas.
+
+Na classe `Oportunidade`, foi incluído o atributo `prazo_inscricao`, permitindo representar a data limite para inscrição em vagas, cursos, bolsas, eventos ou outras oportunidades divulgadas pela equipe.
+
+Na classe `Agenda`, foram adicionados os atributos `hora_inicio` e `hora_fim`, tornando a representação dos compromissos mais completa. Antes, a agenda indicava apenas a data, mas agora também permite visualizar o intervalo de horário previsto para atendimentos, reuniões, mentorias ou eventos.
+
+Também foram feitos ajustes de coerência no diagrama. A classe `HistoricoPsicologico` foi revisada para manter os atributos alinhados ao modelo físico, utilizando `observacao`, `titulo` e `idHistorico`. A classe `Psicologo` também foi simplificada para representar apenas os dados previstos no banco atual.
+
+As relações principais entre as classes foram mantidas, preservando a estrutura do domínio. O aluno continua sendo a entidade central do modelo, relacionado a notificações, labels, histórico psicológico, agenda, oportunidades e participações. A diferença é que, agora, a participação em atividades aparece de forma mais adequada, por meio de uma classe própria.
+
+Dessa forma, o Diagrama de Classes do Domínio passou a representar melhor a lógica do sistema, diferenciando corretamente as entidades principais, registros de apoio e classes associativas. Portanto, a atualização melhora a coerência entre o diagrama, o DER, o modelo físico e a implementação no Supabase.
+
+<div align="center">
+<sup>Figura 9: Diagrama de Classes do Domínio atualizado.</sup><br>
+<img src="../docs/assets/Diagrama_Classes_Dominio_atualizado.png"><br>
+<sub>Fonte: Autoria própria (2026). </sub><br>
+</div>
+
 
 ### 3.2.4. Diagrama de Sequência UML
 
@@ -972,8 +1237,11 @@ Esta seção apresenta cinco diagramas de sequência UML que descrevem como os p
 </div>
 
 #### 3.2.4.1. UC-04 - Adicionar cadastro do aluno
+#### 3.2.4.1. UC-04 - Adicionar cadastro do aluno
 
 <div align="center">
+<sup>Figura 11: Diagrama de sequência do caso de uso Adicionar cadastro do aluno.</sup><br>
+<img src="../docs/assets/diagrama_sequencia_uc04.png"><br>
 <sup>Figura 11: Diagrama de sequência do caso de uso Adicionar cadastro do aluno.</sup><br>
 <img src="../docs/assets/diagrama_sequencia_uc04.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -989,6 +1257,7 @@ O fluxo começa quando o membro da equipe preenche o formulário de cadastro na 
 
 <div align="center">
 <sup>Figura 12: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
+<sup>Figura 12: Diagrama de sequência do caso de uso Visualizar histórico consolidado do aluno.</sup><br>
 <img src="./assets/diagrama-sequencia-2.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
@@ -1000,8 +1269,11 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 </div>
 
 #### 3.2.4.3. UC-07 — Manter jornada do aluno
+#### 3.2.4.3. UC-07 — Manter jornada do aluno
 
 <div align="center">
+<sup>Figura 13: Diagrama de sequência do caso de uso Manter jornada do aluno.</sup><br>
+<img src="../docs/assets/diagrama_sequencia07.png"><br>
 <sup>Figura 13: Diagrama de sequência do caso de uso Manter jornada do aluno.</sup><br>
 <img src="../docs/assets/diagrama_sequencia07.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -1014,8 +1286,11 @@ O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e 
 </div>
 
 #### 3.2.4.4. UC-14 — Visualizar dashboard de impacto
+#### 3.2.4.4. UC-14 — Visualizar dashboard de impacto
 
 <div align="center">
+<sup>Figura 14: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
+<img src="../docs/assets/diagrama_sequencia_uc14.png"><br>
 <sup>Figura 14: Diagrama de sequência do caso de uso Visualizar dashboard de impacto.</sup><br>
 <img src="../docs/assets/diagrama_sequencia_uc14.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -1030,6 +1305,7 @@ A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como 
 #### 3.2.4.5. UC-22 — Manter registros de saúde mental
 
 <div align="center">
+<sup>Figura 15: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
 <sup>Figura 15: Diagrama de sequência do caso de uso Manter registros de saúde mental.</sup><br>
 <img src="./assets/diagrama-sequencia-5.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -1122,6 +1398,8 @@ Caso queira acessar os wireframes completos, acesse o link: https://www.canva.co
 <div align="center">
 <sup>Figura 16: Fluxo de telas do perfil Aluno.</sup><br>
     <img src="assets/fluxoTelasAluno.png" ><br>
+<sup>Figura 16: Fluxo de telas do perfil Aluno.</sup><br>
+    <img src="assets/fluxoTelasAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1134,6 +1412,8 @@ Neste fluxo, o aluno faz login com CPF e nome, acessa a tela inicial com jornada
 <div align="center">
 <sup>Figura 17: Fluxo de telas do perfil Gestor.</sup><br>
     <img src="assets/fluxoTelasGest.png" ><br>
+<sup>Figura 17: Fluxo de telas do perfil Gestor.</sup><br>
+    <img src="assets/fluxoTelasGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1143,6 +1423,8 @@ O gestor faz login com e-mail e senha, acessa a tela inicial com visão geral da
 
 
 <div align="center">
+<sup>Figura 18: Fluxo de telas do perfil Psicólogo.</sup><br>
+    <img src="assets/fluxoTelasPsic.png" ><br>
 <sup>Figura 18: Fluxo de telas do perfil Psicólogo.</sup><br>
     <img src="assets/fluxoTelasPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1157,6 +1439,8 @@ O psicólogo faz login com e-mail, nome e senha, acessa a tela inicial com foco 
 <div align="center">
 <sup>Figura 19: Wireframe da tela de login do Gestor.</sup><br>
     <img src="assets/wrfLoginGest.png" ><br>
+<sup>Figura 19: Wireframe da tela de login do Gestor.</sup><br>
+    <img src="assets/wrfLoginGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1165,6 +1449,8 @@ Tela de login do sistema  dividida em dois painéis. O painel esquerdo (cinza) e
 </div>
 
 <div align="center">
+<sup>Figura 20: Wireframe da tela de login do Aluno.</sup><br>
+    <img src="assets/wrfLoginAluno.png" ><br>
 <sup>Figura 20: Wireframe da tela de login do Aluno.</sup><br>
     <img src="assets/wrfLoginAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1177,6 +1463,8 @@ Tela de login para Alunos do PULSE MAIS com layout dividido em dois painéis. O 
 <div align="center">
 <sup>Figura 21: Wireframe da tela de login do Psicólogo.</sup><br>
     <img src="assets/wrfLoginPsic.png" ><br>
+<sup>Figura 21: Wireframe da tela de login do Psicólogo.</sup><br>
+    <img src="assets/wrfLoginPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1185,6 +1473,8 @@ Tela de login exclusiva para psicólogos da plataforma Pulse Mais. Dividida em d
 </div>
 
 <div align="center">
+<sup>Figura 22: Wireframe da tela inicial do Gestor.</sup><br>
+    <img src="assets/wrfInicialGest.png" ><br>
 <sup>Figura 22: Wireframe da tela inicial do Gestor.</sup><br>
     <img src="assets/wrfInicialGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1197,6 +1487,8 @@ Tela inicial do gestor no Pulse Manager, com menu lateral contendo Início, Alun
 <div align="center">
 <sup>Figura 23: Wireframe da tela inicial do Psicólogo.</sup><br>
     <img src="assets/wrfInicialPsic.png" ><br>
+<sup>Figura 23: Wireframe da tela inicial do Psicólogo.</sup><br>
+    <img src="assets/wrfInicialPsic.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1205,6 +1497,8 @@ Tela inicial do psicólogo no Pulse Manager, com menu lateral contendo Início, 
 </div>
 
 <div align="center">
+<sup>Figura 24: Wireframe do Dashboard do Gestor.</sup><br>
+    <img src="assets/wrfDashboardGest.png" ><br>
 <sup>Figura 24: Wireframe do Dashboard do Gestor.</sup><br>
     <img src="assets/wrfDashboardGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1217,6 +1511,8 @@ Dashboard de performance da turma para o gestor no Pulse Manager. No topo, quatr
 <div align="center">
 <sup>Figura 25: Wireframe do Dashboard do Aluno.</sup><br>
     <img src="assets/wrfDashboardAluno.png" ><br>
+<sup>Figura 25: Wireframe do Dashboard do Aluno.</sup><br>
+    <img src="assets/wrfDashboardAluno.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1225,6 +1521,8 @@ Dashboard de progresso pessoal do aluno no Pulse Manager. No topo, quatro cards 
 </div>
 
 <div align="center">
+<sup>Figura 26: Wireframe do Dashboard do Psicólogo.</sup><br>
+    <img src="assets/wrfDashboardPsic.jpg" ><br>
 <sup>Figura 26: Wireframe do Dashboard do Psicólogo.</sup><br>
     <img src="assets/wrfDashboardPsic.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1237,6 +1535,8 @@ A tela de Dashboard do Psicólogo apresenta uma barra de navegação lateral com
 <div align="center">
 <sup>Figura 27: Wireframe da lista de alunos do Psicólogo.</sup><br>
     <img src="assets/wrfListaAlunosPsic.jpg" ><br>
+<sup>Figura 27: Wireframe da lista de alunos do Psicólogo.</sup><br>
+    <img src="assets/wrfListaAlunosPsic.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1245,6 +1545,8 @@ Tela de listagem de alunos do psicólogo no sistema Pulse Manager, exibindo card
 </div>
 
 <div align="center">
+<sup>Figura 28: Wireframe do perfil do aluno na visão do Gestor.</sup><br>
+    <img src="assets/wrfPerfilAlunoGest.jpg" ><br>
 <sup>Figura 28: Wireframe do perfil do aluno na visão do Gestor.</sup><br>
     <img src="assets/wrfPerfilAlunoGest.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1257,6 +1559,8 @@ A tela exibe o perfil de um aluno com navegação lateral (Início, Alunos, Dash
 <div align="center">
 <sup>Figura 29: Wireframe da tela inicial do Aluno.</sup><br>
     <img src="assets/wrfInicioAluno.jpg" ><br>
+<sup>Figura 29: Wireframe da tela inicial do Aluno.</sup><br>
+    <img src="assets/wrfInicioAluno.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1265,6 +1569,8 @@ Tela inicial do aluno está dividida em quatro seções: jornada de aprendizado 
 </div>
 
 <div align="center">
+<sup>Figura 30: Wireframe da tela de Agenda.</sup><br>
+    <img src="assets/wrfAgenda.jpg" ><br>
 <sup>Figura 30: Wireframe da tela de Agenda.</sup><br>
     <img src="assets/wrfAgenda.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1277,6 +1583,8 @@ Wireframe da tela agenda com calendário mensal navegável e botão "+ Evento" �
 <div align="center">
 <sup>Figura 31: Wireframe da tela de Notificações do Gestor.</sup><br>
     <img src="./assets/wrfNotsGest.png" ><br>
+<sup>Figura 31: Wireframe da tela de Notificações do Gestor.</sup><br>
+    <img src="./assets/wrfNotsGest.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1285,6 +1593,8 @@ Wireframe da tela notificações com uma lista à esquerda filtrada por abas (To
 </div>
 
 <div align="center">
+<sup>Figura 32: Wireframe da lista de alunos do Gestor.</sup><br>
+    <img src="assets/wrfListaAlunosGest.jpg" ><br>
 <sup>Figura 32: Wireframe da lista de alunos do Gestor.</sup><br>
     <img src="assets/wrfListaAlunosGest.jpg" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
@@ -1317,6 +1627,8 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 <div align="center">
 <sup>Figura 33: Azul Pulse - cor principal.</sup><br>
 <img src="./assets/azulPulse.png" width="500"><br>
+<sup>Figura 33: Azul Pulse - cor principal.</sup><br>
+<img src="./assets/azulPulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
 
@@ -1329,6 +1641,8 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 <div align="center">
 <sup>Figura 34: Verde Pulse - cor secundária.</sup><br>
 <img src="./assets/verdePulse.png" width="500"><br>
+<sup>Figura 34: Verde Pulse - cor secundária.</sup><br>
+<img src="./assets/verdePulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
 
@@ -1339,6 +1653,8 @@ A identidade cromática do Pulse Manager é herdada do Manual de Identidade Visu
 </div>
 
 <div align="center">
+<sup>Figura 35: Amarelo Pulse - cor de destaque.</sup><br>
+<img src="./assets/amareloPulse.png" width="500"><br>
 <sup>Figura 35: Amarelo Pulse - cor de destaque.</sup><br>
 <img src="./assets/amareloPulse.png" width="500"><br>
 <sub>Fonte: Adaptado do Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
@@ -1383,6 +1699,8 @@ O Pulse Manager adota a biblioteca **Lucide** como sistema de iconografia da pla
 <div align="center">
 <sup>Figura 36: Grid de ícones representativos da plataforma - Lucide, outline, stroke 2px.</sup><br>
 <img src="./assets/gridIcones.png" width="600"><br>
+<sup>Figura 36: Grid de ícones representativos da plataforma - Lucide, outline, stroke 2px.</sup><br>
+<img src="./assets/gridIcones.png" width="600"><br>
 <sub>Fonte: Gerado a partir da biblioteca Lucide (open source). Guia de Estilos – Pulse Manager v1.1 (2026).</sub><br>
 </div>
 
@@ -1404,6 +1722,8 @@ Em casos onde a Lucide não oferecer o ícone necessário, as bibliotecas **Phos
 <div align="center">
 <sup>Figura 37: Tela de Login Geral.</sup><br>
 <img src="./assets/loginGeral.png"><br>
+<sup>Figura 37: Tela de Login Geral.</sup><br>
+<img src="./assets/loginGeral.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1417,6 +1737,8 @@ Esta tela está associada às User Stories US05, US07, US08 e US09, de acordo co
 <div align="center">
 <sup>Figura 38: Tela Inicial do Gestor.</sup><br>
 <img src="./assets/inicioGestor.png"><br>
+<sup>Figura 38: Tela Inicial do Gestor.</sup><br>
+<img src="./assets/inicioGestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1427,6 +1749,8 @@ O protótipo apresenta a tela inicial do painel do gestor na plataforma, projeta
 ### Lista de Alunos apresentada ao Gestor
 
 <div align="center">
+<sup>Figura 39: Lista de Alunos do Gestor.</sup><br>
+<img src="./assets/listaAlunosGest.png"><br>
 <sup>Figura 39: Lista de Alunos do Gestor.</sup><br>
 <img src="./assets/listaAlunosGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1443,6 +1767,8 @@ Esta tela está associada às User Stories US01, US03 e US04, de acordo com os c
 <div align="center">
 <sup>Figura 40: Perfil do Aluno do Gestor.</sup><br>
 <img src="./assets/perfilAlunoGest.png"><br>
+<sup>Figura 40: Perfil do Aluno do Gestor.</sup><br>
+<img src="./assets/perfilAlunoGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1453,6 +1779,8 @@ O protótipo apresenta a tela de perfil individual do aluno na visão do gestor,
 ### Dashboard apresentado ao Gestor
 
 <div align="center">
+<sup>Figura 41: Dashboard do Gestor.</sup><br>
+<img src="./assets/dashboardGest.png"><br>
 <sup>Figura 41: Dashboard do Gestor.</sup><br>
 <img src="./assets/dashboardGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1469,6 +1797,8 @@ O corpo principal da página destaca-se por quatro cartões de métricas no topo
 <div align="center">
 <sup>Figura 42: Tela de Agenda do Gestor.</sup><br>
 <img src="./assets/agendaGest.png"><br>
+<sup>Figura 42: Tela de Agenda do Gestor.</sup><br>
+<img src="./assets/agendaGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1483,6 +1813,8 @@ Esta tela está associada às User Stories US01, US02 e US04, de acordo com os c
 <div align="center">
 <sup>Figura 43: Tela Inicial do Aluno.</sup><br>
 <img src="./assets/inicioAluno.png"><br>
+<sup>Figura 43: Tela Inicial do Aluno.</sup><br>
+<img src="./assets/inicioAluno.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1494,6 +1826,8 @@ Esta tela está associada às User Stories US08, US09 e US10, de acordo com os c
 ### Tela de Perfil apresentada para o Aluno
 
 <div align="center">
+<sup>Figura 44: Perfil do Aluno.</sup><br>
+<img src="./assets/perfilAlunoAl.png"><br>
 <sup>Figura 44: Perfil do Aluno.</sup><br>
 <img src="./assets/perfilAlunoAl.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1510,6 +1844,8 @@ Esta tela está associada às User Stories US01, US04 e US05, de acordo com os c
 <div align="center">
 <sup>Figura 45: Dashboard do Aluno.</sup><br>
 <img src="./assets/dashboardAluno.png"><br>
+<sup>Figura 45: Dashboard do Aluno.</sup><br>
+<img src="./assets/dashboardAluno.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1521,6 +1857,8 @@ Os quatro cartões de métricas no topo sintetizam os dados mais relevantes para
 ### Tela Inicial do Aluno
 
 <div align="center">
+<sup>Figura 46: Tela Inicial do Psicólogo.</sup><br>
+<img src="./assets/inicioPsic.png"><br>
 <sup>Figura 46: Tela Inicial do Psicólogo.</sup><br>
 <img src="./assets/inicioPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1537,6 +1875,8 @@ Os quatro cartões de métricas superiores apresentam os indicadores centrais do
 <div align="center">
 <sup>Figura 47: Lista de Alunos do Psicólogo.</sup><br>
 <img src="./assets/listaAlunosPsic.png"><br>
+<sup>Figura 47: Lista de Alunos do Psicólogo.</sup><br>
+<img src="./assets/listaAlunosPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
 </div>
 
@@ -1549,6 +1889,8 @@ Esta tela está associada às User Stories US06 e US07, de acordo com os critér
 ### Dashboard apresentado ao Psicólogo
 
 <div align="center">
+<sup>Figura 48: Dashboard do Psicólogo.</sup><br>
+<img src="./assets/dashboardPsic.png"><br>
 <sup>Figura 48: Dashboard do Psicólogo.</sup><br>
 <img src="./assets/dashboardPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub><br>
@@ -1574,6 +1916,7 @@ A partir destes conceitos e utilizando como base o TAPI e outros materiais dispo
 </div>
 
 <div align="center">
+<sup>Figura 49: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
 <sup>Figura 49: Modelo conceitual Entidade-Relacionamento utilizando Chen.</sup><br>
 <img src="./assets/mer.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
@@ -1647,6 +1990,8 @@ O DER explicita as entidades do sistema, seus atributos, as respectivas chaves p
 </div>
 
 <div align="center">
+<sup>Figura 50: Diagrama Entidade-Relacionamento.</sup><br>
+<img src="./assets/der.png"><br>
 <sup>Figura 50: Diagrama Entidade-Relacionamento.</sup><br>
 <img src="./assets/der.png"><br>
 <sub>Fonte: Elaborado pela equipe (2026).</sub><br>
@@ -2559,12 +2904,16 @@ Protótipo desenvolvido para os três perfis:
 <div align="center">
 <sup>Figura 51: Tela de login — perfil gestora.</sup><br>
 <img src="./assets/loginGeral.png"><br>
+<sup>Figura 51: Tela de login — perfil gestora.</sup><br>
+<img src="./assets/loginGeral.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
 <br>
 
 <div align="center">
+<sup>Figura 52: Dashboard — visão da gestora.</sup><br>
+<img src="./assets/inicioGestor.png"><br>
 <sup>Figura 52: Dashboard — visão da gestora.</sup><br>
 <img src="./assets/inicioGestor.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
@@ -2575,6 +2924,8 @@ Protótipo desenvolvido para os três perfis:
 <div align="center">
 <sup>Figura 53: Listagem de alunos — perfil gestora.</sup><br>
 <img src="./assets/listaAlunosGest.png"><br>
+<sup>Figura 53: Listagem de alunos — perfil gestora.</sup><br>
+<img src="./assets/listaAlunosGest.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -2583,12 +2934,16 @@ Protótipo desenvolvido para os três perfis:
 <div align="center">
 <sup>Figura 54: Listagem de alunos — perfil psicóloga.</sup><br>
 <img src="./assets/listaAlunosPsic.png"><br>
+<sup>Figura 54: Listagem de alunos — perfil psicóloga.</sup><br>
+<img src="./assets/listaAlunosPsic.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
 <br>
 
 <div align="center">
+<sup>Figura 55: Perfil do aluno — visão do aluno.</sup><br>
+<img src="./assets/perfilAlunoAl.png"><br>
 <sup>Figura 55: Perfil do aluno — visão do aluno.</sup><br>
 <img src="./assets/perfilAlunoAl.png"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
@@ -2679,51 +3034,25 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes automatizados do backend (sprint 4)
+## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
 Os testes automatizados do backend foram implementados com **Jest**, contemplando duas abordagens complementares:
 
 - **_White-box_** — testes unitários de Service que exercitam ramos internos, exceções e regras de negócio com conhecimento da implementação.
 - **_Black-box_** — testes de integração dos endpoints via Jest + Supertest, verificando o contrato HTTP, status code, body e efeitos observáveis sem depender da implementação interna.
 
-O relatório abaixo consolida a estrutura real existente em `src/tests`, corrige a organização das evidências e explicita o escopo validado pela suíte automatizada.
-
-| Indicador | Resultado validado |
-|---|---:|
-| Arquivos de testes unitários de Service | 8 |
-| Casos de testes unitários de Service | 110 |
-| Arquivos de testes de integração de endpoints | 12 |
-| Casos de testes de integração de endpoints | 156 |
-| Total de arquivos automatizados | 20 |
-| Total de casos automatizados aprovados | 266 |
-| Comando principal de validação | `npm test` |
-
-Essa tabela apresenta uma visão geral da suíte automatizada, indicando o volume de arquivos, a quantidade de testes e o comando usado para validar o backend. Ela serve para mostrar rapidamente o tamanho da cobertura automatizada entregue.
-
 ### 5.1.1 Estratégia de Testes
 <div align="justify">
 
 A suíte de testes automatizados da aplicação combina testes de integração via Supertest e testes unitários de Service. Os testes de integração cobrem de forma unificada as camadas de Controller, Service e Repository em cada requisição, enquanto os testes unitários de Service validam regras de negócio de forma isolada, com repositories e integrações externas mockadas. Essa combinação permite verificar tanto o contrato HTTP dos endpoints quanto os ramos internos mais relevantes da camada de negócio.
 
-| Campo | Definição adotada |
-|---|---|
-| Framework de testes | Jest com `ts-jest` e ambiente `node`. |
-| Biblioteca de requisições HTTP | Supertest, usada nos arquivos com sufixo `.integration.test.ts`. |
-| Local dos testes unitários | `src/tests/unit/services`. |
-| Local dos testes de integração | `src/tests/integration`. |
-| Setup global | `src/tests/setup.js`, responsável por definir `NODE_ENV=test`. |
-| Banco usado na integração | `sqljs` em memória, configurado automaticamente para o ambiente de teste. |
-| Critério de aprovação | Todas as suítes executadas sem falhas, com status HTTP, body, exceções e efeitos observáveis validados. |
-
-Essa tabela explica a base técnica usada nos testes. Ela serve para deixar claro quais ferramentas, diretórios e critérios sustentam a execução automatizada.
-
 **Tipos de teste implementados**
 
 A suíte é organizada em três tipos, diferenciados pelo nível de isolamento e pelo uso de mocks:
 
-- **Tipo 1 - Testes unitários de Service:** validação isolada da camada de `src/backend/services`, sem acesso a banco de dados real, Supabase, PostgreSQL, rotas ou controllers. As dependências externas, como repositories e integrações de auditoria, são simuladas por mocks com `jest.fn()`.
-- **Tipo 2 - Integração pura:** banco em memória, requisição HTTP real e nenhum mock. O arquivo `src/tests/integration/jornada.integration.test.ts` é um exemplo representativo desse tipo. Todos os efeitos observáveis - status HTTP, corpo da resposta e estado do banco - são verificados sem substituição de dependência interna.
-- **Tipo 3 - Integração com mock de dependência externa:** mesmo setup do Tipo 2, com a diferença de que `jest.mock()` é aplicado exclusivamente sobre integrações externas, como serviços que fariam chamadas reais de rede em produção. O arquivo `src/tests/integration/segmentacao.integration.test.ts` representa esse tipo: banco, HTTP, Controller, Service e Repository permanecem reais; apenas `registrarConsultaSegmentacao` é substituído por um `jest.fn()`.
+- **Tipo 1 - Testes unitários de Service:** validação isolada da camada de `services/`, sem acesso a banco de dados real, Supabase, PostgreSQL, rotas ou controllers. As dependências externas, como repositories e integrações de auditoria, são simuladas por mocks com `jest.fn()`.
+- **Tipo 2 - Integração pura:** banco em memória, requisição HTTP real e nenhum mock. O arquivo `jornada.integration.test.ts` é um exemplo representativo desse tipo. Todos os efeitos observáveis - status HTTP, corpo da resposta e estado do banco - são verificados sem substituição de dependência interna.
+- **Tipo 3 - Integração com mock de dependência externa:** mesmo setup do Tipo 2, com a diferença de que `jest.mock()` é aplicado exclusivamente sobre integrações externas, como serviços que fariam chamadas reais de rede em produção. O arquivo `segmentacao.integration.test.ts` representa esse tipo: banco, HTTP, Controller, Service e Repository permanecem reais; apenas `registrarConsultaSegmentacao` é substituído por um `jest.fn()`.
 
 **Padrão de escrita - AAA**
 
@@ -2735,7 +3064,7 @@ Todos os casos de teste seguem o padrão Arrange, Act, Assert:
 
 **Determinismo e isolamento**
 
-O determinismo da suíte de integração é garantido pelo mecanismo configurado em `src/backend/database/connection.ts`, ativado automaticamente quando `NODE_ENV=test` - valor definido por `src/tests/setup.js` antes de qualquer teste, referenciado em `jest.config.ts` via `setupFiles`. Nesse modo, a aplicação instancia um DataSource com `type: 'sqljs'` - banco SQLite compilado em WebAssembly que existe exclusivamente em memória durante a execução do Jest, sem dependência de servidor externo. A flag `dropSchema: true` garante que o schema seja descartado na inicialização; o `beforeEach` de cada arquivo de teste executa `AppDataSource.synchronize(true)`, que dropa e recria todas as tabelas do zero antes de cada caso de teste individual.
+O determinismo da suíte de integração é garantido pelo mecanismo configurado em `connection.ts`, ativado automaticamente quando `NODE_ENV=test` - valor definido por `setup.js` antes de qualquer teste, referenciado em `jest.config.ts` via `setupFiles`. Nesse modo, a aplicação instancia um DataSource com `type: 'sqljs'` - banco SQLite compilado em WebAssembly que existe exclusivamente em memória durante a execução do Jest, sem dependência de servidor externo. A flag `dropSchema: true` garante que o schema seja descartado na inicialização; o `beforeEach` de cada arquivo de teste executa `AppDataSource.synchronize(true)`, que dropa e recria todas as tabelas do zero antes de cada caso de teste individual.
 
 Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
 
@@ -2749,7 +3078,7 @@ Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
 ### 5.1.2 Testes Unitários de Service
 <div align="justify">
 
-Os testes unitários de Service foram organizados em `src/tests/unit/services`, seguindo o padrão de nomenclatura com sufixo `.service.test.ts`. O objetivo foi validar os principais comportamentos dos services ligados aos endpoints ativos do backend, contemplando cenários de sucesso, erros de validação, regras de negócio, conflitos, registros inexistentes e chamadas corretas aos repositories mockados.
+Os testes unitários de Service foram organizados em `src/tests/unit/services`, seguindo o padrão de nomenclatura `*.service.test.ts`. O objetivo foi validar os principais comportamentos dos services ligados aos endpoints ativos do backend, contemplando cenários de sucesso, erros de validação, regras de negócio, conflitos, registros inexistentes e chamadas corretas aos repositories mockados.
 
 | Service testado | Arquivo de teste | Quantidade de testes | Principais responsabilidades validadas |
 | --- | --- | ---: | --- |
@@ -2762,8 +3091,6 @@ Os testes unitários de Service foram organizados em `src/tests/unit/services`, 
 | `PortalAlunoService` | `src/tests/unit/services/portal-aluno.service.test.ts` | 13 | Visualização de perfil, atualização de contato, normalização de email/telefone, permissões de notificações e oportunidades do portal. |
 | `SaudeMentalService` | `src/tests/unit/services/saude-mental.service.test.ts` | 11 | Prontuários, labels, restrição ao perfil psicólogo, validação de aluno, tipo de label, título, observação e descrição. |
 | **Total** | **8 arquivos** | **110 testes** | **Cobertura unitária das principais regras de negócio da camada de Service.** |
-
-Essa tabela organiza os testes unitários por Service. Ela serve para mostrar quais regras de negócio foram validadas de forma isolada e quantos testes existem para cada service.
 
 **AlunoService**
 
@@ -2802,78 +3129,79 @@ Os testes do `SaudeMentalService` validam listagem de prontuários apenas para p
 ### 5.1.3 Testes de Integração de Endpoints
 <div align="justify">
 
-Os testes de integração cobrem os endpoints principais da aplicação por meio de requisições HTTP reais via Supertest, com banco em memória. Para cada endpoint, a cobertura segue quatro cenários-chave: sucesso (`200`/`201`), falha de validação (`400`/`422`), regra de negócio violada (`409`/`422`/`403`) e recurso não encontrado (`404`). Quando um cenário é marcado como N/A, significa que aquela categoria de erro não se aplica à lógica do endpoint - não é um gap de cobertura.
+Os testes de integração cobrem os endpoints principais da aplicação por meio de requisições HTTP reais via Supertest, com banco SQLite in-memory. Para cada endpoint, a cobertura segue quatro cenários-chave: sucesso (`200`/`201`), falha de validação (`400`/`422`), regra de negócio violada (`409`/`422`/`403`) e recurso não encontrado (`404`). Quando um cenário é marcado como N/A, significa que aquela categoria de erro não se aplica à lógica do endpoint - não é um gap de cobertura.
 
 A suíte de integração totaliza **156 testes distribuídos em 12 arquivos**, todos executados via `npm test` sem falhas.
 
-| Arquivo de integração                                                 | Módulo/Requisito coberto                    | Quantidade de testes | Escopo principal                                                                                                 |
-| --------------------------------------------------------------------- | ------------------------------------------- | -------------------: | ---------------------------------------------------------------------------------------------------------------- |
-| `src/tests/integration/alunos.integration.test.ts`                    | UC-03 a UC-06 / gestão de alunos            | 17                   | Cadastro, listagem, consulta, atualização, inativação, código PM, validações, duplicidade e RNF de qualidade.    |
-| `src/tests/integration/codigo-pm.integration.test.ts`                 | RN001 / geração de identificador interno    | 4                    | Sequencial anual `PM-AAAA-NNN`, reinício por ano e formato do código gerado.                                     |
-| `src/tests/integration/jornada.integration.test.ts`                   | UC-07 a UC-12 / jornada do aluno            | 28                   | Histórico consolidado, frequência, participação, empregabilidade, ensino superior, anotações qualitativas e RNF. |
-| `src/tests/integration/segmentacao.integration.test.ts`               | UC-13 / segmentação                         | 8                    | Filtros, busca, limite, risco de evasão, consulta persistida e auditoria mockada.                                |
-| `src/tests/integration/dashboard.integration.test.ts`                 | UC-14 a UC-19 / dashboards                  | 28                   | Impacto, jornada, conclusão, empregabilidade, ensino superior, evasão, filtros e RNF.                            |
-| `src/tests/integration/saude-mental.integration.test.ts`              | UC-20 / saúde mental                        | 14                   | Prontuários, labels, restrição de perfil psicólogo, validações e RNF.                                            |
-| `src/tests/integration/agenda.integration.test.ts`                    | RF020/RF021 / agenda                        | 18                   | Listagem, criação, atualização, cancelamento, permissão de gestor, validações e RNF.                             |
-| `src/tests/integration/notificacoes.integration.test.ts`              | RF019 / comunicação e oportunidades         | 15                   | Notificações, oportunidades, filtros, validações e RNF.                                                          |
-| `src/tests/integration/notificacao-psicologo.integration.test.ts`     | UC-24 / remetente psicólogo                 | 4                    | Permissão para envio como psicólogo e bloqueio de perfis indevidos.                                              |
-| `src/tests/integration/portal-aluno.integration.test.ts`              | UC-01/UC-02 / portal do aluno               | 10                   | Perfil do aluno, atualização de contato, validações, inexistência e RNF.                                         |
-| `src/tests/integration/portal-aluno-notificacoes.integration.test.ts` | UC-03 / portal do aluno                     | 5                    | Notificações próprias, bloqueio de acesso cruzado, oportunidades e validações.                                   |
-| `src/tests/integration/desempenho-psicologo.integration.test.ts`      | UC-23 / desempenho acadêmico para psicólogo | 5                    | Acesso por vínculo, bloqueio por perfil/vínculo, id inválido e aluno inexistente.                                |
-| **Total**                                                             | **12 arquivos de integração**               | **156 testes**       | **Cobertura automatizada dos endpoints principais do backend.**                                                  |
+**Módulo: Alunos**
 
-Essa tabela serve para identificar quais arquivos compõem a suíte de integração, quais módulos ou requisitos cada arquivo valida e quantos testes automatizados existem em cada parte do backend.
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `POST /api/alunos` | ✅ | ✅ email inválido, idade > 120 | ✅ 409 email duplicado | N/A |
+| `GET /api/alunos` | ✅ | N/A | N/A | N/A |
+| `GET /api/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+| `PATCH /api/alunos/:id` | ✅ | ✅ riscoEvasao inválido | N/A | ✅ |
+| `DELETE /api/alunos/:id` | ✅ | N/A | N/A | ✅ |
+| `GET /api/alunos/segmentacao` | ✅ | ✅ limite, risco, busca | ✅ 422 sem critério | N/A |
 
-**Matriz consolidada de cenários por módulo**
+**Módulo: Jornada**
 
-| Módulo / Escopo | Endpoint ou regra validada | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
-| --------------- | -------------------------- | ------- | ----------------- | ----------------- | --- |
-| **Módulo: Alunos** | Cadastro, listagem, consulta, atualização, inativação e segmentação de alunos. | - | - | - | - |
-| Alunos | `POST /api/alunos` | ✅ | ✅ email inválido, idade > 120 | ✅ 409 email duplicado | N/A |
-| Alunos | `GET /api/alunos` | ✅ | N/A | N/A | N/A |
-| Alunos | `GET /api/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
-| Alunos | `PATCH /api/alunos/:id` | ✅ | ✅ riscoEvasao inválido | N/A | ✅ |
-| Alunos | `DELETE /api/alunos/:id` | ✅ | N/A | N/A | ✅ |
-| Alunos | `GET /api/alunos/segmentacao` | ✅ | ✅ limite, risco, busca | ✅ 422 sem critério | N/A |
-| **Módulo: Código PM** | Regra de negócio de geração do identificador interno único do aluno. | - | - | - | - |
-| Código PM | `POST /api/alunos` com geração `PM-AAAA-NNN` | ✅ | N/A | ✅ sequencial anual e reinício por ano | N/A |
-| **Módulo: Jornada** | Histórico do aluno, frequência, participação, empregabilidade, ensino superior e anotações qualitativas. | - | - | - | - |
-| Jornada | `GET /api/jornada/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
-| Jornada | `POST /api/frequencias` | ✅ | ✅ nota > 10 | ✅ 422 atividade não é aula | ✅ |
-| Jornada | `POST /api/participacoes` | ✅ | ✅ idAtividade inválido | ✅ 409 duplicado, 422 tipo | ✅ |
-| Jornada | `PATCH /api/empregabilidade/:id` | ✅ | ✅ ocupacao, rendaMensal | N/A | ✅ |
-| Jornada | `PATCH /api/ensino-superior/:id` | ✅ | ✅ escolaridade, dataIngresso | N/A | ✅ |
-| Jornada | `POST /api/anotacoes-qualitativas` | ✅ | ✅ descricao, dataRegistro | N/A | ✅ |
-| **Módulo: Agenda** | Listagem, criação, atualização e cancelamento de compromissos da agenda. | - | - | - | - |
-| Agenda | `GET /api/agenda` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
-| Agenda | `POST /api/agenda` | ✅ | ✅ tipoUser, formato data | ✅ 422 sem perfil gestor | N/A |
-| Agenda | `PATCH /api/agenda/:id` | ✅ | ✅ id não numérico | ✅ 422 sem permissão | ✅ |
-| Agenda | `DELETE /api/agenda/:id` | ✅ | N/A | ✅ 422 sem perfil gestor | ✅ |
-| **Módulo: Dashboard** | Indicadores consolidados de impacto, jornada, conclusão, empregabilidade, ensino superior, evasão e risco. | - | - | - | - |
-| Dashboard | `GET /api/impacto/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
-| Dashboard | `GET /api/jornada/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
-| Dashboard | `GET /api/impacto/conclusao-programas` | ✅ | ✅ categoria < 3 chars | ✅ 422 intervalo inválido | N/A |
-| Dashboard | `GET /api/impacto/alunos-empregados` | ✅ | ✅ formato dataFim | ✅ 422 intervalo inválido | N/A |
-| Dashboard | `GET /api/impacto/acesso-ensino-superior` | ✅ | ✅ programa < 3 chars | ✅ 422 intervalo inválido | N/A |
-| Dashboard | `GET /api/jornada/evasao-risco` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
-| **Módulo: Comunicação** | Notificações enviadas pela equipe e oportunidades exibidas aos alunos. | - | - | - | - |
-| Comunicação | `GET /api/comunicacao` | ✅ | N/A | N/A | N/A |
-| Comunicação | `POST /api/comunicacao` | ✅ | ✅ tipo, tipoRemetente, dataEnvio | ✅ 403 psicólogo | ✅ |
-| Comunicação | `GET /api/comunicacao/oportunidades` | ✅ | N/A | N/A | N/A |
-| Comunicação | `POST /api/comunicacao/oportunidades` | ✅ | ✅ tipo, prazoInscricao | N/A | N/A |
-| **Módulo: Portal do Aluno** | Perfil, contato, notificações próprias e oportunidades acessadas pelo aluno. | - | - | - | - |
-| Portal do Aluno | `GET /api/portal/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
-| Portal do Aluno | `PATCH /api/portal/alunos/:id/contato` | ✅ | ✅ email inválido, nenhum campo informado | N/A | ✅ |
-| Portal do Aluno | `GET /api/portal/alunos/:id/notificacoes` | ✅ | ✅ id não numérico | ✅ 403 aluno cruzado | ✅ |
-| Portal do Aluno | `GET /api/portal/oportunidades` | ✅ | N/A | N/A | N/A |
-| **Módulo: Saúde Mental** | Prontuários, labels psicológicas e desempenho acadêmico acessado por psicólogo autorizado. | - | - | - | - |
-| Saúde Mental | `GET /api/prontuarios` | ✅ | N/A | ✅ 422 sem perfil | N/A |
-| Saúde Mental | `POST /api/prontuarios` | ✅ | ✅ titulo, observacao ausentes | ✅ 422 sem perfil | ✅ |
-| Saúde Mental | `GET /api/labels` | ✅ | N/A | ✅ 422 sem perfil | N/A |
-| Saúde Mental | `POST /api/labels` | ✅ | ✅ tipoLabel inválido | ✅ 422 sem perfil | ✅ |
-| Saúde Mental | `GET /api/psicologo/alunos/:id/desempenho` | ✅ | ✅ id não numérico | ✅ 403 sem vínculo | ✅ |
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/jornada/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+| `POST /api/frequencias` | ✅ | ✅ nota > 10 | ✅ 422 atividade não é aula | ✅ |
+| `POST /api/participacoes` | ✅ | ✅ idAtividade inválido | ✅ 409 duplicado, 422 tipo | ✅ |
+| `PATCH /api/empregabilidade/:id` | ✅ | ✅ ocupacao, rendaMensal | N/A | ✅ |
+| `PATCH /api/ensino-superior/:id` | ✅ | ✅ escolaridade, dataIngresso | N/A | ✅ |
+| `POST /api/anotacoes-qualitativas` | ✅ | ✅ descricao, dataRegistro | N/A | ✅ |
 
-Essa tabela serve para mostrar, por módulo, quais endpoints foram testados e quais tipos de cenário foram cobertos: sucesso, erro de validação, violação de regra de negócio/permissão e recurso inexistente. Ela ajuda a verificar se cada fluxo principal possui cobertura mínima de contrato HTTP e comportamento esperado.
+**Módulo: Agenda**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/agenda` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+| `POST /api/agenda` | ✅ | ✅ tipoUser, formato data | ✅ 422 sem perfil gestor | N/A |
+| `PATCH /api/agenda/:id` | ✅ | ✅ id não numérico | ✅ 422 sem permissão | ✅ |
+| `DELETE /api/agenda/:id` | ✅ | N/A | ✅ 422 sem perfil gestor | ✅ |
+
+**Módulo: Dashboard**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/impacto/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+| `GET /api/jornada/resumo` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+| `GET /api/impacto/conclusao-programas` | ✅ | ✅ categoria < 3 chars | ✅ 422 intervalo inválido | N/A |
+| `GET /api/impacto/alunos-empregados` | ✅ | ✅ formato dataFim | ✅ 422 intervalo inválido | N/A |
+| `GET /api/impacto/acesso-ensino-superior` | ✅ | ✅ programa < 3 chars | ✅ 422 intervalo inválido | N/A |
+| `GET /api/jornada/evasao-risco` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+
+**Módulo: Comunicação**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/comunicacao` | ✅ | N/A | N/A | N/A |
+| `POST /api/comunicacao` | ✅ | ✅ tipo, tipoRemetente, dataEnvio | ✅ 403 psicólogo | ✅ |
+| `GET /api/comunicacao/oportunidades` | ✅ | N/A | N/A | N/A |
+| `POST /api/comunicacao/oportunidades` | ✅ | ✅ tipo, prazoInscricao | N/A | N/A |
+
+**Módulo: Portal do Aluno**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/portal/alunos/:id` | ✅ | ✅ id não numérico | N/A | ✅ |
+| `PATCH /api/portal/alunos/:id/contato` | ✅ | ✅ email inválido, nenhum campo informado | N/A | ✅ |
+| `GET /api/portal/alunos/:id/notificacoes` | ✅ | ✅ id não numérico | ✅ 403 aluno cruzado | ✅ |
+| `GET /api/portal/oportunidades` | ✅ | N/A | N/A | N/A |
+
+**Módulo: Saúde Mental**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/prontuarios` | ✅ | N/A | ✅ 422 sem perfil | N/A |
+| `POST /api/prontuarios` | ✅ | ✅ titulo, observacao ausentes | ✅ 422 sem perfil | ✅ |
+| `GET /api/labels` | ✅ | N/A | ✅ 422 sem perfil | N/A |
+| `POST /api/labels` | ✅ | ✅ tipoLabel inválido | ✅ 422 sem perfil | ✅ |
+| `GET /api/psicologo/alunos/:id/desempenho` | ✅ | ✅ id não numérico | ✅ 403 sem vínculo | ✅ |
 
 </div>
 
@@ -2887,8 +3215,6 @@ As evidências de execução dos testes foram registradas a partir da execução
 | Testes unitários de Service | `npm run test -- src/tests/unit/services --runInBand` | Validação isolada das regras de negócio dos services, com repositories e integrações mockadas. | 8 suítes executadas, 110 testes aprovados. |
 | Suíte completa do backend | `npm run test` | Validação conjunta dos testes unitários de Service e dos testes de integração de endpoints. | 20 suítes executadas, 266 testes aprovados. |
 
-Essa tabela resume as evidências de execução. Ela serve para registrar quais comandos foram rodados, qual escopo cada comando validou e qual foi o resultado obtido.
-
 **Evidência 1 - Testes unitários de Service**
 
 ```bash
@@ -2898,20 +3224,19 @@ npm run test -- src/tests/unit/services --runInBand
 Resultado obtido:
 
 ```text
-PASS src/tests/unit/services/segmentacao.service.test.ts (8.62 s)
-PASS src/tests/unit/services/dashboard.service.test.ts
-PASS src/tests/unit/services/notificacao.service.test.ts
-PASS src/tests/unit/services/agenda.service.test.ts
+PASS src/tests/unit/services/segmentacao.service.test.ts
 PASS src/tests/unit/services/jornada.service.test.ts
-PASS src/tests/unit/services/saude-mental.service.test.ts
 PASS src/tests/unit/services/aluno.service.test.ts
+PASS src/tests/unit/services/notificacao.service.test.ts
+PASS src/tests/unit/services/dashboard.service.test.ts
 PASS src/tests/unit/services/portal-aluno.service.test.ts
+PASS src/tests/unit/services/agenda.service.test.ts
+PASS src/tests/unit/services/saude-mental.service.test.ts
 
 Test Suites: 8 passed, 8 total
 Tests:       110 passed, 110 total
 Snapshots:   0 total
-Time:        13.223 s
-Ran all test suites matching /src\\tests\\unit\\services/i.
+Time:        9.445 s
 ```
 
 Essa execução comprova que os oito arquivos de testes unitários de Service foram executados com sucesso, validando regras de negócio de `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService` e `SaudeMentalService` sem acesso a banco real ou infraestrutura externa.
@@ -2925,46 +3250,34 @@ npm run test
 Resultado obtido:
 
 ```text
-PASS src/tests/integration/saude-mental.integration.test.ts (12.831 s)
-PASS src/tests/integration/jornada.integration.test.ts
-PASS src/tests/integration/dashboard.integration.test.ts
-PASS src/tests/integration/notificacoes.integration.test.ts
-PASS src/tests/integration/agenda.integration.test.ts
-PASS src/tests/integration/segmentacao.integration.test.ts
-PASS src/tests/integration/portal-aluno.integration.test.ts
-PASS src/tests/integration/alunos.integration.test.ts
-PASS src/tests/integration/notificacao-psicologo.integration.test.ts
+PASS src/tests/integration/saude-mental.integration.test.ts
 PASS src/tests/integration/desempenho-psicologo.integration.test.ts
+PASS src/tests/integration/notificacao-psicologo.integration.test.ts
+PASS src/tests/integration/dashboard.integration.test.ts
+PASS src/tests/unit/services/segmentacao.service.test.ts
+PASS src/tests/integration/jornada.integration.test.ts
+PASS src/tests/integration/alunos.integration.test.ts
+PASS src/tests/integration/notificacoes.integration.test.ts
+PASS src/tests/integration/segmentacao.integration.test.ts
+PASS src/tests/integration/agenda.integration.test.ts
+PASS src/tests/integration/portal-aluno.integration.test.ts
 PASS src/tests/integration/portal-aluno-notificacoes.integration.test.ts
 PASS src/tests/integration/codigo-pm.integration.test.ts
-PASS src/tests/unit/services/segmentacao.service.test.ts
-PASS src/tests/unit/services/dashboard.service.test.ts
 PASS src/tests/unit/services/aluno.service.test.ts
-PASS src/tests/unit/services/agenda.service.test.ts
 PASS src/tests/unit/services/jornada.service.test.ts
-PASS src/tests/unit/services/portal-aluno.service.test.ts
-PASS src/tests/unit/services/notificacao.service.test.ts
+PASS src/tests/unit/services/agenda.service.test.ts
 PASS src/tests/unit/services/saude-mental.service.test.ts
+PASS src/tests/unit/services/portal-aluno.service.test.ts
+PASS src/tests/unit/services/dashboard.service.test.ts
+PASS src/tests/unit/services/notificacao.service.test.ts
 
 Test Suites: 20 passed, 20 total
 Tests:       266 passed, 266 total
 Snapshots:   0 total
-Time:        63.275 s
-Ran all test suites.
+Time:        53.384 s
 ```
 
 A execução completa demonstra que os testes necessários para o backend estão passando. A suíte final validada contém 20 arquivos de teste e 266 cenários aprovados, cobrindo testes unitários de Service e testes de integração dos endpoints ativos.
-
-**Observações e lacunas registradas**
-
-| Item | Situação atual | Encaminhamento |
-|---|---|---|
-| Testes end-to-end de interface | Não fazem parte da suíte automatizada atual; a seção 5.1 cobre backend. | Manter como evolução futura junto aos testes de usabilidade da sprint 5. |
-| Módulos sem integração própria | Rotas de importação, frequência isolada, participação isolada e anotação qualitativa aparecem validadas dentro da jornada, mas ainda não possuem arquivo dedicado de integração. | Criar arquivos específicos caso esses módulos passem a ter regras próprias mais complexas. |
-| Dependências externas | Auditoria/integrações externas são mockadas em testes que poderiam disparar chamadas fora do processo. | Manter mocks para preservar determinismo e adicionar testes contratuais apenas se houver ambiente externo controlado. |
-| Helpers de teste | `src/tests/helpers/databaseTestHelper.ts` ainda está como placeholder e não é usado pela suíte atual. | Implementar apenas se houver duplicação relevante de setup; hoje o isolamento é feito diretamente nos `beforeEach` dos arquivos. |
-
-Essa tabela registra limitações e próximos cuidados da suíte. Ela serve para separar o que já está validado do que ainda pode evoluir em testes futuros.
 
 </div>
 
