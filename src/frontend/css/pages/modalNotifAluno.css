@@ -1,0 +1,303 @@
+/* ============================================================
+   Pulse Manager – Painel de Notificações do Aluno
+   Drawer lateral que desliza da direita ao clicar no sino
+   ============================================================ */
+
+/* ── Backdrop ─────────────────────────────────────────────── */
+.notif-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 39, 85, 0.18);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s;
+}
+.notif-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Painel ───────────────────────────────────────────────── */
+.notif-panel {
+  position: absolute;
+  top: 0; right: 0;
+  width: 440px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -12px 0 48px rgba(0, 39, 85, 0.16);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  overflow: hidden;
+}
+.notif-overlay.open .notif-panel {
+  transform: translateX(0);
+}
+
+/* ── Cabeçalho ────────────────────────────────────────────── */
+.notif-header {
+  padding: 22px 24px 16px;
+  border-bottom: 1px solid #EEF1F4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.notif-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.notif-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #003870;
+  font-family: 'Poppins', sans-serif;
+}
+.notif-count-badge {
+  background: #003870;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-family: 'Poppins', sans-serif;
+  min-width: 22px;
+  text-align: center;
+}
+.notif-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.notif-mark-all {
+  font-size: 12px;
+  font-weight: 500;
+  color: #378ADD;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.notif-mark-all:hover { background: #E6F1FB; color: #003870; }
+.notif-close-btn {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: #F5F4F0;
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #6B7684; font-size: 16px;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.notif-close-btn:hover { background: #EEF1F4; color: #003870; }
+
+/* ── Tabs de filtro ───────────────────────────────────────── */
+.notif-tabs {
+  display: flex;
+  border-bottom: 1px solid #EEF1F4;
+  padding: 0 24px;
+  flex-shrink: 0;
+  background: #fff;
+}
+.notif-tab {
+  padding: 11px 4px;
+  margin-right: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #97A1AE;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.notif-tab:hover { color: #6B7684; }
+.notif-tab.active { color: #003870; border-bottom-color: #003870; font-weight: 600; }
+.notif-tab-count {
+  background: #EEF1F4;
+  color: #6B7684;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+.notif-tab.active .notif-tab-count { background: rgba(0,56,112,0.1); color: #003870; }
+
+/* ── Cabeçalho de data (agrupamento) ──────────────────────── */
+.notif-date-group {
+  padding: 12px 24px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #97A1AE;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ── Lista de notificações ────────────────────────────────── */
+.notif-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+.notif-list::-webkit-scrollbar { width: 4px; }
+.notif-list::-webkit-scrollbar-track { background: transparent; }
+.notif-list::-webkit-scrollbar-thumb { background: #DEE3EA; border-radius: 2px; }
+
+/* Estado vazio */
+.notif-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 280px;
+  gap: 12px;
+  color: #97A1AE;
+  font-family: 'Poppins', sans-serif;
+}
+.notif-empty i { font-size: 36px; color: #DEE3EA; }
+.notif-empty p { font-size: 13px; text-align: center; }
+
+/* ── Item de notificação ──────────────────────────────────── */
+.notif-item {
+  padding: 14px 24px 14px 34px;  /* left extra para o dot */
+  border-bottom: 1px solid #F7F8FA;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+}
+.notif-item:hover { background: #FAFAFA; }
+.notif-item.unread { background: #F0F6FF; }
+.notif-item.unread:hover { background: #E8F1FB; }
+.notif-item:last-child { border-bottom: none; }
+
+/* Ponto de "não lida" */
+.notif-unread-dot {
+  position: absolute;
+  top: 22px; left: 14px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #003870;
+  flex-shrink: 0;
+}
+
+/* Avatar do remetente */
+.notif-av {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  flex-shrink: 0;
+  font-family: 'Poppins', sans-serif;
+}
+.notif-av.psicologo { background: #E8F8ED; color: #1D7A36; }
+.notif-av.gestor    { background: #E6F1FB; color: #003870; }
+
+/* Corpo */
+.notif-body { flex: 1; min-width: 0; }
+
+.notif-row1 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+.notif-sender-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #11161D;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Badge de ocupação */
+.notif-occ {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 8px; border-radius: 999px;
+  font-size: 10px; font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+}
+.notif-occ.psicologo { background: #E8F8ED; color: #1D7A36; }
+.notif-occ.gestor    { background: #E6F1FB; color: #003870; }
+
+/* Badge de tipo de compromisso */
+.notif-type {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 9px; border-radius: 999px;
+  font-size: 10px; font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  margin-left: auto;
+}
+.notif-type i { font-size: 11px; }
+.notif-type.evento   { background: rgba(0,56,112,0.10);  color: #003870; }
+.notif-type.consulta { background: rgba(51,180,88,0.15); color: #1D7A36; }
+.notif-type.aula     { background: rgba(255,217,39,0.28); color: #854F0B; }
+.notif-type.mentoria { background: rgba(123,79,217,0.12); color: #5B3AA8; }
+
+/* Data e hora */
+.notif-datetime {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: #6B7684; font-weight: 500;
+  margin-bottom: 5px;
+  font-family: 'Poppins', sans-serif;
+}
+.notif-datetime i { font-size: 11px; color: #97A1AE; }
+.notif-sep { color: #DEE3EA; }
+
+/* Descrição */
+.notif-desc {
+  font-size: 12px;
+  color: #6B7684;
+  line-height: 1.55;
+  font-family: 'Poppins', sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 7px;
+}
+
+/* Rodapé do item */
+.notif-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.notif-time-ago {
+  font-size: 11px;
+  color: #97A1AE;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ── Indicador no sino (bell badge) ───────────────────────── */
+.bell-has-notif { position: relative; }
+.bell-badge {
+  position: absolute;
+  top: -4px; right: -4px;
+  background: #E24B4A;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+  font-family: 'Poppins', sans-serif;
+  border: 1.5px solid #fff;
+}

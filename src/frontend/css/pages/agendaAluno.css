@@ -1,0 +1,96 @@
+/* ══════════════════════════════════════════════════
+   agendaAluno.css — Agenda do Aluno (somente leitura)
+   Extraído de alunoApp.html › VIEW: AGENDA
+══════════════════════════════════════════════════ */
+
+.paginaConteudo {
+  padding: 28px 36px !important;
+  gap: 20px !important;
+  overflow-y: auto !important;
+}
+
+/* Agenda — layout full-width */
+.ag-full { width: 100%; display: flex; flex-direction: column; gap: 20px; }
+
+/* Cabeçalho da agenda */
+.ag-header {
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.ag-title { font-size: 24px; font-weight: 700; color: #003870; line-height: 1.2; letter-spacing: -.01em; font-family: 'Poppins', sans-serif; }
+.ag-month { font-size: 13px; color: #6B7684; font-weight: 500; }
+
+/* Legenda de tipos */
+.ag-legend {
+  display: flex; gap: 18px; align-items: center; flex-wrap: wrap;
+}
+.ag-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6B7684; font-weight: 500; }
+.ag-legend-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* Calendário */
+.ag-cal {
+  background: #fff; border: 1px solid #DEE3EA; border-radius: 16px; overflow: hidden; flex-shrink: 0;
+}
+.ag-dow-row {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  background: #F7F8FA; border-bottom: 1px solid #DEE3EA;
+}
+.ag-dow {
+  padding: 10px 0; text-align: center; font-size: 11px; font-weight: 700;
+  color: #97A1AE; text-transform: uppercase; letter-spacing: .06em;
+}
+.ag-week { border-bottom: 1px solid #F0F3F7; }
+.ag-week:last-child { border-bottom: none; }
+.ag-day-row { display: grid; grid-template-columns: repeat(7, 1fr); }
+.ag-cell {
+  min-height: 72px; padding: 8px 10px 6px; border-right: 1px solid #F0F3F7;
+  position: relative; cursor: default;
+}
+.ag-cell:last-child { border-right: none; }
+.ag-cell.other-month .ag-dn { color: #C2CAD4; }
+.ag-cell.today .ag-dn {
+  background: #003870; color: #fff; width: 24px; height: 24px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.ag-dn { font-size: 12px; font-weight: 600; color: #6B7684; margin-bottom: 4px; display: inline-flex; }
+.ag-ev-row { display: grid; grid-template-columns: repeat(7, 1fr); min-height: 22px; }
+.ag-ev {
+  margin: 1px 2px; border-radius: 4px; padding: 2px 6px;
+  font-size: 11px; font-weight: 600; color: #fff;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  cursor: pointer; transition: opacity .15s; user-select: none;
+}
+.ag-ev:hover { opacity: .82; }
+.ag-ev.ev-tipo-evento   { background: #003870; }
+.ag-ev.ev-tipo-consulta { background: #7B4FD9; }
+.ag-ev.ev-tipo-aula     { background: #F4A261; color: #fff; }
+.ag-ev.ev-tipo-mentoria { background: #33B458; }
+.ag-ev.ev-tipo-formatura{ background: #FFD927; color: #003870; }
+
+/* Painel de detalhe */
+.ag-detail {
+  background: #fff; border: 1px solid #DEE3EA; border-radius: 16px; padding: 24px 28px;
+  display: none; flex-direction: column; gap: 14px;
+}
+.ag-detail.open { display: flex; }
+.ag-det-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.ag-det-title { font-size: 16px; font-weight: 700; color: #11161D; }
+.ag-det-close {
+  background: none; border: none; cursor: pointer; color: #97A1AE;
+  font-size: 18px; line-height: 1; padding: 0; flex-shrink: 0;
+}
+.ag-det-close:hover { color: #6B7684; }
+.ag-det-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700;
+  color: #fff; width: fit-content;
+}
+.ag-det-badge.ev-tipo-evento   { background: #003870; }
+.ag-det-badge.ev-tipo-consulta { background: #7B4FD9; }
+.ag-det-badge.ev-tipo-aula     { background: #F4A261; }
+.ag-det-badge.ev-tipo-mentoria { background: #33B458; }
+.ag-det-badge.ev-tipo-formatura{ background: #FFD927; color: #003870; }
+.ag-det-rows { display: flex; flex-direction: column; gap: 10px; }
+.ag-det-row  { display: flex; gap: 8px; align-items: flex-start; }
+.ag-det-row i { font-size: 15px; color: #97A1AE; margin-top: 1px; flex-shrink: 0; }
+.ag-det-lbl  { font-size: 11px; font-weight: 500; color: #97A1AE; }
+.ag-det-val  { font-size: 13px; color: #11161D; font-weight: 500; }

@@ -4,9 +4,9 @@
 <a href= "https://www.inteli.edu.br/"><img src="./docs/assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
 </p>
 
-# Nome do projeto
+# Pulse Manager
 
-## Nome do grupo
+## Grupo 03
 
 ## :student: Integrantes: 
 - <a href="https://www.linkedin.com/in/ana-carvalho-27268634b/">Ana Luiza Lima de Carvalho</a>
@@ -34,76 +34,217 @@ _Descreva seu projeto (até 600 palavras)_
 ## Link de demonstração
 
 _Coloque aqui o link para o vídeo de demonstração do projeto_
+_A inserção do video sera feita na Sprint 05 com o projeto finalizado_
 
 ## Estrutura de pastas
 
 Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
-- <b>backend</b>: reúne a API em Node.js/Express, com rotas, controladores, modelos e utilitários.
-
-- <b>database</b>: contém migrations, seeds e o schema do banco de dados.
-
 - <b>docs</b>: reúne a documentação do projeto, incluindo setup, decisões técnicas, API e WAD.
 
-- <b>frontend</b>: concentra as páginas HTML, estilos CSS, scripts JavaScript e assets de interface.
+- <b>src</b>: contém o código-fonte principal da aplicação.
+
+- <b>.gitattributes</b>: define configurações de atributos específicos do repositório Git.
+
+- <b>.gitignore</b>: especifica arquivos e pastas que o Git deve ignorar no versionamento.
 
 - <b>README.md</b>: arquivo introdutório com visão geral do projeto e instruções de uso.
+
+- <b>jest.config.ts</b>: arquivo de configuração do framework de testes automatizados Jest.
+
+- <b>package-lock.json</b>: arquivo gerado automaticamente que mapeia a árvore exata de dependências instaladas.
+
+- <b>package.json</b>: manifesto do projeto Node.js que lista metadados, scripts de execução e dependências.
+
+- <b>tsconfig.json</b>: arquivo de configuração do compilador do TypeScript.
 
 
 Além das pastas na raiz do projeto, também estão presentes as pastas secundárias, definidas por:
 
-No diretório <b>backend</b>:
-
-- <b>src</b>: contém o código-fonte principal da aplicação.
-
-
-No diretório <b>database</b>:
-
-- <b>migrations</b>: reúne os scripts SQL responsáveis por criar e alterar a estrutura das tabelas do banco de dados de forma versionada.
-
-- <b>seeds</b>: armazena scripts destinados ao povoamento inicial do banco de dados com dados de teste ou pré-definidos.
-
 
 No diretório <b>docs</b>:
 
-- <b>assets</b>: concetra as imagens utilizadas na documentação.
+
+- <b>assets</b>: concentra as imagens utilizadas na documentação.
 
 - <b>others</b>: armazena arquivos complementares e apresentações de entregas (sprints) do projeto.
 
+- <b>wad.md</b>: documento contendo as definições de arquitetura da aplicação (Web Architecture Document).
 
-No diretório <b>frontend</b>:
 
-- <b>assets</b>: concentra as imagens utilizadas na parte visível do projeto.
+No diretório <b>src</b>:
 
-- <b>css</b>: concetra a página referente à estilização da plataforma.
 
-- <b>js</b>: centraliza a lógica de comportamento, organizada por funcionalidades como navegação, integração com serviços e funções auxiliares.
+- <b>backend</b>: reúne a API da aplicação, integrando rotas, controladores, modelos e banco de dados.
 
-- <b>pages</b>: armazena os documentos HTML que compõem as diferentes telas e interfaces da aplicação.
+- <b>frontend</b>: concentra os arquivos relacionados à interface de usuário e interação do lado do cliente.
+
+- <b>scripts</b>: armazena scripts auxiliares de automação ou integração do projeto.
+
+- <b>tests</b>: centraliza os arquivos e padronizações dedicados à realização de testes na aplicação.
+
+- <b>server.ts</b>: arquivo principal responsável por inicializar a execução do servidor.
+
 
 ## Configuração para desenvolvimento e execução do código
 
-*Acrescentar as informações necessárias sobre pré-requisitos (IDEs, bibliotecas, serviços etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o código e executar a aplicação a partir de sua máquina local.*
+Esta seção apresenta as instruções necessárias para configurar o ambiente de desenvolvimento e executar a primeira versão funcional do sistema web da Pulse Mais em máquina local.
 
-*exemplo de instruções*
+### Pré-requisitos
 
-Aqui encontram-se as instruções necessárias para a instalação de programas, bibliotecas e ferramentas imprescindíveis à configuração do ambiente de desenvolvimento.
+Antes de iniciar a execução do projeto, é necessário ter instalado:
 
-1. Baixar e instalar o node.js: [https://nodejs.org/pt-br/](https://nodejs.org/pt-br/) (versão 16.15.1 LTS)
-2. Clone o repositório em questão.
-3. No modo administrador, abra o prompt de comando ou o terminal e, em seguida, acesse a pasta `backend` no diretório raiz do repositório clonado.
+* **Node.js** em versão LTS;
+* **npm**, instalado junto ao Node.js;
+* **Git**, para clonar o repositório;
+* **PostgreSQL** ou acesso a um banco PostgreSQL/Supabase configurado;
+* Editor de código, preferencialmente **Visual Studio Code**.
+
+### 1. Clonar o repositório
+
+No terminal, execute:
+
+```sh
+git clone <link-do-repositorio>
+```
+
+Em seguida, acesse a pasta do projeto:
+
+```sh
+cd g03
+```
+
+### 2. Instalar as dependências
+
+Na raiz do projeto, instale as dependências necessárias:
 
 ```sh
 npm install
 ```
 
-4. Isso instalará todas as dependências definidas no arquivo <b>package.json</b> necessárias para executar o projeto. Para iniciar a aplicação, digite:
+Caso o projeto esteja organizado com um `package.json` específico dentro da pasta `backend`, acesse a pasta antes de instalar:
+
+```sh
+cd backend
+npm install
+```
+
+### 3. Configurar as variáveis de ambiente
+
+Crie um arquivo `.env` na pasta em que o backend é executado. Esse arquivo deve conter as informações de conexão com o banco de dados.
+
+Exemplo:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=sua_senha
+DB_NAME=pulse_mais
+PORT=3000
+```
+
+Caso o banco utilizado seja Supabase, as informações devem ser preenchidas conforme os dados de conexão do projeto no painel do Supabase.
+
+### 4. Executar as migrations
+
+As migrations são responsáveis por criar ou atualizar a estrutura do banco de dados. Para executá-las, utilize:
+
+```sh
+npm run migrate
+```
+
+Esse comando deve ser executado antes do seed, para garantir que as tabelas e colunas necessárias já existam no banco.
+
+### 5. Popular o banco com dados simulados
+
+Após executar as migrations, rode o seed para inserir dados fictícios no banco de desenvolvimento:
+
+```sh
+npm run seed
+```
+
+O seed inclui dados simulados para alunos, membros da equipe, psicólogos, atividades, participações, agendas, oportunidades, notificações, labels e históricos psicológicos. Esses dados são utilizados para testar consultas, endpoints, telas e indicadores do sistema.
+
+### 6. Executar o backend
+
+Para iniciar o servidor backend em ambiente de desenvolvimento, execute:
+
+```sh
+npm run dev
+```
+
+Caso o projeto utilize apenas o modo de produção/local simples, utilize:
 
 ```sh
 npm start
 ```
-5. Agora você pode acessar a aplicação no link `http://localhost:1234/`.
-6. O servidor estará online.
+
+Após a inicialização, a API estará disponível em:
+
+```sh
+http://localhost:3000
+```
+
+A porta pode variar de acordo com a configuração definida no arquivo `.env`.
+
+### 7. Executar o frontend
+
+O frontend está localizado na pasta `frontend` e contém as páginas HTML, arquivos CSS, scripts JavaScript e assets da interface.
+
+Caso as páginas sejam estáticas, elas podem ser abertas diretamente no navegador a partir da pasta `frontend/pages`.
+
+Também é possível utilizar uma extensão como **Live Server** no Visual Studio Code para visualizar as páginas localmente.
+
+Exemplo de acesso:
+
+```sh
+frontend/pages/login.html
+```
+
+### 8. Executar os testes
+
+Para executar os testes automatizados do projeto, utilize:
+
+```sh
+npm test
+```
+
+Os testes contemplam validações unitárias e de integração relacionadas aos principais módulos do sistema, como alunos, agenda, portal do aluno, notificações, saúde mental, dashboard, jornada, frequência, participação e segmentação.
+
+### 9. Fluxo recomendado de execução
+
+Para configurar o projeto do zero, recomenda-se seguir a ordem abaixo:
+
+```sh
+npm install
+npm run migrate
+npm run seed
+npm run dev
+```
+
+Em seguida, acesse a API em:
+
+```sh
+http://localhost:3000
+```
+
+E visualize o frontend pela pasta `frontend/pages` ou por meio do Live Server.
+
+### Observações importantes
+
+O arquivo `.env` não deve ser enviado ao repositório, pois contém informações sensíveis de conexão com o banco de dados.
+
+O comando `npm run seed` deve ser utilizado apenas em ambiente de desenvolvimento ou teste, pois ele pode limpar e recriar dados simulados no banco.
+
+Caso ocorra erro relacionado ao `ts-node`, instale as dependências de desenvolvimento com:
+
+```sh
+npm install --save-dev ts-node typescript @types/node
+```
+
+Caso ocorra erro de conexão com o banco, verifique se as variáveis do `.env` estão corretas e se o banco PostgreSQL/Supabase está ativo.
+
 
 ## Histórico de lançamentos
 
@@ -119,12 +260,5 @@ npm start
     *
 
 ## Licença/License
-```
-Alunos Inteli (remover esta observação do readme.md após leitura e execução, junto com o link para o tutorial):
 
-1. Siga o tutorial para criação da licença: https://drive.google.com/file/d/1hXWLHUhjBkPVuGqeE2LZKozFntnJZzlx/view
-```
-
-<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/Intelihub/Template_M2/">MODELO GIT INTELI</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://www.yggbrasil.com.br/vr">Inteli, Nome do integrante 1, Nome do integrante 2, Nome do integrante 3, Nome do integrante 4, Nome do integrante 5, Nome do integrante 6, Nome do integrante 7</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
-
-
+<a href="https://git.inteli.edu.br/graduacao/2026-1b/t29/g03.git">Pulse Manager</a> © 2026 by <a href="https://git.inteli.edu.br/graduacao/2026-1b/t29/g03.git">INTELI, ANA LUIZA LIMA DE CARVALHO, FELIPE SODRÉ PESSÔA, GABRIELI MARQUES BATTINI, JOSÉ ISAIAS MENEZES SANTOS, NÍCOLAS RIGOLIN CARRASCOSSA, RAFFAEL CABRAL BENSOUSSAN, VITOR MEDRADO LISBÔA</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
