@@ -152,6 +152,132 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
         message: 'O campo idAluno deve ser um numero inteiro positivo.'
       });
     });
+
+    it('CT06 - deve combinar filtros de empregabilidade, escolaridade, curso e ano de ingresso', async () => {
+      await alunoRepository.save([
+        {
+          nome: 'Ana Empregada',
+          email: 'ana.empregada@pulsemais.org',
+          idade: 23,
+          genero: 'feminino',
+          ocupacao: 'Analista de dados',
+          escolaridade: 'ensino_superior',
+          curso: 'Formacao em Dados',
+          programa: 'Jornada de empregabilidade',
+          categoria: 'transformado',
+          riscoEvasao: 'baixo',
+          engajamento: 90,
+          dataIngresso: '2025-03-10',
+          status: 'egresso'
+        },
+        {
+          nome: 'Bruno Empregado',
+          email: 'bruno.empregado@pulsemais.org',
+          idade: 22,
+          genero: 'masculino',
+          ocupacao: 'Desenvolvedor junior',
+          escolaridade: 'ensino_superior',
+          curso: 'Desenvolvimento Web',
+          programa: 'Jornada de empregabilidade',
+          categoria: 'transformado',
+          riscoEvasao: 'baixo',
+          engajamento: 85,
+          dataIngresso: '2025-04-10',
+          status: 'egresso'
+        },
+        {
+          nome: 'Carla Desempregada',
+          email: 'carla.desempregada@pulsemais.org',
+          idade: 21,
+          genero: 'feminino',
+          ocupacao: 'buscando_emprego',
+          escolaridade: 'ensino_superior',
+          curso: 'Formacao em Dados',
+          programa: 'Jornada de empregabilidade',
+          categoria: 'capacitado',
+          riscoEvasao: 'baixo',
+          engajamento: 75,
+          dataIngresso: '2025-05-10',
+          status: 'ativo'
+        }
+      ]);
+
+      const response = await request(app).get('/api/alunos').query({
+        empregabilidade: 'empregado',
+        escolaridade: 'ensino_superior',
+        curso: 'Formacao em Dados',
+        anoIngresso: '2025'
+      });
+
+      expect(response.status).toBe(200);
+      expect(response.body.data.alunos).toHaveLength(1);
+      expect(response.body.data.alunos[0]).toMatchObject({
+        nome: 'Ana Empregada',
+        empregabilidade: 'empregado',
+        escolaridade: 'ensino_superior',
+        curso: 'Formacao em Dados',
+        dataIngresso: '2025-03-10'
+      });
+    });
+
+    it('CT07 - deve filtrar estudantes, desempregados e dados nao informados por empregabilidade', async () => {
+      await alunoRepository.save([
+        {
+          nome: 'Estudante Teste',
+          email: 'estudante.teste@pulsemais.org',
+          ocupacao: 'estudante',
+          programa: 'Pulse',
+          categoria: 'conectado',
+          riscoEvasao: 'baixo',
+          engajamento: 60,
+          dataIngresso: '2026-01-01',
+          status: 'ativo'
+        },
+        {
+          nome: 'Sem Ocupacao',
+          email: 'sem.ocupacao@pulsemais.org',
+          programa: 'Pulse',
+          categoria: 'conectado',
+          riscoEvasao: 'baixo',
+          engajamento: 60,
+          dataIngresso: '2026-01-01',
+          status: 'ativo'
+        },
+        {
+          nome: 'Vinculo Prevalece',
+          email: 'vinculo.prevalece@pulsemais.org',
+          ocupacao: 'desempregado',
+          tipoVinculoEmpregaticio: 'CLT',
+          programa: 'Pulse',
+          categoria: 'transformado',
+          riscoEvasao: 'baixo',
+          engajamento: 80,
+          dataIngresso: '2026-01-01',
+          status: 'egresso'
+        }
+      ]);
+
+      const estudante = await request(app).get('/api/alunos?empregabilidade=estudante');
+      const desempregado = await request(app).get('/api/alunos?empregabilidade=desempregado');
+      const naoInformado = await request(app).get('/api/alunos?empregabilidade=nao_informado');
+      const empregado = await request(app).get('/api/alunos?empregabilidade=empregado');
+
+      expect(estudante.body.data.alunos.map((item: { nome: string }) => item.nome)).toContain('Estudante Teste');
+      expect(desempregado.body.data.alunos.map((item: { nome: string }) => item.nome)).not.toContain('Estudante Teste');
+      expect(desempregado.body.data.alunos.map((item: { nome: string }) => item.nome)).not.toContain('Vinculo Prevalece');
+      expect(naoInformado.body.data.alunos.map((item: { nome: string }) => item.nome)).toContain('Sem Ocupacao');
+      expect(empregado.body.data.alunos.map((item: { nome: string }) => item.nome)).toContain('Vinculo Prevalece');
+    });
+
+    it('CT08 - deve rejeitar empregabilidade e ano de ingresso invalidos', async () => {
+      const empregabilidade = await request(app).get('/api/alunos?empregabilidade=talvez');
+      const anoIngresso = await request(app).get('/api/alunos?anoIngresso=22');
+
+      expect(empregabilidade.status).toBe(400);
+      expect(empregabilidade.body.message).toBe('Empregabilidade invalida.');
+      expect(anoIngresso.status).toBe(400);
+      expect(anoIngresso.body.message).toBe('O campo anoIngresso deve ser um ano valido.');
+    });
   });
 
   describe('UC-05 - Atualizar dados do aluno', () => {

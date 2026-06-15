@@ -1,200 +1,430 @@
 (function () {
   'use strict';
 
-  /* ════════════════════════════════════════════════════════════
-     VIEW: LISTA DE ALUNOS
-     Extraído de spaGestor.js › initAlunosView()
-  ════════════════════════════════════════════════════════════ */
-  function initAlunosView() {
-    const PER_PAGE = 9;
-    const TOTAL    = 18;
-    let curPage      = 1;
-    let filterCourse = 'all';
-    let desempSort   = 'none'; // 'none' | 'desc' | 'asc'  — ordena por pct
-    let notaSort     = 'none'; // 'none' | 'desc' | 'asc'  — ordena por nota média
-    let engSort      = 'none'; // 'none' | 'desc' | 'asc'  — ordena por engajamento
-    let nameSort     = 'none'; // 'none' | 'az'   | 'za'
-
-    const STUDENTS = [
-      { id:'PM-2024-474', name:'Mariana Costa',   ini:'MC', bg:'#E0E7FF', tc:'#4338CA', age:19, course:'Desenvolvimento AI-First na Prática',                    st:'ativa',     mod:'Módulo 5',             pct:84,  nota:8.4, eng:8, techCourse:'Engenharia de Software'          },
-      { id:'PM-2024-950', name:'Tiago Ribeiro',   ini:'TR', bg:'#FFE4E1', tc:'#DC2626', age:21, course:'Letramento Digital',                                     st:'risco',     mod:'Módulo 4',             pct:62,  nota:7.2, eng:5, techCourse:'Análise e Des. de Sistemas'      },
-      { id:'PM-2024-811', name:'Letícia Pires',   ini:'LP', bg:'#FEF9C3', tc:'#854D0E', age:22, course:'Autogestão no Mundo do Trabalho',                        st:'empregado', mod:'Módulo 5 · Concluído', pct:100, nota:9.5, eng:9, techCourse:'Sistemas de Informação'          },
-      { id:'PM-2024-137', name:'Bruno Ferraz',    ini:'BF', bg:'#F1F5F9', tc:'#475569', age:19, course:'Letramento Digital',                                     st:'inativo',   mod:'Módulo 3',             pct:48,  nota:6.3, eng:3, techCourse:''                                },
-      { id:'PM-2024-465', name:'Júlia Alves',     ini:'JA', bg:'#DCFCE7', tc:'#15803D', age:20, course:'Fortalecimento Emocional para Jovens',                   st:'ativa',     mod:'Módulo 5',             pct:85,  nota:8.5, eng:8, techCourse:''                                },
-      { id:'PM-2024-799', name:'Renato Dias',     ini:'RD', bg:'#FEF9C3', tc:'#854D0E', age:23, course:'Mercado de Trabalho: Preparação, Conexão e Vivências',   st:'atencao',   mod:'Módulo 4',             pct:65,  nota:7.6, eng:6, techCourse:'Tecnologia em Redes'             },
-      { id:'PM-2024-302', name:'Karen Souza',     ini:'KS', bg:'#CFFAFE', tc:'#0E7490', age:20, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:82,  nota:8.2, eng:7, techCourse:'Desenvolvimento Web'             },
-      { id:'PM-2024-618', name:'Pedro Lima',      ini:'PL', bg:'#FFE4E1', tc:'#DC2626', age:22, course:'Laboratório de Mentoria',                                st:'risco',     mod:'Módulo 3',             pct:42,  nota:5.9, eng:4, techCourse:''                                },
-      { id:'PM-2024-229', name:'Ana Martins',     ini:'AM', bg:'#DCFCE7', tc:'#15803D', age:19, course:'Autogestão no Mundo do Trabalho',                        st:'ativa',     mod:'Módulo 5',             pct:91,  nota:9.0, eng:9, techCourse:''                                },
-      { id:'PM-2024-531', name:'Felipe Santos',   ini:'FS', bg:'#E0E7FF', tc:'#4338CA', age:21, course:'Laboratório de Mentoria',                                st:'ativa',     mod:'Módulo 4',             pct:68,  nota:7.8, eng:7, techCourse:'Ciência da Computação'          },
-      { id:'PM-2024-388', name:'Camila Rocha',    ini:'CR', bg:'#FCE7F3', tc:'#9D174D', age:20, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:87,  nota:8.7, eng:8, techCourse:'Design Digital'                  },
-      { id:'PM-2024-712', name:'Diego Melo',      ini:'DM', bg:'#FFE4E1', tc:'#DC2626', age:24, course:'Letramento Digital',                                     st:'risco',     mod:'Módulo 2',             pct:31,  nota:5.1, eng:3, techCourse:''                                },
-      { id:'PM-2024-559', name:'Isabela Gomes',   ini:'IG', bg:'#F3E8FF', tc:'#7E22CE', age:19, course:'Fortalecimento Emocional para Jovens',                   st:'ativa',     mod:'Módulo 5',             pct:83,  nota:8.3, eng:8, techCourse:''                                },
-      { id:'PM-2024-244', name:'Lucas Ferreira',  ini:'LF', bg:'#FEF9C3', tc:'#854D0E', age:22, course:'Mercado de Trabalho: Preparação, Conexão e Vivências',   st:'empregado', mod:'Módulo 5 · Concluído', pct:100, nota:9.4, eng:9, techCourse:'Engenharia de Software'          },
-      { id:'PM-2024-876', name:'Sofia Carvalho',  ini:'SC', bg:'#FEF3C7', tc:'#92400E', age:20, course:'Autogestão no Mundo do Trabalho',                        st:'atencao',   mod:'Módulo 3',             pct:43,  nota:6.0, eng:5, techCourse:''                                },
-      { id:'PM-2024-193', name:'Gabriel Nunes',   ini:'GN', bg:'#CFFAFE', tc:'#0E7490', age:21, course:'Desenvolvimento AI-First na Prática',                    st:'ativa',     mod:'Módulo 5',             pct:86,  nota:8.6, eng:8, techCourse:'Análise e Des. de Sistemas'      },
-      { id:'PM-2024-647', name:'Patrícia Leal',   ini:'PL', bg:'#DCFCE7', tc:'#15803D', age:23, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:88,  nota:8.8, eng:9, techCourse:'Sistemas de Informação'          },
-      { id:'PM-2024-320', name:'Henrique Torres', ini:'HT', bg:'#F1F5F9', tc:'#475569', age:19, course:'Laboratório de Mentoria',                                st:'inativo',   mod:'Módulo 2',             pct:23,  nota:4.5, eng:2, techCourse:''                                },
-    ];
-
-    const COURSES = ['Todos', ...new Set(STUDENTS.map(s => s.techCourse || '—'))];
-    let courseIdx = 0;
-
-    const BAR  = { ativa:'c-green', risco:'c-red', empregado:'c-green', inativo:'c-gray', atencao:'c-amber' };
-    const SLBL = { risco:'⚠ em risco', atencao:'! atenção' };
-    const PROB = new Set(['risco', 'atencao']);
-
-    function getList() {
-      let list = STUDENTS.slice();
-      if (filterCourse !== 'all') list = list.filter(s => (s.techCourse || '—') === filterCourse);
-      if (desempSort === 'desc') list.sort((a, b) => b.pct  - a.pct);
-      if (desempSort === 'asc')  list.sort((a, b) => a.pct  - b.pct);
-      if (notaSort  === 'desc')  list.sort((a, b) => b.nota - a.nota);
-      if (notaSort  === 'asc')   list.sort((a, b) => a.nota - b.nota);
-      if (engSort   === 'desc')  list.sort((a, b) => b.eng  - a.eng);
-      if (engSort   === 'asc')   list.sort((a, b) => a.eng  - b.eng);
-      if (nameSort  === 'az')    list.sort((a, b) => a.name.localeCompare(b.name, 'pt'));
-      if (nameSort  === 'za')    list.sort((a, b) => b.name.localeCompare(a.name, 'pt'));
-      return list;
+  const API_BASE = window.PULSE_API_BASE
+    || (window.location.port === '3000' ? '/api' : 'http://localhost:3000/api');
+  const PER_PAGE = 9;
+  const AVATAR_COLORS = [
+    ['#E0E7FF', '#4338CA'],
+    ['#FFE4E1', '#DC2626'],
+    ['#DCFCE7', '#15803D'],
+    ['#CFFAFE', '#0E7490'],
+    ['#F3E8FF', '#7E22CE'],
+    ['#FEF3C7', '#92400E']
+  ];
+  const SORT_CONTROLS = [
+    {
+      id: 'btn-desemp',
+      key: 'pct',
+      modes: ['none', 'desc', 'asc'],
+      labels: ['Desempenho', 'Desempenho ↑', 'Desempenho ↓']
+    },
+    {
+      id: 'btn-nota',
+      key: 'nota',
+      modes: ['none', 'desc', 'asc'],
+      labels: ['Nota Média', 'Nota Média ↑', 'Nota Média ↓']
+    },
+    {
+      id: 'btn-eng',
+      key: 'eng',
+      modes: ['none', 'desc', 'asc'],
+      labels: ['Engajamento', 'Engajamento ↑', 'Engajamento ↓']
+    },
+    {
+      id: 'btn-ord',
+      key: 'name',
+      modes: ['none', 'az', 'za'],
+      labels: ['Ordenar', 'A → Z', 'Z → A'],
+      icon: true
     }
+  ];
 
-    function renderPage(page) {
-      curPage = page;
-      const list  = getList();
-      const total = list.length || 1;
-      const start = (page - 1) * PER_PAGE;
-      const slice = list.slice(start, start + PER_PAGE);
-      const grid  = document.getElementById('al-grid');
-      if (!grid) return;
+  let activeInstance = null;
 
-      grid.innerHTML = slice.map(s => `
-        <div class="al-card" data-id="${s.id}">
-          <div class="al-card-top">
-            <div class="al-av" style="background:${s.bg};color:${s.tc};">${s.ini}</div>
-            <div class="al-info">
-              <div class="al-name">${s.name}</div>
-              <div class="al-meta">${s.age} anos · ${s.techCourse || '—'}</div>
-              <div class="al-id">${s.id}</div>
-            </div>
-            ${PROB.has(s.st) ? `<span class="al-badge al-badge--${s.st}">${SLBL[s.st]}</span>` : ''}
-          </div>
-          <div class="al-prog-row">
-            <span class="al-module">${s.mod}</span>
-            <span class="al-pct">${s.pct}%</span>
-          </div>
-          <div class="al-bar"><div class="al-bar-inner ${BAR[s.st]}" style="width:${s.pct}%"></div></div>
-        </div>
-      `).join('');
-
-      /* Paginação */
-      const totalPages = Math.ceil(total / PER_PAGE);
-      const info = document.getElementById('al-pag-info');
-      const displayTotal = filterCourse === 'all' ? TOTAL : total;
-      if (info) info.textContent =
-        `Exibindo ${start + 1}–${Math.min(start + PER_PAGE, total)} de ${displayTotal} alunos`;
-
-      const nums = document.getElementById('al-pag-nums');
-      if (nums) {
-        nums.innerHTML = '';
-        const show = new Set(
-          [1, page - 1, page, page + 1, totalPages]
-            .filter(p => p >= 1 && p <= totalPages)
-        );
-        let prev = 0;
-        [...show].sort((a, b) => a - b).forEach(p => {
-          if (prev && p - prev > 1) {
-            const ell = document.createElement('span');
-            ell.textContent = '…';
-            ell.style.cssText = 'font-size:11px;color:#97A1AE;padding:0 2px;line-height:26px;';
-            nums.appendChild(ell);
-          }
-          const btn = document.createElement('button');
-          btn.className = 'al-pag-btn' + (p === page ? ' active' : '');
-          btn.textContent = p;
-          btn.addEventListener('click', () => renderPage(p));
-          nums.appendChild(btn);
-          prev = p;
-        });
-      }
-
-      const prevBtn = document.getElementById('al-prev');
-      const nextBtn = document.getElementById('al-next');
-      if (prevBtn) prevBtn.disabled = page === 1;
-      if (nextBtn) nextBtn.disabled = page >= totalPages;
-    }
-
-    /* ── Botões de filtro e ordenação ──────────────────────── */
-    const btnCurso  = document.getElementById('btn-curso');
-    const btnDesemp = document.getElementById('btn-desemp');
-    const btnNota   = document.getElementById('btn-nota');
-    const btnEng    = document.getElementById('btn-eng');
-    const btnOrd    = document.getElementById('btn-ord');
-    let desempIdx = 0, notaIdx = 0, engIdx = 0, nameSortIdx = 0;
-
-    /* Reseta todos os sorts exceto o informado */
-    function resetSortBtns(except) {
-      if (except !== 'desemp') { desempSort = 'none'; desempIdx = 0; if (btnDesemp) { btnDesemp.textContent = 'Desempenho';  btnDesemp.classList.remove('al-filter-btn--active'); } }
-      if (except !== 'nota')   { notaSort   = 'none'; notaIdx   = 0; if (btnNota)   { btnNota.textContent   = 'Nota Média';  btnNota.classList.remove('al-filter-btn--active'); } }
-      if (except !== 'eng')    { engSort    = 'none'; engIdx    = 0; if (btnEng)    { btnEng.textContent    = 'Engajamento'; btnEng.classList.remove('al-filter-btn--active'); } }
-      if (except !== 'name')   { nameSort   = 'none'; nameSortIdx = 0;
-        if (btnOrd) { btnOrd.innerHTML = '<i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> Ordenar'; btnOrd.classList.remove('al-filter-btn--active'); }
-      }
-    }
-
-    /* Curso */
-    if (btnCurso) btnCurso.addEventListener('click', function () {
-      courseIdx    = (courseIdx + 1) % COURSES.length;
-      filterCourse = courseIdx === 0 ? 'all' : COURSES[courseIdx];
-      this.textContent = courseIdx === 0 ? 'Curso' : COURSES[courseIdx];
-      this.classList.toggle('al-filter-btn--active', courseIdx !== 0);
-      renderPage(1);
-    });
-
-    /* Desempenho — ordena por pct */
-    if (btnDesemp) btnDesemp.addEventListener('click', function () {
-      desempIdx  = (desempIdx + 1) % 3;
-      desempSort = ['none', 'desc', 'asc'][desempIdx];
-      resetSortBtns('desemp');
-      this.textContent = ['Desempenho', 'Desempenho ↑', 'Desempenho ↓'][desempIdx];
-      this.classList.toggle('al-filter-btn--active', desempIdx !== 0);
-      renderPage(1);
-    });
-
-    /* Nota Média — ordena por nota */
-    if (btnNota) btnNota.addEventListener('click', function () {
-      notaIdx  = (notaIdx + 1) % 3;
-      notaSort = ['none', 'desc', 'asc'][notaIdx];
-      resetSortBtns('nota');
-      this.textContent = ['Nota Média', 'Nota Média ↑', 'Nota Média ↓'][notaIdx];
-      this.classList.toggle('al-filter-btn--active', notaIdx !== 0);
-      renderPage(1);
-    });
-
-    /* Engajamento — ordena por eng */
-    if (btnEng) btnEng.addEventListener('click', function () {
-      engIdx  = (engIdx + 1) % 3;
-      engSort = ['none', 'desc', 'asc'][engIdx];
-      resetSortBtns('eng');
-      this.textContent = ['Engajamento', 'Engajamento ↑', 'Engajamento ↓'][engIdx];
-      this.classList.toggle('al-filter-btn--active', engIdx !== 0);
-      renderPage(1);
-    });
-
-    /* Ordenar por nome */
-    if (btnOrd) btnOrd.addEventListener('click', function () {
-      nameSortIdx = (nameSortIdx + 1) % 3;
-      nameSort    = ['none', 'az', 'za'][nameSortIdx];
-      resetSortBtns('name');
-      this.innerHTML = `<i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> ${['Ordenar', 'A → Z', 'Z → A'][nameSortIdx]}`;
-      this.classList.toggle('al-filter-btn--active', nameSortIdx !== 0);
-      renderPage(1);
-    });
-
-    /* ── Paginação ──────────────────────────────────────────── */
-    document.getElementById('al-prev').addEventListener('click', () => renderPage(curPage - 1));
-    document.getElementById('al-next').addEventListener('click', () => renderPage(curPage + 1));
-    renderPage(1);
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 
-  initAlunosView();
+  function initials(name) {
+    return String(name || 'Aluno')
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((part) => part.charAt(0).toUpperCase())
+      .join('');
+  }
 
+  function normalizeStudent(aluno, index) {
+    const [bg, tc] = AVATAR_COLORS[index % AVATAR_COLORS.length];
+    const employed = aluno.empregabilidade === 'empregado';
+    const risk = aluno.riscoEvasao === 'alto';
+    const attention = aluno.riscoEvasao === 'medio';
+    const inactive = aluno.status === 'inativo' || aluno.status === 'desligado';
+    const st = risk ? 'risco' : attention ? 'atencao' : inactive ? 'inativo' : employed ? 'empregado' : 'ativa';
+    const progress = Math.max(0, Math.min(100, Number(aluno.engajamento) || 0));
+
+    return {
+      raw: aluno,
+      id: aluno.codigoPm || String(aluno.idAluno),
+      name: aluno.nome,
+      ini: initials(aluno.nome),
+      bg,
+      tc,
+      age: aluno.idade,
+      course: aluno.curso || aluno.programa || 'Programa Pulse Mais',
+      techCourse: aluno.curso || 'Curso nao informado',
+      st,
+      mod: aluno.nivelJornada || aluno.categoria || aluno.status || 'Sem etapa informada',
+      pct: progress,
+      nota: progress / 10,
+      eng: progress / 10,
+      employability: aluno.empregabilidade,
+      schooling: aluno.escolaridade,
+      entryYear: aluno.dataIngresso ? String(aluno.dataIngresso).slice(0, 4) : ''
+    };
+  }
+
+  function apiUrl(filters) {
+    const params = new URLSearchParams({ limite: '100' });
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) params.set(key, value);
+    });
+    return `${API_BASE}/alunos?${params.toString()}`;
+  }
+
+  async function fetchStudents(filters, signal) {
+    let response;
+    try {
+      response = await fetch(apiUrl(filters), { signal });
+    } catch (error) {
+      if (error.name === 'AbortError') throw error;
+      throw new Error('Nao foi possivel conectar a API. Inicie o backend com "npm run dev:local".');
+    }
+
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok || !body.success) {
+      throw new Error(body.message || 'Nao foi possivel consultar os alunos.');
+    }
+    return body.data.alunos || [];
+  }
+
+  function uniqueOptions(students, field) {
+    return [...new Set(students.map((student) => student[field]).filter(Boolean))]
+      .sort((a, b) => String(a).localeCompare(String(b), 'pt-BR'));
+  }
+
+  function fillSelect(select, options) {
+    if (!select) return;
+    const selected = select.value;
+    const firstOption = select.options[0];
+    select.innerHTML = '';
+    select.appendChild(firstOption);
+    options.forEach((value) => {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = value;
+      select.appendChild(option);
+    });
+    select.value = selected;
+  }
+
+  function selectedFilters(root) {
+    const filters = {};
+    root.querySelectorAll('[data-al-filter]').forEach((select) => {
+      if (select.value) filters[select.dataset.alFilter] = select.value;
+    });
+
+    const search = document.querySelector('.menuSuperior__search-input, #top-search input');
+    const searchValue = search && 'value' in search ? search.value.trim() : '';
+    if (searchValue.length >= 3) filters.busca = searchValue;
+    return filters;
+  }
+
+  function updateSelectState(select) {
+    if (!select) return;
+    select.classList.toggle('al-filter-select--active', Boolean(select.value));
+  }
+
+  function createInstance(options) {
+    const root = document.getElementById('view-alunos') || document;
+    const grid = root.querySelector('#al-grid');
+    if (!grid) return null;
+
+    return {
+      root,
+      grid,
+      onSelect: options && options.onSelect,
+      students: [],
+      currentPage: 1,
+      sort: { key: null, mode: 'none' },
+      controller: null,
+      initialized: false
+    };
+  }
+
+  function renderEmpty(instance, message, error) {
+    instance.grid.innerHTML = `
+      <div class="al-empty ${error ? 'al-empty--error' : ''}">
+        <i class="ti ${error ? 'ti-alert-circle' : 'ti-users-off'}"></i>
+        <span>${escapeHtml(message)}</span>
+      </div>
+    `;
+  }
+
+  function renderSummary(instance) {
+    const rawStudents = instance.students.map((student) => student.raw);
+    const total = rawStudents.length;
+    const risk = rawStudents.filter((student) => student.riscoEvasao === 'alto').length;
+    const employed = rawStudents.filter((student) => student.empregabilidade === 'empregado').length;
+    const active = rawStudents.filter((student) => student.status === 'ativo').length;
+    const average = total
+      ? rawStudents.reduce((sum, student) => sum + (Number(student.engajamento) || 0), 0) / total
+      : 0;
+
+    const subtitle = instance.root.querySelector('.al-subtitle');
+    if (subtitle) {
+      subtitle.innerHTML = `${total} alunos &middot; <span class="al-risk">${risk} em risco</span> &middot; <span class="al-emp">${employed} empregados</span>`;
+    }
+
+    const statValues = instance.root.querySelectorAll('.al-stat-val');
+    [active, risk, employed, (average / 10).toFixed(1).replace('.', ',')].forEach((value, index) => {
+      if (statValues[index]) statValues[index].textContent = value;
+    });
+
+    const legendValues = instance.root.querySelectorAll('.al-leg-num');
+    const legendCounts = [
+      rawStudents.filter((student) => student.status === 'ativo').length,
+      risk,
+      rawStudents.filter((student) => student.riscoEvasao === 'medio').length,
+      rawStudents.filter((student) => student.status === 'inativo' || student.status === 'desligado').length,
+      employed
+    ];
+    legendCounts.forEach((value, index) => {
+      if (legendValues[index]) legendValues[index].textContent = value;
+    });
+  }
+
+  function renderPagination(instance, totalPages) {
+    const info = instance.root.querySelector('#al-pag-info');
+    const nums = instance.root.querySelector('#al-pag-nums');
+    const prev = instance.root.querySelector('#al-prev');
+    const next = instance.root.querySelector('#al-next');
+    const total = instance.students.length;
+    const start = total ? (instance.currentPage - 1) * PER_PAGE + 1 : 0;
+    const end = Math.min(instance.currentPage * PER_PAGE, total);
+
+    if (info) info.textContent = `Exibindo ${start}-${end} de ${total} alunos`;
+    if (prev) prev.disabled = instance.currentPage <= 1;
+    if (next) next.disabled = instance.currentPage >= totalPages;
+    if (!nums) return;
+
+    nums.innerHTML = '';
+    for (let page = 1; page <= totalPages; page += 1) {
+      const button = document.createElement('button');
+      button.className = `al-pag-btn${page === instance.currentPage ? ' active' : ''}`;
+      button.textContent = page;
+      button.addEventListener('click', () => renderPage(instance, page));
+      nums.appendChild(button);
+    }
+  }
+
+  function sortedStudents(instance) {
+    const students = instance.students.slice();
+    const { key, mode } = instance.sort;
+    if (!key || mode === 'none') return students;
+
+    if (key === 'name') {
+      students.sort((a, b) => (
+        mode === 'az'
+          ? a.name.localeCompare(b.name, 'pt-BR')
+          : b.name.localeCompare(a.name, 'pt-BR')
+      ));
+      return students;
+    }
+
+    students.sort((a, b) => (
+      mode === 'desc' ? Number(b[key]) - Number(a[key]) : Number(a[key]) - Number(b[key])
+    ));
+    return students;
+  }
+
+  function setSortButton(button, control, mode) {
+    const index = Math.max(0, control.modes.indexOf(mode));
+    const label = control.labels[index];
+    if (control.icon) {
+      button.innerHTML = `<i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> ${label}`;
+    } else {
+      button.textContent = label;
+    }
+    button.classList.toggle('al-filter-btn--active', mode !== 'none');
+  }
+
+  function resetSortControls(instance) {
+    instance.sort = { key: null, mode: 'none' };
+    SORT_CONTROLS.forEach((control) => {
+      const button = instance.root.querySelector(`#${control.id}`);
+      if (button) setSortButton(button, control, 'none');
+    });
+  }
+
+  function renderPage(instance, page) {
+    const orderedStudents = sortedStudents(instance);
+    const totalPages = Math.max(1, Math.ceil(orderedStudents.length / PER_PAGE));
+    instance.currentPage = Math.min(Math.max(page, 1), totalPages);
+    const start = (instance.currentPage - 1) * PER_PAGE;
+    const students = orderedStudents.slice(start, start + PER_PAGE);
+
+    if (students.length === 0) {
+      renderEmpty(instance, 'Nenhum aluno encontrado com os filtros selecionados.');
+    } else {
+      const bar = { ativa: 'c-green', risco: 'c-red', empregado: 'c-green', inativo: 'c-gray', atencao: 'c-amber' };
+      const badge = {
+        risco: 'Em risco',
+        atencao: 'Atencao',
+        empregado: 'Empregado',
+        inativo: 'Inativo'
+      };
+
+      instance.grid.innerHTML = students.map((student) => `
+        <button type="button" class="al-card" data-id="${escapeHtml(student.id)}">
+          <div class="al-card-top">
+            <div class="al-av" style="background:${student.bg};color:${student.tc};">${escapeHtml(student.ini)}</div>
+            <div class="al-info">
+              <div class="al-name">${escapeHtml(student.name)}</div>
+              <div class="al-meta">${student.age ? `${escapeHtml(student.age)} anos` : 'Idade nao informada'} &middot; ${escapeHtml(student.techCourse)}</div>
+              <div class="al-id">${escapeHtml(student.id)}</div>
+            </div>
+            ${badge[student.st] ? `<span class="al-badge al-badge--${student.st}">${badge[student.st]}</span>` : ''}
+          </div>
+          <div class="al-prog-row">
+            <span class="al-module">${escapeHtml(student.mod)}</span>
+            <span class="al-pct">${student.pct}%</span>
+          </div>
+          <div class="al-bar"><div class="al-bar-inner ${bar[student.st]}" style="width:${student.pct}%"></div></div>
+        </button>
+      `).join('');
+
+      if (typeof instance.onSelect === 'function') {
+        instance.grid.querySelectorAll('.al-card').forEach((card, index) => {
+          card.addEventListener('click', () => instance.onSelect(students[index]));
+        });
+      }
+    }
+
+    renderSummary(instance);
+    renderPagination(instance, totalPages);
+  }
+
+  async function applyFilters(instance) {
+    if (instance.controller) instance.controller.abort();
+    instance.controller = new AbortController();
+    instance.grid.innerHTML = '<div class="al-empty"><i class="ti ti-loader-2 al-spin"></i><span>Consultando alunos...</span></div>';
+
+    try {
+      const alunos = await fetchStudents(selectedFilters(instance.root), instance.controller.signal);
+      instance.students = alunos.map(normalizeStudent);
+      renderPage(instance, 1);
+    } catch (error) {
+      if (error.name === 'AbortError') return;
+      instance.students = [];
+      renderSummary(instance);
+      renderPagination(instance, 1);
+      renderEmpty(instance, error.message, true);
+    }
+  }
+
+  function bindEvents(instance) {
+    instance.root.querySelectorAll('[data-al-filter]').forEach((select) => {
+      select.addEventListener('change', () => {
+        updateSelectState(select);
+        applyFilters(instance);
+      });
+    });
+
+    const clear = instance.root.querySelector('#btn-limpar-filtros');
+    if (clear) {
+      clear.addEventListener('click', () => {
+        instance.root.querySelectorAll('[data-al-filter]').forEach((select) => {
+          select.value = '';
+          updateSelectState(select);
+        });
+        resetSortControls(instance);
+        applyFilters(instance);
+      });
+    }
+
+    SORT_CONTROLS.forEach((control) => {
+      const button = instance.root.querySelector(`#${control.id}`);
+      if (!button) return;
+
+      button.addEventListener('click', () => {
+        const currentIndex = instance.sort.key === control.key
+          ? control.modes.indexOf(instance.sort.mode)
+          : 0;
+        const mode = control.modes[(currentIndex + 1) % control.modes.length];
+
+        resetSortControls(instance);
+        if (mode !== 'none') {
+          instance.sort = { key: control.key, mode };
+          setSortButton(button, control, mode);
+        }
+        renderPage(instance, 1);
+      });
+    });
+
+    const prev = instance.root.querySelector('#al-prev');
+    const next = instance.root.querySelector('#al-next');
+    if (prev) prev.addEventListener('click', () => renderPage(instance, instance.currentPage - 1));
+    if (next) next.addEventListener('click', () => renderPage(instance, instance.currentPage + 1));
+
+    const search = document.querySelector('.menuSuperior__search-input, #top-search input');
+    if (search && 'value' in search) {
+      let timer;
+      search.addEventListener('input', () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => applyFilters(instance), 300);
+      });
+    }
+  }
+
+  async function initialize(options) {
+    if (activeInstance && activeInstance.initialized) {
+      if (options && options.onSelect) activeInstance.onSelect = options.onSelect;
+      return;
+    }
+
+    const instance = createInstance(options);
+    if (!instance) return;
+    activeInstance = instance;
+    bindEvents(instance);
+
+    try {
+      const alunos = await fetchStudents({}, new AbortController().signal);
+      const normalized = alunos.map(normalizeStudent);
+      fillSelect(instance.root.querySelector('#filtro-escolaridade'), uniqueOptions(normalized, 'schooling'));
+      fillSelect(instance.root.querySelector('#filtro-curso'), uniqueOptions(normalized, 'techCourse'));
+      fillSelect(instance.root.querySelector('#filtro-ano-ingresso'), uniqueOptions(normalized, 'entryYear').reverse());
+      instance.students = normalized;
+      instance.initialized = true;
+      renderPage(instance, 1);
+    } catch (error) {
+      instance.initialized = true;
+      instance.students = [];
+      renderSummary(instance);
+      renderPagination(instance, 1);
+      renderEmpty(instance, error.message, true);
+    }
+  }
+
+  window.initListaAlunosView = initialize;
+
+  if (!document.getElementById('view-alunos')) {
+    initialize();
+  }
 })();

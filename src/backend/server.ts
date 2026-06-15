@@ -1,11 +1,16 @@
 import { app } from './app';
 import { env } from './config/env';
 import { initializeDatabase } from './database/connection';
+import { seedLocalDevelopmentDatabase } from './database/localSeed';
 
 const port = env.port;
 
 initializeDatabase()
-  .then(() => {
+  .then(async () => {
+    if (env.database.type === 'sqljs' && !env.isTest) {
+      await seedLocalDevelopmentDatabase();
+    }
+
     app.listen(port, () => {
       console.log(`API Pulse Manager rodando em http://localhost:${port}`);
       console.log(`Healthcheck: http://localhost:${port}/api/health`);

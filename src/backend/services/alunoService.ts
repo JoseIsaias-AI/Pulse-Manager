@@ -2,15 +2,34 @@
 import { NotFoundError, PayloadValidationError, ConflictError } from '../utils/errors';
 import { assertIsoDate } from '../utils/date';
 import { normalizeText, requiredString } from '../utils/validators';
+import {
+  EMPREGABILIDADES_ALUNO,
+  EmpregabilidadeAluno,
+  SegmentacaoAlunoQuery
+} from '../models/alunoModel';
 
 export class AlunoService {
   constructor(private readonly repository: AlunoRepository) {}
 
-  async listar(filtros: { busca?: string; status?: string; programa?: string; limite?: number }) {
+  async listar(filtros: SegmentacaoAlunoQuery) {
+    if (
+      filtros.empregabilidade &&
+      !EMPREGABILIDADES_ALUNO.includes(filtros.empregabilidade as EmpregabilidadeAluno)
+    ) {
+      throw new PayloadValidationError('Empregabilidade invalida.');
+    }
+
+    if (
+      filtros.anoIngresso !== undefined &&
+      (!Number.isInteger(filtros.anoIngresso) || filtros.anoIngresso < 1900 || filtros.anoIngresso > 2100)
+    ) {
+      throw new PayloadValidationError('O campo anoIngresso deve ser um ano valido.');
+    }
+
     return {
       success: true,
       data: {
-        alunos: await this.repository.list(filtros as any),
+        alunos: await this.repository.list(filtros),
       }
     };
   }

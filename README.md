@@ -174,6 +174,14 @@ Para iniciar o servidor backend em ambiente de desenvolvimento, execute:
 npm run dev
 ```
 
+Para executar localmente sem PostgreSQL ou Supabase configurado, usando o banco em memória:
+
+```sh
+npm run dev:local
+```
+
+Esse modo carrega automaticamente uma massa demonstrativa de alunos. Os dados são recriados sempre que o servidor local é reiniciado.
+
 Caso o projeto utilize apenas o modo de produção/local simples, utilize:
 
 ```sh

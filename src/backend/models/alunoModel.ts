@@ -2,6 +2,7 @@ import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 export type StatusAluno = 'ativo' | 'inativo' | 'egresso' | 'desligado' | 'em_acompanhamento';
 export type RiscoEvasao = 'baixo' | 'medio' | 'alto';
+export type EmpregabilidadeAluno = 'empregado' | 'desempregado' | 'estudante' | 'nao_informado';
 
 export interface SegmentacaoAlunoQuery {
   programa?: string;
@@ -9,7 +10,10 @@ export interface SegmentacaoAlunoQuery {
   risco?: RiscoEvasao;
   categoria?: string;
   ocupacao?: string;
+  empregabilidade?: EmpregabilidadeAluno;
   escolaridade?: string;
+  curso?: string;
+  anoIngresso?: number;
   busca?: string;
   limite?: number;
 }
@@ -32,6 +36,12 @@ export const STATUS_ALUNO: StatusAluno[] = [
 ];
 
 export const RISCOS_EVASAO: RiscoEvasao[] = ['baixo', 'medio', 'alto'];
+export const EMPREGABILIDADES_ALUNO: EmpregabilidadeAluno[] = [
+  'empregado',
+  'desempregado',
+  'estudante',
+  'nao_informado'
+];
 
 export const CRITERIOS_SEGMENTACAO: Array<keyof SegmentacaoAlunoQuery> = [
   'programa',
@@ -39,7 +49,10 @@ export const CRITERIOS_SEGMENTACAO: Array<keyof SegmentacaoAlunoQuery> = [
   'risco',
   'categoria',
   'ocupacao',
+  'empregabilidade',
   'escolaridade',
+  'curso',
+  'anoIngresso',
   'busca'
 ];
 

@@ -9,6 +9,7 @@ const baseAluno = {
   idade: 20,
   genero: null,
   ocupacao: null,
+  empregabilidade: 'nao_informado',
   tipoVinculoEmpregaticio: null,
   rendaMensal: null,
   escolaridade: null,
@@ -51,10 +52,37 @@ describe('AlunoService', () => {
   it('lista alunos com filtros', async () => {
     repository.list.mockResolvedValue([baseAluno]);
 
-    const result = await service.listar({ busca: 'Maria', status: 'ativo', programa: 'Pulse', limite: 10 });
+    const result = await service.listar({
+      busca: 'Maria',
+      status: 'ativo',
+      programa: 'Pulse',
+      empregabilidade: 'empregado',
+      escolaridade: 'ensino_superior',
+      curso: 'Desenvolvimento Web',
+      anoIngresso: 2024,
+      limite: 10
+    });
 
-    expect(repository.list).toHaveBeenCalledWith({ busca: 'Maria', status: 'ativo', programa: 'Pulse', limite: 10 });
+    expect(repository.list).toHaveBeenCalledWith({
+      busca: 'Maria',
+      status: 'ativo',
+      programa: 'Pulse',
+      empregabilidade: 'empregado',
+      escolaridade: 'ensino_superior',
+      curso: 'Desenvolvimento Web',
+      anoIngresso: 2024,
+      limite: 10
+    });
     expect(result).toEqual({ success: true, data: { alunos: [baseAluno] } });
+  });
+
+  it('rejeita filtros de empregabilidade e ano de ingresso invalidos', async () => {
+    await expect(service.listar({ empregabilidade: 'talvez' as any })).rejects.toThrow(
+      'Empregabilidade invalida.'
+    );
+    await expect(service.listar({ anoIngresso: 22 })).rejects.toThrow(
+      'O campo anoIngresso deve ser um ano valido.'
+    );
   });
 
   it('cadastra aluno com payload valido', async () => {

@@ -1,6 +1,6 @@
 import { QueryResultRow } from 'pg';
 import { query } from '../database/connection';
-import { SegmentacaoAlunoQuery } from '../models/alunoModel';
+import { EmpregabilidadeAluno, SegmentacaoAlunoQuery } from '../models/alunoModel';
 import { formatarCodigoPm, extrairSequencial } from '../services/codigoPmService';
 
 export interface AlunoRecord {
@@ -12,6 +12,7 @@ export interface AlunoRecord {
   idade: number | null;
   genero: string | null;
   ocupacao: string | null;
+  empregabilidade: EmpregabilidadeAluno;
   tipoVinculoEmpregaticio: string | null;
   rendaMensal: number | null;
   escolaridade: string | null;
@@ -56,6 +57,16 @@ export interface AtualizarAlunoPayload extends Partial<CriarAlunoPayload> {
 
 // Sem casts PostgreSQL-específicos (::text, ::float) para compatibilidade com sqljs nos testes.
 // PostgreSQL faz conversão implícita; sqljs não suporta sintaxe de cast do PG.
+const EMPREGABILIDADE_SQL = `
+  CASE
+    WHEN TRIM(COALESCE(tipo_vinculo_empregaticio, '')) <> '' THEN 'empregado'
+    WHEN LOWER(COALESCE(ocupacao, '')) LIKE '%desempreg%' OR LOWER(COALESCE(ocupacao, '')) LIKE '%buscando_emprego%' OR LOWER(COALESCE(ocupacao, '')) LIKE '%procurando%' THEN 'desempregado'
+    WHEN LOWER(COALESCE(ocupacao, '')) LIKE '%estudante%' THEN 'estudante'
+    WHEN TRIM(COALESCE(ocupacao, '')) = '' THEN 'nao_informado'
+    ELSE 'empregado'
+  END
+`;
+
 const ALUNO_SELECT = `
   SELECT
     id_aluno AS "idAluno",
@@ -66,6 +77,7 @@ const ALUNO_SELECT = `
     idade,
     genero,
     ocupacao,
+    ${EMPREGABILIDADE_SQL} AS empregabilidade,
     tipo_vinculo_empregaticio AS "tipoVinculoEmpregaticio",
     CAST(renda_mensal AS REAL) AS "rendaMensal",
     escolaridade,
@@ -293,7 +305,13 @@ export class AlunoRepository {
     if (filters.risco) push("COALESCE(risco_evasao, 'baixo') = ?", filters.risco);
     if (filters.categoria) push("LOWER(COALESCE(categoria, nivel_jornada, '')) = LOWER(?)", filters.categoria);
     if (filters.ocupacao) push("LOWER(COALESCE(ocupacao, '')) = LOWER(?)", filters.ocupacao);
+    if (filters.empregabilidade) push(`(${EMPREGABILIDADE_SQL}) = ?`, filters.empregabilidade);
     if (filters.escolaridade) push("LOWER(COALESCE(escolaridade, '')) = LOWER(?)", filters.escolaridade);
+    if (filters.curso) push("LOWER(COALESCE(curso, '')) = LOWER(?)", filters.curso);
+    if (filters.anoIngresso !== undefined) {
+      push('data_ingresso >= ?', `${filters.anoIngresso}-01-01`);
+      push('data_ingresso < ?', `${filters.anoIngresso + 1}-01-01`);
+    }
     if (filters.busca) {
       push('(LOWER(nome) LIKE LOWER(?) OR LOWER(email) LIKE LOWER(?))', `%${filters.busca}%`);
       params.push(`%${filters.busca}%`);

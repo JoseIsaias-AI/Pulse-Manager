@@ -141,6 +141,11 @@
      VIEW: ALUNOS
   ════════════════════════════════════════════════════════════ */
   function initAlunosView() {
+    if (window.initListaAlunosView) {
+      window.initListaAlunosView({ onSelect: openStudentProfile });
+      return;
+    }
+
     const PER_PAGE = 9;
     const TOTAL    = 18;
     let curPage      = 1;

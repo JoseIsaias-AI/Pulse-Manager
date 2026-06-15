@@ -5,6 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev:local": "set DB_TYPE=sqljs&& ts-node-dev --respawn --transpile-only src/server.ts",
     "migrate": "ts-node src/backend/database/migrate.ts",
     "seed": "ts-node src/backend/database/seed.ts",
     "db:test": "ts-node src/scripts/test-db.ts",

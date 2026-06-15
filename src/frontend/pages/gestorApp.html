@@ -213,9 +213,25 @@
   .al-subtitle .al-risk { color: #E24B4A; font-weight: 600; }
   .al-subtitle .al-emp  { color: #33B458;  font-weight: 600; }
 
-  .al-filters { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .al-filters { display: flex; align-items: flex-end; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+  .al-filter-field {
+    display: flex; flex-direction: column; gap: 3px; min-width: 145px;
+    font-size: 9px; font-weight: 600; color: #6B7684;
+  }
+  .al-filter-select {
+    height: 32px; padding: 4px 28px 4px 10px; border-radius: 8px; border: 1px solid #DEE3EA;
+    background: #fff; font-size: 10px; font-weight: 500; color: #6B7684;
+    cursor: pointer; font-family: 'Poppins', sans-serif; outline: none;
+  }
+  .al-filter-select:hover, .al-filter-select:focus { border-color: #003870; color: #003870; }
+  .al-filter-select--active { background: #EDF3F9; border-color: #003870; color: #003870; font-weight: 600; }
+  .al-clear-filters {
+    height: 32px; padding: 5px 10px; border: none; background: none; color: #6B7684;
+    font: 500 10px 'Poppins', sans-serif; cursor: pointer;
+  }
+  .al-clear-filters:hover { color: #003870; text-decoration: underline; }
   .al-filter-btn {
-    padding: 5px 14px; border-radius: 8px; border: 1px solid #DEE3EA;
+    height: 32px; padding: 5px 14px; border-radius: 8px; border: 1px solid #DEE3EA;
     background: #fff; font-size: 11px; font-weight: 500; color: #6B7684;
     cursor: pointer; font-family: 'Poppins', sans-serif; transition: all .15s;
     display: inline-flex; align-items: center; gap: 5px;
@@ -233,6 +249,7 @@
   .al-card {
     background: #fff; border-radius: 12px; border: 1px solid #DEE3EA;
     padding: 14px 16px 12px; box-shadow: 0 1px 3px rgba(0,56,112,.05);
+    text-align: left; font-family: 'Poppins', sans-serif;
   }
   .al-card-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
   .al-av {
@@ -266,6 +283,14 @@
   .al-bar-inner.c-red   { background: #E24B4A; }
   .al-bar-inner.c-gray  { background: #C2CAD4; }
   .al-note { font-size: 10px; color: #97A1AE; line-height: 1.4; }
+  .al-empty {
+    grid-column: 1 / -1; min-height: 150px; display: flex; align-items: center; justify-content: center;
+    gap: 8px; border: 1px dashed #C2CAD4; border-radius: 12px; color: #6B7684; font-size: 11px;
+  }
+  .al-empty i { font-size: 18px; }
+  .al-empty--error { color: #C2410C; border-color: #F4A261; background: #FFF9F0; }
+  .al-spin { animation: al-spin .8s linear infinite; }
+  @keyframes al-spin { to { transform: rotate(360deg); } }
 
   .al-foot {
     display: flex; align-items: center; justify-content: space-between;
@@ -519,13 +544,41 @@
 
         <!-- Filtros -->
         <div class="al-filters">
-          <button class="al-filter-btn" id="btn-curso">Curso</button>
-          <button class="al-filter-btn" id="btn-desemp">Desempenho</button>
-          <button class="al-filter-btn" id="btn-nota">Nota Média</button>
-          <button class="al-filter-btn" id="btn-eng">Engajamento</button>
-          <button class="al-filter-btn" id="btn-ord">
+          <label class="al-filter-field">
+            <span>Empregabilidade</span>
+            <select class="al-filter-select" id="filtro-empregabilidade" data-al-filter="empregabilidade">
+              <option value="">Todas</option>
+              <option value="empregado">Empregado</option>
+              <option value="desempregado">Desempregado ou buscando</option>
+              <option value="estudante">Estudante</option>
+              <option value="nao_informado">Nao informado</option>
+            </select>
+          </label>
+          <label class="al-filter-field">
+            <span>Escolaridade</span>
+            <select class="al-filter-select" id="filtro-escolaridade" data-al-filter="escolaridade">
+              <option value="">Todas</option>
+            </select>
+          </label>
+          <label class="al-filter-field">
+            <span>Curso</span>
+            <select class="al-filter-select" id="filtro-curso" data-al-filter="curso">
+              <option value="">Todos</option>
+            </select>
+          </label>
+          <label class="al-filter-field">
+            <span>Ano de ingresso</span>
+            <select class="al-filter-select" id="filtro-ano-ingresso" data-al-filter="anoIngresso">
+              <option value="">Todos</option>
+            </select>
+          </label>
+          <button class="al-filter-btn" id="btn-desemp" type="button">Desempenho</button>
+          <button class="al-filter-btn" id="btn-nota" type="button">Nota Média</button>
+          <button class="al-filter-btn" id="btn-eng" type="button">Engajamento</button>
+          <button class="al-filter-btn" id="btn-ord" type="button">
             <i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> Ordenar
           </button>
+          <button class="al-clear-filters" id="btn-limpar-filtros" type="button">Limpar filtros</button>
           <button class="al-import-btn">+ Importar CSV</button>
         </div>
 
@@ -1176,6 +1229,7 @@
 <script src="../js/components/guiaGestor.js"></script>
 <script src="../js/components/menuSuperior.js"></script>
 <script src="../js/components/modalConfEquipe.js"></script>
+<script src="../js/pages/listaAlunos.js"></script>
 <script src="../js/pages/spaGestor.js"></script>
 </body>
 </html>
