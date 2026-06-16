@@ -86,115 +86,139 @@ No diretório <b>src</b>:
 - <b>server.ts</b>: arquivo principal responsável por inicializar a execução do servidor.
 
 
-## Configuração para desenvolvimento e execução do código
+## Instalação, Configuração de Ambiente
 
-Esta seção apresenta as instruções necessárias para configurar o ambiente de desenvolvimento e executar a primeira versão funcional do sistema web da Pulse Mais em máquina local.
-
-### Pré-requisitos
+### 1. Pré-requisitos
 
 Antes de iniciar a execução do projeto, é necessário ter instalado:
+Node.js 20.x (LTS);
 
-* **Node.js** em versão LTS;
-* **npm**, instalado junto ao Node.js;
-* **Git**, para clonar o repositório;
-* **PostgreSQL** ou acesso a um banco PostgreSQL/Supabase configurado;
-* Editor de código, preferencialmente **Visual Studio Code**.
+npm, instalado junto ao Node.js;
 
-### 1. Clonar o repositório
+Git, para clonar o repositório;
 
-No terminal, execute:
+PostgreSQL ou acesso a um banco PostgreSQL/Supabase 
+configurado;
 
-```sh
-git clone <link-do-repositorio>
-```
+Editor de código, preferencialmente Visual Studio Code.
 
-Em seguida, acesse a pasta do projeto:
+### 2. Instalação e execução
 
 ```sh
+# 1. Clonar o repositório e entrar na pasta
+git clone <url-do-repositorio>
 cd g03
-```
 
-### 2. Instalar as dependências
-
-Na raiz do projeto, instale as dependências necessárias:
-
-```sh
+# 2. Instalar as dependências
 npm install
-```
 
-Caso o projeto esteja organizado com um `package.json` específico dentro da pasta `backend`, acesse a pasta antes de instalar:
+# 3. Criar o arquivo de variáveis de ambiente (ver seção 3)
+cp .env.example .env   # se existir; caso contrário, crie manualmente
 
-```sh
-cd backend
-npm install
-```
+# 4. Testar a conexão com o banco
+npm run db:test
 
-### 3. Configurar as variáveis de ambiente
-
-Crie um arquivo `.env` na pasta em que o backend é executado. Esse arquivo deve conter as informações de conexão com o banco de dados.
-
-Exemplo:
-
-```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=sua_senha
-DB_NAME=pulse_mais
-PORT=3000
-```
-
-Caso o banco utilizado seja Supabase, as informações devem ser preenchidas conforme os dados de conexão do projeto no painel do Supabase.
-
-### 4. Executar as migrations
-
-As migrations são responsáveis por criar ou atualizar a estrutura do banco de dados. Para executá-las, utilize:
-
-```sh
+# 5. Executar as migrations (cria as tabelas)
 npm run migrate
-```
 
-Esse comando deve ser executado antes do seed, para garantir que as tabelas e colunas necessárias já existam no banco.
-
-### 5. Popular o banco com dados simulados
-
-Após executar as migrations, rode o seed para inserir dados fictícios no banco de desenvolvimento:
-
-```sh
+# 6. (Opcional) Popular o banco com dados iniciais
 npm run seed
 ```
 
-O seed inclui dados simulados para alunos, membros da equipe, psicólogos, atividades, participações, agendas, oportunidades, notificações, labels e históricos psicológicos. Esses dados são utilizados para testar consultas, endpoints, telas e indicadores do sistema.
+Comandos de execução disponíveis:
 
-### 6. Executar o backend
+| Modo | Comando | Descrição |
+|---|---|---|
+| Desenvolvimento | npm run dev | ts-node-dev com hot-reload. |
+| Build | npm run build | Compila TypeScript para dist/. |
+| Produção | npm start | Executa dist/backend/server.js. |
+| Testes | npm test | Jest em modo serial (--runInBand). |
 
-Para iniciar o servidor backend em ambiente de desenvolvimento, execute:
+### 3. Configuração de ambiente
 
-```sh
-npm run dev
+O projeto usa dotenv. Crie um arquivo `.env` na raiz do repositório.
+
+A conexão com o banco aceita dois modos mutuamente exclusivos:
+
+- **Modo A — connection string:** defina `DATABASE_URL` (recomendado para Supabase ou Postgres remoto).
+- **Modo B — variáveis individuais:** defina `DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD` e `DB_DATABASE` (Postgres local).
+
+#### Exemplo de .env
+
+```env
+# ── Aplicação ──────────────────────────────────────────────
+NODE_ENV=development
+PORT=3000
+
+# ── Banco de dados — MODO A (connection string) ────────────
+DATABASE_URL=postgresql://postgres.txkehvgltibkitjngsye:<sua-senha>@aws-1-sa-east-1.pooler.supabase.com:5432/postgres
+DATABASE_SSL=true
+
+# ── Banco de dados — MODO B (variáveis individuais) ────────
+# DB_HOST=localhost
+# DB_PORT=5432
+# DB_USERNAME=postgres
+# DB_PASSWORD=postgres
+# DB_DATABASE=pulse_uc13
+# DATABASE_SSL=false
+
+# ── Tipo de banco (postgres | sqljs) ───────────────────────
+# DB_TYPE=postgres   # padrão: postgres em dev, sqljs em test
+
+# ── Supabase (apenas para chamadas à API HTTP do Supabase) ─
+# SUPABASE_URL=https://txkehvgltibkitjngsye.supabase.co
+# SUPABASE_ANON_KEY=<anon-key>
+# SUPABASE_SERVICE_ROLE_KEY=<service-role-key>
+
+# ── Integrações externas (opcionais) ───────────────────────
+# AUDITORIA_URL=http://localhost:4000/auditoria
+# AUDITORIA_URL_DASHBOARD=http://localhost:4000/dashboard
 ```
 
-Caso o projeto utilize apenas o modo de produção/local simples, utilize:
+#### Variáveis — aplicação
 
-```sh
-npm start
-```
+| Variável | Obrigatória | Padrão | Descrição |
+|---|---|---|---|
+| NODE_ENV | Não | development | Ambiente de execução. Em test, o banco muda automaticamente para sqljs. |
+| PORT | Não | 3000 | Porta HTTP do servidor Express. |
 
-Após a inicialização, a API estará disponível em:
+#### Variáveis — banco de dados
 
-```sh
-http://localhost:3000
-```
+| Variável | Alternativa aceita | Obrigatória | Padrão | Descrição |
+|---|---|---|---|---|
+| DATABASE_URL | SUPABASE_DB_URL | Não* | — | Connection string completa do PostgreSQL. Se definida, as variáveis DB_* são ignoradas. |
+| DATABASE_SSL | — | Não | true se DATABASE_URL definida, senão false | Habilita SSL na conexão. |
+| DB_TYPE | DB_MODE | Não | postgres | Tipo do banco: postgres ou sqljs (in-memory, usado nos testes). |
+| DB_HOST | — | Não* | localhost | Host do PostgreSQL (Modo B). |
+| DB_PORT | — | Não* | 5432 | Porta do PostgreSQL (Modo B). |
+| DB_USERNAME | DB_USER | Não* | postgres | Usuário do banco (Modo B). |
+| DB_PASSWORD | — | Não* | postgres | Senha do banco (Modo B). |
+| DB_DATABASE | DB_NAME | Não* | pulse_uc13 | Nome do banco (Modo B). |
 
-A porta pode variar de acordo com a configuração definida no arquivo `.env`.
+> \* É obrigatório configurar pelo menos um dos dois modos (A ou B) para o servidor funcionar com PostgreSQL.
 
-### 7. Executar o frontend
+#### Variáveis — Supabase (opcionais)
+
+Necessárias apenas para operações via API HTTP do Supabase.
+
+| Variável | Alternativa aceita | Obrigatória | Descrição |
+|---|---|---|---|
+| SUPABASE_URL | — | Não | URL do projeto Supabase (ex.: https://xyz.supabase.co). |
+| SUPABASE_ANON_KEY | SUPABASE_PUBLISHABLE_KEY | Não | Chave pública. Usada se a service role key não estiver definida. |
+| SUPABASE_SERVICE_ROLE_KEY | SUPABASE_SECRET_KEY | Não | Chave de serviço (acesso irrestrito). Tem precedência sobre a anon key. |
+
+#### Variáveis — integrações externas (opcionais)
+
+| Variável | Obrigatória | Descrição |
+|---|---|---|
+| AUDITORIA_URL | Não | URL base do serviço de auditoria externo. |
+| AUDITORIA_URL_DASHBOARD | Não | URL do dashboard de auditoria externo. |
+
+### 5. Frontend
 
 O frontend está localizado na pasta `frontend` e contém as páginas HTML, arquivos CSS, scripts JavaScript e assets da interface.
 
-Caso as páginas sejam estáticas, elas podem ser abertas diretamente no navegador a partir da pasta `frontend/pages`.
-
-Também é possível utilizar uma extensão como **Live Server** no Visual Studio Code para visualizar as páginas localmente.
+As páginas estáticas podem ser abertas diretamente no navegador a partir da pasta `frontend/pages`, ou servidas com a extensão Live Server do Visual Studio Code.
 
 Exemplo de acesso:
 
@@ -202,62 +226,31 @@ Exemplo de acesso:
 frontend/pages/login.html
 ```
 
-### 8. Executar os testes
+### 6. Observações importantes
 
-Para executar os testes automatizados do projeto, utilize:
-
-```sh
-npm test
-```
-
-Os testes contemplam validações unitárias e de integração relacionadas aos principais módulos do sistema, como alunos, agenda, portal do aluno, notificações, saúde mental, dashboard, jornada, frequência, participação e segmentação.
-
-### 9. Fluxo recomendado de execução
-
-Para configurar o projeto do zero, recomenda-se seguir a ordem abaixo:
-
-```sh
-npm install
-npm run migrate
-npm run seed
-npm run dev
-```
-
-Em seguida, acesse a API em:
-
-```sh
-http://localhost:3000
-```
-
-E visualize o frontend pela pasta `frontend/pages` ou por meio do Live Server.
-
-### Observações importantes
-
-O arquivo `.env` não deve ser enviado ao repositório, pois contém informações sensíveis de conexão com o banco de dados.
-
-O comando `npm run seed` deve ser utilizado apenas em ambiente de desenvolvimento ou teste, pois ele pode limpar e recriar dados simulados no banco.
-
-Caso ocorra erro relacionado ao `ts-node`, instale as dependências de desenvolvimento com:
+- O arquivo `.env` não deve ser enviado ao repositório, pois contém informações sensíveis. Garanta que ele esteja listado no `.gitignore`.
+- O comando `npm run seed` deve ser usado apenas em ambiente de desenvolvimento ou teste, pois pode limpar e recriar os dados simulados.
+- Caso ocorra erro relacionado ao `ts-node`, reinstale as dependências de desenvolvimento:
 
 ```sh
 npm install --save-dev ts-node typescript @types/node
 ```
 
-Caso ocorra erro de conexão com o banco, verifique se as variáveis do `.env` estão corretas e se o banco PostgreSQL/Supabase está ativo.
+- Caso ocorra erro de conexão com o banco, verifique se as variáveis do `.env` estão corretas e se o PostgreSQL/Supabase está ativo.
 
 
 ## Histórico de lançamentos
 
-* 0.5.0 - XX/XX/2024
-    * 
-* 0.4.0 - XX/XX/2024
-    * 
-* 0.3.0 - XX/XX/2024
-    * 
-* 0.2.0 - XX/XX/2024
-    * 
-* 0.1.0 - XX/XX/2024
-    *
+* 0.5.0 - 25/06/2026
+    
+* 0.4.0 - 12/06/2026
+     
+* 0.3.0 - 29/05/2026
+     
+* 0.2.0 - 15/05/2026
+     
+* 0.1.0 - 30/04/2026
+    
 
 ## Licença/License
 
