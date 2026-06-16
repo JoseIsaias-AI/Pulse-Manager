@@ -1088,9 +1088,9 @@
         </div>
       </div>
       <div class="modal-badges">
-        <span class="badge badge-ativo"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
+        <span class="badge badge-ativo" id="pf-badge-status"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
         <span class="badge badge-curso" id="pf-badge-curso"><i class="ti ti-code" style="font-size:11px;"></i> —</span>
-        <span class="badge badge-nivel">Capacitado</span>
+        <span class="badge badge-nivel" id="pf-badge-nivel">—</span>
       </div>
       <button class="close-btn" onclick="closePerfilModal()" aria-label="Fechar"><i class="ti ti-x"></i></button>
     </div>
@@ -1113,38 +1113,42 @@
           </div>
           <div class="field span2">
             <label>Nome completo</label>
-            <input type="text" id="pf-fullname" value="—" readonly>
-          </div>
-          <div class="field">
-            <label>CPF</label>
-            <input type="text" id="pf-cpf" value="—" readonly>
+            <input type="text" id="pf-fullname" data-pf-field="nome" value="—" readonly>
           </div>
           <div class="field">
             <label>Idade</label>
-            <input type="text" id="pf-age" value="—" readonly>
+            <input type="number" min="0" max="120" id="pf-age" data-pf-field="idade" value="—" readonly>
           </div>
           <div class="field">
             <label>Gênero</label>
-            <input type="text" value="Não informado" readonly>
+            <input type="text" id="pf-genero" data-pf-field="genero" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <input type="text" id="pf-status" data-pf-field="status" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>Data de ingresso</label>
+            <input type="date" id="pf-data-ingresso" data-pf-field="dataIngresso" readonly>
           </div>
         </div>
         <div class="sec-label">Formação</div>
         <div class="field-grid">
           <div class="field">
             <label>Curso</label>
-            <input type="text" id="pf-course" value="—" readonly>
+            <input type="text" id="pf-course" data-pf-field="curso" value="—" readonly>
           </div>
           <div class="field">
             <label>Escolaridade</label>
-            <input type="text" value="Ensino Médio Completo" readonly>
+            <input type="text" id="pf-escolaridade" data-pf-field="escolaridade" value="—" readonly>
           </div>
           <div class="field">
             <label>Ocupação</label>
-            <input type="text" value="Estudante" readonly>
+            <input type="text" id="pf-ocupacao" data-pf-field="ocupacao" value="—" readonly>
           </div>
           <div class="field">
             <label>Programa</label>
-            <input type="text" value="Programa Pulse Mais" readonly>
+            <input type="text" id="pf-programa" data-pf-field="programa" value="—" readonly>
           </div>
         </div>
       </div>
@@ -1154,15 +1158,35 @@
         <div class="field-grid">
           <div class="field">
             <label>Perfil socioeconômico</label>
-            <input type="text" value="Classe C" readonly>
+            <input type="text" id="pf-perfil-socioeconomico" data-pf-field="perfilSocioeconomico" value="—" readonly>
           </div>
           <div class="field">
             <label>Renda mensal familiar</label>
-            <input type="text" value="R$ 1.800,00" readonly>
+            <input type="number" min="0" step="0.01" id="pf-renda-mensal" data-pf-field="rendaMensal" value="—" readonly>
           </div>
-          <div class="field span2">
+          <div class="field">
             <label>Nível de jornada</label>
-            <input type="text" value="Capacitado" readonly>
+            <input type="text" id="pf-nivel-jornada" data-pf-field="nivelJornada" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>Categoria</label>
+            <input type="text" id="pf-categoria" data-pf-field="categoria" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>Tipo de vínculo</label>
+            <input type="text" id="pf-tipo-vinculo" data-pf-field="tipoVinculoEmpregaticio" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>Origem da participação</label>
+            <input type="text" id="pf-origem-participacao" data-pf-field="origemParticipacao" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>Risco de evasão</label>
+            <input type="text" id="pf-risco-evasao" data-pf-field="riscoEvasao" value="—" readonly>
+          </div>
+          <div class="field">
+            <label>Engajamento (0 a 100)</label>
+            <input type="number" min="0" max="100" id="pf-engajamento" data-pf-field="engajamento" value="—" readonly>
           </div>
         </div>
       </div>
@@ -1172,11 +1196,11 @@
         <div class="field-grid">
           <div class="field">
             <label>E-mail</label>
-            <input type="text" id="pf-email" value="—" readonly>
+            <input type="email" id="pf-email" data-pf-field="email" value="—" readonly>
           </div>
           <div class="field">
             <label>Telefone</label>
-            <input type="text" value="(11) 98765-4321" readonly>
+            <input type="text" id="pf-telefone" data-pf-field="telefone" value="—" readonly>
           </div>
         </div>
       </div>
@@ -1217,8 +1241,11 @@
     </div>
 
     <div class="modal-footer">
-      <div class="footer-left"><i class="ti ti-eye" style="font-size:13px;"></i> Visualização — dados somente leitura</div>
+      <div class="footer-left" id="pf-footer-status"><i class="ti ti-eye" style="font-size:13px;"></i> Visualização — dados somente leitura</div>
       <div class="footer-right">
+        <button class="btn btn-ghost" id="pf-cancel-edit" onclick="cancelPerfilEdit()" hidden>Cancelar</button>
+        <button class="btn btn-ghost" id="pf-edit-btn" onclick="startPerfilEdit()"><i class="ti ti-pencil"></i> Editar dados</button>
+        <button class="btn btn-primary" id="pf-save-btn" onclick="savePerfilAluno()" hidden><i class="ti ti-device-floppy"></i> Salvar</button>
         <button class="btn btn-primary" onclick="closePerfilModal()"><i class="ti ti-x"></i> Fechar</button>
       </div>
     </div>

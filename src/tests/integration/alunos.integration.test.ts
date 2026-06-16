@@ -376,6 +376,55 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       expect(response.body.data.nome).toBe('Carlos Mendes Atualizado');
     });
 
+    it('CT01b - deve atualizar dados cadastrais exibidos no perfil do gestor', async () => {
+      const response = await request(app)
+        .patch(`/api/alunos/${aluno.idAluno}`)
+        .send({
+          nome: 'Carlos Mendes Perfil',
+          email: 'carlos.perfil@pulsemais.org',
+          telefone: '11911112222',
+          idade: 26,
+          genero: 'masculino',
+          ocupacao: 'Analista junior',
+          tipoVinculoEmpregaticio: 'CLT',
+          rendaMensal: 2400.75,
+          escolaridade: 'ensino_superior',
+          programa: 'Jornada atualizada',
+          categoria: 'transformado',
+          riscoEvasao: 'baixo',
+          engajamento: 88,
+          status: 'em_acompanhamento',
+          nivelJornada: 'avancado',
+          perfilSocioeconomico: 'renda familiar ate 3 salarios',
+          curso: 'Formacao em Dados',
+          origemParticipacao: 'indicacao',
+          dataIngresso: '2026-02-15'
+        });
+
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+      expect(response.body.data).toMatchObject({
+        nome: 'Carlos Mendes Perfil',
+        email: 'carlos.perfil@pulsemais.org',
+        telefone: '11911112222',
+        idade: 26,
+        empregabilidade: 'empregado',
+        tipoVinculoEmpregaticio: 'CLT',
+        rendaMensal: 2400.75,
+        escolaridade: 'ensino_superior',
+        programa: 'Jornada atualizada',
+        categoria: 'transformado',
+        riscoEvasao: 'baixo',
+        engajamento: 88,
+        status: 'em_acompanhamento',
+        nivelJornada: 'avancado',
+        perfilSocioeconomico: 'renda familiar ate 3 salarios',
+        curso: 'Formacao em Dados',
+        origemParticipacao: 'indicacao',
+        dataIngresso: '2026-02-15'
+      });
+    });
+
     it('CT02 - deve rejeitar riscoEvasao invalido', async () => {
       const response = await request(app)
         .patch(`/api/alunos/${aluno.idAluno}`)

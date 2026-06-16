@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  const GESTOR_API_BASE = window.PULSE_API_BASE
+    || (window.location.port === '3000' ? '/api' : 'http://localhost:3000/api');
+
   /* ── VIEWS ────────────────────────────────────────────────── */
   const VIEWS = ['inicio', 'alunos', 'dashboard', 'agenda'];
   const chartInited = { inicio: false, alunos: false, dashboard: false, agenda: false };
@@ -795,65 +798,246 @@
     'Laboratório de Mentoria':                                'ti-users',
   };
 
+  const PERFIL_FIELD_CONFIG = {
+    nome: { required: true },
+    email: { required: true },
+    telefone: { nullable: true },
+    idade: { number: true, integer: true, nullable: true },
+    genero: { token: true, nullable: true },
+    status: { token: true, skipEmpty: true },
+    dataIngresso: { skipEmpty: true },
+    curso: { nullable: true },
+    escolaridade: { nullable: true },
+    ocupacao: { nullable: true },
+    programa: { skipEmpty: true },
+    perfilSocioeconomico: { nullable: true },
+    rendaMensal: { number: true, nullable: true },
+    nivelJornada: { nullable: true },
+    categoria: { skipEmpty: true },
+    tipoVinculoEmpregaticio: { nullable: true },
+    origemParticipacao: { nullable: true },
+    riscoEvasao: { token: true, skipEmpty: true },
+    engajamento: { number: true, integer: true, skipEmpty: true }
+  };
+
+  let currentPerfilStudent = null;
+  let currentPerfilAluno = null;
+
+  function normalizeToken(value) {
+    return String(value)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim()
+      .toLowerCase()
+      .replace(/[\s-]+/g, '_');
+  }
+
+  function formatPerfilLabel(value) {
+    const text = String(value ?? '').trim();
+    if (!text) return 'Não informado';
+    return text
+      .replace(/_/g, ' ')
+      .replace(/\s+/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  }
+
+  function setPerfilInput(id, value) {
+    const input = document.getElementById(id);
+    if (!input) return;
+    input.placeholder = 'Não informado';
+    input.value = value === undefined || value === null ? '' : String(value);
+  }
+
+  function setPerfilStatus(message, icon = 'ti-eye') {
+    const footer = document.getElementById('pf-footer-status');
+    if (footer) footer.innerHTML = `<i class="ti ${icon}" style="font-size:13px;"></i> ${message}`;
+  }
+
+  function setPerfilEditMode(editing) {
+    const overlay = document.getElementById('perfil-overlay');
+    if (!overlay) return;
+
+    overlay.querySelectorAll('[data-pf-field]').forEach((input) => {
+      input.readOnly = !editing;
+    });
+
+    const editBtn = document.getElementById('pf-edit-btn');
+    const saveBtn = document.getElementById('pf-save-btn');
+    const cancelBtn = document.getElementById('pf-cancel-edit');
+    if (editBtn) editBtn.hidden = editing;
+    if (saveBtn) saveBtn.hidden = !editing;
+    if (cancelBtn) cancelBtn.hidden = !editing;
+
+    setPerfilStatus(
+      editing ? 'Edição ativa — revise e salve para atualizar o banco' : 'Visualização — dados do cadastro',
+      editing ? 'ti-pencil' : 'ti-eye'
+    );
+  }
+
+  function fillPerfilFields(student) {
+    const aluno = student?.raw || student || {};
+    const codigo = aluno.codigoPm || student?.id || (aluno.idAluno ? String(aluno.idAluno) : '');
+    const curso = aluno.curso || student?.techCourse || '';
+    const programa = aluno.programa || student?.course || '';
+    const nivel = aluno.nivelJornada || student?.mod || '';
+
+    setPerfilInput('pf-code', codigo);
+    setPerfilInput('pf-fullname', aluno.nome || student?.name);
+    setPerfilInput('pf-age', aluno.idade);
+    setPerfilInput('pf-genero', aluno.genero);
+    setPerfilInput('pf-status', aluno.status);
+    setPerfilInput('pf-data-ingresso', aluno.dataIngresso ? String(aluno.dataIngresso).slice(0, 10) : '');
+    setPerfilInput('pf-course', curso === 'Curso nao informado' ? '' : curso);
+    setPerfilInput('pf-escolaridade', aluno.escolaridade);
+    setPerfilInput('pf-ocupacao', aluno.ocupacao);
+    setPerfilInput('pf-programa', programa);
+    setPerfilInput('pf-perfil-socioeconomico', aluno.perfilSocioeconomico);
+    setPerfilInput('pf-renda-mensal', aluno.rendaMensal);
+    setPerfilInput('pf-nivel-jornada', aluno.nivelJornada);
+    setPerfilInput('pf-categoria', aluno.categoria);
+    setPerfilInput('pf-tipo-vinculo', aluno.tipoVinculoEmpregaticio);
+    setPerfilInput('pf-origem-participacao', aluno.origemParticipacao);
+    setPerfilInput('pf-risco-evasao', aluno.riscoEvasao);
+    setPerfilInput('pf-engajamento', aluno.engajamento);
+    setPerfilInput('pf-email', aluno.email);
+    setPerfilInput('pf-telefone', aluno.telefone);
+
+    const nameEl = document.getElementById('pf-name');
+    if (nameEl) nameEl.textContent = aluno.nome || student?.name || 'Aluno';
+
+    const metaEl = document.getElementById('pf-meta');
+    if (metaEl) {
+      const metaParts = [codigo, programa || curso].filter(Boolean).map(formatPerfilLabel);
+      metaEl.textContent = metaParts.length ? metaParts.join(' · ') : 'Cadastro sem detalhes informados';
+    }
+
+    const statusBadge = document.getElementById('pf-badge-status');
+    if (statusBadge) {
+      statusBadge.innerHTML = `<i class="ti ti-circle-filled" style="font-size:8px;"></i> ${formatPerfilLabel(aluno.status || student?.st)}`;
+    }
+
+    const badgeCurso = document.getElementById('pf-badge-curso');
+    if (badgeCurso) {
+      const courseForIcon = aluno.curso || student?.course;
+      const icon = COURSE_ICON[courseForIcon] || 'ti-book';
+      badgeCurso.innerHTML = `<i class="ti ${icon}" style="font-size:11px;"></i> ${formatPerfilLabel(curso || programa)}`;
+    }
+
+    const badgeNivel = document.getElementById('pf-badge-nivel');
+    if (badgeNivel) badgeNivel.textContent = formatPerfilLabel(nivel);
+
+    const av = document.getElementById('pf-avatar');
+    if (av) {
+      av.textContent = student?.ini || (aluno.nome || 'A').trim().slice(0, 2).toUpperCase();
+      av.style.background = student?.bg || '#E0E7FF';
+      av.style.color = student?.tc || '#4338CA';
+    }
+  }
+
+  function buildPerfilPayload() {
+    const payload = {};
+    const overlay = document.getElementById('perfil-overlay');
+    overlay?.querySelectorAll('[data-pf-field]').forEach((input) => {
+      const field = input.dataset.pfField;
+      const config = PERFIL_FIELD_CONFIG[field] || {};
+      const rawValue = input.value.trim();
+
+      if (!rawValue) {
+        if (config.required) {
+          throw new Error(`O campo ${field} é obrigatório.`);
+        }
+        if (config.skipEmpty) return;
+        payload[field] = null;
+        return;
+      }
+
+      if (config.number) {
+        const value = Number(rawValue.replace(',', '.'));
+        if (!Number.isFinite(value)) throw new Error(`O campo ${field} deve ser numérico.`);
+        if (config.integer && !Number.isInteger(value)) throw new Error(`O campo ${field} deve ser inteiro.`);
+        payload[field] = value;
+        return;
+      }
+
+      payload[field] = config.token ? normalizeToken(rawValue) : rawValue;
+    });
+
+    if (payload.email && !String(payload.email).includes('@')) {
+      throw new Error('O e-mail deve conter um endereço válido.');
+    }
+
+    return payload;
+  }
+
+  async function updatePerfilAluno(idAluno, payload) {
+    const response = await fetch(`${GESTOR_API_BASE}/alunos/${idAluno}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok || !body.success) {
+      throw new Error(body.message || 'Não foi possível atualizar o aluno.');
+    }
+    return body.data;
+  }
+
+  function syncPerfilStudent(updatedAluno) {
+    const previous = currentPerfilStudent || {};
+    return {
+      ...previous,
+      raw: updatedAluno,
+      id: updatedAluno.codigoPm || String(updatedAluno.idAluno),
+      name: updatedAluno.nome,
+      age: updatedAluno.idade,
+      course: updatedAluno.curso || updatedAluno.programa || previous.course || 'Programa Pulse Mais',
+      techCourse: updatedAluno.curso || previous.techCourse || 'Curso nao informado',
+      mod: updatedAluno.nivelJornada || updatedAluno.categoria || updatedAluno.status || previous.mod || 'Sem etapa informada',
+      pct: Math.max(0, Math.min(100, Number(updatedAluno.engajamento) || previous.pct || 0))
+    };
+  }
+
   function openStudentProfile(s) {
     const overlay = document.getElementById('perfil-overlay');
     if (!overlay) return;
 
-    /* Avatar */
-    const av = document.getElementById('pf-avatar');
-    if (av) { av.textContent = s.ini; av.style.background = s.bg; av.style.color = s.tc; }
-
-    /* Nome e meta */
-    const nameEl = document.getElementById('pf-name');
-    if (nameEl) nameEl.textContent = s.name;
-
-    const metaEl = document.getElementById('pf-meta');
-    if (metaEl) metaEl.textContent = s.id + ' · Programa Pulse Mais · Turma T4';
-
-    /* Badge de curso */
-    const badgeCurso = document.getElementById('pf-badge-curso');
-    if (badgeCurso) {
-      const icon  = COURSE_ICON[s.course]  || 'ti-book';
-      const short = COURSE_SHORT[s.course] || s.course;
-      badgeCurso.innerHTML = `<i class="ti ${icon}" style="font-size:11px;"></i> ${short}`;
-    }
-
-    /* Campos do formulário */
-    const codeNum = s.id.split('-').pop();
-    const codeEl  = document.getElementById('pf-code');     if (codeEl)     codeEl.value    = codeNum;
-    const nameInp = document.getElementById('pf-fullname'); if (nameInp)    nameInp.value   = s.name;
-    const ageInp  = document.getElementById('pf-age');      if (ageInp)     ageInp.value    = s.age + ' anos';
-    const courseInp = document.getElementById('pf-course'); if (courseInp)  courseInp.value = s.techCourse || '—';
+    currentPerfilStudent = s || {};
+    currentPerfilAluno = currentPerfilStudent.raw || currentPerfilStudent;
+    fillPerfilFields(currentPerfilStudent);
+    setPerfilEditMode(false);
 
     /* Frequência */
     const freqVal = document.getElementById('pf-freq-val');
     const freqBar = document.getElementById('pf-freq-bar');
-    if (freqVal) freqVal.textContent = s.pct + '%';
-    if (freqBar) { freqBar.style.width = s.pct + '%'; freqBar.style.background = s.pct < 60 ? '#E24B4A' : s.pct < 75 ? '#F4A261' : 'var(--green-600,#33B458)'; }
+    const progress = Math.max(0, Math.min(100, Number(s?.pct) || Number(currentPerfilAluno?.engajamento) || 0));
+    if (freqVal) freqVal.textContent = progress + '%';
+    if (freqBar) { freqBar.style.width = progress + '%'; freqBar.style.background = progress < 60 ? '#E24B4A' : progress < 75 ? '#F4A261' : 'var(--green-600,#33B458)'; }
 
     /* Estrelas de engajamento */
     const stars = document.getElementById('pf-eng-stars');
     if (stars) {
-      const score = Math.round(s.pct / 10);
+      const score = Math.round(progress / 10);
       stars.innerHTML = Array.from({length: 10}, (_, i) =>
         `<i class="ti ti-star${i < score ? '-filled' : ''}" style="font-size:13px;color:${i < score ? '#FFD927' : '#DEE3EA'};"></i>`
       ).join('');
     }
 
     /* ── Notas e Jornada dinâmicas ─────────────────────────── */
-    const modules    = COURSE_MODULES[s.course] || ['Módulo 1','Módulo 2','Módulo 3','Módulo 4','Módulo 5'];
-    const concluded  = s.mod.includes('Concluído');
-    const modNumMatch = s.mod.match(/Módulo (\d)/);
+    const courseName = s?.course || currentPerfilAluno?.curso || currentPerfilAluno?.programa || 'Programa Pulse Mais';
+    const modName = s?.mod || currentPerfilAluno?.nivelJornada || currentPerfilAluno?.categoria || '';
+    const modules    = COURSE_MODULES[courseName] || ['Módulo 1','Módulo 2','Módulo 3','Módulo 4','Módulo 5'];
+    const concluded  = String(modName).includes('Concluído');
+    const modNumMatch = String(modName).match(/Módulo (\d)/);
     const currentMod = modNumMatch ? parseInt(modNumMatch[1]) : 5;
     const doneMods   = concluded ? 5 : currentMod - 1;
 
     /* grade determinística: varia por curso+módulo, centrada no pct do aluno */
-    const baseGrade  = 5.5 + (s.pct / 100) * 3.5;
+    const baseGrade  = 5.5 + (progress / 100) * 3.5;
     const offsets    = [0.5, 0.2, 0, -0.2, -0.4];
 
     /* Label */
     const notasLabel = document.getElementById('pf-notas-label');
-    if (notasLabel) notasLabel.textContent = `Notas — ${s.course}`;
+    if (notasLabel) notasLabel.textContent = `Notas — ${formatPerfilLabel(courseName)}`;
 
     /* Grid de notas */
     const notasGrid = document.getElementById('pf-notas-grid');
@@ -907,6 +1091,48 @@
     overlay.classList.add('open');
     document.body.classList.add('perfil-open');
   }
+
+  window.startPerfilEdit = function () {
+    if (!currentPerfilAluno?.idAluno) {
+      setPerfilStatus('Este aluno ainda não possui identificador para edição.', 'ti-alert-circle');
+      return;
+    }
+    setPerfilEditMode(true);
+  };
+
+  window.cancelPerfilEdit = function () {
+    if (currentPerfilStudent) fillPerfilFields(currentPerfilStudent);
+    setPerfilEditMode(false);
+  };
+
+  window.savePerfilAluno = async function () {
+    const saveBtn = document.getElementById('pf-save-btn');
+    try {
+      if (!currentPerfilAluno?.idAluno) {
+        throw new Error('Este aluno ainda não possui identificador para edição.');
+      }
+
+      const payload = buildPerfilPayload();
+      if (saveBtn) saveBtn.disabled = true;
+      setPerfilStatus('Salvando alterações...', 'ti-loader-2');
+
+      const updatedAluno = await updatePerfilAluno(currentPerfilAluno.idAluno, payload);
+      currentPerfilAluno = updatedAluno;
+      currentPerfilStudent = syncPerfilStudent(updatedAluno);
+
+      fillPerfilFields(currentPerfilStudent);
+      setPerfilEditMode(false);
+      setPerfilStatus('Aluno atualizado com sucesso.', 'ti-circle-check');
+
+      if (window.refreshListaAlunosView) {
+        await window.refreshListaAlunosView();
+      }
+    } catch (error) {
+      setPerfilStatus(error.message || 'Não foi possível atualizar o aluno.', 'ti-alert-circle');
+    } finally {
+      if (saveBtn) saveBtn.disabled = false;
+    }
+  };
 
   window.closePerfilModal = function () {
     const overlay = document.getElementById('perfil-overlay');

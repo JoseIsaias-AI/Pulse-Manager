@@ -802,6 +802,11 @@
   }
 
   window.initListaAlunosView = initialize;
+  window.refreshListaAlunosView = async function () {
+    if (!activeInstance) return;
+    await applyFilters(activeInstance);
+    await refreshFilterOptions(activeInstance).catch(() => {});
+  };
 
   if (!document.getElementById('view-alunos')) {
     initialize();

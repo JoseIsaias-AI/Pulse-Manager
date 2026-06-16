@@ -2,7 +2,7 @@
 import { NotFoundError, PayloadValidationError, ConflictError } from '../utils/errors';
 import { CadastroAlunoOptions } from '../repositories/alunoRepository';
 import { assertIsoDate } from '../utils/date';
-import { normalizeText, optionalString, requiredString } from '../utils/validators';
+import { optionalString, requiredString } from '../utils/validators';
 import {
   EMPREGABILIDADES_ALUNO,
   EmpregabilidadeAluno,
@@ -175,10 +175,84 @@ export class AlunoService {
       data.email = requiredString(data.email, 'email', 5).toLowerCase();
       if (!data.email.includes('@')) throw new PayloadValidationError('O campo email deve conter um endereco valido.');
     }
-    if (data.dataIngresso !== undefined) data.dataIngresso = assertIsoDate(data.dataIngresso, 'dataIngresso');
-    if (data.riscoEvasao !== undefined && !['baixo', 'medio', 'alto'].includes(normalizeText(data.riscoEvasao))) {
-      throw new PayloadValidationError('Risco de evasao invalido.');
+
+    if (
+      data.idade !== undefined &&
+      data.idade !== null &&
+      (!Number.isInteger(data.idade) || data.idade < 0 || data.idade > 120)
+    ) {
+      throw new PayloadValidationError('O campo idade deve estar entre 0 e 120.');
     }
+
+    if (
+      data.rendaMensal !== undefined &&
+      data.rendaMensal !== null &&
+      (!Number.isFinite(data.rendaMensal) || data.rendaMensal < 0)
+    ) {
+      throw new PayloadValidationError('O campo rendaMensal deve ser um numero maior ou igual a zero.');
+    }
+
+    if (
+      data.engajamento !== undefined &&
+      (!Number.isInteger(data.engajamento) || data.engajamento < 0 || data.engajamento > 100)
+    ) {
+      throw new PayloadValidationError('O campo engajamento deve ser um numero inteiro entre 0 e 100.');
+    }
+
+    if (data.genero !== undefined && data.genero !== null) {
+      const genero = optionalString(data.genero)?.toLowerCase();
+      if (genero && !GENEROS_ALUNO.includes(genero as (typeof GENEROS_ALUNO)[number])) {
+        throw new PayloadValidationError('Genero invalido.');
+      }
+      data.genero = genero;
+    }
+
+    if (data.status !== undefined) {
+      const status = optionalString(data.status)?.toLowerCase();
+      if (!status || !STATUS_ALUNO.includes(status as StatusAluno)) {
+        throw new PayloadValidationError('Status do aluno invalido.');
+      }
+      data.status = status as StatusAluno;
+    }
+
+    if (data.dataIngresso !== undefined) data.dataIngresso = assertIsoDate(data.dataIngresso, 'dataIngresso');
+
+    if (data.dataIngressoEnsinoSuperior !== undefined && data.dataIngressoEnsinoSuperior !== null) {
+      data.dataIngressoEnsinoSuperior = assertIsoDate(
+        data.dataIngressoEnsinoSuperior,
+        'dataIngressoEnsinoSuperior'
+      );
+    }
+
+    if (data.riscoEvasao !== undefined) {
+      const riscoEvasao = optionalString(data.riscoEvasao)?.toLowerCase();
+      if (!riscoEvasao || !RISCOS_EVASAO.includes(riscoEvasao as RiscoEvasao)) {
+        throw new PayloadValidationError('Risco de evasao invalido.');
+      }
+      data.riscoEvasao = riscoEvasao as RiscoEvasao;
+    }
+
+    [
+      'telefone',
+      'ocupacao',
+      'tipoVinculoEmpregaticio',
+      'escolaridade',
+      'instituicaoEnsinoSuperior',
+      'cursoEnsinoSuperior',
+      'statusEnsinoSuperior',
+      'programa',
+      'categoria',
+      'nivelJornada',
+      'perfilSocioeconomico',
+      'curso',
+      'origemParticipacao'
+    ].forEach((field) => {
+      const key = field as keyof AtualizarAlunoPayload;
+      if (data[key] !== undefined && data[key] !== null) {
+        (data as Record<string, unknown>)[field] = optionalString(data[key]);
+      }
+    });
+
     return data;
   }
 }
