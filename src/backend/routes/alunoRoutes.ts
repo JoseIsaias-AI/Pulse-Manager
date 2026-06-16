@@ -8,6 +8,7 @@ const controller = new AlunoController(new AlunoService(new AlunoRepository()));
 
 router.get('/alunos', controller.listar);
 router.post('/alunos', controller.cadastrar);
+router.get('/alunos/opcoes-cadastro', controller.listarOpcoesCadastro);
 router.get('/alunos/:idAluno', controller.obter);
 router.patch('/alunos/:idAluno', controller.atualizar);
 router.delete('/alunos/:idAluno', controller.inativar);

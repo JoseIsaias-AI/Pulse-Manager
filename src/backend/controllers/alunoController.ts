@@ -35,6 +35,15 @@ export class AlunoController {
     }
   };
 
+  listarOpcoesCadastro = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const result = await this.service.listarOpcoesCadastro();
+      res.status(200).json(result);
+    } catch (error) {
+      this.handle(error, res, next);
+    }
+  };
+
   obter = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const result = await this.service.obterPerfil(positiveInteger(req.params.idAluno, 'idAluno'));

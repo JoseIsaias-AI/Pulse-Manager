@@ -114,6 +114,40 @@
     return body.data.alunos || [];
   }
 
+  async function createStudent(payload) {
+    let response;
+    try {
+      response = await fetch(`${API_BASE}/alunos`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (error) {
+      throw new Error('Nao foi possivel conectar a API. Inicie o backend com "npm run dev:local".');
+    }
+
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok || !body.success) {
+      throw new Error(body.message || 'Nao foi possivel cadastrar o aluno.');
+    }
+    return body.data;
+  }
+
+  async function fetchCreateOptions() {
+    let response;
+    try {
+      response = await fetch(`${API_BASE}/alunos/opcoes-cadastro`);
+    } catch (error) {
+      throw new Error('Nao foi possivel carregar as opcoes de cadastro.');
+    }
+
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok || !body.success) {
+      throw new Error(body.message || 'Nao foi possivel carregar as opcoes de cadastro.');
+    }
+    return body.data || {};
+  }
+
   function uniqueOptions(students, field) {
     return [...new Set(students.map((student) => student[field]).filter(Boolean))]
       .sort((a, b) => String(a).localeCompare(String(b), 'pt-BR'));
@@ -164,8 +198,288 @@
       currentPage: 1,
       sort: { key: null, mode: 'none' },
       controller: null,
+      createOverlay: null,
+      createForm: null,
+      createOptionMaps: {},
+      createOptionsLoaded: false,
       initialized: false
     };
+  }
+
+  function createModalMarkup() {
+    return `
+      <div class="al-create-modal" role="dialog" aria-modal="true" aria-labelledby="al-create-title">
+        <div class="al-create-header">
+          <div>
+            <h2 id="al-create-title">Novo aluno</h2>
+            <p>Cadastre os dados disponiveis do aluno.</p>
+          </div>
+          <button class="al-create-close" type="button" aria-label="Fechar">&times;</button>
+        </div>
+        <form class="al-create-form">
+          <fieldset class="al-create-section">
+            <legend>Dados pessoais</legend>
+            <div class="al-create-grid">
+              <label class="al-create-field al-create-field--wide">
+                Nome completo <span class="al-create-required">*</span>
+                <input name="nome" type="text" minlength="3" maxlength="150" required autocomplete="name">
+              </label>
+              <label class="al-create-field">
+                E-mail <span class="al-create-required">*</span>
+                <input name="email" type="email" maxlength="255" required autocomplete="email">
+              </label>
+              <label class="al-create-field">
+                Telefone
+                <input name="telefone" type="tel" maxlength="30" autocomplete="tel">
+              </label>
+              <label class="al-create-field">
+                Idade
+                <input name="idade" type="number" min="0" max="120" step="1">
+              </label>
+              <label class="al-create-field">
+                G&ecirc;nero
+                <select name="genero" data-al-option-field="genero" data-al-empty-label="N&atilde;o informado">
+                  <option value="">Carregando op&ccedil;&otilde;es...</option>
+                </select>
+              </label>
+              <label class="al-create-field">
+                Data de ingresso
+                <input name="dataIngresso" type="date">
+              </label>
+              <label class="al-create-field">
+                Status
+                <select name="status" data-al-option-field="status" data-al-empty-label="N&atilde;o informado">
+                  <option value="">Carregando op&ccedil;&otilde;es...</option>
+                </select>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="al-create-section">
+            <legend>Jornada Pulse Mais</legend>
+            <div class="al-create-grid">
+              <label class="al-create-field">
+                Programa
+                <input name="programa" type="text" maxlength="120" data-al-option-field="programa">
+              </label>
+              <label class="al-create-field">
+                Categoria
+                <input name="categoria" type="text" maxlength="60" data-al-option-field="categoria">
+              </label>
+              <label class="al-create-field">
+                Nivel da jornada
+                <input name="nivelJornada" type="text" maxlength="50" data-al-option-field="nivelJornada">
+              </label>
+              <label class="al-create-field">
+                Curso Pulse Mais
+                <input name="curso" type="text" maxlength="150" data-al-option-field="curso">
+              </label>
+              <label class="al-create-field">
+                Origem da participa&ccedil;&atilde;o
+                <input name="origemParticipacao" type="text" maxlength="100" data-al-option-field="origemParticipacao">
+              </label>
+              <label class="al-create-field">
+                Risco de evas&atilde;o
+                <select name="riscoEvasao" data-al-option-field="riscoEvasao" data-al-empty-label="N&atilde;o informado">
+                  <option value="">Carregando op&ccedil;&otilde;es...</option>
+                </select>
+              </label>
+              <label class="al-create-field">
+                Engajamento (0 a 100)
+                <input name="engajamento" type="number" min="0" max="100" step="1">
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="al-create-section">
+            <legend>Empregabilidade</legend>
+            <div class="al-create-grid">
+              <label class="al-create-field">
+                Ocupa&ccedil;&atilde;o
+                <input name="ocupacao" type="text" maxlength="150" data-al-option-field="ocupacao">
+              </label>
+              <label class="al-create-field">
+                Tipo de v&iacute;nculo
+                <input name="tipoVinculoEmpregaticio" type="text" maxlength="50" data-al-option-field="tipoVinculoEmpregaticio">
+              </label>
+              <label class="al-create-field">
+                Renda mensal
+                <input name="rendaMensal" type="number" min="0" step="0.01">
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="al-create-section">
+            <legend>Escolaridade e perfil</legend>
+            <div class="al-create-grid">
+              <label class="al-create-field">
+                Escolaridade
+                <input name="escolaridade" type="text" maxlength="100" data-al-option-field="escolaridade">
+              </label>
+              <label class="al-create-field">
+                Perfil socioecon&ocirc;mico
+                <input name="perfilSocioeconomico" type="text" maxlength="150" data-al-option-field="perfilSocioeconomico">
+              </label>
+            </div>
+          </fieldset>
+
+          <p class="al-create-feedback" role="alert"></p>
+        </form>
+        <div class="al-create-actions">
+          <button class="al-create-cancel" type="button">Cancelar</button>
+          <button class="al-create-submit" type="submit" form="al-create-form-placeholder">Cadastrar aluno</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function ensureCreateModal(instance) {
+    if (instance.createOverlay) return;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'al-create-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.innerHTML = createModalMarkup();
+    document.body.appendChild(overlay);
+
+    const form = overlay.querySelector('.al-create-form');
+    const submit = overlay.querySelector('.al-create-submit');
+    const formId = `al-create-form-${Date.now()}`;
+    form.id = formId;
+    submit.setAttribute('form', formId);
+    instance.createOverlay = overlay;
+    instance.createForm = form;
+  }
+
+  function openCreateModal(instance) {
+    ensureCreateModal(instance);
+    loadCreateOptions(instance);
+    instance.createOverlay.classList.add('is-open');
+    instance.createOverlay.setAttribute('aria-hidden', 'false');
+    instance.createOverlay.querySelector('.al-create-feedback').textContent = '';
+    const firstInput = instance.createForm.querySelector('input[name="nome"]');
+    if (firstInput) firstInput.focus();
+  }
+
+  function closeCreateModal(instance, reset) {
+    if (!instance.createOverlay) return;
+    instance.createOverlay.classList.remove('is-open');
+    instance.createOverlay.setAttribute('aria-hidden', 'true');
+    if (reset && instance.createForm) instance.createForm.reset();
+  }
+
+  function serializeCreateForm(form, optionMaps) {
+    const numericFields = new Set(['idade', 'rendaMensal', 'engajamento']);
+    const payload = {};
+
+    new FormData(form).forEach((value, key) => {
+      const normalized = String(value).trim();
+      if (normalized === '') return;
+      const optionMap = optionMaps[key] || {};
+      const persistedValue = optionMap[normalized.toLocaleLowerCase('pt-BR')] || normalized;
+      payload[key] = numericFields.has(key) ? Number(normalized) : persistedValue;
+    });
+    return payload;
+  }
+
+  function showNotice(message, error) {
+    const previous = document.querySelector('.al-notice');
+    if (previous) previous.remove();
+
+    const notice = document.createElement('div');
+    notice.className = `al-notice${error ? ' al-notice--error' : ''}`;
+    notice.textContent = message;
+    document.body.appendChild(notice);
+    setTimeout(() => notice.remove(), 4500);
+  }
+
+  function optionLabel(value) {
+    const exactLabels = {
+      nao_informado: 'N\u00e3o informado',
+      sem_categoria: 'Sem categoria',
+      em_acompanhamento: 'Em acompanhamento',
+      nao_binario: 'N\u00e3o bin\u00e1rio',
+      prefiro_nao_informar: 'Prefiro n\u00e3o informar',
+      programa_pulse_mais: 'Programa Pulse Mais',
+      ex_aluno_indicacao: 'Ex-aluno por indica\u00e7\u00e3o',
+      vivencia_empresa: 'Viv\u00eancia em empresa'
+    };
+    const wordLabels = {
+      nao: 'n\u00e3o',
+      medio: 'm\u00e9dio',
+      indicacao: 'indica\u00e7\u00e3o',
+      publica: 'p\u00fablica',
+      participacao: 'participa\u00e7\u00e3o',
+      instituicao: 'institui\u00e7\u00e3o',
+      socioeconomico: 'socioecon\u00f4mico',
+      graduacao: 'gradua\u00e7\u00e3o',
+      vinculo: 'v\u00ednculo'
+    };
+    const raw = String(value).trim();
+    if (exactLabels[raw.toLowerCase()]) return exactLabels[raw.toLowerCase()];
+    if (/^[A-Z0-9]{2,}$/.test(raw)) return raw;
+
+    const text = raw
+      .replace(/_/g, ' ')
+      .split(/\s+/)
+      .map((word) => wordLabels[word.toLowerCase()] || word)
+      .join(' ');
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  function populateCreateOptions(instance, options) {
+    instance.createForm.querySelectorAll('[data-al-option-field]').forEach((field) => {
+      const values = Array.isArray(options[field.dataset.alOptionField])
+        ? options[field.dataset.alOptionField]
+        : [];
+      const fieldName = field.dataset.alOptionField;
+      instance.createOptionMaps[fieldName] = Object.fromEntries(
+        values.map((value) => [optionLabel(value).toLocaleLowerCase('pt-BR'), value])
+      );
+
+      if (field.tagName === 'SELECT') {
+        const selected = field.value;
+        field.innerHTML = '';
+        const empty = document.createElement('option');
+        empty.value = '';
+        empty.textContent = field.dataset.alEmptyLabel || 'Nao informado';
+        field.appendChild(empty);
+        values.forEach((value) => {
+          const option = document.createElement('option');
+          option.value = value;
+          option.textContent = optionLabel(value);
+          field.appendChild(option);
+        });
+        field.value = values.includes(selected) ? selected : '';
+        return;
+      }
+
+      const listId = `al-options-${field.dataset.alOptionField}`;
+      let list = instance.createForm.querySelector(`#${listId}`);
+      if (!list) {
+        list = document.createElement('datalist');
+        list.id = listId;
+        instance.createForm.appendChild(list);
+      }
+      list.innerHTML = values
+        .map((value) => `<option value="${escapeHtml(optionLabel(value))}"></option>`)
+        .join('');
+      field.setAttribute('list', listId);
+      field.placeholder = values.length ? 'Selecione ou digite um novo valor' : 'Digite um valor';
+    });
+  }
+
+  async function loadCreateOptions(instance) {
+    if (instance.createOptionsLoaded) return;
+    try {
+      populateCreateOptions(instance, await fetchCreateOptions());
+      instance.createOptionsLoaded = true;
+    } catch (error) {
+      showNotice(error.message, true);
+      instance.createForm.querySelectorAll('select[data-al-option-field]').forEach((select) => {
+        select.innerHTML = '<option value="">Op&ccedil;&otilde;es indispon&iacute;veis</option>';
+      });
+    }
   }
 
   function renderEmpty(instance, message, error) {
@@ -339,6 +653,69 @@
     }
   }
 
+  async function refreshFilterOptions(instance) {
+    const alunos = await fetchStudents({}, new AbortController().signal);
+    const normalized = alunos.map(normalizeStudent);
+    fillSelect(instance.root.querySelector('#filtro-escolaridade'), uniqueOptions(normalized, 'schooling'));
+    fillSelect(instance.root.querySelector('#filtro-curso'), uniqueOptions(normalized, 'techCourse'));
+    fillSelect(instance.root.querySelector('#filtro-ano-ingresso'), uniqueOptions(normalized, 'entryYear').reverse());
+  }
+
+  function bindCreateEvents(instance) {
+    const openButton = instance.root.querySelector('[data-al-open-create]');
+    if (!openButton) return;
+
+    ensureCreateModal(instance);
+    const overlay = instance.createOverlay;
+    const form = instance.createForm;
+    const closeButton = overlay.querySelector('.al-create-close');
+    const cancelButton = overlay.querySelector('.al-create-cancel');
+    const submitButton = overlay.querySelector('.al-create-submit');
+    const feedback = overlay.querySelector('.al-create-feedback');
+
+    openButton.addEventListener('click', () => openCreateModal(instance));
+    closeButton.addEventListener('click', () => closeCreateModal(instance, true));
+    cancelButton.addEventListener('click', () => closeCreateModal(instance, true));
+    overlay.addEventListener('click', (event) => {
+      if (event.target === overlay) closeCreateModal(instance, true);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
+        closeCreateModal(instance, true);
+      }
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      feedback.textContent = '';
+      submitButton.disabled = true;
+      submitButton.textContent = 'Cadastrando...';
+
+      let aluno;
+      try {
+        aluno = await createStudent(serializeCreateForm(form, instance.createOptionMaps));
+      } catch (error) {
+        feedback.textContent = error.message;
+        return;
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Cadastrar aluno';
+      }
+
+      closeCreateModal(instance, true);
+      showNotice(`${aluno.nome} foi cadastrado com o codigo ${aluno.codigoPm}.`);
+
+      try {
+        instance.createOptionsLoaded = false;
+        await loadCreateOptions(instance);
+        await refreshFilterOptions(instance);
+        await applyFilters(instance);
+      } catch (error) {
+        showNotice('Aluno cadastrado, mas nao foi possivel atualizar as opcoes de filtro.', true);
+      }
+    });
+  }
+
   function bindEvents(instance) {
     instance.root.querySelectorAll('[data-al-filter]').forEach((select) => {
       select.addEventListener('change', () => {
@@ -391,6 +768,8 @@
         timer = setTimeout(() => applyFilters(instance), 300);
       });
     }
+
+    bindCreateEvents(instance);
   }
 
   async function initialize(options) {

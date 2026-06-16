@@ -32,6 +32,7 @@ const baseAluno = {
 function makeRepository() {
   return {
     list: jest.fn(),
+    getCadastroOptions: jest.fn(),
     findOneByEmail: jest.fn(),
     create: jest.fn(),
     findById: jest.fn(),
@@ -74,6 +75,33 @@ describe('AlunoService', () => {
       limite: 10
     });
     expect(result).toEqual({ success: true, data: { alunos: [baseAluno] } });
+  });
+
+  it('lista opcoes de cadastro combinando enums e valores do banco', async () => {
+    repository.getCadastroOptions.mockResolvedValue({
+      genero: ['masculino'],
+      ocupacao: ['Estudante'],
+      tipoVinculoEmpregaticio: ['CLT'],
+      escolaridade: ['Ensino medio completo'],
+      instituicaoEnsinoSuperior: [],
+      cursoEnsinoSuperior: [],
+      statusEnsinoSuperior: [],
+      programa: ['Pulse'],
+      categoria: ['Conectado'],
+      riscoEvasao: ['baixo'],
+      status: ['ativo'],
+      nivelJornada: ['conectado'],
+      perfilSocioeconomico: ['bolsista'],
+      curso: ['Tecnologia'],
+      origemParticipacao: ['evento']
+    });
+
+    const result = await service.listarOpcoesCadastro();
+
+    expect(result.data.genero).toEqual(expect.arrayContaining(['masculino', 'nao_binario']));
+    expect(result.data.status).toEqual(expect.arrayContaining(['ativo', 'desligado']));
+    expect(result.data.riscoEvasao).toEqual(expect.arrayContaining(['baixo', 'medio', 'alto']));
+    expect(result.data.curso).toEqual(['Tecnologia']);
   });
 
   it('rejeita filtros de empregabilidade e ano de ingresso invalidos', async () => {
@@ -127,6 +155,20 @@ describe('AlunoService', () => {
     await expect(
       service.cadastrar({ nome: 'Maria Silva', email: 'maria@email.com', dataIngresso: '10/01/2024' })
     ).rejects.toThrow('O campo dataIngresso deve estar no formato YYYY-MM-DD.');
+  });
+
+  it('valida os dados adicionais do cadastro', async () => {
+    await expect(
+      service.cadastrar({ nome: 'Maria Silva', email: 'maria@email.com', rendaMensal: -10 })
+    ).rejects.toThrow('O campo rendaMensal deve ser um numero maior ou igual a zero.');
+
+    await expect(
+      service.cadastrar({ nome: 'Maria Silva', email: 'maria@email.com', engajamento: 101 })
+    ).rejects.toThrow('O campo engajamento deve ser um numero inteiro entre 0 e 100.');
+
+    await expect(
+      service.cadastrar({ nome: 'Maria Silva', email: 'maria@email.com', status: 'desconhecido' as any })
+    ).rejects.toThrow('Status do aluno invalido.');
   });
 
   it('rejeita cadastro com email ja existente', async () => {

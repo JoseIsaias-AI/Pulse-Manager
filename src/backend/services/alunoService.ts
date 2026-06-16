@@ -1,12 +1,23 @@
 ﻿import { CriarAlunoPayload, AlunoRecord, AlunoRepository, AtualizarAlunoPayload } from '../repositories/alunoRepository';
 import { NotFoundError, PayloadValidationError, ConflictError } from '../utils/errors';
+import { CadastroAlunoOptions } from '../repositories/alunoRepository';
 import { assertIsoDate } from '../utils/date';
-import { normalizeText, requiredString } from '../utils/validators';
+import { normalizeText, optionalString, requiredString } from '../utils/validators';
 import {
   EMPREGABILIDADES_ALUNO,
   EmpregabilidadeAluno,
-  SegmentacaoAlunoQuery
+  GENEROS_ALUNO,
+  RISCOS_EVASAO,
+  RiscoEvasao,
+  SegmentacaoAlunoQuery,
+  STATUS_ALUNO,
+  StatusAluno
 } from '../models/alunoModel';
+
+function mergeOptions(...groups: readonly string[][]): string[] {
+  return [...new Set(groups.flat().filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b, 'pt-BR'));
+}
 
 export class AlunoService {
   constructor(private readonly repository: AlunoRepository) {}
@@ -43,6 +54,17 @@ export class AlunoService {
 
     const aluno = await this.repository.create(data);
     return { success: true, data: aluno };
+  }
+
+  async listarOpcoesCadastro() {
+    const options = await this.repository.getCadastroOptions();
+    const data: CadastroAlunoOptions = {
+      ...options,
+      genero: mergeOptions([...GENEROS_ALUNO], options.genero),
+      riscoEvasao: mergeOptions(RISCOS_EVASAO, options.riscoEvasao),
+      status: mergeOptions(STATUS_ALUNO, options.status)
+    };
+    return { success: true, data };
   }
 
   async obterPerfil(idAluno: number) {
@@ -82,8 +104,40 @@ export class AlunoService {
       throw new PayloadValidationError('O campo email deve conter um endereco valido.');
     }
 
-    if (payload.idade !== undefined && (payload.idade < 0 || payload.idade > 120)) {
+    if (
+      payload.idade !== undefined &&
+      (!Number.isInteger(payload.idade) || payload.idade < 0 || payload.idade > 120)
+    ) {
       throw new PayloadValidationError('O campo idade deve estar entre 0 e 120.');
+    }
+
+    if (
+      payload.rendaMensal !== undefined &&
+      (!Number.isFinite(payload.rendaMensal) || payload.rendaMensal < 0)
+    ) {
+      throw new PayloadValidationError('O campo rendaMensal deve ser um numero maior ou igual a zero.');
+    }
+
+    if (
+      payload.engajamento !== undefined &&
+      (!Number.isInteger(payload.engajamento) || payload.engajamento < 0 || payload.engajamento > 100)
+    ) {
+      throw new PayloadValidationError('O campo engajamento deve ser um numero inteiro entre 0 e 100.');
+    }
+
+    const genero = optionalString(payload.genero)?.toLowerCase();
+    if (genero && !GENEROS_ALUNO.includes(genero as (typeof GENEROS_ALUNO)[number])) {
+      throw new PayloadValidationError('Genero invalido.');
+    }
+
+    const riscoEvasao = optionalString(payload.riscoEvasao)?.toLowerCase();
+    if (riscoEvasao && !RISCOS_EVASAO.includes(riscoEvasao as RiscoEvasao)) {
+      throw new PayloadValidationError('Risco de evasao invalido.');
+    }
+
+    const status = optionalString(payload.status)?.toLowerCase();
+    if (status && !STATUS_ALUNO.includes(status as StatusAluno)) {
+      throw new PayloadValidationError('Status do aluno invalido.');
     }
 
     return {
@@ -91,10 +145,26 @@ export class AlunoService {
       nome,
       email,
       dataIngresso: assertIsoDate(payload.dataIngresso, 'dataIngresso'),
-      programa: payload.programa?.trim(),
-      categoria: payload.categoria?.trim(),
-      nivelJornada: payload.nivelJornada?.trim(),
-      curso: payload.curso?.trim()
+      dataIngressoEnsinoSuperior: assertIsoDate(
+        payload.dataIngressoEnsinoSuperior,
+        'dataIngressoEnsinoSuperior'
+      ),
+      telefone: optionalString(payload.telefone),
+      genero,
+      ocupacao: optionalString(payload.ocupacao),
+      tipoVinculoEmpregaticio: optionalString(payload.tipoVinculoEmpregaticio),
+      escolaridade: optionalString(payload.escolaridade),
+      instituicaoEnsinoSuperior: optionalString(payload.instituicaoEnsinoSuperior),
+      cursoEnsinoSuperior: optionalString(payload.cursoEnsinoSuperior),
+      statusEnsinoSuperior: optionalString(payload.statusEnsinoSuperior),
+      programa: optionalString(payload.programa),
+      categoria: optionalString(payload.categoria),
+      riscoEvasao: riscoEvasao as RiscoEvasao | undefined,
+      status: status as StatusAluno | undefined,
+      nivelJornada: optionalString(payload.nivelJornada),
+      perfilSocioeconomico: optionalString(payload.perfilSocioeconomico),
+      curso: optionalString(payload.curso),
+      origemParticipacao: optionalString(payload.origemParticipacao)
     };
   }
 

@@ -103,9 +103,94 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
         message: 'O campo idade deve estar entre 0 e 120.'
       });
     });
+
+    it('CT05 - deve cadastrar todos os dados disponiveis do aluno', async () => {
+      const response = await request(app).post('/api/alunos').send({
+        nome: 'Marina Completa',
+        email: 'marina.completa@pulsemais.org',
+        telefone: '11999999999',
+        idade: 24,
+        genero: 'feminino',
+        ocupacao: 'Analista de dados',
+        tipoVinculoEmpregaticio: 'CLT',
+        rendaMensal: 3500.5,
+        escolaridade: 'ensino_superior',
+        instituicaoEnsinoSuperior: 'Universidade Federal',
+        cursoEnsinoSuperior: 'Sistemas de Informacao',
+        statusEnsinoSuperior: 'cursando',
+        dataIngressoEnsinoSuperior: '2024-02-01',
+        dataIngresso: '2026-03-10',
+        programa: 'Jornada de empregabilidade',
+        categoria: 'transformado',
+        riscoEvasao: 'medio',
+        engajamento: 82,
+        status: 'em_acompanhamento',
+        nivelJornada: 'avancado',
+        perfilSocioeconomico: 'renda familiar ate 3 salarios',
+        curso: 'Formacao em Dados',
+        origemParticipacao: 'indicacao'
+      });
+
+      expect(response.status).toBe(201);
+      expect(response.body.data).toMatchObject({
+        nome: 'Marina Completa',
+        empregabilidade: 'empregado',
+        tipoVinculoEmpregaticio: 'CLT',
+        rendaMensal: 3500.5,
+        instituicaoEnsinoSuperior: 'Universidade Federal',
+        cursoEnsinoSuperior: 'Sistemas de Informacao',
+        dataIngressoEnsinoSuperior: '2024-02-01',
+        riscoEvasao: 'medio',
+        engajamento: 82,
+        status: 'em_acompanhamento',
+        curso: 'Formacao em Dados'
+      });
+    });
+
+    it('CT06 - deve rejeitar renda negativa e engajamento fora da faixa', async () => {
+      const renda = await request(app).post('/api/alunos').send({
+        nome: 'Aluno Renda',
+        email: 'aluno.renda@pulsemais.org',
+        rendaMensal: -1
+      });
+      const engajamento = await request(app).post('/api/alunos').send({
+        nome: 'Aluno Engajamento',
+        email: 'aluno.engajamento@pulsemais.org',
+        engajamento: 101
+      });
+
+      expect(renda.status).toBe(400);
+      expect(renda.body.message).toBe('O campo rendaMensal deve ser um numero maior ou igual a zero.');
+      expect(engajamento.status).toBe(400);
+      expect(engajamento.body.message).toBe('O campo engajamento deve ser um numero inteiro entre 0 e 100.');
+    });
   });
 
   describe('UC-04 - Listar e consultar alunos', () => {
+    it('CT00 - deve listar enums e valores variaveis para o cadastro', async () => {
+      const response = await request(app).get('/api/alunos/opcoes-cadastro');
+
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+      expect(response.body.data.genero).toEqual(expect.arrayContaining([
+        'feminino',
+        'masculino',
+        'nao_binario',
+        'outro',
+        'prefiro_nao_informar'
+      ]));
+      expect(response.body.data.status).toEqual(expect.arrayContaining([
+        'ativo',
+        'inativo',
+        'egresso',
+        'desligado',
+        'em_acompanhamento'
+      ]));
+      expect(response.body.data.riscoEvasao).toEqual(expect.arrayContaining(['baixo', 'medio', 'alto']));
+      expect(response.body.data.escolaridade).toContain('ensino_medio');
+      expect(response.body.data.programa).toContain('Jornada de empregabilidade');
+    });
+
     it('CT01 - deve listar alunos cadastrados', async () => {
       const response = await request(app).get('/api/alunos');
 

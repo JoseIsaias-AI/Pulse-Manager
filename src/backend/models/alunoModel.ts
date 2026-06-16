@@ -36,6 +36,13 @@ export const STATUS_ALUNO: StatusAluno[] = [
 ];
 
 export const RISCOS_EVASAO: RiscoEvasao[] = ['baixo', 'medio', 'alto'];
+export const GENEROS_ALUNO = [
+  'feminino',
+  'masculino',
+  'nao_binario',
+  'outro',
+  'prefiro_nao_informar'
+] as const;
 export const EMPREGABILIDADES_ALUNO: EmpregabilidadeAluno[] = [
   'empregado',
   'desempregado',

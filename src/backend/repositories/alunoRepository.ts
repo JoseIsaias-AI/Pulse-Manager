@@ -1,6 +1,11 @@
 import { QueryResultRow } from 'pg';
 import { query } from '../database/connection';
-import { EmpregabilidadeAluno, SegmentacaoAlunoQuery } from '../models/alunoModel';
+import {
+  EmpregabilidadeAluno,
+  RiscoEvasao,
+  SegmentacaoAlunoQuery,
+  StatusAluno
+} from '../models/alunoModel';
 import { formatarCodigoPm, extrairSequencial } from '../services/codigoPmService';
 
 export interface AlunoRecord {
@@ -39,10 +44,19 @@ export interface CriarAlunoPayload {
   idade?: number;
   genero?: string;
   ocupacao?: string;
+  tipoVinculoEmpregaticio?: string;
+  rendaMensal?: number;
   escolaridade?: string;
+  instituicaoEnsinoSuperior?: string;
+  cursoEnsinoSuperior?: string;
+  statusEnsinoSuperior?: string;
+  dataIngressoEnsinoSuperior?: string;
   dataIngresso?: string;
   programa?: string;
   categoria?: string;
+  riscoEvasao?: RiscoEvasao;
+  engajamento?: number;
+  status?: StatusAluno;
   nivelJornada?: string;
   perfilSocioeconomico?: string;
   curso?: string;
@@ -50,10 +64,45 @@ export interface CriarAlunoPayload {
 }
 
 export interface AtualizarAlunoPayload extends Partial<CriarAlunoPayload> {
-  status?: string;
-  riscoEvasao?: string;
-  engajamento?: number;
+  status?: StatusAluno;
+  riscoEvasao?: RiscoEvasao;
 }
+
+export interface CadastroAlunoOptions {
+  genero: string[];
+  ocupacao: string[];
+  tipoVinculoEmpregaticio: string[];
+  escolaridade: string[];
+  instituicaoEnsinoSuperior: string[];
+  cursoEnsinoSuperior: string[];
+  statusEnsinoSuperior: string[];
+  programa: string[];
+  categoria: string[];
+  riscoEvasao: string[];
+  status: string[];
+  nivelJornada: string[];
+  perfilSocioeconomico: string[];
+  curso: string[];
+  origemParticipacao: string[];
+}
+
+const CADASTRO_OPTION_COLUMNS: Record<keyof CadastroAlunoOptions, string> = {
+  genero: 'genero',
+  ocupacao: 'ocupacao',
+  tipoVinculoEmpregaticio: 'tipo_vinculo_empregaticio',
+  escolaridade: 'escolaridade',
+  instituicaoEnsinoSuperior: 'instituicao_ensino_superior',
+  cursoEnsinoSuperior: 'curso_ensino_superior',
+  statusEnsinoSuperior: 'status_ensino_superior',
+  programa: 'programa',
+  categoria: 'categoria',
+  riscoEvasao: 'risco_evasao',
+  status: 'status',
+  nivelJornada: 'nivel_jornada',
+  perfilSocioeconomico: 'perfil_socioeconomico',
+  curso: 'curso',
+  origemParticipacao: 'origem_participacao'
+};
 
 // Sem casts PostgreSQL-específicos (::text, ::float) para compatibilidade com sqljs nos testes.
 // PostgreSQL faz conversão implícita; sqljs não suporta sintaxe de cast do PG.
@@ -86,7 +135,7 @@ const ALUNO_SELECT = `
     status_ensino_superior AS "statusEnsinoSuperior",
     data_ingresso_ensino_superior AS "dataIngressoEnsinoSuperior",
     COALESCE(programa, curso, origem_participacao) AS programa,
-    COALESCE(categoria, nivel_jornada, status) AS categoria,
+    COALESCE(categoria, nivel_jornada, CAST(status AS TEXT)) AS categoria,
     COALESCE(risco_evasao, 'baixo') AS "riscoEvasao",
     COALESCE(engajamento, 0) AS engajamento,
     data_ingresso AS "dataIngresso",
@@ -103,6 +152,22 @@ function definedEntries(payload: Record<string, unknown>): Array<[string, unknow
 }
 
 export class AlunoRepository {
+  async getCadastroOptions(): Promise<CadastroAlunoOptions> {
+    const entries = await Promise.all(
+      Object.entries(CADASTRO_OPTION_COLUMNS).map(async ([field, column]) => {
+        const result = await query<{ value: string } & QueryResultRow>(
+          `SELECT DISTINCT ${column} AS value
+           FROM aluno
+           WHERE ${column} IS NOT NULL AND TRIM(CAST(${column} AS TEXT)) <> ''
+           ORDER BY value`
+        );
+        return [field, result.rows.map((row) => String(row.value))] as const;
+      })
+    );
+
+    return Object.fromEntries(entries) as unknown as CadastroAlunoOptions;
+  }
+
   async list(filters: SegmentacaoAlunoQuery = {}): Promise<AlunoRecord[]> {
     const { where, params } = this.buildFilters(filters, false);
     const limit = filters.limite || 100;
@@ -135,11 +200,14 @@ export class AlunoRepository {
     // Sem cast ::genero_aluno_enum — PostgreSQL aceita string implicitamente para colunas enum
     const result = await query<{ idAluno: number } & QueryResultRow>(
       `INSERT INTO aluno (
-        nome, email, telefone, idade, genero, ocupacao, escolaridade, data_ingresso,
-        programa, categoria, nivel_jornada, perfil_socioeconomico, curso, origem_participacao
+        nome, email, telefone, idade, genero, ocupacao, tipo_vinculo_empregaticio,
+        renda_mensal, escolaridade, instituicao_ensino_superior, curso_ensino_superior,
+        status_ensino_superior, data_ingresso_ensino_superior, data_ingresso, programa,
+        categoria, risco_evasao, engajamento, status, nivel_jornada, perfil_socioeconomico,
+        curso, origem_participacao
       ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7, COALESCE($8, CURRENT_DATE),
-        $9, $10, $11, $12, $13, $14
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
+        COALESCE($14, CURRENT_DATE), $15, $16, $17, $18, $19, $20, $21, $22, $23
       )
       RETURNING id_aluno AS "idAluno"`,
       [
@@ -149,10 +217,19 @@ export class AlunoRepository {
         payload.idade ?? null,
         payload.genero ?? null,
         payload.ocupacao ?? null,
+        payload.tipoVinculoEmpregaticio ?? null,
+        payload.rendaMensal ?? null,
         payload.escolaridade ?? null,
+        payload.instituicaoEnsinoSuperior ?? null,
+        payload.cursoEnsinoSuperior ?? null,
+        payload.statusEnsinoSuperior ?? null,
+        payload.dataIngressoEnsinoSuperior ?? null,
         payload.dataIngresso ?? null,
-        payload.programa ?? payload.curso ?? null,
-        payload.categoria ?? payload.nivelJornada ?? null,
+        payload.programa ?? payload.curso ?? 'nao_informado',
+        payload.categoria ?? payload.nivelJornada ?? 'sem_categoria',
+        payload.riscoEvasao ?? 'baixo',
+        payload.engajamento ?? 0,
+        payload.status ?? 'ativo',
         payload.nivelJornada ?? null,
         payload.perfilSocioeconomico ?? null,
         payload.curso ?? null,
@@ -186,7 +263,13 @@ export class AlunoRepository {
       idade: 'idade',
       genero: 'genero',
       ocupacao: 'ocupacao',
+      tipoVinculoEmpregaticio: 'tipo_vinculo_empregaticio',
+      rendaMensal: 'renda_mensal',
       escolaridade: 'escolaridade',
+      instituicaoEnsinoSuperior: 'instituicao_ensino_superior',
+      cursoEnsinoSuperior: 'curso_ensino_superior',
+      statusEnsinoSuperior: 'status_ensino_superior',
+      dataIngressoEnsinoSuperior: 'data_ingresso_ensino_superior',
       dataIngresso: 'data_ingresso',
       programa: 'programa',
       categoria: 'categoria',
