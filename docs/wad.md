@@ -3225,8 +3225,131 @@ A execução completa demonstra que os testes necessários para o backend estão
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
+<div align="justify">
 
-_Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
+Os testes de guerrilha foram realizados com 7 participantes voluntários, recrutados de forma informal entre estudantes das turmas T28 e T24 do Inteli. Cada participante executou individualmente as tarefas propostas, sem auxílio do avaliador, enquanto o observador registrava o resultado geral e o desempenho em cada etapa. O critério de sucesso adotado foi a conclusão autônoma da tarefa sem erros bloqueadores. As heurísticas de Nielsen foram utilizadas como referência para identificar os princípios de usabilidade relacionados a cada tarefa.
+
+Ao todo, foram testadas 5 tarefas cobrindo os três perfis da aplicação (gestor, psicólogo e aluno). Todos os 7 participantes concluíram todas as tarefas com sucesso, o que indica boa adequação geral da interface às expectativas dos usuários. As ocorrências identificadas foram de baixa severidade e estão consolidadas ao final desta seção.
+
+**Tarefa 1 — Filtrar alunos por curso**
+
+Enunciado: Suponha que você é gestor(a) da Pulse Mais e quer encontrar alunos que cursam Sistemas de Informação para uma vaga específica. Utilize o sistema para filtrar alunos que cursam Sistemas de Informação.
+
+Heurísticas relacionadas:
+- **H4** — A linguagem e posição dos filtros devem seguir padrões esperados de sistemas similares.
+- **H6** — O filtro por curso deve estar visível e acessível sem que o usuário precise memorizar onde ele está.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Abrir lista de alunos | Etapa 3: Selecionar filtro de curso |
+|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 2 — Adicionar evento**
+
+Enunciado: Suponha que você é gestor(a) da Pulse Mais e quer marcar um evento com todos os alunos da Pulse Mais. Utilize o sistema para marcar um evento na agenda.
+
+Heurísticas relacionadas:
+- **H1** — O sistema deve confirmar claramente que o evento foi adicionado.
+- **H3** — O usuário deve poder editar ou cancelar um evento após criá-lo, com saída de emergência clara.
+- **H5** — Campos obrigatórios devem ser sinalizados antes do envio para evitar submissões incompletas.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Abrir agenda | Etapa 3: Adicionar dados do evento | Etapa 4: Adicionar registro |
+|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 3 — Adicionar registro psicológico**
+
+Enunciado: Suponha que você é Psicólogo da Pulse Mais e quer adicionar o registro de uma sessão ao perfil do aluno. Utilize o sistema para registrar o Histórico Psicológico.
+
+Heurísticas relacionadas:
+- **H2** — O termo "Histórico Psicológico" deve ser familiar ao psicólogo e refletir a linguagem da área clínica.
+- **H4** — A aba de Histórico Psicológico deve ter posição e ícone consistentes com as demais abas do perfil do aluno.
+- **H10** — Campos de registro psicológico podem exigir orientações sobre quais informações incluir, especialmente para novos usuários.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Psicólogo | Etapa 2: Abrir lista de alunos | Etapa 3: Abrir perfil do aluno | Etapa 4: Abrir aba de Histórico Psicológico | Etapa 5: Adicionar registro |
+|---|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+Observação: A participante Manuela T24 concluiu a tarefa com sucesso, porém não registrou a Etapa 5 na planilha de tabulação; o resultado geral foi marcado como sucesso.
+
+**Tarefa 4 — Visualizar evento**
+
+Enunciado: Suponha que você é Aluno da Pulse Mais e quer visualizar um evento na sua agenda. Utilize o sistema para visualizar os detalhes deste evento.
+
+Heurísticas relacionadas:
+- **H1** — Deve ser claro para o aluno quais eventos são futuros, em andamento ou passados.
+- **H6** — Os eventos devem ser visíveis diretamente na agenda sem que o aluno precise navegar por múltiplas telas.
+- **H8** — Os detalhes do evento devem apresentar apenas informações relevantes (data, hora, descrição).
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Aluno | Etapa 2: Abrir agenda | Etapa 3: Selecionar evento |
+|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 5 — Visualizar desempenho**
+
+Enunciado: Suponha que você é Gestor da Pulse Mais e quer visualizar o desempenho de um aluno. Utilize o sistema para ver o perfil do aluno e seu desempenho.
+
+Heurísticas relacionadas:
+- **H1** — Os dados de desempenho devem ser exibidos de forma clara, com indicadores visuais (gráficos, percentuais) que facilitem a leitura rápida.
+- **H2** — Métricas de desempenho devem usar terminologia familiar ao gestor educacional (ex.: frequência, progresso).
+- **H6** — A aba de desempenho deve estar destacada no perfil do aluno, sem necessidade de memorizar onde está.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Selecionar lista de alunos | Etapa 3: Selecionar perfil do aluno | Etapa 4: Selecionar aba de desempenho |
+|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas Deli T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Resumo das ocorrências**
+
+A tabela abaixo consolida os problemas e observações identificados durante os testes, ordenados por prioridade de melhoria. Os níveis de severidade seguem a escala: 1 — cosmética, 2 — baixa, 3 — alta, 4 — catástrofe.
+
+| Tarefa | Severidade | Resumo do ocorrido e potenciais melhorias | Participantes afetados |
+|---|---|---|---|
+| Filtragem de alunos | 1 - Cosmética | Problema de usabilidade: o participante achou a posição do filtro de cursos um pouco confusa. Potencial melhoria: destacar visualmente o campo de filtro por curso ou reposicioná-lo em local mais intuitivo. | Participante 1 |
+
+**Considerações gerais**
+
+Todos os 7 participantes concluíram as 5 tarefas com sucesso (taxa geral de 100%), sem ocorrências de severidade alta ou catastrófica. O único ponto de atenção identificado foi de severidade cosmética, referente à disposição do filtro de cursos na listagem de alunos. Os demais fluxos - adição de evento na agenda, registro psicológico, visualização de evento pelo aluno e visualização de desempenho pelo gestor - foram percorridos sem dificuldades por todos os participantes, o que indica boa aderência da interface às heurísticas de Nielsen avaliadas.
+
+</div>
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
