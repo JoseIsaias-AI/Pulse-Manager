@@ -245,11 +245,19 @@
   }
   .al-import-btn:hover { opacity: .7; }
 
-  .al-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; flex-shrink: 0; }
+  .al-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
 
   .al-card {
     background: #fff; border-radius: 12px; border: 1px solid #DEE3EA;
-    padding: 14px 16px 12px; box-shadow: 0 1px 3px rgba(0,56,112,.05);
+    padding: 16px 18px 14px; box-shadow: 0 1px 3px rgba(0,56,112,.05);
     text-align: left; font-family: 'Poppins', sans-serif;
   }
   .al-card-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
@@ -259,13 +267,13 @@
     font-size: 13px; font-weight: 700; font-family: 'Poppins', sans-serif;
   }
   .al-info { flex: 1; min-width: 0; }
-  .al-name { font-size: 13px; font-weight: 600; color: #11161D; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .al-meta { font-size: 10px; color: #6B7684; margin-top: 2px; }
-  .al-id   { font-size: 10px; color: #97A1AE; }
+  .al-name { font-size: 14px; font-weight: 600; color: #11161D; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .al-meta { font-size: 11px; color: #6B7684; margin-top: 3px; }
+  .al-id   { font-size: 11px; color: #97A1AE; }
 
   .al-badge {
     display: inline-flex; align-items: center; gap: 4px;
-    padding: 3px 9px; border-radius: 999px; font-size: 10px;
+    padding: 4px 10px; border-radius: 999px; font-size: 10.5px;
     font-weight: 600; flex-shrink: 0; white-space: nowrap;
   }
   .al-badge--ativa     { background: #E8F8ED; color: #1D7A36; }
@@ -275,15 +283,15 @@
   .al-badge--atencao   { background: #FFF3E0; color: #C2410C; }
 
   .al-prog-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-  .al-module   { font-size: 11px; color: #6B7684; font-weight: 500; }
-  .al-pct      { font-size: 11px; font-weight: 600; color: #11161D; }
+  .al-module   { font-size: 12px; color: #6B7684; font-weight: 500; }
+  .al-pct      { font-size: 12px; font-weight: 600; color: #11161D; }
   .al-bar      { height: 5px; border-radius: 3px; background: #EEF1F4; overflow: hidden; margin-bottom: 6px; }
   .al-bar-inner{ height: 100%; border-radius: 3px; }
   .al-bar-inner.c-green { background: #33B458; }
   .al-bar-inner.c-amber { background: #F4A261; }
   .al-bar-inner.c-red   { background: #E24B4A; }
   .al-bar-inner.c-gray  { background: #C2CAD4; }
-  .al-note { font-size: 10px; color: #97A1AE; line-height: 1.4; }
+  .al-note { font-size: 11px; color: #97A1AE; line-height: 1.4; }
   .al-empty {
     grid-column: 1 / -1; min-height: 150px; display: flex; align-items: center; justify-content: center;
     gap: 8px; border: 1px dashed #C2CAD4; border-radius: 12px; color: #6B7684; font-size: 11px;
@@ -337,7 +345,7 @@
   #view-agenda { overflow-y: auto !important; padding: 24px 40px; gap: 20px; flex-direction: column; background: #EEF1F4; }
   .ag-layout { display: flex; gap: 20px; flex: 1; min-height: 0; }
   .ag-main { flex: 1; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
-  .ag-sidebar { width: 360px; flex-shrink: 0; }
+  .ag-sidebar { width: 410px; flex-shrink: 0; }
 
   /* Calendar */
   .ag-cal { background: #fff; border-radius: 12px; border: 1px solid #DEE3EA; box-shadow: 0 1px 4px rgba(0,56,112,.07); overflow: hidden; }
@@ -383,17 +391,17 @@
 
   /* Sidebar form */
   .ag-form-card { background: #fff; border-radius: 12px; border: 1px solid #DEE3EA; box-shadow: 0 1px 4px rgba(0,56,112,.07); overflow: hidden; display: flex; flex-direction: column; }
-  .ag-form-head { background: #003870; padding: 14px 18px; display: flex; align-items: center; gap: 10px; }
-  .ag-form-head-title { font-size: 13px; font-weight: 600; color: #fff; }
-  .ag-form-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 11px; }
-  .ag-field { display: flex; flex-direction: column; gap: 4px; }
-  .ag-field label { font-size: 11px; font-weight: 500; color: #6B7684; display: flex; align-items: center; gap: 5px; }
-  .ag-field input, .ag-field select, .ag-field textarea { width: 100%; padding: 7px 10px; border: 1px solid #DEE3EA; border-radius: 7px; font-family: 'Poppins', sans-serif; font-size: 12px; color: #11161D; background: #fff; outline: none; transition: border-color .12s; }
+  .ag-form-head { background: #003870; padding: 16px 20px; display: flex; align-items: center; gap: 10px; }
+  .ag-form-head-title { font-size: 14px; font-weight: 600; color: #fff; }
+  .ag-form-body { padding: 18px 20px; display: flex; flex-direction: column; gap: 13px; }
+  .ag-field { display: flex; flex-direction: column; gap: 5px; }
+  .ag-field label { font-size: 12px; font-weight: 500; color: #6B7684; display: flex; align-items: center; gap: 5px; }
+  .ag-field input, .ag-field select, .ag-field textarea { width: 100%; padding: 9px 12px; border: 1px solid #DEE3EA; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 13px; color: #11161D; background: #fff; outline: none; transition: border-color .12s; }
   .ag-field input:focus, .ag-field select:focus, .ag-field textarea:focus { border-color: #003870; }
-  .ag-field textarea { resize: vertical; min-height: 60px; }
+  .ag-field textarea { resize: vertical; min-height: 74px; }
   .ag-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .ag-form-footer { padding: 12px 18px; border-top: 1px solid #EEF1F4; }
-  .ag-submit-btn { width: 100%; padding: 10px; background: #003870; color: #fff; border: none; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: background .12s; }
+  .ag-form-footer { padding: 14px 20px; border-top: 1px solid #EEF1F4; }
+  .ag-submit-btn { width: 100%; padding: 12px; background: #003870; color: #fff; border: none; border-radius: 9px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: background .12s; }
   .ag-submit-btn:hover { background: #004F96; }
   .ag-val-err { border-color: #E24B4A !important; }
   /* ══ PERFIL OVERLAY ═══════════════════════════════════════ */

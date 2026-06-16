@@ -107,7 +107,8 @@
       { title:'Sprint Review',      start:'2026-06-25', type:'evento',   color:'#33B458', sender:'Carlos Mendes',  role:'Gestor',    time:'15:00' },
       { title:'Formatura T4',       start:'2026-06-30', type:'evento',   color:'#FFD927', sender:'Ana Clara',      role:'Gestora',   time:'18:00' },
     ];
-    const TODAY_STR  = '2026-06-11';
+    const hojeInicio = new Date();
+    const TODAY_STR  = `${hojeInicio.getFullYear()}-${String(hojeInicio.getMonth() + 1).padStart(2, '0')}-${String(hojeInicio.getDate()).padStart(2, '0')}`;
     const TYPE_LABEL_EV = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria' };
     const MONTH_ABREV = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
@@ -519,10 +520,10 @@
     const WD_LABELS   = ['D','S','T','Q','Q','S','S'];
     const TYPE_COLOR  = { evento:'#003870', consulta:'#7B4FD9', aula:'#F4A261', mentoria:'#33B458' };
     const TYPE_LABEL  = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria' };
-    const today       = new Date(2026, 5, 11); // data do sistema: 11 jun 2026
+    const today       = new Date();
 
-    let viewYear  = 2026;
-    let viewMonth = 5; // junho
+    let viewYear  = today.getFullYear();
+    let viewMonth = today.getMonth();
     let selectedId = null;
 
     let events = [
