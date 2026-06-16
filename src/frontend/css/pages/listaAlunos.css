@@ -39,6 +39,7 @@
 }
 .al-filter-btn:hover  { border-color: #003870; color: #003870; }
 .al-filter-btn--active{ background: #003870; color: #fff; border-color: #003870; font-weight: 600; }
+.al-filter-btn--active:hover { background: #003870; border-color: #003870; color: #fff; }
 .al-import-btn {
   margin-left: auto; font-size: 11px; font-weight: 600; color: #33B458;
   background: none; border: none; cursor: pointer; font-family: 'Poppins', sans-serif;
