@@ -143,21 +143,25 @@ html, body {
   display: flex; align-items: center; gap: 5px; text-transform: uppercase; letter-spacing: 0.06em;
 }
 .field label i { font-size: 13px; }
-.field input {
+.field input,
+.field select {
   font-family: 'Poppins', sans-serif;
   font-size: 13px; padding: 9px 12px; border-radius: var(--radius-md);
   border: 1px solid var(--blue-100); background: var(--white);
   color: var(--gray-700); width: 100%; outline: none;
   transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
 }
-.field input:focus {
+.field input:focus,
+.field select:focus {
   border-color: var(--blue-700);
   box-shadow: 0 0 0 3px rgba(0,79,150,0.12);
 }
-.field input[readonly] {
+.field input[readonly],
+.field select:disabled {
   border: 1px solid var(--gray-100); background: var(--gray-50);
   color: var(--gray-600); width: 100%; cursor: default; outline: none;
   box-shadow: none;
+  opacity: 1;
 }
 
 /* ── Footer ── */
@@ -173,6 +177,7 @@ html, body {
   font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s;
   display: flex; align-items: center; gap: 7px; border: none;
 }
+.btn[hidden] { display: none !important; }
 .btn-primary { background: var(--blue-800); color: #fff; }
 .btn-primary:hover { background: var(--blue-700); }
 .btn-primary:active { transform: scale(0.98); }

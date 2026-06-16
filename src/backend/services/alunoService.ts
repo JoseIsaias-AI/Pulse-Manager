@@ -19,6 +19,13 @@ function mergeOptions(...groups: readonly string[][]): string[] {
     .sort((a, b) => a.localeCompare(b, 'pt-BR'));
 }
 
+function validarNomeAluno(nome: string): string {
+  if (/\d/.test(nome)) {
+    throw new PayloadValidationError('O campo nome nao pode conter numeros.');
+  }
+  return nome;
+}
+
 export class AlunoService {
   constructor(private readonly repository: AlunoRepository) {}
 
@@ -98,7 +105,7 @@ export class AlunoService {
   }
 
   private validarCadastro(payload: CriarAlunoPayload): CriarAlunoPayload {
-    const nome = requiredString(payload.nome, 'nome', 3);
+    const nome = validarNomeAluno(requiredString(payload.nome, 'nome', 3));
     const email = requiredString(payload.email, 'email', 5).toLowerCase();
     if (!email.includes('@')) {
       throw new PayloadValidationError('O campo email deve conter um endereco valido.');
@@ -170,7 +177,7 @@ export class AlunoService {
 
   private validarAtualizacao(payload: AtualizarAlunoPayload): AtualizarAlunoPayload {
     const data: AtualizarAlunoPayload = { ...payload };
-    if (data.nome !== undefined) data.nome = requiredString(data.nome, 'nome', 3);
+    if (data.nome !== undefined) data.nome = validarNomeAluno(requiredString(data.nome, 'nome', 3));
     if (data.email !== undefined) {
       data.email = requiredString(data.email, 'email', 5).toLowerCase();
       if (!data.email.includes('@')) throw new PayloadValidationError('O campo email deve conter um endereco valido.');

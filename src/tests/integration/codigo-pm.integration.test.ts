@@ -56,7 +56,7 @@ describe('UC-05 - RN001: Geracao de codigo PM-AAAA-NNN com sequencial anual', ()
 
   it('CT03 - deve reiniciar sequencial em 001 para o primeiro aluno de um novo ano', async () => {
     await request(app).post('/api/alunos').send({
-      nome: 'Alice 2026',
+      nome: 'Alice Ano Atual',
       email: 'alice.2026@pulsemais.org',
       dataIngresso: '2026-06-01',
       programa: 'Jornada',
@@ -65,7 +65,7 @@ describe('UC-05 - RN001: Geracao de codigo PM-AAAA-NNN com sequencial anual', ()
     });
 
     await request(app).post('/api/alunos').send({
-      nome: 'Bruno 2026',
+      nome: 'Bruno Ano Atual',
       email: 'bruno.2026@pulsemais.org',
       dataIngresso: '2026-08-01',
       programa: 'Mentoria',
@@ -74,7 +74,7 @@ describe('UC-05 - RN001: Geracao de codigo PM-AAAA-NNN com sequencial anual', ()
     });
 
     const response = await request(app).post('/api/alunos').send({
-      nome: 'Carlos 2027',
+      nome: 'Carlos Ano Seguinte',
       email: 'carlos.2027@pulsemais.org',
       dataIngresso: '2027-01-15',
       programa: 'Jornada',

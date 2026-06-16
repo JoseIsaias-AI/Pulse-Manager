@@ -222,7 +222,7 @@
             <div class="al-create-grid">
               <label class="al-create-field al-create-field--wide">
                 Nome completo <span class="al-create-required">*</span>
-                <input name="nome" type="text" minlength="3" maxlength="150" required autocomplete="name">
+                <input name="nome" type="text" minlength="3" maxlength="150" pattern="[^0-9]{3,150}" title="Nome nao pode conter numeros." required autocomplete="name">
               </label>
               <label class="al-create-field">
                 E-mail <span class="al-create-required">*</span>
@@ -230,11 +230,11 @@
               </label>
               <label class="al-create-field">
                 Telefone
-                <input name="telefone" type="tel" maxlength="30" autocomplete="tel">
+                <input name="telefone" type="tel" maxlength="30" pattern="[0-9()+\\-.\\s]*" autocomplete="tel">
               </label>
               <label class="al-create-field">
                 Idade
-                <input name="idade" type="number" min="0" max="120" step="1">
+                <input name="idade" type="number" min="0" max="120" step="1" inputmode="numeric">
               </label>
               <label class="al-create-field">
                 G&ecirc;nero
@@ -244,7 +244,7 @@
               </label>
               <label class="al-create-field">
                 Data de ingresso
-                <input name="dataIngresso" type="date">
+                <input name="dataIngresso" type="date" min="1900-01-01" max="2100-12-31">
               </label>
               <label class="al-create-field">
                 Status
@@ -284,10 +284,6 @@
                   <option value="">Carregando op&ccedil;&otilde;es...</option>
                 </select>
               </label>
-              <label class="al-create-field">
-                Engajamento (0 a 100)
-                <input name="engajamento" type="number" min="0" max="100" step="1">
-              </label>
             </div>
           </fieldset>
 
@@ -304,7 +300,7 @@
               </label>
               <label class="al-create-field">
                 Renda mensal
-                <input name="rendaMensal" type="number" min="0" step="0.01">
+                <input name="rendaMensal" type="number" min="0" max="99999999.99" step="0.01" inputmode="decimal">
               </label>
             </div>
           </fieldset>
@@ -369,7 +365,7 @@
   }
 
   function serializeCreateForm(form, optionMaps) {
-    const numericFields = new Set(['idade', 'rendaMensal', 'engajamento']);
+    const numericFields = new Set(['idade', 'rendaMensal']);
     const payload = {};
 
     new FormData(form).forEach((value, key) => {
@@ -390,8 +386,10 @@
     notice.className = `al-notice${error ? ' al-notice--error' : ''}`;
     notice.textContent = message;
     document.body.appendChild(notice);
-    setTimeout(() => notice.remove(), 4500);
+    setTimeout(() => notice.remove(), 3600);
   }
+
+  window.showPulseNotice = showNotice;
 
   function optionLabel(value) {
     const exactLabels = {

@@ -1113,19 +1113,23 @@
           </div>
           <div class="field span2">
             <label>Nome completo</label>
-            <input type="text" id="pf-fullname" data-pf-field="nome" value="—" readonly>
+            <input type="text" id="pf-fullname" data-pf-field="nome" value="—" minlength="3" maxlength="150" pattern="[^0-9]{3,150}" title="Nome nao pode conter numeros." required readonly>
           </div>
           <div class="field">
             <label>Idade</label>
-            <input type="number" min="0" max="120" id="pf-age" data-pf-field="idade" value="—" readonly>
+            <input type="number" min="0" max="120" step="1" id="pf-age" data-pf-field="idade" value="—" readonly>
           </div>
           <div class="field">
             <label>Gênero</label>
-            <input type="text" id="pf-genero" data-pf-field="genero" value="—" readonly>
+            <select id="pf-genero" data-pf-field="genero" data-pf-option-field="genero" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Status</label>
-            <input type="text" id="pf-status" data-pf-field="status" value="—" readonly>
+            <select id="pf-status" data-pf-field="status" data-pf-option-field="status" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Data de ingresso</label>
@@ -1136,19 +1140,27 @@
         <div class="field-grid">
           <div class="field">
             <label>Curso</label>
-            <input type="text" id="pf-course" data-pf-field="curso" value="—" readonly>
+            <select id="pf-course" data-pf-field="curso" data-pf-option-field="curso" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Escolaridade</label>
-            <input type="text" id="pf-escolaridade" data-pf-field="escolaridade" value="—" readonly>
+            <select id="pf-escolaridade" data-pf-field="escolaridade" data-pf-option-field="escolaridade" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Ocupação</label>
-            <input type="text" id="pf-ocupacao" data-pf-field="ocupacao" value="—" readonly>
+            <select id="pf-ocupacao" data-pf-field="ocupacao" data-pf-option-field="ocupacao" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Programa</label>
-            <input type="text" id="pf-programa" data-pf-field="programa" value="—" readonly>
+            <select id="pf-programa" data-pf-field="programa" data-pf-option-field="programa" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
         </div>
       </div>
@@ -1158,35 +1170,43 @@
         <div class="field-grid">
           <div class="field">
             <label>Perfil socioeconômico</label>
-            <input type="text" id="pf-perfil-socioeconomico" data-pf-field="perfilSocioeconomico" value="—" readonly>
+            <select id="pf-perfil-socioeconomico" data-pf-field="perfilSocioeconomico" data-pf-option-field="perfilSocioeconomico" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Renda mensal familiar</label>
-            <input type="number" min="0" step="0.01" id="pf-renda-mensal" data-pf-field="rendaMensal" value="—" readonly>
+            <input type="number" min="0" max="99999999.99" step="0.01" id="pf-renda-mensal" data-pf-field="rendaMensal" value="—" readonly>
           </div>
           <div class="field">
             <label>Nível de jornada</label>
-            <input type="text" id="pf-nivel-jornada" data-pf-field="nivelJornada" value="—" readonly>
+            <select id="pf-nivel-jornada" data-pf-field="nivelJornada" data-pf-option-field="nivelJornada" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Categoria</label>
-            <input type="text" id="pf-categoria" data-pf-field="categoria" value="—" readonly>
+            <select id="pf-categoria" data-pf-field="categoria" data-pf-option-field="categoria" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Tipo de vínculo</label>
-            <input type="text" id="pf-tipo-vinculo" data-pf-field="tipoVinculoEmpregaticio" value="—" readonly>
+            <select id="pf-tipo-vinculo" data-pf-field="tipoVinculoEmpregaticio" data-pf-option-field="tipoVinculoEmpregaticio" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Origem da participação</label>
-            <input type="text" id="pf-origem-participacao" data-pf-field="origemParticipacao" value="—" readonly>
+            <select id="pf-origem-participacao" data-pf-field="origemParticipacao" data-pf-option-field="origemParticipacao" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Risco de evasão</label>
-            <input type="text" id="pf-risco-evasao" data-pf-field="riscoEvasao" value="—" readonly>
-          </div>
-          <div class="field">
-            <label>Engajamento (0 a 100)</label>
-            <input type="number" min="0" max="100" id="pf-engajamento" data-pf-field="engajamento" value="—" readonly>
+            <select id="pf-risco-evasao" data-pf-field="riscoEvasao" data-pf-option-field="riscoEvasao" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
         </div>
       </div>
@@ -1196,11 +1216,11 @@
         <div class="field-grid">
           <div class="field">
             <label>E-mail</label>
-            <input type="email" id="pf-email" data-pf-field="email" value="—" readonly>
+            <input type="email" id="pf-email" data-pf-field="email" value="—" maxlength="255" required readonly>
           </div>
           <div class="field">
             <label>Telefone</label>
-            <input type="text" id="pf-telefone" data-pf-field="telefone" value="—" readonly>
+            <input type="tel" id="pf-telefone" data-pf-field="telefone" value="—" maxlength="30" pattern="[0-9()+\-.\s]*" autocomplete="tel" readonly>
           </div>
         </div>
       </div>

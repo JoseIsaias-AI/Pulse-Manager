@@ -164,6 +164,16 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       expect(engajamento.status).toBe(400);
       expect(engajamento.body.message).toBe('O campo engajamento deve ser um numero inteiro entre 0 e 100.');
     });
+
+    it('CT07 - deve rejeitar nome com numeros', async () => {
+      const response = await request(app).post('/api/alunos').send({
+        nome: 'Aluno 123',
+        email: 'aluno.nome.numero@pulsemais.org'
+      });
+
+      expect(response.status).toBe(400);
+      expect(response.body.message).toBe('O campo nome nao pode conter numeros.');
+    });
   });
 
   describe('UC-04 - Listar e consultar alunos', () => {
@@ -447,6 +457,15 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
         success: false,
         message: 'Aluno nao encontrado.'
       });
+    });
+
+    it('CT04 - deve rejeitar atualizacao com numeros no nome', async () => {
+      const response = await request(app)
+        .patch(`/api/alunos/${aluno.idAluno}`)
+        .send({ nome: 'Carlos 2' });
+
+      expect(response.status).toBe(400);
+      expect(response.body.message).toBe('O campo nome nao pode conter numeros.');
     });
   });
 

@@ -816,12 +816,13 @@
     categoria: { skipEmpty: true },
     tipoVinculoEmpregaticio: { nullable: true },
     origemParticipacao: { nullable: true },
-    riscoEvasao: { token: true, skipEmpty: true },
-    engajamento: { number: true, integer: true, skipEmpty: true }
+    riscoEvasao: { token: true, skipEmpty: true }
   };
 
   let currentPerfilStudent = null;
   let currentPerfilAluno = null;
+  let perfilOptions = null;
+  let perfilOptionsPromise = null;
 
   function normalizeToken(value) {
     return String(value)
@@ -841,9 +842,100 @@
       .replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
+  function perfilOptionLabel(value) {
+    const exactLabels = {
+      nao_informado: 'Não informado',
+      sem_categoria: 'Sem categoria',
+      em_acompanhamento: 'Em acompanhamento',
+      nao_binario: 'Não binário',
+      prefiro_nao_informar: 'Prefiro não informar',
+      programa_pulse_mais: 'Programa Pulse Mais',
+      ex_aluno_indicacao: 'Ex-aluno por indicação',
+      vivencia_empresa: 'Vivência em empresa'
+    };
+    const wordLabels = {
+      nao: 'não',
+      medio: 'médio',
+      indicacao: 'indicação',
+      publica: 'pública',
+      participacao: 'participação',
+      socioeconomico: 'socioeconômico',
+      vinculo: 'vínculo'
+    };
+    const raw = String(value ?? '').trim();
+    if (!raw) return 'Não informado';
+    if (exactLabels[raw.toLowerCase()]) return exactLabels[raw.toLowerCase()];
+    if (/^[A-Z0-9]{2,}$/.test(raw)) return raw;
+    const text = raw
+      .replace(/_/g, ' ')
+      .split(/\s+/)
+      .map((word) => wordLabels[word.toLowerCase()] || word)
+      .join(' ');
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  async function fetchPerfilOptions() {
+    const response = await fetch(`${GESTOR_API_BASE}/alunos/opcoes-cadastro`);
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok || !body.success) {
+      throw new Error(body.message || 'Não foi possível carregar as opções do aluno.');
+    }
+    return body.data || {};
+  }
+
+  async function ensurePerfilOptions() {
+    if (perfilOptions) return perfilOptions;
+    if (!perfilOptionsPromise) {
+      perfilOptionsPromise = fetchPerfilOptions()
+        .then((options) => {
+          perfilOptions = options;
+          return options;
+        })
+        .finally(() => {
+          perfilOptionsPromise = null;
+        });
+    }
+    return perfilOptionsPromise;
+  }
+
+  function fillPerfilSelectOptions(aluno = {}) {
+    const overlay = document.getElementById('perfil-overlay');
+    if (!overlay) return;
+
+    overlay.querySelectorAll('select[data-pf-option-field]').forEach((select) => {
+      const optionField = select.dataset.pfOptionField;
+      const dataField = select.dataset.pfField;
+      const currentValue = aluno[dataField];
+      const sourceValues = Array.isArray(perfilOptions?.[optionField]) ? perfilOptions[optionField] : [];
+      const values = [...new Set([
+        ...sourceValues,
+        ...(currentValue ? [currentValue] : [])
+      ].filter(Boolean))];
+
+      select.innerHTML = '<option value="">Não informado</option>';
+      values.forEach((value) => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = perfilOptionLabel(value);
+        select.appendChild(option);
+      });
+    });
+  }
+
   function setPerfilInput(id, value) {
     const input = document.getElementById(id);
     if (!input) return;
+    if (input.tagName === 'SELECT') {
+      const selectedValue = value === undefined || value === null ? '' : String(value);
+      if (selectedValue && !Array.from(input.options).some((option) => option.value === selectedValue)) {
+        const option = document.createElement('option');
+        option.value = selectedValue;
+        option.textContent = perfilOptionLabel(selectedValue);
+        input.appendChild(option);
+      }
+      input.value = selectedValue;
+      return;
+    }
     input.placeholder = 'Não informado';
     input.value = value === undefined || value === null ? '' : String(value);
   }
@@ -853,12 +945,25 @@
     if (footer) footer.innerHTML = `<i class="ti ${icon}" style="font-size:13px;"></i> ${message}`;
   }
 
+  function showPerfilNotice(message, error) {
+    if (window.showPulseNotice) {
+      window.showPulseNotice(message, error);
+      return;
+    }
+    const notice = document.createElement('div');
+    notice.className = `al-notice${error ? ' al-notice--error' : ''}`;
+    notice.textContent = message;
+    document.body.appendChild(notice);
+    setTimeout(() => notice.remove(), 3600);
+  }
+
   function setPerfilEditMode(editing) {
     const overlay = document.getElementById('perfil-overlay');
     if (!overlay) return;
 
     overlay.querySelectorAll('[data-pf-field]').forEach((input) => {
-      input.readOnly = !editing;
+      if (input.tagName === 'SELECT') input.disabled = !editing;
+      else input.readOnly = !editing;
     });
 
     const editBtn = document.getElementById('pf-edit-btn');
@@ -881,6 +986,8 @@
     const programa = aluno.programa || student?.course || '';
     const nivel = aluno.nivelJornada || student?.mod || '';
 
+    fillPerfilSelectOptions(aluno);
+
     setPerfilInput('pf-code', codigo);
     setPerfilInput('pf-fullname', aluno.nome || student?.name);
     setPerfilInput('pf-age', aluno.idade);
@@ -898,7 +1005,6 @@
     setPerfilInput('pf-tipo-vinculo', aluno.tipoVinculoEmpregaticio);
     setPerfilInput('pf-origem-participacao', aluno.origemParticipacao);
     setPerfilInput('pf-risco-evasao', aluno.riscoEvasao);
-    setPerfilInput('pf-engajamento', aluno.engajamento);
     setPerfilInput('pf-email', aluno.email);
     setPerfilInput('pf-telefone', aluno.telefone);
 
@@ -941,6 +1047,11 @@
       const field = input.dataset.pfField;
       const config = PERFIL_FIELD_CONFIG[field] || {};
       const rawValue = input.value.trim();
+
+      if (!input.checkValidity()) {
+        const label = input.closest('.field')?.querySelector('label')?.textContent?.trim() || field;
+        throw new Error(`${label}: ${input.validationMessage}`);
+      }
 
       if (!rawValue) {
         if (config.required) {
@@ -997,12 +1108,17 @@
     };
   }
 
-  function openStudentProfile(s) {
+  async function openStudentProfile(s) {
     const overlay = document.getElementById('perfil-overlay');
     if (!overlay) return;
 
     currentPerfilStudent = s || {};
     currentPerfilAluno = currentPerfilStudent.raw || currentPerfilStudent;
+    try {
+      await ensurePerfilOptions();
+    } catch (error) {
+      showPerfilNotice(error.message || 'Não foi possível carregar as opções do aluno.', true);
+    }
     fillPerfilFields(currentPerfilStudent);
     setPerfilEditMode(false);
 
@@ -1123,12 +1239,14 @@
       fillPerfilFields(currentPerfilStudent);
       setPerfilEditMode(false);
       setPerfilStatus('Aluno atualizado com sucesso.', 'ti-circle-check');
+      showPerfilNotice('Aluno atualizado com sucesso.');
 
       if (window.refreshListaAlunosView) {
         await window.refreshListaAlunosView();
       }
     } catch (error) {
       setPerfilStatus(error.message || 'Não foi possível atualizar o aluno.', 'ti-alert-circle');
+      showPerfilNotice(error.message || 'Não foi possível atualizar o aluno.', true);
     } finally {
       if (saveBtn) saveBtn.disabled = false;
     }
