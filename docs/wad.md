@@ -1,4 +1,4 @@
-<img src="./assets/logointeli.png">
+﻿<img src="./assets/logointeli.png">
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
@@ -3225,12 +3225,267 @@ A execução completa demonstra que os testes necessários para o backend estão
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
+<div align="justify">
 
-_Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
+Os testes de guerrilha foram realizados com 7 participantes voluntários, recrutados de forma informal entre estudantes das turmas T28 e T24 do Inteli. Cada participante executou individualmente as tarefas propostas, sem auxílio do avaliador, enquanto o observador registrava o resultado geral e o desempenho em cada etapa. O critério de sucesso adotado foi a conclusão autônoma da tarefa sem erros bloqueadores. As heurísticas de Nielsen foram utilizadas como referência para identificar os princípios de usabilidade relacionados a cada tarefa.
+
+Ao todo, foram testadas 5 tarefas cobrindo os três perfis da aplicação (gestor, psicólogo e aluno). Todos os 7 participantes concluíram todas as tarefas com sucesso, o que indica boa adequação geral da interface às expectativas dos usuários. As ocorrências identificadas foram de baixa severidade e estão consolidadas ao final desta seção.
+
+**Tarefa 1 — Filtrar alunos por curso**
+
+Enunciado: Suponha que você é gestor(a) da Pulse Mais e quer encontrar alunos que cursam Sistemas de Informação para uma vaga específica. Utilize o sistema para filtrar alunos que cursam Sistemas de Informação.
+
+Heurísticas relacionadas:
+- **H4** — A linguagem e posição dos filtros devem seguir padrões esperados de sistemas similares.
+- **H6** — O filtro por curso deve estar visível e acessível sem que o usuário precise memorizar onde ele está.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Abrir lista de alunos | Etapa 3: Selecionar filtro de curso |
+|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 2 — Adicionar evento**
+
+Enunciado: Suponha que você é gestor(a) da Pulse Mais e quer marcar um evento com todos os alunos da Pulse Mais. Utilize o sistema para marcar um evento na agenda.
+
+Heurísticas relacionadas:
+- **H1** — O sistema deve confirmar claramente que o evento foi adicionado.
+- **H3** — O usuário deve poder editar ou cancelar um evento após criá-lo, com saída de emergência clara.
+- **H5** — Campos obrigatórios devem ser sinalizados antes do envio para evitar submissões incompletas.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Abrir agenda | Etapa 3: Adicionar dados do evento | Etapa 4: Adicionar registro |
+|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 3 — Adicionar registro psicológico**
+
+Enunciado: Suponha que você é Psicólogo da Pulse Mais e quer adicionar o registro de uma sessão ao perfil do aluno. Utilize o sistema para registrar o Histórico Psicológico.
+
+Heurísticas relacionadas:
+- **H2** — O termo "Histórico Psicológico" deve ser familiar ao psicólogo e refletir a linguagem da área clínica.
+- **H4** — A aba de Histórico Psicológico deve ter posição e ícone consistentes com as demais abas do perfil do aluno.
+- **H10** — Campos de registro psicológico podem exigir orientações sobre quais informações incluir, especialmente para novos usuários.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Psicólogo | Etapa 2: Abrir lista de alunos | Etapa 3: Abrir perfil do aluno | Etapa 4: Abrir aba de Histórico Psicológico | Etapa 5: Adicionar registro |
+|---|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+Observação: A participante Manuela T24 concluiu a tarefa com sucesso, porém não registrou a Etapa 5 na planilha de tabulação; o resultado geral foi marcado como sucesso.
+
+**Tarefa 4 — Visualizar evento**
+
+Enunciado: Suponha que você é Aluno da Pulse Mais e quer visualizar um evento na sua agenda. Utilize o sistema para visualizar os detalhes deste evento.
+
+Heurísticas relacionadas:
+- **H1** — Deve ser claro para o aluno quais eventos são futuros, em andamento ou passados.
+- **H6** — Os eventos devem ser visíveis diretamente na agenda sem que o aluno precise navegar por múltiplas telas.
+- **H8** — Os detalhes do evento devem apresentar apenas informações relevantes (data, hora, descrição).
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Aluno | Etapa 2: Abrir agenda | Etapa 3: Selecionar evento |
+|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 5 — Visualizar desempenho**
+
+Enunciado: Suponha que você é Gestor da Pulse Mais e quer visualizar o desempenho de um aluno. Utilize o sistema para ver o perfil do aluno e seu desempenho.
+
+Heurísticas relacionadas:
+- **H1** — Os dados de desempenho devem ser exibidos de forma clara, com indicadores visuais (gráficos, percentuais) que facilitem a leitura rápida.
+- **H2** — Métricas de desempenho devem usar terminologia familiar ao gestor educacional (ex.: frequência, progresso).
+- **H6** — A aba de desempenho deve estar destacada no perfil do aluno, sem necessidade de memorizar onde está.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Selecionar lista de alunos | Etapa 3: Selecionar perfil do aluno | Etapa 4: Selecionar aba de desempenho |
+|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas Deli T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Resumo das ocorrências**
+
+A tabela abaixo consolida os problemas e observações identificados durante os testes, ordenados por prioridade de melhoria. Os níveis de severidade seguem a escala: 1 — cosmética, 2 — baixa, 3 — alta, 4 — catástrofe.
+
+| Tarefa | Severidade | Resumo do ocorrido e potenciais melhorias | Participantes afetados |
+|---|---|---|---|
+| Filtragem de alunos | 1 - Cosmética | Problema de usabilidade: o participante achou a posição do filtro de cursos um pouco confusa. Potencial melhoria: destacar visualmente o campo de filtro por curso ou reposicioná-lo em local mais intuitivo. | Participante 1 |
+
+**Considerações gerais**
+
+Todos os 7 participantes concluíram as 5 tarefas com sucesso (taxa geral de 100%), sem ocorrências de severidade alta ou catastrófica. O único ponto de atenção identificado foi de severidade cosmética, referente à disposição do filtro de cursos na listagem de alunos. Os demais fluxos - adição de evento na agenda, registro psicológico, visualização de evento pelo aluno e visualização de desempenho pelo gestor - foram percorridos sem dificuldades por todos os participantes, o que indica boa aderência da interface às heurísticas de Nielsen avaliadas.
+
+</div>
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
-_Posicione aqui o relatório dos testes SUS realizados._
+<div align="justify">
+
+O teste SUS (System Usability Scale) foi utilizado como complemento ao teste de guerrilha realizado com a aplicação Pulse Manager. Enquanto o teste de guerrilha teve como objetivo verificar se os participantes conseguiam executar tarefas específicas sem auxílio do avaliador, o SUS teve como objetivo mensurar a percepção geral de usabilidade da interface após a interação com o sistema.
+
+Os testes de guerrilha foram conduzidos com 7 participantes voluntários das turmas T28 e T24 do Inteli. Cada participante executou 5 tarefas relacionadas aos principais perfis da aplicação: gestor, psicólogo e aluno. As tarefas avaliadas foram: filtrar alunos por curso, adicionar evento, adicionar registro psicológico, visualizar evento e visualizar desempenho de aluno. Ao todo, foram realizadas 35 tentativas de tarefa, todas concluídas com sucesso, resultando em taxa geral de sucesso de 100%.
+
+Após a execução dos fluxos, os participantes avaliaram a experiência de uso em escala de 1 a 5. As respostas registradas indicaram uma percepção positiva da aplicação, com notas 4 e 5 distribuídas nos itens positivos do questionário e discordância nos itens negativos. Esse resultado reforça que, além de conseguirem concluir as tarefas propostas, os usuários relataram boa experiência geral com a interface.
+
+</div>
+
+#### Método de aplicação
+
+<div align="justify">
+
+A aplicação do SUS ocorreu após a realização das tarefas do teste de guerrilha, para que a percepção dos participantes sobre a interface ainda estivesse recente. Cada participante respondeu às afirmativas considerando uma escala de 1 a 5, em que:
+
+</div>
+
+| Valor | Significado |
+|---|---|
+| 1 | Discordo totalmente |
+| 2 | Discordo parcialmente |
+| 3 | Neutro |
+| 4 | Concordo parcialmente |
+| 5 | Concordo totalmente |
+
+<div align="justify">
+
+As avaliações obtidas indicaram alto grau de concordância com aspectos positivos da experiência de uso, como facilidade de navegação, confiança durante a interação e compreensão dos fluxos principais. Nos itens positivos, as respostas ficaram concentradas entre 4 e 5. Nos itens negativos, as respostas ficaram concentradas entre 1 e 2, indicando discordância em relação a afirmações como complexidade, dificuldade de uso e inconsistência.
+
+</div>
+
+#### Questionário SUS aplicado
+
+| Item | Afirmativa |
+|---|---|
+| 1 | Eu acho que gostaria de usar este sistema com frequência. |
+| 2 | Eu achei o sistema desnecessariamente complexo. |
+| 3 | Eu achei o sistema fácil de usar. |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa técnica para conseguir usar este sistema. |
+| 5 | Eu achei que as diversas funções do sistema estavam bem integradas. |
+| 6 | Eu achei que havia muita inconsistência neste sistema. |
+| 7 | Eu imagino que a maioria das pessoas aprenderia a usar este sistema rapidamente. |
+| 8 | Eu achei o sistema muito difícil de usar. |
+| 9 | Eu me senti confiante ao usar o sistema. |
+| 10 | Eu precisei aprender muitas coisas antes de conseguir usar este sistema. |
+
+#### Forma de cálculo
+
+<div align="justify">
+
+O cálculo do SUS deve ser realizado individualmente para cada participante. Para os itens ímpares, a contribuição corresponde à resposta do participante menos 1. Para os itens pares, a contribuição corresponde a 5 menos a resposta do participante. Em seguida, as contribuições dos 10 itens devem ser somadas e multiplicadas por 2,5. O resultado final varia de 0 a 100 pontos.
+
+</div>
+
+```text
+Itens ímpares: resposta - 1
+Itens pares: 5 - resposta
+Pontuação SUS = soma das contribuições x 2,5
+```
+
+<div align="justify">
+
+Como as avaliações dos itens positivos se concentraram entre 4 e 5, observou-se uma tendência favorável à usabilidade percebida. Além disso, a baixa concordância com os itens negativos reforça que os participantes não perceberam a aplicação como complexa, inconsistente ou difícil de utilizar.
+
+</div>
+
+#### Tabela de tabulação
+
+| Participante | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 | Pontuação SUS |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fernanda T28 | 5 | 1 | 5 | 1 | 4 | 1 | 5 | 1 | 5 | 1 | 97,5 |
+| Sofia Brandão T28 | 4 | 1 | 5 | 2 | 5 | 1 | 4 | 1 | 5 | 1 | 92,5 |
+| Nicolas T28 | 5 | 2 | 4 | 1 | 5 | 1 | 5 | 2 | 4 | 1 | 90,0 |
+| Arthur Augusto T28 | 4 | 1 | 4 | 1 | 5 | 2 | 5 | 1 | 5 | 2 | 90,0 |
+| Felipe Estrada T28 | 5 | 1 | 5 | 1 | 5 | 1 | 4 | 1 | 4 | 1 | 95,0 |
+| Tainá T28 | 4 | 2 | 5 | 1 | 4 | 1 | 5 | 1 | 5 | 1 | 92,5 |
+| Manuela T24 | 5 | 1 | 4 | 2 | 5 | 1 | 4 | 1 | 5 | 1 | 92,5 |
+| **Média geral** |  |  |  |  |  |  |  |  |  |  | **92,9** |
+
+<div align="justify">
+
+A tabela demonstra que todos os participantes atribuíram notas altas aos itens positivos do questionário, com respostas 4 e 5 distribuídas entre as afirmações relacionadas à frequência de uso, facilidade, integração das funções, aprendizagem rápida e confiança. Nos itens negativos, as respostas 1 e 2 indicam discordância em relação a afirmações de complexidade, inconsistência, dificuldade e necessidade de aprendizagem prévia excessiva.
+
+</div>
+
+#### Critérios de interpretação
+
+<div align="justify">
+
+Para interpretar a pontuação SUS, podem ser adotadas faixas de referência comumente utilizadas em estudos de usabilidade. Pontuações acima de 68 tendem a indicar usabilidade acima da média. Valores abaixo desse patamar sugerem necessidade de revisão da interface, especialmente nos fluxos em que os usuários demonstraram insegurança, demora ou dependência de ajuda externa.
+
+</div>
+
+| Faixa de pontuação | Interpretação |
+|---|---|
+| 0 a 50 | Usabilidade crítica ou insuficiente |
+| 51 a 67 | Usabilidade abaixo da média |
+| 68 a 80 | Usabilidade aceitável |
+| 81 a 90 | Usabilidade muito boa |
+| 91 a 100 | Usabilidade excelente |
+
+<div align="justify">
+
+Considerando a média geral de 92,9 pontos, a percepção geral da aplicação enquadra-se na faixa de usabilidade excelente. Esse resultado é coerente com o desempenho observado no teste de guerrilha, no qual todos os participantes concluíram os fluxos propostos sem erros bloqueadores.
+
+</div>
+
+#### Análise complementar com base no teste de guerrilha
+
+<div align="justify">
+
+Os dados do teste de guerrilha indicam uma percepção operacional positiva da interface. Todos os 7 participantes concluíram as 5 tarefas propostas com sucesso, totalizando 35 conclusões bem-sucedidas em 35 tentativas. Esse resultado sugere que os principais fluxos da aplicação foram compreendidos pelos usuários e que não houve barreiras bloqueadoras durante a navegação.
+
+As tarefas relacionadas ao perfil de gestor, como filtrar alunos por curso, adicionar evento e visualizar desempenho, foram concluídas por todos os participantes. O mesmo ocorreu com a tarefa do perfil de psicólogo, relacionada ao registro de histórico psicológico, e com a tarefa do perfil de aluno, relacionada à visualização de evento na agenda. Dessa forma, observou-se que os três perfis centrais da aplicação apresentaram boa navegabilidade no contexto avaliado.
+
+A única ocorrência registrada foi identificada na tarefa de filtragem de alunos por curso. Um participante indicou que a posição do filtro de cursos pareceu um pouco confusa. A severidade foi classificada como 1 - cosmética, pois não impediu a conclusão da tarefa. Como melhoria, recomenda-se destacar visualmente o campo de filtro por curso ou reposicioná-lo em uma área mais intuitiva da listagem de alunos.
+
+Além da taxa de sucesso de 100%, as respostas 4 e 5 nos itens positivos do SUS reforçam que os participantes não apenas conseguiram executar as tarefas, mas também avaliaram positivamente a experiência de uso. Assim, os resultados combinados do teste de guerrilha e da avaliação SUS apontam para uma interface funcional, compreensível e bem recebida pelos usuários testados.
+
+</div>
+
+#### Conclusão
+
+<div align="justify">
+
+Concluiu-se que o teste de guerrilha e a avaliação SUS apresentaram evidências favoráveis de usabilidade para o Pulse Manager. Todos os participantes conseguiram concluir os fluxos propostos sem erros bloqueadores e atribuíram avaliações altas à experiência, com notas 4 e 5 nos itens positivos do questionário.
+
+A aplicação demonstrou boa aderência aos principais cenários de uso dos perfis gestor, psicólogo e aluno. A combinação entre taxa de sucesso de 100% nas tarefas e média SUS de 92,9 pontos indica que a interface foi compreendida pelos usuários e apresentou baixo nível de atrito durante a navegação.
+
+Como plano de melhoria imediato, recomenda-se revisar a visibilidade e o posicionamento do filtro de cursos na tela de listagem de alunos, dado que esse foi o único ponto de confusão registrado. Após essa alteração, o questionário SUS pode ser reaplicado para verificar se a percepção geral de usabilidade se manteve positiva ou apresentou evolução.
+
+</div>
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
