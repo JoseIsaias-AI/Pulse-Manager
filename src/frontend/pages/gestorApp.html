@@ -436,6 +436,54 @@
   .perfil-overlay.open { display: flex; }
   .perfil-overlay.open .modal { transform: translateY(0) scale(1); opacity: 1; }
   body.perfil-open { overflow: hidden; }
+  #view-atualizacoes {
+    overflow-y: auto !important;
+    padding: 24px 40px;
+    gap: 18px;
+    flex-direction: column;
+    background: #EEF1F4;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+  }
+  .upd-page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .upd-page-title { font-size: 24px; font-weight: 800; color: #003870; letter-spacing: -.01em; }
+  .upd-page-sub { font-size: 13px; color: #6B7684; margin-top: 4px; max-width: 720px; line-height: 1.5; }
+  .upd-page-pill {
+    display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 999px;
+    background: #EDF3F9; color: #003870; font-size: 11px; font-weight: 800; white-space: nowrap;
+  }
+  .upd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: flex-start; }
+  .upd-card {
+    border: 1px solid #DEE3EA; border-radius: 16px; background: #fff;
+    box-shadow: 0 8px 22px rgba(0,56,112,.07); overflow: hidden;
+  }
+  .upd-card-head { padding: 16px 18px; background: #F7FAFD; border-bottom: 1px solid #EEF1F4; }
+  .upd-card-title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; color: #003870; }
+  .upd-card-sub { font-size: 11px; color: #6B7684; margin-top: 4px; line-height: 1.45; }
+  .upd-card-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .upd-field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .upd-field { display: flex; flex-direction: column; gap: 5px; }
+  .upd-field.span2 { grid-column: 1 / -1; }
+  .upd-field label { font-size: 11px; font-weight: 700; color: #6B7684; }
+  .upd-field input,
+  .upd-field select,
+  .upd-field textarea {
+    width: 100%; border: 1px solid #DEE3EA; border-radius: 9px; padding: 9px 11px;
+    font: 500 12px 'Poppins', sans-serif; color: #11161D; background: #fff; outline: none;
+  }
+  .upd-field textarea { min-height: 82px; resize: vertical; }
+  .upd-field select[multiple] { min-height: 118px; }
+  .upd-field input:focus,
+  .upd-field select:focus,
+  .upd-field textarea:focus { border-color: #003870; }
+  .upd-submit {
+    border: none; border-radius: 10px; background: #003870; color: #fff;
+    font: 700 12px 'Poppins', sans-serif; padding: 11px 12px; cursor: default;
+  }
+  .upd-note { margin: 0; font-size: 10.5px; color: #97A1AE; line-height: 1.45; }
+  @media (max-width: 980px) {
+    .upd-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -934,6 +982,126 @@
 
       </div><!-- fim #view-dashboard -->
 
+      <div id="view-atualizacoes" class="spa-view">
+        <div class="upd-page-head">
+          <div>
+            <div class="upd-page-title"><i class="ti ti-bell-ringing" style="font-size:22px;vertical-align:-3px;margin-right:8px;"></i>Atualizações</div>
+          </div>
+          <div class="upd-page-pill"><i class="ti ti-eye"></i> Interface fictícia</div>
+        </div>
+
+        <div class="upd-grid">
+          <section class="upd-card">
+            <div class="upd-card-head">
+              <div class="upd-card-title"><i class="ti ti-message-circle"></i> Enviar notificação</div>
+            </div>
+            <div class="upd-card-body">
+              <div class="upd-field-grid">
+                <div class="upd-field span2">
+                  <label>Título</label>
+                  <input type="text" maxlength="255" value="Nova atualização da Pulse Mais">
+                </div>
+                <div class="upd-field span2">
+                  <label>Destinatários</label>
+                  <select multiple size="4">
+                    <option selected>Marianne Oliveira</option>
+                    <option selected>Tiago Ribeiro</option>
+                    <option>Sofia Carvalho</option>
+                    <option>Lucas Nascimento</option>
+                    <option>Todos os alunos da turma T4</option>
+                  </select>
+                </div>
+                <div class="upd-field">
+                  <label>Tipo</label>
+                  <select>
+                    <option>alerta</option>
+                    <option selected>informativo</option>
+                    <option>convite</option>
+                    <option>urgente</option>
+                    <option>outro</option>
+                  </select>
+                </div>
+                <div class="upd-field">
+                  <label>Data envio</label>
+                  <input type="date" value="2026-06-16">
+                </div>
+                <div class="upd-field">
+                  <label>Remetente</label>
+                  <select>
+                    <option selected>Vitória Brandão</option>
+                    <option>Carlos Mendes</option>
+                    <option>Equipe Pulse Mais</option>
+                  </select>
+                </div>
+                <div class="upd-field">
+                  <label>Tipo remetente</label>
+                  <select>
+                    <option selected>membro_equipe</option>
+                    <option>psicologo</option>
+                  </select>
+                </div>
+                <div class="upd-field">
+                  <label>Nome remetente</label>
+                  <input type="text" maxlength="150" value="Vitória Brandão">
+                </div>
+                <div class="upd-field span2">
+                  <label>Mensagem</label>
+                  <textarea maxlength="500">Confira as novas oportunidades disponíveis no portal.</textarea>
+                </div>
+              </div>
+              <button class="upd-submit" type="button">Enviar notificação</button>
+            </div>
+          </section>
+
+          <section class="upd-card">
+            <div class="upd-card-head">
+              <div class="upd-card-title"><i class="ti ti-briefcase"></i> Enviar oportunidade</div>
+            </div>
+            <div class="upd-card-body">
+              <div class="upd-field-grid">
+                <div class="upd-field span2">
+                  <label>Título</label>
+                  <input type="text" maxlength="255" value="Estágio em Dados - Trilha Inicial">
+                </div>
+                <div class="upd-field">
+                  <label>Tipo</label>
+                  <select>
+                    <option>emprego</option>
+                    <option selected>estagio</option>
+                    <option>curso</option>
+                    <option>evento</option>
+                    <option>bolsa</option>
+                    <option>voluntariado</option>
+                    <option>outro</option>
+                  </select>
+                </div>
+                <div class="upd-field">
+                  <label>Data publicação</label>
+                  <input type="date" value="2026-06-16">
+                </div>
+                <div class="upd-field">
+                  <label>Prazo inscrição</label>
+                  <input type="date" value="2026-06-30">
+                </div>
+                <div class="upd-field">
+                  <label>Publicador</label>
+                  <select>
+                    <option selected>Vitória Brandão</option>
+                    <option>Carlos Mendes</option>
+                    <option>Equipe Pulse Mais</option>
+                  </select>
+                </div>
+                <div class="upd-field span2">
+                  <label>Descrição</label>
+                  <textarea maxlength="500">Oportunidade demonstrativa para alunos praticarem análise de dados e visualização de indicadores.</textarea>
+                </div>
+              </div>
+              <button class="upd-submit" type="button">Enviar oportunidade</button>
+            </div>
+          </section>
+        </div>
+      </div>
+
       <!-- ══════════════════════════════════════════════════════
            VIEW: AGENDA  (em desenvolvimento pelo colega)
       ══════════════════════════════════════════════════════ -->
@@ -1026,6 +1194,7 @@
       <div class="tab-strip">
         <button class="tab-btn active" onclick="showTab('dados',this)"><i class="ti ti-user"></i> Dados</button>
         <button class="tab-btn" onclick="showTab('contato',this)"><i class="ti ti-phone"></i> Contato</button>
+        <button class="tab-btn" onclick="showTab('atualizacoes',this)"><i class="ti ti-bell-ringing"></i> Atualizações</button>
       </div>
 
       <div class="modal-body">
@@ -1066,6 +1235,123 @@
               <label>Telefone</label>
               <input type="tel" value="(11) 99876-5432">
             </div>
+          </div>
+        </div>
+
+        <div id="tab-atualizacoes" class="tab-panel">
+          <div class="sec-label">Comunicação e oportunidades</div>
+          <div class="upd-grid">
+            <section class="upd-card">
+              <div class="upd-card-head">
+                <div class="upd-card-title"><i class="ti ti-message-circle"></i> Enviar notificação</div>
+                <div class="upd-card-sub">Campos demonstrativos baseados na entidade notificacao.</div>
+              </div>
+              <div class="upd-card-body">
+                <div class="upd-field-grid">
+                  <div class="upd-field span2">
+                    <label>Título</label>
+                    <input type="text" maxlength="255" value="Nova atualização da Pulse Mais">
+                  </div>
+                  <div class="upd-field span2">
+                    <label>Destinatários</label>
+                    <select multiple size="4">
+                      <option selected>Marianne Oliveira</option>
+                      <option selected>Tiago Ribeiro</option>
+                      <option>Sofia Carvalho</option>
+                      <option>Lucas Nascimento</option>
+                      <option>Todos os alunos da turma T4</option>
+                    </select>
+                  </div>
+                  <div class="upd-field">
+                    <label>Tipo</label>
+                    <select>
+                      <option>alerta</option>
+                      <option selected>informativo</option>
+                      <option>convite</option>
+                      <option>urgente</option>
+                      <option>outro</option>
+                    </select>
+                  </div>
+                  <div class="upd-field">
+                    <label>Data envio</label>
+                    <input type="date" value="2026-06-16">
+                  </div>
+                  <div class="upd-field">
+                    <label>Remetente</label>
+                    <select>
+                      <option selected>Vitória Brandão</option>
+                      <option>Carlos Mendes</option>
+                      <option>Equipe Pulse Mais</option>
+                    </select>
+                  </div>
+                  <div class="upd-field">
+                    <label>Tipo remetente</label>
+                    <select>
+                      <option selected>membro_equipe</option>
+                      <option>psicologo</option>
+                    </select>
+                  </div>
+                  <div class="upd-field">
+                    <label>Nome remetente</label>
+                    <input type="text" maxlength="150" value="Vitória Brandão">
+                  </div>
+                  <div class="upd-field span2">
+                    <label>Mensagem</label>
+                    <textarea maxlength="500">Confira as novas oportunidades disponíveis no portal.</textarea>
+                  </div>
+                </div>
+                <button class="upd-submit" type="button">Enviar notificação</button>
+              
+              </div>
+            </section>
+
+            <section class="upd-card">
+              <div class="upd-card-head">
+                <div class="upd-card-title"><i class="ti ti-briefcase"></i> Enviar oportunidade</div>
+                <div class="upd-card-sub">Campos demonstrativos baseados na entidade oportunidade.</div>
+              </div>
+              <div class="upd-card-body">
+                <div class="upd-field-grid">
+                  <div class="upd-field span2">
+                    <label>Título</label>
+                    <input type="text" maxlength="255" value="Estágio em Dados - Trilha Inicial">
+                  </div>
+                  <div class="upd-field">
+                    <label>Tipo</label>
+                    <select>
+                      <option>emprego</option>
+                      <option selected>estagio</option>
+                      <option>curso</option>
+                      <option>evento</option>
+                      <option>bolsa</option>
+                      <option>voluntariado</option>
+                      <option>outro</option>
+                    </select>
+                  </div>
+                  <div class="upd-field">
+                    <label>Data publicação</label>
+                    <input type="date" value="2026-06-16">
+                  </div>
+                  <div class="upd-field">
+                    <label>Prazo inscrição</label>
+                    <input type="date" value="2026-06-30">
+                  </div>
+                  <div class="upd-field">
+                    <label>Publicador</label>
+                    <select>
+                      <option selected>Vitória Brandão</option>
+                      <option>Carlos Mendes</option>
+                      <option>Equipe Pulse Mais</option>
+                    </select>
+                  </div>
+                  <div class="upd-field span2">
+                    <label>Descrição</label>
+                    <textarea maxlength="500">Oportunidade demonstrativa para alunos praticarem análise de dados e visualização de indicadores.</textarea>
+                  </div>
+                </div>
+                <button class="upd-submit" type="button">Enviar oportunidade</button>
+              </div>
+            </section>
           </div>
         </div>
 

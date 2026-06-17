@@ -2,8 +2,8 @@
   'use strict';
 
   /* ── VIEWS ────────────────────────────────────────────────── */
-  const VIEWS = ['inicio', 'dashboard', 'agenda'];
-  const chartInited = { inicio: false, dashboard: false, agenda: false };
+  const VIEWS = ['inicio', 'dashboard', 'agenda', 'atualizacoes'];
+  const chartInited = { inicio: false, dashboard: false, agenda: false, atualizacoes: false };
 
   function showView(id) {
     VIEWS.forEach(v => {
@@ -20,6 +20,7 @@
       if (id === 'inicio')    initInicioView();
       if (id === 'dashboard') initDashboardView();
       if (id === 'agenda')    initAgendaView();
+      if (id === 'atualizacoes') initAtualizacoesView();
     }
   }
 
@@ -48,6 +49,115 @@
 
   /* ── VIEW PADRÃO ──────────────────────────────────────────── */
   showView('inicio');
+
+  function initAtualizacoesView() {
+    const list = document.getElementById('at-oportunidades-list');
+    const notifList = document.getElementById('at-notificacoes-list');
+    if ((!list || list.dataset.rendered === '1') && (!notifList || notifList.dataset.rendered === '1')) return;
+    if (list) list.dataset.rendered = '1';
+    if (notifList) notifList.dataset.rendered = '1';
+    const notificacoes = [
+      {
+        titulo: 'Convite para evento de carreiras',
+        mensagem: 'Participe do encontro demonstrativo com empresas parceiras e trilhas de empregabilidade.',
+        tipo: 'convite',
+        dataEnvio: '2026-06-17',
+        tipoRemetente: 'membro_equipe',
+        nomeRemetente: 'Vitória Brandão'
+      },
+      {
+        titulo: 'Atualização de oportunidade',
+        mensagem: 'Novas oportunidades simuladas foram adicionadas para acompanhamento no portal do aluno.',
+        tipo: 'informativo',
+        dataEnvio: '2026-06-15',
+        tipoRemetente: 'membro_equipe',
+        nomeRemetente: 'Equipe Pulse Mais'
+      },
+      {
+        titulo: 'Acompanhamento disponível',
+        mensagem: 'Há um horário demonstrativo reservado para conversa sobre objetivos de carreira.',
+        tipo: 'alerta',
+        dataEnvio: '2026-06-12',
+        tipoRemetente: 'psicologo',
+        nomeRemetente: 'João Mário'
+      }
+    ];
+    const oportunidades = [
+      {
+        titulo: 'Estágio em Dados - Trilha Inicial',
+        descricao: 'Vaga demonstrativa para praticar análise de dados, planilhas e visualização de indicadores.',
+        tipo: 'estagio',
+        dataPublicacao: '2026-06-12',
+        prazoInscricao: '2026-06-28',
+        idMembro: 1
+      },
+      {
+        titulo: 'Curso de UX para Produtos Sociais',
+        descricao: 'Oportunidade fictícia de formação curta em pesquisa com usuários e prototipação.',
+        tipo: 'curso',
+        dataPublicacao: '2026-06-10',
+        prazoInscricao: '2026-07-05',
+        idMembro: 2
+      },
+      {
+        titulo: 'Bolsa para Certificação em Cloud',
+        descricao: 'Bolsa simulada para alunos em fase de aprofundamento técnico.',
+        tipo: 'bolsa',
+        dataPublicacao: '2026-06-08',
+        prazoInscricao: '2026-06-30',
+        idMembro: 1
+      },
+      {
+        titulo: 'Evento de Carreiras em Tecnologia',
+        descricao: 'Encontro demonstrativo com empresas parceiras e rodas de conversa sobre empregabilidade.',
+        tipo: 'evento',
+        dataPublicacao: '2026-06-04',
+        prazoInscricao: '2026-06-24',
+        idMembro: 3
+      }
+    ];
+    const tipoLabel = { emprego:'Emprego', estagio:'Estágio', curso:'Curso', evento:'Evento', bolsa:'Bolsa', voluntariado:'Voluntariado', outro:'Outro' };
+    const notifTipoLabel = { alerta:'Alerta', informativo:'Informativo', convite:'Convite', urgente:'Urgente', outro:'Outro' };
+    if (notifList) {
+      notifList.innerHTML = notificacoes.map((n) => `
+        <article class="at-notif-card at-notif-card--${n.tipo}">
+          <div class="at-op-top">
+            <span class="at-notif-type">${notifTipoLabel[n.tipo] || n.tipo}</span>
+            <span class="at-op-date">Enviada em ${formatDatePt(n.dataEnvio)}</span>
+          </div>
+          <h2>${n.titulo}</h2>
+          <p>${n.mensagem}</p>
+          <div class="at-notif-meta">
+            <span><i class="ti ti-user"></i> ${n.nomeRemetente}</span>
+            <span><i class="ti ti-id"></i> ${n.tipoRemetente}</span>
+          </div>
+        </article>
+      `).join('');
+    }
+    if (list) {
+      list.innerHTML = oportunidades.map((op) => `
+      <article class="at-op-card">
+        <div class="at-op-top">
+          <span class="at-op-type at-op-type--${op.tipo}">${tipoLabel[op.tipo] || op.tipo}</span>
+          <span class="at-op-date">Publicada em ${formatDatePt(op.dataPublicacao)}</span>
+        </div>
+        <h2>${op.titulo}</h2>
+        <p>${op.descricao}</p>
+        <div class="at-op-meta">
+          <span><i class="ti ti-calendar-due"></i> Prazo: ${formatDatePt(op.prazoInscricao)}</span>
+          <span><i class="ti ti-user-star"></i> Membro #${op.idMembro}</span>
+        </div>
+        <button class="at-op-btn" type="button" disabled>Inscrição indisponível</button>
+      </article>
+      `).join('');
+    }
+  }
+
+  function formatDatePt(value) {
+    if (!value) return 'Não informado';
+    const [year, month, day] = value.split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('pt-BR');
+  }
 
   /* ════════════════════════════════════════════════════════════
      VIEW: INÍCIO (Portal do Aluno)

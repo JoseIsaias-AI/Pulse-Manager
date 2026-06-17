@@ -17,7 +17,8 @@ const pulseConfig = {
     { id: 'inicio',    icon: 'ti-home',       label: 'Início'    },
     { id: 'alunos',    icon: 'ti-users',      label: 'Alunos'    },
     { id: 'dashboard', icon: 'ti-chart-bar',  label: 'Dashboard' },
-    { id: 'agenda',    icon: 'ti-calendar',   label: 'Agenda'    }
+    { id: 'agenda',    icon: 'ti-calendar',   label: 'Agenda'    },
+    { id: 'atualizacoes', icon: 'ti-bell-ringing', label: 'Atualizações' }
   ],
 
   // Cards exibidos na seção "Acesso Rápido"

@@ -5,8 +5,8 @@
     || (window.location.port === '3000' ? '/api' : 'http://localhost:3000/api');
 
   /* ── VIEWS ────────────────────────────────────────────────── */
-  const VIEWS = ['inicio', 'alunos', 'dashboard', 'agenda'];
-  const chartInited = { inicio: false, alunos: false, dashboard: false, agenda: false };
+  const VIEWS = ['inicio', 'alunos', 'dashboard', 'agenda', 'atualizacoes'];
+  const chartInited = { inicio: false, alunos: false, dashboard: false, agenda: false, atualizacoes: false };
 
   function showView(id) {
     // Esconde todas as views
