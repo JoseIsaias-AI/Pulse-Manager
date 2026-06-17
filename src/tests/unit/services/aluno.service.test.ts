@@ -1,4 +1,6 @@
 import { AlunoService } from '../../../backend/services/alunoService';
+import { AlunoRepository } from '../../../backend/repositories/alunoRepository';
+import { asMockedDependency } from '../../helpers/mockHelper';
 
 const baseAluno = {
   idAluno: 1,
@@ -45,7 +47,7 @@ describe('AlunoService', () => {
 
   beforeEach(() => {
     repository = makeRepository();
-    service = new AlunoService(repository as any);
+    service = new AlunoService(asMockedDependency<AlunoRepository>(repository));
   });
 
   it('lista alunos com filtros', async () => {
@@ -78,13 +80,13 @@ describe('AlunoService', () => {
   });
 
   it('rejeita cadastro com nome invalido', async () => {
-    await expect(service.cadastrar({ nome: 'Ma', email: 'maria@email.com' } as any)).rejects.toThrow(
+    await expect(service.cadastrar({ nome: 'Ma', email: 'maria@email.com' })).rejects.toThrow(
       'O campo nome deve ter pelo menos 3 caracteres.'
     );
   });
 
   it('rejeita cadastro com email invalido', async () => {
-    await expect(service.cadastrar({ nome: 'Maria Silva', email: 'maria.email.com' } as any)).rejects.toThrow(
+    await expect(service.cadastrar({ nome: 'Maria Silva', email: 'maria.email.com' })).rejects.toThrow(
       'O campo email deve conter um endereco valido.'
     );
   });
@@ -138,7 +140,7 @@ describe('AlunoService', () => {
   it('rejeita atualizacao com dados invalidos', async () => {
     repository.findById.mockResolvedValue(baseAluno);
 
-    await expect(service.atualizar(1, { riscoEvasao: 'critico' as any })).rejects.toThrow('Risco de evasao invalido.');
+    await expect(service.atualizar(1, { riscoEvasao: 'critico' })).rejects.toThrow('Risco de evasao invalido.');
   });
 
   it('inativa aluno existente', async () => {

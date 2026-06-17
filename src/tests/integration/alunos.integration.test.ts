@@ -1,7 +1,8 @@
-﻿import request from 'supertest';
+import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
+import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
 
 describe('UC-03 a UC-06 - Gestao de Alunos', () => {
@@ -9,12 +10,12 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
   let aluno: Aluno;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
 
     aluno = await alunoRepository.save({
       nome: 'Carlos Mendes',
@@ -32,11 +33,7 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
     });
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   describe('UC-03 - Cadastrar aluno (RN001, RN002)', () => {
     it('CT01 - deve cadastrar aluno e gerar codigo PM automaticamente (RN001)', async () => {
@@ -112,7 +109,15 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
       expect(Array.isArray(response.body.data.alunos)).toBe(true);
-      expect(response.body.data.alunos.length).toBeGreaterThanOrEqual(1);
+      expect(response.body.data.alunos).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            idAluno: aluno.idAluno,
+            nome: 'Carlos Mendes',
+            email: 'carlos.mendes@pulsemais.org'
+          })
+        ])
+      );
     });
 
     it('CT02 - deve obter perfil de aluno pelo id', async () => {
@@ -137,7 +142,14 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       const response = await request(app).get('/api/alunos?status=ativo');
 
       expect(response.status).toBe(200);
-      expect(response.body.data.alunos.length).toBeGreaterThanOrEqual(1);
+      expect(response.body.data.alunos).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            idAluno: aluno.idAluno,
+            status: 'ativo'
+          })
+        ])
+      );
       response.body.data.alunos.forEach((a: { status: string }) => {
         expect(a.status).toBe('ativo');
       });
@@ -220,7 +232,7 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
   });
 
   describe('RNF - Qualidade para UC-03 a UC-06', () => {
-    it('RNF-DES-UC04 - deve responder listagem de alunos em ate 1500ms', async () => {
+    performanceIt('RNF-DES-UC04 - deve responder listagem de alunos em ate 1500ms', async () => {
       const inicio = Date.now();
       const response = await request(app).get('/api/alunos');
       const duracaoMs = Date.now() - inicio;
