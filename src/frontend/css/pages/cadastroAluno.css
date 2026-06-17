@@ -1,0 +1,230 @@
+.al-new-btn {
+  height: 32px;
+  padding: 5px 14px;
+  border: 1px solid #003870;
+  border-radius: 8px;
+  background: #003870;
+  color: #fff;
+  cursor: pointer;
+  font: 600 11px 'Poppins', sans-serif;
+  transition: background .15s, border-color .15s;
+}
+
+.al-new-btn:hover {
+  background: #0a4a89;
+  border-color: #0a4a89;
+}
+
+.al-create-overlay {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 35, 70, .55);
+}
+
+.al-create-overlay.is-open {
+  display: flex;
+}
+
+.al-create-modal {
+  width: min(920px, 100%);
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(0, 35, 70, .25);
+}
+
+.al-create-header,
+.al-create-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  border-bottom: 1px solid #dee3ea;
+}
+
+.al-create-header h2 {
+  margin: 0;
+  color: #003870;
+  font-size: 20px;
+}
+
+.al-create-header p {
+  margin: 3px 0 0;
+  color: #6b7684;
+  font-size: 11px;
+}
+
+.al-create-close {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: #eef1f4;
+  color: #003870;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.al-create-form {
+  overflow-y: auto;
+  padding: 18px 22px 4px;
+}
+
+.al-create-section {
+  margin: 0 0 20px;
+  padding: 0;
+  border: 0;
+}
+
+.al-create-section legend {
+  width: 100%;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #eef1f4;
+  color: #003870;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.al-create-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.al-create-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #4f5b68;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.al-create-field--wide {
+  grid-column: span 2;
+}
+
+.al-create-field input,
+.al-create-field select {
+  width: 100%;
+  height: 38px;
+  padding: 7px 10px;
+  border: 1px solid #dee3ea;
+  border-radius: 8px;
+  outline: none;
+  background: #fff;
+  color: #11161d;
+  font: 400 11px 'Poppins', sans-serif;
+}
+
+.al-create-field input:focus,
+.al-create-field select:focus {
+  border-color: #003870;
+  box-shadow: 0 0 0 2px rgba(0, 56, 112, .1);
+}
+
+.al-create-required {
+  color: #c2410c;
+}
+
+.al-create-feedback {
+  min-height: 18px;
+  margin: 0;
+  color: #c2410c;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.al-create-actions {
+  justify-content: flex-end;
+  border-top: 1px solid #dee3ea;
+  border-bottom: 0;
+}
+
+.al-create-cancel,
+.al-create-submit {
+  height: 36px;
+  padding: 7px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font: 600 11px 'Poppins', sans-serif;
+}
+
+.al-create-cancel {
+  border: 1px solid #dee3ea;
+  background: #fff;
+  color: #6b7684;
+}
+
+.al-create-submit {
+  border: 1px solid #003870;
+  background: #003870;
+  color: #fff;
+}
+
+.al-create-submit:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+
+.al-notice {
+  position: fixed;
+  z-index: 5000;
+  top: 18px;
+  right: 18px;
+  max-width: 360px;
+  padding: 11px 15px;
+  border-radius: 10px;
+  background: #e8f8ed;
+  color: #1d7a36;
+  box-shadow: 0 8px 24px rgba(0, 35, 70, .18);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.35;
+  animation: al-notice-in .16s ease-out;
+}
+
+.al-notice--error {
+  background: #fff3e0;
+  color: #c2410c;
+}
+
+@keyframes al-notice-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 800px) {
+  .al-create-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .al-create-overlay {
+    padding: 0;
+  }
+
+  .al-create-modal {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .al-create-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .al-create-field--wide {
+    grid-column: auto;
+  }
+}

@@ -2,18 +2,24 @@
 import { AlunoService } from '../services/alunoService';
 import { AppError } from '../utils/errors';
 import { optionalString, optionalNumber, positiveInteger } from '../utils/validators';
+import { EmpregabilidadeAluno, SegmentacaoAlunoQuery, StatusAluno } from '../models/alunoModel';
 
 export class AlunoController {
   constructor(private readonly service: AlunoService) {}
 
   listar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const result = await this.service.listar({
+      const filtros: SegmentacaoAlunoQuery = {
         busca: optionalString(req.query.busca),
-        status: optionalString(req.query.status),
+        status: optionalString(req.query.status) as StatusAluno | undefined,
         programa: optionalString(req.query.programa),
+        empregabilidade: optionalString(req.query.empregabilidade) as EmpregabilidadeAluno | undefined,
+        escolaridade: optionalString(req.query.escolaridade),
+        curso: optionalString(req.query.curso),
+        anoIngresso: optionalNumber(req.query.anoIngresso, 'anoIngresso'),
         limite: optionalNumber(req.query.limite, 'limite')
-      });
+      };
+      const result = await this.service.listar(filtros);
       res.status(200).json(result);
     } catch (error) {
       this.handle(error, res, next);
@@ -24,6 +30,15 @@ export class AlunoController {
     try {
       const result = await this.service.cadastrar(req.body);
       res.status(201).json(result);
+    } catch (error) {
+      this.handle(error, res, next);
+    }
+  };
+
+  listarOpcoesCadastro = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const result = await this.service.listarOpcoesCadastro();
+      res.status(200).json(result);
     } catch (error) {
       this.handle(error, res, next);
     }

@@ -160,7 +160,15 @@ DATABASE_SSL=true
 # DB_TYPE=postgres   # padrão: postgres em dev, sqljs em test
 ```
 
-#### Variáveis — aplicação
+Para executar localmente sem PostgreSQL ou Supabase configurado, usando o banco em memória:
+
+```sh
+npm run dev:local
+```
+
+Esse modo carrega automaticamente uma massa demonstrativa de alunos. Os dados são recriados sempre que o servidor local é reiniciado.
+
+Caso o projeto utilize apenas o modo de produção/local simples, utilize:
 
 | Variável | Obrigatória | Padrão | Descrição |
 |---|---|---|---|

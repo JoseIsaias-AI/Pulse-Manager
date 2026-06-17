@@ -1,5 +1,10 @@
 ﻿import { NextFunction, Request, Response } from 'express';
-import { StatusAluno, RiscoEvasao, SegmentacaoAlunoQuery } from '../models/alunoModel';
+import {
+  EmpregabilidadeAluno,
+  StatusAluno,
+  RiscoEvasao,
+  SegmentacaoAlunoQuery
+} from '../models/alunoModel';
 import { SegmentacaoService } from '../services/segmentacaoService';
 import { AppError } from '../utils/errors';
 
@@ -30,7 +35,10 @@ export class SegmentacaoController {
       risco: optionalString(req.query.risco) as RiscoEvasao | undefined,
       categoria: optionalString(req.query.categoria),
       ocupacao: optionalString(req.query.ocupacao),
+      empregabilidade: optionalString(req.query.empregabilidade) as EmpregabilidadeAluno | undefined,
       escolaridade: optionalString(req.query.escolaridade),
+      curso: optionalString(req.query.curso),
+      anoIngresso: optionalNumber(req.query.anoIngresso),
       busca: optionalString(req.query.busca),
       limite: optionalNumber(req.query.limite)
     };

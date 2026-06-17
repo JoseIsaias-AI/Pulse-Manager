@@ -357,6 +357,15 @@ ON aluno(nivel_jornada);
 CREATE INDEX IF NOT EXISTS idx_aluno_curso
 ON aluno(curso);
 
+CREATE INDEX IF NOT EXISTS idx_aluno_escolaridade
+ON aluno(escolaridade);
+
+CREATE INDEX IF NOT EXISTS idx_aluno_ocupacao
+ON aluno(ocupacao);
+
+CREATE INDEX IF NOT EXISTS idx_aluno_data_ingresso
+ON aluno(data_ingresso);
+
 CREATE INDEX IF NOT EXISTS idx_atividade_tipo
 ON atividade(tipo);
 

@@ -186,7 +186,10 @@
           notif.unread = false;
           syncBellBadge();
           updateTabCounts();
-          renderList();
+        }
+        closeNotif();
+        if (typeof window.__onMenuNav === 'function') {
+          window.__onMenuNav('atualizacoes');
         }
       });
     });

@@ -1,11 +1,16 @@
 import { app } from './backend/app';
 import { env } from './backend/config/env';
 import { initializeDatabase } from './backend/database/connection';
+import { seedLocalDevelopmentDatabase } from './backend/database/localSeed';
 
 const port = env.port;
 
 initializeDatabase()
-  .then(() => {
+  .then(async () => {
+    if (env.database.type === 'sqljs' && !env.isTest) {
+      await seedLocalDevelopmentDatabase();
+    }
+
     app.listen(port, () => {
       console.log(`Servidor Pulse Mais rodando na porta ${port}`);
       console.log(`Healthcheck: http://localhost:${port}/api/health`);

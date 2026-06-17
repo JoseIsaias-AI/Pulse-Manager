@@ -77,34 +77,20 @@
           <div class="ag-form-card">
             <div class="ag-form-head">
               <i class="ti ti-calendar-plus" style="font-size:18px;color:#FFD927;"></i>
-              <span class="ag-form-head-title">Adicionar Evento</span>
+              <span class="ag-form-head-title">Pré-cadastro de agenda</span>
             </div>
             <div class="ag-form-body">
               <div class="ag-field">
-                <label>Nome do evento</label>
-                <input type="text" id="ag-f-title" placeholder="Ex.: Sessão de boas-vindas">
-              </div>
-              <div class="ag-field">
-                <label>Responsável pela atividade</label>
-                <input type="text" id="ag-f-nome" placeholder="Ex.: Ana Clara">
-              </div>
-              <div class="ag-field">
-                <label>Ocupação</label>
-                <select id="ag-f-role">
+                <label>Usuário</label>
+                <select id="ag-f-tipo-user">
                   <option value="">Selecione...</option>
-                  <option>Psicólogo</option>
-                  <option>Gestor</option>
+                  <option value="aluno">Aluno</option>
+                  <option value="membro_equipe">Membro da equipe</option>
                 </select>
               </div>
               <div class="ag-field">
-                <label>Tipo de compromisso</label>
-                <select id="ag-f-type">
-                  <option value="">Selecione...</option>
-                  <option value="evento">Evento</option>
-                  <option value="consulta">Consulta</option>
-                  <option value="aula">Aula</option>
-                  <option value="mentoria">Mentoria</option>
-                </select>
+                <label>Registro</label>
+                <textarea id="ag-f-registro" maxlength="500" placeholder="Texto que será salvo em agenda.registro"></textarea>
               </div>
               <div class="ag-field-row">
                 <div class="ag-field">
@@ -112,27 +98,27 @@
                   <input type="date" id="ag-f-date">
                 </div>
                 <div class="ag-field">
-                  <label>Hora</label>
-                  <input type="time" id="ag-f-time">
+                  <label>Status</label>
+                  <select id="ag-f-status">
+                    <option value="1">Ativo</option>
+                    <option value="0">Cancelado/Inativo</option>
+                  </select>
                 </div>
               </div>
-              <div class="ag-field">
-                <label>Descrição da atividade</label>
-                <textarea id="ag-f-desc" placeholder="Descreva a atividade..."></textarea>
+              <div class="ag-field-row">
+                <div class="ag-field">
+                  <label>Hora início</label>
+                  <input type="time" id="ag-f-start">
+                </div>
+                <div class="ag-field">
+                  <label>Hora fim</label>
+                  <input type="time" id="ag-f-end">
+                </div>
               </div>
-              <div class="ag-field">
-                <label>Enviar para</label>
-                <select id="ag-f-target" onchange="agUpdateTargetField()">
-                  <option value="todos">Todos os alunos</option>
-                  <option value="especificos">Alunos específicos</option>
-                  <option value="aluno">Um aluno (por ID)</option>
-                </select>
-              </div>
-              <div id="ag-target-detail"></div>
             </div>
             <div class="ag-form-footer">
               <button class="ag-submit-btn" onclick="agAddEvent()">
-                <i class="ti ti-plus"></i> Adicionar evento
+                <i class="ti ti-plus"></i> Pré-visualizar na agenda
               </button>
             </div>
           </div>

@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <!-- Estilos da página -->
 <link rel="stylesheet" href="../css/pages/listaAlunos.css">
+<link rel="stylesheet" href="../css/pages/cadastroAluno.css">
 </head>
 <body>
 
@@ -74,14 +75,43 @@
 
       <!-- Filtros -->
       <div class="al-filters">
-        <button class="al-filter-btn" id="btn-curso">Curso</button>
-        <button class="al-filter-btn" id="btn-desemp">Desempenho</button>
-        <button class="al-filter-btn" id="btn-nota">Nota Média</button>
-        <button class="al-filter-btn" id="btn-eng">Engajamento</button>
-        <button class="al-filter-btn" id="btn-ord">
+        <label class="al-filter-field">
+          <span>Empregabilidade</span>
+          <select class="al-filter-select" id="filtro-empregabilidade" data-al-filter="empregabilidade">
+            <option value="">Todas</option>
+            <option value="empregado">Empregado</option>
+            <option value="desempregado">Desempregado ou buscando</option>
+            <option value="estudante">Estudante</option>
+            <option value="nao_informado">Nao informado</option>
+          </select>
+        </label>
+        <label class="al-filter-field">
+          <span>Escolaridade</span>
+          <select class="al-filter-select" id="filtro-escolaridade" data-al-filter="escolaridade">
+            <option value="">Todas</option>
+          </select>
+        </label>
+        <label class="al-filter-field">
+          <span>Curso</span>
+          <select class="al-filter-select" id="filtro-curso" data-al-filter="curso">
+            <option value="">Todos</option>
+          </select>
+        </label>
+        <label class="al-filter-field">
+          <span>Ano de ingresso</span>
+          <select class="al-filter-select" id="filtro-ano-ingresso" data-al-filter="anoIngresso">
+            <option value="">Todos</option>
+          </select>
+        </label>
+        <button class="al-filter-btn" id="btn-desemp" type="button">Desempenho</button>
+        <button class="al-filter-btn" id="btn-nota" type="button">Nota Média</button>
+        <button class="al-filter-btn" id="btn-eng" type="button">Engajamento</button>
+        <button class="al-filter-btn" id="btn-ord" type="button">
           <i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> Ordenar
         </button>
-        <button class="al-import-btn">+ Importar CSV</button>
+        <button class="al-clear-filters" id="btn-limpar-filtros" type="button">Limpar filtros</button>
+        <button class="al-import-btn" type="button">+ Importar CSV</button>
+        <button class="al-new-btn" type="button" data-al-open-create>+ Novo aluno</button>
       </div>
 
       <!-- Grid de alunos (renderizado por JS) -->

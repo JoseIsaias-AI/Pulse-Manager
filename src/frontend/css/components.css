@@ -115,3 +115,117 @@
 .menuSuperior__avatar-btn:hover {
   opacity: 0.85;
 }
+
+/* ---- Ajuste fluido do conteudo principal ---- */
+.paginaMain {
+  min-width: 0;
+  transition: flex-basis 0.22s ease;
+}
+
+.paginaConteudo,
+.menuSuperior {
+  min-width: 0;
+}
+
+/* ---- Sidebar expansivel/compacta ---- */
+.menuLateral {
+  width: 232px !important;
+  transition: width 0.22s ease;
+}
+
+.menuLateral__logo {
+  position: relative;
+  padding-left: 18px !important;
+  padding-right: 18px !important;
+}
+
+.menuLateral__toggle {
+  width: 100%;
+  height: 34px;
+  margin-top: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font: 600 11px 'Poppins', sans-serif;
+  transition: background 0.16s, color 0.16s, border-color 0.16s;
+}
+
+.menuLateral__toggle:hover {
+  background: rgba(255, 255, 255, 0.13);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.menuLateral__toggle i { font-size: 16px; }
+.menuLateral__link { font-size: 13px !important; padding: 11px 13px !important; }
+.menuLateral__icon { font-size: 18px !important; }
+.menuLateral__quick-card { padding: 12px 13px !important; }
+.menuLateral__quick-value { font-size: 13px !important; }
+.menuLateral__avatar { width: 34px !important; height: 34px !important; font-size: 12px !important; }
+.menuLateral__user-name { font-size: 12px !important; }
+.menuLateral__user-role { font-size: 10px !important; }
+
+body.sidebar-collapsed .menuLateral {
+  width: 78px !important;
+}
+
+body.sidebar-collapsed .menuLateral__logo {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+body.sidebar-collapsed .menuLateral__logo-brand {
+  justify-content: center;
+  gap: 0;
+}
+
+body.sidebar-collapsed .menuLateral__logo-icon {
+  width: 46px !important;
+  height: 46px !important;
+}
+
+body.sidebar-collapsed .menuLateral__logo-name,
+body.sidebar-collapsed .menuLateral__logo-role,
+body.sidebar-collapsed .menuLateral__section-label,
+body.sidebar-collapsed .menuLateral__link span,
+body.sidebar-collapsed .menuLateral__quick,
+body.sidebar-collapsed .menuLateral__settings span,
+body.sidebar-collapsed .menuLateral__user-info,
+body.sidebar-collapsed .menuLateral__toggle span {
+  display: none !important;
+}
+
+body.sidebar-collapsed .menuLateral__nav,
+body.sidebar-collapsed .menuLateral__footer {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+body.sidebar-collapsed .menuLateral__link,
+body.sidebar-collapsed .menuLateral__settings,
+body.sidebar-collapsed .menuLateral__user {
+  justify-content: center;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+body.sidebar-collapsed .menuLateral__toggle {
+  width: 42px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.sidebar-collapsed .menuLateral__footer {
+  align-items: center;
+}
+
+/* Breadcrumb removido visualmente, mas preservado no DOM para compatibilidade */
+.menuSuperior__breadcrumb {
+  display: none !important;
+}
