@@ -449,7 +449,7 @@
       <ul class="menuLateral__menu"></ul>
     </nav>
     <footer class="menuLateral__footer">
-      <a href="#" class="menuLateral__settings menuLateral__link">
+      <a href="#" class="menuLateral__settings menuLateral__link" onclick="window.__onMenuNav && window.__onMenuNav('configuracoes');return false;">
         <i class="ti ti-settings menuLateral__icon"></i>
         <span>Configurações</span>
       </a>
@@ -884,6 +884,104 @@
 
       </div><!-- fim #view-dashboard -->
 
+      <div id="view-configuracoes" class="spa-view cfg-view">
+        <div class="cfg-head">
+          <div>
+            <h1 class="cfg-title"><i class="ti ti-settings"></i> Configurações</h1>
+            <p class="cfg-subtitle">Ajuste a experiência visual do painel de acompanhamento.</p>
+          </div>
+          <span class="cfg-pill"><i class="ti ti-user-heart"></i> Preferências do psicólogo</span>
+        </div>
+
+        <div class="cfg-grid">
+          <section class="cfg-card">
+            <div class="cfg-card-head">
+              <div>
+                <h2 class="cfg-card-title"><i class="ti ti-palette"></i> Aparência</h2>
+                <p class="cfg-card-sub">Personalização visual para leitura, foco e densidade dos cards.</p>
+              </div>
+            </div>
+            <div class="cfg-card-body">
+              <div class="cfg-section-label">Cor de destaque</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="classic"><span class="cfg-dot" style="--dot-color:#003870"></span> Azul Pulse</button>
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="green"><span class="cfg-dot" style="--dot-color:#33B458"></span> Verde</button>
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="amber"><span class="cfg-dot" style="--dot-color:#D4860A"></span> Âmbar</button>
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="indigo"><span class="cfg-dot" style="--dot-color:#4F46E5"></span> Índigo</button>
+              </div>
+
+              <div class="cfg-section-label">Modo da interface</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="mode" data-cfg-value="light"><i class="ti ti-sun"></i> Claro</button>
+                <button class="cfg-choice" type="button" data-cfg-option="mode" data-cfg-value="dark"><i class="ti ti-moon"></i> Escuro</button>
+              </div>
+
+              <div class="cfg-section-label">Densidade</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="density" data-cfg-value="comfortable"><i class="ti ti-layout-grid"></i> Confortável</button>
+                <button class="cfg-choice" type="button" data-cfg-option="density" data-cfg-value="compact"><i class="ti ti-layout-list"></i> Compacta</button>
+              </div>
+
+              <div class="cfg-section-label">Leitura</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="font" data-cfg-value="normal"><i class="ti ti-letter-case"></i> Fonte padrão</button>
+                <button class="cfg-choice" type="button" data-cfg-option="font" data-cfg-value="large"><i class="ti ti-letter-case-upper"></i> Fonte maior</button>
+              </div>
+
+              <div class="cfg-section-label">Contraste</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="contrast" data-cfg-value="normal"><i class="ti ti-contrast"></i> Padrão</button>
+                <button class="cfg-choice" type="button" data-cfg-option="contrast" data-cfg-value="high"><i class="ti ti-contrast-2"></i> Alto contraste</button>
+              </div>
+
+              <div class="cfg-section-label">Bordas</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="rounded"><i class="ti ti-square-rounded"></i> Arredondadas</button>
+                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="soft"><i class="ti ti-circle"></i> Suaves</button>
+                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="square"><i class="ti ti-square"></i> Retas</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="cfg-card">
+            <div class="cfg-card-head">
+              <div>
+                <h2 class="cfg-card-title"><i class="ti ti-bell-cog"></i> Preferências</h2>
+                <p class="cfg-card-sub">Opções para avisos, leitura e acessibilidade.</p>
+              </div>
+            </div>
+            <div class="cfg-card-body">
+              <div class="cfg-toggle-list">
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Alertas por e-mail</span><span class="cfg-toggle-desc">Receber resumos de agenda e acompanhamentos.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="email"><span class="cfg-slider"></span></span>
+                </label>
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Notificações do painel</span><span class="cfg-toggle-desc">Mostrar avisos rápidos durante o uso.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="browser"><span class="cfg-slider"></span></span>
+                </label>
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Resumo de acompanhamento</span><span class="cfg-toggle-desc">Agrupar indicadores em uma visão de acompanhamento.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="digest"><span class="cfg-slider"></span></span>
+                </label>
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Reduzir animações</span><span class="cfg-toggle-desc">Diminuir transições para uma navegação mais estável.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="reduceMotion"><span class="cfg-slider"></span></span>
+                </label>
+              </div>
+              <div class="cfg-preview">
+                <div class="cfg-preview-top"><span class="cfg-preview-title">Prévia do acompanhamento</span><span class="cfg-preview-chip">Psicólogo</span></div>
+                <p class="cfg-preview-text">Veja como as preferências ajustam a visualização do acompanhamento.</p>
+              </div>
+              <div class="cfg-actions">
+                <button class="cfg-btn cfg-btn-primary" type="button" data-cfg-option="density" data-cfg-value="compact">Usar modo compacto</button>
+                <button class="cfg-btn cfg-btn-ghost" type="button" data-cfg-reset>Restaurar padrão</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
     </main>
   </div><!-- fim .paginaMain -->
 
@@ -1191,5 +1289,6 @@
 <script src="../js/components/menuSuperior.js"></script>
 <script src="../js/components/modalConfEquipe.js"></script>
 <script src="../js/pages/spaPsicologo.js"></script>
+<script src="../js/components/configuracoesFrontend.js"></script>
 </body>
 </html>

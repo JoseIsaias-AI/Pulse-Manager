@@ -2,8 +2,8 @@
   'use strict';
 
   /* ── VIEWS ────────────────────────────────────────────────── */
-  const VIEWS = ['inicio', 'dashboard', 'agenda', 'atualizacoes'];
-  const chartInited = { inicio: false, dashboard: false, agenda: false, atualizacoes: false };
+  const VIEWS = ['inicio', 'dashboard', 'agenda', 'atualizacoes', 'configuracoes'];
+  const chartInited = { inicio: false, dashboard: false, agenda: false, atualizacoes: false, configuracoes: false };
 
   function showView(id) {
     VIEWS.forEach(v => {
@@ -163,25 +163,25 @@
      VIEW: INÍCIO (Portal do Aluno)
   ════════════════════════════════════════════════════════════ */
   function initInicioView() {
-    /* Emoji selector */
-    var emojiRow = document.getElementById('ini-emoji-row');
+    var wellbeingRange = document.getElementById('ini-wellbeing-range');
+    var wellbeingValue = document.getElementById('ini-wellbeing-value');
     var saudeMsg = document.getElementById('ini-saude-msg');
-    var MOODS = {
-      '1': 'Vamos juntos superar isso 💙',
-      '2': 'Não está fácil. Fale com o psicólogo 💜',
-      '3': 'Tudo bem! Vá devagar hoje.',
-      '4': 'Que bom! Continue assim 👏',
-      '5': 'Você está arrasando! 🎉'
-    };
-    if (emojiRow) {
-      emojiRow.querySelectorAll('.ini-emoji-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          emojiRow.querySelectorAll('.ini-emoji-btn').forEach(function (b) {
-            b.classList.remove('ini-emoji-selected');
-          });
-          btn.classList.add('ini-emoji-selected');
-          if (saudeMsg) saudeMsg.textContent = MOODS[btn.dataset.mood] || '';
-        });
+    function wellbeingText(value) {
+      var score = Number(value);
+      if (score <= 2) return 'Bem-estar baixo. Considere buscar apoio hoje.';
+      if (score <= 4) return 'Dia mais difícil. Vá com calma e acompanhe como se sente.';
+      if (score <= 6) return 'Bem-estar moderado. Pequenas pausas podem ajudar.';
+      if (score <= 8) return 'Bem-estar estável. Continue acompanhando sua rotina.';
+      return 'Bem-estar alto. Ótimo momento para manter seus hábitos.';
+    }
+    function updateWellbeing(value) {
+      if (wellbeingValue) wellbeingValue.textContent = value;
+      if (saudeMsg) saudeMsg.textContent = wellbeingText(value);
+    }
+    if (wellbeingRange) {
+      updateWellbeing(wellbeingRange.value);
+      wellbeingRange.addEventListener('input', function () {
+        updateWellbeing(wellbeingRange.value);
       });
     }
 

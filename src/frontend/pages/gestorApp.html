@@ -637,7 +637,7 @@
       <ul class="menuLateral__menu"></ul>
     </nav>
     <footer class="menuLateral__footer">
-      <a href="#" class="menuLateral__settings menuLateral__link">
+      <a href="#" class="menuLateral__settings menuLateral__link" onclick="window.__onMenuNav && window.__onMenuNav('configuracoes');return false;">
         <i class="ti ti-settings menuLateral__icon"></i>
         <span>Configurações</span>
       </a>
@@ -1122,7 +1122,7 @@
           <div>
             <div class="upd-page-title"><i class="ti ti-bell-ringing" style="font-size:22px;vertical-align:-3px;margin-right:8px;"></i>Atualizações</div>
           </div>
-          <div class="upd-page-pill"><i class="ti ti-eye"></i> Interface fictícia</div>
+          <div class="upd-page-pill"><i class="ti ti-bell"></i> Central de envios</div>
         </div>
 
         <div class="upd-grid">
@@ -1228,7 +1228,7 @@
                 </div>
                 <div class="upd-field span2">
                   <label>Descrição</label>
-                  <textarea maxlength="500">Oportunidade demonstrativa para alunos praticarem análise de dados e visualização de indicadores.</textarea>
+                  <textarea maxlength="500">Oportunidade para alunos praticarem análise de dados e visualização de indicadores.</textarea>
                 </div>
               </div>
               <button class="upd-submit" type="button">Enviar oportunidade</button>
@@ -1303,6 +1303,104 @@
 
         </div>
       </div><!-- fim #view-agenda -->
+
+      <div id="view-configuracoes" class="spa-view cfg-view">
+        <div class="cfg-head">
+          <div>
+            <h1 class="cfg-title"><i class="ti ti-settings"></i> Configurações</h1>
+            <p class="cfg-subtitle">Personalize a experiência visual do painel de gestão.</p>
+          </div>
+          <span class="cfg-pill"><i class="ti ti-device-desktop-cog"></i> Preferências do gestor</span>
+        </div>
+
+        <div class="cfg-grid">
+          <section class="cfg-card">
+            <div class="cfg-card-head">
+              <div>
+                <h2 class="cfg-card-title"><i class="ti ti-palette"></i> Aparência</h2>
+                <p class="cfg-card-sub">Ajustes rápidos para adaptar contraste, leitura e espaçamento.</p>
+              </div>
+            </div>
+            <div class="cfg-card-body">
+              <div class="cfg-section-label">Cor de destaque</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="classic"><span class="cfg-dot" style="--dot-color:#003870"></span> Azul Pulse</button>
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="green"><span class="cfg-dot" style="--dot-color:#33B458"></span> Verde</button>
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="amber"><span class="cfg-dot" style="--dot-color:#D4860A"></span> Âmbar</button>
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="indigo"><span class="cfg-dot" style="--dot-color:#4F46E5"></span> Índigo</button>
+              </div>
+
+              <div class="cfg-section-label">Modo da interface</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="mode" data-cfg-value="light"><i class="ti ti-sun"></i> Claro</button>
+                <button class="cfg-choice" type="button" data-cfg-option="mode" data-cfg-value="dark"><i class="ti ti-moon"></i> Escuro</button>
+              </div>
+
+              <div class="cfg-section-label">Densidade</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="density" data-cfg-value="comfortable"><i class="ti ti-layout-grid"></i> Confortável</button>
+                <button class="cfg-choice" type="button" data-cfg-option="density" data-cfg-value="compact"><i class="ti ti-layout-list"></i> Compacta</button>
+              </div>
+
+              <div class="cfg-section-label">Leitura</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="font" data-cfg-value="normal"><i class="ti ti-letter-case"></i> Fonte padrão</button>
+                <button class="cfg-choice" type="button" data-cfg-option="font" data-cfg-value="large"><i class="ti ti-letter-case-upper"></i> Fonte maior</button>
+              </div>
+
+              <div class="cfg-section-label">Contraste</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="contrast" data-cfg-value="normal"><i class="ti ti-contrast"></i> Padrão</button>
+                <button class="cfg-choice" type="button" data-cfg-option="contrast" data-cfg-value="high"><i class="ti ti-contrast-2"></i> Alto contraste</button>
+              </div>
+
+              <div class="cfg-section-label">Bordas</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="rounded"><i class="ti ti-square-rounded"></i> Arredondadas</button>
+                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="soft"><i class="ti ti-circle"></i> Suaves</button>
+                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="square"><i class="ti ti-square"></i> Retas</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="cfg-card">
+            <div class="cfg-card-head">
+              <div>
+                <h2 class="cfg-card-title"><i class="ti ti-bell-cog"></i> Preferências</h2>
+                <p class="cfg-card-sub">Ajustes para notificações e acessibilidade.</p>
+              </div>
+            </div>
+            <div class="cfg-card-body">
+              <div class="cfg-toggle-list">
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Alertas por e-mail</span><span class="cfg-toggle-desc">Receber resumo de alunos e agenda.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="email"><span class="cfg-slider"></span></span>
+                </label>
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Notificações do painel</span><span class="cfg-toggle-desc">Exibir avisos visuais durante o uso.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="browser"><span class="cfg-slider"></span></span>
+                </label>
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Resumo diário</span><span class="cfg-toggle-desc">Agrupar atualizações em uma visão diária.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="digest"><span class="cfg-slider"></span></span>
+                </label>
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Reduzir animações</span><span class="cfg-toggle-desc">Deixar transições mais discretas.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="reduceMotion"><span class="cfg-slider"></span></span>
+                </label>
+              </div>
+              <div class="cfg-preview">
+                <div class="cfg-preview-top"><span class="cfg-preview-title">Prévia do painel</span><span class="cfg-preview-chip">Gestor</span></div>
+                <p class="cfg-preview-text">Veja como as preferências ajustam aparência e usabilidade do painel.</p>
+              </div>
+              <div class="cfg-actions">
+                <button class="cfg-btn cfg-btn-primary" type="button" data-cfg-option="density" data-cfg-value="compact">Usar modo compacto</button>
+                <button class="cfg-btn cfg-btn-ghost" type="button" data-cfg-reset>Restaurar padrão</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
 
     </main>
   </div><!-- fim .paginaMain -->
@@ -1379,7 +1477,7 @@
             <section class="upd-card">
               <div class="upd-card-head">
                 <div class="upd-card-title"><i class="ti ti-message-circle"></i> Enviar notificação</div>
-                <div class="upd-card-sub">Campos demonstrativos baseados na entidade notificacao.</div>
+                <div class="upd-card-sub">Campos de envio para notificações.</div>
               </div>
               <div class="upd-card-body">
                 <div class="upd-field-grid">
@@ -1443,7 +1541,7 @@
             <section class="upd-card">
               <div class="upd-card-head">
                 <div class="upd-card-title"><i class="ti ti-briefcase"></i> Enviar oportunidade</div>
-                <div class="upd-card-sub">Campos demonstrativos baseados na entidade oportunidade.</div>
+                <div class="upd-card-sub">Campos de envio para oportunidades.</div>
               </div>
               <div class="upd-card-body">
                 <div class="upd-field-grid">
@@ -1481,7 +1579,7 @@
                   </div>
                   <div class="upd-field span2">
                     <label>Descrição</label>
-                    <textarea maxlength="500">Oportunidade demonstrativa para alunos praticarem análise de dados e visualização de indicadores.</textarea>
+                    <textarea maxlength="500">Oportunidade para alunos praticarem análise de dados e visualização de indicadores.</textarea>
                   </div>
                 </div>
                 <button class="upd-submit" type="button">Enviar oportunidade</button>
@@ -1713,5 +1811,6 @@
 <script src="../js/components/modalConfEquipe.js"></script>
 <script src="../js/pages/listaAlunos.js"></script>
 <script src="../js/pages/spaGestor.js"></script>
+<script src="../js/components/configuracoesFrontend.js"></script>
 </body>
 </html>

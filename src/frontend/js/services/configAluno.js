@@ -10,7 +10,8 @@ const pulseConfig = {
     { id: 'inicio',    icon: 'ti-home',      label: 'Início'    },
     { id: 'dashboard', icon: 'ti-chart-bar', label: 'Dashboard' },
     { id: 'agenda',    icon: 'ti-calendar',  label: 'Agenda'    },
-    { id: 'atualizacoes', icon: 'ti-bell-ringing', label: 'Atualizações' }
+    { id: 'atualizacoes', icon: 'ti-bell-ringing', label: 'Atualizações' },
+    { id: 'configuracoes', icon: 'ti-settings', label: 'Configurações' }
   ],
 
   quickAccess: [],
