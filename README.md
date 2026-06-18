@@ -27,9 +27,15 @@
 - <a href="https://www.linkedin.com/in/fernando-pizzo-208b526a/">Fernando Pizzo</a>
 - <a href="https://www.linkedin.com/in/vanunes/">Vanessa Nunes</a>
 
-## Descrição
+## Descrição:
 
-_Descreva seu projeto (até 600 palavras)_
+ **Pulse Manager** é um sistema web de gestão de alunos desenvolvido para a ONG Pulse Mais. Ele centraliza o acompanhamento da jornada formativa dos alunos,  desde frequência e participação em atividades até indicadores de empregabilidade e acesso ao ensino superior, e disponibiliza módulos especializados para cada perfil de usuário.
+
+O sistema atende três perfis de acesso: o **Gestor**, responsável por administrar cadastros, agenda e monitorar indicadores de impacto; o **Psicólogo**, que registra prontuários, acompanha a saúde mental dos alunos e visualiza o desempenho individual dos alunos; e o **Aluno**, que consulta seu perfil, cursos e oportunidades dísponiveis 
+
+Entre as funcionalidades principais estão: cadastro e segmentação de alunos por critérios de risco e programa; agenda para os gestores; registro de frequências, participações e anotações qualitativas; gerenciamento de agenda com criação e cancelamento de eventos; sistema de notificações e oportunidades; módulo de saúde mental com prontuários e labels psicológicas; e um dashboard de impacto com métricas consolidadas, integrado a um serviço externo de auditoria.
+
+A aplicação é composta por um backend em **Node.js + TypeScript** para persistência em PostgreSQL, e um frontend em HTML, CSS e JavaScript.
 
 ## Link de demonstração
 
@@ -88,36 +94,35 @@ No diretório <b>src</b>:
 
 ## Instalação e Configuração de Ambiente
 
+Esta seção apresenta as instruções necessárias para configurar o ambiente de desenvolvimento e executar a primeira versão funcional do sistema web em uma máquina local.
+
 ### 1. Pré-requisitos
 
 Antes de iniciar a execução do projeto, é necessário ter instalado:
 
-- **Node.js 20.x (LTS)**
-- **npm** (instalado junto ao Node.js)
-- **Git**, para clonar o repositório
-- **PostgreSQL** ou acesso a um banco PostgreSQL/Supabase configurado
-- **Editor de código**, preferencialmente Visual Studio Code
+* **Node.js** em versão LTS;
+* **npm**, instalado junto ao Node.js;
+* **Git**, para clonar o repositório;
+* **PostgreSQL** ou acesso a um banco PostgreSQL/Supabase configurado;
+* Editor de código, **Visual Studio Code**.
 
 ### 2. Instalação e execução
 
 ```sh
 # 1. Clonar o repositório e entrar na pasta
-git clone <url-do-repositorio>
+git clone https://git.inteli.edu.br/graduacao/2026-1b/t29/g03.git
 cd g03
 
 # 2. Instalar as dependências
 npm install
 
-# 3. Criar o arquivo de variáveis de ambiente (ver seção 3)
-cp .env.example .env   # se existir; caso contrário, crie manualmente
-
-# 4. Testar a conexão com o banco
+# 3. Testar a conexão com o banco
 npm run db:test
 
-# 5. Executar as migrations (cria as tabelas)
+# 4. Executar as migrations (cria as tabelas)
 npm run migrate
 
-# 6. (Opcional) Popular o banco com dados iniciais
+# 5. (Opcional) Popular o banco com dados iniciais
 npm run seed
 ```
 
@@ -140,15 +145,15 @@ A conexão com o banco aceita dois modos mutuamente exclusivos:
 #### Exemplo de `.env`
 
 ```env
-# ── Aplicação ──────────────────────────────────────────────
+# Aplicação 
 NODE_ENV=development
 PORT=3000
 
-# ── Banco de dados — MODO A (connection string) ────────────
+#  Banco de dados — MODO A (connection string) 
 DATABASE_URL=postgresql://postgres.<seu-projeto>:<sua-senha>@<seu-host>.pooler.supabase.com:5432/postgres
 DATABASE_SSL=true
 
-# ── Banco de dados — MODO B (variáveis individuais) ────────
+# Banco de dados — MODO B (variáveis individuais)
 # DB_HOST=localhost
 # DB_PORT=5432
 # DB_USERNAME=postgres
@@ -156,7 +161,7 @@ DATABASE_SSL=true
 # DB_DATABASE=pulse_uc13
 # DATABASE_SSL=false
 
-# ── Tipo de banco (postgres | sqljs) ───────────────────────
+# Tipo de banco (postgres | sqljs)
 # DB_TYPE=postgres   # padrão: postgres em dev, sqljs em test
 ```
 
@@ -187,8 +192,6 @@ Caso o projeto utilize apenas o modo de produção/local simples, utilize:
 | `DB_USERNAME` | `DB_USER` | Não* | postgres | Usuário do banco (Modo B). |
 | `DB_PASSWORD` | — | Não* | postgres | Senha do banco (Modo B). |
 | `DB_DATABASE` | `DB_NAME` | Não* | pulse_uc13 | Nome do banco (Modo B). |
-
-> \* É obrigatório configurar pelo menos um dos dois modos (A ou B) para o servidor funcionar com PostgreSQL.
 
 #### Variáveis 
 
@@ -222,17 +225,72 @@ npm install --save-dev ts-node typescript @types/node
 - Caso ocorra erro de conexão com o banco, verifique se as variáveis do `.env` estão corretas e se o PostgreSQL/Supabase está ativo.
 
 
+## Validação dos fluxos autenticados de ponta a ponta
+
+Esta seção orienta um avaliador externo a subir a aplicação, autenticar-se nos três perfis e percorrer os principais fluxos sem contato com o grupo. Ela complementa as seções de configuração e execução já documentadas acima.
+
+### Credenciais de acesso após `npm run seed`
+
+O login na interface web é feito automaticamente com qualquer numero, mais a frente adicionaremos os comandos correspondentes. 
+
+
+> O seed também cria mais 19 alunos, 4 membros de equipe e 4 psicólogos, caso seja necessário testar outros registros.
+
+### Roteiro dos fluxos autenticados
+
+Com o servidor rodando (`npm run dev`) e o banco populado (`npm run seed`), abra `frontend/pages/login.html` no navegador e siga os roteiros abaixo por perfil.
+
+#### Perfil Gestor
+
+
+
+#### Perfil Psicólogo
+
+
+
+#### Perfil Aluno
+
+
+
+### Cobertura da suite de testes
+
+A suite é executada com `npm test` em banco **in-memory** (`sqljs`), sem necessidade de PostgreSQL ativo. São **20 arquivos no total**: 12 de integração e 8 unitários.
+
+#### Testes de integração (`src/tests/integration/`)
+
+| Arquivo | O que valida |
+|---------|-------------|
+| `alunos.integration.test.ts` | CRUD de alunos, geração automática de código PM, validação de email duplicado e inválido |
+| `portal-aluno.integration.test.ts` | Visualização de perfil no portal, retorno 404 para aluno inexistente |
+| `jornada.integration.test.ts` | Registro de frequência, participação em eventos, atualização de empregabilidade e ensino superior, anotações qualitativas |
+| `dashboard.integration.test.ts` | Resumos de impacto e jornada, consultas de alunos empregados, conclusão de programas, risco de evasão, integração com auditoria |
+| `agenda.integration.test.ts` | Listagem, criação, atualização e cancelamento de eventos |
+| `notificacoes.integration.test.ts` | Criação e listagem de notificações e oportunidades |
+| `portal-aluno-notificacoes.integration.test.ts` | Notificações filtradas por aluno no portal, listagem de oportunidades |
+| `saude-mental.integration.test.ts` | Criação e listagem de prontuários e labels psicológicas |
+| `segmentacao.integration.test.ts` | Segmentação de alunos por critérios e agrupamento por categoria de risco |
+| `desempenho-psicologo.integration.test.ts` | Acesso ao desempenho do aluno com validação de permissão por perfil |
+| `notificacao-psicologo.integration.test.ts` | Notificações direcionadas ao perfil psicólogo |
+| `codigo-pm.integration.test.ts` | Geração e unicidade do código PM |
+
+#### Testes unitários (`src/tests/unit/services/`)
+
+Cobrem a lógica de negócio isolada dos serviços: `AlunoService` (listagem com filtros, normalização, geração de código PM), `DashboardService`, `JornadaService`, `NotificacaoService`, `AgendaService`, `PortalAlunoService`, `SaudeMentalService` e `SegmentacaoService`.
+
+---
+
 ## Histórico de lançamentos
 
-* 0.5.0 - 25/06/2026
+
+* 0.5.0 - 25/06/2026 - Desenvolvimento final da aplicação.
     
-* 0.4.0 - 12/06/2026
+* 0.4.0 - 12/06/2026 - Segunda versão do sistema web, relatório de testes, estudo de mercado e plano de marketing 
      
-* 0.3.0 - 29/05/2026
+* 0.3.0 - 29/05/2026 - Protótipo de alta, guia de estilos, arquitetura de solução, lógica proposicional e WebAPI.
      
-* 0.2.0 - 15/05/2026
+* 0.2.0 - 15/05/2026 -  Wireframes, modelagem de banco de dados.
      
-* 0.1.0 - 30/04/2026
+* 0.1.0 - 30/04/2026  - Idealização da proposta, modelagem feita em grupo da proposta, criação de personas e entendimento do usuário.
     
 
 ## Licença/License
