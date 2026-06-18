@@ -1,5 +1,8 @@
 import { SegmentacaoService } from '../../../backend/services/segmentacaoService';
 import { registrarConsultaSegmentacao } from '../../../backend/integrations/auditoriaIntegration';
+import { AlunoRepository } from '../../../backend/repositories/alunoRepository';
+import { SegmentacaoAlunoQuery } from '../../../backend/models/alunoModel';
+import { asMockedDependency } from '../../helpers/mockHelper';
 
 jest.mock('../../../backend/integrations/auditoriaIntegration', () => ({
   registrarConsultaSegmentacao: jest.fn()
@@ -11,6 +14,10 @@ function makeRepository() {
   };
 }
 
+function invalidQuery(payload: Record<string, unknown>): SegmentacaoAlunoQuery {
+  return payload as unknown as SegmentacaoAlunoQuery;
+}
+
 describe('SegmentacaoService', () => {
   let repository: ReturnType<typeof makeRepository>;
   let service: SegmentacaoService;
@@ -18,7 +25,7 @@ describe('SegmentacaoService', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     repository = makeRepository();
-    service = new SegmentacaoService(repository as any);
+    service = new SegmentacaoService(asMockedDependency<AlunoRepository>(repository));
     (registrarConsultaSegmentacao as jest.Mock).mockResolvedValue(undefined);
   });
 
@@ -56,11 +63,11 @@ describe('SegmentacaoService', () => {
   });
 
   it('rejeita status invalido', async () => {
-    await expect(service.segmentar({ status: 'pausado' as any })).rejects.toThrow('Status de aluno invalido.');
+    await expect(service.segmentar(invalidQuery({ status: 'pausado' }))).rejects.toThrow('Status de aluno invalido.');
   });
 
   it('rejeita risco de evasao invalido', async () => {
-    await expect(service.segmentar({ risco: 'critico' as any })).rejects.toThrow('Risco de evasao invalido.');
+    await expect(service.segmentar(invalidQuery({ risco: 'critico' }))).rejects.toThrow('Risco de evasao invalido.');
   });
 
   it('rejeita busca com menos de 3 caracteres', async () => {
