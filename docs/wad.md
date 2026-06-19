@@ -2976,7 +2976,7 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## 5.1. Relatório de testes automatizados (sprint 4 — suíte reformulada na sprint 5)
 
 Os testes automatizados do backend foram implementados com **Jest**, contemplando duas abordagens complementares:
 
@@ -2992,9 +2992,29 @@ A suíte de testes automatizados da aplicação combina testes de integração v
 
 A suíte é organizada em três tipos, diferenciados pelo nível de isolamento e pelo uso de mocks:
 
-- **Tipo 1 - Testes unitários de Service:** validação isolada da camada de `services/`, sem acesso a banco de dados real, Supabase, PostgreSQL, rotas ou controllers. As dependências externas, como repositories e integrações de auditoria, são simuladas por mocks com `jest.fn()`.
+- **Tipo 1 - Testes unitários de Service:** validação isolada da camada de `services/`, sem acesso a banco de dados real, Supabase, PostgreSQL, rotas ou controllers. As dependências externas, como repositories e integrações de auditoria, são simuladas por mocks com `jest.fn()`, com tipagem explícita via o helper `asMockedDependency<T>()`.
 - **Tipo 2 - Integração pura:** banco em memória, requisição HTTP real e nenhum mock. O arquivo `jornada.integration.test.ts` é um exemplo representativo desse tipo. Todos os efeitos observáveis - status HTTP, corpo da resposta e estado do banco - são verificados sem substituição de dependência interna.
 - **Tipo 3 - Integração com mock de dependência externa:** mesmo setup do Tipo 2, com a diferença de que `jest.mock()` é aplicado exclusivamente sobre integrações externas, como serviços que fariam chamadas reais de rede em produção. O arquivo `segmentacao.integration.test.ts` representa esse tipo: banco, HTTP, Controller, Service e Repository permanecem reais; apenas `registrarConsultaSegmentacao` é substituído por um `jest.fn()`.
+
+**Scripts de execução**
+
+A suíte expõe comandos separados no `package.json`, permitindo executar cada tipo de teste de forma independente:
+
+| Comando | Escopo |
+|---|---|
+| `npm test` | Suíte completa (unitários + integração funcional) em série |
+| `npm run test:unit` | Apenas testes unitários de Service |
+| `npm run test:integration` | Apenas testes de integração de endpoints (testes de desempenho ignorados) |
+| `npm run test:performance` | Apenas testes de desempenho marcados com `RNF-DES` |
+| `npm run test:ci` | Suíte completa seguida dos testes de desempenho |
+
+**Infraestrutura compartilhada**
+
+Os helpers centralizados em `src/tests/helpers/` concentram a infraestrutura de teste, eliminando repetição de código entre os arquivos:
+
+- **`databaseTestHelper.ts`**: expõe `setupIntegrationDatabase()`, `resetIntegrationDatabase()`, `teardownIntegrationDatabase()` e `getIntegrationRepository<T>()`, centralizando o ciclo de vida do banco in-memory para os testes de integração. A constante `NON_EXISTENT_ID` também é definida aqui para padronizar os cenários `404`.
+- **`performanceTest.ts`**: expõe `performanceIt`, alias de `it` quando `RUN_PERFORMANCE_TESTS=true` e de `it.skip` caso contrário, separando a medição de desempenho da validação funcional principal.
+- **`mockHelper.ts`**: provê `asMockedDependency<T>()` para injetar dependências mockadas nos testes unitários com tipagem explícita, eliminando o uso de `as any` nos mocks.
 
 **Padrão de escrita - AAA**
 
@@ -3006,7 +3026,24 @@ Todos os casos de teste seguem o padrão Arrange, Act, Assert:
 
 **Determinismo e isolamento**
 
-O determinismo da suíte de integração é garantido pelo mecanismo configurado em `connection.ts`, ativado automaticamente quando `NODE_ENV=test` - valor definido por `setup.js` antes de qualquer teste, referenciado em `jest.config.ts` via `setupFiles`. Nesse modo, a aplicação instancia um DataSource com `type: 'sqljs'` - banco SQLite compilado em WebAssembly que existe exclusivamente em memória durante a execução do Jest, sem dependência de servidor externo. A flag `dropSchema: true` garante que o schema seja descartado na inicialização; o `beforeEach` de cada arquivo de teste executa `AppDataSource.synchronize(true)`, que dropa e recria todas as tabelas do zero antes de cada caso de teste individual.
+O determinismo da suíte de integração é garantido pelo mecanismo configurado em `connection.ts`, ativado automaticamente quando `NODE_ENV=test` - valor definido por `setup.js` antes de qualquer teste, referenciado em `jest.config.ts` via `setupFiles`. Nesse modo, a aplicação instancia um DataSource com `type: 'sqljs'` - banco SQLite compilado em WebAssembly que existe exclusivamente em memória durante a execução do Jest, sem dependência de servidor externo.
+
+O ciclo de vida do banco é gerenciado pelo helper `databaseTestHelper.ts`, eliminando a repetição manual de `initializeDatabase()`, `AppDataSource.synchronize(true)` e `AppDataSource.destroy()` em cada arquivo. O padrão adotado em todos os testes de integração é:
+
+```ts
+beforeAll(async () => {
+  await setupIntegrationDatabase();
+  repository = getIntegrationRepository(Entidade);
+});
+
+beforeEach(async () => {
+  await resetIntegrationDatabase();
+});
+
+afterAll(teardownIntegrationDatabase);
+```
+
+A chamada `resetIntegrationDatabase()` executa `AppDataSource.synchronize(true)` internamente, dropando e recriando todas as tabelas antes de cada caso de teste individual, garantindo isolamento completo entre execuções.
 
 Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
 
@@ -3020,11 +3057,15 @@ Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
 ### 5.1.2 Testes Unitários de Service
 <div align="justify">
 
-Os testes unitários de Service foram organizados em `src/tests/unit/services`, seguindo o padrão de nomenclatura `*.service.test.ts`. O objetivo foi validar os principais comportamentos dos services ligados aos endpoints ativos do backend, contemplando cenários de sucesso, erros de validação, regras de negócio, conflitos, registros inexistentes e chamadas corretas aos repositories mockados.
+Os testes unitários de Service foram organizados em `src/tests/unit/services`, seguindo o padrão de nomenclatura `*.service.test.ts`. O objetivo foi validar os principais comportamentos dos services ligados aos endpoints ativos do backend, contemplando cenários de sucesso, erros de validação, regras de negócio, conflitos, registros inexistentes e chamadas corretas aos repositories mockados. Os mocks são construídos com o helper `asMockedDependency<T>()`, que substitui o uso de `as any` por injeção explicitamente tipada:
+
+```ts
+service = new AgendaService(asMockedDependency<AgendaRepository>(repository));
+```
 
 | Service testado | Arquivo de teste | Quantidade de testes | Principais responsabilidades validadas |
 | --- | --- | ---: | --- |
-| `AlunoService` | `src/tests/unit/services/aluno.service.test.ts` | 13 | Cadastro, listagem, busca, atualização, inativação, validação de email, idade, data, duplicidade e risco de evasão. |
+| `AlunoService` | `src/tests/unit/services/aluno.service.test.ts` | 16 | Cadastro, listagem, busca, atualização, inativação, validação de email, idade, data, duplicidade e risco de evasão. |
 | `SegmentacaoService` | `src/tests/unit/services/segmentacao.service.test.ts` | 9 | Segmentação de alunos, validação de filtros, limite máximo, status, risco de evasão, busca e auditoria. |
 | `DashboardService` | `src/tests/unit/services/dashboard.service.test.ts` | 14 | Cálculo de indicadores de impacto, jornada, evasão, risco, empregabilidade, conclusão, ensino superior, agrupamento por programa e auditoria. |
 | `JornadaService` | `src/tests/unit/services/jornada.service.test.ts` | 23 | Consolidação da jornada, frequência, participação em eventos, empregabilidade, ensino superior e anotações qualitativas. |
@@ -3032,7 +3073,7 @@ Os testes unitários de Service foram organizados em `src/tests/unit/services`, 
 | `NotificacaoService` | `src/tests/unit/services/notificacao.service.test.ts` | 15 | Listagem e criação de notificações, oportunidades, validação de aluno destinatário, tipos, remetente, perfil, datas e campos obrigatórios. |
 | `PortalAlunoService` | `src/tests/unit/services/portal-aluno.service.test.ts` | 13 | Visualização de perfil, atualização de contato, normalização de email/telefone, permissões de notificações e oportunidades do portal. |
 | `SaudeMentalService` | `src/tests/unit/services/saude-mental.service.test.ts` | 11 | Prontuários, labels, restrição ao perfil psicólogo, validação de aluno, tipo de label, título, observação e descrição. |
-| **Total** | **8 arquivos** | **110 testes** | **Cobertura unitária das principais regras de negócio da camada de Service.** |
+| **Total** | **8 arquivos** | **113 testes** | **Cobertura unitária das principais regras de negócio da camada de Service.** |
 
 **AlunoService**
 
@@ -3073,7 +3114,7 @@ Os testes do `SaudeMentalService` validam listagem de prontuários apenas para p
 
 Os testes de integração cobrem os endpoints principais da aplicação por meio de requisições HTTP reais via Supertest, com banco SQLite in-memory. Para cada endpoint, a cobertura segue quatro cenários-chave: sucesso (`200`/`201`), falha de validação (`400`/`422`), regra de negócio violada (`409`/`422`/`403`) e recurso não encontrado (`404`). Quando um cenário é marcado como N/A, significa que aquela categoria de erro não se aplica à lógica do endpoint - não é um gap de cobertura.
 
-A suíte de integração totaliza **168 testes distribuídos em 12 arquivos**, todos executados via `npm test` sem falhas.
+A suíte de integração totaliza **157 testes funcionais distribuídos em 12 arquivos**, todos executados via `npm run test:integration` sem falhas. Cada arquivo que cobre um endpoint com requisito de desempenho contém adicionalmente um caso `performanceIt` (marcado com `RNF-DES`), totalizando **8 testes de desempenho** executados separadamente via `npm run test:performance`.
 
 **Módulo: Alunos**
 
@@ -3145,22 +3186,38 @@ A suíte de integração totaliza **168 testes distribuídos em 12 arquivos**, t
 | `POST /api/labels` | ✅ | ✅ tipoLabel inválido | ✅ 422 sem perfil | ✅ |
 | `GET /api/psicologo/alunos/:id/desempenho` | ✅ | ✅ id não numérico | ✅ 403 sem vínculo | ✅ |
 
+**Testes de desempenho (RNF-DES)**
+
+Os testes de desempenho são marcados com `performanceIt` dentro dos próprios arquivos de integração e executados apenas quando `RUN_PERFORMANCE_TESTS=true`. Cada caso mede o tempo de resposta de um endpoint crítico e verifica se o limiar do requisito não funcional é respeitado.
+
+| Identificador | Endpoint | Limiar |
+|---|---|---|
+| `RNF-DES` | `GET /api/agenda` | ≤ 1000 ms |
+| `RNF-DES-UC04` | `GET /api/alunos` | ≤ 1500 ms |
+| `RNF-DES-UC14` | `GET /api/impacto/resumo` | ≤ 3000 ms |
+| `RNF-DES-UC07` | `GET /api/jornada/alunos/:id` | ≤ 1500 ms |
+| `RNF-DES-RF019` | `GET /api/comunicacao` | ≤ 1000 ms |
+| `RNF-DES-UC01` | `GET /api/portal/alunos/:id` | ≤ 1000 ms |
+| `RNF-DES-UC20` | `GET /api/prontuarios` | ≤ 1000 ms |
+| `RNF-DES-UC13` | `GET /api/alunos/segmentacao` | ≤ 2000 ms |
+
 </div>
 
 ### 5.1.4 Evidências de Execução dos Testes
 <div align="justify">
 
-As evidências de execução dos testes foram registradas a partir da execução local da suíte automatizada com Jest.
+As evidências de execução dos testes foram registradas a partir da execução local da suíte automatizada com Jest, após a reformulação da infraestrutura de testes.
 
 | Evidência | Comando executado | Escopo validado | Resultado |
 |---|---|---|---|
-| Testes unitários de Service | `npm run test -- src/tests/unit/services --runInBand` | Validação isolada das regras de negócio dos services, com repositories e integrações mockadas. | 8 suítes executadas, 110 testes aprovados. |
-| Suíte completa do backend | `npm run test` | Validação conjunta dos testes unitários de Service e dos testes de integração de endpoints. | 20 suítes executadas, 266 testes aprovados. |
+| Testes unitários de Service | `npm run test:unit -- --silent` | Validação isolada das regras de negócio dos services, com repositories mockados via `asMockedDependency`. | 8 suítes executadas, 113 testes aprovados. |
+| Testes de integração de endpoints | `npm run test:integration -- --silent` | Validação de endpoints via Supertest com banco in-memory; testes de desempenho ignorados nessa execução. | 12 suítes executadas, 157 testes aprovados, 8 ignorados. |
+| Testes de desempenho | `npm run test:performance -- --silent` | Execução dos 8 casos `RNF-DES` que medem tempo de resposta dos endpoints críticos. | 8 testes de desempenho aprovados. |
 
 **Evidência 1 - Testes unitários de Service**
 
 ```bash
-npm run test -- src/tests/unit/services --runInBand
+npm run test:unit -- --silent
 ```
 
 Resultado obtido:
@@ -3176,17 +3233,16 @@ PASS src/tests/unit/services/agenda.service.test.ts
 PASS src/tests/unit/services/saude-mental.service.test.ts
 
 Test Suites: 8 passed, 8 total
-Tests:       110 passed, 110 total
+Tests:       113 passed, 113 total
 Snapshots:   0 total
-Time:        9.445 s
 ```
 
 Essa execução comprova que os oito arquivos de testes unitários de Service foram executados com sucesso, validando regras de negócio de `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService` e `SaudeMentalService` sem acesso a banco real ou infraestrutura externa.
 
-**Evidência 2 - Suíte completa do backend**
+**Evidência 2 - Testes de integração de endpoints**
 
 ```bash
-npm run test
+npm run test:integration -- --silent
 ```
 
 Resultado obtido:
@@ -3196,7 +3252,6 @@ PASS src/tests/integration/saude-mental.integration.test.ts
 PASS src/tests/integration/desempenho-psicologo.integration.test.ts
 PASS src/tests/integration/notificacao-psicologo.integration.test.ts
 PASS src/tests/integration/dashboard.integration.test.ts
-PASS src/tests/unit/services/segmentacao.service.test.ts
 PASS src/tests/integration/jornada.integration.test.ts
 PASS src/tests/integration/alunos.integration.test.ts
 PASS src/tests/integration/notificacoes.integration.test.ts
@@ -3205,40 +3260,29 @@ PASS src/tests/integration/agenda.integration.test.ts
 PASS src/tests/integration/portal-aluno.integration.test.ts
 PASS src/tests/integration/portal-aluno-notificacoes.integration.test.ts
 PASS src/tests/integration/codigo-pm.integration.test.ts
-PASS src/tests/unit/services/aluno.service.test.ts
-PASS src/tests/unit/services/jornada.service.test.ts
-PASS src/tests/unit/services/agenda.service.test.ts
-PASS src/tests/unit/services/saude-mental.service.test.ts
-PASS src/tests/unit/services/portal-aluno.service.test.ts
-PASS src/tests/unit/services/dashboard.service.test.ts
-PASS src/tests/unit/services/notificacao.service.test.ts
 
-Test Suites: 20 passed, 20 total
-Tests:       266 passed, 266 total
+Test Suites: 12 passed, 12 total
+Tests:       157 passed, 8 skipped, 165 total
 Snapshots:   0 total
-Time:        53.384 s
 ```
 
-A execução completa demonstra que os testes necessários para o backend estão passando. A suíte validada naquele momento continha 20 arquivos de teste e 266 cenários aprovados, cobrindo testes unitários de Service e testes de integração dos endpoints ativos.
+Os 8 testes ignorados são os casos `performanceIt` (`RNF-DES`), que são convertidos em `it.skip` automaticamente quando `RUN_PERFORMANCE_TESTS` não está definido como `true`.
 
-#### Atualização da suíte de testes após refinamentos finais
+**Evidência 3 - Testes de desempenho**
 
-Após os refinamentos finais de cadastro, edição de alunos, filtros combinados, agenda, comunicação e portal do aluno, a suíte automatizada foi revisada para refletir os fluxos consolidados do backend. O total passou de 266 para **278 testes automatizados**, mantendo os mesmos 20 arquivos de teste e ampliando a quantidade de cenários cobertos nos testes de integração.
-
-Os novos cenários reforçam principalmente os módulos de alunos, agenda, comunicação e portal do aluno, que sustentam os fluxos ajustados no front-end. A cobertura atual fica dividida entre 110 testes unitários de Service e 168 testes de integração de endpoints, garantindo validação tanto das regras de negócio internas quanto dos contratos HTTP expostos pela API.
-
-| Evidência | Comando executado | Escopo validado | Resultado |
-|---|---|---|---|
-| Suíte completa após refinamentos finais | `npm test` | Validação conjunta dos testes unitários de Service e dos testes de integração de endpoints após os refinamentos finais. | 20 suítes executadas, 278 testes aprovados. |
+```bash
+npm run test:performance -- --silent
+```
 
 Resultado obtido:
 
 ```text
-Test Suites: 20 passed, 20 total
-Tests:       278 passed, 278 total
+Test Suites: 8 passed, 8 total
+Tests:       8 passed, 8 total
 Snapshots:   0 total
-Time:        28.972 s
 ```
+
+Os 8 casos `RNF-DES` foram aprovados, verificando que os endpoints críticos respondem dentro dos limiares estabelecidos nos requisitos não funcionais de desempenho.
 
 </div>
 
