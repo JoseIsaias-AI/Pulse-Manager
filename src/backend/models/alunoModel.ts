@@ -74,6 +74,9 @@ export class Aluno {
   @PrimaryGeneratedColumn({ name: 'id_aluno' })
   idAluno!: number;
 
+  @Column({ type: 'varchar', length: 11, nullable: true, unique: true })
+  cpf!: string | null;
+
   @Column({ type: 'varchar', length: 150 })
   nome!: string;
 

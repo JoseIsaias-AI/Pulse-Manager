@@ -21,10 +21,41 @@
     return url.toString();
   }
 
+  function getPulseUser() {
+    try {
+      const storedUser = sessionStorage.getItem('pulseUser');
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function getAuthHeaders() {
+    const pulseUser = getPulseUser();
+    if (!pulseUser) return {};
+
+    const authHeaders = {};
+
+    if (pulseUser.id !== undefined && pulseUser.id !== null) {
+      authHeaders['x-user-id'] = String(pulseUser.id);
+    }
+
+    if (pulseUser.perfil) {
+      authHeaders['x-user-role'] = String(pulseUser.perfil);
+    }
+
+    if (pulseUser.nome) {
+      authHeaders['x-user-name'] = String(pulseUser.nome);
+    }
+
+    return authHeaders;
+  }
+
   function getJsonHeaders(customHeaders) {
     return {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      ...getAuthHeaders(),
       ...(customHeaders || {})
     };
   }

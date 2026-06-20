@@ -1,102 +1,101 @@
-// =========================================
-// Login – Lógica de autenticação
-// Depende de: nenhum arquivo externo
-// =========================================
-
-// Mapa de perfil → página de destino após login bem-sucedido
-const ROLE_PAGES = {
-  gestor:    'gestorApp.html',    // Gestor vai para o SPA de gestão da turma
-  psicologo: 'psicologoApp.html', // Psicólogo vai para o SPA dedicado ao psicólogo
-  aluno:     'alunoApp.html',     // Aluno vai para o SPA de visão geral pessoal
+const rolePages = {
+  gestor: 'gestorApp.html',
+  psicologo: 'psicologoApp.html',
+  aluno: 'alunoApp.html'
 };
 
-// Armazena o perfil atualmente selecionado nos botões de role
-// Começa com "gestor" porque o botão Gestor tem classe "active" no HTML
 let currentRole = 'gestor';
 
-// ---- SELEÇÃO DE PERFIL ----
-// Chamada pelo onclick de cada .role-btn no HTML
-// btn → referência ao botão clicado; role → string do perfil ('gestor', etc.)
-function selectRole(btn, role) {
-  // Remove "active" de todos os botões para limpar a seleção anterior
-  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+function selectRole(button, role) {
+  document.querySelectorAll('.role-btn').forEach((roleButton) => {
+    roleButton.classList.remove('active');
+  });
 
-  // Adiciona "active" apenas no botão clicado
-  btn.classList.add('active');
-
-  // Atualiza a variável de estado para o redirect correto
+  button.classList.add('active');
   currentRole = role;
 }
 
-// ---- MÁSCARA DO CPF ----
-// Formata o texto enquanto o usuário digita: 000.000.000-00
-function applyMaskCPF(input) {
-  let v = input.value.replace(/\D/g, ''); // remove tudo que não é dígito
-
-  v = v.replace(/(\d{3})(\d)/, '$1.$2');      // insere ponto após o 3º dígito
-  v = v.replace(/(\d{3})(\d)/, '$1.$2');      // insere ponto após o 6º dígito
-  v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // insere hífen antes dos últimos 2 dígitos
-
-  input.value = v; // aplica o valor formatado de volta no campo
+function getCpfDigits(cpf) {
+  return String(cpf || '').replace(/\D/g, '');
 }
 
-// ---- VALIDAÇÃO DO FORMULÁRIO ----
-// Retorna uma string de erro ou null se o formulário for válido
-function validateForm(cpf, nome) {
-  const cpfClean = cpf.replace(/\D/g, ''); // conta apenas os dígitos do CPF
+function applyCpfMask(input) {
+  let value = getCpfDigits(input.value);
 
-  if (cpfClean.length !== 11) return 'CPF inválido';   // CPF deve ter exatamente 11 dígitos
-  if (nome.trim().length < 3) return 'Nome muito curto'; // nome mínimo de 3 caracteres
+  value = value.replace(/(\d{3})(\d)/, '$1.$2');
+  value = value.replace(/(\d{3})(\d)/, '$1.$2');
+  value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
 
-  return null; // null = sem erros = formulário válido
+  input.value = value;
 }
 
-// ---- HANDLER DE SUBMIT ----
-function handleSubmit() {
-  const cpfInput  = document.getElementById('cpf');      // referência ao campo CPF
-  const nomeInput = document.getElementById('nome');     // referência ao campo Nome
-  const btnEntrar = document.getElementById('btn-entrar'); // referência ao botão
+function validateLoginForm(cpf, name) {
+  const cpfDigits = getCpfDigits(cpf);
 
-  const error = validateForm(cpfInput.value, nomeInput.value); // executa a validação
+  if (cpfDigits.length !== 11) return 'CPF invalido';
+  if (name.trim().length < 3) return 'Nome muito curto';
 
-  if (error) {
-    // Exibe o erro no botão temporariamente (visual de feedback)
-    btnEntrar.textContent = error;       // substitui "ENTRAR" pelo texto de erro
-    btnEntrar.classList.add('error');    // aplica fundo vermelho via login.css
+  return null;
+}
 
-    // Restaura o botão após 2.2 segundos
-    setTimeout(() => {
-      btnEntrar.textContent = 'ENTRAR';
-      btnEntrar.classList.remove('error');
-    }, 2200);
+function showButtonFeedback(button, message) {
+  button.textContent = message;
+  button.classList.add('error');
 
-    return; // interrompe a função: não faz redirect com erro
+  setTimeout(() => {
+    button.textContent = 'ENTRAR';
+    button.classList.remove('error');
+    button.disabled = false;
+  }, 2200);
+}
+
+function createPulseUser(cpf, name, role) {
+  const cpfDigits = getCpfDigits(cpf);
+
+  return {
+    id: Number(cpfDigits),
+    cpf: cpfDigits,
+    nome: name.trim(),
+    perfil: role
+  };
+}
+
+function savePulseUser(user) {
+  sessionStorage.setItem('pulseUser', JSON.stringify(user));
+}
+
+function getDestinationPage(role) {
+  return rolePages[role] || rolePages.gestor;
+}
+
+function handleLoginSubmit() {
+  const cpfInput = document.getElementById('cpf');
+  const nameInput = document.getElementById('nome');
+  const submitButton = document.getElementById('btn-entrar');
+  const validationError = validateLoginForm(cpfInput.value, nameInput.value);
+
+  if (validationError) {
+    showButtonFeedback(submitButton, validationError);
+    return;
   }
 
-  // Feedback visual de carregamento antes do redirect
-  btnEntrar.textContent = 'Entrando…'; // texto de transição
-  btnEntrar.disabled = true;            // desabilita para evitar duplo clique
+  submitButton.textContent = 'Entrando...';
+  submitButton.disabled = true;
 
-  // Aguarda 600ms (simula chamada de API) e então redireciona
-  setTimeout(() => {
-    window.location.href = ROLE_PAGES[currentRole]; // navega para a página do perfil
-  }, 600);
+  const pulseUser = createPulseUser(cpfInput.value, nameInput.value, currentRole);
+  savePulseUser(pulseUser);
+
+  window.location.href = getDestinationPage(currentRole);
 }
 
-// ---- INICIALIZAÇÃO ----
-// DOMContentLoaded garante que o HTML foi completamente parseado antes de o JS rodar
 document.addEventListener('DOMContentLoaded', () => {
-
-  // Aplica a máscara de CPF a cada tecla digitada no campo
   document.getElementById('cpf').addEventListener('input', function () {
-    applyMaskCPF(this); // this = o próprio input que disparou o evento
+    applyCpfMask(this);
   });
 
-  // Conecta o clique do botão ao handler de submit
-  document.getElementById('btn-entrar').addEventListener('click', handleSubmit);
+  document.getElementById('btn-entrar').addEventListener('click', handleLoginSubmit);
 
-  // Permite submeter o formulário pressionando Enter em qualquer campo
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') handleSubmit();
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') handleLoginSubmit();
   });
 });

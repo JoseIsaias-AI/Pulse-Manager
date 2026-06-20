@@ -11,6 +11,7 @@ import { formatarCodigoPm, extrairSequencial } from '../services/codigoPmService
 export interface AlunoRecord {
   idAluno: number;
   codigoPm: string | null;
+  cpf: string | null;
   nome: string;
   email: string;
   telefone: string | null;
@@ -40,6 +41,7 @@ export interface AlunoRecord {
 export interface CriarAlunoPayload {
   nome: string;
   email: string;
+  cpf?: string;
   telefone?: string;
   idade?: number;
   genero?: string;
@@ -120,6 +122,7 @@ const ALUNO_SELECT = `
   SELECT
     id_aluno AS "idAluno",
     codigo_pm AS "codigoPm",
+    cpf,
     nome,
     email,
     telefone,
@@ -196,23 +199,32 @@ export class AlunoRepository {
     return result.rows[0] || null;
   }
 
+  async findOneByCpf(cpf: string): Promise<AlunoRecord | null> {
+    const result = await query<AlunoRecord & QueryResultRow>(
+      `${ALUNO_SELECT} WHERE cpf = $1`,
+      [cpf]
+    );
+    return result.rows[0] || null;
+  }
+
   async create(payload: CriarAlunoPayload): Promise<AlunoRecord> {
     // Sem cast ::genero_aluno_enum — PostgreSQL aceita string implicitamente para colunas enum
     const result = await query<{ idAluno: number } & QueryResultRow>(
       `INSERT INTO aluno (
-        nome, email, telefone, idade, genero, ocupacao, tipo_vinculo_empregaticio,
+        nome, email, cpf, telefone, idade, genero, ocupacao, tipo_vinculo_empregaticio,
         renda_mensal, escolaridade, instituicao_ensino_superior, curso_ensino_superior,
         status_ensino_superior, data_ingresso_ensino_superior, data_ingresso, programa,
         categoria, risco_evasao, engajamento, status, nivel_jornada, perfil_socioeconomico,
         curso, origem_participacao
       ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
-        COALESCE($14, CURRENT_DATE), $15, $16, $17, $18, $19, $20, $21, $22, $23
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14,
+        COALESCE($15, CURRENT_DATE), $16, $17, $18, $19, $20, $21, $22, $23, $24
       )
       RETURNING id_aluno AS "idAluno"`,
       [
         payload.nome,
         payload.email,
+        payload.cpf ?? null,
         payload.telefone ?? null,
         payload.idade ?? null,
         payload.genero ?? null,
@@ -259,6 +271,7 @@ export class AlunoRepository {
     const columnMap: Record<string, string> = {
       nome: 'nome',
       email: 'email',
+      cpf: 'cpf',
       telefone: 'telefone',
       idade: 'idade',
       genero: 'genero',
