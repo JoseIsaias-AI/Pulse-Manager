@@ -10,6 +10,7 @@ const repository = new JornadaRepository();
 const service = new JornadaService(repository);
 const controller = new JornadaController(service);
 
+router.get('/atividades', controller.listarAtividades);
 router.get('/jornada/alunos/:idAluno', controller.obterJornadaAluno);
 
 router.post('/frequencias', authMiddleware, controller.registrarFrequencia);

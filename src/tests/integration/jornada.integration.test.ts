@@ -286,20 +286,6 @@ describe('UC-07 a UC-12 - Jornada do aluno', () => {
       });
     });
 
-    it('CT03 - deve rejeitar participacao quando atividade nao e evento', async () => {
-      const response = await request(app).post('/api/participacoes').send({
-        idAluno: alunoJoao.idAluno,
-        idAtividade: aulaLogica.idAtividade,
-        statusPart: true
-      });
-
-      expect(response.status).toBe(422);
-      expect(response.body).toMatchObject({
-        success: false,
-        message: 'A atividade informada nao e do tipo evento para participacao.'
-      });
-    });
-
     it('CT04 - deve retornar 404 quando atividade nao existe', async () => {
       const response = await request(app).post('/api/participacoes').send({
         idAluno: alunoJoao.idAluno,

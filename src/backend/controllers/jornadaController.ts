@@ -24,6 +24,16 @@ function parseId(value: unknown, fieldName: string): number {
 export class JornadaController {
   constructor(private readonly service: JornadaService) { }
 
+  listarAtividades = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const tipo = typeof req.query.tipo === 'string' ? req.query.tipo : undefined;
+      const resultado = await this.service.listarAtividades(tipo);
+      res.status(200).json(resultado);
+    } catch (error) {
+      this.tratarErro(error, res, next);
+    }
+  };
+
   obterJornadaAluno = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const idAluno = parseId(req.params.idAluno, 'idAluno');

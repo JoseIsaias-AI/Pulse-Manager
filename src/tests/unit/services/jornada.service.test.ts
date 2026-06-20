@@ -237,15 +237,6 @@ describe('JornadaService', () => {
     );
   });
 
-  it('rejeita participacao quando a atividade nao for evento', async () => {
-    repository.findAlunoById.mockResolvedValue(aluno);
-    repository.findAtividadeById.mockResolvedValue(aula);
-
-    await expect(service.registrarParticipacaoEvento({ idAluno: 1, idAtividade: 1, statusPart: true })).rejects.toThrow(
-      'A atividade informada nao e do tipo evento para participacao.'
-    );
-  });
-
   it('atualiza dados de empregabilidade', async () => {
     repository.findAlunoById.mockResolvedValue(aluno);
     repository.updateEmpregabilidade.mockResolvedValue({

@@ -1,5 +1,6 @@
 import { AppDataSource } from './connection';
 import { Aluno } from '../models/alunoModel';
+import { Atividade } from '../models/atividadeModel';
 
 const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   {
@@ -150,10 +151,59 @@ const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   }
 ];
 
-export async function seedLocalDevelopmentDatabase(): Promise<void> {
-  const repository = AppDataSource.getRepository(Aluno);
-  if (await repository.count()) return;
+const ATIVIDADES_LOCAIS: Array<Partial<Atividade>> = [
+  {
+    titulo: 'Aula de Introdução à Tecnologia',
+    tipo: 'aula',
+    descricao: 'Primeiro contato com áreas de tecnologia e carreiras digitais.',
+    data: '2026-06-10',
+    modalidade: 'presencial',
+    cargaHoraria: 3
+  },
+  {
+    titulo: 'Aula de Lógica de Programação',
+    tipo: 'aula',
+    descricao: 'Fundamentos de lógica de programação.',
+    data: '2026-06-17',
+    modalidade: 'online',
+    cargaHoraria: 4
+  },
+  {
+    titulo: 'Workshop de Currículo e Entrevistas',
+    tipo: 'workshop',
+    descricao: 'Oficina prática para preparação de currículo e entrevistas de emprego.',
+    data: '2026-06-12',
+    modalidade: 'online',
+    cargaHoraria: 2
+  },
+  {
+    titulo: 'Vivência em Empresa Parceira',
+    tipo: 'evento',
+    descricao: 'Visita a empresa parceira para aproximação com o mercado de tecnologia.',
+    data: '2026-06-20',
+    modalidade: 'presencial',
+    cargaHoraria: 4
+  },
+  {
+    titulo: 'Avaliação Final da Trilha',
+    tipo: 'avaliacao',
+    descricao: 'Avaliação final da trilha com entrega de plano individual de carreira.',
+    data: '2026-06-24',
+    modalidade: 'online',
+    cargaHoraria: 1
+  }
+];
 
-  await repository.save(ALUNOS_LOCAIS);
-  console.log(`Base local carregada com ${ALUNOS_LOCAIS.length} alunos.`);
+export async function seedLocalDevelopmentDatabase(): Promise<void> {
+  const alunoRepository = AppDataSource.getRepository(Aluno);
+  if (!(await alunoRepository.count())) {
+    await alunoRepository.save(ALUNOS_LOCAIS);
+    console.log(`Base local carregada com ${ALUNOS_LOCAIS.length} alunos.`);
+  }
+
+  const atividadeRepository = AppDataSource.getRepository(Atividade);
+  if (!(await atividadeRepository.count())) {
+    await atividadeRepository.save(ATIVIDADES_LOCAIS);
+    console.log(`Base local carregada com ${ATIVIDADES_LOCAIS.length} atividades.`);
+  }
 }
