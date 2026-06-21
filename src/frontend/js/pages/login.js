@@ -49,17 +49,6 @@ function showButtonFeedback(button, message) {
   }, 2200);
 }
 
-function createFallbackPulseUser(cpf, name, role) {
-  const cpfDigits = getCpfDigits(cpf);
-
-  return {
-    id: Number(cpfDigits),
-    cpf: cpfDigits,
-    nome: name.trim(),
-    perfil: role
-  };
-}
-
 function savePulseUser(user) {
   sessionStorage.setItem('pulseUser', JSON.stringify(user));
 }
@@ -79,7 +68,12 @@ async function loginWithCpf(cpf, name, role) {
     perfil: role
   });
 
-  return response.data || createFallbackPulseUser(cpf, name, role);
+  const user = response.data;
+  if (!user || user.id === undefined || !user.cpf || !user.nome || !user.perfil) {
+    throw new Error('Resposta de login invalida.');
+  }
+
+  return user;
 }
 
 async function handleLoginSubmit() {
