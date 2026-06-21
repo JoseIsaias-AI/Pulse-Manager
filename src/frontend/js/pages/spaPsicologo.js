@@ -54,6 +54,14 @@
     if (!target) return;
     target.style.display = 'flex';
 
+    document.querySelectorAll('.menuLateral__item[data-page]').forEach(item => {
+      item.classList.toggle('menuLateral__item--active', item.dataset.page === id);
+    });
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', id);
+    window.history.replaceState({}, '', url);
+
     if (!chartInited[id]) {
       chartInited[id] = true;
       if (id === 'inicio')     initInicioView();
@@ -68,7 +76,8 @@
   };
 
   /* ── View padrão ─────────────────────────────────────────── */
-  showView('inicio');
+  const requestedView = new URLSearchParams(window.location.search).get('view');
+  showView(VIEWS.includes(requestedView) ? requestedView : 'inicio');
 
   /* ── Bloco de perfil na sidebar → abre modalConfEquipe ───── */
   document.addEventListener('DOMContentLoaded', function () {

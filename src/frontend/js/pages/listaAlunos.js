@@ -1,8 +1,6 @@
 (function () {
   'use strict';
 
-  const API_BASE = window.PULSE_API_BASE
-    || (window.location.port === '3000' ? '/api' : 'http://localhost:3000/api');
   const PER_PAGE = 9;
   const AVATAR_COLORS = [
     ['#E0E7FF', '#4338CA'],
@@ -90,61 +88,28 @@
     };
   }
 
-  function apiUrl(filters) {
-    const params = new URLSearchParams({ limite: '100' });
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value) params.set(key, value);
-    });
-    return `${API_BASE}/alunos?${params.toString()}`;
+  function httpClient() {
+    if (!window.PulseApi) {
+      throw new Error('Cliente HTTP nao carregado.');
+    }
+    return window.PulseApi;
   }
 
   async function fetchStudents(filters, signal) {
-    let response;
-    try {
-      response = await fetch(apiUrl(filters), { signal });
-    } catch (error) {
-      if (error.name === 'AbortError') throw error;
-      throw new Error('Nao foi possivel conectar a API. Inicie o backend com "npm run dev:local".');
-    }
-
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Nao foi possivel consultar os alunos.');
-    }
+    const body = await httpClient().get('/alunos', {
+      query: { limite: 100, ...(filters || {}) },
+      signal
+    });
     return body.data.alunos || [];
   }
 
   async function createStudent(payload) {
-    let response;
-    try {
-      response = await fetch(`${API_BASE}/alunos`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    } catch (error) {
-      throw new Error('Nao foi possivel conectar a API. Inicie o backend com "npm run dev:local".');
-    }
-
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Nao foi possivel cadastrar o aluno.');
-    }
+    const body = await httpClient().post('/alunos', payload);
     return body.data;
   }
 
   async function fetchCreateOptions() {
-    let response;
-    try {
-      response = await fetch(`${API_BASE}/alunos/opcoes-cadastro`);
-    } catch (error) {
-      throw new Error('Nao foi possivel carregar as opcoes de cadastro.');
-    }
-
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Nao foi possivel carregar as opcoes de cadastro.');
-    }
+    const body = await httpClient().get('/alunos/opcoes-cadastro');
     return body.data || {};
   }
 

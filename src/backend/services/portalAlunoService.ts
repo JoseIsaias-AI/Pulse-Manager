@@ -8,7 +8,8 @@ export class PortalAlunoService {
     private readonly notificacaoRepository: NotificacaoRepository
   ) {}
 
-  async visualizarPerfil(idAluno: number) {
+  async visualizarPerfil(idAluno: number, usuarioId: number | undefined) {
+    this.validarProprioAluno(idAluno, usuarioId);
     const aluno = await this.alunoRepository.findById(idAluno);
     if (!aluno) {
       throw new NotFoundError('Aluno nao encontrado no portal.');
@@ -29,7 +30,12 @@ export class PortalAlunoService {
     };
   }
 
-  async atualizarContato(idAluno: number, payload: { email?: string; telefone?: string }) {
+  async atualizarContato(
+    idAluno: number,
+    payload: { email?: string; telefone?: string },
+    usuarioId: number | undefined
+  ) {
+    this.validarProprioAluno(idAluno, usuarioId);
     const aluno = await this.alunoRepository.findById(idAluno);
     if (!aluno) {
       throw new NotFoundError('Aluno nao encontrado no portal.');
@@ -53,9 +59,7 @@ export class PortalAlunoService {
   }
 
   async listarNotificacoes(idAluno: number, usuarioId: number | undefined) {
-    if (usuarioId !== undefined && usuarioId !== idAluno) {
-      throw new AppError('Acesso negado: voce so pode visualizar suas proprias notificacoes.', 403);
-    }
+    this.validarProprioAluno(idAluno, usuarioId);
 
     const aluno = await this.alunoRepository.findById(idAluno);
     if (!aluno) {
@@ -67,5 +71,11 @@ export class PortalAlunoService {
 
   async listarOportunidades() {
     return { success: true, data: await this.notificacaoRepository.listarOportunidades() };
+  }
+
+  private validarProprioAluno(idAluno: number, usuarioId: number | undefined): void {
+    if (usuarioId !== idAluno) {
+      throw new AppError('Acesso negado: voce so pode visualizar os seus proprios dados.', 403);
+    }
   }
 }

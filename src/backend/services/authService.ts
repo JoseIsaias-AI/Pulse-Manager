@@ -1,4 +1,4 @@
-import { AlunoRepository } from '../repositories/alunoRepository';
+import { PerfilLogin, UsuarioRepository } from '../repositories/usuarioRepository';
 import { NotFoundError, PayloadValidationError } from '../utils/errors';
 
 const perfisPermitidos = ['gestor', 'psicologo', 'aluno'];
@@ -9,14 +9,27 @@ export interface LoginPayload {
   perfil?: string;
 }
 
+export interface LoginResponse {
+  success: true;
+  message: string;
+  data: {
+    id: number;
+    idAluno: number;
+    cpf: string;
+    nome: string;
+    perfil: string;
+    codigoPm: string | null;
+  };
+}
+
 function apenasDigitos(value: string): string {
   return value.replace(/\D/g, '');
 }
 
 export class AuthService {
-  constructor(private readonly alunoRepository: AlunoRepository) {}
+  constructor(private readonly usuarioRepository: UsuarioRepository) {}
 
-  async login(payload: LoginPayload) {
+  async login(payload: LoginPayload): Promise<LoginResponse> {
     const cpf = apenasDigitos(String(payload.cpf || ''));
     const nomeInformado = String(payload.nome || '').trim();
     const perfil = String(payload.perfil || '').trim();
@@ -33,20 +46,21 @@ export class AuthService {
       throw new PayloadValidationError('Perfil invalido.');
     }
 
-    const aluno = await this.alunoRepository.findOneByCpf(cpf);
-    if (!aluno) {
-      throw new NotFoundError('CPF nao encontrado.');
+    const usuario = await this.usuarioRepository.findOneByCpfAndPerfil(cpf, perfil as PerfilLogin);
+    if (!usuario) {
+      throw new NotFoundError('Usuario nao encontrado para o perfil informado.');
     }
 
     return {
       success: true,
+      message: 'Login realizado com sucesso.',
       data: {
-        id: aluno.idAluno,
-        idAluno: aluno.idAluno,
-        cpf: aluno.cpf,
-        nome: nomeInformado,
-        perfil,
-        codigoPm: aluno.codigoPm
+        id: usuario.id,
+        idAluno: usuario.id,
+        cpf: usuario.cpf,
+        nome: usuario.nome,
+        perfil: usuario.perfil,
+        codigoPm: usuario.codigoPm
       }
     };
   }
