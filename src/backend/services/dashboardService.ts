@@ -160,6 +160,9 @@ export class DashboardService {
 
   private calcularImpacto(alunos: AlunoRecord[]): DashboardImpactoData {
     const totalAlunos = alunos.length;
+    const conectados = alunos.filter((aluno) => this.isCategoriaImpacto(aluno, 'conectado')).length;
+    const capacitados = alunos.filter((aluno) => this.isCategoriaImpacto(aluno, 'capacitado')).length;
+    const transformados = alunos.filter((aluno) => this.isCategoriaImpacto(aluno, 'transformado')).length;
     const alunosEmpregados = alunos.filter((aluno) => this.isAlunoEmpregado(aluno)).length;
     const conclusaoProgramas = alunos.filter((aluno) => this.isConcluinte(aluno)).length;
     const acessoEnsinoSuperior = alunos.filter((aluno) => this.isEnsinoSuperior(aluno)).length;
@@ -186,6 +189,9 @@ export class DashboardService {
 
     return {
       totalAlunos,
+      conectados: indicador(conectados, totalAlunos),
+      capacitados: indicador(capacitados, totalAlunos),
+      transformados: indicador(transformados, totalAlunos),
       alunosEmpregados: indicador(alunosEmpregados, totalAlunos),
       conclusaoProgramas: indicador(conclusaoProgramas, totalAlunos),
       acessoEnsinoSuperior: indicador(acessoEnsinoSuperior, totalAlunos),
@@ -193,6 +199,13 @@ export class DashboardService {
         a.programa.localeCompare(b.programa)
       )
     };
+  }
+
+  private isCategoriaImpacto(
+    aluno: AlunoRecord,
+    categoria: 'conectado' | 'capacitado' | 'transformado'
+  ): boolean {
+    return normalizarTexto(aluno.categoria || '').includes(categoria);
   }
 
   private calcularJornada(alunos: AlunoRecord[]): DashboardJornadaData {

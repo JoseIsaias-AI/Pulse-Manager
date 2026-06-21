@@ -20,6 +20,14 @@
     if (!target) return;
     target.style.display = 'flex';
 
+    document.querySelectorAll('.menuLateral__item[data-page]').forEach(item => {
+      item.classList.toggle('menuLateral__item--active', item.dataset.page === id);
+    });
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', id);
+    window.history.replaceState({}, '', url);
+
     // Barra de busca: visível apenas na aba Alunos
     const search = document.getElementById('top-search');
     if (search) search.style.display = id === 'alunos' ? '' : 'none';
@@ -68,7 +76,8 @@
   };
 
   /* ── INICIALIZAR VIEW PADRÃO ──────────────────────────────── */
-  showView('inicio');
+  const requestedView = new URLSearchParams(window.location.search).get('view');
+  showView(VIEWS.includes(requestedView) ? requestedView : 'inicio');
 
   /* ════════════════════════════════════════════════════════════
      VIEW: INÍCIO (inicioGestor)
@@ -359,6 +368,11 @@
      VIEW: DASHBOARD (dashboardGestor) — Dados Pulse Mais 2022–2025
   ════════════════════════════════════════════════════════════ */
   function initDashboardView() {
+    if (window.initDashboardGestorApp) {
+      window.initDashboardGestorApp();
+      return;
+    }
+
     Chart.defaults.font.family = "'Poppins', sans-serif";
     Chart.defaults.font.size   = 11;
 

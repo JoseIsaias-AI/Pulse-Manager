@@ -73,7 +73,11 @@ async function loginWithCpf(cpf, name, role) {
     throw new Error('Resposta de login invalida.');
   }
 
-  return user;
+  return {
+    ...user,
+    nome: name.trim(),
+    perfil: role
+  };
 }
 
 async function handleLoginSubmit() {
