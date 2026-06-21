@@ -82,4 +82,33 @@ describe('Autenticacao por CPF', () => {
       message: 'CPF invalido.'
     });
   });
+
+  it('deve preservar o perfil selecionado na sessao retornada', async () => {
+    const response = await request(app).post('/api/auth/login').send({
+      cpf: '12345678900',
+      nome: 'Nome Digitado',
+      perfil: 'psicologo'
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data).toMatchObject({
+      cpf: '12345678900',
+      nome: 'Nome Digitado',
+      perfil: 'psicologo'
+    });
+  });
+
+  it('deve rejeitar perfil fora das opcoes da tela', async () => {
+    const response = await request(app).post('/api/auth/login').send({
+      cpf: '12345678900',
+      nome: 'Nome Digitado',
+      perfil: 'administrador'
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toMatchObject({
+      success: false,
+      message: 'Perfil invalido.'
+    });
+  });
 });

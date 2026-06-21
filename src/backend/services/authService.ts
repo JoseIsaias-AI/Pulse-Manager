@@ -9,6 +9,18 @@ export interface LoginPayload {
   perfil?: string;
 }
 
+export interface LoginResponse {
+  success: true;
+  data: {
+    id: number;
+    idAluno: number;
+    cpf: string;
+    nome: string;
+    perfil: string;
+    codigoPm: string | null;
+  };
+}
+
 function apenasDigitos(value: string): string {
   return value.replace(/\D/g, '');
 }
@@ -16,7 +28,7 @@ function apenasDigitos(value: string): string {
 export class AuthService {
   constructor(private readonly alunoRepository: AlunoRepository) {}
 
-  async login(payload: LoginPayload) {
+  async login(payload: LoginPayload): Promise<LoginResponse> {
     const cpf = apenasDigitos(String(payload.cpf || ''));
     const nomeInformado = String(payload.nome || '').trim();
     const perfil = String(payload.perfil || '').trim();
@@ -35,6 +47,10 @@ export class AuthService {
 
     const aluno = await this.alunoRepository.findOneByCpf(cpf);
     if (!aluno) {
+      throw new NotFoundError('CPF nao encontrado.');
+    }
+
+    if (!aluno.cpf) {
       throw new NotFoundError('CPF nao encontrado.');
     }
 
