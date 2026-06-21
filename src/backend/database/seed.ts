@@ -59,6 +59,11 @@ async function seed() {
 
     const alunos = alunosResult.rows.map((row: AlunoRow) => row.id_aluno);
 
+    await Promise.all(alunos.map((idAluno, index) => {
+      const cpf = String(index + 1).padStart(11, String(index + 1).slice(-1));
+      return client.query('UPDATE aluno SET cpf = $1 WHERE id_aluno = $2', [cpf, idAluno]);
+    }));
+
     const membrosResult = await client.query<MembroRow>(`
       INSERT INTO membro_equipe (nome, cargo, email)
       VALUES

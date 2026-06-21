@@ -5,6 +5,7 @@ import agendaRoutes from './agendaRoutes';
 import notificacaoRoutes from './notificacaoRoutes';
 import portalAlunoRoutes from './portalAlunoRoutes';
 import segmentacaoRoutes from './segmentacaoRoutes';
+import authRoutes from './authRoutes';
 import alunoRoutes from './alunoRoutes';
 import dashboardRoutes from './dashboardRoutes';
 import psicologoRoutes from './psicologoRoutes';
@@ -52,6 +53,7 @@ router.get('/health/supabase', async (_req, res) => {
 // segmentacaoRoutes deve vir antes de alunoRoutes para que
 // GET /alunos/segmentacao nao seja capturado por /alunos/:idAluno
 router.use(segmentacaoRoutes);
+router.use(authRoutes);
 router.use(alunoRoutes);
 router.use(dashboardRoutes);
 router.use(jornadaRoutes);

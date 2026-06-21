@@ -5,6 +5,7 @@ import { Atividade } from '../models/atividadeModel';
 const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   {
     codigoPm: 'PM-2024-001',
+    cpf: '11111111111',
     nome: 'Mariana Costa',
     email: 'mariana.costa@local.pulsemais.org',
     idade: 20,
@@ -21,6 +22,7 @@ const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   },
   {
     codigoPm: 'PM-2024-002',
+    cpf: '22222222222',
     nome: 'Tiago Ribeiro',
     email: 'tiago.ribeiro@local.pulsemais.org',
     idade: 21,
@@ -37,6 +39,7 @@ const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   },
   {
     codigoPm: 'PM-2024-003',
+    cpf: '33333333333',
     nome: 'Leticia Pires',
     email: 'leticia.pires@local.pulsemais.org',
     idade: 22,
@@ -54,6 +57,7 @@ const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   },
   {
     codigoPm: 'PM-2025-001',
+    cpf: '44444444444',
     nome: 'Bruno Ferraz',
     email: 'bruno.ferraz@local.pulsemais.org',
     idade: 19,
@@ -69,6 +73,7 @@ const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   },
   {
     codigoPm: 'PM-2025-002',
+    cpf: '55555555555',
     nome: 'Julia Alves',
     email: 'julia.alves@local.pulsemais.org',
     idade: 20,
@@ -86,6 +91,7 @@ const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   },
   {
     codigoPm: 'PM-2025-003',
+    cpf: '66666666666',
     nome: 'Renato Dias',
     email: 'renato.dias@local.pulsemais.org',
     idade: 23,
@@ -102,6 +108,7 @@ const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   },
   {
     codigoPm: 'PM-2026-001',
+    cpf: '77777777777',
     nome: 'Karen Souza',
     email: 'karen.souza@local.pulsemais.org',
     idade: 20,
@@ -118,6 +125,7 @@ const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   },
   {
     codigoPm: 'PM-2026-002',
+    cpf: '88888888888',
     nome: 'Pedro Lima',
     email: 'pedro.lima@local.pulsemais.org',
     idade: 22,
@@ -134,6 +142,7 @@ const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   },
   {
     codigoPm: 'PM-2026-003',
+    cpf: '99999999999',
     nome: 'Ana Martins',
     email: 'ana.martins@local.pulsemais.org',
     idade: 19,

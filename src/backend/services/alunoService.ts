@@ -26,6 +26,10 @@ function validarNomeAluno(nome: string): string {
   return nome;
 }
 
+function apenasDigitos(value: string): string {
+  return value.replace(/\D/g, '');
+}
+
 export class AlunoService {
   constructor(private readonly repository: AlunoRepository) {}
 
@@ -57,6 +61,13 @@ export class AlunoService {
     const existente = await this.repository.findOneByEmail(data.email);
     if (existente) {
       throw new ConflictError('Ja existe aluno cadastrado com este e-mail.');
+    }
+
+    if (data.cpf) {
+      const alunoComCpf = await this.repository.findOneByCpf(data.cpf);
+      if (alunoComCpf) {
+        throw new ConflictError('Ja existe aluno cadastrado com este CPF.');
+      }
     }
 
     const aluno = await this.repository.create(data);
@@ -111,6 +122,11 @@ export class AlunoService {
       throw new PayloadValidationError('O campo email deve conter um endereco valido.');
     }
 
+    const cpf = payload.cpf ? apenasDigitos(payload.cpf) : undefined;
+    if (cpf !== undefined && cpf.length !== 11) {
+      throw new PayloadValidationError('O campo cpf deve conter 11 digitos.');
+    }
+
     if (
       payload.idade !== undefined &&
       (!Number.isInteger(payload.idade) || payload.idade < 0 || payload.idade > 120)
@@ -151,6 +167,7 @@ export class AlunoService {
       ...payload,
       nome,
       email,
+      cpf,
       dataIngresso: assertIsoDate(payload.dataIngresso, 'dataIngresso'),
       dataIngressoEnsinoSuperior: assertIsoDate(
         payload.dataIngressoEnsinoSuperior,

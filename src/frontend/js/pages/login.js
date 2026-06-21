@@ -49,7 +49,7 @@ function showButtonFeedback(button, message) {
   }, 2200);
 }
 
-function createPulseUser(cpf, name, role) {
+function createFallbackPulseUser(cpf, name, role) {
   const cpfDigits = getCpfDigits(cpf);
 
   return {
@@ -68,10 +68,27 @@ function getDestinationPage(role) {
   return rolePages[role] || rolePages.gestor;
 }
 
-function handleLoginSubmit() {
+async function loginWithCpf(cpf, name, role) {
+  if (!window.PulseApi) {
+    throw new Error('Cliente HTTP nao carregado.');
+  }
+
+  const response = await window.PulseApi.post('/auth/login', {
+    cpf: getCpfDigits(cpf),
+    nome: name.trim(),
+    perfil: role
+  });
+
+  return response.data || createFallbackPulseUser(cpf, name, role);
+}
+
+async function handleLoginSubmit() {
   const cpfInput = document.getElementById('cpf');
   const nameInput = document.getElementById('nome');
   const submitButton = document.getElementById('btn-entrar');
+
+  if (submitButton.disabled) return;
+
   const validationError = validateLoginForm(cpfInput.value, nameInput.value);
 
   if (validationError) {
@@ -82,10 +99,14 @@ function handleLoginSubmit() {
   submitButton.textContent = 'Entrando...';
   submitButton.disabled = true;
 
-  const pulseUser = createPulseUser(cpfInput.value, nameInput.value, currentRole);
-  savePulseUser(pulseUser);
+  try {
+    const pulseUser = await loginWithCpf(cpfInput.value, nameInput.value, currentRole);
+    savePulseUser(pulseUser);
 
-  window.location.href = getDestinationPage(currentRole);
+    window.location.href = getDestinationPage(currentRole);
+  } catch (error) {
+    showButtonFeedback(submitButton, error.message || 'CPF nao encontrado');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
