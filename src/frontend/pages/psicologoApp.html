@@ -1039,7 +1039,7 @@
             </div>
             <div class="psico-field">
               <label><i class="ti ti-user-heart"></i> Psicólogo(a)</label>
-              <input type="text" id="pf-psi" placeholder="Nome do profissional">
+              <input type="text" id="pf-psi" placeholder="Nome do profissional" readonly>
             </div>
           </div>
           <div class="psico-field psico-field--full">
@@ -1054,10 +1054,23 @@
               <button type="button" class="psico-label-btn psico-label-btn--observacao" data-label="observacao" onclick="pickLabel(this)"><i class="ti ti-eye" style="font-size:11px;"></i> Observação</button>
             </div>
             <input type="hidden" id="pf-label" value="">
+            <div style="display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap;">
+              <input type="text" id="pf-nova-label" placeholder="Descrição da nova label" style="flex:1;min-width:190px;">
+              <select id="pf-nova-label-tipo" style="min-width:150px;">
+                <option value="acompanhamento">Acompanhamento</option>
+                <option value="risco">Risco</option>
+                <option value="interesse">Interesse</option>
+                <option value="perfil">Perfil</option>
+                <option value="prioridade">Prioridade</option>
+                <option value="outro">Outro</option>
+              </select>
+              <button type="button" class="btn btn-ghost" id="pf-criar-label">Criar label</button>
+            </div>
           </div>
           <div class="psico-form__actions">
+            <span id="psico-form-error" role="alert" style="display:none;color:#E24B4A;font-size:11px;font-weight:600;"></span>
             <span class="psico-form__hint"><i class="ti ti-lock" style="font-size:12px;"></i> Acesso restrito a profissionais autorizados</span>
-            <button class="btn btn-psico" onclick="registrarAnotacao()"><i class="ti ti-plus"></i> Registrar anotação</button>
+            <button class="btn btn-psico" id="pf-registrar-anotacao" onclick="registrarAnotacao()"><i class="ti ti-plus"></i> Registrar anotação</button>
           </div>
         </div>
         <div class="sec-label" style="margin-top:20px;">Anotações anteriores</div>
@@ -1083,9 +1096,12 @@
 <!-- Scripts — ordem importante -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="../js/services/configPsicologo.js"></script>
+<script src="../js/services/api.js"></script>
+<script src="../js/services/sessionUser.js"></script>
 <script src="../js/components/guiaPsicologo.js"></script>
 <script src="../js/components/menuSuperior.js"></script>
 <script src="../js/components/modalConfEquipe.js"></script>
 <script src="../js/pages/spaPsicologo.js"></script>
+<script src="../js/pages/historicoPsicologico.js"></script>
 </body>
 </html>

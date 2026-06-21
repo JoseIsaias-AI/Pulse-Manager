@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { AuthController } from '../controllers/authController';
-import { AlunoRepository } from '../repositories/alunoRepository';
+import { UsuarioRepository } from '../repositories/usuarioRepository';
 import { AuthService } from '../services/authService';
 
 const router = Router();
-const controller = new AuthController(new AuthService(new AlunoRepository()));
+const controller = new AuthController(new AuthService(new UsuarioRepository()));
 
 router.post('/auth/login', controller.login);
 

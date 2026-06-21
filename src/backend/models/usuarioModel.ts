@@ -5,6 +5,9 @@ export class Psicologo {
   @PrimaryGeneratedColumn({ name: 'id_psi' })
   idPsi!: number;
 
+  @Column({ type: 'varchar', length: 11, nullable: true, unique: true })
+  cpf!: string | null;
+
   @Column({ name: 'nome_psi', type: 'varchar', length: 150 })
   nomePsi!: string;
 
@@ -16,6 +19,9 @@ export class Psicologo {
 export class MembroEquipe {
   @PrimaryGeneratedColumn({ name: 'id_membro' })
   idMembro!: number;
+
+  @Column({ type: 'varchar', length: 11, nullable: true, unique: true })
+  cpf!: string | null;
 
   @Column({ type: 'varchar', length: 150 })
   nome!: string;

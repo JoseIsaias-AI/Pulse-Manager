@@ -122,6 +122,9 @@ describe('UC-14 a UC-19 - Dashboard de Impacto', () => {
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
       expect(response.body.data.totalAlunos).toBe(6);
+      expect(response.body.data.conectados).toEqual({ valor: 2, percentual: 33.33 });
+      expect(response.body.data.capacitados).toEqual({ valor: 3, percentual: 50 });
+      expect(response.body.data.transformados).toEqual({ valor: 0, percentual: 0 });
       expect(response.body.data.alunosEmpregados.valor).toBe(2);
       expect(response.body.data.conclusaoProgramas.valor).toBe(1);
       expect(response.body.data.acessoEnsinoSuperior.valor).toBe(2);

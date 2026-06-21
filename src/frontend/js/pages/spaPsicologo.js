@@ -54,6 +54,14 @@
     if (!target) return;
     target.style.display = 'flex';
 
+    document.querySelectorAll('.menuLateral__item[data-page]').forEach(item => {
+      item.classList.toggle('menuLateral__item--active', item.dataset.page === id);
+    });
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', id);
+    window.history.replaceState({}, '', url);
+
     if (!chartInited[id]) {
       chartInited[id] = true;
       if (id === 'inicio')     initInicioView();
@@ -68,7 +76,8 @@
   };
 
   /* ── View padrão ─────────────────────────────────────────── */
-  showView('inicio');
+  const requestedView = new URLSearchParams(window.location.search).get('view');
+  showView(VIEWS.includes(requestedView) ? requestedView : 'inicio');
 
   /* ── Bloco de perfil na sidebar → abre modalConfEquipe ───── */
   document.addEventListener('DOMContentLoaded', function () {
@@ -185,7 +194,7 @@
   ════════════════════════════════════════════════════════════ */
   function initAlunosView() {
     const PER_PAGE = 9;
-    const TOTAL    = 18;
+    let totalAlunos  = 0;
     let curPage      = 1;
     let filterCourse = 'all';
     let desempSort   = 'none';
@@ -194,28 +203,8 @@
     let nameSort     = 'none';
     let searchQuery  = '';
 
-    const STUDENTS = [
-      { id:'PM-2024-474', name:'Mariana Costa',   ini:'MC', bg:'#E0E7FF', tc:'#4338CA', age:19, course:'Desenvolvimento AI-First na Prática',                    st:'ativa',     mod:'Módulo 5',             pct:84,  nota:8.4, eng:8, techCourse:'Engenharia de Software'          },
-      { id:'PM-2024-950', name:'Tiago Ribeiro',   ini:'TR', bg:'#FFE4E1', tc:'#DC2626', age:21, course:'Letramento Digital',                                     st:'risco',     mod:'Módulo 4',             pct:62,  nota:7.2, eng:5, techCourse:'Análise e Des. de Sistemas'      },
-      { id:'PM-2024-811', name:'Letícia Pires',   ini:'LP', bg:'#FEF9C3', tc:'#854D0E', age:22, course:'Autogestão no Mundo do Trabalho',                        st:'empregado', mod:'Módulo 5 · Concluído', pct:100, nota:9.5, eng:9, techCourse:'Sistemas de Informação'          },
-      { id:'PM-2024-137', name:'Bruno Ferraz',    ini:'BF', bg:'#F1F5F9', tc:'#475569', age:19, course:'Letramento Digital',                                     st:'inativo',   mod:'Módulo 3',             pct:48,  nota:6.3, eng:3, techCourse:''                                },
-      { id:'PM-2024-465', name:'Júlia Alves',     ini:'JA', bg:'#DCFCE7', tc:'#15803D', age:20, course:'Fortalecimento Emocional para Jovens',                   st:'ativa',     mod:'Módulo 5',             pct:85,  nota:8.5, eng:8, techCourse:''                                },
-      { id:'PM-2024-799', name:'Renato Dias',     ini:'RD', bg:'#FEF9C3', tc:'#854D0E', age:23, course:'Mercado de Trabalho: Preparação, Conexão e Vivências',   st:'atencao',   mod:'Módulo 4',             pct:65,  nota:7.6, eng:6, techCourse:'Tecnologia em Redes'             },
-      { id:'PM-2024-302', name:'Karen Souza',     ini:'KS', bg:'#CFFAFE', tc:'#0E7490', age:20, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:82,  nota:8.2, eng:7, techCourse:'Desenvolvimento Web'             },
-      { id:'PM-2024-618', name:'Pedro Lima',      ini:'PL', bg:'#FFE4E1', tc:'#DC2626', age:22, course:'Laboratório de Mentoria',                                st:'risco',     mod:'Módulo 3',             pct:42,  nota:5.9, eng:4, techCourse:''                                },
-      { id:'PM-2024-229', name:'Ana Martins',     ini:'AM', bg:'#DCFCE7', tc:'#15803D', age:19, course:'Autogestão no Mundo do Trabalho',                        st:'ativa',     mod:'Módulo 5',             pct:91,  nota:9.0, eng:9, techCourse:''                                },
-      { id:'PM-2024-531', name:'Felipe Santos',   ini:'FS', bg:'#E0E7FF', tc:'#4338CA', age:21, course:'Laboratório de Mentoria',                                st:'ativa',     mod:'Módulo 4',             pct:68,  nota:7.8, eng:7, techCourse:'Ciência da Computação'          },
-      { id:'PM-2024-388', name:'Camila Rocha',    ini:'CR', bg:'#FCE7F3', tc:'#9D174D', age:20, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:87,  nota:8.7, eng:8, techCourse:'Design Digital'                  },
-      { id:'PM-2024-712', name:'Diego Melo',      ini:'DM', bg:'#FFE4E1', tc:'#DC2626', age:24, course:'Letramento Digital',                                     st:'risco',     mod:'Módulo 2',             pct:31,  nota:5.1, eng:3, techCourse:''                                },
-      { id:'PM-2024-559', name:'Isabela Gomes',   ini:'IG', bg:'#F3E8FF', tc:'#7E22CE', age:19, course:'Fortalecimento Emocional para Jovens',                   st:'ativa',     mod:'Módulo 5',             pct:83,  nota:8.3, eng:8, techCourse:''                                },
-      { id:'PM-2024-244', name:'Lucas Ferreira',  ini:'LF', bg:'#FEF9C3', tc:'#854D0E', age:22, course:'Mercado de Trabalho: Preparação, Conexão e Vivências',   st:'empregado', mod:'Módulo 5 · Concluído', pct:100, nota:9.4, eng:9, techCourse:'Engenharia de Software'          },
-      { id:'PM-2024-876', name:'Sofia Carvalho',  ini:'SC', bg:'#FEF3C7', tc:'#92400E', age:20, course:'Autogestão no Mundo do Trabalho',                        st:'atencao',   mod:'Módulo 3',             pct:43,  nota:6.0, eng:5, techCourse:''                                },
-      { id:'PM-2024-193', name:'Gabriel Nunes',   ini:'GN', bg:'#CFFAFE', tc:'#0E7490', age:21, course:'Desenvolvimento AI-First na Prática',                    st:'ativa',     mod:'Módulo 5',             pct:86,  nota:8.6, eng:8, techCourse:'Análise e Des. de Sistemas'      },
-      { id:'PM-2024-647', name:'Patrícia Leal',   ini:'PL', bg:'#DCFCE7', tc:'#15803D', age:23, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:88,  nota:8.8, eng:9, techCourse:'Sistemas de Informação'          },
-      { id:'PM-2024-320', name:'Henrique Torres', ini:'HT', bg:'#F1F5F9', tc:'#475569', age:19, course:'Laboratório de Mentoria',                                st:'inativo',   mod:'Módulo 2',             pct:23,  nota:4.5, eng:2, techCourse:''                                },
-    ];
-
-    const COURSES = ['Todos', ...new Set(STUDENTS.map(function (s) { return s.techCourse || '—'; }))];
+    let STUDENTS = [];
+    let COURSES = ['Todos'];
     let courseIdx = 0;
 
     const BAR  = { ativa:'c-green', risco:'c-red', empregado:'c-green', inativo:'c-gray', atencao:'c-amber' };
@@ -279,7 +268,7 @@
       /* Paginação */
       const totalPages   = Math.ceil(total / PER_PAGE);
       const info         = document.getElementById('al-pag-info');
-      const displayTotal = filterCourse === 'all' && !searchQuery ? TOTAL : total;
+      const displayTotal = filterCourse === 'all' && !searchQuery ? totalAlunos : total;
       if (info) info.textContent =
         `Exibindo ${start + 1}–${Math.min(start + PER_PAGE, total)} de ${displayTotal} alunos`;
 
@@ -388,7 +377,39 @@
     if (prevBtn) prevBtn.addEventListener('click', function () { renderPage(curPage - 1); });
     if (nextBtn) nextBtn.addEventListener('click', function () { renderPage(curPage + 1); });
 
-    renderPage(1);
+    const grid = document.getElementById('al-grid');
+    if (grid) grid.innerHTML = '<div class="psico-empty">Carregando alunos...</div>';
+
+    window.PulseApi.get('/alunos', { query: { limite: 100 } })
+      .then(function (resposta) {
+        const cores = [
+          ['#E0E7FF', '#4338CA'], ['#DCFCE7', '#15803D'], ['#FEF9C3', '#854D0E'],
+          ['#CFFAFE', '#0E7490'], ['#FCE7F3', '#9D174D']
+        ];
+        STUDENTS = (Array.isArray(resposta.data) ? resposta.data : []).map(function (aluno, indice) {
+          const partes = String(aluno.nome || '').trim().split(/\s+/);
+          const cor = cores[indice % cores.length];
+          return {
+            idAluno: Number(aluno.idAluno),
+            id: aluno.codigoPm || `Aluno #${aluno.idAluno}`,
+            name: aluno.nome,
+            ini: `${partes[0]?.[0] || 'A'}${partes.length > 1 ? partes[partes.length - 1][0] : ''}`.toUpperCase(),
+            bg: cor[0], tc: cor[1], age: aluno.idade || '—',
+            course: aluno.curso || aluno.programa || 'Não informado',
+            st: aluno.riscoEvasao === 'alto' ? 'risco' : aluno.status === 'inativo' ? 'inativo' : 'ativa',
+            mod: aluno.nivelJornada || 'Jornada não informada',
+            pct: Number(aluno.engajamento) || 0,
+            nota: 0, eng: Number(aluno.engajamento) / 10 || 0,
+            techCourse: aluno.cursoEnsinoSuperior || aluno.curso || '—'
+          };
+        });
+        totalAlunos = STUDENTS.length;
+        COURSES = ['Todos', ...new Set(STUDENTS.map(function (s) { return s.techCourse || '—'; }))];
+        renderPage(1);
+      })
+      .catch(function (erro) {
+        if (grid) grid.innerHTML = `<div class="psico-empty">${erro.message || 'Não foi possível carregar os alunos.'}</div>`;
+      });
   }
 
   /* ════════════════════════════════════════════════════════════
@@ -631,8 +652,8 @@
     const pfData = document.getElementById('pf-data');
     if (pfData && !pfData.value) pfData.value = new Date().toISOString().split('T')[0];
 
-    /* Renderizar lista de anotações existentes */
-    renderLista();
+    /* Carrega o histórico usando o idAluno real do card selecionado. */
+    if (window.HistoricoPsicologico) window.HistoricoPsicologico.carregarAluno(s);
 
     /* Reset para aba "Dados gerais" */
     window.showHistTab('pf-tab-dados', overlay.querySelector('.tab-btn'));
@@ -671,26 +692,7 @@
   /* ════════════════════════════════════════════════════════════
      ANOTAÇÕES PSICOLÓGICAS
   ════════════════════════════════════════════════════════════ */
-  const anotacoes = [
-    {
-      data: '2024-10-03',
-      tipo: 'Triagem inicial',
-      psi:  'Dr. João Mário',
-      texto: 'Primeira sessão de triagem. Aluno demonstra bom vínculo social com colegas de turma. Leve ansiedade em relação às entregas do módulo atual, porém sem impacto significativo no desempenho. Recomendado acompanhamento mensal.'
-    },
-    {
-      data: '2024-11-07',
-      tipo: 'Acompanhamento',
-      psi:  'Dr. João Mário',
-      texto: 'Segunda sessão. Ansiedade reduzida em relação ao período anterior. Melhora na organização de rotina de estudos. Engajamento nas atividades em grupo permanece positivo. Nenhuma intervenção adicional necessária no momento.'
-    },
-    {
-      data: '2024-12-12',
-      tipo: 'Acompanhamento',
-      psi:  'Dr. João Mário',
-      texto: 'Sessão de final de semestre. Sinais de cansaço típicos do período, sem indicadores de sofrimento psíquico. Orientado sobre técnicas de autocuidado durante o recesso. Retorno previsto para o início do próximo módulo.'
-    }
-  ];
+  const anotacoes = [];
 
   function renderLista() {
     var list = document.getElementById('psico-list');
