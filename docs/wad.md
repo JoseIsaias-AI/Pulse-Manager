@@ -607,13 +607,27 @@ User Stories: As User Stories são definidas como descrições de uma funcionali
 
 | Identificação        | US06 |
 | -------------------- | ---- |
+| Persona              | Lucas Silva |
+| User Story           | Como psicólogo, eu quero registrar observações sobre o estado emocional e de saúde mental dos alunos que acompanho, para que eu possa manter um histórico confidencial de cada atendimento e embasar futuras intervenções de forma mais precisa. |
+| Critério de aceite 1 | CR1: Dado que o psicólogo está no perfil de um aluno que ele atende, quando ele clica em "Adicionar observação", então o sistema exibe um formulário com campo de texto livre, data e categoria (bem-estar, crise ou acompanhamento regular), salva o registro vinculado ao psicólogo e ao aluno e exibe confirmação de sucesso. |
+| Critério de aceite 2 | CR2: Dado que o psicólogo deseja consultar o histórico de atendimento de um aluno, quando ele acessa a aba "Saúde Mental" no perfil desse aluno, então o sistema exibe apenas as observações registradas por esse psicólogo, em ordem cronológica decrescente, com data, categoria e conteúdo — sem expor registros feitos por outros psicólogos. |
+
+| Identificação        | US07 |
+| -------------------- | ---- |
+| Persona              | André Souza |
+| User Story           | Como aluno da Pulse Mais, eu quero atualizar meus dados de contato na plataforma, para que as informações que a Pulse Mais mantém sobre mim estejam sempre corretas e eu possa ser localizado para oportunidades e comunicados. |
+| Critério de aceite 1 | CR1: Dado que o aluno deseja corrigir seu telefone ou e-mail, quando ele acessa a aba "Meu Perfil" e edita os campos de contato, então o sistema valida o formato dos dados informados, salva as alterações e exibe uma confirmação de sucesso. |
+| Critério de aceite 2 | CR2: Dado que o aluno tentou salvar dados inválidos (ex: e-mail sem "@" ou telefone com menos de 10 dígitos), quando ele clica em "Salvar", então o sistema destaca os campos com erro, exibe uma mensagem descritiva com o formato esperado e não salva os dados incorretos. |
+
+| Identificação        | US08 |
+| -------------------- | ---- |
 | Persona              | André Souza |
 | User Story           | Como um aluno da Pulse Mais, eu quero ter acesso aos meus resultados de maneira simples e com um histórico de notas, para que eu consiga me organizar melhor e ver em quais matérias estou tendo mais dificuldades. |
 | Critério de aceite 1 | CR1: Dado que o aluno deseja ver seus resultados, quando ele abre a plataforma e clica em notas, então o sistema exibe uma média geral de todas as notas e um histórico em ordem cronológica das notas do aluno. |
 | Critério de aceite 2 | CR2: Dado que o aluno quer ver o seu desempenho em uma matéria específica, quando ele clica em notas e seleciona uma matéria, então o sistema exibe a média e o histórico de notas daquela matéria. |
 | Critérios INVEST     | INDEPENDENTE: A história pode ser desenvolvida e entregue sem depender de outras funcionalidades de visualização de perfil ou módulos de secretaria, focando na consulta ao banco de dados. <br><br> NEGOCIÁVEL: Os detalhes da interface e o formato do histórico podem ser discutidos com o time de design e desenvolvimento durante a sprint. <br><br> VALIOSA: Fornece transparência ao aluno sobre seu desempenho acadêmico, permitindo que ele identifique lacunas de aprendizado e melhore sua organização pessoal. <br><br> ESTIMÁVEL: O esforço técnico é observável, pois envolve a criação de uma consulta para cálculo de média e uma listagem cronológica. <br><br> PEQUENA: A funcionalidade é limitada à visualização de dados existentes, sendo simples o suficiente para ser implementada em poucos dias. <br><br> TESTÁVEL: É possível fazer o teste através de testes automatizados ou manuais, conferindo se a média exibida e a ordem das notas no histórico correspondem aos dados reais do banco. |
 
-| Identificação        | US07 |
+| Identificação        | US09 |
 | -------------------- | ---- |
 | Persona              | André Souza |
 | User Story           | Como um aluno da Pulse Mais, eu quero receber notificações dos eventos da Pulse Mais e ter acesso às minhas faltas, para que eu consiga me organizar melhor e ver de maneira simples o que perdi. |
@@ -621,7 +635,7 @@ User Stories: As User Stories são definidas como descrições de uma funcionali
 | Critério de aceite 2 | CR2: Dado que o aluno tem um evento da Pulse Mais nos próximos dias, quando ele abre a plataforma, então o sistema envia uma notificação informando o aluno que o evento irá ocorrer nos próximos dias. |
 | Critérios INVEST     | INDEPENDENTE: A funcionalidade de visualização de calendário e notificações pode ser desenvolvida separadamente do sistema de notas, utilizando apenas a base de dados de cronograma da Pulse Mais. <br><br> NEGOCIÁVEL: Os canais de notificação e o visual do calendário podem ser discutidos e ajustados conforme o feedback dos alunos. <br><br> VALIOSA: Ajuda o aluno a não perder eventos importantes e a manter o controle sobre suas faltas, aumentando o engajamento com as atividades da ONG. <br><br> ESTIMÁVEL: Como os eventos e as faltas já constam no banco de dados, o esforço para exibir essas informações em uma interface de calendário e configurar alertas automáticos é compreendido pela equipe. <br><br> PEQUENA: A história foca em uma interface de visualização e um gatilho de lembrete simples, sendo possível de completar dentro de uma única sprint. <br><br> TESTÁVEL: É possível testar criando um evento fictício no banco e verificando se o calendário o exibe corretamente e se o sistema dispara a notificação no tempo previsto. |
 
-| Identificação        | US08 |
+| Identificação        | US10 |
 | -------------------- | ---- |
 | Persona              | André Souza |
 | User Story           | Como aluno da Pulse Mais, eu quero entrar em contato com os psicólogos quando estiver com dificuldades, para que eu consiga receber ajuda de um profissional. |
@@ -664,14 +678,14 @@ Os requisitos funcionais a seguir foram extraídos do Termo de Abertura do Proje
 | RF009 | O sistema deve permitir o registro de observações sobre saúde mental e bem-estar do aluno, com acesso restrito ao psicólogo da instituição que atende o aluno específico.                             | Alta       | Parcial   |
 | RF010 | O sistema deve restringir o acesso às funcionalidades de acordo com o perfil do usuário (ex.: equipe Pulse, psicólogo, aluno).                                                                        | Alta       | Parcial   |
 | RF011 | O sistema deve permitir a localização e segmentação de alunos com base em múltiplos critérios combinados, incluindo empregabilidade, escolaridade, curso, ano de ingresso e demais filtros operacionais da aba Alunos. | Média      | Implementado |
-| RF012 | O sistema deve apresentar um dashboard consolidando os principais indicadores de impacto da Pulse Mais.                                                                                               | Alta       | Parcial   |
+| RF012 | O sistema deve consolidar e apresentar os principais indicadores de impacto da Pulse Mais, permitindo a análise de empregabilidade, evasão, conclusão de programas e acesso ao ensino superior com filtros de período, programa e categoria. | Alta       | Parcial   |
 | RF013 | O sistema deve calcular e apresentar o total de alunos empregados em um período selecionado.                                                                                                          | Baixa      | Parcial   |
 | RF014 | O sistema deve calcular e apresentar o total de alunos que concluíram um programa em um período selecionado.                                                                                          | Média      | Parcial   |
 | RF015 | O sistema deve calcular e apresentar indicadores de evasão e risco por programa ou turma.                                                                                                             | Média      | Parcial   |
 | RF016 | O sistema deve calcular e apresentar indicadores de acesso ao ensino superior dentro da rede de alunos.                                                                                               | Média      | Parcial   |
-| RF017 | O sistema deve disponibilizar um portal restrito ao aluno no qual o próprio aluno possa visualizar seus dados cadastrais, agenda demonstrativa, notificações e oportunidades em formato de consulta. | Alta       | Parcial |
+| RF017 | O sistema deve permitir que o próprio aluno visualize seus dados cadastrais, agenda, notificações e oportunidades, com acesso restrito às suas próprias informações e sem permissão de edição de dados institucionais. | Alta       | Parcial |
 | RF018 | O sistema deve permitir que o aluno atualize informações do seu perfil, como e-mail, telefone e CPF, pelo portal do aluno.                                                                         | Alta       | Parcial   |
-| RF019 | O sistema deve permitir o envio e a visualização de notificações informativas, convites e oportunidades, com formulários administrativos no perfil gestor e consulta pelo portal do aluno. | Baixa      | Parcial |
+| RF019 | O sistema deve permitir que a equipe interna envie notificações informativas, convites e oportunidades aos alunos, e que o aluno visualize as notificações e oportunidades destinadas a ele. | Baixa      | Parcial |
 | RF020 | O sistema deve permitir a visualização da agenda para gestor e aluno, com consulta por dia, filtros por aluno, membro responsável e período; no portal do aluno, a agenda é somente leitura. | Média      | Parcial |
 | RF021 | O sistema deve permitir que o gestor crie, atualize ou cancele itens presentes na agenda; no frontend atual, o formulário está alinhado ao banco e parte da interação permanece demonstrativa. | Alta       | Parcial |
 | RF022 | O sistema deve permitir ao psicólogo acessar o desempenho acadêmico dos alunos que monitora.                                                                                                          | Alta       | Parcial   |
@@ -797,46 +811,46 @@ Os requisitos não funcionais aqui definidos traduzem as escolhas de qualidade f
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
 
-| Metodo | Endpoint | RF | Entrada principal | Retorno esperado | Status principais |
-| --- | --- | --- | --- | --- | --- |
-| GET | `/api/health` | N/A | N/A | Status da API | 200 |
-| GET | `/api/health/supabase` | N/A | N/A | Status de conexão com banco/configuração Supabase | 200, 503 |
-| GET | `/api/portal/alunos/:idAluno` | RF017 | `idAluno` path param | Perfil do aluno | 200, 400, 404 |
-| PATCH | `/api/portal/alunos/:idAluno/contato` | RF018 | `email`, `telefone` | Contato atualizado | 200, 400, 404 |
-| GET | `/api/portal/alunos/:idAluno/notificacoes` | RF019 | `idAluno`, headers de autenticação | Notificações do aluno | 200, 400, 403, 404 |
-| GET | `/api/portal/oportunidades` | RF019 | N/A | Lista de oportunidades | 200 |
-| POST | `/api/alunos` | RF001 | Dados cadastrais do aluno | Aluno cadastrado | 201, 400, 409 |
-| GET | `/api/alunos` | RF003, RF011 | Filtros opcionais, como busca, status, risco, empregabilidade, escolaridade, curso e ano de ingresso | Lista de alunos filtrada | 200 |
-| GET | `/api/alunos/opcoes-cadastro` | RF001, RF002 | N/A | Opções controladas para cadastro e edição de aluno | 200 |
-| GET | `/api/alunos/:idAluno` | RF003, RF004 | `idAluno` path param | Dados do aluno | 200, 400, 404 |
-| PATCH | `/api/alunos/:idAluno` | RF002 | Campos parciais do aluno | Aluno atualizado | 200, 400, 404 |
-| DELETE | `/api/alunos/:idAluno` | RF002 | `idAluno` path param | Aluno inativado | 200, 404 |
-| GET | `/api/jornada/alunos/:idAluno` | RF004 | `idAluno` path param | Jornada consolidada | 200, 400, 404 |
-| POST | `/api/frequencias` | RF005 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Frequência registrada | 200, 400, 404, 422 |
-| POST | `/api/participacoes` | RF006 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Participação registrada | 200, 400, 404, 409, 422 |
-| PATCH | `/api/empregabilidade/:idAluno` | RF007 | `ocupacao`, `tipoVinculoEmpregaticio`, `rendaMensal` | Empregabilidade atualizada | 200, 400, 404 |
-| PATCH | `/api/ensino-superior/:idAluno` | RF008 | `escolaridade`, instituição/curso/status/data | Ensino superior atualizado | 200, 400, 404 |
-| POST | `/api/anotacoes-qualitativas` | RF004 | `idAluno`, `titulo`, `descricao`, `autor`, `dataRegistro` | Anotação registrada | 201, 400, 404 |
-| GET | `/api/alunos/segmentacao` | RF011 | Query params de filtros | Alunos segmentados | 200, 400, 422 |
-| GET | `/api/impacto/resumo` | RF012 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo de impacto | 200, 400, 422 |
-| GET | `/api/jornada/resumo` | RF004, RF012 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo da jornada | 200, 400, 422 |
-| GET | `/api/impacto/conclusao-programas` | RF014 | Filtros de dashboard | Indicador de conclusão | 200, 400, 422 |
-| GET | `/api/impacto/alunos-empregados` | RF013 | Filtros de dashboard | Indicador de empregados | 200, 400, 422 |
-| GET | `/api/impacto/acesso-ensino-superior` | RF016 | Filtros de dashboard | Indicador de ensino superior | 200, 400, 422 |
-| GET | `/api/jornada/evasao-risco` | RF015 | Filtros de dashboard | Indicador de evasão/risco | 200, 400, 422 |
-| GET | `/api/comunicacao` | RF019 | `idAluno` opcional | Lista de notificações | 200 |
-| POST | `/api/comunicacao` | RF019 | Dados da notificação | Notificação criada | 201, 400, 403, 404 |
-| GET | `/api/comunicacao/oportunidades` | RF019 | N/A | Lista de oportunidades | 200 |
-| POST | `/api/comunicacao/oportunidades` | RF019 | Dados da oportunidade | Oportunidade criada | 201, 400 |
-| GET | `/api/agenda` | RF020 | `idAluno`, `idMembro`, `dataInicio`, `dataFim` | Itens de agenda | 200, 400, 422 |
-| POST | `/api/agenda` | RF021 | Dados do item de agenda | Item criado | 201, 400, 422 |
-| PATCH | `/api/agenda/:idAgenda` | RF021 | Campos parciais do item | Item atualizado | 200, 400, 404, 422 |
-| DELETE | `/api/agenda/:idAgenda` | RF021 | `idAgenda` path param | Item cancelado | 200, 404, 422 |
-| GET | `/api/prontuarios` | RF009, RF010 | `idAluno`, `idPsi`, perfil | Lista de prontuários | 200, 422 |
-| POST | `/api/prontuarios` | RF009, RF010 | `idAluno`, `idPsi`, `titulo`, `observacao`, perfil | Prontuário criado | 201, 400, 404, 422 |
-| GET | `/api/labels` | RF009, RF010 | `idAluno`, `idPsi`, perfil | Lista de labels | 200, 422 |
-| POST | `/api/labels` | RF009, RF010 | `idAluno`, `idPsi`, `descricao`, `tipoLabel`, perfil | Label criada | 201, 400, 404, 422 |
-| GET | `/api/psicologo/alunos/:idAluno/desempenho` | RF022 | `idAluno`, headers de autenticação/permissão | Desempenho do aluno | 200, 400, 403, 404 |
+| Metodo | Endpoint | RF | RN | Entrada principal | Retorno esperado | Status principais |
+| --- | --- | --- | --- | --- | --- | --- |
+| GET | `/api/health` | N/A | N/A | N/A | Status da API | 200 |
+| GET | `/api/health/supabase` | N/A | N/A | N/A | Status de conexão com banco/configuração Supabase | 200, 503 |
+| GET | `/api/portal/alunos/:idAluno` | RF017 | RN013, RN-PORTAL-01, RN-PORTAL-02 | `idAluno` path param | Perfil do aluno | 200, 400, 404 |
+| PATCH | `/api/portal/alunos/:idAluno/contato` | RF018 | RN013, RN014, RN-PORTAL-03, RN-PORTAL-04 | `email`, `telefone` | Contato atualizado | 200, 400, 404 |
+| GET | `/api/portal/alunos/:idAluno/notificacoes` | RF019 | RN011, RN017, RN-PORTAL-05 | `idAluno`, headers de autenticação | Notificações do aluno | 200, 400, 403, 404 |
+| GET | `/api/portal/oportunidades` | RF019 | RN-PORTAL-06 | N/A | Lista de oportunidades | 200 |
+| POST | `/api/alunos` | RF001 | RN001, RN002, RN003, RN-ALUNO-01, RN-ALUNO-02 | Dados cadastrais do aluno | Aluno cadastrado | 201, 400, 409 |
+| GET | `/api/alunos` | RF003, RF011 | RN-ALUNO-04, RN-SEG-01, RN-SEG-03 | Filtros opcionais, como busca, status, risco, empregabilidade, escolaridade, curso e ano de ingresso | Lista de alunos filtrada | 200 |
+| GET | `/api/alunos/opcoes-cadastro` | RF001, RF002 | RN001 | N/A | Opções controladas para cadastro e edição de aluno | 200 |
+| GET | `/api/alunos/:idAluno` | RF003, RF004 | RN-ALUNO-04, RN-ALUNO-05 | `idAluno` path param | Dados do aluno | 200, 400, 404 |
+| PATCH | `/api/alunos/:idAluno` | RF002 | RN003, RN005, RN011, RN-ALUNO-06, RN-ALUNO-07 | Campos parciais do aluno | Aluno atualizado | 200, 400, 404 |
+| DELETE | `/api/alunos/:idAluno` | RF002 | RN010 | `idAluno` path param | Aluno inativado | 200, 404 |
+| GET | `/api/jornada/alunos/:idAluno` | RF004 | RN004, RN-JORNADA-01, RN-JORNADA-02 | `idAluno` path param | Jornada consolidada | 200, 400, 404 |
+| POST | `/api/frequencias` | RF005 | RN004, RN-JORNADA-03, RN-JORNADA-04, RN-JORNADA-05 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Frequência registrada | 200, 400, 404, 422 |
+| POST | `/api/participacoes` | RF006 | RN004, RN-JORNADA-06, RN-JORNADA-07, RN-JORNADA-08 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Participação registrada | 200, 400, 404, 409, 422 |
+| PATCH | `/api/empregabilidade/:idAluno` | RF007 | RN008, RN-JORNADA-09 | `ocupacao`, `tipoVinculoEmpregaticio`, `rendaMensal` | Empregabilidade atualizada | 200, 400, 404 |
+| PATCH | `/api/ensino-superior/:idAluno` | RF008 | RN-JORNADA-10, RN-JORNADA-11 | `escolaridade`, instituição/curso/status/data | Ensino superior atualizado | 200, 400, 404 |
+| POST | `/api/anotacoes-qualitativas` | RF004 | RN016, RN-JORNADA-12, RN-JORNADA-13 | `idAluno`, `titulo`, `descricao`, `autor`, `dataRegistro` | Anotação registrada | 201, 400, 404 |
+| GET | `/api/alunos/segmentacao` | RF011 | RN-SEG-01, RN-SEG-02, RN-SEG-03 | Query params de filtros | Alunos segmentados | 200, 400, 422 |
+| GET | `/api/impacto/resumo` | RF012 | RN009, RN-DASH-01, RN-DASH-02, RN-DASH-03 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo de impacto | 200, 400, 422 |
+| GET | `/api/jornada/resumo` | RF004, RF012 | RN004, RN009, RN-DASH-01 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo da jornada | 200, 400, 422 |
+| GET | `/api/impacto/conclusao-programas` | RF014 | RN006, RN009, RN-DASH-01 | Filtros de período e programa | Indicador de conclusão | 200, 400, 422 |
+| GET | `/api/impacto/alunos-empregados` | RF013 | RN008, RN009, RN-DASH-01 | Filtros de período e programa | Indicador de empregados | 200, 400, 422 |
+| GET | `/api/impacto/acesso-ensino-superior` | RF016 | RN009, RN-DASH-01 | Filtros de período e programa | Indicador de ensino superior | 200, 400, 422 |
+| GET | `/api/jornada/evasao-risco` | RF015 | RN007, RN009, RN-DASH-01 | Filtros de período e programa | Indicador de evasão/risco | 200, 400, 422 |
+| GET | `/api/comunicacao` | RF019 | RN011, RN017 | `idAluno` opcional | Lista de notificações | 200 |
+| POST | `/api/comunicacao` | RF019 | RN011, RN017, RN-COM-01, RN-COM-02, RN-COM-03 | Dados da notificação | Notificação criada | 201, 400, 403, 404 |
+| GET | `/api/comunicacao/oportunidades` | RF019 | N/A | N/A | Lista de oportunidades | 200 |
+| POST | `/api/comunicacao/oportunidades` | RF019 | RN011, RN-COM-04, RN-COM-05 | Dados da oportunidade | Oportunidade criada | 201, 400 |
+| GET | `/api/agenda` | RF020 | RN018, RN-AGENDA-01, RN-AGENDA-02 | `idAluno`, `idMembro`, `dataInicio`, `dataFim` | Itens de agenda | 200, 400, 422 |
+| POST | `/api/agenda` | RF021 | RN019, RN-AGENDA-01 | Dados do item de agenda | Item criado | 201, 400, 422 |
+| PATCH | `/api/agenda/:idAgenda` | RF021 | RN019, RN-AGENDA-03 | Campos parciais do item | Item atualizado | 200, 400, 404, 422 |
+| DELETE | `/api/agenda/:idAgenda` | RF021 | RN019, RN-AGENDA-03 | `idAgenda` path param | Item cancelado | 200, 404, 422 |
+| GET | `/api/prontuarios` | RF009, RF010 | RN012, RN016, RN-SAUDE-01 | `idAluno`, `idPsi`, perfil | Lista de prontuários | 200, 422 |
+| POST | `/api/prontuarios` | RF009, RF010 | RN012, RN016, RN-SAUDE-01, RN-SAUDE-02, RN-SAUDE-03 | `idAluno`, `idPsi`, `titulo`, `observacao`, perfil | Prontuário criado | 201, 400, 404, 422 |
+| GET | `/api/labels` | RF009, RF010 | RN012, RN016, RN-SAUDE-01 | `idAluno`, `idPsi`, perfil | Lista de labels | 200, 422 |
+| POST | `/api/labels` | RF009, RF010 | RN012, RN016, RN-SAUDE-04, RN-SAUDE-05 | `idAluno`, `idPsi`, `descricao`, `tipoLabel`, perfil | Label criada | 201, 400, 404, 422 |
+| GET | `/api/psicologo/alunos/:idAluno/desempenho` | RF022 | RN020, RN-PSI-01, RN-PSI-02 | `idAluno`, headers de autenticação/permissão | Desempenho do aluno | 200, 400, 403, 404 |
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
@@ -1810,7 +1824,7 @@ Em casos onde a Lucide não oferecer o ícone necessário, as bibliotecas **Phos
 
 <div align="justify">
 A tela de login é a página inicial da plataforma para todos os perfis de usuário. Ela conta com um fundo azul institucional, o logo do Pulse Manager centralizado no topo e um card branco com os campos de autenticação — CPF e Nome Completo para alunos, e e-mail e senha para gestores e psicólogos — e o botão "Entrar", que redireciona cada usuário para sua tela inicial correspondente.
-Esta tela está associada às User Stories US03, US05, US06 e US07, de acordo com o critério de aceite número 1 de cada uma. Isso porque o acesso unificado e padronizado garante tanto a simplicidade para o aluno quanto o controle de acesso necessário para gestores e psicólogos visualizarem e interagirem com os dados da plataforma.
+Esta tela está associada às User Stories US05, US07, US08 e US09, de acordo com o critério de aceite número 1 de cada uma. Isso porque o acesso unificado e padronizado garante tanto a simplicidade para o aluno quanto o controle de acesso necessário para gestores e psicólogos visualizarem e interagirem com os dados da plataforma.
 </div>
 
 ### Tela Inicial do Gestor
@@ -1894,7 +1908,7 @@ Esta tela está associada às User Stories US01 e US02, de acordo com os critér
 
 <div align="justify">
 A tela inicial do aluno é onde o estudante tem uma visão geral da sua jornada na plataforma. Nela estão dispostos seus principais indicadores de desempenho, o progresso nos módulos do curso, os próximos eventos da Pulse Mais e um acesso rápido ao suporte de saúde mental. A navegação lateral permite que o aluno transite entre as demais seções da plataforma.
-Esta tela está associada às User Stories US06, US07 e US08, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza o acesso aos resultados pessoais do aluno, exibe os eventos e faltas de forma clara e disponibiliza o contato direto com o psicólogo, tornando a navegação intuitiva e completa para o estudante.
+Esta tela está associada às User Stories US08, US09 e US10, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza o acesso aos resultados pessoais do aluno, exibe os eventos e faltas de forma clara e disponibiliza o contato direto com o psicólogo, tornando a navegação intuitiva e completa para o estudante.
 </div>
 
 ### Tela de Perfil apresentada para o Aluno
