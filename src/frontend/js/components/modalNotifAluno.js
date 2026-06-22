@@ -70,6 +70,10 @@
         if (item) item.naoLida = false;
         sincronizarContadores();
         renderizar();
+        fechar();
+        if (typeof window.__onMenuNav === 'function') {
+          window.__onMenuNav('atualizacoes');
+        }
       });
     });
   }

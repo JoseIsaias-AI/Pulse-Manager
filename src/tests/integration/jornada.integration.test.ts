@@ -1,7 +1,8 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
+import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
 import { Atividade } from '../../backend/models/atividadeModel';
 import { Participacao } from '../../backend/models/participacaoModel';
@@ -21,15 +22,15 @@ describe('UC-07 a UC-12 - Jornada do aluno', () => {
   let eventoDemoDay: Atividade;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
-    atividadeRepository = AppDataSource.getRepository(Atividade);
-    participacaoRepository = AppDataSource.getRepository(Participacao);
-    anotacaoRepository = AppDataSource.getRepository(AnotacaoQualitativa);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
+    atividadeRepository = getIntegrationRepository(Atividade);
+    participacaoRepository = getIntegrationRepository(Participacao);
+    anotacaoRepository = getIntegrationRepository(AnotacaoQualitativa);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
 
     [alunoMaria, alunoJoao] = await alunoRepository.save([
       {
@@ -90,11 +91,7 @@ describe('UC-07 a UC-12 - Jornada do aluno', () => {
     ]);
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   describe('UC-07 - Manter jornada do aluno', () => {
     it('CT01 - deve consolidar jornada do aluno com frequencias, eventos e anotacoes', async () => {
@@ -499,7 +496,7 @@ describe('UC-07 a UC-12 - Jornada do aluno', () => {
   });
 
   describe('RNF - Qualidade para UC-07 a UC-12', () => {
-    it('RNF-DES-UC07 - deve responder historico consolidado em ate 1500ms', async () => {
+    performanceIt('RNF-DES-UC07 - deve responder historico consolidado em ate 1500ms', async () => {
       const inicio = Date.now();
       const response = await request(app).get(`/api/jornada/alunos/${alunoMaria.idAluno}`);
       const duracaoMs = Date.now() - inicio;

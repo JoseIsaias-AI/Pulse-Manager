@@ -1,7 +1,8 @@
-﻿import request from 'supertest';
+import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
+import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
 import { registrarConsultaDashboard } from '../../backend/integrations/dashboardAuditoriaIntegration';
 
@@ -13,12 +14,12 @@ describe('UC-14 a UC-19 - Dashboard de Impacto', () => {
   let alunoRepository: Repository<Aluno>;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
     jest.clearAllMocks();
 
     await alunoRepository.save([
@@ -109,11 +110,7 @@ describe('UC-14 a UC-19 - Dashboard de Impacto', () => {
     ]);
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   describe('UC-14 - Visualizar dashboard de impacto', () => {
     it('CT01 - deve retornar resumo de impacto consolidado', async () => {
@@ -483,7 +480,7 @@ describe('UC-14 a UC-19 - Dashboard de Impacto', () => {
   });
 
   describe('RNF - Qualidade para UC-14 a UC-19', () => {
-    it('RNF-DES-UC14 - deve responder resumo de impacto em ate 3000ms', async () => {
+    performanceIt('RNF-DES-UC14 - deve responder resumo de impacto em ate 3000ms', async () => {
       const inicio = Date.now();
       const response = await request(app).get('/api/impacto/resumo');
       const duracaoMs = Date.now() - inicio;

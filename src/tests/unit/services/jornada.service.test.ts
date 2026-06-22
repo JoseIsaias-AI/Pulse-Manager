@@ -1,4 +1,6 @@
 import { JornadaService } from '../../../backend/services/jornadaService';
+import { JornadaRepository } from '../../../backend/repositories/jornadaRepository';
+import { asMockedDependency } from '../../helpers/mockHelper';
 
 const aluno = {
   idAluno: 1,
@@ -83,7 +85,7 @@ describe('JornadaService', () => {
 
   beforeEach(() => {
     repository = makeRepository();
-    service = new JornadaService(repository as any);
+    service = new JornadaService(asMockedDependency<JornadaRepository>(repository));
   });
 
   it('rejeita id de aluno invalido', async () => {

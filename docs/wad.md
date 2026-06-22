@@ -1,4 +1,4 @@
-<img src="./assets/logointeli.png">
+﻿<img src="./assets/logointeli.png">
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
@@ -664,8 +664,8 @@ Os requisitos funcionais a seguir foram extraídos do Termo de Abertura do Proje
 
 | ID    | Descrição                                                                                                                                                                                             | Prioridade | Status    |
 | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
-| RF001 | O sistema deve permitir o cadastro de alunos e ex-alunos com dados pessoais, acadêmicos, de jornada na Pulse Mais, empregabilidade e engajamento.                                                     | Alta       | Parcial   |
-| RF002 | O sistema deve permitir a edição e atualização dos dados cadastrais de um aluno pela equipe Pulse Mais.                                                                                               | Alta       | Parcial   |
+| RF001 | O sistema deve permitir o cadastro de alunos e ex-alunos com dados pessoais, acadêmicos, de jornada na Pulse Mais e empregabilidade, utilizando campos aderentes ao modelo físico do banco e opções controladas quando aplicável. | Alta       | Implementado |
+| RF002 | O sistema deve permitir a edição e atualização dos dados cadastrais de um aluno pela equipe Pulse Mais, com validações de tipo, tamanho e campos editáveis conforme permissões institucionais. | Alta       | Implementado |
 | RF003 | O sistema deve permitir a consulta e listagem dos alunos cadastrados.                                                                                                                                 | Alta       | Implementado |
 | RF004 | O sistema deve consolidar e apresentar o histórico completo de cada aluno (dados gerais, programas, eventos, empregabilidade e renda) de forma integrada.                                             | Alta       | Parcial   |
 | RF005 | O sistema deve permitir o registro de frequência dos alunos em aulas.                                                                                                                                 | Alta       | Parcial   |
@@ -674,17 +674,17 @@ Os requisitos funcionais a seguir foram extraídos do Termo de Abertura do Proje
 | RF008 | O sistema deve permitir atualizar informações sobre o acesso do aluno no ensino superior.                                                                                                             | Alta       | Parcial   |
 | RF009 | O sistema deve permitir o registro de observações sobre saúde mental e bem-estar do aluno, com acesso restrito ao psicólogo da instituição que atende o aluno específico.                             | Alta       | Parcial   |
 | RF010 | O sistema deve restringir o acesso às funcionalidades de acordo com o perfil do usuário (ex.: equipe Pulse, psicólogo, aluno).                                                                        | Alta       | Parcial   |
-| RF011 | O sistema deve permitir a localização e segmentação de alunos com base em múltiplos critérios combinados (ex.: identificação de perfis para oportunidades específicas ou de multiplicadores na rede). | Média      | Parcial   |
+| RF011 | O sistema deve permitir a localização e segmentação de alunos com base em múltiplos critérios combinados, incluindo empregabilidade, escolaridade, curso, ano de ingresso e demais filtros operacionais da aba Alunos. | Média      | Implementado |
 | RF012 | O sistema deve apresentar um dashboard consolidando os principais indicadores de impacto da Pulse Mais.                                                                                               | Alta       | Parcial   |
 | RF013 | O sistema deve calcular e apresentar o total de alunos empregados em um período selecionado.                                                                                                          | Baixa      | Parcial   |
 | RF014 | O sistema deve calcular e apresentar o total de alunos que concluíram um programa em um período selecionado.                                                                                          | Média      | Parcial   |
 | RF015 | O sistema deve calcular e apresentar indicadores de evasão e risco por programa ou turma.                                                                                                             | Média      | Parcial   |
 | RF016 | O sistema deve calcular e apresentar indicadores de acesso ao ensino superior dentro da rede de alunos.                                                                                               | Média      | Parcial   |
-| RF017 | O sistema deve disponibilizar um portal restrito ao aluno no qual o próprio aluno possa visualizar seus dados cadastrais.                                                                             | Alta       | Parcial   |
+| RF017 | O sistema deve disponibilizar um portal restrito ao aluno no qual o próprio aluno possa visualizar seus dados cadastrais, agenda demonstrativa, notificações e oportunidades em formato de consulta. | Alta       | Parcial |
 | RF018 | O sistema deve permitir que o aluno atualize informações do seu perfil, como e-mail, telefone e CPF, pelo portal do aluno.                                                                         | Alta       | Parcial   |
-| RF019 | O sistema deve permitir o envio de notificações informativas e convites para eventos.                                                                                                                 | Baixa      | Parcial   |
-| RF020 | O sistema deve permitir a visualização da agenda para gestor e aluno, com filtros por aluno, membro responsável e período.                                                                           | Média      | Parcial   |
-| RF021 | O sistema deve permitir que o gestor modifique os itens presentes na agenda.                                                                                                                          | Alta       | Parcial   |
+| RF019 | O sistema deve permitir o envio e a visualização de notificações informativas, convites e oportunidades, com formulários administrativos no perfil gestor e consulta pelo portal do aluno. | Baixa      | Parcial |
+| RF020 | O sistema deve permitir a visualização da agenda para gestor e aluno, com consulta por dia, filtros por aluno, membro responsável e período; no portal do aluno, a agenda é somente leitura. | Média      | Parcial |
+| RF021 | O sistema deve permitir que o gestor crie, atualize ou cancele itens presentes na agenda; no frontend atual, o formulário está alinhado ao banco e parte da interação permanece demonstrativa. | Alta       | Parcial |
 | RF022 | O sistema deve permitir ao psicólogo acessar o desempenho acadêmico dos alunos que monitora.                                                                                                          | Alta       | Parcial   |
 
 ### 3.1.2. Regras de Negócio
@@ -817,7 +817,8 @@ Os requisitos não funcionais aqui definidos traduzem as escolhas de qualidade f
 | GET | `/api/portal/alunos/:idAluno/notificacoes` | RF019 | `idAluno`, headers de autenticação | Notificações do aluno | 200, 400, 403, 404 |
 | GET | `/api/portal/oportunidades` | RF019 | N/A | Lista de oportunidades | 200 |
 | POST | `/api/alunos` | RF001 | Dados cadastrais do aluno | Aluno cadastrado | 201, 400, 409 |
-| GET | `/api/alunos` | RF003 | Filtros opcionais | Lista de alunos | 200 |
+| GET | `/api/alunos` | RF003, RF011 | Filtros opcionais, como busca, status, risco, empregabilidade, escolaridade, curso e ano de ingresso | Lista de alunos filtrada | 200 |
+| GET | `/api/alunos/opcoes-cadastro` | RF001, RF002 | N/A | Opções controladas para cadastro e edição de aluno | 200 |
 | GET | `/api/alunos/:idAluno` | RF003, RF004 | `idAluno` path param | Dados do aluno | 200, 400, 404 |
 | PATCH | `/api/alunos/:idAluno` | RF002 | Campos parciais do aluno | Aluno atualizado | 200, 400, 404 |
 | DELETE | `/api/alunos/:idAluno` | RF002 | `idAluno` path param | Aluno inativado | 200, 404 |
@@ -1892,7 +1893,7 @@ Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras
 
 O Diagrama Entidade-Relacionamento (DER) do sistema PulseManager representa a estrutura lógica do banco de dados responsável por armazenar e organizar as informações relacionadas ao acompanhamento acadêmico, profissional e psicossocial dos alunos atendidos pela organização Pulse Mais. O modelo foi desenvolvido com base nos requisitos funcionais levantados ao longo da análise do sistema e está integralmente alinhado ao Diagrama de Classes do Domínio, garantindo consistência entre a modelagem conceitual orientada a objetos e a modelagem relacional.
 
-O DER explicita as entidades do sistema, seus atributos, as respectivas chaves primárias (Primary Keys – PK), chaves estrangeiras (Foreign Keys – FK) e as cardinalidades de todos os relacionamentos, assegurando a integridade referencial e a correta representação das regras de negócio.
+O DER explicita as entidades do sistema, seus atributos, as respectivas chaves primárias (Primary Keys – PK), chaves estrangeiras (Foreign Keys – FK) e as cardinalidades de todos os relacionamentos, representadas por meio da notação crow's foot
 
 </div>
 
@@ -2794,8 +2795,8 @@ No contexto do projeto, a RTM é importante porque permite verificar se os requi
 
 | Persona | RF | RN | Endpoint | Tela | Teste | Evidência |
 | ------- | ----- | ---- | ----------- | -------- | ----- | ---------------------------------- |
-| Equipe Pulse Mais | RF001 | RN001, RN002, RN003, RN005, RN006, RN010, RN015, RN017 | `POST /api/alunos` | Cadastro | `src/tests/integration/alunos.integration.test.ts` - UC-03 CT01 a CT04; `src/tests/integration/codigo-pm.integration.test.ts` - CT01 a CT04; `src/tests/unit/services/aluno.service.test.ts` | Registro retornado pela API |
-| Equipe Pulse Mais | RF002 | RN003, RN005, RN010, RN011, RN015 | `PATCH /api/alunos/:idAluno` | Cadastro / Perfil do aluno | `src/tests/integration/alunos.integration.test.ts` - UC-05 CT01 a CT03; `src/tests/unit/services/aluno.service.test.ts` | Formulário de edição de dados do aluno |
+| Equipe Pulse Mais | RF001 | RN001, RN002, RN003, RN005, RN006, RN010, RN015, RN017 | `POST /api/alunos`, `GET /api/alunos/opcoes-cadastro` | Cadastro | `src/tests/integration/alunos.integration.test.ts` - UC-03 CT01 a CT04; `src/tests/integration/codigo-pm.integration.test.ts` - CT01 a CT04; `src/tests/unit/services/aluno.service.test.ts` | Registro retornado pela API; formulário de cadastro com campos aderentes ao banco e opções controladas |
+| Equipe Pulse Mais | RF002 | RN003, RN005, RN010, RN011, RN015 | `PATCH /api/alunos/:idAluno`, `GET /api/alunos/opcoes-cadastro` | Cadastro / Perfil do aluno | `src/tests/integration/alunos.integration.test.ts` - UC-05 CT01 a CT03; `src/tests/unit/services/aluno.service.test.ts` | Formulário de edição do perfil com validações e opções enum carregadas para campos controlados |
 | Equipe Pulse Mais | RF003 | - | `GET /api/alunos`, `GET /api/alunos/:idAluno` | Busca / Perfil do aluno | `src/tests/integration/alunos.integration.test.ts` - UC-04 CT01 a CT05; `src/tests/unit/services/aluno.service.test.ts` | Lista e detalhe retornados pela API |
 | Equipe Pulse Mais | RF004 | RN003, RN004, RN005, RN006, RN010, RN016 | `GET /api/alunos/:idAluno`, `GET /api/jornada/resumo`, `GET /api/jornada/alunos/:idAluno` | Perfil do aluno | `src/tests/integration/jornada.integration.test.ts` - UC-07 CT01 a CT04; `src/tests/unit/services/jornada.service.test.ts` | Histórico parcial exibido no perfil |
 | Equipe Pulse Mais | RF005 | RN007, RN016 | `POST /api/frequencias` | Registro de frequência | `src/tests/integration/jornada.integration.test.ts` - UC-08 CT01 a CT05; `src/tests/unit/services/jornada.service.test.ts` | Frequência registrada por aula |
@@ -2804,7 +2805,7 @@ No contexto do projeto, a RTM é importante porque permite verificar se os requi
 | Equipe Pulse Mais | RF008 | - | `PATCH /api/ensino-superior/:idAluno`, `GET /api/impacto/acesso-ensino-superior` | Perfil do aluno | `src/tests/integration/jornada.integration.test.ts` - UC-11 CT01 a CT04; `src/tests/integration/dashboard.integration.test.ts` - UC-18 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Dados de ensino superior exibidos no perfil |
 | Psicólogo | RF009 | RN012, RN017 | `GET /api/prontuarios`, `POST /api/prontuarios`, `GET /api/labels`, `POST /api/labels` | Prontuário | `src/tests/integration/saude-mental.integration.test.ts` - UC-20a CT01 a CT06; UC-20b CT01 a CT06; `src/tests/unit/services/saude-mental.service.test.ts` | Listagem restrita de prontuários |
 | Todos os usuários | RF010 | RN011, RN012, RN017, RN019, RN020 | `GET /api/prontuarios`, `POST /api/prontuarios`, `POST /api/agenda`, `PATCH /api/agenda/:idAgenda`, `DELETE /api/agenda/:idAgenda`, `GET /api/psicologo/alunos/:idAluno/desempenho` | Sistema global | `src/tests/integration/saude-mental.integration.test.ts`; `src/tests/integration/agenda.integration.test.ts`; `src/tests/integration/notificacao-psicologo.integration.test.ts`; `src/tests/integration/desempenho-psicologo.integration.test.ts` | Restrições aplicadas nas operações sensíveis de saúde mental, agenda e desempenho |
-| Equipe Pulse Mais | RF011 | RN015 | `GET /api/alunos/segmentacao` | Busca / Filtros | `src/tests/integration/segmentacao.integration.test.ts` - UC-13 CT01 a CT06; `src/tests/unit/services/segmentacao.service.test.ts` | Lista filtrada retornada pela API |
+| Equipe Pulse Mais | RF011 | RN015 | `GET /api/alunos`, `GET /api/alunos/segmentacao` | Busca / Filtros | `src/tests/integration/segmentacao.integration.test.ts` - UC-13 CT01 a CT06; `src/tests/unit/services/segmentacao.service.test.ts` | Lista filtrada por múltiplos critérios, incluindo empregabilidade, escolaridade, curso e ano de ingresso |
 | Gestora | RF012 | RN006, RN009 | `GET /api/impacto/resumo`, `GET /api/jornada/resumo` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-14 CT01 a CT06; `src/tests/unit/services/dashboard.service.test.ts` | KPIs exibidos no dashboard |
 | Gestora | RF013 | RN008, RN009 | `GET /api/impacto/alunos-empregados` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-16 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Indicador de empregabilidade |
 | Gestora | RF014 | RN005, RN006, RN009 | `GET /api/impacto/conclusao-programas` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-15 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Indicador de conclusão de programa |
@@ -2812,9 +2813,9 @@ No contexto do projeto, a RTM é importante porque permite verificar se os requi
 | Gestora | RF016 | RN009 | `GET /api/impacto/acesso-ensino-superior` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-18 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Indicador de ensino superior |
 | Aluno | RF017 | RN013, RN017 | `GET /api/portal/alunos/:idAluno` | Portal do aluno | `src/tests/integration/portal-aluno.integration.test.ts` - UC-01 CT01 a CT03; `src/tests/unit/services/portal-aluno.service.test.ts` | Dados cadastrais exibidos no portal |
 | Aluno | RF018 | RN013, RN014, RN017 | `PATCH /api/portal/alunos/:idAluno/contato` | Portal do aluno | `src/tests/integration/portal-aluno.integration.test.ts` - UC-02 CT01 a CT05; `src/tests/unit/services/portal-aluno.service.test.ts` | Atualização de contato realizada pelo aluno |
-| Equipe Pulse Mais | RF019 | - | `GET /api/comunicacao`, `POST /api/comunicacao`, `GET /api/comunicacao/oportunidades`, `POST /api/comunicacao/oportunidades`, `GET /api/portal/alunos/:idAluno/notificacoes`, `GET /api/portal/oportunidades` | Comunicação | `src/tests/integration/notificacoes.integration.test.ts` - RF019a CT01 a CT08 e RF019b CT01 a CT05; `src/tests/integration/notificacao-psicologo.integration.test.ts` - CT01 a CT04; `src/tests/integration/portal-aluno-notificacoes.integration.test.ts` - CT01 a CT05; `src/tests/unit/services/notificacao.service.test.ts` | Comunicação cadastrada e listada |
-| Gestor e Aluno | RF020 | RN018 | `GET /api/agenda` | Agenda do gestor / Agenda do aluno | `src/tests/integration/agenda.integration.test.ts` - RF020 CT01 a CT05; `src/tests/unit/services/agenda.service.test.ts` | Listagem e filtros da agenda; no frontend, gestor tem agenda gerenciável e aluno tem agenda somente leitura |
-| Gestora | RF021 | RN019 | `POST /api/agenda`, `PATCH /api/agenda/:idAgenda`, `DELETE /api/agenda/:idAgenda` | Agenda | `src/tests/integration/agenda.integration.test.ts` - RF021 CT01 a CT07; `src/tests/unit/services/agenda.service.test.ts` | Item de agenda criado, editado ou cancelado |
+| Equipe Pulse Mais | RF019 | - | `GET /api/comunicacao`, `POST /api/comunicacao`, `GET /api/comunicacao/oportunidades`, `POST /api/comunicacao/oportunidades`, `GET /api/portal/alunos/:idAluno/notificacoes`, `GET /api/portal/oportunidades` | Atualizações / Comunicação | `src/tests/integration/notificacoes.integration.test.ts` - RF019a CT01 a CT08 e RF019b CT01 a CT05; `src/tests/integration/notificacao-psicologo.integration.test.ts` - CT01 a CT04; `src/tests/integration/portal-aluno-notificacoes.integration.test.ts` - CT01 a CT05; `src/tests/unit/services/notificacao.service.test.ts` | Comunicação cadastrada e listada; no frontend, Atualizações reúne notificações, oportunidades e seleção múltipla simulada de destinatários |
+| Gestor e Aluno | RF020 | RN018 | `GET /api/agenda` | Agenda do gestor / Agenda do aluno | `src/tests/integration/agenda.integration.test.ts` - RF020 CT01 a CT05; `src/tests/unit/services/agenda.service.test.ts` | Listagem e filtros da agenda; no frontend, gestor tem agenda gerenciável e aluno tem agenda somente leitura por dia |
+| Gestora | RF021 | RN019 | `POST /api/agenda`, `PATCH /api/agenda/:idAgenda`, `DELETE /api/agenda/:idAgenda` | Agenda | `src/tests/integration/agenda.integration.test.ts` - RF021 CT01 a CT07; `src/tests/unit/services/agenda.service.test.ts` | Item de agenda criado, editado ou cancelado na API; formulário do gestor alinhado aos campos reais da entidade agenda |
 | Psicólogo | RF022 | RN020, RN017 | `GET /api/psicologo/alunos/:idAluno/desempenho` | Perfil do aluno monitorado | `src/tests/integration/desempenho-psicologo.integration.test.ts` - UC-23 CT01 a CT05 | Desempenho acadêmico exibido apenas para alunos monitorados |
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
@@ -2942,11 +2943,11 @@ A integração do backend com o Supabase foi implementada e documentada. O clien
 
 **Testes automatizados**
 
-Foram implementados 266 casos de teste automatizados distribuídos em 20 arquivos, cobrindo duas abordagens complementares. Os testes unitários de Service (`src/tests/unit/services/`), com 110 casos em 8 arquivos, validam de forma isolada as regras de negócio dos services `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService` e `SaudeMentalService`. Os testes de integração de endpoints (`src/tests/integration/`), com 156 casos em 12 arquivos, verificam o contrato HTTP das rotas utilizando banco SQLite em memória via `sqljs`. Ao longo da sprint foram também realizadas a auditoria e padronização da nomenclatura e semântica de todos os arquivos Jest, bem como a reorganização estrutural das pastas de testes.
+Foram implementados 278 casos de teste automatizados distribuídos em 20 arquivos, cobrindo duas abordagens complementares. Os testes unitários de Service (`src/tests/unit/services/`), com 110 casos em 8 arquivos, validam de forma isolada as regras de negócio dos services `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService` e `SaudeMentalService`. Os testes de integração de endpoints (`src/tests/integration/`), com 168 casos em 12 arquivos, verificam o contrato HTTP das rotas utilizando banco SQLite em memória via `sqljs`. Ao longo da sprint foram também realizadas a auditoria e padronização da nomenclatura e semântica de todos os arquivos Jest, bem como a reorganização estrutural das pastas de testes.
 
 **Documentação**
 
-As seções 3.1.3 e 3.1.4 (casos de uso) e 3.2.1 a 3.2.7 (arquitetura do sistema) do WAD foram atualizadas. Na seção de testes, foram redigidas as seções 5.1.1 (estratégia e estrutura), 5.1.3 (mapeamento dos testes de integração) e 5.1.4 (evidências de execução). A Matriz de Rastreabilidade foi atualizada com os novos endpoints e as referências bibliográficas foram revisadas para o modelo ABNT. O processo de integração com o Supabase foi documentado em `docs/others/supabase-integration.md`.
+As seções 3.1.3 e 3.1.4 (casos de uso) e 3.2.1 a 3.2.7 (arquitetura do sistema) do WAD foram atualizadas. Na seção de testes, foram redigidas as seções 5.1.1 (estratégia e estrutura), 5.1.3 (mapeamento dos testes de integração) e 5.1.4 (evidências de execução, incluindo atualização da suíte após refinamentos finais). A Matriz de Rastreabilidade foi atualizada com os novos endpoints e as referências bibliográficas foram revisadas para o modelo ABNT. O processo de integração com o Supabase foi documentado em `docs/others/supabase-integration.md`.
 
 No Artefato 12 de negócios, foram produzidas as seguintes seções: Resumo Executivo (seção 6.1), com contextualização do problema da Pulse Mais, descrição da solução Pulse Manager, diferenciais competitivos e objetivos estratégicos; análise de mercado, cobrindo visão geral do setor, tamanho e crescimento, tendências, segmentação de mercado e perfil do público-alvo; Público-Alvo (seção 6.4), detalhando os usuários diretos (gestores, psicólogos e equipe operacional) e indiretos (alunos e ex-alunos); Business Model Canvas completo (atividades-chave, proposta de valor, recursos e parcerias principais, relacionamento com clientes, segmentos, canais, fontes de receita e estrutura de custos); e Estratégia de Marketing 4Ps.
 
@@ -2975,7 +2976,7 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## 5.1. Relatório de testes automatizados (sprint 4 — suíte reformulada na sprint 5)
 
 Os testes automatizados do backend foram implementados com **Jest**, contemplando duas abordagens complementares:
 
@@ -2991,9 +2992,29 @@ A suíte de testes automatizados da aplicação combina testes de integração v
 
 A suíte é organizada em três tipos, diferenciados pelo nível de isolamento e pelo uso de mocks:
 
-- **Tipo 1 - Testes unitários de Service:** validação isolada da camada de `services/`, sem acesso a banco de dados real, Supabase, PostgreSQL, rotas ou controllers. As dependências externas, como repositories e integrações de auditoria, são simuladas por mocks com `jest.fn()`.
+- **Tipo 1 - Testes unitários de Service:** validação isolada da camada de `services/`, sem acesso a banco de dados real, Supabase, PostgreSQL, rotas ou controllers. As dependências externas, como repositories e integrações de auditoria, são simuladas por mocks com `jest.fn()`, com tipagem explícita via o helper `asMockedDependency<T>()`.
 - **Tipo 2 - Integração pura:** banco em memória, requisição HTTP real e nenhum mock. O arquivo `jornada.integration.test.ts` é um exemplo representativo desse tipo. Todos os efeitos observáveis - status HTTP, corpo da resposta e estado do banco - são verificados sem substituição de dependência interna.
 - **Tipo 3 - Integração com mock de dependência externa:** mesmo setup do Tipo 2, com a diferença de que `jest.mock()` é aplicado exclusivamente sobre integrações externas, como serviços que fariam chamadas reais de rede em produção. O arquivo `segmentacao.integration.test.ts` representa esse tipo: banco, HTTP, Controller, Service e Repository permanecem reais; apenas `registrarConsultaSegmentacao` é substituído por um `jest.fn()`.
+
+**Scripts de execução**
+
+A suíte expõe comandos separados no `package.json`, permitindo executar cada tipo de teste de forma independente:
+
+| Comando | Escopo |
+|---|---|
+| `npm test` | Suíte completa (unitários + integração funcional) em série |
+| `npm run test:unit` | Apenas testes unitários de Service |
+| `npm run test:integration` | Apenas testes de integração de endpoints (testes de desempenho ignorados) |
+| `npm run test:performance` | Apenas testes de desempenho marcados com `RNF-DES` |
+| `npm run test:ci` | Suíte completa seguida dos testes de desempenho |
+
+**Infraestrutura compartilhada**
+
+Os helpers centralizados em `src/tests/helpers/` concentram a infraestrutura de teste, eliminando repetição de código entre os arquivos:
+
+- **`databaseTestHelper.ts`**: expõe `setupIntegrationDatabase()`, `resetIntegrationDatabase()`, `teardownIntegrationDatabase()` e `getIntegrationRepository<T>()`, centralizando o ciclo de vida do banco in-memory para os testes de integração. A constante `NON_EXISTENT_ID` também é definida aqui para padronizar os cenários `404`.
+- **`performanceTest.ts`**: expõe `performanceIt`, alias de `it` quando `RUN_PERFORMANCE_TESTS=true` e de `it.skip` caso contrário, separando a medição de desempenho da validação funcional principal.
+- **`mockHelper.ts`**: provê `asMockedDependency<T>()` para injetar dependências mockadas nos testes unitários com tipagem explícita, eliminando o uso de `as any` nos mocks.
 
 **Padrão de escrita - AAA**
 
@@ -3005,7 +3026,24 @@ Todos os casos de teste seguem o padrão Arrange, Act, Assert:
 
 **Determinismo e isolamento**
 
-O determinismo da suíte de integração é garantido pelo mecanismo configurado em `connection.ts`, ativado automaticamente quando `NODE_ENV=test` - valor definido por `setup.js` antes de qualquer teste, referenciado em `jest.config.ts` via `setupFiles`. Nesse modo, a aplicação instancia um DataSource com `type: 'sqljs'` - banco SQLite compilado em WebAssembly que existe exclusivamente em memória durante a execução do Jest, sem dependência de servidor externo. A flag `dropSchema: true` garante que o schema seja descartado na inicialização; o `beforeEach` de cada arquivo de teste executa `AppDataSource.synchronize(true)`, que dropa e recria todas as tabelas do zero antes de cada caso de teste individual.
+O determinismo da suíte de integração é garantido pelo mecanismo configurado em `connection.ts`, ativado automaticamente quando `NODE_ENV=test` - valor definido por `setup.js` antes de qualquer teste, referenciado em `jest.config.ts` via `setupFiles`. Nesse modo, a aplicação instancia um DataSource com `type: 'sqljs'` - banco SQLite compilado em WebAssembly que existe exclusivamente em memória durante a execução do Jest, sem dependência de servidor externo.
+
+O ciclo de vida do banco é gerenciado pelo helper `databaseTestHelper.ts`, eliminando a repetição manual de `initializeDatabase()`, `AppDataSource.synchronize(true)` e `AppDataSource.destroy()` em cada arquivo. O padrão adotado em todos os testes de integração é:
+
+```ts
+beforeAll(async () => {
+  await setupIntegrationDatabase();
+  repository = getIntegrationRepository(Entidade);
+});
+
+beforeEach(async () => {
+  await resetIntegrationDatabase();
+});
+
+afterAll(teardownIntegrationDatabase);
+```
+
+A chamada `resetIntegrationDatabase()` executa `AppDataSource.synchronize(true)` internamente, dropando e recriando todas as tabelas antes de cada caso de teste individual, garantindo isolamento completo entre execuções.
 
 Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
 
@@ -3019,11 +3057,15 @@ Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
 ### 5.1.2 Testes Unitários de Service
 <div align="justify">
 
-Os testes unitários de Service foram organizados em `src/tests/unit/services`, seguindo o padrão de nomenclatura `*.service.test.ts`. O objetivo foi validar os principais comportamentos dos services ligados aos endpoints ativos do backend, contemplando cenários de sucesso, erros de validação, regras de negócio, conflitos, registros inexistentes e chamadas corretas aos repositories mockados.
+Os testes unitários de Service foram organizados em `src/tests/unit/services`, seguindo o padrão de nomenclatura `*.service.test.ts`. O objetivo foi validar os principais comportamentos dos services ligados aos endpoints ativos do backend, contemplando cenários de sucesso, erros de validação, regras de negócio, conflitos, registros inexistentes e chamadas corretas aos repositories mockados. Os mocks são construídos com o helper `asMockedDependency<T>()`, que substitui o uso de `as any` por injeção explicitamente tipada:
+
+```ts
+service = new AgendaService(asMockedDependency<AgendaRepository>(repository));
+```
 
 | Service testado | Arquivo de teste | Quantidade de testes | Principais responsabilidades validadas |
 | --- | --- | ---: | --- |
-| `AlunoService` | `src/tests/unit/services/aluno.service.test.ts` | 13 | Cadastro, listagem, busca, atualização, inativação, validação de email, idade, data, duplicidade e risco de evasão. |
+| `AlunoService` | `src/tests/unit/services/aluno.service.test.ts` | 16 | Cadastro, listagem, busca, atualização, inativação, validação de email, idade, data, duplicidade e risco de evasão. |
 | `SegmentacaoService` | `src/tests/unit/services/segmentacao.service.test.ts` | 9 | Segmentação de alunos, validação de filtros, limite máximo, status, risco de evasão, busca e auditoria. |
 | `DashboardService` | `src/tests/unit/services/dashboard.service.test.ts` | 14 | Cálculo de indicadores de impacto, jornada, evasão, risco, empregabilidade, conclusão, ensino superior, agrupamento por programa e auditoria. |
 | `JornadaService` | `src/tests/unit/services/jornada.service.test.ts` | 23 | Consolidação da jornada, frequência, participação em eventos, empregabilidade, ensino superior e anotações qualitativas. |
@@ -3031,7 +3073,7 @@ Os testes unitários de Service foram organizados em `src/tests/unit/services`, 
 | `NotificacaoService` | `src/tests/unit/services/notificacao.service.test.ts` | 15 | Listagem e criação de notificações, oportunidades, validação de aluno destinatário, tipos, remetente, perfil, datas e campos obrigatórios. |
 | `PortalAlunoService` | `src/tests/unit/services/portal-aluno.service.test.ts` | 13 | Visualização de perfil, atualização de contato, normalização de email/telefone, permissões de notificações e oportunidades do portal. |
 | `SaudeMentalService` | `src/tests/unit/services/saude-mental.service.test.ts` | 11 | Prontuários, labels, restrição ao perfil psicólogo, validação de aluno, tipo de label, título, observação e descrição. |
-| **Total** | **8 arquivos** | **110 testes** | **Cobertura unitária das principais regras de negócio da camada de Service.** |
+| **Total** | **8 arquivos** | **113 testes** | **Cobertura unitária das principais regras de negócio da camada de Service.** |
 
 **AlunoService**
 
@@ -3072,7 +3114,7 @@ Os testes do `SaudeMentalService` validam listagem de prontuários apenas para p
 
 Os testes de integração cobrem os endpoints principais da aplicação por meio de requisições HTTP reais via Supertest, com banco SQLite in-memory. Para cada endpoint, a cobertura segue quatro cenários-chave: sucesso (`200`/`201`), falha de validação (`400`/`422`), regra de negócio violada (`409`/`422`/`403`) e recurso não encontrado (`404`). Quando um cenário é marcado como N/A, significa que aquela categoria de erro não se aplica à lógica do endpoint - não é um gap de cobertura.
 
-A suíte de integração totaliza **156 testes distribuídos em 12 arquivos**, todos executados via `npm test` sem falhas.
+A suíte de integração totaliza **157 testes funcionais distribuídos em 12 arquivos**, todos executados via `npm run test:integration` sem falhas. Cada arquivo que cobre um endpoint com requisito de desempenho contém adicionalmente um caso `performanceIt` (marcado com `RNF-DES`), totalizando **8 testes de desempenho** executados separadamente via `npm run test:performance`.
 
 **Módulo: Alunos**
 
@@ -3144,22 +3186,38 @@ A suíte de integração totaliza **156 testes distribuídos em 12 arquivos**, t
 | `POST /api/labels` | ✅ | ✅ tipoLabel inválido | ✅ 422 sem perfil | ✅ |
 | `GET /api/psicologo/alunos/:id/desempenho` | ✅ | ✅ id não numérico | ✅ 403 sem vínculo | ✅ |
 
+**Testes de desempenho (RNF-DES)**
+
+Os testes de desempenho são marcados com `performanceIt` dentro dos próprios arquivos de integração e executados apenas quando `RUN_PERFORMANCE_TESTS=true`. Cada caso mede o tempo de resposta de um endpoint crítico e verifica se o limiar do requisito não funcional é respeitado.
+
+| Identificador | Endpoint | Limiar |
+|---|---|---|
+| `RNF-DES` | `GET /api/agenda` | ≤ 1000 ms |
+| `RNF-DES-UC04` | `GET /api/alunos` | ≤ 1500 ms |
+| `RNF-DES-UC14` | `GET /api/impacto/resumo` | ≤ 3000 ms |
+| `RNF-DES-UC07` | `GET /api/jornada/alunos/:id` | ≤ 1500 ms |
+| `RNF-DES-RF019` | `GET /api/comunicacao` | ≤ 1000 ms |
+| `RNF-DES-UC01` | `GET /api/portal/alunos/:id` | ≤ 1000 ms |
+| `RNF-DES-UC20` | `GET /api/prontuarios` | ≤ 1000 ms |
+| `RNF-DES-UC13` | `GET /api/alunos/segmentacao` | ≤ 2000 ms |
+
 </div>
 
 ### 5.1.4 Evidências de Execução dos Testes
 <div align="justify">
 
-As evidências de execução dos testes foram registradas a partir da execução local da suíte automatizada com Jest.
+As evidências de execução dos testes foram registradas a partir da execução local da suíte automatizada com Jest, após a reformulação da infraestrutura de testes.
 
 | Evidência | Comando executado | Escopo validado | Resultado |
 |---|---|---|---|
-| Testes unitários de Service | `npm run test -- src/tests/unit/services --runInBand` | Validação isolada das regras de negócio dos services, com repositories e integrações mockadas. | 8 suítes executadas, 110 testes aprovados. |
-| Suíte completa do backend | `npm run test` | Validação conjunta dos testes unitários de Service e dos testes de integração de endpoints. | 20 suítes executadas, 266 testes aprovados. |
+| Testes unitários de Service | `npm run test:unit -- --silent` | Validação isolada das regras de negócio dos services, com repositories mockados via `asMockedDependency`. | 8 suítes executadas, 113 testes aprovados. |
+| Testes de integração de endpoints | `npm run test:integration -- --silent` | Validação de endpoints via Supertest com banco in-memory; testes de desempenho ignorados nessa execução. | 12 suítes executadas, 157 testes aprovados, 8 ignorados. |
+| Testes de desempenho | `npm run test:performance -- --silent` | Execução dos 8 casos `RNF-DES` que medem tempo de resposta dos endpoints críticos. | 8 testes de desempenho aprovados. |
 
 **Evidência 1 - Testes unitários de Service**
 
 ```bash
-npm run test -- src/tests/unit/services --runInBand
+npm run test:unit -- --silent
 ```
 
 Resultado obtido:
@@ -3175,17 +3233,16 @@ PASS src/tests/unit/services/agenda.service.test.ts
 PASS src/tests/unit/services/saude-mental.service.test.ts
 
 Test Suites: 8 passed, 8 total
-Tests:       110 passed, 110 total
+Tests:       113 passed, 113 total
 Snapshots:   0 total
-Time:        9.445 s
 ```
 
 Essa execução comprova que os oito arquivos de testes unitários de Service foram executados com sucesso, validando regras de negócio de `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService` e `SaudeMentalService` sem acesso a banco real ou infraestrutura externa.
 
-**Evidência 2 - Suíte completa do backend**
+**Evidência 2 - Testes de integração de endpoints**
 
 ```bash
-npm run test
+npm run test:integration -- --silent
 ```
 
 Resultado obtido:
@@ -3195,7 +3252,6 @@ PASS src/tests/integration/saude-mental.integration.test.ts
 PASS src/tests/integration/desempenho-psicologo.integration.test.ts
 PASS src/tests/integration/notificacao-psicologo.integration.test.ts
 PASS src/tests/integration/dashboard.integration.test.ts
-PASS src/tests/unit/services/segmentacao.service.test.ts
 PASS src/tests/integration/jornada.integration.test.ts
 PASS src/tests/integration/alunos.integration.test.ts
 PASS src/tests/integration/notificacoes.integration.test.ts
@@ -3204,33 +3260,296 @@ PASS src/tests/integration/agenda.integration.test.ts
 PASS src/tests/integration/portal-aluno.integration.test.ts
 PASS src/tests/integration/portal-aluno-notificacoes.integration.test.ts
 PASS src/tests/integration/codigo-pm.integration.test.ts
-PASS src/tests/unit/services/aluno.service.test.ts
-PASS src/tests/unit/services/jornada.service.test.ts
-PASS src/tests/unit/services/agenda.service.test.ts
-PASS src/tests/unit/services/saude-mental.service.test.ts
-PASS src/tests/unit/services/portal-aluno.service.test.ts
-PASS src/tests/unit/services/dashboard.service.test.ts
-PASS src/tests/unit/services/notificacao.service.test.ts
 
-Test Suites: 20 passed, 20 total
-Tests:       266 passed, 266 total
+Test Suites: 12 passed, 12 total
+Tests:       157 passed, 8 skipped, 165 total
 Snapshots:   0 total
-Time:        53.384 s
 ```
 
-A execução completa demonstra que os testes necessários para o backend estão passando. A suíte final validada contém 20 arquivos de teste e 266 cenários aprovados, cobrindo testes unitários de Service e testes de integração dos endpoints ativos.
+Os 8 testes ignorados são os casos `performanceIt` (`RNF-DES`), que são convertidos em `it.skip` automaticamente quando `RUN_PERFORMANCE_TESTS` não está definido como `true`.
+
+**Evidência 3 - Testes de desempenho**
+
+```bash
+npm run test:performance -- --silent
+```
+
+Resultado obtido:
+
+```text
+Test Suites: 8 passed, 8 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+```
+
+Os 8 casos `RNF-DES` foram aprovados, verificando que os endpoints críticos respondem dentro dos limiares estabelecidos nos requisitos não funcionais de desempenho.
 
 </div>
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
+<div align="justify">
 
-_Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
+Os testes de guerrilha foram realizados com 7 participantes voluntários, recrutados de forma informal entre estudantes das turmas T28 e T24 do Inteli. Cada participante executou individualmente as tarefas propostas, sem auxílio do avaliador, enquanto o observador registrava o resultado geral e o desempenho em cada etapa. O critério de sucesso adotado foi a conclusão autônoma da tarefa sem erros bloqueadores. As heurísticas de Nielsen foram utilizadas como referência para identificar os princípios de usabilidade relacionados a cada tarefa.
+
+Ao todo, foram testadas 5 tarefas cobrindo os três perfis da aplicação (gestor, psicólogo e aluno). Todos os 7 participantes concluíram todas as tarefas com sucesso, o que indica boa adequação geral da interface às expectativas dos usuários. As ocorrências identificadas foram de baixa severidade e estão consolidadas ao final desta seção.
+
+**Tarefa 1 — Filtrar alunos por curso**
+
+Enunciado: Suponha que você é gestor(a) da Pulse Mais e quer encontrar alunos que cursam Sistemas de Informação para uma vaga específica. Utilize o sistema para filtrar alunos que cursam Sistemas de Informação.
+
+Heurísticas relacionadas:
+- **H4** — A linguagem e posição dos filtros devem seguir padrões esperados de sistemas similares.
+- **H6** — O filtro por curso deve estar visível e acessível sem que o usuário precise memorizar onde ele está.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Abrir lista de alunos | Etapa 3: Selecionar filtro de curso |
+|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 2 — Adicionar evento**
+
+Enunciado: Suponha que você é gestor(a) da Pulse Mais e quer marcar um evento com todos os alunos da Pulse Mais. Utilize o sistema para marcar um evento na agenda.
+
+Heurísticas relacionadas:
+- **H1** — O sistema deve confirmar claramente que o evento foi adicionado.
+- **H3** — O usuário deve poder editar ou cancelar um evento após criá-lo, com saída de emergência clara.
+- **H5** — Campos obrigatórios devem ser sinalizados antes do envio para evitar submissões incompletas.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Abrir agenda | Etapa 3: Adicionar dados do evento | Etapa 4: Adicionar registro |
+|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 3 — Adicionar registro psicológico**
+
+Enunciado: Suponha que você é Psicólogo da Pulse Mais e quer adicionar o registro de uma sessão ao perfil do aluno. Utilize o sistema para registrar o Histórico Psicológico.
+
+Heurísticas relacionadas:
+- **H2** — O termo "Histórico Psicológico" deve ser familiar ao psicólogo e refletir a linguagem da área clínica.
+- **H4** — A aba de Histórico Psicológico deve ter posição e ícone consistentes com as demais abas do perfil do aluno.
+- **H10** — Campos de registro psicológico podem exigir orientações sobre quais informações incluir, especialmente para novos usuários.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Psicólogo | Etapa 2: Abrir lista de alunos | Etapa 3: Abrir perfil do aluno | Etapa 4: Abrir aba de Histórico Psicológico | Etapa 5: Adicionar registro |
+|---|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+Observação: A participante Manuela T24 concluiu a tarefa com sucesso, porém não registrou a Etapa 5 na planilha de tabulação; o resultado geral foi marcado como sucesso.
+
+**Tarefa 4 — Visualizar evento**
+
+Enunciado: Suponha que você é Aluno da Pulse Mais e quer visualizar um evento na sua agenda. Utilize o sistema para visualizar os detalhes deste evento.
+
+Heurísticas relacionadas:
+- **H1** — Deve ser claro para o aluno quais eventos são futuros, em andamento ou passados.
+- **H6** — Os eventos devem ser visíveis diretamente na agenda sem que o aluno precise navegar por múltiplas telas.
+- **H8** — Os detalhes do evento devem apresentar apenas informações relevantes (data, hora, descrição).
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Aluno | Etapa 2: Abrir agenda | Etapa 3: Selecionar evento |
+|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 5 — Visualizar desempenho**
+
+Enunciado: Suponha que você é Gestor da Pulse Mais e quer visualizar o desempenho de um aluno. Utilize o sistema para ver o perfil do aluno e seu desempenho.
+
+Heurísticas relacionadas:
+- **H1** — Os dados de desempenho devem ser exibidos de forma clara, com indicadores visuais (gráficos, percentuais) que facilitem a leitura rápida.
+- **H2** — Métricas de desempenho devem usar terminologia familiar ao gestor educacional (ex.: frequência, progresso).
+- **H6** — A aba de desempenho deve estar destacada no perfil do aluno, sem necessidade de memorizar onde está.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Selecionar lista de alunos | Etapa 3: Selecionar perfil do aluno | Etapa 4: Selecionar aba de desempenho |
+|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas Deli T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Resumo das ocorrências**
+
+A tabela abaixo consolida os problemas e observações identificados durante os testes, ordenados por prioridade de melhoria. Os níveis de severidade seguem a escala: 1 — cosmética, 2 — baixa, 3 — alta, 4 — catástrofe.
+
+| Tarefa | Severidade | Resumo do ocorrido e potenciais melhorias | Participantes afetados |
+|---|---|---|---|
+| Filtragem de alunos | 1 - Cosmética | Problema de usabilidade: o participante achou a posição do filtro de cursos um pouco confusa. Potencial melhoria: destacar visualmente o campo de filtro por curso ou reposicioná-lo em local mais intuitivo. | Participante 1 |
+
+**Considerações gerais**
+
+Todos os 7 participantes concluíram as 5 tarefas com sucesso (taxa geral de 100%), sem ocorrências de severidade alta ou catastrófica. O único ponto de atenção identificado foi de severidade cosmética, referente à disposição do filtro de cursos na listagem de alunos. Os demais fluxos - adição de evento na agenda, registro psicológico, visualização de evento pelo aluno e visualização de desempenho pelo gestor - foram percorridos sem dificuldades por todos os participantes, o que indica boa aderência da interface às heurísticas de Nielsen avaliadas.
+
+</div>
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
-_Posicione aqui o relatório dos testes SUS realizados._
+<div align="justify">
+
+O teste SUS (System Usability Scale) foi utilizado como complemento ao teste de guerrilha realizado com a aplicação Pulse Manager. Enquanto o teste de guerrilha teve como objetivo verificar se os participantes conseguiam executar tarefas específicas sem auxílio do avaliador, o SUS teve como objetivo mensurar a percepção geral de usabilidade da interface após a interação com o sistema.
+
+Os testes de guerrilha foram conduzidos com 7 participantes voluntários das turmas T28 e T24 do Inteli. Cada participante executou 5 tarefas relacionadas aos principais perfis da aplicação: gestor, psicólogo e aluno. As tarefas avaliadas foram: filtrar alunos por curso, adicionar evento, adicionar registro psicológico, visualizar evento e visualizar desempenho de aluno. Ao todo, foram realizadas 35 tentativas de tarefa, todas concluídas com sucesso, resultando em taxa geral de sucesso de 100%.
+
+Após a execução dos fluxos, os participantes avaliaram a experiência de uso em escala de 1 a 5. As respostas registradas indicaram uma percepção positiva da aplicação, com notas 4 e 5 distribuídas nos itens positivos do questionário e discordância nos itens negativos. Esse resultado reforça que, além de conseguirem concluir as tarefas propostas, os usuários relataram boa experiência geral com a interface.
+
+</div>
+
+#### Método de aplicação
+
+<div align="justify">
+
+A aplicação do SUS ocorreu após a realização das tarefas do teste de guerrilha, para que a percepção dos participantes sobre a interface ainda estivesse recente. Cada participante respondeu às afirmativas considerando uma escala de 1 a 5, em que:
+
+</div>
+
+| Valor | Significado |
+|---|---|
+| 1 | Discordo totalmente |
+| 2 | Discordo parcialmente |
+| 3 | Neutro |
+| 4 | Concordo parcialmente |
+| 5 | Concordo totalmente |
+
+<div align="justify">
+
+As avaliações obtidas indicaram alto grau de concordância com aspectos positivos da experiência de uso, como facilidade de navegação, confiança durante a interação e compreensão dos fluxos principais. Nos itens positivos, as respostas ficaram concentradas entre 4 e 5. Nos itens negativos, as respostas ficaram concentradas entre 1 e 2, indicando discordância em relação a afirmações como complexidade, dificuldade de uso e inconsistência.
+
+</div>
+
+#### Questionário SUS aplicado
+
+| Item | Afirmativa |
+|---|---|
+| 1 | Eu acho que gostaria de usar este sistema com frequência. |
+| 2 | Eu achei o sistema desnecessariamente complexo. |
+| 3 | Eu achei o sistema fácil de usar. |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa técnica para conseguir usar este sistema. |
+| 5 | Eu achei que as diversas funções do sistema estavam bem integradas. |
+| 6 | Eu achei que havia muita inconsistência neste sistema. |
+| 7 | Eu imagino que a maioria das pessoas aprenderia a usar este sistema rapidamente. |
+| 8 | Eu achei o sistema muito difícil de usar. |
+| 9 | Eu me senti confiante ao usar o sistema. |
+| 10 | Eu precisei aprender muitas coisas antes de conseguir usar este sistema. |
+
+#### Forma de cálculo
+
+<div align="justify">
+
+O cálculo do SUS deve ser realizado individualmente para cada participante. Para os itens ímpares, a contribuição corresponde à resposta do participante menos 1. Para os itens pares, a contribuição corresponde a 5 menos a resposta do participante. Em seguida, as contribuições dos 10 itens devem ser somadas e multiplicadas por 2,5. O resultado final varia de 0 a 100 pontos.
+
+</div>
+
+```text
+Itens ímpares: resposta - 1
+Itens pares: 5 - resposta
+Pontuação SUS = soma das contribuições x 2,5
+```
+
+<div align="justify">
+
+Como as avaliações dos itens positivos se concentraram entre 4 e 5, observou-se uma tendência favorável à usabilidade percebida. Além disso, a baixa concordância com os itens negativos reforça que os participantes não perceberam a aplicação como complexa, inconsistente ou difícil de utilizar.
+
+</div>
+
+#### Tabela de tabulação
+
+| Participante | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 | Pontuação SUS |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fernanda T28 | 5 | 1 | 5 | 1 | 4 | 1 | 5 | 1 | 5 | 1 | 97,5 |
+| Sofia Brandão T28 | 4 | 1 | 5 | 2 | 5 | 1 | 4 | 1 | 5 | 1 | 92,5 |
+| Nicolas T28 | 5 | 2 | 4 | 1 | 5 | 1 | 5 | 2 | 4 | 1 | 90,0 |
+| Arthur Augusto T28 | 4 | 1 | 4 | 1 | 5 | 2 | 5 | 1 | 5 | 2 | 90,0 |
+| Felipe Estrada T28 | 5 | 1 | 5 | 1 | 5 | 1 | 4 | 1 | 4 | 1 | 95,0 |
+| Tainá T28 | 4 | 2 | 5 | 1 | 4 | 1 | 5 | 1 | 5 | 1 | 92,5 |
+| Manuela T24 | 5 | 1 | 4 | 2 | 5 | 1 | 4 | 1 | 5 | 1 | 92,5 |
+| **Média geral** |  |  |  |  |  |  |  |  |  |  | **92,9** |
+
+<div align="justify">
+
+A tabela demonstra que todos os participantes atribuíram notas altas aos itens positivos do questionário, com respostas 4 e 5 distribuídas entre as afirmações relacionadas à frequência de uso, facilidade, integração das funções, aprendizagem rápida e confiança. Nos itens negativos, as respostas 1 e 2 indicam discordância em relação a afirmações de complexidade, inconsistência, dificuldade e necessidade de aprendizagem prévia excessiva.
+
+</div>
+
+#### Critérios de interpretação
+
+<div align="justify">
+
+Para interpretar a pontuação SUS, podem ser adotadas faixas de referência comumente utilizadas em estudos de usabilidade. Pontuações acima de 68 tendem a indicar usabilidade acima da média. Valores abaixo desse patamar sugerem necessidade de revisão da interface, especialmente nos fluxos em que os usuários demonstraram insegurança, demora ou dependência de ajuda externa.
+
+</div>
+
+| Faixa de pontuação | Interpretação |
+|---|---|
+| 0 a 50 | Usabilidade crítica ou insuficiente |
+| 51 a 67 | Usabilidade abaixo da média |
+| 68 a 80 | Usabilidade aceitável |
+| 81 a 90 | Usabilidade muito boa |
+| 91 a 100 | Usabilidade excelente |
+
+<div align="justify">
+
+Considerando a média geral de 92,9 pontos, a percepção geral da aplicação enquadra-se na faixa de usabilidade excelente. Esse resultado é coerente com o desempenho observado no teste de guerrilha, no qual todos os participantes concluíram os fluxos propostos sem erros bloqueadores.
+
+</div>
+
+#### Análise complementar com base no teste de guerrilha
+
+<div align="justify">
+
+Os dados do teste de guerrilha indicam uma percepção operacional positiva da interface. Todos os 7 participantes concluíram as 5 tarefas propostas com sucesso, totalizando 35 conclusões bem-sucedidas em 35 tentativas. Esse resultado sugere que os principais fluxos da aplicação foram compreendidos pelos usuários e que não houve barreiras bloqueadoras durante a navegação.
+
+As tarefas relacionadas ao perfil de gestor, como filtrar alunos por curso, adicionar evento e visualizar desempenho, foram concluídas por todos os participantes. O mesmo ocorreu com a tarefa do perfil de psicólogo, relacionada ao registro de histórico psicológico, e com a tarefa do perfil de aluno, relacionada à visualização de evento na agenda. Dessa forma, observou-se que os três perfis centrais da aplicação apresentaram boa navegabilidade no contexto avaliado.
+
+A única ocorrência registrada foi identificada na tarefa de filtragem de alunos por curso. Um participante indicou que a posição do filtro de cursos pareceu um pouco confusa. A severidade foi classificada como 1 - cosmética, pois não impediu a conclusão da tarefa. Como melhoria, recomenda-se destacar visualmente o campo de filtro por curso ou reposicioná-lo em uma área mais intuitiva da listagem de alunos.
+
+Além da taxa de sucesso de 100%, as respostas 4 e 5 nos itens positivos do SUS reforçam que os participantes não apenas conseguiram executar as tarefas, mas também avaliaram positivamente a experiência de uso. Assim, os resultados combinados do teste de guerrilha e da avaliação SUS apontam para uma interface funcional, compreensível e bem recebida pelos usuários testados.
+
+</div>
+
+#### Conclusão
+
+<div align="justify">
+
+Concluiu-se que o teste de guerrilha e a avaliação SUS apresentaram evidências favoráveis de usabilidade para o Pulse Manager. Todos os participantes conseguiram concluir os fluxos propostos sem erros bloqueadores e atribuíram avaliações altas à experiência, com notas 4 e 5 nos itens positivos do questionário.
+
+A aplicação demonstrou boa aderência aos principais cenários de uso dos perfis gestor, psicólogo e aluno. A combinação entre taxa de sucesso de 100% nas tarefas e média SUS de 92,9 pontos indica que a interface foi compreendida pelos usuários e apresentou baixo nível de atrito durante a navegação.
+
+Como plano de melhoria imediato, recomenda-se revisar a visibilidade e o posicionamento do filtro de cursos na tela de listagem de alunos, dado que esse foi o único ponto de confusão registrado. Após essa alteração, o questionário SUS pode ser reaplicado para verificar se a percepção geral de usabilidade se manteve positiva ou apresentou evolução.
+
+</div>
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 

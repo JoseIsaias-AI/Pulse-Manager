@@ -1,4 +1,7 @@
 import { NotificacaoService } from '../../../backend/services/notificacaoService';
+import { AlunoRepository } from '../../../backend/repositories/alunoRepository';
+import { NotificacaoRepository } from '../../../backend/repositories/notificacaoRepository';
+import { asMockedDependency } from '../../helpers/mockHelper';
 
 const aluno = { idAluno: 1, nome: 'Maria Silva' };
 const notificacaoPayload = {
@@ -35,7 +38,10 @@ describe('NotificacaoService', () => {
   beforeEach(() => {
     notificacaoRepository = makeNotificacaoRepository();
     alunoRepository = makeAlunoRepository();
-    service = new NotificacaoService(notificacaoRepository as any, alunoRepository as any);
+    service = new NotificacaoService(
+      asMockedDependency<NotificacaoRepository>(notificacaoRepository),
+      asMockedDependency<AlunoRepository>(alunoRepository)
+    );
   });
 
   it('lista todas as notificacoes', async () => {

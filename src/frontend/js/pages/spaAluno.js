@@ -2,8 +2,8 @@
   'use strict';
 
   /* ── VIEWS ────────────────────────────────────────────────── */
-  const VIEWS = ['inicio', 'dashboard', 'agenda'];
-  const chartInited = { inicio: false, dashboard: false, agenda: false };
+  const VIEWS = ['inicio', 'dashboard', 'agenda', 'atualizacoes', 'configuracoes'];
+  const chartInited = { inicio: false, dashboard: false, agenda: false, atualizacoes: false, configuracoes: false };
 
   function showView(id) {
     VIEWS.forEach(v => {
@@ -28,6 +28,7 @@
       if (id === 'inicio')    initInicioView();
       if (id === 'dashboard') initDashboardView();
       if (id === 'agenda')    initAgendaView();
+      if (id === 'atualizacoes') initAtualizacoesView();
     }
   }
 
@@ -58,29 +59,138 @@
   const requestedView = new URLSearchParams(window.location.search).get('view');
   showView(VIEWS.includes(requestedView) ? requestedView : 'inicio');
 
+  function initAtualizacoesView() {
+    const list = document.getElementById('at-oportunidades-list');
+    const notifList = document.getElementById('at-notificacoes-list');
+    if ((!list || list.dataset.rendered === '1') && (!notifList || notifList.dataset.rendered === '1')) return;
+    if (list) list.dataset.rendered = '1';
+    if (notifList) notifList.dataset.rendered = '1';
+    const notificacoes = [
+      {
+        titulo: 'Convite para evento de carreiras',
+        mensagem: 'Participe do encontro demonstrativo com empresas parceiras e trilhas de empregabilidade.',
+        tipo: 'convite',
+        dataEnvio: '2026-06-17',
+        tipoRemetente: 'membro_equipe',
+        nomeRemetente: 'Vitória Brandão'
+      },
+      {
+        titulo: 'Atualização de oportunidade',
+        mensagem: 'Novas oportunidades simuladas foram adicionadas para acompanhamento no portal do aluno.',
+        tipo: 'informativo',
+        dataEnvio: '2026-06-15',
+        tipoRemetente: 'membro_equipe',
+        nomeRemetente: 'Equipe Pulse Mais'
+      },
+      {
+        titulo: 'Acompanhamento disponível',
+        mensagem: 'Há um horário demonstrativo reservado para conversa sobre objetivos de carreira.',
+        tipo: 'alerta',
+        dataEnvio: '2026-06-12',
+        tipoRemetente: 'psicologo',
+        nomeRemetente: 'João Mário'
+      }
+    ];
+    const oportunidades = [
+      {
+        titulo: 'Estágio em Dados - Trilha Inicial',
+        descricao: 'Vaga demonstrativa para praticar análise de dados, planilhas e visualização de indicadores.',
+        tipo: 'estagio',
+        dataPublicacao: '2026-06-12',
+        prazoInscricao: '2026-06-28',
+        idMembro: 1
+      },
+      {
+        titulo: 'Curso de UX para Produtos Sociais',
+        descricao: 'Oportunidade fictícia de formação curta em pesquisa com usuários e prototipação.',
+        tipo: 'curso',
+        dataPublicacao: '2026-06-10',
+        prazoInscricao: '2026-07-05',
+        idMembro: 2
+      },
+      {
+        titulo: 'Bolsa para Certificação em Cloud',
+        descricao: 'Bolsa simulada para alunos em fase de aprofundamento técnico.',
+        tipo: 'bolsa',
+        dataPublicacao: '2026-06-08',
+        prazoInscricao: '2026-06-30',
+        idMembro: 1
+      },
+      {
+        titulo: 'Evento de Carreiras em Tecnologia',
+        descricao: 'Encontro demonstrativo com empresas parceiras e rodas de conversa sobre empregabilidade.',
+        tipo: 'evento',
+        dataPublicacao: '2026-06-04',
+        prazoInscricao: '2026-06-24',
+        idMembro: 3
+      }
+    ];
+    const tipoLabel = { emprego:'Emprego', estagio:'Estágio', curso:'Curso', evento:'Evento', bolsa:'Bolsa', voluntariado:'Voluntariado', outro:'Outro' };
+    const notifTipoLabel = { alerta:'Alerta', informativo:'Informativo', convite:'Convite', urgente:'Urgente', outro:'Outro' };
+    if (notifList) {
+      notifList.innerHTML = notificacoes.map((n) => `
+        <article class="at-notif-card at-notif-card--${n.tipo}">
+          <div class="at-op-top">
+            <span class="at-notif-type">${notifTipoLabel[n.tipo] || n.tipo}</span>
+            <span class="at-op-date">Enviada em ${formatDatePt(n.dataEnvio)}</span>
+          </div>
+          <h2>${n.titulo}</h2>
+          <p>${n.mensagem}</p>
+          <div class="at-notif-meta">
+            <span><i class="ti ti-user"></i> ${n.nomeRemetente}</span>
+            <span><i class="ti ti-id"></i> ${n.tipoRemetente}</span>
+          </div>
+        </article>
+      `).join('');
+    }
+    if (list) {
+      list.innerHTML = oportunidades.map((op) => `
+      <article class="at-op-card">
+        <div class="at-op-top">
+          <span class="at-op-type at-op-type--${op.tipo}">${tipoLabel[op.tipo] || op.tipo}</span>
+          <span class="at-op-date">Publicada em ${formatDatePt(op.dataPublicacao)}</span>
+        </div>
+        <h2>${op.titulo}</h2>
+        <p>${op.descricao}</p>
+        <div class="at-op-meta">
+          <span><i class="ti ti-calendar-due"></i> Prazo: ${formatDatePt(op.prazoInscricao)}</span>
+          <span><i class="ti ti-user-star"></i> Membro #${op.idMembro}</span>
+        </div>
+        <button class="at-op-btn" type="button" disabled>Inscrição indisponível</button>
+      </article>
+      `).join('');
+    }
+  }
+
+  function formatDatePt(value) {
+    if (!value) return 'Não informado';
+    const [year, month, day] = value.split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('pt-BR');
+  }
+
   /* ════════════════════════════════════════════════════════════
      VIEW: INÍCIO (Portal do Aluno)
   ════════════════════════════════════════════════════════════ */
   function initInicioView() {
-    /* Emoji selector */
-    var emojiRow = document.getElementById('ini-emoji-row');
+    var wellbeingRange = document.getElementById('ini-wellbeing-range');
+    var wellbeingValue = document.getElementById('ini-wellbeing-value');
     var saudeMsg = document.getElementById('ini-saude-msg');
-    var MOODS = {
-      '1': 'Vamos juntos superar isso 💙',
-      '2': 'Não está fácil. Fale com o psicólogo 💜',
-      '3': 'Tudo bem! Vá devagar hoje.',
-      '4': 'Que bom! Continue assim 👏',
-      '5': 'Você está arrasando! 🎉'
-    };
-    if (emojiRow) {
-      emojiRow.querySelectorAll('.ini-emoji-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          emojiRow.querySelectorAll('.ini-emoji-btn').forEach(function (b) {
-            b.classList.remove('ini-emoji-selected');
-          });
-          btn.classList.add('ini-emoji-selected');
-          if (saudeMsg) saudeMsg.textContent = MOODS[btn.dataset.mood] || '';
-        });
+    function wellbeingText(value) {
+      var score = Number(value);
+      if (score <= 2) return 'Bem-estar baixo. Considere buscar apoio hoje.';
+      if (score <= 4) return 'Dia mais difícil. Vá com calma e acompanhe como se sente.';
+      if (score <= 6) return 'Bem-estar moderado. Pequenas pausas podem ajudar.';
+      if (score <= 8) return 'Bem-estar estável. Continue acompanhando sua rotina.';
+      return 'Bem-estar alto. Ótimo momento para manter seus hábitos.';
+    }
+    function updateWellbeing(value) {
+      if (wellbeingValue) wellbeingValue.textContent = value;
+      if (saudeMsg) saudeMsg.textContent = wellbeingText(value);
+    }
+    if (wellbeingRange) {
+      updateWellbeing(wellbeingRange.value);
+      wellbeingRange.addEventListener('input', function () {
+        updateWellbeing(wellbeingRange.value);
       });
     }
 
@@ -242,10 +352,17 @@
       { id:14, title:'Consulta Psicológica',               tipo:'consulta',  start:'2026-06-29', end:'2026-06-29', hora:'10:00', responsavel:'João Mário',      iniciais:'JM', ocupacao:'psicologo', occLabel:'Psicólogo', desc:'Encerramento de ciclo. Avaliação de progresso emocional.' },
       { id:15, title:'Encerramento de Junho',              tipo:'evento',    start:'2026-06-30', end:'2026-06-30', hora:'17:00', responsavel:'Vitória Brandão', iniciais:'VB', ocupacao:'gestor',    occLabel:'Gestor',    desc:'Reunião de encerramento mensal com toda a equipe e alunos.' },
     ];
+    let selectedDate = '2026-06-11';
 
     /* ── Helpers ───────────────────────────────────────────── */
     function toDate(s) { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
     function daysBetween(a,b) { return Math.round((toDate(b)-toDate(a))/(864e5))+1; }
+    function formatDate(str) { return toDate(str).toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' }); }
+    function eventsForDay(dateStr) {
+      return EVENTS
+        .filter(ev => ev.start <= dateStr && ev.end >= dateStr)
+        .sort((a, b) => (a.hora || '').localeCompare(b.hora || ''));
+    }
     function colOf(dateStr) {
       const d = toDate(dateStr);
       return ((d.getDay()+6)%7); // Mon=0 … Sun=6
@@ -328,12 +445,16 @@
         const cellsHtml = cells.map(d => {
           const valid = d >= 1 && d <= daysInMonth;
           const isToday = (d === 11); // hoje = 11 Jun 2026
+          const dateStr = valid ? `2026-06-${String(d).padStart(2, '0')}` : '';
+          const hasEvents = valid && eventsForDay(dateStr).length > 0;
           const cls = [
             'ag-cell',
             !valid ? 'other-month' : '',
-            isToday ? 'today' : ''
+            isToday ? 'today' : '',
+            dateStr === selectedDate ? 'selected-day' : '',
+            hasEvents ? 'has-events' : ''
           ].filter(Boolean).join(' ');
-          return `<div class="${cls}"><span class="ag-dn">${valid ? d : ''}</span></div>`;
+          return `<div class="${cls}" ${valid ? `data-date="${dateStr}" onclick="window.__agShowDay('${dateStr}')"` : ''}><span class="ag-dn">${valid ? d : ''}</span></div>`;
         }).join('');
 
         // Linhas de eventos
@@ -363,10 +484,47 @@
     }
 
     /* ── Mostrar detalhe ────────────────────────────────────── */
+    function showDayDetail(dateStr) {
+      selectedDate = dateStr;
+      const det = document.getElementById('ag-detail');
+      if (!det) return;
+      const dayEvents = eventsForDay(dateStr);
+      const tipoLabel = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria', formatura:'Formatura' };
+      const tipoIcon  = { evento:'ti-calendar-event', consulta:'ti-stethoscope', aula:'ti-school', mentoria:'ti-users', formatura:'ti-award' };
+      const itemsHtml = dayEvents.length
+        ? dayEvents.map(ev => `<button class="ag-day-event" type="button" onclick="window.__agShowDetail(${ev.id})">
+            <span class="ag-day-event-time">${ev.hora}</span>
+            <span class="ag-day-event-main">
+              <strong><i class="ti ${tipoIcon[ev.tipo]}"></i> ${ev.title}</strong>
+              <small>${tipoLabel[ev.tipo] || ev.tipo} · ${ev.responsavel}</small>
+            </span>
+            <i class="ti ti-chevron-right"></i>
+          </button>`).join('')
+        : `<div class="ag-day-empty">
+            <i class="ti ti-calendar-off"></i>
+            <strong>Nenhum evento neste dia</strong>
+            <span>Quando a agenda for integrada, seus compromissos aparecerão aqui.</span>
+          </div>`;
+
+      det.innerHTML = `
+        <div class="ag-det-head">
+          <div>
+            <div class="ag-det-kicker">Agenda do dia</div>
+            <div class="ag-det-title">${formatDate(dateStr)}</div>
+          </div>
+          <button class="ag-det-close" onclick="document.getElementById('ag-detail').classList.remove('open')"><i class="ti ti-x"></i></button>
+        </div>
+        <div class="ag-day-list">${itemsHtml}</div>`;
+      det.classList.add('open');
+      renderCal();
+      det.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     function showDetail(id) {
       const ev = EVENTS.find(e => e.id === id);
       const det = document.getElementById('ag-detail');
       if (!ev || !det) return;
+      selectedDate = ev.start;
 
       const tipoLabel = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria', formatura:'Formatura' };
       const tipoIcon  = { evento:'ti-calendar-event', consulta:'ti-stethoscope', aula:'ti-school', mentoria:'ti-users', formatura:'ti-award' };
@@ -377,7 +535,10 @@
 
       det.innerHTML = `
         <div class="ag-det-head">
-          <div class="ag-det-title">${ev.title}</div>
+          <div>
+            <div class="ag-det-kicker">Detalhe do evento</div>
+            <div class="ag-det-title">${ev.title}</div>
+          </div>
           <button class="ag-det-close" onclick="document.getElementById('ag-detail').classList.remove('open')"><i class="ti ti-x"></i></button>
         </div>
         <span class="ag-det-badge ev-tipo-${ev.tipo}"><i class="ti ${tipoIcon[ev.tipo]}"></i> ${tipoLabel[ev.tipo]}</span>
@@ -388,11 +549,13 @@
           <div class="ag-det-row"><i class="ti ti-notes"></i><div><div class="ag-det-lbl">Descrição</div><div class="ag-det-val">${ev.desc}</div></div></div>
         </div>`;
       det.classList.add('open');
+      renderCal();
       det.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     /* Expõe o handler globalmente para os onclick do HTML gerado */
     window.__agShowDetail = showDetail;
+    window.__agShowDay = showDayDetail;
 
     renderCal();
   }

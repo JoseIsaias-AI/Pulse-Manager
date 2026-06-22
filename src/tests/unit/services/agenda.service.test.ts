@@ -1,4 +1,6 @@
 import { AgendaService } from '../../../backend/services/agendaService';
+import { AgendaRepository } from '../../../backend/repositories/agendaRepository';
+import { asMockedDependency } from '../../helpers/mockHelper';
 
 const agenda = {
   idAgenda: 1,
@@ -27,7 +29,7 @@ describe('AgendaService', () => {
 
   beforeEach(() => {
     repository = makeRepository();
-    service = new AgendaService(repository as any);
+    service = new AgendaService(asMockedDependency<AgendaRepository>(repository));
   });
 
   it('lista agenda com filtros validos', async () => {

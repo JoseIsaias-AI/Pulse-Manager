@@ -1,7 +1,8 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
+import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
 
 describe('UC-01 a UC-02 - Portal do Aluno', () => {
@@ -9,12 +10,12 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
   let aluno: Aluno;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
 
     aluno = await alunoRepository.save({
       nome: 'Ana Costa',
@@ -35,11 +36,7 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
     });
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   describe('UC-01 - Visualizar perfil no portal', () => {
     it('CT01 - deve retornar o perfil do aluno com campos do portal', async () => {
@@ -148,7 +145,7 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
   });
 
   describe('RNF - Qualidade para UC-01 e UC-02', () => {
-    it('RNF-DES-UC01 - deve responder visualizacao do perfil em ate 1000ms', async () => {
+    performanceIt('RNF-DES-UC01 - deve responder visualizacao do perfil em ate 1000ms', async () => {
       const inicio = Date.now();
       const response = await request(app)
         .get(`/api/portal/alunos/${aluno.idAluno}`)

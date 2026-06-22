@@ -12,6 +12,10 @@
     "supabase:check": "ts-node src/scripts/test-db.ts",
     "risco:recalcular": "ts-node src/scripts/recalcular-risco-evasao.ts",
     "test": "jest --runInBand",
+    "test:unit": "jest --runInBand src/tests/unit",
+    "test:integration": "jest --runInBand src/tests/integration",
+    "test:performance": "node src/tests/run-performance-tests.js --runInBand src/tests/integration --testNamePattern=RNF-DES",
+    "test:ci": "npm run test && npm run test:performance",
     "build": "tsc",
     "start": "node dist/backend/server.js"
   },

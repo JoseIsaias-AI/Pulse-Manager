@@ -1,7 +1,8 @@
-﻿import request from 'supertest';
+import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
+import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
 import { registrarConsultaSegmentacao } from '../../backend/integrations/auditoriaIntegration';
 
@@ -13,12 +14,12 @@ describe('UC-13 - Segmentacao de alunos', () => {
   let alunoRepository: Repository<Aluno>;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
     jest.clearAllMocks();
 
     await alunoRepository.save([
@@ -95,11 +96,7 @@ describe('UC-13 - Segmentacao de alunos', () => {
     ]);
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   it('CT01 - deve consultar e segmentar alunos por programa e risco com sucesso', async () => {
     const response = await request(app)
@@ -200,7 +197,7 @@ describe('UC-13 - Segmentacao de alunos', () => {
     });
   });
 
-  it('RNF-DES-UC13 - deve responder segmentacao em ate 2000ms com base ampliada', async () => {
+  performanceIt('RNF-DES-UC13 - deve responder segmentacao em ate 2000ms com base ampliada', async () => {
     const massa = Array.from({ length: 300 }).map((_, index) => ({
       nome: `Aluno ${index + 1}`,
       email: `aluno.${index + 1}@pulsemais.org`,

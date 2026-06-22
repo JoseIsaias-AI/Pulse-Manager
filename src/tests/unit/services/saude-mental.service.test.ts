@@ -1,4 +1,7 @@
 import { SaudeMentalService } from '../../../backend/services/saudeMentalService';
+import { AlunoRepository } from '../../../backend/repositories/alunoRepository';
+import { SaudeMentalRepository } from '../../../backend/repositories/saudeMentalRepository';
+import { asMockedDependency } from '../../helpers/mockHelper';
 
 const aluno = { idAluno: 1, nome: 'Maria Silva' };
 const prontuarioPayload = {
@@ -37,7 +40,10 @@ describe('SaudeMentalService', () => {
   beforeEach(() => {
     repository = makeSaudeMentalRepository();
     alunoRepository = makeAlunoRepository();
-    service = new SaudeMentalService(repository as any, alunoRepository as any);
+    service = new SaudeMentalService(
+      asMockedDependency<SaudeMentalRepository>(repository),
+      asMockedDependency<AlunoRepository>(alunoRepository)
+    );
   });
 
   it('lista prontuarios para perfil psicologo', async () => {
