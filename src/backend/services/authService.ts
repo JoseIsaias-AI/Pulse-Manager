@@ -1,28 +1,37 @@
-import { AlunoRepository } from '../repositories/alunoRepository';
+import { PerfilLogin, UsuarioRepository } from '../repositories/usuarioRepository';
 import { NotFoundError, PayloadValidationError } from '../utils/errors';
 
 const perfisPermitidos = ['gestor', 'psicologo', 'aluno'];
 
 export interface LoginPayload {
-  cpf?: string;
+  email?: string;
   nome?: string;
   perfil?: string;
 }
 
-function apenasDigitos(value: string): string {
-  return value.replace(/\D/g, '');
+export interface LoginResponse {
+  success: true;
+  message: string;
+  data: {
+    id: number;
+    idAluno: number;
+    email: string;
+    nome: string;
+    perfil: string;
+    codigoPm: string | null;
+  };
 }
 
 export class AuthService {
-  constructor(private readonly alunoRepository: AlunoRepository) {}
+  constructor(private readonly usuarioRepository: UsuarioRepository) {}
 
-  async login(payload: LoginPayload) {
-    const cpf = apenasDigitos(String(payload.cpf || ''));
+  async login(payload: LoginPayload): Promise<LoginResponse> {
+    const email = String(payload.email || '').trim().toLowerCase();
     const nomeInformado = String(payload.nome || '').trim();
     const perfil = String(payload.perfil || '').trim();
 
-    if (cpf.length !== 11) {
-      throw new PayloadValidationError('CPF invalido.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      throw new PayloadValidationError('Email invalido.');
     }
 
     if (nomeInformado.length < 3) {
@@ -33,20 +42,25 @@ export class AuthService {
       throw new PayloadValidationError('Perfil invalido.');
     }
 
-    const aluno = await this.alunoRepository.findOneByCpf(cpf);
-    if (!aluno) {
-      throw new NotFoundError('CPF nao encontrado.');
+    const usuario = await this.usuarioRepository.findOneByEmailNomeAndPerfil(
+      email,
+      nomeInformado,
+      perfil as PerfilLogin
+    );
+    if (!usuario) {
+      throw new NotFoundError('Usuario nao encontrado para o perfil informado.');
     }
 
     return {
       success: true,
+      message: 'Login realizado com sucesso.',
       data: {
-        id: aluno.idAluno,
-        idAluno: aluno.idAluno,
-        cpf: aluno.cpf,
-        nome: nomeInformado,
-        perfil,
-        codigoPm: aluno.codigoPm
+        id: usuario.id,
+        idAluno: usuario.id,
+        email: usuario.email,
+        nome: usuario.nome,
+        perfil: usuario.perfil,
+        codigoPm: usuario.codigoPm
       }
     };
   }
