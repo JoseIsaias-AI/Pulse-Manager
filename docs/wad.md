@@ -3659,7 +3659,7 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ABRASCE. *Programa Pulse Mais 2026 inicia com alta adesão e reforça aposta na formação de jovens para o mercado de tecnologia*. 2026. Disponível em: https://abrasce.com.br/espaco-do-associado/tecnologia/programa-pulse-mais-2026-inicia-com-alta-adesao-e-reforca-aposta-na-formacao-de-jovens-para-o-mercado-de-tecnologia/. Acesso em: 10 jun. 2026.
 
-ESG INSIDE. Pulse Mais abre inscrições para programa gratuito que prepara jovens para carreiras em tecnologia. 2026. Disponível em: https://esginside.com.br/2026/01/23/pulse-mais-abre-inscricoes-para-programa-gratuito-que-prepara-jovens-para-carreiras-em-tecnologia/. Acesso em: 10 jun. 2026.
+ESG INSIDE. *Pulse Mais abre inscrições para programa gratuito que prepara jovens para carreiras em tecnologia*. 2026. Disponível em: https://esginside.com.br/2026/01/23/pulse-mais-abre-inscricoes-para-programa-gratuito-que-prepara-jovens-para-carreiras-em-tecnologia/. Acesso em: 10 jun. 2026.
 
 OBSERVATÓRIO DO TERCEIRO SETOR. Pulse Mais celebra 3 anos e amplia oportunidades para jovens na tecnologia. 2025. Disponível em: https://observatorio3setor.org.br/pulse-mais-celebra-3-anos-e-amplia-oportunidades-para-jovens-na-tecnologia/. Acesso em: 10 jun. 2026.
 
