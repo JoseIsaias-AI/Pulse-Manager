@@ -10,7 +10,6 @@ Esta implementação calcula automaticamente um indicador quantitativo de risco 
 O valor percentual é um **índice fuzzy de priorização**, construído a partir dos dados disponíveis no sistema. Ele ajuda a identificar alunos que merecem acompanhamento, mas não deve ser interpretado como uma probabilidade estatística comprovada ou como certeza de que o aluno deixará o programa.
 
 ## 2. Estado atual da integração
-
 O cálculo está conectado às tabelas, ao modelo de aluno e às APIs existentes.
 
 O fluxo implementado é:
