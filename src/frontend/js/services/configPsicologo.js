@@ -9,7 +9,8 @@ const pulseConfig = {
   menu: [
     { id: 'inicio',    icon: 'ti-home',      label: 'Início'    },
     { id: 'alunos',    icon: 'ti-users',     label: 'Alunos'    },
-    { id: 'dashboard', icon: 'ti-chart-bar', label: 'Dashboard' }
+    { id: 'dashboard', icon: 'ti-chart-bar', label: 'Dashboard' },
+    { id: 'configuracoes', icon: 'ti-settings', label: 'Configurações' }
   ],
 
   quickAccess: [

@@ -37,8 +37,8 @@
   /* ════════════════════════════════════════════════════════════
      VIEWS — roteador SPA
   ════════════════════════════════════════════════════════════ */
-  const VIEWS = ['inicio', 'alunos', 'dashboard'];
-  const chartInited = { inicio: false, alunos: false, dashboard: false };
+  const VIEWS = ['inicio', 'alunos', 'dashboard', 'configuracoes'];
+  const chartInited = { inicio: false, alunos: false, dashboard: false, configuracoes: false };
 
   function showView(id) {
     VIEWS.forEach(function (v) {

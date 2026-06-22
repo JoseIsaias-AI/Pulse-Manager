@@ -259,29 +259,34 @@
   .ini-kpi--amber .ini-kpi-sub   { color: rgba(0,56,112,.55); }
 
   .ini-main-grid {
-    display: grid; grid-template-columns: 1fr 330px; gap: 16px; flex: 1; min-height: 0;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 330px); gap: 16px; flex: 1; min-height: 0;
+    width: 100%; max-width: 100%;
   }
+  .ini-main-grid > * { min-width: 0; }
   .ini-card {
     background: #fff; border-radius: 14px; border: 1px solid #DEE3EA;
     box-shadow: 0 1px 4px rgba(0,56,112,.07);
     padding: 20px 24px; display: flex; flex-direction: column; gap: 14px;
+    min-width: 0;
   }
   .ini-card-head {
-    display: flex; align-items: flex-start; justify-content: space-between; flex-shrink: 0;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-shrink: 0;
   }
+  .ini-card-head > div { min-width: 0; }
   .ini-card-title { font-size: 15px; font-weight: 700; color: #11161D; }
-  .ini-card-sub   { font-size: 12px; color: #97A1AE; margin-top: 3px; }
+  .ini-card-sub   { font-size: 12px; color: #97A1AE; margin-top: 3px; overflow-wrap: anywhere; }
   .ini-progress-badge {
     background: rgba(0,56,112,.08); color: #003870;
     border-radius: 8px; padding: 5px 12px; font-size: 11px; font-weight: 700; white-space: nowrap;
   }
 
-  .ini-mod-tabs { display: flex; flex-wrap: wrap; gap: 6px; flex-shrink: 0; }
+  .ini-mod-tabs { display: flex; flex-wrap: wrap; gap: 6px; flex-shrink: 0; min-width: 0; }
   .ini-mod-tab {
     display: inline-flex; align-items: center; gap: 5px;
     padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 600;
     border: 1px solid #DEE3EA; background: #fff; cursor: pointer;
     font-family: 'Poppins', sans-serif; transition: all .15s; color: #6B7684;
+    max-width: 100%;
   }
   .ini-mod-done    { border-color: #33B458; color: #1D7A36; background: rgba(51,180,88,.08); }
   .ini-mod-active  { border-color: #003870; color: #fff; background: #003870; }
@@ -292,7 +297,8 @@
   .ini-pct-badge          { font-size: 11px; font-weight: 700; color: #003870; }
   .ini-prog-bar           { height: 8px; border-radius: 4px; background: #EEF1F4; overflow: hidden; }
   .ini-prog-inner         { height: 100%; border-radius: 4px; background: #003870; }
-  .ini-mod-labels         { display: flex; justify-content: space-between; font-size: 9px; color: #97A1AE; padding: 2px 0; }
+  .ini-mod-labels         { display: flex; justify-content: space-between; gap: 8px; font-size: 9px; color: #97A1AE; padding: 2px 0; min-width: 0; }
+  .ini-mod-labels span    { min-width: 0; overflow-wrap: anywhere; }
   .ini-sprint-label       { font-size: 11px; font-weight: 500; color: #97A1AE; }
 
   .ini-ativ-label { font-size: 11px; font-weight: 500; color: #97A1AE; }
@@ -315,18 +321,26 @@
   .ini-ativ-badge.active { background: rgba(0,56,112,.10); color: #003870; }
   .ini-ativ-badge.locked { background: #F0F3F7; color: #C2CAD4; }
 
-  .ini-right-col { display: flex; flex-direction: column; gap: 14px; }
+  .ini-right-col { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 
-  .ini-emoji-row  { display: flex; justify-content: space-between; gap: 6px; flex-shrink: 0; }
-  .ini-emoji-btn  {
-    width: 48px; height: 48px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; border-radius: 12px; border: 2px solid transparent;
-    background: #F7F9FB; cursor: pointer; transition: all .15s; line-height: 1;
+  .ini-wellbeing-box { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+  .ini-wellbeing-value {
+    display: flex; align-items: baseline; justify-content: center; gap: 4px;
+    color: #003870; font-weight: 800;
   }
-  .ini-emoji-btn:hover    { background: #EDF3F9; border-color: #003870; }
-  .ini-emoji-btn.ini-emoji-selected { background: rgba(0,56,112,.1); border-color: #003870; }
+  .ini-wellbeing-value strong { font-size: 34px; line-height: 1; }
+  .ini-wellbeing-value span { font-size: 13px; color: #6B7684; font-weight: 700; }
+  .ini-wellbeing-range {
+    width: 100%; accent-color: #003870; cursor: pointer;
+  }
+  .ini-wellbeing-scale-labels {
+    display: flex; justify-content: space-between; gap: 8px;
+    font-size: 10px; color: #97A1AE; font-weight: 700;
+  }
   .ini-saude-msg  { font-size: 12px; color: #33B458; font-weight: 600; text-align: center; flex-shrink: 0; }
+  .ini-saude-msg,
+  .ini-saude-last,
+  .ini-btn-psi { max-width: 100%; overflow-wrap: anywhere; }
   .ini-btn-psi {
     display: flex; align-items: center; justify-content: center; gap: 7px;
     padding: 10px; border-radius: 8px; border: 1px solid #DEE3EA;
@@ -340,12 +354,13 @@
   .ini-event-item {
     display: flex; align-items: center; gap: 10px;
     padding: 9px 0; border-bottom: 1px solid #F0F3F7;
+    min-width: 0;
   }
   .ini-event-item:last-child { border-bottom: none; padding-bottom: 0; }
   .ini-event-dot  { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
   .ini-event-body { flex: 1; min-width: 0; }
   .ini-event-name { font-size: 12px; font-weight: 600; color: #11161D; display: block; }
-  .ini-event-time { font-size: 10px; color: #97A1AE; }
+  .ini-event-time { font-size: 10px; color: #97A1AE; overflow-wrap: anywhere; }
   .ini-event-tag  {
     font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 999px; white-space: nowrap;
   }
@@ -424,6 +439,121 @@
     border: 1px solid #DEE3EA; border-radius: 10px; background: #F7F9FB; color: #97A1AE;
     font: 700 11px 'Poppins', sans-serif; padding: 10px; cursor: not-allowed;
   }
+
+  @media (max-width: 1100px) {
+    #view-inicio .quick-grid,
+    .ini-kpi-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .ini-main-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+  @media (max-width: 1380px) {
+    .ini-main-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .ini-right-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: stretch;
+    }
+  }
+
+  @media (max-width: 760px) {
+    #view-inicio,
+    #view-dashboard,
+    #view-agenda,
+    #view-atualizacoes {
+      padding: 20px !important;
+    }
+
+    #view-inicio .welcome-banner,
+    #view-inicio .next-card,
+    .ag-header,
+    .at-header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #view-inicio .welcome-badge,
+    #view-inicio .next-badge {
+      width: 100%;
+      margin-left: 0;
+      text-align: center;
+      justify-content: center;
+    }
+
+    #view-inicio .quick-grid,
+    .ini-kpi-row,
+    .ini-right-col,
+    .at-notif-list,
+    .at-op-grid,
+    .chart-grid,
+    .charts-row,
+    .dash-grid,
+    .dashboard-grid,
+    .kpi-row {
+      grid-template-columns: 1fr !important;
+    }
+
+    .ini-wellbeing-scale-labels,
+    .ag-legend,
+    .at-section-head {
+      flex-wrap: wrap;
+    }
+
+    .ag-cal {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .ag-dow-row,
+    .ag-day-row,
+    .ag-ev-row {
+      min-width: 640px;
+    }
+
+    .ag-detail {
+      padding: 18px;
+    }
+
+    .ag-day-event {
+      grid-template-columns: 46px 1fr;
+    }
+
+    .ag-day-event > i {
+      display: none;
+    }
+  }
+
+  @media (max-width: 520px) {
+    #view-inicio,
+    #view-dashboard,
+    #view-agenda,
+    #view-atualizacoes {
+      padding: 16px !important;
+      gap: 14px !important;
+    }
+
+    #view-inicio .welcome-banner,
+    .at-notif-card,
+    .at-op-card {
+      padding: 16px;
+    }
+
+    #view-inicio h1,
+    .at-title {
+      font-size: 20px;
+    }
+
+    .ini-kpi-value {
+      font-size: 26px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -442,7 +572,7 @@
       <ul class="menuLateral__menu"></ul>
     </nav>
     <footer class="menuLateral__footer">
-      <a href="#" class="menuLateral__settings menuLateral__link">
+      <a href="#" class="menuLateral__settings menuLateral__link" onclick="window.__onMenuNav && window.__onMenuNav('configuracoes');return false;">
         <i class="ti ti-settings menuLateral__icon"></i>
         <span>Configurações</span>
       </a>
@@ -615,16 +745,16 @@
                   <div class="ini-card-sub">Registro de hoje</div>
                 </div>
               </div>
-              <div class="ini-emoji-row" id="ini-emoji-row">
-                <button class="ini-emoji-btn" data-mood="1" title="Muito mal">😟</button>
-                <button class="ini-emoji-btn" data-mood="2" title="Mal">😕</button>
-                <button class="ini-emoji-btn" data-mood="3" title="Neutro">😐</button>
-                <button class="ini-emoji-btn ini-emoji-selected" data-mood="4" title="Bem">🙂</button>
-                <button class="ini-emoji-btn" data-mood="5" title="Muito bem">😄</button>
+              <div class="ini-wellbeing-box">
+                <div class="ini-wellbeing-value"><strong id="ini-wellbeing-value">7</strong><span>/10</span></div>
+                <input class="ini-wellbeing-range" id="ini-wellbeing-range" type="range" min="0" max="10" step="1" value="7" aria-label="Nível de bem-estar de 0 a 10">
+                <div class="ini-wellbeing-scale-labels">
+                  <span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span>
+                </div>
               </div>
-              <p class="ini-saude-msg" id="ini-saude-msg">Que bom! Continue assim 👏</p>
+              <p class="ini-saude-msg" id="ini-saude-msg">Bem-estar estável. Continue acompanhando sua rotina.</p>
               <button class="ini-btn-psi"><i class="ti ti-plus"></i> Adicionar registro</button>
-              <p class="ini-saude-last">Última entrada: 10/06 · 🟡 Bem</p>
+              <p class="ini-saude-last">Última entrada: 10/06 · 7/10</p>
             </section>
 
             <!-- Próximos Eventos -->
@@ -781,19 +911,19 @@
           <div>
             <div class="at-title"><i class="ti ti-bell-ringing" style="font-size:20px;vertical-align:-2px;margin-right:8px;color:#003870;"></i>Atualizações</div>
           </div>
-          <div class="at-readonly"><i class="ti ti-eye"></i> Dados fictícios</div>
+          <div class="at-readonly"><i class="ti ti-eye"></i> Visualização</div>
         </div>
         <section class="at-section">
           <div class="at-section-head">
             <div class="at-section-title"><i class="ti ti-bell"></i> Notificações</div>
-            <span>Simuladas</span>
+            <span>Recebidas</span>
           </div>
           <div class="at-notif-list" id="at-notificacoes-list"></div>
         </section>
         <section class="at-section">
           <div class="at-section-head">
             <div class="at-section-title"><i class="ti ti-briefcase"></i> Oportunidades</div>
-            <span>Demonstrativas</span>
+            <span>Disponíveis</span>
           </div>
           <div class="at-op-grid" id="at-oportunidades-list"></div>
         </section>
@@ -809,7 +939,7 @@
             <div>
               <div class="ag-title"><i class="ti ti-calendar" style="font-size:18px;vertical-align:-2px;margin-right:8px;color:#003870;"></i>Agenda</div>
               <div class="ag-month">Junho de 2026</div>
-              <div class="ag-readonly-note"><i class="ti ti-eye"></i> Somente visualização · dados demonstrativos</div>
+              <div class="ag-readonly-note"><i class="ti ti-eye"></i> Somente visualização</div>
             </div>
             <div class="ag-legend">
               <div class="ag-legend-item"><div class="ag-legend-dot" style="background:#003870"></div>Evento</div>
@@ -828,6 +958,104 @@
 
         </div>
       </div><!-- fim #view-agenda -->
+
+      <div id="view-configuracoes" class="spa-view cfg-view">
+        <div class="cfg-head">
+          <div>
+            <h1 class="cfg-title"><i class="ti ti-settings"></i> Configurações</h1>
+            <p class="cfg-subtitle">Personalize a visualização do seu portal.</p>
+          </div>
+          <span class="cfg-pill"><i class="ti ti-user-cog"></i> Preferências do aluno</span>
+        </div>
+
+        <div class="cfg-grid">
+          <section class="cfg-card">
+            <div class="cfg-card-head">
+              <div>
+                <h2 class="cfg-card-title"><i class="ti ti-palette"></i> Aparência</h2>
+                <p class="cfg-card-sub">Ajustes para deixar leitura, cores e espaçamento mais confortáveis.</p>
+              </div>
+            </div>
+            <div class="cfg-card-body">
+              <div class="cfg-section-label">Cor de destaque</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="classic"><span class="cfg-dot" style="--dot-color:#003870"></span> Azul Pulse</button>
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="green"><span class="cfg-dot" style="--dot-color:#33B458"></span> Verde</button>
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="amber"><span class="cfg-dot" style="--dot-color:#D4860A"></span> Âmbar</button>
+                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="indigo"><span class="cfg-dot" style="--dot-color:#4F46E5"></span> Índigo</button>
+              </div>
+
+              <div class="cfg-section-label">Modo da interface</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="mode" data-cfg-value="light"><i class="ti ti-sun"></i> Claro</button>
+                <button class="cfg-choice" type="button" data-cfg-option="mode" data-cfg-value="dark"><i class="ti ti-moon"></i> Escuro</button>
+              </div>
+
+              <div class="cfg-section-label">Densidade</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="density" data-cfg-value="comfortable"><i class="ti ti-layout-grid"></i> Confortável</button>
+                <button class="cfg-choice" type="button" data-cfg-option="density" data-cfg-value="compact"><i class="ti ti-layout-list"></i> Compacta</button>
+              </div>
+
+              <div class="cfg-section-label">Leitura</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="font" data-cfg-value="normal"><i class="ti ti-letter-case"></i> Fonte padrão</button>
+                <button class="cfg-choice" type="button" data-cfg-option="font" data-cfg-value="large"><i class="ti ti-letter-case-upper"></i> Fonte maior</button>
+              </div>
+
+              <div class="cfg-section-label">Contraste</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="contrast" data-cfg-value="normal"><i class="ti ti-contrast"></i> Padrão</button>
+                <button class="cfg-choice" type="button" data-cfg-option="contrast" data-cfg-value="high"><i class="ti ti-contrast-2"></i> Alto contraste</button>
+              </div>
+
+              <div class="cfg-section-label">Bordas</div>
+              <div class="cfg-choice-row">
+                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="rounded"><i class="ti ti-square-rounded"></i> Arredondadas</button>
+                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="soft"><i class="ti ti-circle"></i> Suaves</button>
+                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="square"><i class="ti ti-square"></i> Retas</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="cfg-card">
+            <div class="cfg-card-head">
+              <div>
+                <h2 class="cfg-card-title"><i class="ti ti-bell-cog"></i> Preferências</h2>
+                <p class="cfg-card-sub">Opções para controlar avisos e acessibilidade.</p>
+              </div>
+            </div>
+            <div class="cfg-card-body">
+              <div class="cfg-toggle-list">
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Alertas por e-mail</span><span class="cfg-toggle-desc">Receber lembretes sobre agenda e oportunidades.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="email"><span class="cfg-slider"></span></span>
+                </label>
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Notificações do portal</span><span class="cfg-toggle-desc">Mostrar avisos rápidos durante o uso.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="browser"><span class="cfg-slider"></span></span>
+                </label>
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Resumo semanal</span><span class="cfg-toggle-desc">Agrupar progresso e atualizações em uma visão simples.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="digest"><span class="cfg-slider"></span></span>
+                </label>
+                <label class="cfg-toggle-item">
+                  <span><span class="cfg-toggle-title">Reduzir animações</span><span class="cfg-toggle-desc">Diminuir movimentos e transições visuais.</span></span>
+                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="reduceMotion"><span class="cfg-slider"></span></span>
+                </label>
+              </div>
+              <div class="cfg-preview">
+                <div class="cfg-preview-top"><span class="cfg-preview-title">Prévia do portal</span><span class="cfg-preview-chip">Aluno</span></div>
+                <p class="cfg-preview-text">As preferências ajustam a visualização e podem ser restauradas a qualquer momento.</p>
+              </div>
+              <div class="cfg-actions">
+                <button class="cfg-btn cfg-btn-primary" type="button" data-cfg-option="font" data-cfg-value="large">Aumentar fonte</button>
+                <button class="cfg-btn cfg-btn-ghost" type="button" data-cfg-reset>Restaurar padrão</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
 
     </main>
   </div><!-- fim .paginaMain -->
@@ -1025,5 +1253,6 @@
 <script src="../js/components/modalConfAluno.js"></script>
 <script src="../js/components/modalNotifAluno.js"></script>
 <script src="../js/pages/spaAluno.js"></script>
+<script src="../js/components/configuracoesFrontend.js"></script>
 </body>
 </html>
