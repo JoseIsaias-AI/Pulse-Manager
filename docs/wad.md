@@ -3663,7 +3663,7 @@ ESG INSIDE. *Pulse Mais abre inscrições para programa gratuito que prepara jov
 
 OBSERVATÓRIO DO TERCEIRO SETOR. *Pulse Mais celebra 3 anos e amplia oportunidades para jovens na tecnologia*. 2025. Disponível em: https://observatorio3setor.org.br/pulse-mais-celebra-3-anos-e-amplia-oportunidades-para-jovens-na-tecnologia/. Acesso em: 10 jun. 2026.
 
-PULSE MAIS. Pulse Mais. 2026. Disponível em: https://pulsemais.org.br/. Acesso em: 10 jun. 2026.
+PULSE MAIS. *Pulse Mais: site institucional*. 2026. Disponível em: https://pulsemais.org.br/. Acesso em: 10 jun. 2026.
 
 # <a name="c9"></a>Anexos
 
