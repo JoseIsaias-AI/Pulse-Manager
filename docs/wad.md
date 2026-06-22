@@ -2204,7 +2204,7 @@ O Diagrama Entidade-Relacionamento do PulseManager representa de forma estrutura
 
 Esta seção traduz o DER apresentado na seção 3.6.2 para o modelo relacional e para sua implementação física em PostgreSQL. Como a modelagem foi revisada ao longo do desenvolvimento, as tabelas abaixo representam a versão consolidada após as atualizações da Sprint 4, e não apenas o recorte inicial produzido na Sprint 2.
 
-O modelo relacional organiza os dados em tabelas com seus respectivos campos (Normando, 2024). As chaves primárias identificam de forma única cada registro, enquanto as chaves estrangeiras conectam uma tabela a outra e preservam os vínculos definidos na modelagem. Dessa forma, as entidades e relacionamentos do DER são convertidos em uma estrutura pronta para implementação no banco de dados.
+O modelo relacional organiza os dados em tabelas com seus respectivos campos (NORMANDO, 2024). As chaves primárias identificam de forma única cada registro, enquanto as chaves estrangeiras conectam uma tabela a outra e preservam os vínculos definidos na modelagem. Dessa forma, as entidades e relacionamentos do DER são convertidos em uma estrutura pronta para implementação no banco de dados.
 
 </div>
 
