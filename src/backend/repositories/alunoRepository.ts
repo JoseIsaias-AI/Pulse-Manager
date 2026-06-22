@@ -74,7 +74,7 @@ const ALUNO_SELECT = `
     status_ensino_superior AS "statusEnsinoSuperior",
     data_ingresso_ensino_superior AS "dataIngressoEnsinoSuperior",
     COALESCE(programa, curso, origem_participacao) AS programa,
-    COALESCE(categoria, nivel_jornada, status) AS categoria,
+    COALESCE(categoria, nivel_jornada, CAST(status AS TEXT)) AS categoria,
     COALESCE(risco_evasao, 'baixo') AS "riscoEvasao",
     COALESCE(engajamento, 0) AS engajamento,
     data_ingresso AS "dataIngresso",

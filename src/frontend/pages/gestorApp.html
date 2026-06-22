@@ -223,10 +223,18 @@
   .al-filter-btn:hover  { border-color: #003870; color: #003870; }
   .al-filter-btn--active{ background: #003870; color: #fff; border-color: #003870; font-weight: 600; }
   .al-import-btn {
-    margin-left: auto; font-size: 11px; font-weight: 600; color: #33B458;
+    font-size: 11px; font-weight: 600; color: #33B458;
     background: none; border: none; cursor: pointer; font-family: 'Poppins', sans-serif;
+    display: inline-flex; align-items: center; gap: 5px;
   }
   .al-import-btn:hover { opacity: .7; }
+  .al-csv-actions { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; }
+  .al-import-status {
+    display: none; flex-shrink: 0; border: 1px solid #D9E7D6; background: #F5FBF4;
+    color: #1F7A36; border-radius: 8px; padding: 8px 12px; font-size: 11px;
+  }
+  .al-import-status.is-error { border-color: #F3CACA; background: #FFF6F6; color: #B42318; }
+  .al-import-status strong { font-weight: 700; }
 
   .al-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; flex-shrink: 0; }
 
@@ -526,8 +534,18 @@
           <button class="al-filter-btn" id="btn-ord">
             <i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> Ordenar
           </button>
-          <button class="al-import-btn">+ Importar CSV</button>
+          <div class="al-csv-actions">
+            <input type="file" id="al-csv-file" accept=".csv,text/csv" hidden>
+            <button class="al-import-btn" id="al-import-csv" type="button">
+              <i class="ti ti-upload" style="font-size:13px;"></i> Importar CSV
+            </button>
+            <button class="al-import-btn" id="al-export-csv" type="button">
+              <i class="ti ti-download" style="font-size:13px;"></i> Exportar CSV
+            </button>
+          </div>
         </div>
+
+        <div class="al-import-status" id="al-import-status"></div>
 
         <!-- Grid de alunos (renderizado por JS) -->
         <div class="al-grid" id="al-grid"></div>
@@ -1173,6 +1191,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="../js/services/config.js"></script>
+<script src="../js/services/api.js"></script>
 <script src="../js/components/guiaGestor.js"></script>
 <script src="../js/components/menuSuperior.js"></script>
 <script src="../js/components/modalConfEquipe.js"></script>

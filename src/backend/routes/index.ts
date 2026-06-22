@@ -8,6 +8,7 @@ import segmentacaoRoutes from './segmentacaoRoutes';
 import alunoRoutes from './alunoRoutes';
 import dashboardRoutes from './dashboardRoutes';
 import psicologoRoutes from './psicologoRoutes';
+import importacaoRoutes from './importacaoRoutes';
 import { getDatabaseConnectionInfo } from '../config/database';
 import { pingDatabase } from '../database/connection';
 import { isSupabaseClientConfigured } from '../integrations/supabaseClient';
@@ -60,5 +61,6 @@ router.use(agendaRoutes);
 router.use(notificacaoRoutes);
 router.use(portalAlunoRoutes);
 router.use(psicologoRoutes);
+router.use(importacaoRoutes);
 
 export default router;
