@@ -7,18 +7,25 @@ import { positiveInteger } from '../utils/validators';
 export class PortalAlunoController {
   constructor(private readonly service: PortalAlunoService) {}
 
-  visualizarPerfil = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  visualizarPerfil = async (req: RequestComUsuario, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const result = await this.service.visualizarPerfil(positiveInteger(req.params.idAluno, 'idAluno'));
+      const result = await this.service.visualizarPerfil(
+        positiveInteger(req.params.idAluno, 'idAluno'),
+        req.usuario?.id
+      );
       res.status(200).json(result);
     } catch (error) {
       this.handle(error, res, next);
     }
   };
 
-  atualizarContato = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  atualizarContato = async (req: RequestComUsuario, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const result = await this.service.atualizarContato(positiveInteger(req.params.idAluno, 'idAluno'), req.body);
+      const result = await this.service.atualizarContato(
+        positiveInteger(req.params.idAluno, 'idAluno'),
+        req.body,
+        req.usuario?.id
+      );
       res.status(200).json(result);
     } catch (error) {
       this.handle(error, res, next);

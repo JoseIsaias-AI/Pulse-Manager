@@ -205,6 +205,21 @@ describe('AlunoService', () => {
     expect(result).toEqual({ success: true, data: atualizado });
   });
 
+  it('recalcula automaticamente o risco quando o engajamento muda', async () => {
+    const riscoEvasaoService = { recalcularAluno: jest.fn().mockResolvedValue(undefined) };
+    service = new AlunoService(repository as any, riscoEvasaoService as any);
+    const atualizado = { ...baseAluno, engajamento: 25, riscoEvasao: 'alto' };
+    repository.findById
+      .mockResolvedValueOnce(baseAluno)
+      .mockResolvedValueOnce(atualizado);
+    repository.update.mockResolvedValue({ ...baseAluno, engajamento: 25 });
+
+    const result = await service.atualizar(1, { engajamento: 25 });
+
+    expect(riscoEvasaoService.recalcularAluno).toHaveBeenCalledWith(1);
+    expect(result.data).toEqual(atualizado);
+  });
+
   it('rejeita atualizacao com dados invalidos', async () => {
     repository.findById.mockResolvedValue(baseAluno);
 

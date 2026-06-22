@@ -180,6 +180,10 @@ describe('UC-07 a UC-12 - Jornada do aluno', () => {
         idAluno: alunoMaria.idAluno,
         idAtividade: aulaLogica.idAtividade
       });
+
+      const alunoAtualizado = await alunoRepository.findOneByOrFail({ idAluno: alunoMaria.idAluno });
+      expect(alunoAtualizado.probabilidadeEvasao).not.toBeNull();
+      expect(alunoAtualizado.riscoEvasao).toBe('baixo');
     });
 
     it('CT02 - deve atualizar frequencia existente para mesma aula', async () => {

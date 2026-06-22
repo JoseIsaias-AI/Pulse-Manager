@@ -3,11 +3,14 @@ import { JornadaController } from '../controllers/jornadaController';
 import { JornadaRepository } from '../repositories/jornadaRepository';
 import { JornadaService } from '../services/jornadaService';
 import { authMiddleware } from '../middlewares/authMiddleware';
+import { RiscoEvasaoRepository } from '../repositories/riscoEvasaoRepository';
+import { RiscoEvasaoService } from '../services/riscoEvasaoService';
 
 const router = Router();
 
 const repository = new JornadaRepository();
-const service = new JornadaService(repository);
+const riscoEvasaoService = new RiscoEvasaoService(new RiscoEvasaoRepository());
+const service = new JornadaService(repository, riscoEvasaoService);
 const controller = new JornadaController(service);
 
 router.get('/atividades', controller.listarAtividades);

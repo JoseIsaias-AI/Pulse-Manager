@@ -20,6 +20,14 @@
     if (!target) return;
     target.style.display = 'flex';
 
+    document.querySelectorAll('.menuLateral__item[data-page]').forEach(item => {
+      item.classList.toggle('menuLateral__item--active', item.dataset.page === id);
+    });
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', id);
+    window.history.replaceState({}, '', url);
+
     // Barra de busca: visível apenas na aba Alunos
     const search = document.getElementById('top-search');
     if (search) search.style.display = id === 'alunos' ? '' : 'none';
@@ -68,7 +76,8 @@
   };
 
   /* ── INICIALIZAR VIEW PADRÃO ──────────────────────────────── */
-  showView('inicio');
+  const requestedView = new URLSearchParams(window.location.search).get('view');
+  showView(VIEWS.includes(requestedView) ? requestedView : 'inicio');
 
   /* ════════════════════════════════════════════════════════════
      VIEW: INÍCIO (inicioGestor)
@@ -359,6 +368,11 @@
      VIEW: DASHBOARD (dashboardGestor) — Dados Pulse Mais 2022–2025
   ════════════════════════════════════════════════════════════ */
   function initDashboardView() {
+    if (window.initDashboardGestorApp) {
+      window.initDashboardGestorApp();
+      return;
+    }
+
     Chart.defaults.font.family = "'Poppins', sans-serif";
     Chart.defaults.font.size   = 11;
 
@@ -525,6 +539,11 @@
      VIEW: AGENDA
   ════════════════════════════════════════════════════════════ */
   function initAgendaView() {
+    if (window.initAgendaGestorApp) {
+      window.initAgendaGestorApp();
+      return;
+    }
+
     const MONTH_NAMES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
     const WD_LABELS   = ['D','S','T','Q','Q','S','S'];
     const TYPE_COLOR  = { evento:'#003870', consulta:'#7B4FD9', aula:'#F4A261', mentoria:'#33B458' };
