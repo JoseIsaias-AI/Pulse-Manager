@@ -1,102 +1,101 @@
-// =========================================
-// Login – Lógica de autenticação
-// Depende de: nenhum arquivo externo
-// =========================================
-
-// Mapa de perfil → página de destino após login bem-sucedido
-const ROLE_PAGES = {
-  gestor:    'gestorApp.html',    // Gestor vai para o SPA de gestão da turma
-  psicologo: 'psicologoApp.html', // Psicólogo vai para o SPA dedicado ao psicólogo
-  aluno:     'alunoApp.html',     // Aluno vai para o SPA de visão geral pessoal
+const rolePages = {
+  gestor: 'gestorApp.html',
+  psicologo: 'psicologoApp.html',
+  aluno: 'alunoApp.html'
 };
 
-// Armazena o perfil atualmente selecionado nos botões de role
-// Começa com "gestor" porque o botão Gestor tem classe "active" no HTML
 let currentRole = 'gestor';
 
-// ---- SELEÇÃO DE PERFIL ----
-// Chamada pelo onclick de cada .role-btn no HTML
-// btn → referência ao botão clicado; role → string do perfil ('gestor', etc.)
-function selectRole(btn, role) {
-  // Remove "active" de todos os botões para limpar a seleção anterior
-  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+function selectRole(button, role) {
+  document.querySelectorAll('.role-btn').forEach((roleButton) => {
+    roleButton.classList.remove('active');
+  });
 
-  // Adiciona "active" apenas no botão clicado
-  btn.classList.add('active');
-
-  // Atualiza a variável de estado para o redirect correto
+  button.classList.add('active');
   currentRole = role;
 }
 
-// ---- MÁSCARA DO CPF ----
-// Formata o texto enquanto o usuário digita: 000.000.000-00
-function applyMaskCPF(input) {
-  let v = input.value.replace(/\D/g, ''); // remove tudo que não é dígito
+function validateLoginForm(email, name) {
+  const normalizedEmail = String(email || '').trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) return 'E-mail inválido';
+  if (name.trim().length < 3) return 'Nome muito curto';
 
-  v = v.replace(/(\d{3})(\d)/, '$1.$2');      // insere ponto após o 3º dígito
-  v = v.replace(/(\d{3})(\d)/, '$1.$2');      // insere ponto após o 6º dígito
-  v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // insere hífen antes dos últimos 2 dígitos
-
-  input.value = v; // aplica o valor formatado de volta no campo
+  return null;
 }
 
-// ---- VALIDAÇÃO DO FORMULÁRIO ----
-// Retorna uma string de erro ou null se o formulário for válido
-function validateForm(cpf, nome) {
-  const cpfClean = cpf.replace(/\D/g, ''); // conta apenas os dígitos do CPF
+function showButtonFeedback(button, message) {
+  button.textContent = message;
+  button.classList.add('error');
 
-  if (cpfClean.length !== 11) return 'CPF inválido';   // CPF deve ter exatamente 11 dígitos
-  if (nome.trim().length < 3) return 'Nome muito curto'; // nome mínimo de 3 caracteres
-
-  return null; // null = sem erros = formulário válido
+  setTimeout(() => {
+    button.textContent = 'ENTRAR';
+    button.classList.remove('error');
+    button.disabled = false;
+  }, 2200);
 }
 
-// ---- HANDLER DE SUBMIT ----
-function handleSubmit() {
-  const cpfInput  = document.getElementById('cpf');      // referência ao campo CPF
-  const nomeInput = document.getElementById('nome');     // referência ao campo Nome
-  const btnEntrar = document.getElementById('btn-entrar'); // referência ao botão
+function savePulseUser(user) {
+  sessionStorage.setItem('pulseUser', JSON.stringify(user));
+}
 
-  const error = validateForm(cpfInput.value, nomeInput.value); // executa a validação
+function getDestinationPage(role) {
+  return rolePages[role] || rolePages.gestor;
+}
 
-  if (error) {
-    // Exibe o erro no botão temporariamente (visual de feedback)
-    btnEntrar.textContent = error;       // substitui "ENTRAR" pelo texto de erro
-    btnEntrar.classList.add('error');    // aplica fundo vermelho via login.css
-
-    // Restaura o botão após 2.2 segundos
-    setTimeout(() => {
-      btnEntrar.textContent = 'ENTRAR';
-      btnEntrar.classList.remove('error');
-    }, 2200);
-
-    return; // interrompe a função: não faz redirect com erro
+async function loginWithEmail(email, name, role) {
+  if (!window.PulseApi) {
+    throw new Error('Cliente HTTP nao carregado.');
   }
 
-  // Feedback visual de carregamento antes do redirect
-  btnEntrar.textContent = 'Entrando…'; // texto de transição
-  btnEntrar.disabled = true;            // desabilita para evitar duplo clique
-
-  // Aguarda 600ms (simula chamada de API) e então redireciona
-  setTimeout(() => {
-    window.location.href = ROLE_PAGES[currentRole]; // navega para a página do perfil
-  }, 600);
-}
-
-// ---- INICIALIZAÇÃO ----
-// DOMContentLoaded garante que o HTML foi completamente parseado antes de o JS rodar
-document.addEventListener('DOMContentLoaded', () => {
-
-  // Aplica a máscara de CPF a cada tecla digitada no campo
-  document.getElementById('cpf').addEventListener('input', function () {
-    applyMaskCPF(this); // this = o próprio input que disparou o evento
+  const response = await window.PulseApi.post('/auth/login', {
+    email: email.trim().toLowerCase(),
+    nome: name.trim(),
+    perfil: role
   });
 
-  // Conecta o clique do botão ao handler de submit
-  document.getElementById('btn-entrar').addEventListener('click', handleSubmit);
+  const user = response.data;
+  if (!user || user.id === undefined || !user.email || !user.nome || !user.perfil) {
+    throw new Error('Resposta de login invalida.');
+  }
 
-  // Permite submeter o formulário pressionando Enter em qualquer campo
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') handleSubmit();
+  return {
+    ...user,
+    nome: name.trim(),
+    perfil: role
+  };
+}
+
+async function handleLoginSubmit() {
+  const emailInput = document.getElementById('email');
+  const nameInput = document.getElementById('nome');
+  const submitButton = document.getElementById('btn-entrar');
+
+  if (submitButton.disabled) return;
+
+  const validationError = validateLoginForm(emailInput.value, nameInput.value);
+
+  if (validationError) {
+    showButtonFeedback(submitButton, validationError);
+    return;
+  }
+
+  submitButton.textContent = 'Entrando...';
+  submitButton.disabled = true;
+
+  try {
+    const pulseUser = await loginWithEmail(emailInput.value, nameInput.value, currentRole);
+    savePulseUser(pulseUser);
+
+    window.location.href = getDestinationPage(currentRole);
+  } catch (error) {
+    showButtonFeedback(submitButton, error.message || 'Usuário não encontrado');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btn-entrar').addEventListener('click', handleLoginSubmit);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') handleLoginSubmit();
   });
 });

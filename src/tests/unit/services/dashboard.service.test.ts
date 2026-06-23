@@ -82,6 +82,20 @@ describe('DashboardService', () => {
     expect(result.data.alunosEmpregados).toEqual({ valor: 2, percentual: 66.67 });
   });
 
+  it('calcula os estagios do indicador de impacto pela categoria', async () => {
+    repository.listarAlunosParaDashboard.mockResolvedValue([
+      aluno({ categoria: 'conectado' }),
+      aluno({ idAluno: 2, categoria: 'capacitado' }),
+      aluno({ idAluno: 3, categoria: 'transformado' })
+    ]);
+
+    const result = await service.obterResumoImpacto({});
+
+    expect(result.data.conectados).toEqual({ valor: 1, percentual: 33.33 });
+    expect(result.data.capacitados).toEqual({ valor: 1, percentual: 33.33 });
+    expect(result.data.transformados).toEqual({ valor: 1, percentual: 33.33 });
+  });
+
   it('retorna percentual zero quando nao houver alunos', async () => {
     repository.listarAlunosParaDashboard.mockResolvedValue([]);
 

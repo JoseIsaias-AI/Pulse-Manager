@@ -1631,6 +1631,7 @@
       <button class="tab-btn" onclick="showPerfilTab('pf-tab-socio',this)"><i class="ti ti-chart-pie"></i> Socioeconômico</button>
       <button class="tab-btn" onclick="showPerfilTab('pf-tab-contato',this)"><i class="ti ti-phone"></i> Contato</button>
       <button class="tab-btn" onclick="showPerfilTab('pf-tab-desempenho',this)"><i class="ti ti-chart-line"></i> Desempenho</button>
+      <button class="tab-btn" onclick="showPerfilTab('pf-tab-registro',this)"><i class="ti ti-clipboard-check"></i> Notas e Presença</button>
     </div>
 
     <div class="modal-body">
@@ -1780,12 +1781,53 @@
         <div class="sec-label" id="pf-notas-label" style="margin-top:20px;">Notas — Módulos</div>
         <div class="notas-grid" id="pf-notas-grid"></div>
         <div class="nota-media-row"><span class="nota-media-label">Nota média geral</span><span class="nota-media-val" id="pf-nota-media-val">—</span></div>
+
         <div class="sec-label" style="margin-top:20px;">Jornada — Programa Pulse Mais</div>
         <div class="journey" id="pf-journey"></div>
         <div class="journey-legend">
           <span><span class="jl-dot done"></span>Concluído</span>
           <span><span class="jl-dot current"></span>Em andamento</span>
           <span><span class="jl-dot pending"></span>Pendente</span>
+        </div>
+      </div>
+
+      <div id="pf-tab-registro" class="tab-panel">
+        <div class="sec-label">Registrar nota e presença</div>
+        <div class="registro-novo">
+          <div class="field">
+            <label>Tipo de atividade</label>
+            <select id="pf-registro-tipo">
+              <option value="">Selecione o tipo</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Atividade</label>
+            <select id="pf-registro-atividade" disabled>
+              <option value="">Selecione o tipo primeiro</option>
+            </select>
+          </div>
+          <div class="field" style="max-width:90px;">
+            <label>Nota (0-10)</label>
+            <input type="number" id="pf-registro-nota" min="0" max="10" step="0.1" placeholder="—">
+          </div>
+          <div class="registro-presenca" style="flex-direction:column;align-items:flex-start;gap:4px;">
+            <span style="font-size:11px;color:var(--gray-400);">&nbsp;</span>
+            <span style="display:flex;align-items:center;gap:5px;">
+              <input type="checkbox" id="pf-registro-sem-nota">
+              <label for="pf-registro-sem-nota">Sem nota (ex: evento)</label>
+            </span>
+          </div>
+          <div class="registro-presenca">
+            <input type="checkbox" id="pf-registro-presenca">
+            <label for="pf-registro-presenca">Presente</label>
+          </div>
+          <button class="btn btn-primary" id="pf-registro-btn" onclick="registrarNotaPresenca()"><i class="ti ti-plus"></i> Registrar</button>
+        </div>
+        <div class="registro-status" id="pf-registro-status"></div>
+
+        <div class="sec-label" style="margin-top:20px;">Notas e presença registradas</div>
+        <div class="notas-grid" id="pf-registros-grid">
+          <div class="perf-card__sub">Carregando registros...</div>
         </div>
       </div>
 
@@ -1806,11 +1848,16 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="../js/services/config.js"></script>
+<script src="../js/services/api.js"></script>
+<script src="../js/services/sessionUser.js"></script>
 <script src="../js/components/guiaGestor.js"></script>
 <script src="../js/components/menuSuperior.js"></script>
 <script src="../js/components/modalConfEquipe.js"></script>
 <script src="../js/pages/listaAlunos.js"></script>
+<script src="../js/pages/dashboardGestorApp.js"></script>
+<script src="../js/pages/agendaGestorApp.js"></script>
 <script src="../js/pages/spaGestor.js"></script>
+<script src="../js/pages/comunicacao.js"></script>
 <script src="../js/components/configuracoesFrontend.js"></script>
 </body>
 </html>

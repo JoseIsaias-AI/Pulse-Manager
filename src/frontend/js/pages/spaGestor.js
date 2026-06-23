@@ -20,6 +20,14 @@
     if (!target) return;
     target.style.display = 'flex';
 
+    document.querySelectorAll('.menuLateral__item[data-page]').forEach(item => {
+      item.classList.toggle('menuLateral__item--active', item.dataset.page === id);
+    });
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', id);
+    window.history.replaceState({}, '', url);
+
     // Barra de busca: visível apenas na aba Alunos
     const search = document.getElementById('top-search');
     if (search) search.style.display = id === 'alunos' ? '' : 'none';
@@ -50,6 +58,16 @@
       userBlock.title = 'Ver equipe';
       userBlock.addEventListener('click', openEquipeModal);
     }
+
+    /* Aba "Notas e Presença" — tipo filtra atividade, "sem nota" desabilita o campo */
+    const tipoSelect = document.getElementById('pf-registro-tipo');
+    if (tipoSelect) {
+      tipoSelect.addEventListener('change', () => populateAtividadeSelect(tipoSelect.value));
+    }
+    const semNotaCheckbox = document.getElementById('pf-registro-sem-nota');
+    if (semNotaCheckbox) {
+      semNotaCheckbox.addEventListener('change', updateRegistroNotaState);
+    }
   });
 
   /* ── ROTEADOR — hook chamado por guiaBase.js ──────────────── */
@@ -58,7 +76,8 @@
   };
 
   /* ── INICIALIZAR VIEW PADRÃO ──────────────────────────────── */
-  showView('inicio');
+  const requestedView = new URLSearchParams(window.location.search).get('view');
+  showView(VIEWS.includes(requestedView) ? requestedView : 'inicio');
 
   /* ════════════════════════════════════════════════════════════
      VIEW: INÍCIO (inicioGestor)
@@ -350,6 +369,11 @@
      VIEW: DASHBOARD (dashboardGestor) — Dados Pulse Mais 2022–2025
   ════════════════════════════════════════════════════════════ */
   function initDashboardView() {
+    if (window.initDashboardGestorApp) {
+      window.initDashboardGestorApp();
+      return;
+    }
+
     Chart.defaults.font.family = "'Poppins', sans-serif";
     Chart.defaults.font.size   = 11;
 
@@ -516,6 +540,11 @@
      VIEW: AGENDA
   ════════════════════════════════════════════════════════════ */
   function initAgendaView() {
+    if (window.initAgendaGestorApp) {
+      window.initAgendaGestorApp();
+      return;
+    }
+
     const MONTH_NAMES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
     const WD_LABELS   = ['D','S','T','Q','Q','S','S'];
     const TYPE_COLOR  = { evento:'#003870', consulta:'#7B4FD9', aula:'#F4A261', mentoria:'#33B458' };
@@ -878,6 +907,7 @@
 
   let currentPerfilStudent = null;
   let currentPerfilAluno = null;
+  let currentAtividades = [];
   let perfilOptions = null;
   let perfilOptionsPromise = null;
 
@@ -1165,6 +1195,228 @@
     };
   }
 
+  /* ── Notas e presença (registros reais) ───────────────────── */
+
+  function setRegistroStatus(message, isError) {
+    const el = document.getElementById('pf-registro-status');
+    if (!el) return;
+    el.textContent = message || '';
+    el.classList.toggle('is-error', !!isError);
+    el.classList.toggle('is-success', !isError && !!message);
+  }
+
+  async function fetchAtividades() {
+    const response = await fetch(`${GESTOR_API_BASE}/atividades`);
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok || !body.success) {
+      throw new Error(body.message || 'Não foi possível carregar as atividades.');
+    }
+    return body.data.atividades || [];
+  }
+
+  async function fetchJornadaAluno(idAluno) {
+    const response = await fetch(`${GESTOR_API_BASE}/jornada/alunos/${idAluno}`);
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok || !body.success) {
+      throw new Error(body.message || 'Não foi possível carregar notas e presença do aluno.');
+    }
+    return body.data;
+  }
+
+  async function registrarFrequencia(payload) {
+    const response = await fetch(`${GESTOR_API_BASE}/frequencias`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok || !body.success) {
+      throw new Error(body.message || 'Não foi possível registrar a frequência.');
+    }
+    return body.data;
+  }
+
+  async function registrarParticipacaoEvento(payload) {
+    const response = await fetch(`${GESTOR_API_BASE}/participacoes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok || !body.success) {
+      throw new Error(body.message || 'Não foi possível registrar a participação.');
+    }
+    return body.data;
+  }
+
+  function populateTipoAtividadeSelect(atividades) {
+    const select = document.getElementById('pf-registro-tipo');
+    if (!select) return;
+    const tipos = [...new Set(atividades.map((a) => a.tipo))].sort();
+    select.innerHTML = '<option value="">Selecione o tipo</option>' + tipos.map((tipo) =>
+      `<option value="${tipo}">${formatPerfilLabel(tipo)}</option>`
+    ).join('');
+  }
+
+  function populateAtividadeSelect(tipo) {
+    const select = document.getElementById('pf-registro-atividade');
+    if (!select) return;
+
+    if (!tipo) {
+      select.innerHTML = '<option value="">Selecione o tipo primeiro</option>';
+      select.disabled = true;
+      return;
+    }
+
+    const filtradas = currentAtividades.filter((a) => a.tipo === tipo);
+    select.disabled = false;
+    select.innerHTML = '<option value="">Selecione uma atividade</option>' + filtradas.map((a) =>
+      `<option value="${a.idAtividade}">${a.titulo}${a.data ? ' — ' + String(a.data).slice(0, 10) : ''}</option>`
+    ).join('');
+  }
+
+  function updateRegistroNotaState() {
+    const semNota = document.getElementById('pf-registro-sem-nota')?.checked;
+    const notaInput = document.getElementById('pf-registro-nota');
+    if (!notaInput) return;
+    notaInput.disabled = !!semNota;
+    if (semNota) notaInput.value = '';
+  }
+
+  function renderRegistrosGrid(jornada) {
+    const grid = document.getElementById('pf-registros-grid');
+    if (!grid) return;
+
+    const registros = [...(jornada?.frequencias || []), ...(jornada?.participacoesEventos || [])]
+      .sort((a, b) => String(b.dataPart).localeCompare(String(a.dataPart)));
+
+    if (registros.length === 0) {
+      grid.innerHTML = '<div class="perf-card__sub">Nenhum registro de nota ou presença ainda.</div>';
+      return;
+    }
+
+    grid.innerHTML = registros.map((r) => {
+      const editavel = r.tipoAtividade === 'aula';
+      const notaValue = r.nota !== null && r.nota !== undefined ? r.nota : '';
+      return `<div class="registro-item" data-id-atividade="${r.idAtividade}" data-tipo="${r.tipoAtividade}">
+        <div class="registro-titulo">
+          ${r.tituloAtividade}
+          <small>${formatPerfilLabel(r.tipoAtividade)} · ${r.dataPart ? String(r.dataPart).slice(0, 10) : '—'}</small>
+        </div>
+        <label class="registro-presenca">
+          <input type="checkbox" class="registro-presenca-input" ${r.statusPart ? 'checked' : ''} ${editavel ? '' : 'disabled'}>
+          Presente
+        </label>
+        <input type="number" class="registro-nota-input" min="0" max="10" step="0.1" value="${notaValue}" ${editavel ? '' : 'disabled'}>
+        ${editavel
+          ? '<button class="registro-save-btn" title="Salvar"><i class="ti ti-device-floppy"></i></button>'
+          : ''}
+      </div>`;
+    }).join('');
+
+    grid.querySelectorAll('.registro-save-btn').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const item = btn.closest('.registro-item');
+        const idAtividade = Number(item.dataset.idAtividade);
+        const presente = item.querySelector('.registro-presenca-input').checked;
+        const notaRaw = item.querySelector('.registro-nota-input').value.trim();
+        const nota = notaRaw === '' ? undefined : Number(notaRaw);
+
+        if (nota !== undefined && (!Number.isFinite(nota) || nota < 0 || nota > 10)) {
+          setRegistroStatus('A nota deve ser um número entre 0 e 10.', true);
+          return;
+        }
+
+        btn.disabled = true;
+        try {
+          await registrarFrequencia({
+            idAluno: currentPerfilAluno.idAluno,
+            idAtividade,
+            statusPart: presente,
+            nota
+          });
+          setRegistroStatus('Registro atualizado com sucesso.', false);
+          const jornada = await fetchJornadaAluno(currentPerfilAluno.idAluno);
+          renderRegistrosGrid(jornada);
+        } catch (error) {
+          setRegistroStatus(error.message || 'Não foi possível salvar o registro.', true);
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    });
+  }
+
+  window.registrarNotaPresenca = async function () {
+    const btn = document.getElementById('pf-registro-btn');
+    try {
+      if (!currentPerfilAluno?.idAluno) {
+        throw new Error('Este aluno ainda não possui identificador para registro.');
+      }
+
+      const idAtividade = Number(document.getElementById('pf-registro-atividade').value);
+      if (!idAtividade) {
+        throw new Error('Selecione uma atividade para registrar.');
+      }
+
+      const presente = document.getElementById('pf-registro-presenca').checked;
+      const semNota = document.getElementById('pf-registro-sem-nota').checked;
+      const notaRaw = document.getElementById('pf-registro-nota').value.trim();
+      const nota = semNota || notaRaw === '' ? undefined : Number(notaRaw);
+      if (nota !== undefined && (!Number.isFinite(nota) || nota < 0 || nota > 10)) {
+        throw new Error('A nota deve ser um número entre 0 e 10.');
+      }
+
+      const atividade = currentAtividades.find((a) => a.idAtividade === idAtividade);
+      if (!atividade) {
+        throw new Error('Atividade inválida.');
+      }
+
+      if (btn) btn.disabled = true;
+      setRegistroStatus('Registrando...', false);
+
+      const payload = { idAluno: currentPerfilAluno.idAluno, idAtividade, statusPart: presente, nota };
+      if (atividade.tipo === 'aula') {
+        await registrarFrequencia(payload);
+      } else {
+        await registrarParticipacaoEvento(payload);
+      }
+
+      setRegistroStatus('Registro salvo com sucesso.', false);
+      document.getElementById('pf-registro-tipo').value = '';
+      populateAtividadeSelect('');
+      document.getElementById('pf-registro-nota').value = '';
+      document.getElementById('pf-registro-sem-nota').checked = false;
+      updateRegistroNotaState();
+      document.getElementById('pf-registro-presenca').checked = false;
+
+      const jornada = await fetchJornadaAluno(currentPerfilAluno.idAluno);
+      renderRegistrosGrid(jornada);
+    } catch (error) {
+      setRegistroStatus(error.message || 'Não foi possível registrar.', true);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  };
+
+  async function loadRegistrosTab(idAluno) {
+    const grid = document.getElementById('pf-registros-grid');
+    if (grid) grid.innerHTML = '<div class="perf-card__sub">Carregando registros...</div>';
+    setRegistroStatus('', false);
+
+    try {
+      if (currentAtividades.length === 0) {
+        currentAtividades = await fetchAtividades();
+        populateTipoAtividadeSelect(currentAtividades);
+      }
+      const jornada = await fetchJornadaAluno(idAluno);
+      renderRegistrosGrid(jornada);
+    } catch (error) {
+      if (grid) grid.innerHTML = '<div class="perf-card__sub">Não foi possível carregar os registros.</div>';
+      setRegistroStatus(error.message || 'Erro ao carregar notas e presença.', true);
+    }
+  }
+
   async function openStudentProfile(s) {
     const overlay = document.getElementById('perfil-overlay');
     if (!overlay) return;
@@ -1255,6 +1507,11 @@
         const line      = i < 4 ? `<div class="journey-line ${lineDone}"></div>` : '';
         return `<div class="journey-step"><div class="journey-node ${cls}">${modN}</div><div class="journey-label">${name}</div></div>${line}`;
       }).join('');
+    }
+
+    /* Notas e presença reais (registros do banco) */
+    if (currentPerfilAluno?.idAluno) {
+      loadRegistrosTab(currentPerfilAluno.idAluno);
     }
 
     /* Reset para aba "Dados gerais" */

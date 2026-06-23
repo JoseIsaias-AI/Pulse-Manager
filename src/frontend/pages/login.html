@@ -76,13 +76,11 @@
       </div><!-- /.role-selector -->
 
       <div class="form-group">
-      <!-- Agrupa o label e o input do CPF em bloco separado para espaçamento correto -->
+      <!-- Agrupa o label e o input de e-mail -->
 
-        <label for="cpf">CPF:</label>
-        <!-- Label associado ao input via for="cpf"; clicar nele foca o campo -->
+        <label for="email">E-mail:</label>
 
-        <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" autocomplete="off">
-        <!-- Campo de texto para o CPF; maxlength limita ao formato 000.000.000-00 -->
+        <input type="email" id="email" placeholder="seu.email@exemplo.com" autocomplete="email">
 
       </div><!-- /.form-group -->
 
@@ -107,8 +105,9 @@
 
   </div><!-- /.login-bg -->
 
+  <script src="../js/services/api.js"></script>
   <script src="../js/pages/login.js"></script>
-  <!-- Carrega o JS do login: máscara de CPF, validação e redirect por perfil -->
+  <!-- Carrega o JS do login: validação de e-mail/nome e redirect por perfil -->
   <!-- ATENÇÃO: mova logoIcon.png e logo.png para a pasta assets/ -->
 
 </body>

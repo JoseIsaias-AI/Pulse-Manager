@@ -486,7 +486,10 @@
 
         <!-- Page header -->
         <div style="flex-shrink:0;">
-          <div class="psi-page-title">Bem-estar dos Alunos</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;">
+            <div class="psi-page-title">Bem-estar dos Alunos</div>
+            <button type="button" class="btn btn-primary" id="abrir-comunicacao"><i class="ti ti-message-circle"></i> Comunicação</button>
+          </div>
           <div class="psi-page-sub">Semana 15 · 3 sessões hoje</div>
         </div>
 
@@ -1241,7 +1244,7 @@
             </div>
             <div class="psico-field">
               <label><i class="ti ti-user-heart"></i> Psicólogo(a)</label>
-              <input type="text" id="pf-psi" placeholder="Nome do profissional">
+              <input type="text" id="pf-psi" placeholder="Nome do profissional" readonly>
             </div>
           </div>
           <div class="psico-field psico-field--full">
@@ -1256,10 +1259,23 @@
               <button type="button" class="psico-label-btn psico-label-btn--observacao" data-label="observacao" onclick="pickLabel(this)"><i class="ti ti-eye" style="font-size:11px;"></i> Observação</button>
             </div>
             <input type="hidden" id="pf-label" value="">
+            <div style="display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap;">
+              <input type="text" id="pf-nova-label" placeholder="Descrição da nova label" style="flex:1;min-width:190px;">
+              <select id="pf-nova-label-tipo" style="min-width:150px;">
+                <option value="acompanhamento">Acompanhamento</option>
+                <option value="risco">Risco</option>
+                <option value="interesse">Interesse</option>
+                <option value="perfil">Perfil</option>
+                <option value="prioridade">Prioridade</option>
+                <option value="outro">Outro</option>
+              </select>
+              <button type="button" class="btn btn-ghost" id="pf-criar-label">Criar label</button>
+            </div>
           </div>
           <div class="psico-form__actions">
+            <span id="psico-form-error" role="alert" style="display:none;color:#E24B4A;font-size:11px;font-weight:600;"></span>
             <span class="psico-form__hint"><i class="ti ti-lock" style="font-size:12px;"></i> Acesso restrito a profissionais autorizados</span>
-            <button class="btn btn-psico" onclick="registrarAnotacao()"><i class="ti ti-plus"></i> Registrar anotação</button>
+            <button class="btn btn-psico" id="pf-registrar-anotacao" onclick="registrarAnotacao()"><i class="ti ti-plus"></i> Registrar anotação</button>
           </div>
         </div>
         <div class="sec-label" style="margin-top:20px;">Anotações anteriores</div>
@@ -1282,13 +1298,59 @@
   <i class="ti ti-circle-check"></i> Anotação registrada com sucesso
 </div>
 
+<!-- Central de comunicação -->
+<div class="overlay" id="comunicacao-overlay">
+  <div class="modal" style="max-width:1080px;width:min(1080px,94vw);max-height:90vh;overflow:auto;">
+    <div class="modal-header">
+      <div class="mh-top">
+        <div class="modal-avatar"><i class="ti ti-speakerphone"></i></div>
+        <div><div class="modal-name">Central de comunicação</div><div class="modal-meta">Notificações e oportunidades</div></div>
+      </div>
+      <button type="button" class="close-btn" id="fechar-comunicacao" aria-label="Fechar"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">
+      <section>
+        <div class="sec-label">Nova comunicação</div>
+        <div class="field-grid">
+          <div class="field span2"><label>Aluno destinatário</label><select id="com-aluno"><option value="">Carregando alunos...</option></select></div>
+          <div class="field"><label>Título</label><input id="com-titulo" maxlength="255"></div>
+          <div class="field"><label>Tipo</label><select id="com-tipo"><option value="informativo">Informativo</option><option value="alerta">Alerta</option><option value="convite">Convite</option><option value="urgente">Urgente</option><option value="outro">Outro</option></select></div>
+          <div class="field span2"><label>Mensagem</label><textarea id="com-mensagem" rows="3"></textarea></div>
+        </div>
+        <div id="com-status" role="status" style="font-size:12px;margin:8px 0;color:#6B7684;"></div>
+        <button type="button" class="btn btn-primary" id="com-enviar">Enviar comunicação</button>
+        <div class="sec-label" style="margin-top:20px;">Comunicações enviadas</div>
+        <div id="com-lista" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </section>
+
+      <section>
+        <div class="sec-label">Nova oportunidade</div>
+        <div class="field-grid">
+          <div class="field"><label>Título</label><input id="op-titulo" maxlength="255"></div>
+          <div class="field"><label>Tipo</label><select id="op-tipo"><option value="emprego">Emprego</option><option value="estagio">Estágio</option><option value="curso">Curso</option><option value="evento">Evento</option><option value="bolsa">Bolsa</option><option value="voluntariado">Voluntariado</option><option value="outro">Outro</option></select></div>
+          <div class="field span2"><label>Descrição</label><textarea id="op-descricao" rows="3"></textarea></div>
+          <div class="field span2"><label>Prazo de inscrição</label><input type="date" id="op-prazo"></div>
+        </div>
+        <div id="op-status" role="status" style="font-size:12px;margin:8px 0;color:#6B7684;"></div>
+        <button type="button" class="btn btn-primary" id="op-criar">Publicar oportunidade</button>
+        <div class="sec-label" style="margin-top:20px;">Oportunidades publicadas</div>
+        <div id="op-lista" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
 <!-- Scripts — ordem importante -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="../js/services/configPsicologo.js"></script>
+<script src="../js/services/api.js"></script>
+<script src="../js/services/sessionUser.js"></script>
 <script src="../js/components/guiaPsicologo.js"></script>
 <script src="../js/components/menuSuperior.js"></script>
 <script src="../js/components/modalConfEquipe.js"></script>
 <script src="../js/pages/spaPsicologo.js"></script>
+<script src="../js/pages/historicoPsicologico.js"></script>
+<script src="../js/pages/comunicacao.js"></script>
 <script src="../js/components/configuracoesFrontend.js"></script>
 </body>
 </html>

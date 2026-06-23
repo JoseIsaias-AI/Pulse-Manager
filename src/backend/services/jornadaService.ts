@@ -10,6 +10,7 @@ import {
 } from '../models/jornadaModel';
 import { JornadaRepository } from '../repositories/jornadaRepository';
 import { BusinessRuleError, ConflictError, NotFoundError, PayloadValidationError } from '../utils/errors';
+import { RiscoEvasaoService } from './riscoEvasaoService';
 
 interface SuccessResponse<T> {
   success: true;
@@ -36,8 +37,22 @@ function toParticipacaoView(item: ParticipacaoRecord): JornadaParticipacaoView {
   };
 }
 
+const TIPOS_ATIVIDADE_VALIDOS = ['aula', 'mentoria', 'workshop', 'evento', 'avaliacao', 'curso', 'outro'];
+
 export class JornadaService {
-  constructor(private readonly repository: JornadaRepository) { }
+  constructor(
+    private readonly repository: JornadaRepository,
+    private readonly riscoEvasaoService?: Pick<RiscoEvasaoService, 'recalcularAluno'>
+  ) { }
+
+  async listarAtividades(tipo?: string): Promise<SuccessResponse<{ atividades: AtividadeRecord[] }>> {
+    if (tipo && !TIPOS_ATIVIDADE_VALIDOS.includes(tipo)) {
+      throw new PayloadValidationError('O campo tipo deve ser um tipo de atividade valido.');
+    }
+
+    const atividades = await this.repository.listAtividades(tipo);
+    return { success: true, data: { atividades } };
+  }
 
   async obterJornadaAluno(idAluno: number): Promise<SuccessResponse<JornadaAlunoResponseData>> {
     this.validarId(idAluno, 'idAluno');
@@ -56,7 +71,7 @@ export class JornadaService {
       .filter((item) => item.atividade?.tipo === 'aula')
       .map(toParticipacaoView);
     const participacoesEventos = participacoes
-      .filter((item) => item.atividade?.tipo === 'evento')
+      .filter((item) => item.atividade?.tipo !== 'aula')
       .map(toParticipacaoView);
 
     return {
@@ -121,6 +136,7 @@ export class JornadaService {
         nota: payload.nota ?? existente.nota,
         dataPart
       });
+      await this.recalcularRisco(aluno.idAluno);
 
       return {
         success: true,
@@ -135,6 +151,7 @@ export class JornadaService {
       nota: payload.nota ?? null,
       dataPart
     });
+    await this.recalcularRisco(aluno.idAluno);
 
     return {
       success: true,
@@ -148,10 +165,6 @@ export class JornadaService {
     const aluno = await this.validarAluno(payload.idAluno);
     const atividade = await this.validarAtividade(payload.idAtividade);
     this.validarNota(payload.nota);
-
-    if (atividade.tipo !== 'evento') {
-      throw new BusinessRuleError('A atividade informada nao e do tipo evento para participacao.');
-    }
 
     const dataPart = toDateISO(payload.dataPart);
     if (!isDateStringValida(dataPart)) {
@@ -170,6 +183,7 @@ export class JornadaService {
       nota: payload.nota ?? null,
       dataPart
     });
+    await this.recalcularRisco(aluno.idAluno);
 
     return {
       success: true,
@@ -307,6 +321,12 @@ export class JornadaService {
       throw new NotFoundError('Aluno nao encontrado.');
     }
     return aluno;
+  }
+
+  private async recalcularRisco(idAluno: number): Promise<void> {
+    if (this.riscoEvasaoService) {
+      await this.riscoEvasaoService.recalcularAluno(idAluno);
+    }
   }
 
   private async validarAtividade(idAtividade: number): Promise<AtividadeRecord> {

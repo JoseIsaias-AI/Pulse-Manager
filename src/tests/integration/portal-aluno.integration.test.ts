@@ -40,7 +40,9 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
 
   describe('UC-01 - Visualizar perfil no portal', () => {
     it('CT01 - deve retornar o perfil do aluno com campos do portal', async () => {
-      const response = await request(app).get(`/api/portal/alunos/${aluno.idAluno}`);
+      const response = await request(app)
+        .get(`/api/portal/alunos/${aluno.idAluno}`)
+        .set('x-user-id', String(aluno.idAluno));
 
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
@@ -55,7 +57,9 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
     });
 
     it('CT02 - deve retornar 404 quando aluno nao existe', async () => {
-      const response = await request(app).get('/api/portal/alunos/9999');
+      const response = await request(app)
+        .get('/api/portal/alunos/9999')
+        .set('x-user-id', '9999');
 
       expect(response.status).toBe(404);
       expect(response.body).toMatchObject({
@@ -65,7 +69,9 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
     });
 
     it('CT03 - deve retornar 400 para idAluno invalido', async () => {
-      const response = await request(app).get('/api/portal/alunos/abc');
+      const response = await request(app)
+        .get('/api/portal/alunos/abc')
+        .set('x-user-id', String(aluno.idAluno));
 
       expect(response.status).toBe(400);
       expect(response.body).toMatchObject({
@@ -79,6 +85,7 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
     it('CT01 - deve atualizar email do aluno', async () => {
       const response = await request(app)
         .patch(`/api/portal/alunos/${aluno.idAluno}/contato`)
+        .set('x-user-id', String(aluno.idAluno))
         .send({ email: 'ana.novo@pulsemais.org' });
 
       expect(response.status).toBe(200);
@@ -89,6 +96,7 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
     it('CT02 - deve atualizar telefone do aluno', async () => {
       const response = await request(app)
         .patch(`/api/portal/alunos/${aluno.idAluno}/contato`)
+        .set('x-user-id', String(aluno.idAluno))
         .send({ telefone: '11988880000' });
 
       expect(response.status).toBe(200);
@@ -99,6 +107,7 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
     it('CT03 - deve retornar 404 quando aluno nao existe', async () => {
       const response = await request(app)
         .patch('/api/portal/alunos/9999/contato')
+        .set('x-user-id', '9999')
         .send({ telefone: '11988880000' });
 
       expect(response.status).toBe(404);
@@ -111,6 +120,7 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
     it('CT04 - deve rejeitar email invalido', async () => {
       const response = await request(app)
         .patch(`/api/portal/alunos/${aluno.idAluno}/contato`)
+        .set('x-user-id', String(aluno.idAluno))
         .send({ email: 'emailsemarroba' });
 
       expect(response.status).toBe(400);
@@ -123,6 +133,7 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
     it('CT05 - deve rejeitar quando nenhum campo e informado', async () => {
       const response = await request(app)
         .patch(`/api/portal/alunos/${aluno.idAluno}/contato`)
+        .set('x-user-id', String(aluno.idAluno))
         .send({});
 
       expect(response.status).toBe(400);
@@ -136,7 +147,9 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
   describe('RNF - Qualidade para UC-01 e UC-02', () => {
     performanceIt('RNF-DES-UC01 - deve responder visualizacao do perfil em ate 1000ms', async () => {
       const inicio = Date.now();
-      const response = await request(app).get(`/api/portal/alunos/${aluno.idAluno}`);
+      const response = await request(app)
+        .get(`/api/portal/alunos/${aluno.idAluno}`)
+        .set('x-user-id', String(aluno.idAluno));
       const duracaoMs = Date.now() - inicio;
 
       expect(response.status).toBe(200);
@@ -146,10 +159,33 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
     it('RNF-SEG-UC02 - deve padronizar erro sem expor stack trace', async () => {
       const response = await request(app)
         .patch(`/api/portal/alunos/${aluno.idAluno}/contato`)
+        .set('x-user-id', String(aluno.idAluno))
         .send({});
 
       expect(response.status).toBe(400);
       expect(response.body.stack).toBeUndefined();
+    });
+
+    it('RNF-SEG-UC01 - deve impedir que um aluno consulte o perfil de outro', async () => {
+      const response = await request(app)
+        .get(`/api/portal/alunos/${aluno.idAluno}`)
+        .set('x-user-id', String(aluno.idAluno + 1));
+
+      expect(response.status).toBe(403);
+      expect(response.body).toMatchObject({
+        success: false,
+        message: 'Acesso negado: voce so pode visualizar os seus proprios dados.'
+      });
+    });
+
+    it('RNF-SEG-UC02 - deve impedir que um aluno altere o contato de outro', async () => {
+      const response = await request(app)
+        .patch(`/api/portal/alunos/${aluno.idAluno}/contato`)
+        .set('x-user-id', String(aluno.idAluno + 1))
+        .send({ telefone: '11900000000' });
+
+      expect(response.status).toBe(403);
+      expect(response.body.success).toBe(false);
     });
   });
 });
