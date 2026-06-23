@@ -13,7 +13,7 @@ export class PortalAlunoController {
         positiveInteger(req.params.idAluno, 'idAluno'),
         req.usuario?.id
       );
-      res.status(200).json(result);
+      res.status(200).json({ ...result, message: 'Perfil do aluno carregado com sucesso.' });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -26,7 +26,7 @@ export class PortalAlunoController {
         req.body,
         req.usuario?.id
       );
-      res.status(200).json(result);
+      res.status(200).json({ ...result, message: 'Contato atualizado com sucesso.' });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -36,7 +36,7 @@ export class PortalAlunoController {
     try {
       const idAluno = positiveInteger(req.params.idAluno, 'idAluno');
       const result = await this.service.listarNotificacoes(idAluno, req.usuario?.id);
-      res.status(200).json(result);
+      res.status(200).json({ ...result, message: 'Notificacoes carregadas com sucesso.' });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -45,7 +45,7 @@ export class PortalAlunoController {
   listarOportunidades = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const result = await this.service.listarOportunidades();
-      res.status(200).json(result);
+      res.status(200).json({ ...result, message: 'Oportunidades carregadas com sucesso.' });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -53,7 +53,7 @@ export class PortalAlunoController {
 
   private handle(error: unknown, res: Response, next: NextFunction): void {
     if (error instanceof AppError) {
-      res.status(error.statusCode).json({ success: false, message: error.message });
+      res.status(error.statusCode).json({ success: false, data: null, message: error.message });
       return;
     }
     next(error);

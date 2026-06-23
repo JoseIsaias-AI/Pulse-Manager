@@ -4,6 +4,7 @@ import { app } from '../../backend/app';
 import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
 import { Aluno } from '../../backend/models/alunoModel';
 import { MembroEquipe, Psicologo } from '../../backend/models/usuarioModel';
+import { expectErrorContract, expectSuccessContract } from '../helpers/responseContract';
 
 describe('Autenticacao por CPF', () => {
   let alunoRepository: Repository<Aluno>;
@@ -61,6 +62,7 @@ describe('Autenticacao por CPF', () => {
     });
 
     expect(response.status).toBe(200);
+    expectSuccessContract(response.body);
     expect(response.body).toMatchObject({
       success: true,
       message: 'Login realizado com sucesso.',
@@ -82,6 +84,7 @@ describe('Autenticacao por CPF', () => {
     });
 
     expect(response.status).toBe(404);
+    expectErrorContract(response.body);
     expect(response.body).toMatchObject({
       success: false,
       message: 'Usuario nao encontrado para o perfil informado.'
@@ -96,6 +99,7 @@ describe('Autenticacao por CPF', () => {
     });
 
     expect(response.status).toBe(400);
+    expectErrorContract(response.body);
     expect(response.body).toMatchObject({
       success: false,
       message: 'CPF invalido.'

@@ -5,6 +5,7 @@ import { AppDataSource, initializeDatabase } from '../../backend/database/connec
 import { Aluno } from '../../backend/models/alunoModel';
 import { Agenda } from '../../backend/models/AgendaModel';
 import { MembroEquipe } from '../../backend/models/usuarioModel';
+import { expectErrorContract, expectSuccessContract } from '../helpers/responseContract';
 
 describe('RF020/RF021 - Gestao de Agenda', () => {
   let alunoRepository: Repository<Aluno>;
@@ -52,6 +53,7 @@ describe('RF020/RF021 - Gestao de Agenda', () => {
       const response = await request(app).get('/api/agenda');
 
       expect(response.status).toBe(200);
+      expectSuccessContract(response.body);
       expect(response.body.success).toBe(true);
       expect(Array.isArray(response.body.data)).toBe(true);
       expect(response.body.data.length).toBe(0);
@@ -110,6 +112,7 @@ describe('RF020/RF021 - Gestao de Agenda', () => {
       const response = await request(app).get('/api/agenda?dataInicio=10-04-2026');
 
       expect(response.status).toBe(400);
+      expectErrorContract(response.body);
       expect(response.body).toMatchObject({
         success: false,
         message: 'O campo dataInicio deve estar no formato YYYY-MM-DD.'
@@ -143,6 +146,7 @@ describe('RF020/RF021 - Gestao de Agenda', () => {
         });
 
       expect(response.status).toBe(201);
+      expectSuccessContract(response.body);
       expect(response.body.success).toBe(true);
       expect(response.body.data).toMatchObject({
         tipoUser: 'aluno',
@@ -164,6 +168,7 @@ describe('RF020/RF021 - Gestao de Agenda', () => {
         });
 
       expect(response.status).toBe(422);
+      expectErrorContract(response.body);
       expect(response.body).toMatchObject({
         success: false,
         message: 'Apenas usuarios com perfil gestor podem modificar a agenda.'

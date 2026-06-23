@@ -16,7 +16,7 @@ export class AuthController {
 
   private handle(error: unknown, res: Response, next: NextFunction): void {
     if (error instanceof AppError) {
-      res.status(error.statusCode).json({ success: false, message: error.message });
+      res.status(error.statusCode).json({ success: false, data: null, message: error.message });
       return;
     }
     next(error);

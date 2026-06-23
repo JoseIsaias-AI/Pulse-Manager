@@ -14,7 +14,7 @@ export class AgendaController {
         dataInicio: optionalString(req.query.dataInicio),
         dataFim: optionalString(req.query.dataFim)
       });
-      res.status(200).json(result);
+      res.status(200).json({ ...result, message: 'Agenda listada com sucesso.' });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -22,7 +22,10 @@ export class AgendaController {
 
   criar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.status(201).json(await this.service.criar(req.body, this.perfil(req)));
+      res.status(201).json({
+        ...await this.service.criar(req.body, this.perfil(req)),
+        message: 'Compromisso criado com sucesso.'
+      });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -30,7 +33,10 @@ export class AgendaController {
 
   atualizar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.status(200).json(await this.service.atualizar(positiveInteger(req.params.idAgenda, 'idAgenda'), req.body, this.perfil(req)));
+      res.status(200).json({
+        ...await this.service.atualizar(positiveInteger(req.params.idAgenda, 'idAgenda'), req.body, this.perfil(req)),
+        message: 'Compromisso atualizado com sucesso.'
+      });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -38,7 +44,10 @@ export class AgendaController {
 
   cancelar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.status(200).json(await this.service.cancelar(positiveInteger(req.params.idAgenda, 'idAgenda'), this.perfil(req)));
+      res.status(200).json({
+        ...await this.service.cancelar(positiveInteger(req.params.idAgenda, 'idAgenda'), this.perfil(req)),
+        message: 'Compromisso cancelado com sucesso.'
+      });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -50,7 +59,7 @@ export class AgendaController {
 
   private handle(error: unknown, res: Response, next: NextFunction): void {
     if (error instanceof AppError) {
-      res.status(error.statusCode).json({ success: false, message: error.message });
+      res.status(error.statusCode).json({ success: false, data: null, message: error.message });
       return;
     }
     next(error);
