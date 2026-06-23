@@ -2378,7 +2378,7 @@ O Diagrama Entidade-Relacionamento do PulseManager representa de forma estrutura
 
 Esta seção traduz o DER apresentado na seção 3.6.2 para o modelo relacional e para sua implementação física em PostgreSQL. Como a modelagem foi revisada ao longo do desenvolvimento, as tabelas abaixo representam a versão consolidada após as atualizações da Sprint 4, e não apenas o recorte inicial produzido na Sprint 2.
 
-O modelo relacional organiza os dados em tabelas com seus respectivos campos (Normando, 2024). As chaves primárias identificam de forma única cada registro, enquanto as chaves estrangeiras conectam uma tabela a outra e preservam os vínculos definidos na modelagem. Dessa forma, as entidades e relacionamentos do DER são convertidos em uma estrutura pronta para implementação no banco de dados.
+O modelo relacional organiza os dados em tabelas com seus respectivos campos (NORMANDO, 2024). As chaves primárias identificam de forma única cada registro, enquanto as chaves estrangeiras conectam uma tabela a outra e preservam os vínculos definidos na modelagem. Dessa forma, as entidades e relacionamentos do DER são convertidos em uma estrutura pronta para implementação no banco de dados.
 
 </div>
 
@@ -3833,13 +3833,21 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
-ABRASCE. Programa Pulse Mais 2026 inicia com alta adesão e reforça aposta na formação de jovens para o mercado de tecnologia. 2026. Disponível em: https://abrasce.com.br/espaco-do-associado/tecnologia/programa-pulse-mais-2026-inicia-com-alta-adesao-e-reforca-aposta-na-formacao-de-jovens-para-o-mercado-de-tecnologia/. Acesso em: 10 jun. 2026.
+ABRASCE. *Programa Pulse Mais 2026 inicia com alta adesão e reforça aposta na formação de jovens para o mercado de tecnologia*. 2026. Disponível em: https://abrasce.com.br/espaco-do-associado/tecnologia/programa-pulse-mais-2026-inicia-com-alta-adesao-e-reforca-aposta-na-formacao-de-jovens-para-o-mercado-de-tecnologia/. Acesso em: 10 jun. 2026.
 
-ESG INSIDE. Pulse Mais abre inscrições para programa gratuito que prepara jovens para carreiras em tecnologia. 2026. Disponível em: https://esginside.com.br/2026/01/23/pulse-mais-abre-inscricoes-para-programa-gratuito-que-prepara-jovens-para-carreiras-em-tecnologia/. Acesso em: 10 jun. 2026.
+BRASIL. Lei nº 13.709, de 14 de agosto de 2018. *Lei Geral de Proteção de Dados Pessoais (LGPD)*. Brasília, DF: Presidência da República, 2018. Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm. Acesso em: 10 jun. 2026.
 
-OBSERVATÓRIO DO TERCEIRO SETOR. Pulse Mais celebra 3 anos e amplia oportunidades para jovens na tecnologia. 2025. Disponível em: https://observatorio3setor.org.br/pulse-mais-celebra-3-anos-e-amplia-oportunidades-para-jovens-na-tecnologia/. Acesso em: 10 jun. 2026.
+ESG INSIDE. *Pulse Mais abre inscrições para programa gratuito que prepara jovens para carreiras em tecnologia*. 2026. Disponível em: https://esginside.com.br/2026/01/23/pulse-mais-abre-inscricoes-para-programa-gratuito-que-prepara-jovens-para-carreiras-em-tecnologia/. Acesso em: 10 jun. 2026.
 
-PULSE MAIS. Pulse Mais. 2026. Disponível em: https://pulsemais.org.br/. Acesso em: 10 jun. 2026.
+INTERNATIONAL ORGANIZATION FOR STANDARDIZATION. *ISO/IEC 25010: Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models*. Geneva: ISO, 2011. Disponível em: https://www.iso.org/standard/35733.html. Acesso em: 10 jun. 2026.
+
+NORMANDO, Célio. *Modelo relacional: conceitos, restrições de integridade, mapeamento de modelos E-R para esquemas relacionais*. Medium, 2024. Disponível em: https://medium.com/@celionormando/modelo-relacional-8de45e45e009. Acesso em: 10 jun. 2026.
+
+OBSERVATÓRIO DO TERCEIRO SETOR. *Pulse Mais celebra 3 anos e amplia oportunidades para jovens na tecnologia*. 2025. Disponível em: https://observatorio3setor.org.br/pulse-mais-celebra-3-anos-e-amplia-oportunidades-para-jovens-na-tecnologia/. Acesso em: 10 jun. 2026.
+
+PULSE MAIS. *Pulse Mais: site institucional*. 2026. Disponível em: https://pulsemais.org.br/. Acesso em: 10 jun. 2026.
+
+WORLD WIDE WEB CONSORTIUM (W3C). *Web Content Accessibility Guidelines (WCAG) 2.1*. [S. l.]: W3C, 2018. Disponível em: https://www.w3.org/TR/WCAG21/. Acesso em: 10 jun. 2026.
 
 # <a name="c9"></a>Anexos
 
