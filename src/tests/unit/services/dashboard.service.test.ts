@@ -1,5 +1,7 @@
 import { DashboardService } from '../../../backend/services/dashboardService';
 import { registrarConsultaDashboard } from '../../../backend/integrations/dashboardAuditoriaIntegration';
+import { DashboardRepository } from '../../../backend/repositories/dashboardRepository';
+import { asMockedDependency } from '../../helpers/mockHelper';
 
 jest.mock('../../../backend/integrations/dashboardAuditoriaIntegration', () => ({
   registrarConsultaDashboard: jest.fn()
@@ -50,7 +52,7 @@ describe('DashboardService', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     repository = makeRepository();
-    service = new DashboardService(repository as any);
+    service = new DashboardService(asMockedDependency<DashboardRepository>(repository));
     (registrarConsultaDashboard as jest.Mock).mockResolvedValue(undefined);
   });
 

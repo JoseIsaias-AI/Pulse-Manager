@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
 import { Aluno } from '../../backend/models/alunoModel';
 import { Atividade } from '../../backend/models/atividadeModel';
 import { Participacao } from '../../backend/models/participacaoModel';
@@ -19,16 +19,16 @@ describe('UC-23 - Acessar desempenho academico dos alunos (Psicologo)', () => {
   let psicologo: Psicologo;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepo = AppDataSource.getRepository(Aluno);
-    psicologoRepo = AppDataSource.getRepository(Psicologo);
-    atividadeRepo = AppDataSource.getRepository(Atividade);
-    participacaoRepo = AppDataSource.getRepository(Participacao);
-    historicoRepo = AppDataSource.getRepository(HistoricoPsicologico);
+    await setupIntegrationDatabase();
+    alunoRepo = getIntegrationRepository(Aluno);
+    psicologoRepo = getIntegrationRepository(Psicologo);
+    atividadeRepo = getIntegrationRepository(Atividade);
+    participacaoRepo = getIntegrationRepository(Participacao);
+    historicoRepo = getIntegrationRepository(HistoricoPsicologico);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
 
     psicologo = await psicologoRepo.save({
       nomePsi: 'Dra. Carla Mendes',
@@ -68,11 +68,7 @@ describe('UC-23 - Acessar desempenho academico dos alunos (Psicologo)', () => {
     });
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   it('CT01 - deve retornar desempenho do aluno para psicologo com vinculo', async () => {
     const response = await request(app)

@@ -127,6 +127,9 @@ export class Aluno {
   @Column({ name: 'risco_evasao', type: 'varchar', length: 20, default: 'baixo' })
   riscoEvasao!: RiscoEvasao;
 
+  @Column({ name: 'probabilidade_evasao', type: 'decimal', precision: 5, scale: 2, nullable: true })
+  probabilidadeEvasao!: number | null;
+
   @Column({ type: 'integer', default: 0 })
   engajamento!: number;
 

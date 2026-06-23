@@ -12,8 +12,8 @@
   }
 
   /* ── VIEWS ────────────────────────────────────────────────── */
-  const VIEWS = ['inicio', 'alunos', 'dashboard', 'agenda'];
-  const chartInited = { inicio: false, alunos: false, dashboard: false, agenda: false };
+  const VIEWS = ['inicio', 'alunos', 'dashboard', 'agenda', 'atualizacoes', 'configuracoes'];
+  const chartInited = { inicio: false, alunos: false, dashboard: false, agenda: false, atualizacoes: false, configuracoes: false };
 
   function showView(id) {
     // Esconde todas as views
@@ -133,7 +133,8 @@
       { title:'Sprint Review',      start:'2026-06-25', type:'evento',   color:'#33B458', sender:'Carlos Mendes',  role:'Gestor',    time:'15:00' },
       { title:'Formatura T4',       start:'2026-06-30', type:'evento',   color:'#FFD927', sender:'Ana Clara',      role:'Gestora',   time:'18:00' },
     ];
-    const TODAY_STR  = '2026-06-11';
+    const hojeInicio = new Date();
+    const TODAY_STR  = `${hojeInicio.getFullYear()}-${String(hojeInicio.getMonth() + 1).padStart(2, '0')}-${String(hojeInicio.getDate()).padStart(2, '0')}`;
     const TYPE_LABEL_EV = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria' };
     const MONTH_ABREV = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
@@ -555,11 +556,12 @@
     const WD_LABELS   = ['D','S','T','Q','Q','S','S'];
     const TYPE_COLOR  = { evento:'#003870', consulta:'#7B4FD9', aula:'#F4A261', mentoria:'#33B458' };
     const TYPE_LABEL  = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria' };
-    const today       = new Date(2026, 5, 11); // data do sistema: 11 jun 2026
+    const today       = new Date();
 
-    let viewYear  = 2026;
-    let viewMonth = 5; // junho
+    let viewYear  = today.getFullYear();
+    let viewMonth = today.getMonth();
     let selectedId = null;
+    let selectedDate = null;
 
     let events = [
       { id:1, title:'Check-in Semanal',    start:'2026-06-03', end:'2026-06-03', type:'evento',   color:'#003870', sender:'Ana Clara',      role:'Gestora',   time:'09:00', desc:'Check-in semanal com todos os alunos da turma T4.',              target:'todos'        },
@@ -576,6 +578,16 @@
     function toDate(str) { const [y,m,d] = str.split('-').map(Number); return new Date(y,m-1,d); }
     function toStr(d)    { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
     const todayStr = toStr(today);
+    selectedDate = todayStr;
+    function formatDate(str) {
+      const d = toDate(str);
+      return `${d.getDate()} de ${MONTH_NAMES[d.getMonth()]} de ${d.getFullYear()}`;
+    }
+    function eventsForDay(dateStr) {
+      return events
+        .filter(ev => ev.start <= dateStr && ev.end >= dateStr)
+        .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+    }
 
     function renderCal() {
       const calEl = document.getElementById('ag-cal');
@@ -658,7 +670,8 @@
           const dStr   = toStr(cell.d);
           const isToday = dStr === todayStr;
           const isWkd  = i === 0 || i === 6;
-          html += `<div class="ag-cell${cell.other ? ' other-month' : ''}">
+          const hasEvents = eventsForDay(dStr).length > 0;
+          html += `<div class="ag-cell${cell.other ? ' other-month' : ''}${dStr === selectedDate ? ' selected-day' : ''}${hasEvents ? ' has-events' : ''}" data-date="${dStr}">
             <div class="ag-day-num${isToday ? ' today' : ''}${isWkd && !isToday ? ' weekend' : ''}">${cell.d.getDate()}</div>
           </div>`;
         });
@@ -696,6 +709,58 @@
         el.addEventListener('click', e => {
           e.stopPropagation();
           selectedId = parseInt(el.dataset.evId);
+          const ev = events.find(item => item.id === selectedId);
+          if (ev) selectedDate = ev.start;
+          showDetail(selectedId);
+          renderCal();
+        });
+      });
+      calEl.querySelectorAll('.ag-cell[data-date]').forEach(el => {
+        el.addEventListener('click', () => {
+          selectedId = null;
+          selectedDate = el.dataset.date;
+          renderCal();
+          showDayDetail(selectedDate);
+        });
+      });
+    }
+
+    function showDayDetail(dateStr) {
+      const box = document.getElementById('ag-detail');
+      if (!box) return;
+      const dayEvents = eventsForDay(dateStr);
+      const itemsHtml = dayEvents.length
+        ? dayEvents.map(ev => {
+            const tc = TYPE_COLOR[ev.type] || '#003870';
+            const targetStr = ev.target === 'todos' ? 'Todos os alunos' : ev.target;
+            return `<button class="ag-day-event" type="button" data-ev-id="${ev.id}">
+              <span class="ag-day-event-time">${ev.time || '--:--'}</span>
+              <span class="ag-day-event-dot" style="background:${tc};"></span>
+              <span class="ag-day-event-main">
+                <strong>${ev.title}</strong>
+                <small>${TYPE_LABEL[ev.type] || ev.type} · ${targetStr}</small>
+              </span>
+              <i class="ti ti-chevron-right"></i>
+            </button>`;
+          }).join('')
+        : `<div class="ag-day-empty">
+            <i class="ti ti-calendar-off"></i>
+            <strong>Nenhum evento neste dia</strong>
+          </div>`;
+
+      box.innerHTML = `
+        <div class="ag-detail-header">
+          <div>
+            <div class="ag-detail-kicker">Agenda do dia</div>
+            <div class="ag-detail-title">${formatDate(dateStr)}</div>
+          </div>
+          <button class="ag-detail-close" onclick="document.getElementById('ag-detail').classList.remove('open');"><i class="ti ti-x"></i></button>
+        </div>
+        <div class="ag-day-list">${itemsHtml}</div>`;
+      box.classList.add('open');
+      box.querySelectorAll('.ag-day-event').forEach(el => {
+        el.addEventListener('click', () => {
+          selectedId = parseInt(el.dataset.evId);
           showDetail(selectedId);
           renderCal();
         });
@@ -706,6 +771,7 @@
       const ev  = events.find(e => e.id === id);
       const box = document.getElementById('ag-detail');
       if (!ev || !box) return;
+      selectedDate = ev.start;
 
       const startD  = toDate(ev.start), endD = toDate(ev.end);
       const sameDay = ev.start === ev.end;
@@ -720,7 +786,10 @@
 
       box.innerHTML = `
         <div class="ag-detail-header">
-          <div class="ag-detail-title">${ev.title}</div>
+          <div>
+            <div class="ag-detail-kicker">Detalhe do evento</div>
+            <div class="ag-detail-title">${ev.title}</div>
+          </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="ag-detail-type" style="background:${tc}20;color:${tc};">${tl}</span>
             <button class="ag-detail-close" onclick="document.getElementById('ag-detail').classList.remove('open');"><i class="ti ti-x"></i></button>
@@ -739,65 +808,53 @@
 
     /* ── Formulário: campo condicional de destinatário ── */
     window.agUpdateTargetField = function () {
-      const val = document.getElementById('ag-f-target')?.value;
-      const td  = document.getElementById('ag-target-detail');
-      if (!td) return;
-      if (val === 'aluno') {
-        td.innerHTML = `<div class="ag-field"><label><i class="ti ti-hash" style="font-size:11px;"></i> ID do aluno</label><input type="text" id="ag-f-tid" placeholder="PM-2024-000"></div>`;
-      } else if (val === 'especificos') {
-        td.innerHTML = `<div class="ag-field"><label><i class="ti ti-list" style="font-size:11px;"></i> IDs separados por vírgula</label><input type="text" id="ag-f-tids" placeholder="PM-2024-000, PM-2024-001..."></div>`;
-      } else {
-        td.innerHTML = '';
-      }
+      return null;
     };
 
     /* ── Formulário: adicionar evento ── */
     window.agAddEvent = function () {
-      const evtTitle = document.getElementById('ag-f-title')?.value.trim();
-      const nome = document.getElementById('ag-f-nome')?.value.trim();
-      const role = document.getElementById('ag-f-role')?.value;
-      const type = document.getElementById('ag-f-type')?.value;
+      const registro = document.getElementById('ag-f-registro')?.value.trim();
+      const tipoUser = document.getElementById('ag-f-tipo-user')?.value;
       const date = document.getElementById('ag-f-date')?.value;
-      const time = document.getElementById('ag-f-time')?.value;
-      const desc = document.getElementById('ag-f-desc')?.value.trim();
-      const tgtV = document.getElementById('ag-f-target')?.value;
+      const horaInicio = document.getElementById('ag-f-start')?.value;
+      const horaFim = document.getElementById('ag-f-end')?.value;
+      const status = document.getElementById('ag-f-status')?.value;
 
       /* Validação */
       let ok = true;
-      [['ag-f-title', evtTitle], ['ag-f-nome', nome], ['ag-f-type', type], ['ag-f-date', date]].forEach(([id, v]) => {
+      [['ag-f-registro', registro], ['ag-f-tipo-user', tipoUser], ['ag-f-date', date]].forEach(([id, v]) => {
         const el = document.getElementById(id);
         if (!v) { el?.classList.add('ag-val-err'); ok = false; }
         else    el?.classList.remove('ag-val-err');
       });
       if (!ok) return;
 
-      const target = tgtV === 'aluno'       ? (document.getElementById('ag-f-tid')?.value.trim()  || 'todos')
-                   : tgtV === 'especificos' ? (document.getElementById('ag-f-tids')?.value.trim() || 'todos')
-                   : 'todos';
-
       const newEv = {
         id: Date.now(),
-        title: evtTitle,
+        title: registro,
         start: date, end: date,
-        type, color: TYPE_COLOR[type] || '#003870',
-        sender: nome, role: role || '—', time: time || '—',
-        desc: desc || '—', target,
+        type: tipoUser === 'aluno' ? 'mentoria' : 'evento',
+        color: tipoUser === 'aluno' ? TYPE_COLOR.mentoria : TYPE_COLOR.evento,
+        sender: tipoUser === 'aluno' ? 'Aluno' : 'Membro da equipe',
+        role: tipoUser === 'aluno' ? 'Aluno' : 'Membro da equipe',
+        time: horaInicio || '—',
+        desc: `Pré-visualização: ${registro}. Horário: ${horaInicio || 'não informado'}${horaFim ? ` até ${horaFim}` : ''}. Status: ${status || 1}.`,
+        target: tipoUser === 'aluno' ? 'Aluno' : 'Membro da equipe',
       };
       events.push(newEv);
 
       /* Limpa formulário */
-      ['ag-f-title','ag-f-nome','ag-f-role','ag-f-type','ag-f-date','ag-f-time','ag-f-desc'].forEach(id => {
+      ['ag-f-registro','ag-f-tipo-user','ag-f-date','ag-f-start','ag-f-end','ag-f-status'].forEach(id => {
         const el = document.getElementById(id); if (el) el.value = '';
       });
-      document.getElementById('ag-target-detail').innerHTML = '';
-      document.getElementById('ag-f-target').value = 'todos';
 
       /* Navega para o mês do evento e seleciona */
       const [y, m] = date.split('-').map(Number);
       viewYear = y; viewMonth = m - 1;
       selectedId = newEv.id;
+      selectedDate = date;
       renderCal();
-      showDetail(newEv.id);
+      showDayDetail(date);
     };
   }
 

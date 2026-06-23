@@ -10,6 +10,7 @@ import {
 } from '../models/jornadaModel';
 import { JornadaRepository } from '../repositories/jornadaRepository';
 import { BusinessRuleError, ConflictError, NotFoundError, PayloadValidationError } from '../utils/errors';
+import { RiscoEvasaoService } from './riscoEvasaoService';
 
 interface SuccessResponse<T> {
   success: true;
@@ -39,7 +40,10 @@ function toParticipacaoView(item: ParticipacaoRecord): JornadaParticipacaoView {
 const TIPOS_ATIVIDADE_VALIDOS = ['aula', 'mentoria', 'workshop', 'evento', 'avaliacao', 'curso', 'outro'];
 
 export class JornadaService {
-  constructor(private readonly repository: JornadaRepository) { }
+  constructor(
+    private readonly repository: JornadaRepository,
+    private readonly riscoEvasaoService?: Pick<RiscoEvasaoService, 'recalcularAluno'>
+  ) { }
 
   async listarAtividades(tipo?: string): Promise<SuccessResponse<{ atividades: AtividadeRecord[] }>> {
     if (tipo && !TIPOS_ATIVIDADE_VALIDOS.includes(tipo)) {
@@ -132,6 +136,7 @@ export class JornadaService {
         nota: payload.nota ?? existente.nota,
         dataPart
       });
+      await this.recalcularRisco(aluno.idAluno);
 
       return {
         success: true,
@@ -146,6 +151,7 @@ export class JornadaService {
       nota: payload.nota ?? null,
       dataPart
     });
+    await this.recalcularRisco(aluno.idAluno);
 
     return {
       success: true,
@@ -177,6 +183,7 @@ export class JornadaService {
       nota: payload.nota ?? null,
       dataPart
     });
+    await this.recalcularRisco(aluno.idAluno);
 
     return {
       success: true,
@@ -314,6 +321,12 @@ export class JornadaService {
       throw new NotFoundError('Aluno nao encontrado.');
     }
     return aluno;
+  }
+
+  private async recalcularRisco(idAluno: number): Promise<void> {
+    if (this.riscoEvasaoService) {
+      await this.riscoEvasaoService.recalcularAluno(idAluno);
+    }
   }
 
   private async validarAtividade(idAtividade: number): Promise<AtividadeRecord> {

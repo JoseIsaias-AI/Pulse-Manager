@@ -1,7 +1,8 @@
-﻿import request from 'supertest';
+import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
+import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
 import { Agenda } from '../../backend/models/AgendaModel';
 import { MembroEquipe } from '../../backend/models/usuarioModel';
@@ -15,14 +16,14 @@ describe('RF020/RF021 - Gestao de Agenda', () => {
   let membro: MembroEquipe;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
-    agendaRepository = AppDataSource.getRepository(Agenda);
-    membroRepository = AppDataSource.getRepository(MembroEquipe);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
+    agendaRepository = getIntegrationRepository(Agenda);
+    membroRepository = getIntegrationRepository(MembroEquipe);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
 
     aluno = await alunoRepository.save({
       nome: 'Pedro Alves',
@@ -42,11 +43,7 @@ describe('RF020/RF021 - Gestao de Agenda', () => {
     });
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   describe('RF020 - Listar agenda', () => {
     it('CT01 - deve listar agenda vazia inicialmente', async () => {
@@ -56,7 +53,7 @@ describe('RF020/RF021 - Gestao de Agenda', () => {
       expectSuccessContract(response.body);
       expect(response.body.success).toBe(true);
       expect(Array.isArray(response.body.data)).toBe(true);
-      expect(response.body.data.length).toBe(0);
+      expect(response.body.data).toHaveLength(0);
     });
 
     it('CT02 - deve listar agenda com itens apos criacao', async () => {
@@ -74,7 +71,7 @@ describe('RF020/RF021 - Gestao de Agenda', () => {
       const response = await request(app).get('/api/agenda');
 
       expect(response.status).toBe(200);
-      expect(response.body.data.length).toBe(1);
+      expect(response.body.data).toHaveLength(1);
       expect(response.body.data[0]).toMatchObject({
         tipoUser: 'aluno',
         registro: 'Sessao de mentoria'
@@ -104,7 +101,7 @@ describe('RF020/RF021 - Gestao de Agenda', () => {
       const response = await request(app).get(`/api/agenda?idAluno=${aluno.idAluno}`);
 
       expect(response.status).toBe(200);
-      expect(response.body.data.length).toBe(1);
+      expect(response.body.data).toHaveLength(1);
       expect(response.body.data[0].registro).toBe('Evento para Pedro');
     });
 
@@ -312,7 +309,7 @@ describe('RF020/RF021 - Gestao de Agenda', () => {
   });
 
   describe('RNF - Qualidade para agenda', () => {
-    it('RNF-DES - deve responder listagem da agenda em ate 1000ms', async () => {
+    performanceIt('RNF-DES - deve responder listagem da agenda em ate 1000ms', async () => {
       const inicio = Date.now();
       const response = await request(app).get('/api/agenda');
       const duracaoMs = Date.now() - inicio;

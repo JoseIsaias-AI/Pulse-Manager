@@ -1,4 +1,6 @@
 import { AlunoService } from '../../../backend/services/alunoService';
+import { AlunoRepository } from '../../../backend/repositories/alunoRepository';
+import { asMockedDependency } from '../../helpers/mockHelper';
 
 const baseAluno = {
   idAluno: 1,
@@ -47,7 +49,7 @@ describe('AlunoService', () => {
 
   beforeEach(() => {
     repository = makeRepository();
-    service = new AlunoService(repository as any);
+    service = new AlunoService(asMockedDependency<AlunoRepository>(repository));
   });
 
   it('lista alunos com filtros', async () => {
@@ -134,13 +136,13 @@ describe('AlunoService', () => {
   });
 
   it('rejeita cadastro com nome invalido', async () => {
-    await expect(service.cadastrar({ nome: 'Ma', email: 'maria@email.com' } as any)).rejects.toThrow(
+    await expect(service.cadastrar({ nome: 'Ma', email: 'maria@email.com' })).rejects.toThrow(
       'O campo nome deve ter pelo menos 3 caracteres.'
     );
   });
 
   it('rejeita cadastro com email invalido', async () => {
-    await expect(service.cadastrar({ nome: 'Maria Silva', email: 'maria.email.com' } as any)).rejects.toThrow(
+    await expect(service.cadastrar({ nome: 'Maria Silva', email: 'maria.email.com' })).rejects.toThrow(
       'O campo email deve conter um endereco valido.'
     );
   });
@@ -203,6 +205,21 @@ describe('AlunoService', () => {
 
     expect(repository.update).toHaveBeenCalledWith(1, { nome: 'Maria Atualizada' });
     expect(result).toEqual({ success: true, data: atualizado });
+  });
+
+  it('recalcula automaticamente o risco quando o engajamento muda', async () => {
+    const riscoEvasaoService = { recalcularAluno: jest.fn().mockResolvedValue(undefined) };
+    service = new AlunoService(repository as any, riscoEvasaoService as any);
+    const atualizado = { ...baseAluno, engajamento: 25, riscoEvasao: 'alto' };
+    repository.findById
+      .mockResolvedValueOnce(baseAluno)
+      .mockResolvedValueOnce(atualizado);
+    repository.update.mockResolvedValue({ ...baseAluno, engajamento: 25 });
+
+    const result = await service.atualizar(1, { engajamento: 25 });
+
+    expect(riscoEvasaoService.recalcularAluno).toHaveBeenCalledWith(1);
+    expect(result.data).toEqual(atualizado);
   });
 
   it('rejeita atualizacao com dados invalidos', async () => {

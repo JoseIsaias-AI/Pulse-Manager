@@ -1,4 +1,4 @@
-<img src="./assets/logointeli.png">
+﻿<img src="./assets/logointeli.png">
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
@@ -33,9 +33,9 @@
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
 <div align="justify">
-A Pulse Mais é uma organização sem fins lucrativos voltada à capacitação profissional de jovens que desejam seguir na área de tecnologia. Ao analisar mais profundamente o contexto da organização é identificada uma problemática central em relação à organização operacional: a descentralização dos dados institucionais, divididos em múltiplos arquivos em diferentes formatos, de planilhas à relatórios, e sistemas externos. Essa fragmentação de informações compromete diretamente a eficiência na tomada de decisões da equipe, dificulta o acompanhamento individual dos jovens atingidos e reduz a oportunidade da instituição de explicitar o impacto de forma estruturada em apresentações ao público e parceiros.
+A Pulse Mais é uma organização sem fins lucrativos voltada à capacitação profissional de jovens que desejam seguir na área de tecnologia. Ao analisar o contexto da ONG, identifica-se uma problemática central: a descentralização dos dados institucionais, dispersos em múltiplos arquivos de diferentes formatos de planilhas a relatórios e sistemas externos. Essa fragmentação compromete a eficiência na tomada de decisões, dificulta o acompanhamento individualizado dos jovens e reduz a capacidade da instituição de comunicar seu impacto de forma estruturada a parceiros e financiadores.
 
-A partir desta problemática, o grupo propõe o desenvolvimento de uma plataforma web voltada à organização e gestão dos dados institucionais e dos alunos que possibilita a centralização das informações em um ambiente e o monitoramento dos indicadores empresariais, contribuindo para maior eficiência nos processos desenvolvidos pela equipe.
+A partir desta problemática, o grupo propos o desenvolvimento de uma plataforma web que centraliza os dados institucionais e os transforma em inteligência operacional. Mais do que organizar informações, a solução permitirá identificar riscos de evasão por meio de alertas automáticos, personalizar o suporte pedagógico e psicológico com base no histórico individual de cada jovem e gerar relatórios prontos para prestação de contas a doadores e editais. Essa capacidade de converter dados dispersos em decisões ágeis representa o principal diferencial de valor da plataforma para a Pulse Mais.
 
 </div>
 
@@ -47,25 +47,25 @@ A partir desta problemática, o grupo propõe o desenvolvimento de uma plataform
 
 <div align="justify">
 
-**Ameaça de novos entrantes - Ameaça Baixa**
+**Ameaça de novos entrantes - Ameaça Baixa a Moderada**
 
-A entrada no segmento de ONGs voltadas à capacitação no mercado tecnológico se torna de difícil execução devido aos desafios burocráticos, além da captação de mentores e entidades doadoras. Para além disso, há uma expansão de instituições voltadas ao aprendizado e tecnologia no Brasil, de acordo com a Edtech Report 2024 da Distrito, indo de 197 para 619 entre 2013 e 2024. Apesar disso, a popularização da IA Generativa facilitou a construção de novas ferramentas voltadas ao ensino e capacitação tecnológica de jovens, permitindo a construção rápida de novas ferramentas e menos infraestrutura física; explicitando que, apesar das barreiras, há pontos que tornam a ameaça moderada.
+A entrada no segmento de ONGs voltadas à capacitação no mercado tecnológico se torna de difícil execução devido aos desafios burocráticos, além da captação de mentores e entidades doadoras. Para além disso, há uma expansão de instituições voltadas ao aprendizado e tecnologia no Brasil, de acordo com a Edtech Report 2024 da Distrito, indo de 197 para 619 entre 2013 e 2024. Apesar disso, a popularização da IA Generativa facilitou a construção de novas ferramentas voltadas ao ensino e capacitação tecnológica de jovens, permitindo a construção rápida de novas ferramentas e menos infraestrutura física; o que classifica a ameaça como baixa a moderada, exigindo atenção contínua da Pulse Mais ao ecossistema emergente de Edtechs.
 
 **Ameaça de produtos substitutos - Ameaça Alta**
 
-É identificada uma alta ameaça de produtos substitutos devido ao crescimento da disponibilidade de conteúdos onlines, como cursos gratuitos e vídeos em plataformas como Youtube, além da existência de programas governamentais, como o Pronatec. Para além disso, há também a substituição através de outras organizações que oferecem serviços semelhantes, classificando a ameaça como alta.
+É identificada uma alta ameaça de produtos substitutos devido ao crescimento da disponibilidade de conteúdos online, como cursos gratuitos e vídeos em plataformas como o YouTube, e à existência de programas governamentais de capacitação profissional, como o Pronatec (Ministério da Educação, 2024). A presença de outras organizações do terceiro setor com proposta semelhante amplia essa ameaça, classificando-a como alta.
 
 **Poder de barganha dos fornecedores - Poder Alto**
 
-Os fornecedores deste segmento são definidos como os mentores e equipe voluntários e empresas parceiras doadoras, que podem exercer grande poder sobre as operações. Para além da existência de dificuldades relacionadas à captação e mantenimento de colaboradores, a equipe também influencia na credibilidade institucional e sua substituição é de alto custo de tempo, ocasionando um alto poder de barganha da parte dos fornecedores.
+Os fornecedores desta organização compreendem duas categorias distintas: mentores e colaboradores voluntários e doadores e entidades financiadoras. O poder de barganha dos voluntários é moderado: o NPS de 88,2 da Formação Líder Mentor e a reputação consolidada da Pulse Mais funcionam como atratores de profissionais motivados por propósitos de ESG, reduzindo a dependência de qualquer mentor específico. O poder alto reside nos doadores e entidades financiadoras os reais fornecedores de capital operacional, que podem impor condições, postergar repasses ou encerrar parcerias, ameaçando a continuidade dos programas. Nesse contexto, a plataforma web proposta representa um diferencial estratégico: ao centralizar indicadores de impacto mensuráveis, como taxas de empregabilidade e progressão acadêmica, a Pulse Mais fortalece sua capacidade de prestação de contas, potencialmente reduzindo esse poder ao longo do tempo por meio de evidências de resultado.
 
 **Poder de barganha dos clientes - Poder Baixo-Médio**
 
-Os clientes são classificados como os jovens atingidos, que possuem, em muitos casos, acesso limitado a alternativas de capacitação acadêmica em tecnologia. Além disso, há a classificação de 88,2 no NPS (Net Promoter Score) da Formação Líder-Mentor, que indica alta satisfação e baixo poder de negociação individual.
+Os clientes são classificados como os jovens atingidos, que possuem, em muitos casos, acesso limitado a alternativas de capacitação acadêmica em tecnologia. Além disso, há a classificação de 88,2 no NPS  da Formação Líder Mentor, que indica alta satisfação e baixo poder de negociação individual.
 
 **Rivalidade entre concorrentes - Rivalidade Alta**
 
-No segmento de aprendizado voltado à tecnologia, há uma maior disputa por visibilidade entre outras, financiamento de empresas e captação de talentos. Como exemplo estão instituições como o Códigos do Amanhã, que oferece serviços em nichos semelhantes, além de competir por doadores e ter perfis semelhantes de beneficiários, ocasionando a classificação de alta rivalidade.
+No segmento de aprendizado voltado à tecnologia, há uma maior disputa por visibilidade entre instituições, financiamento de empresas e captação de talentos. Como exemplo estão organizações como o Códigos do Amanhã, que oferecem serviços em nichos semelhantes e competem pelos mesmos doadores e perfis de beneficiários, ocasionando a classificação de alta rivalidade. Nesse cenário, a centralização de indicadores mensuráveis pela plataforma web proposta representa um diferencial competitivo direto: ao apresentar métricas verificáveis de empregabilidade e progressão dos jovens, a Pulse Mais fortalece seu posicionamento junto a financiadores em relação a concorrentes com menor capacidade analítica.
 
 </div>
 
@@ -79,7 +79,7 @@ No segmento de aprendizado voltado à tecnologia, há uma maior disputa por visi
 
 <div align="justify">
 
-Cada um dos fatores associados à instituição revelam diferentes efeitos na sua participação de mercado. As pontos fortes explicitam a fidelidade dos clientes e fornecedores e o planejamento coerente com os impactos sociais da instituição; já os pontos fracos, a falta de eficiência e a instabilidade na continuidade de processos, além da vulnerabilidade por decisões externas. Há também as oportunidades mapeadas como um cenário de crescimento no mercado e a diferenciação de outros produtos; além das ameaças mostra a necessidade de estratégias para manter a relevância competitiva e consolidar alianças estratégicas.
+Os pontos fortes da Pulse Mais residem no alto NPS e em uma proposta de impacto social alinhada a critérios ESG, o que atrai parceiros e voluntários e diferencia a organização no mercado. A fraqueza central é a fragmentação dos dados institucionais, que limita a eficiência operacional e dificulta a comprovação de resultados a financiadores terreno em que a Pulse Mais perde para concorrentes com maior maturidade em gestão de dados. A expansão do mercado de capacitação tecnológica e a demanda corporativa por talentos diversificados constituem oportunidades concretas, que a plataforma web proposta pode materializar ao gerar indicadores prontos para editais e relatórios de ESG. As ameaças concentram-se na competição por recursos com organizações como o Códigos do Amanhã e na dependência de doadores que condicionam sua participação a métricas de impacto verificáveis.
 
 </div>
 
@@ -97,7 +97,7 @@ Verificou-se que a Pulse Mais opera com dados de alunos fragmentados em planilha
 
 <div align="justify">
 
-Foram identificados como insumos o uma planilha de jovens do framework, relatórios CSV da plataforma atual e dados institucionais sobre programas, trilhas, mentoria, empregabilidade, ensino superior e rede de talentos. Também foram considerados critérios de público, jornada do jovem e indicadores estratégicos da organização.
+Os insumos disponíveis compreendem: uma planilha de jovens do framework (Fonte: Pulse Mais), relatórios CSV da plataforma atual e dados institucionais sobre programas, trilhas, mentoria, empregabilidade, ensino superior e rede de talentos. Também foram mapeados critérios de público-alvo, jornada do jovem e indicadores estratégicos da organização.
 
 </div>
 
@@ -121,7 +121,7 @@ Gestores utilizarão dashboards, filtros e páginas individuais para consultar h
 
 <div align="justify">
 
-Espera-se reduzir a fragmentação de dados e centralizar a jornada dos jovens em uma única plataforma. A solução deverá ampliar a agilidade operacional, melhorar o acompanhamento estratégico, apoiar decisões baseadas em dados e fortalecer a autonomia dos alunos no acesso ao histórico e oportunidades.
+Espera-se reduzir a fragmentação de dados, centralizando a jornada dos jovens em uma única plataforma. A solução ampliará a agilidade operacional, habilitará o acompanhamento preventivo de risco de evasão, fortalecerá a autonomia dos alunos no acesso ao próprio histórico e disponibilizará indicadores de impacto estruturados facilitando a prestação de contas a financiadores e o acesso a editais de fomento.
 
 </div>
 
@@ -129,7 +129,7 @@ Espera-se reduzir a fragmentação de dados e centralizar a jornada dos jovens e
 
 <div align="justify">
 
-O sucesso será avaliado pela centralização dos dados, clareza da visualização histórica, utilidade dos dashboards e efetividade dos fluxos para gestores e alunos. Também serão considerados a aderência ao fluxo operacional da Pulse Mais, a qualidade das funcionalidades entregues e a validação contínua com o parceiro ao longo das sprints.
+O sucesso será medido por critérios mensuráveis:  taxa de conclusão igual ou superior a 80% em tarefas de consulta de histórico e filtragem de alunos durante testes de usabilidade com os pontos focais da Pulse Mais;  cobertura de ao menos 90% dos campos de dados mapeados na plataforma; tempo médio de localização de um perfil inferior a 30 segundos. A validação ocorrerá via demonstração funcional ao final de cada sprint, com aprovação formal do parceiro para que o incremento seja considerado aceito.
 
 </div>
 
@@ -544,15 +544,15 @@ Personas: A persona é definida como uma descrição realista e detalhada do usu
 
 <div align="center">
 <sup>Figura 4: Persona 01.</sup><br>
-    <img src="assets/persUm.jpg" width="60%"><br>
+    <img src="assets/persUm.png" width="60%"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
 <sup>Figura 5: Persona 02.</sup><br>
-    <img src="assets/persDois.jpg" width="60%"><br>
+    <img src="assets/persDois.png" width="60%"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 
 <sup>Figura 6: Persona 03.</sup><br>
-    <img src="assets/persTres.jpg" width="60%"><br>
+    <img src="assets/persTres.png" width="60%"><br>
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -564,81 +564,84 @@ User Stories: As User Stories são definidas como descrições de uma funcionali
 
 </div>
 
-| Identificação        | US01                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | Denise Ghattas                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| User Story           | como uma gestora eu busco ter uma visão geral do perfil do aluno de forma prática para avaliá-lo da melhor maneira                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| Critério de aceite 1 | CR1: Dado que a gestora acessa o dashboard, quando ela clica no perfil do aluno, então é exibido os dados do histórico do aluno.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| Critério de aceite 2 | CR2: dado que a gestora acesse a plataforma, quando ela abrir a aba “alunos”, então devem ser exibidos resumos sobre todos os alunos atingidos.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| Critérios INVEST     | INDEPENDENTE: Pode ser desenvolvida sem depender de outras histórias , utilizando dados pré-existentes no banco. <br><br> NEGOCIÁVEL: O formato de exibição dos dados no dashboard pode ser ajustado com o parceiro Pulse Mais. <br><br> VALIOSA: Resolve a dor real da fragmentação de dados e da dificuldade em visualizar a jornada do jovem. <br><br> ESTIMÁVEL: A equipe técnica consegue estimar o esforço de criação de uma interface de consulta conectada ao PostgreSQL. <br><br> PEQUENA: A implementação de uma tela de consulta básica cabe dentro de uma sprint de desenvolvimento. <br><br> TESTÁVEL: Tem como saber que está pronta verificando se os dados do banco aparecem corretamente ao clicar no perfil. |
+| Identificação        | US01 |
+| -------------------- | ---- |
+| Persona              | Denise Ghattas |
+| User Story           | Como gestora, eu quero visualizar um dashboard centralizado com indicadores estratégicos e perfis individuais dos alunos, para que eu possa monitorar a instituição e tomar decisões embasadas sem depender de planilhas dispersas. |
+| Critério de aceite 1 | CR1: Dado que a gestora acessa a plataforma, quando ela abre o dashboard, então o sistema exibe indicadores consolidados da turma ativa: total de alunos ativos, média geral de notas, percentual de alunos empregados e taxa de engajamento, cada um com variação em relação ao período anterior. |
+| Critério de aceite 2 | CR2: Dado que a gestora está na aba "Alunos", quando a página carrega, então o sistema exibe cards resumidos de cada aluno com nome, curso, badge de status e barra de progresso do módulo atual. |
+| Critério de aceite 3 | CR3: Dado que a gestora quer visualizar o perfil de um aluno, quando ela clica no card do aluno, então o sistema exibe o perfil completo com: dados cadastrais (nome, CPF e contato), dados acadêmicos (notas por módulo e percentual de frequência), trilha e situação de empregabilidade. |
+| Critérios INVEST     | INDEPENDENTE: A visualização do dashboard e dos perfis pode ser desenvolvida sem depender de módulos de notificação ou agendamento, usando dados já presentes no banco. <br><br> NEGOCIÁVEL: Os indicadores exibidos no dashboard e os campos do perfil do aluno podem ser refinados com o parceiro Pulse Mais conforme as prioridades estratégicas da gestão. <br><br> VALIOSA: Centraliza a informação mais crítica para a tomada de decisão da gestora em uma única tela, eliminando a dependência de planilhas dispersas. <br><br> ESTIMÁVEL: O esforço para consolidar os dados acadêmicos e de jornada em telas de dashboard e perfil é mensurável pela equipe, com base nos dados já estruturados no banco de dados. <br><br> PEQUENA: A história abrange a criação de duas telas interligadas (dashboard e perfil do aluno), ambas circunscritas ao escopo do MVP. <br><br> TESTÁVEL: É possível validar verificando se os indicadores exibidos no dashboard correspondem aos dados do banco e se o perfil do aluno carrega todos os campos esperados ao clicar em um card. |
 
-| Identificação        | US02                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | Denise Ghattas                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| User Story           | como uma gestora eu busco uma plataforma que unifique os dados para não perder informação relevante.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| Critério de aceite 1 | CR1: dado que a gestora acesse a plataforma, quando ela abrir a aba de insights, então devem ser exibidos indicadores sobre a performance dos jovens                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| Critério de aceite 2 | CR2: dado que a gestora acesse a plataforma, quando ela acessar a aba “funcionários”, então devem ser exibidos dados quantitativos sobre os funcionários.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| Critérios INVEST     | INDEPENDENTE: A plataforma de unificação pode ser estruturada como o núcleo central do sistema sem depender de módulos externos de comunicação. <br><br> NEGOCIÁVEL: Os indicadores de performance e os dados quantitativos exibidos nas abas de "insights" e "funcionários" podem ser refinados conforme a necessidade estratégica da Denise. <br><br> VALIOSA: Resolve o problema da fragmentação de dados em múltiplas planilhas centralizando o prontuário em uma única interface e com a organização do time. <br><br> ESTIMÁVEL: O esforço para consolidar os dados acadêmicos e de jornada em um banco de dados PostgreSQL é mensurável pela equipe de desenvolvimento. <br><br> PEQUENA: A criação das abas principais para exibição de indicadores e dados quantitativos está delimitada ao escopo do MVP, sendo coerente para uma sprint. <br><br> TESTÁVEL: É possível validar a conclusão da tarefa ao verificar se os indicadores de performance que são exibidos corretamente na aba de insights ao acessar a plataforma. |
+| Identificação        | US02 |
+| -------------------- | ---- |
+| Persona              | Denise Ghattas |
+| User Story           | Como gestora, eu quero buscar e filtrar alunos, ex-alunos e funcionários por critérios específicos, para que eu consiga localizar rapidamente qualquer pessoa na plataforma e acessar seus dados sem depender da minha memória. |
+| Critério de aceite 1 | CR1: Dado que a gestora está na aba "Alunos", quando ela aplica filtros por critérios como nota (acima ou abaixo de um valor), percentual de faltas, trilha ou período de ingresso, então o sistema exibe apenas os registros que atendem a todos os filtros combinados. |
+| Critério de aceite 2 | CR2: Dado que a gestora busca uma pessoa específica, quando ela digita o nome ou CPF na barra de busca, então o sistema exibe o perfil completo dessa pessoa com: dados cadastrais (nome, CPF e contato), dados acadêmicos (notas e frequência por módulo), trilha, período de ingresso e situação de empregabilidade. |
+| Critérios INVEST     | INDEPENDENTE: A funcionalidade de busca e filtro pode ser desenvolvida sem depender de módulos de notificação ou agendamento, operando diretamente sobre o banco de dados existente. <br><br> NEGOCIÁVEL: Os critérios de filtro disponíveis e os campos exibidos no resultado da busca podem ser ajustados com o parceiro conforme as necessidades operacionais da gestora. <br><br> VALIOSA: Reduz significativamente o tempo gasto pela gestora para localizar informações de alunos e funcionários, substituindo a busca manual em planilhas dispersas. <br><br> ESTIMÁVEL: A equipe consegue estimar o esforço com base nos campos já estruturados no banco de dados e na quantidade de critérios de filtro mapeados. <br><br> PEQUENA: A história se limita à implementação de busca textual e filtros combinados sobre listas já existentes na plataforma, sem adicionar novas entidades ao modelo de dados. <br><br> TESTÁVEL: É possível validar aplicando filtros específicos e verificando se os resultados exibidos correspondem apenas aos registros que atendem aos critérios selecionados; e buscando um CPF específico para conferir se o perfil correto é retornado. |
 
-| Identificação        | US03                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | Denise Ghattas                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| User Story           | como gestora eu busco filtrar os alunos para aumentar a agilidade de busca de dados de um aluno e agilidade de trabalho.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| Critério de aceite 1 | CR1: Dado que o usuário abre a plataforma, quando ele busca os dados dos alunos, então os dados aparecem integrados em um único sistema.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| Critério de aceite 2 | CR2: Dado que a gestora quer filtrar os alunos por dados específicos (como nota ou faltas), quando ela cria os filtros, então a plataforma organiza os alunos baseado nos filtros selecionados.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| Critérios INVEST     | INDEPENDENTE: A funcionalidade de unificação dos dados pode ser desenvolvida sem depender diretamente de outras stories <br><br> NEGOCIÁVEL: Os detalhes da integração (quais dados, formato, ferramentas usadas, interface de acesso e filtros) podem ser ajustados conforme as necessidades da equipe. <br><br> VALIOSA: Gera valor claro para a gestora, pois reduz o tempo de busca e aumenta a eficiência na análise dos dados dos alunos. <br><br> ESTIMÁVEL: É possível estimar o esforço com base nas fontes de dados existentes, quantidade de sistemas a integrar e complexidade da estrutura. <br><br> PEQUENA: Pode ser dividida em partes menores, como: integração de um sistema por vez ou criação de um banco central. |
+| Identificação        | US03 |
+| -------------------- | ---- |
+| Persona              | Lucas Silva |
+| User Story           | Como um psicólogo, eu quero mandar notificações para os alunos, para que eu consiga entrar em contato com o aluno para ajudar ele conforme suas necessidades. |
+| Critério de aceite 1 | CR1: Dado que o psicólogo abre a plataforma, quando ele percebe que um aluno está tendo dificuldades e clica no perfil do aluno, então o sistema envia uma notificação para o aluno informando que o psicólogo quer entrar em contato com ele. |
+| Critério de aceite 2 | CR2: Dado que o psicólogo recebe uma notificação de um aluno, quando ele clica no perfil do aluno e seleciona "Notificar aluno", então o sistema envia uma confirmação ao aluno de que o psicólogo irá entrar em contato em breve. |
+| Critérios INVEST     | INDEPENDENTE: A história deve ser entregue sem depender de outras funcionalidades complexas de comunicação, focando apenas no envio da notificação. <br><br> NEGOCIÁVEL: A história abre espaço para discussões sobre como a notificação será entregue e o que deve ser mostrado na mensagem automática. <br><br> VALIOSA: Permite a proatividade do psicólogo no suporte ao aluno, garantindo intervenções necessárias através da plataforma. <br><br> ESTIMÁVEL: Com os critérios de aceite definidos, a equipe consegue avaliar o esforço técnico para implementar o gatilho de ação. <br><br> PEQUENA: A história é focada em uma única ação e um gatilho específico, evitando a inclusão de sistemas complexos de chat ou agendamento nesta fase. <br><br> TESTÁVEL: A história é testável verificando se o aluno recebeu a notificação correspondente na interface dele. |
 
-| Identificação        | US04                                                                                                                                                                                                                                         |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | Denise Ghattas                                                                                                                                                                                                                               |
-| User Story           | Como gestora, eu quero ter acesso a todos os dados dos alunos, funcionários e ex alunos ,para que eu não dependa mais da minha memória para acessar dados específicos de cada aluno, ex aluno e funcionário.                                 |
-| Critério de aceite 1 | CR1: Dado que o usuário busca acessar um dado de um aluno, ex aluno ou funcionário, quando ele clica nessa pessoa específica, então o sistema abre uma página com todos os dados dessa pessoa (como nota, presença, função, empregabilidade) |
-| Critério de aceite 2 | CR2: Dado que a gestora quer achar uma pessoa específica, quando ele busca um dado dessa pessoa (como nome e CPF), então o sistema mostra todos os dados dessa pessoa.                                                                       |
+| Identificação        | US04 |
+| -------------------- | ---- |
+| Persona              | Lucas Silva |
+| User Story           | Como um psicólogo, eu quero receber notificações automáticas quando o desempenho de um aluno diminuir ou quando ele atingir uma porcentagem alta de faltas, para que eu consiga agir proativamente e dar o apoio necessário. |
+| Critério de aceite 1 | CR1: Dado que o psicólogo está com a plataforma aberta, quando ele clica no ícone de notificações, então o sistema abre uma sidebar listando as notificações recebidas dos alunos, com nome do aluno, motivo do alerta e data de geração. |
+| Critério de aceite 2 | CR2: Dado que o desempenho de um aluno cai abaixo de 6,0 ou a frequência dele fica abaixo de 75%, quando o psicólogo abre a plataforma, então o sistema dispara automaticamente uma notificação informando o aluno afetado, o indicador que atingiu o limiar e o valor atual. |
+| Critérios INVEST     | INDEPENDENTE: A lógica de disparo de notificações automáticas pode ser desenvolvida como um serviço separado, sem dependência da interface de chat ou agendamento. <br><br> NEGOCIÁVEL: Os limiares de alerta (percentual de faltas, nota mínima) e o conteúdo das mensagens podem ser ajustados com o parceiro Pulse Mais. <br><br> VALIOSA: Garante que o psicólogo seja alertado proativamente sobre alunos em risco, eliminando a necessidade de monitoramento manual constante. <br><br> ESTIMÁVEL: O esforço para implementar um serviço de monitoramento com gatilhos configuráveis é mensurável pela equipe, com base nos dados já disponíveis no banco. <br><br> PEQUENA: A história se limita ao disparo de notificações automáticas com base em critérios predefinidos, sem incluir funcionalidades de chat ou resposta automática. <br><br> TESTÁVEL: É possível validar simulando uma queda de notas ou aumento de faltas no banco de dados e verificando se a notificação é disparada e exibida corretamente para o psicólogo. |
 
-| Identificação        | US05                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | Lucas Silva                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| User Story           | Como um psicólogo, eu quero mandar notificações para os alunos, para que eu consiga entrar em contato com o aluno para ajudar ele conforme suas necessidades.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| Critério de aceite 1 | CR1: Dado que o psicólogo abre a plataforma, quando ele percebe que um aluno está tendo dificuldades, e clica no perfil do aluno, o sistema envia uma notificação para o aluno mostrando que o psicólogo quer entrar em contato com ele.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| Critério de aceite 2 | CR2: Dado que o psicólogo recebe uma notificação de um aluno, quando ele clica no perfil do aluno, o sistema envia uma notificação para o aluno marcando uma conversa entre o aluno e o psicólogo.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| Critérios INVEST     | INDEPENDENTE: A história deve ser entregue sem depender de outras funcionalidades complexas de comunicação, focando apenas no envio da notificação. <br><br> NEGOCIÁVEL: A história abre espaço para para discussões sobre como a notificação será entregue e o que deve ser mostrado na mensagem automática. <br><br> VALIOSA: Permite a proatividade do psicólogo do suporte ao aluno, garantindo intervenções necessárias através da plataforma. <br><br> ESTIMÁVEL: Com os critérios de aceite definidos a equipe consegue avaliar o esforço técnico para implementar o gatilho de ação. <br><br> PEQUENA: A história é focada em uma única ação e um gatilho específico, assim evitando a inclusão de sistemas complexos de chat ou agendamento completo nesta fase. <br><br> TESTÁVEL: A história é testável verificando se o aluno recebeu a notificação correspondente na interface dele. |
+| Identificação        | US05 |
+| -------------------- | ---- |
+| Persona              | Lucas Silva |
+| User Story           | Como um psicólogo, eu quero visualizar o histórico de notas e a porcentagem de faltas dos alunos, para que eu consiga identificar quem precisa de suporte e acompanhar o histórico individual de cada aluno de forma objetiva. |
+| Critério de aceite 1 | CR1: Dado que o psicólogo percebe que um aluno está com dificuldades, quando ele clica no perfil do aluno, então o sistema exibe o histórico acadêmico completo do aluno: notas por módulo em ordem cronológica e percentual de frequência acumulada. |
+| Critério de aceite 2 | CR2: Dado que o psicólogo acessa a aba "Alunos", quando ele ativa o filtro "Precisa de atenção", então o sistema exibe apenas os alunos vinculados a esse psicólogo que apresentam frequência abaixo de 75% ou média de notas abaixo de 6,0, ordenados por nível de criticidade (crítico → atenção → observação). |
+| Critérios INVEST     | INDEPENDENTE: A visualização do histórico e o filtro de atenção podem ser desenvolvidos com base nos dados de notas e frequência já existentes no banco, sem depender de novas fontes de dados. <br><br> NEGOCIÁVEL: Os limiares que definem "aluno com dificuldades" (percentual de faltas, média de notas) podem ser ajustados com o psicólogo e o parceiro conforme a realidade de cada turma. <br><br> VALIOSA: Permite ao psicólogo identificar proativamente quem precisa de suporte sem precisar analisar manualmente os dados de cada estudante. <br><br> ESTIMÁVEL: A equipe consegue estimar o esforço com base nas consultas ao banco necessárias para calcular as métricas e aplicar os filtros. <br><br> PEQUENA: A história cobre a visualização de dados já existentes (notas e frequência) com um filtro adicional, sem introduzir novas entidades ou fluxos de dados. <br><br> TESTÁVEL: É possível validar inserindo no banco um aluno com frequência abaixo de 75% e notas abaixo de 6,0, e verificando se ele aparece no filtro "Precisa de atenção" com o nível de criticidade correto. |
 
-| Identificação        | US06                                                                                                                                                                                                                                                               |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Persona              | Lucas Silva                                                                                                                                                                                                                                                        |
-| User Story           | Como um psicólogo, eu quero receber notificações dos alunos quando eles tiverem dificuldades, quando o desempenho deles diminuir e quando esse aluno atingir uma porcentagem de faltas alta, para que eu consiga dar o apoio e suporte necessário para esse aluno. |
-| Critério de aceite 1 | CR1: Dado que o psicólogo está com a plataforma aberta, quando ele clicar em notificações, o sistema vai abrir uma sidebar com as notificações que os alunos enviaram para ele.                                                                                    |
-| Critério de aceite 2 | CR2: Dado que o desempenho de um aluno cai ou quando a porcentagem de faltas desse aluno estiver alta, quando o psicólogo abre a plataforma, o sistema envia uma notificação para o psicólogo informando ele das questões desses alunos com dificuldades.          |
+| Identificação        | US06 |
+| -------------------- | ---- |
+| Persona              | Lucas Silva |
+| User Story           | Como psicólogo, eu quero registrar observações sobre o estado emocional e de saúde mental dos alunos que acompanho, para que eu possa manter um histórico confidencial de cada atendimento e embasar futuras intervenções de forma mais precisa. |
+| Critério de aceite 1 | CR1: Dado que o psicólogo está no perfil de um aluno que ele atende, quando ele clica em "Adicionar observação", então o sistema exibe um formulário com campo de texto livre, data e categoria (bem-estar, crise ou acompanhamento regular), salva o registro vinculado ao psicólogo e ao aluno e exibe confirmação de sucesso. |
+| Critério de aceite 2 | CR2: Dado que o psicólogo deseja consultar o histórico de atendimento de um aluno, quando ele acessa a aba "Saúde Mental" no perfil desse aluno, então o sistema exibe apenas as observações registradas por esse psicólogo, em ordem cronológica decrescente, com data, categoria e conteúdo — sem expor registros feitos por outros psicólogos. |
 
-| Identificação        | US07                                                                                                                                                                                                                               |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | Lucas Silva                                                                                                                                                                                                                        |
-| User Story           | Como um psicólogo, eu quero visualizar o histórico de notas dos alunos e a porcentagem de faltas dos alunos, para que eu consiga visualizar de forma mais específica o histórico do aluno para conseguir dar o suporte necessário. |
-| Critério de aceite 1 | CR1: Dado que o psicólogo percebe que um aluno está com dificuldades, quando ele clica no perfil do aluno, o sistema mostra o histórico do aluno.                                                                                  |
-| Critério de aceite 2 | CR2: Dado que o psicólogo acessa a plataforma, quando ele entra na aba de alunos, o sistema mostra todos os alunos com dificuldades (alta porcentagem de faltas ou queda no desempenho)                                            |
+| Identificação        | US07 |
+| -------------------- | ---- |
+| Persona              | André Souza |
+| User Story           | Como aluno da Pulse Mais, eu quero atualizar meus dados de contato na plataforma, para que as informações que a Pulse Mais mantém sobre mim estejam sempre corretas e eu possa ser localizado para oportunidades e comunicados. |
+| Critério de aceite 1 | CR1: Dado que o aluno deseja corrigir seu telefone ou e-mail, quando ele acessa a aba "Meu Perfil" e edita os campos de contato, então o sistema valida o formato dos dados informados, salva as alterações e exibe uma confirmação de sucesso. |
+| Critério de aceite 2 | CR2: Dado que o aluno tentou salvar dados inválidos (ex: e-mail sem "@" ou telefone com menos de 10 dígitos), quando ele clica em "Salvar", então o sistema destaca os campos com erro, exibe uma mensagem descritiva com o formato esperado e não salva os dados incorretos. |
 
-| Identificação        | US08                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Persona              | André Souza                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| User Story           | Como um aluno da Pulse Mais, eu quero ter acesso aos meus resultados de maneira simples e com um histórico de notas, para que eu consiga me organizar melhor e ver em quais matérias eu estou tendo mais dificuldades                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| Critério de aceite 1 | CR1: Dado que o aluno deseja ver seus resultados, quando ele abre a plataforma e clica em notas, o sistema exibe uma média de todas as notas, e um histórico em ordem cronológica das notas do aluno.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| Critério de aceite 2 | CR2: Dado que o aluno quer ver o seu desempenho em uma matéria específica, quando ele clica em notas e seleciona uma matéria específica, o sistema exibe uma média e um histórico de notas daquela matéria.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| Critérios INVEST     | INDEPENDENTE: A história pode ser desenvolvida e entregue sem depender de outras funcionalidades de visualização de perfil ou módulos de secretaria, focando na consulta ao banco de dados. <br><br> NEGOCIÁVEL: Os detalhes da interface e o formato do histórico podem ser discutidos com o time de design e desenvolvimento durante a Sprint. <br><br> VALIOSA: Fornece transparência ao aluno sobre seu desempenho acadêmico, permitindo que ele identifique lacunas de aprendizado e melhore sua organização pessoal. <br><br> ESTIMÁVEL: O esforço técnico é observável, pois envolve a criação de uma consulta para cálculo de média e uma listagem cronológica. <br><br> PEQUENA: A funcionalidade é limitada à visualização de dados existentes, sendo simples o suficiente para ser implementada em poucos dias. <br><br> TESTÁVEL: É possível fazer o teste através de testes automatizados ou manuais, conferindo se a média exibida e a ordem das notas no histórico correspondem aos dados reais do banco. |
+| Identificação        | US08 |
+| -------------------- | ---- |
+| Persona              | André Souza |
+| User Story           | Como um aluno da Pulse Mais, eu quero ter acesso aos meus resultados de maneira simples e com um histórico de notas, para que eu consiga me organizar melhor e ver em quais matérias estou tendo mais dificuldades. |
+| Critério de aceite 1 | CR1: Dado que o aluno deseja ver seus resultados, quando ele abre a plataforma e clica em notas, então o sistema exibe uma média geral de todas as notas e um histórico em ordem cronológica das notas do aluno. |
+| Critério de aceite 2 | CR2: Dado que o aluno quer ver o seu desempenho em uma matéria específica, quando ele clica em notas e seleciona uma matéria, então o sistema exibe a média e o histórico de notas daquela matéria. |
+| Critérios INVEST     | INDEPENDENTE: A história pode ser desenvolvida e entregue sem depender de outras funcionalidades de visualização de perfil ou módulos de secretaria, focando na consulta ao banco de dados. <br><br> NEGOCIÁVEL: Os detalhes da interface e o formato do histórico podem ser discutidos com o time de design e desenvolvimento durante a sprint. <br><br> VALIOSA: Fornece transparência ao aluno sobre seu desempenho acadêmico, permitindo que ele identifique lacunas de aprendizado e melhore sua organização pessoal. <br><br> ESTIMÁVEL: O esforço técnico é observável, pois envolve a criação de uma consulta para cálculo de média e uma listagem cronológica. <br><br> PEQUENA: A funcionalidade é limitada à visualização de dados existentes, sendo simples o suficiente para ser implementada em poucos dias. <br><br> TESTÁVEL: É possível fazer o teste através de testes automatizados ou manuais, conferindo se a média exibida e a ordem das notas no histórico correspondem aos dados reais do banco. |
 
-| Identificação        | US09                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Persona              | André Souza                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| User Story           | Como um aluno da Pulse Mais, eu quero receber notificações dos eventos da Pulse Mais, e ter acesso as minhas faltas, para que eu consiga me organizar melhor e ver de maneira simples o que eu perdi.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| Critério de aceite 1 | CR1: Dado que o aluno deseja ver os próximos eventos da Pulse Mais, quando ele acessa a aba calendário, o sistema mostra para o aluno um calendário com todos os eventos da Pulse Mais.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| Critério de aceite 2 | CR2: Dado que o aluno tem um evento da Pulse Mais nos próximos dias, quando ele abre a plataforma, o sistema envia uma notificação informando o aluno que o evento irá ocorrer nos próximos dias.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| Critérios INVEST     | INDEPENDENTE: A funcionalidade de visualização de calendário e notificações podem ser desenvolvidas separadamente do sistema de notas, utilizando apenas a base de dados de cronograma da Pulse Mais. <br><br> NEGOCIÁVEL: Os canais de notificação e o visual do calendário podem ser discutidos e ajustados conforme o feedback dos alunos. <br><br> VALIOSA: Ajuda o aluno a não perder eventos importantes e a manter o controle sobre suas faltas, aumentando o engajamento com as atividades da ONG. <br><br> ESTIMÁVEL: Como os eventos e as faltas já constam no banco de dados, o esforço para exibir essas informações em uma interface de calendário e configurar alertas automáticos é compreendido pela equipe. <br><br> PEQUENA: A história foca em uma interface de visualização e um gatilho (sino) de lembrete simples, sendo possível de completar dentro de uma única sprint. <br><br> TESTÁVEL: É possível testar criando um evento fictício no banco e verificando se o calendário o exibe corretamente e se o sistema dispara a notificação no tempo previsto. |
+| Identificação        | US09 |
+| -------------------- | ---- |
+| Persona              | André Souza |
+| User Story           | Como um aluno da Pulse Mais, eu quero receber notificações dos eventos da Pulse Mais e ter acesso às minhas faltas, para que eu consiga me organizar melhor e ver de maneira simples o que perdi. |
+| Critério de aceite 1 | CR1: Dado que o aluno deseja ver os próximos eventos da Pulse Mais, quando ele acessa a aba calendário, então o sistema exibe um calendário com todos os eventos da Pulse Mais para o período atual. |
+| Critério de aceite 2 | CR2: Dado que o aluno tem um evento da Pulse Mais nos próximos dias, quando ele abre a plataforma, então o sistema envia uma notificação informando o aluno que o evento irá ocorrer nos próximos dias. |
+| Critérios INVEST     | INDEPENDENTE: A funcionalidade de visualização de calendário e notificações pode ser desenvolvida separadamente do sistema de notas, utilizando apenas a base de dados de cronograma da Pulse Mais. <br><br> NEGOCIÁVEL: Os canais de notificação e o visual do calendário podem ser discutidos e ajustados conforme o feedback dos alunos. <br><br> VALIOSA: Ajuda o aluno a não perder eventos importantes e a manter o controle sobre suas faltas, aumentando o engajamento com as atividades da ONG. <br><br> ESTIMÁVEL: Como os eventos e as faltas já constam no banco de dados, o esforço para exibir essas informações em uma interface de calendário e configurar alertas automáticos é compreendido pela equipe. <br><br> PEQUENA: A história foca em uma interface de visualização e um gatilho de lembrete simples, sendo possível de completar dentro de uma única sprint. <br><br> TESTÁVEL: É possível testar criando um evento fictício no banco e verificando se o calendário o exibe corretamente e se o sistema dispara a notificação no tempo previsto. |
 
-| Identificação        | US10                                                                                                                                                                                                       |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | André Souza                                                                                                                                                                                                |
-| User Story           | Como aluno da Pulse Mais, eu quero entrar em contato com os psicólogos quando estiver com dificuldades, para que eu consiga receber ajuda de um profissional.                                              |
-| Critério de aceite 1 | CR1: Dado que o aluno está tendo dificuldades, quando ele clica em ajuda, o sistema envia uma notificação para um dos psicólogos da Pulse Mais.                                                            |
-| Critério de aceite 2 | CR2: Dado que o aluno entrou em contacto com o psicólogo, quando ele clicar em marcar conversa, o sistema exibe uma agenda do psicólogo, possibilitando o aluno a marcar uma conversa com um profissional. |
+| Identificação        | US10 |
+| -------------------- | ---- |
+| Persona              | André Souza |
+| User Story           | Como aluno da Pulse Mais, eu quero entrar em contato com os psicólogos quando estiver com dificuldades, para que eu consiga receber ajuda de um profissional. |
+| Critério de aceite 1 | CR1: Dado que o aluno está tendo dificuldades, quando ele clica em "Ajuda", então o sistema envia uma notificação para um dos psicólogos da Pulse Mais informando que o aluno precisa de suporte. |
+| Critério de aceite 2 | CR2: Dado que o aluno entrou em contato com o psicólogo, quando ele clicar em "Solicitar conversa", então o sistema registra a solicitação e envia uma notificação ao psicólogo, que poderá confirmar o horário diretamente com o aluno pela plataforma. |
+| Critérios INVEST     | INDEPENDENTE: O fluxo de solicitação de conversa pode ser desenvolvido como uma extensão do sistema de notificações já existente, sem criar um módulo de agendamento completo. <br><br> NEGOCIÁVEL: O formato da solicitação e a forma como o psicólogo confirma o horário podem ser ajustados com o parceiro conforme o fluxo de atendimento real. <br><br> VALIOSA: Oferece ao aluno um canal direto e acessível para buscar apoio psicológico dentro da plataforma, reduzindo a barreira para pedir ajuda. <br><br> ESTIMÁVEL: O esforço técnico é limitado à criação de um registro de solicitação no banco de dados e ao disparo de uma notificação, ambos já padrões no sistema. <br><br> PEQUENA: A história cobre apenas o envio da solicitação e a notificação ao psicólogo, deixando a confirmação de horário como responsabilidade do psicólogo via notificação de resposta. <br><br> TESTÁVEL: É possível validar simulando um clique em "Solicitar conversa" pelo aluno e verificando se a notificação chega ao psicólogo com os dados corretos do solicitante. |
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
@@ -664,8 +667,8 @@ Os requisitos funcionais a seguir foram extraídos do Termo de Abertura do Proje
 
 | ID    | Descrição                                                                                                                                                                                             | Prioridade | Status    |
 | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
-| RF001 | O sistema deve permitir o cadastro de alunos e ex-alunos com dados pessoais, acadêmicos, de jornada na Pulse Mais, empregabilidade e engajamento.                                                     | Alta       | Parcial   |
-| RF002 | O sistema deve permitir a edição e atualização dos dados cadastrais de um aluno pela equipe Pulse Mais.                                                                                               | Alta       | Parcial   |
+| RF001 | O sistema deve permitir o cadastro de alunos e ex-alunos com dados pessoais, acadêmicos, de jornada na Pulse Mais e empregabilidade, utilizando campos aderentes ao modelo físico do banco e opções controladas quando aplicável. | Alta       | Implementado |
+| RF002 | O sistema deve permitir a edição e atualização dos dados cadastrais de um aluno pela equipe Pulse Mais, com validações de tipo, tamanho e campos editáveis conforme permissões institucionais. | Alta       | Implementado |
 | RF003 | O sistema deve permitir a consulta e listagem dos alunos cadastrados.                                                                                                                                 | Alta       | Implementado |
 | RF004 | O sistema deve consolidar e apresentar o histórico completo de cada aluno (dados gerais, programas, eventos, empregabilidade e renda) de forma integrada.                                             | Alta       | Parcial   |
 | RF005 | O sistema deve permitir o registro de frequência dos alunos em aulas.                                                                                                                                 | Alta       | Parcial   |
@@ -674,17 +677,17 @@ Os requisitos funcionais a seguir foram extraídos do Termo de Abertura do Proje
 | RF008 | O sistema deve permitir atualizar informações sobre o acesso do aluno no ensino superior.                                                                                                             | Alta       | Parcial   |
 | RF009 | O sistema deve permitir o registro de observações sobre saúde mental e bem-estar do aluno, com acesso restrito ao psicólogo da instituição que atende o aluno específico.                             | Alta       | Parcial   |
 | RF010 | O sistema deve restringir o acesso às funcionalidades de acordo com o perfil do usuário (ex.: equipe Pulse, psicólogo, aluno).                                                                        | Alta       | Parcial   |
-| RF011 | O sistema deve permitir a localização e segmentação de alunos com base em múltiplos critérios combinados (ex.: identificação de perfis para oportunidades específicas ou de multiplicadores na rede). | Média      | Parcial   |
-| RF012 | O sistema deve apresentar um dashboard consolidando os principais indicadores de impacto da Pulse Mais.                                                                                               | Alta       | Parcial   |
+| RF011 | O sistema deve permitir a localização e segmentação de alunos com base em múltiplos critérios combinados, incluindo empregabilidade, escolaridade, curso, ano de ingresso e demais filtros operacionais da aba Alunos. | Média      | Implementado |
+| RF012 | O sistema deve consolidar e apresentar os principais indicadores de impacto da Pulse Mais, permitindo a análise de empregabilidade, evasão, conclusão de programas e acesso ao ensino superior com filtros de período, programa e categoria. | Alta       | Parcial   |
 | RF013 | O sistema deve calcular e apresentar o total de alunos empregados em um período selecionado.                                                                                                          | Baixa      | Parcial   |
 | RF014 | O sistema deve calcular e apresentar o total de alunos que concluíram um programa em um período selecionado.                                                                                          | Média      | Parcial   |
 | RF015 | O sistema deve calcular e apresentar indicadores de evasão e risco por programa ou turma.                                                                                                             | Média      | Parcial   |
 | RF016 | O sistema deve calcular e apresentar indicadores de acesso ao ensino superior dentro da rede de alunos.                                                                                               | Média      | Parcial   |
-| RF017 | O sistema deve disponibilizar um portal restrito ao aluno no qual o próprio aluno possa visualizar seus dados cadastrais.                                                                             | Alta       | Parcial   |
+| RF017 | O sistema deve permitir que o próprio aluno visualize seus dados cadastrais, agenda, notificações e oportunidades, com acesso restrito às suas próprias informações e sem permissão de edição de dados institucionais. | Alta       | Parcial |
 | RF018 | O sistema deve permitir que o aluno atualize informações do seu perfil, como e-mail, telefone e CPF, pelo portal do aluno.                                                                         | Alta       | Parcial   |
-| RF019 | O sistema deve permitir o envio de notificações informativas e convites para eventos.                                                                                                                 | Baixa      | Parcial   |
-| RF020 | O sistema deve permitir a visualização da agenda para gestor e aluno, com filtros por aluno, membro responsável e período.                                                                           | Média      | Parcial   |
-| RF021 | O sistema deve permitir que o gestor modifique os itens presentes na agenda.                                                                                                                          | Alta       | Parcial   |
+| RF019 | O sistema deve permitir que a equipe interna envie notificações informativas, convites e oportunidades aos alunos, e que o aluno visualize as notificações e oportunidades destinadas a ele. | Baixa      | Parcial |
+| RF020 | O sistema deve permitir a visualização da agenda para gestor e aluno, com consulta por dia, filtros por aluno, membro responsável e período; no portal do aluno, a agenda é somente leitura. | Média      | Parcial |
+| RF021 | O sistema deve permitir que o gestor crie, atualize ou cancele itens presentes na agenda; no frontend atual, o formulário está alinhado ao banco e parte da interação permanece demonstrativa. | Alta       | Parcial |
 | RF022 | O sistema deve permitir ao psicólogo acessar o desempenho acadêmico dos alunos que monitora.                                                                                                          | Alta       | Parcial   |
 
 ### 3.1.2. Regras de Negócio
@@ -780,21 +783,18 @@ A coluna "Requisito" descreve o atributo de qualidade esperado em linguagem de n
 | Eixo | Requisito | Métrica / Critério | Como atendido |
 |------|-----------|--------------------|----|
 | USAB: Usabilidade | A interface da equipe e do portal do aluno deve ser responsiva, funcionando adequadamente  em desktop, dado que parte da equipe Pulse Mais utiliza desktop e estão com programas de doação para os seus alunos.| Layout funcional e legível em viewports de 1920px a 1080px | CSS responsivo com interface adequeada e telas desktop; responsividade feita a partir do HTML também; testes manuais nos breakpoints de desktop |
-| USAB: Usabilidade | A interface da equipe e do portal do aluno deve ser responsiva, funcionando adequadamente  em desktop, dado que parte da equipe Pulse Mais utiliza desktop e estão com programas de doação para os seus alunos.| Layout funcional e legível em viewports de 1920px a 1080px | CSS responsivo com interface adequeada e telas desktop; responsividade feita a partir do HTML também; testes manuais nos breakpoints de desktop |
 | USAB: Usabilidade | A interface deve adotar boas práticas de acessibilidade inspiradas na WCAG 2.1 nível AA, com foco em contraste de cores e suporte a daltonismo. | Contraste mínimo de 4.5:1 para textos e 3:1 para elementos gráficos; informações de status nunca transmitidas exclusivamente por cor; pontuação mínima de 90 na categoria Accessibility do Google Lighthouse nas principais telas. | Paleta validada por ferramenta de contraste (ex.: WebAIM Contrast Checker); ícones e rótulos textuais associados a indicadores coloridos; auditoria via Lighthouse executada nas revisões de sprint. |
 | USAB: Usabilidade | A interface deve apresentar curva de aprendizado curta para usuários da equipe Pulse Mais. | Um novo usuário da equipe deve conseguir realizar o cadastro completo de um aluno em até 5 minutos sem treinamento formal, apoiado apenas pelos rótulos e dicas da própria interface. | Padrões visuais consistentes em todas as telas; rótulos claros em português; mensagens de erro orientadas à ação corretiva. |
 | CONF: Confiabilidade | O sistema deve utilizar identificador interno estável para cada aluno, independente de e-mail, CPF ou nome, resolvendo a dor atual de quebra de cruzamento de dados quando o aluno troca de e-mail. | Todo aluno cadastrado recebe um `id_aluno` único, imutável e gerado automaticamente; relacionamentos internos do sistema não dependem de e-mail ou nome. | Chave primária artificial `id_aluno` na tabela de alunos e constraints de integridade referencial no Banco de Dados. |
 | CONF: Confiabilidade | O sistema deve preservar a integridade dos dados em caso de falha durante uma operação de escrita, evitando registros parciais ou inconsistentes. | Operações que envolvem múltiplas tabelas devem ser atômicas: ou completam por inteiro ou são desfeitas integralmente. | Uso de transações do PostgreSQL com `BEGIN`/`COMMIT`/`ROLLBACK` via biblioteca do Node.js; testes manuais simulando falha durante escrita. |
-| DES: Desempenho | A listagem de alunos com critérios aplicados deve responder rapidamente, mesmo com o crescimento da base prevista (aprox. 600 alunos hoje, projeção de até 2000 ao longo dos próximos anos). | Tempo de resposta p95 < 2 segundos para listagem com até 2000 registros; p95 < 3 segundos para o dashboard agregado com os quatro indicadores principais. | Índices nas colunas mais consultadas (ano, programa, categoria); queries SQL otimizadas. |
+| DES: Desempenho | A listagem de alunos com critérios aplicados deve responder rapidamente, mesmo com o crescimento da base prevista (aprox. 600 alunos hoje, projeção de até 2000 ao longo dos próximos anos). | Tempo de resposta p95 < 2 segundos para listagem com até 2000 registros; p95 < 3 segundos para o dashboard agregado com os quatro indicadores principais. | Índices nas colunas de filtro mais consultadas (status, programa, categoria); agregação do dashboard calculada na aplicação, com otimização em SQL planejada para sprints seguintes. |
 | DES: Desempenho | A consulta ao histórico consolidado de um aluno deve carregar em tempo aceitável para uso diário pela equipe. | Tempo de resposta p95 < 1.5 segundos para abertura do histórico completo de um aluno; pontuação mínima de 80 na categoria Performance do Google Lighthouse nas principais telas. | Consultas pré-otimizadas; agregações feitas no servidor; payload JSON enxuto entre back-end e front-end; auditoria via Lighthouse executada nas revisões de sprint. |
-| SUP: Suportabilidade | O código-fonte deve seguir um padrão arquitetural claro, com separação de responsabilidades entre apresentação, lógica de aplicação e persistência. | Cada camada do sistema deve ter responsabilidade única e bem delimitada; nenhuma lógica de acesso a dados deve estar misturada com a camada de apresentação. | Adoção do padrão MVC com diretórios `controllers/`, `service/` e `repository/`; revisões de pull request validando a separação; consultas SQL restritas à camada de Model. |
 | SUP: Suportabilidade | O código-fonte deve seguir um padrão arquitetural claro, com separação de responsabilidades entre apresentação, lógica de aplicação e persistência. | Cada camada do sistema deve ter responsabilidade única e bem delimitada; nenhuma lógica de acesso a dados deve estar misturada com a camada de apresentação. | Adoção do padrão MVC com diretórios `controllers/`, `service/` e `repository/`; revisões de pull request validando a separação; consultas SQL restritas à camada de Model. |
 | SUP: Suportabilidade | O sistema deve ser facilmente analisável, permitindo que um novo desenvolvedor ou docente entenda e contribua com o código. | Um novo colaborador deve conseguir realizar o setup local em até 10 minutos a partir da documentação; trechos de lógica não trivial devem estar comentados; nomenclatura consistente. | README com passo a passo de instalação; revisão por pares; aderência ao guia de estilo do módulo. |
 | SEG: Segurança | O acesso às funcionalidades sensíveis deve ser controlado por níveis de permissão simples, sem autenticação formal (login/senha), conforme restrição do TAPI. As observações de saúde mental devem ser visíveis apenas para usuários com perfil de psicólogo. | Usuários sem o perfil adequado não devem conseguir acessar dados de saúde mental por nenhum caminho do sistema, incluindo tentativas de acesso direto. | Middleware de verificação de perfil no Express; rotas protegidas por papel; testes de bloqueio em cada perfil. |
 | SEG: Segurança | Dados pessoais e relatos qualitativos sensíveis dos jovens, em conformidade com a LGPD e com o "Conteúdo Restrito" definido no TAPI, não devem ser expostos publicamente nem incluídos em commits do repositório público. | Nenhum dado pessoal real presente no repositório; uso obrigatório de massa de dados fictícia para desenvolvimento e demonstração. | Banco real e dumps incluídos no `.gitignore`; arquivo de seeds com dados fictícios; revisão manual de segredos antes de cada commit. |
-| CAP: Capacidade | O sistema deve suportar a carga prevista de uso pela equipe Pulse Mais e o volume estimado de alunos cadastrados. | Suporte a, no mínimo, 15 usuários simultâneos da equipe (margem confortável sobre os 7 colaboradores internos atuais); base de dados projetada para crescer até 2000 alunos cadastrados sem degradação perceptível. | Banco PostgreSQL com índices nas colunas críticas para facilitar operação e escalabilidade. |
+| CAP: Capacidade | O sistema deve suportar a carga prevista de uso pela equipe Pulse Mais e o volume estimado de alunos cadastrados. | Suporte a, no mínimo, 15 usuários simultâneos da equipe (margem confortável sobre os 7 colaboradores internos atuais); base de dados projetada para crescer até 2000 alunos cadastrados sem degradação perceptível. | Banco PostgreSQL com índices nas principais colunas de filtro dos alunos para facilitar operação e escalabilidade. |
 | CAP: Capacidade | O portal do aluno deve suportar acessos eventuais distribuídos ao longo do dia, sem necessidade de alta concorrência. | Suporte a, no mínimo, 30 acessos simultâneos no portal do aluno sem degradação superior a 20% no tempo de resposta. | Arquitetura stateless do back-end Node.js; consultas leves na rota pública do aluno. |
-| REST: Restrições de Design | Stack tecnológica obrigatória definida pelo Inteli e pelo TAPI: front-end em HTML, CSS,JavaScript e TypeScript; back-end em Node.js; banco de dados PostgreSQL. | O front-end deve ser construído sem o uso de frameworks SPA (Single Page Application), como React, Vue, Angular ou similares; o back-end deve permanecer em Node.js e a persistência em PostgreSQL. | Verificação no `package.json` e na estrutura do projeto durante revisões de sprint; validação arquitetural com docente orientador. |
 | REST: Restrições de Design | Stack tecnológica obrigatória definida pelo Inteli e pelo TAPI: front-end em HTML, CSS,JavaScript e TypeScript; back-end em Node.js; banco de dados PostgreSQL. | O front-end deve ser construído sem o uso de frameworks SPA (Single Page Application), como React, Vue, Angular ou similares; o back-end deve permanecer em Node.js e a persistência em PostgreSQL. | Verificação no `package.json` e na estrutura do projeto durante revisões de sprint; validação arquitetural com docente orientador. |
 | REST: Restrições de Design | Não haverá sistema de autenticação tradicional (login/senha), nem integração em tempo real com APIs externas (ex.: WhatsApp, Google), conforme TAPI. | Ausência de fluxos de cadastro de senha, recuperação de senha, OAuth ou tokens externos; ausência de chamadas a Web APIs externas em runtime. | Estrutura simples de if e else validando credenciais registradas no sistema. |
 | REST: Restrições de Design | A comunicação entre aluno e equipe (mentor, psicólogo) deve ocorrer fora da plataforma; o sistema apenas registra histórico de interações, não implementa chat em tempo real. | Nenhum componente de chat ou comunicação em tempo real implementado; comunicação representada apenas por registros estruturados (mensagens, formulários, anotações). | Decisão arquitetural documentada; escopo do MVP alinhado com o parceiro. |
@@ -808,45 +808,46 @@ Os requisitos não funcionais aqui definidos traduzem as escolhas de qualidade f
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
 
-| Metodo | Endpoint | RF | Entrada principal | Retorno esperado | Status principais |
-| --- | --- | --- | --- | --- | --- |
-| GET | `/api/health` | N/A | N/A | Status da API | 200 |
-| GET | `/api/health/supabase` | N/A | N/A | Status de conexão com banco/configuração Supabase | 200, 503 |
-| GET | `/api/portal/alunos/:idAluno` | RF017 | `idAluno` path param | Perfil do aluno | 200, 400, 404 |
-| PATCH | `/api/portal/alunos/:idAluno/contato` | RF018 | `email`, `telefone` | Contato atualizado | 200, 400, 404 |
-| GET | `/api/portal/alunos/:idAluno/notificacoes` | RF019 | `idAluno`, headers de autenticação | Notificações do aluno | 200, 400, 403, 404 |
-| GET | `/api/portal/oportunidades` | RF019 | N/A | Lista de oportunidades | 200 |
-| POST | `/api/alunos` | RF001 | Dados cadastrais do aluno | Aluno cadastrado | 201, 400, 409 |
-| GET | `/api/alunos` | RF003 | Filtros opcionais | Lista de alunos | 200 |
-| GET | `/api/alunos/:idAluno` | RF003, RF004 | `idAluno` path param | Dados do aluno | 200, 400, 404 |
-| PATCH | `/api/alunos/:idAluno` | RF002 | Campos parciais do aluno | Aluno atualizado | 200, 400, 404 |
-| DELETE | `/api/alunos/:idAluno` | RF002 | `idAluno` path param | Aluno inativado | 200, 404 |
-| GET | `/api/jornada/alunos/:idAluno` | RF004 | `idAluno` path param | Jornada consolidada | 200, 400, 404 |
-| POST | `/api/frequencias` | RF005 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Frequência registrada | 200, 400, 404, 422 |
-| POST | `/api/participacoes` | RF006 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Participação registrada | 200, 400, 404, 409, 422 |
-| PATCH | `/api/empregabilidade/:idAluno` | RF007 | `ocupacao`, `tipoVinculoEmpregaticio`, `rendaMensal` | Empregabilidade atualizada | 200, 400, 404 |
-| PATCH | `/api/ensino-superior/:idAluno` | RF008 | `escolaridade`, instituição/curso/status/data | Ensino superior atualizado | 200, 400, 404 |
-| POST | `/api/anotacoes-qualitativas` | RF004 | `idAluno`, `titulo`, `descricao`, `autor`, `dataRegistro` | Anotação registrada | 201, 400, 404 |
-| GET | `/api/alunos/segmentacao` | RF011 | Query params de filtros | Alunos segmentados | 200, 400, 422 |
-| GET | `/api/impacto/resumo` | RF012 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo de impacto | 200, 400, 422 |
-| GET | `/api/jornada/resumo` | RF004, RF012 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo da jornada | 200, 400, 422 |
-| GET | `/api/impacto/conclusao-programas` | RF014 | Filtros de dashboard | Indicador de conclusão | 200, 400, 422 |
-| GET | `/api/impacto/alunos-empregados` | RF013 | Filtros de dashboard | Indicador de empregados | 200, 400, 422 |
-| GET | `/api/impacto/acesso-ensino-superior` | RF016 | Filtros de dashboard | Indicador de ensino superior | 200, 400, 422 |
-| GET | `/api/jornada/evasao-risco` | RF015 | Filtros de dashboard | Indicador de evasão/risco | 200, 400, 422 |
-| GET | `/api/comunicacao` | RF019 | `idAluno` opcional | Lista de notificações | 200 |
-| POST | `/api/comunicacao` | RF019 | Dados da notificação | Notificação criada | 201, 400, 403, 404 |
-| GET | `/api/comunicacao/oportunidades` | RF019 | N/A | Lista de oportunidades | 200 |
-| POST | `/api/comunicacao/oportunidades` | RF019 | Dados da oportunidade | Oportunidade criada | 201, 400 |
-| GET | `/api/agenda` | RF020 | `idAluno`, `idMembro`, `dataInicio`, `dataFim` | Itens de agenda | 200, 400, 422 |
-| POST | `/api/agenda` | RF021 | Dados do item de agenda | Item criado | 201, 400, 422 |
-| PATCH | `/api/agenda/:idAgenda` | RF021 | Campos parciais do item | Item atualizado | 200, 400, 404, 422 |
-| DELETE | `/api/agenda/:idAgenda` | RF021 | `idAgenda` path param | Item cancelado | 200, 404, 422 |
-| GET | `/api/prontuarios` | RF009, RF010 | `idAluno`, `idPsi`, perfil | Lista de prontuários | 200, 422 |
-| POST | `/api/prontuarios` | RF009, RF010 | `idAluno`, `idPsi`, `titulo`, `observacao`, perfil | Prontuário criado | 201, 400, 404, 422 |
-| GET | `/api/labels` | RF009, RF010 | `idAluno`, `idPsi`, perfil | Lista de labels | 200, 422 |
-| POST | `/api/labels` | RF009, RF010 | `idAluno`, `idPsi`, `descricao`, `tipoLabel`, perfil | Label criada | 201, 400, 404, 422 |
-| GET | `/api/psicologo/alunos/:idAluno/desempenho` | RF022 | `idAluno`, headers de autenticação/permissão | Desempenho do aluno | 200, 400, 403, 404 |
+| Metodo | Endpoint | RF | RN | Entrada principal | Retorno esperado | Status principais |
+| --- | --- | --- | --- | --- | --- | --- |
+| GET | `/api/health` | N/A | N/A | N/A | Status da API | 200 |
+| GET | `/api/health/supabase` | N/A | N/A | N/A | Status de conexão com banco/configuração Supabase | 200, 503 |
+| GET | `/api/portal/alunos/:idAluno` | RF017 | RN013, RN-PORTAL-01, RN-PORTAL-02 | `idAluno` path param | Perfil do aluno | 200, 400, 404 |
+| PATCH | `/api/portal/alunos/:idAluno/contato` | RF018 | RN013, RN014, RN-PORTAL-03, RN-PORTAL-04 | `email`, `telefone` | Contato atualizado | 200, 400, 404 |
+| GET | `/api/portal/alunos/:idAluno/notificacoes` | RF019 | RN011, RN017, RN-PORTAL-05 | `idAluno`, headers de autenticação | Notificações do aluno | 200, 400, 403, 404 |
+| GET | `/api/portal/oportunidades` | RF019 | RN-PORTAL-06 | N/A | Lista de oportunidades | 200 |
+| POST | `/api/alunos` | RF001 | RN001, RN002, RN003, RN-ALUNO-01, RN-ALUNO-02 | Dados cadastrais do aluno | Aluno cadastrado | 201, 400, 409 |
+| GET | `/api/alunos` | RF003, RF011 | RN-ALUNO-04, RN-SEG-01, RN-SEG-03 | Filtros opcionais, como busca, status, risco, empregabilidade, escolaridade, curso e ano de ingresso | Lista de alunos filtrada | 200 |
+| GET | `/api/alunos/opcoes-cadastro` | RF001, RF002 | RN001 | N/A | Opções controladas para cadastro e edição de aluno | 200 |
+| GET | `/api/alunos/:idAluno` | RF003, RF004 | RN-ALUNO-04, RN-ALUNO-05 | `idAluno` path param | Dados do aluno | 200, 400, 404 |
+| PATCH | `/api/alunos/:idAluno` | RF002 | RN003, RN005, RN011, RN-ALUNO-06, RN-ALUNO-07 | Campos parciais do aluno | Aluno atualizado | 200, 400, 404 |
+| DELETE | `/api/alunos/:idAluno` | RF002 | RN010 | `idAluno` path param | Aluno inativado | 200, 404 |
+| GET | `/api/jornada/alunos/:idAluno` | RF004 | RN004, RN-JORNADA-01, RN-JORNADA-02 | `idAluno` path param | Jornada consolidada | 200, 400, 404 |
+| POST | `/api/frequencias` | RF005 | RN004, RN-JORNADA-03, RN-JORNADA-04, RN-JORNADA-05 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Frequência registrada | 200, 400, 404, 422 |
+| POST | `/api/participacoes` | RF006 | RN004, RN-JORNADA-06, RN-JORNADA-07, RN-JORNADA-08 | `idAluno`, `idAtividade`, `statusPart`, `nota`, `dataPart` | Participação registrada | 200, 400, 404, 409, 422 |
+| PATCH | `/api/empregabilidade/:idAluno` | RF007 | RN008, RN-JORNADA-09 | `ocupacao`, `tipoVinculoEmpregaticio`, `rendaMensal` | Empregabilidade atualizada | 200, 400, 404 |
+| PATCH | `/api/ensino-superior/:idAluno` | RF008 | RN-JORNADA-10, RN-JORNADA-11 | `escolaridade`, instituição/curso/status/data | Ensino superior atualizado | 200, 400, 404 |
+| POST | `/api/anotacoes-qualitativas` | RF004 | RN016, RN-JORNADA-12, RN-JORNADA-13 | `idAluno`, `titulo`, `descricao`, `autor`, `dataRegistro` | Anotação registrada | 201, 400, 404 |
+| GET | `/api/alunos/segmentacao` | RF011 | RN-SEG-01, RN-SEG-02, RN-SEG-03 | Query params de filtros | Alunos segmentados | 200, 400, 422 |
+| GET | `/api/impacto/resumo` | RF012 | RN009, RN-DASH-01, RN-DASH-02, RN-DASH-03 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo de impacto | 200, 400, 422 |
+| GET | `/api/jornada/resumo` | RF004, RF012 | RN004, RN009, RN-DASH-01 | `programa`, `categoria`, `dataInicio`, `dataFim` | Resumo da jornada | 200, 400, 422 |
+| GET | `/api/impacto/conclusao-programas` | RF014 | RN006, RN009, RN-DASH-01 | Filtros de período e programa | Indicador de conclusão | 200, 400, 422 |
+| GET | `/api/impacto/alunos-empregados` | RF013 | RN008, RN009, RN-DASH-01 | Filtros de período e programa | Indicador de empregados | 200, 400, 422 |
+| GET | `/api/impacto/acesso-ensino-superior` | RF016 | RN009, RN-DASH-01 | Filtros de período e programa | Indicador de ensino superior | 200, 400, 422 |
+| GET | `/api/jornada/evasao-risco` | RF015 | RN007, RN009, RN-DASH-01 | Filtros de período e programa | Indicador de evasão/risco | 200, 400, 422 |
+| GET | `/api/comunicacao` | RF019 | RN011, RN017 | `idAluno` opcional | Lista de notificações | 200 |
+| POST | `/api/comunicacao` | RF019 | RN011, RN017, RN-COM-01, RN-COM-02, RN-COM-03 | Dados da notificação | Notificação criada | 201, 400, 403, 404 |
+| GET | `/api/comunicacao/oportunidades` | RF019 | N/A | N/A | Lista de oportunidades | 200 |
+| POST | `/api/comunicacao/oportunidades` | RF019 | RN011, RN-COM-04, RN-COM-05 | Dados da oportunidade | Oportunidade criada | 201, 400 |
+| GET | `/api/agenda` | RF020 | RN018, RN-AGENDA-01, RN-AGENDA-02 | `idAluno`, `idMembro`, `dataInicio`, `dataFim` | Itens de agenda | 200, 400, 422 |
+| POST | `/api/agenda` | RF021 | RN019, RN-AGENDA-01 | Dados do item de agenda | Item criado | 201, 400, 422 |
+| PATCH | `/api/agenda/:idAgenda` | RF021 | RN019, RN-AGENDA-03 | Campos parciais do item | Item atualizado | 200, 400, 404, 422 |
+| DELETE | `/api/agenda/:idAgenda` | RF021 | RN019, RN-AGENDA-03 | `idAgenda` path param | Item cancelado | 200, 404, 422 |
+| GET | `/api/prontuarios` | RF009, RF010 | RN012, RN016, RN-SAUDE-01 | `idAluno`, `idPsi`, perfil | Lista de prontuários | 200, 422 |
+| POST | `/api/prontuarios` | RF009, RF010 | RN012, RN016, RN-SAUDE-01, RN-SAUDE-02, RN-SAUDE-03 | `idAluno`, `idPsi`, `titulo`, `observacao`, perfil | Prontuário criado | 201, 400, 404, 422 |
+| GET | `/api/labels` | RF009, RF010 | RN012, RN016, RN-SAUDE-01 | `idAluno`, `idPsi`, perfil | Lista de labels | 200, 422 |
+| POST | `/api/labels` | RF009, RF010 | RN012, RN016, RN-SAUDE-04, RN-SAUDE-05 | `idAluno`, `idPsi`, `descricao`, `tipoLabel`, perfil | Label criada | 201, 400, 404, 422 |
+| GET | `/api/psicologo/alunos/:idAluno/desempenho` | RF022 | RN020, RN-PSI-01, RN-PSI-02 | `idAluno`, headers de autenticação/permissão | Desempenho do aluno | 200, 400, 403, 404 |
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
@@ -929,6 +930,177 @@ O usuário, no navegador, dispara um `POST /frequencia` a partir de `frontend/js
 <img src="./assets/diagCasosUso.png"><br>
 <sub>Fonte: Autoria própria (2026). </sub><br>
 </div>
+
+<div align="justify">
+
+O diagrama de casos de uso formaliza as interações entre os quatro perfis de usuário do sistema Aluno, Membro da Equipe, Gestora e Psicólogo,e as funcionalidades disponíveis para cada um. As relações `«include»` foram utilizadas para modelar comportamentos obrigatórios compartilhados entre casos de uso (por exemplo, o cadastro de aluno inclui a geração automática do código identificador PM). As tabelas a seguir descrevem cada caso de uso identificado no diagrama, com seus respectivos atores, pré-requisitos e pós-requisitos.
+
+</div>
+
+#### UC-01 — Visualizar dados cadastrais no portal
+
+| Campo | Descrição |
+|---|---|
+| **Identificação** | UC-01 |
+| **Nome** | Visualizar dados cadastrais no portal |
+| **Descrição** | O aluno acessa o portal restrito e visualiza seus dados cadastrais, como nome, e-mail, telefone, programa em curso e histórico de atividades, no formato de consulta somente leitura. |
+| **Ator principal** | Aluno |
+| **Atores secundários** | Sistema de autenticação |
+| **Pré-requisitos** | O aluno deve estar cadastrado no sistema e autenticado com credenciais válidas. O registro do aluno deve estar ativo. |
+| **Fluxo principal** | 1. O aluno acessa o portal e se autentica. 2. O sistema valida o perfil e carrega os dados do aluno via `GET /api/portal/alunos/:idAluno`. 3. A tela exibe os dados cadastrais em modo somente leitura. |
+| **Fluxo alternativo** | Se o aluno não for encontrado ou o id for inválido, o sistema retorna erro de recurso não encontrado (RN-PORTAL-02). |
+| **Pós-requisitos** | Os dados cadastrais do aluno são exibidos corretamente. Nenhuma alteração é persistida neste fluxo. |
+| **Regras de negócio associadas** | RN013, RN016, RN017, RN-PORTAL-01, RN-PORTAL-02 |
+
+#### UC-02 — Atualizar dados de contato no portal
+
+| Campo | Descrição |
+|---|---|
+| **Identificação** | UC-02 |
+| **Nome** | Atualizar dados de contato no portal |
+| **Descrição** | O aluno atualiza seus dados de contato  e-mail, telefone e/ou CPF  diretamente pelo portal. Dados institucionais, acadêmicos e sensíveis permanecem protegidos contra edição pelo aluno. |
+| **Ator principal** | Aluno |
+| **Atores secundários** | Sistema de autenticação |
+| **Pré-requisitos** | O aluno deve estar autenticado. Ao menos um campo de contato deve ser informado na requisição. |
+| **Fluxo principal** | 1. O aluno acessa a seção de perfil no portal. 2. Preenche os campos editáveis e confirma. 3. O sistema valida o e-mail (quando informado) e persiste a alteração via `PATCH /api/portal/alunos/:idAluno/contato`. 4. A atualização é registrada com data e origem (RN014). |
+| **Fluxo alternativo** | Se nenhum campo for informado ou o e-mail for inválido, o sistema rejeita a operação com mensagem de validação (RN-PORTAL-03, RN-PORTAL-04). |
+| **Pós-requisitos** | Os dados de contato são atualizados no banco com rastreabilidade de origem e data (RN014). Dados institucionais permanecem inalterados. |
+| **Regras de negócio associadas** | RN013, RN014, RN017, RN-PORTAL-03, RN-PORTAL-04 |
+
+#### UC-03 — Cadastrar aluno
+
+| Campo | Descrição |
+|---|---|
+| **Identificação** | UC-03 |
+| **Nome** | Cadastrar aluno |
+| **Descrição** | O membro da equipe registra um novo aluno ou ex-aluno no sistema, preenchendo dados pessoais, acadêmicos e de jornada na Pulse Mais. O sistema gera automaticamente o código identificador único ao final do cadastro (`«include»` UC-04). |
+| **Ator principal** | Membro da Equipe |
+| **Atores secundários** | Sistema de e-mail |
+| **Pré-requisitos** | O usuário deve estar autenticado com perfil interno (membro da equipe ou gestora). Nome completo e e-mail válido devem ser fornecidos (RN002). Não pode existir outro aluno com o mesmo e-mail (RN003). |
+| **Fluxo principal** | 1. O membro acessa o formulário de cadastro. 2. Preenche os campos obrigatórios e opcionais. 3. O sistema valida os dados e verifica unicidade de e-mail. 4. O registro é persistido no banco via `POST /api/alunos`. 5. O sistema gera o `codigo_pm` no formato `PM-AAAA-NNN` (UC-04). 6. Um e-mail de boas-vindas é disparado. |
+| **Fluxo alternativo** | Se o e-mail já estiver em uso, o sistema rejeita o cadastro com erro de conflito (RN-ALUNO-02). Se os campos obrigatórios não forem preenchidos, o sistema retorna erro 400. |
+| **Pós-requisitos** | O aluno está cadastrado no sistema com status ativo, código PM único gerado e registro auditável. |
+| **Regras de negócio associadas** | RN001, RN002, RN003, RN005, RN006, RN010, RN-ALUNO-01, RN-ALUNO-02, RN-ALUNO-03 |
+
+#### UC-04 — Gerar código identificador PM `«include»`
+
+| Campo | Descrição |
+|---|---|
+| **Identificação** | UC-04 |
+| **Nome** | Gerar código identificador PM |
+| **Descrição** | Comportamento incluído automaticamente no UC-03. O sistema deriva um código único e imutável no formato `PM-AAAA-NNN`, onde `AAAA` é o ano de ingresso e `NNN` é o sequencial anual reiniciado a cada ano. |
+| **Ator principal** | Sistema (executado automaticamente por UC-03) |
+| **Atores secundários** | — |
+| **Pré-requisitos** | Um novo registro de aluno deve ter sido criado com sucesso no banco. O ano de ingresso deve estar disponível. |
+| **Fluxo principal** | 1. Após persistir o aluno, o service recupera o `id_aluno` gerado. 2. Calcula o sequencial anual consultando os registros do mesmo ano. 3. Formata e armazena o `codigo_pm` no registro do aluno. |
+| **Fluxo alternativo** | Se o cálculo do sequencial falhar, a transação é revertida e o cadastro não é confirmado. |
+| **Pós-requisitos** | O aluno possui um `codigo_pm` único, imutável e rastreável que identifica sua entrada na Pulse Mais. |
+| **Regras de negócio associadas** | RN001, RN-ALUNO-01 |
+
+#### UC-05 — Editar cadastro do aluno
+
+| Campo | Descrição |
+|---|---|
+| **Identificação** | UC-05 |
+| **Nome** | Editar cadastro do aluno |
+| **Descrição** | O membro da equipe atualiza dados cadastrais de um aluno existente, como dados de contato, status, categoria ou informações acadêmicas, com validações de tipo e campos editáveis conforme permissões institucionais. |
+| **Ator principal** | Membro da Equipe |
+| **Atores secundários** | — |
+| **Pré-requisitos** | O aluno deve existir no sistema. O usuário deve estar autenticado com perfil interno. O `codigo_pm` não pode ser alterado (RN001). |
+| **Fluxo principal** | 1. O membro seleciona o aluno na listagem. 2. Acessa o formulário de edição e altera os campos desejados. 3. O sistema valida os campos editados (tipo, tamanho, valores permitidos). 4. A atualização é persistida via `PATCH /api/alunos/:idAluno`. |
+| **Fluxo alternativo** | Se o aluno não for encontrado, o sistema retorna erro 404 (RN-ALUNO-07). Se o risco de evasão informado for inválido, o sistema rejeita a operação (RN-ALUNO-06). Se o e-mail já estiver em uso por outro aluno, a operação é rejeitada (RN-ALUNO-02). |
+| **Pós-requisitos** | Os dados cadastrais do aluno são atualizados no banco. O histórico permanece preservado (RN010). |
+| **Regras de negócio associadas** | RN001, RN003, RN005, RN010, RN011, RN015, RN-ALUNO-02, RN-ALUNO-04, RN-ALUNO-06, RN-ALUNO-07 |
+
+#### UC-06 — Visualizar histórico consolidado do aluno
+
+| Campo | Descrição |
+|---|---|
+| **Identificação** | UC-06 |
+| **Nome** | Visualizar histórico consolidado do aluno |
+| **Descrição** | O membro da equipe ou gestora acessa o perfil de um aluno e visualiza seu histórico consolidado: dados gerais, programas, atividades, frequências, participações e indicadores de empregabilidade. Dados de saúde mental são excluídos deste fluxo, por serem restritos ao psicólogo (RN012). |
+| **Ator principal** | Membro da Equipe |
+| **Atores secundários** | Gestora |
+| **Pré-requisitos** | O usuário deve estar autenticado com perfil interno. O aluno deve existir no sistema. |
+| **Fluxo principal** | 1. O usuário busca e seleciona um aluno na listagem. 2. O sistema carrega o perfil via `GET /api/alunos/:idAluno`. 3. A tela renderiza o histórico consolidado em abas ou seções. |
+| **Fluxo alternativo** | Se o aluno não for encontrado, o sistema retorna erro 404. Dados de saúde mental são omitidos do retorno para perfis não autorizados (RN012). |
+| **Pós-requisitos** | O histórico consolidado do aluno é exibido ao usuário. Nenhuma alteração é persistida. |
+| **Regras de negócio associadas** | RN004, RN005, RN012, RN016, RN-ALUNO-04, RN-ALUNO-05 |
+
+#### UC-07 — Manter jornada do aluno
+
+| Campo | Descrição |
+|---|---|
+| **Identificação** | UC-07 |
+| **Nome** | Manter jornada do aluno |
+| **Descrição** | O membro da equipe registra e atualiza informações sobre a jornada de um aluno na Pulse Mais, incluindo frequências em aulas (`«include»` UC-08), participações em eventos (`«include»` UC-09), atualização de empregabilidade (`«extend»` UC-10) e atualização de ensino superior (`«extend»` UC-11). |
+| **Ator principal** | Membro da Equipe |
+| **Atores secundários** | — |
+| **Pré-requisitos** | O usuário deve estar autenticado com perfil interno. O aluno e a atividade devem existir no sistema. |
+| **Fluxo principal** | 1. O membro acessa o perfil do aluno. 2. Seleciona o tipo de registro (frequência, participação, empregabilidade ou ensino superior). 3. Preenche as informações e confirma. 4. O sistema valida as regras de negócio específicas e persiste o registro. |
+| **Fluxo alternativo** | Se o aluno ou a atividade não existirem, o sistema retorna 404 sem gravar. Se houver duplicidade de participação no mesmo evento, a operação é rejeitada (RN-JORNADA-07). |
+| **Pós-requisitos** | O registro de jornada é persistido e compõe o histórico consolidado do aluno (UC-06). Os indicadores do dashboard (UC-14) são atualizados indiretamente. |
+| **Regras de negócio associadas** | RN004, RN005, RN007, RN016, RN-JORNADA-01 a RN-JORNADA-13 |
+
+#### UC-13 — Filtrar e segmentar alunos
+
+| Campo | Descrição |
+|---|---|
+| **Identificação** | UC-13 |
+| **Nome** | Filtrar e segmentar alunos |
+| **Descrição** | O membro da equipe ou gestora aplica múltiplos critérios combinados para localizar e segmentar alunos, como empregabilidade, escolaridade, curso, ano de ingresso, status, risco de evasão e busca por nome ou código PM. |
+| **Ator principal** | Membro da Equipe |
+| **Atores secundários** | Gestora |
+| **Pré-requisitos** | O usuário deve estar autenticado com perfil interno. Ao menos um critério de filtro deve ser informado (RN-SEG-01). |
+| **Fluxo principal** | 1. O usuário acessa a aba de listagem de alunos. 2. Seleciona e preenche um ou mais filtros disponíveis. 3. O sistema processa a consulta via `GET /api/alunos/segmentacao`. 4. A lista filtrada é exibida com os alunos que atendem aos critérios. |
+| **Fluxo alternativo** | Se nenhum critério for informado, o sistema rejeita a requisição (RN-SEG-01). Se o limite ultrapassar 100, o sistema aplica o máximo permitido (RN-SEG-02). Buscas por texto requerem mínimo de 3 caracteres (RN-SEG-03). |
+| **Pós-requisitos** | A lista de alunos segmentada é exibida ao usuário. Nenhuma alteração é persistida. |
+| **Regras de negócio associadas** | RN007, RN011, RN-SEG-01, RN-SEG-02, RN-SEG-03 |
+
+#### UC-14 — Visualizar dashboard de impacto
+
+| Campo | Descrição |
+|---|---|
+| **Identificação** | UC-14 |
+| **Nome** | Visualizar dashboard de impacto |
+| **Descrição** | A gestora acessa o dashboard e visualiza os principais indicadores institucionais de impacto da Pulse Mais: total de alunos ativos, taxa de empregabilidade, acesso ao ensino superior, conclusão de programas e alertas de risco de evasão, com suporte a filtros por período, categoria e programa. |
+| **Ator principal** | Gestora |
+| **Atores secundários** | — |
+| **Pré-requisitos** | O usuário deve estar autenticado com perfil de gestora. Filtros de período, quando aplicados, devem usar o formato `YYYY-MM-DD` e `dataFim` não pode ser anterior a `dataInicio` (RN009, RN-DASH-01). |
+| **Fluxo principal** | 1. A gestora acessa a tela do dashboard. 2. Opcionalmente, aplica filtros de período, categoria ou programa. 3. O sistema consulta os endpoints `/api/impacto/resumo` e `/api/jornada/resumo`. 4. Os KPIs e indicadores são renderizados no dashboard. |
+| **Fluxo alternativo** | Se `dataFim` for anterior a `dataInicio`, a consulta é rejeitada (RN009). Se os filtros `categoria` ou `programa` tiverem menos de 3 caracteres, a requisição é invalidada (RN-DASH-02, RN-DASH-03). |
+| **Pós-requisitos** | Os indicadores são exibidos consolidados para o período e filtros selecionados. Nenhuma alteração é persistida. |
+| **Regras de negócio associadas** | RN006, RN007, RN008, RN009, RN-DASH-01, RN-DASH-02, RN-DASH-03 |
+
+#### UC-21 — Gerenciar agenda
+
+| Campo | Descrição |
+|---|---|
+| **Identificação** | UC-21 |
+| **Nome** | Gerenciar agenda |
+| **Descrição** | A gestora cria, atualiza ou cancela itens da agenda institucional. O aluno pode consultar a agenda em modo somente leitura pelo portal. Membros da equipe também podem consultar a agenda com filtros por aluno, membro responsável e período. |
+| **Ator principal** | Gestora |
+| **Atores secundários** | Membro da Equipe, Aluno |
+| **Pré-requisitos** | Para criar ou editar: o usuário deve estar autenticado com perfil `gestor` (RN019). Para consultar: o usuário deve estar autenticado com qualquer perfil interno ou de aluno. Filtros de data devem respeitar o formato `YYYY-MM-DD` e `dataFim` não pode ser anterior a `dataInicio` (RN-AGENDA-01). |
+| **Fluxo principal** | 1. A gestora acessa o módulo de agenda. 2. Cria um novo item preenchendo título, data, hora e participantes, via `POST /api/agenda`. 3. Quando necessário, edita via `PATCH /api/agenda/:idAgenda` ou cancela via `DELETE /api/agenda/:idAgenda`. |
+| **Fluxo alternativo** | Tentativas de atualizar ou cancelar item inexistente retornam erro 404 (RN-AGENDA-03). Tipo de usuário informado nos filtros deve ser `aluno` ou `membro_equipe` (RN-AGENDA-02). |
+| **Pós-requisitos** | O item de agenda é criado, atualizado ou cancelado no banco. A agenda atualizada fica disponível para consulta por todos os perfis autorizados. |
+| **Regras de negócio associadas** | RN018, RN019, RN-AGENDA-01, RN-AGENDA-02, RN-AGENDA-03 |
+
+#### UC-22 — Manter registros de saúde mental
+
+| Campo | Descrição |
+|---|---|
+| **Identificação** | UC-22 |
+| **Nome** | Manter registros de saúde mental |
+| **Descrição** | O psicólogo cria e visualiza registros de acompanhamento psicológico e etiquetas clínicas de um aluno que monitora. O acesso é estritamente restrito ao perfil psicólogo com vínculo registrado com o aluno (RN012). |
+| **Ator principal** | Psicólogo |
+| **Atores secundários** | — |
+| **Pré-requisitos** | O usuário deve estar autenticado com perfil `psicologo`. O aluno deve existir no sistema. O psicólogo deve ter vínculo de acompanhamento com o aluno (RN012, RN020). |
+| **Fluxo principal** | 1. O psicólogo seleciona um aluno sob seu acompanhamento. 2. Acessa o módulo de prontuário e visualiza registros existentes via `GET /api/prontuarios`. 3. Cria um novo registro de histórico psicológico informando título e observação. 4. Opcionalmente, adiciona labels clínicas ao perfil do aluno. |
+| **Fluxo alternativo** | Se o perfil não for `psicologo`, o acesso é negado (RN-SAUDE-01). Se o aluno não existir, a criação do prontuário é rejeitada (RN-SAUDE-02). Se título ou observação não forem informados, a operação é inválida (RN-SAUDE-03). Tipo de label inválido também rejeita a operação (RN-SAUDE-05). |
+| **Pós-requisitos** | O registro de saúde mental é persistido no banco com acesso restrito ao psicólogo vinculado. Dados sensíveis não aparecem em consultas de outros perfis (RN016). |
+| **Regras de negócio associadas** | RN009, RN012, RN016, RN017, RN-SAUDE-01 a RN-SAUDE-05 |
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
@@ -1426,7 +1598,7 @@ Tela de login exclusiva para psicólogos da plataforma Pulse Mais. Dividida em d
 
 <div align="center">
 <sup>Figura 22: Wireframe da tela inicial do Gestor.</sup><br>
-    <img src="assets/wrfInicialGest.png" ><br>
+    <img src="assets/wrfInicialGestt.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1496,7 +1668,7 @@ A tela exibe o perfil de um aluno com navegação lateral (Início, Alunos, Dash
 
 <div align="center">
 <sup>Figura 29: Wireframe da tela inicial do Aluno.</sup><br>
-    <img src="./assets/wrfInicioAluno.png" ><br>
+    <img src="./assets/wrfInicioAlunoo.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1676,7 +1848,7 @@ O protótipo apresenta a tela inicial do painel do gestor na plataforma, projeta
 <div align="justify">
 A tela de lista de alunos é onde o gestor visualiza e gerencia todos os estudantes da plataforma. Nela estão disponíveis filtros por curso, status e engajamento. Os alunos são exibidos em cards com avatar, nome, curso, badge de status e barra de progresso do módulo atual. No rodapé, uma legenda resume os totais por status com paginação, e quatro cards exibem os principais indicadores da turma.
 
-Esta tela está associada às User Stories US01, US03 e US04, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza os dados de todos os alunos em um único lugar e permite à gestora buscar, filtrar e acessar perfis individuais com agilidade.
+Esta tela está associada às User Stories US01 e US02, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza os dados de todos os alunos em um único lugar e permite à gestora buscar, filtrar e acessar perfis individuais com agilidade.
 </div>
 
 ### Perfil do Aluno apresentado ao Gestor
@@ -1719,7 +1891,7 @@ O corpo principal da página destaca-se por quatro cartões de métricas no topo
 <div align="justify">
 A tela de agenda do gestor é onde a equipe Pulse Mais tem uma visão do calendário operacional da turma. Nela estão dispostos a visualização mensal com todos os compromissos categorizados por cor, check-ins semanais, reuniões de módulo, entregas, mentorias individuais e sprint reviews, a lista de próximos eventos com sua proximidade temporal e um pop-up de alerta para eventos iminentes, permitindo abrir ou adiar a atividade diretamente. A navegação lateral permite que o gestor transite entre o Início, Alunos, Dashboard e a Agenda, com acessos rápidos à turma ativa, ao módulo corrente e ao total de alunos vinculados, além do botão "+ Evento" para criação de novos compromissos.
 
-Esta tela está associada às User Stories US01, US02 e US04, de acordo com os critérios de aceite de cada uma.
+Esta tela está associada às User Stories US01 e US02, de acordo com os critérios de aceite de cada uma.
 </div>
 
 ### Tela Inicial do Aluno
@@ -1748,7 +1920,7 @@ Esta tela está associada às User Stories US08, US09 e US10, de acordo com os c
 <div align="justify">
 A tela de perfil do aluno exibe todas as informações cadastrais do estudante em um único lugar. No topo, um card com avatar, nome, e-mail, curso e turma identifica o aluno, acompanhado de badges de status e etapa atual. Abaixo, abas organizam os dados em categorias — Dados Gerais, Jornada, Empregabilidade, Ensino Superior e Observações. Na aba inicial, os campos exibem nome completo, categoria, e-mail, telefone, endereço, curso superior, emprego atual, CPF e data de nascimento. Botões de editar e notificar ficam disponíveis no canto superior direito.
 
-Esta tela está associada às User Stories US01, US04 e US05, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza todos os dados do aluno em um único lugar, permitindo à gestora e ao psicólogo acessar o perfil completo do estudante com agilidade e tomar as ações necessárias diretamente pela plataforma.
+Esta tela está associada às User Stories US01, US02 e US03, de acordo com os critérios de aceite de cada uma. Isso porque a tela centraliza todos os dados do aluno em um único lugar, permitindo à gestora e ao psicólogo acessar o perfil completo do estudante com agilidade e tomar as ações necessárias diretamente pela plataforma.
 </div>
 
 ### Dashboard apresentado ao Aluno
@@ -1792,7 +1964,7 @@ Os quatro cartões de métricas superiores apresentam os indicadores centrais do
 <div align="justify">
 A tela de lista de alunos do psicólogo segue a mesma estrutura da tela do gestor, com filtros por curso, status e engajamento. Os alunos são exibidos em cards com avatar, nome, curso, badge de status e barra de progresso do módulo atual. A sidebar traz acesso rápido à próxima sessão e às flags abertas, facilitando a priorização dos atendimentos. No rodapé, uma legenda resume os totais por status com paginação, e quatro cards exibem os principais indicadores da turma.
 
-Esta tela está associada às User Stories US06 e US07, de acordo com os critérios de aceite de cada uma. Isso porque a tela permite ao psicólogo visualizar todos os alunos em um único lugar e identificar rapidamente quem precisa de suporte, com base nos badges de status e nas flags abertas exibidas na navegação lateral.
+Esta tela está associada às User Stories US04 e US05, de acordo com os critérios de aceite de cada uma. Isso porque a tela permite ao psicólogo visualizar todos os alunos em um único lugar e identificar rapidamente quem precisa de suporte, com base nos badges de status e nas flags abertas exibidas na navegação lateral.
 </div>
 
 ### Dashboard apresentado ao Psicólogo
@@ -1892,7 +2064,7 @@ Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras
 
 O Diagrama Entidade-Relacionamento (DER) do sistema PulseManager representa a estrutura lógica do banco de dados responsável por armazenar e organizar as informações relacionadas ao acompanhamento acadêmico, profissional e psicossocial dos alunos atendidos pela organização Pulse Mais. O modelo foi desenvolvido com base nos requisitos funcionais levantados ao longo da análise do sistema e está integralmente alinhado ao Diagrama de Classes do Domínio, garantindo consistência entre a modelagem conceitual orientada a objetos e a modelagem relacional.
 
-O DER explicita as entidades do sistema, seus atributos, as respectivas chaves primárias (Primary Keys – PK), chaves estrangeiras (Foreign Keys – FK) e as cardinalidades de todos os relacionamentos, assegurando a integridade referencial e a correta representação das regras de negócio.
+O DER explicita as entidades do sistema, seus atributos, as respectivas chaves primárias (Primary Keys – PK), chaves estrangeiras (Foreign Keys – FK) e as cardinalidades de todos os relacionamentos, representadas por meio da notação crow's foot
 
 </div>
 
@@ -2203,7 +2375,7 @@ O Diagrama Entidade-Relacionamento do PulseManager representa de forma estrutura
 
 Esta seção traduz o DER apresentado na seção 3.6.2 para o modelo relacional e para sua implementação física em PostgreSQL. Como a modelagem foi revisada ao longo do desenvolvimento, as tabelas abaixo representam a versão consolidada após as atualizações da Sprint 4, e não apenas o recorte inicial produzido na Sprint 2.
 
-O modelo relacional organiza os dados em tabelas com seus respectivos campos (Normando, 2024). As chaves primárias identificam de forma única cada registro, enquanto as chaves estrangeiras conectam uma tabela a outra e preservam os vínculos definidos na modelagem. Dessa forma, as entidades e relacionamentos do DER são convertidos em uma estrutura pronta para implementação no banco de dados.
+O modelo relacional organiza os dados em tabelas com seus respectivos campos (NORMANDO, 2024). As chaves primárias identificam de forma única cada registro, enquanto as chaves estrangeiras conectam uma tabela a outra e preservam os vínculos definidos na modelagem. Dessa forma, as entidades e relacionamentos do DER são convertidos em uma estrutura pronta para implementação no banco de dados.
 
 </div>
 
@@ -2680,7 +2852,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#1 | Enviar notificação de "Alerta: Cuidado com Faltas" para o aluno que possui ID 123 e possuem percentual de falta entre 10% e 15%
+\#1 | Enviar notificação de "Alerta: Cuidado com Faltas" para o aluno que possui ID 123 e cujo percentual de faltas está entre 10% e 15%
 --- | ---
 **Expressão SQL** | `INSERT INTO notificacoes (tipo, id_aluno) SELECT 'Alerta: Cuidado com Faltas', id_aluno FROM participacao WHERE id_aluno = 123 GROUP BY id_aluno HAVING (SUM(CASE WHEN participacao = FALSE THEN 1 ELSE 0 END) * 1.0 / COUNT(*)) BETWEEN 0.10 AND 0.15;`
 **Proposições lógicas** | $A$: A taxa de faltas do aluno é maior ou igual a 10% <br> $B$: A taxa de faltas do aluno é menor ou igual a 15% <br> $C$: O aluno recebe a notificação 'Alerta: Cuidado com Faltas'
@@ -2693,17 +2865,18 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 --- | ---
 **Expressão SQL** | `SELECT * FROM alunos WHERE idade IN (17, 18, 19);`
 **Proposições lógicas** | $A$: A idade do aluno é 17 (idade = 17) <br> $B$: A idade do aluno é 18 (idade = 18) <br> $C$: A idade do aluno é 19 (idade = 19)
-**Expressão lógica proposicional** | $(A \lor B) \lor C$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$(A \lor B)$</th><th>$(A \lor B) \lor C$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr></tbody></table>
+**Expressão lógica proposicional** | $A \lor B \lor C$
+**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \lor B \lor C$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr></tbody></table>
+**Observação** | Como a disjunção é associativa, a expressão dispensa parênteses internos. Vale notar que $A$, $B$ e $C$ são mutuamente exclusivas no domínio real (um mesmo aluno não pode ter 17, 18 e 19 anos ao mesmo tempo), de modo que as linhas com mais de uma proposição verdadeira não ocorrem na prática, embora sejam mantidas na tabela para completude lógica.
 
 ---
 
-\#3 | Selecionar alunos que tem status de participação "Ativo" e curso como "Sistemas de Informação"
+\#3 | Selecionar alunos com status 'Ativo' que cursam 'Sistemas de Informação' ou 'Ciência da Computação' e que não sejam bolsistas
 --- | ---
-**Expressão SQL** | `SELECT * FROM alunos WHERE status = 'Ativo' AND NOT curso = 'Sistemas de Informação';`
-**Proposições lógicas** | $A$: O status do aluno é 'Ativo' (status = 'Ativo') <br> $B$: O curso do aluno é 'Sistemas de Informação' (curso = 'Sistemas de Informação')
-**Expressão lógica proposicional** | $A \land \lnot B$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$\lnot B$</th><th>$A \land \lnot B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr></tbody></table>
+**Expressão SQL** | `SELECT * FROM alunos WHERE status = 'Ativo' AND (curso = 'Sistemas de Informação' OR curso = 'Ciência da Computação') AND NOT bolsista = TRUE;`
+**Proposições lógicas** | $A$: O status do aluno é 'Ativo' (status = 'Ativo') <br> $B$: O curso do aluno é 'Sistemas de Informação' (curso = 'Sistemas de Informação') <br> $C$: O curso do aluno é 'Ciência da Computação' (curso = 'Ciência da Computação') <br> $D$: O aluno é bolsista (bolsista = TRUE)
+**Expressão lógica proposicional** | $A \land (B \lor C) \land \lnot D$
+**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$D$</th><th>$(B \lor C)$</th><th>$\lnot D$</th><th>$A \land (B \lor C) \land \lnot D$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td></tr></tbody></table>
 
 ---
 
@@ -2714,17 +2887,18 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 **Expressão lógica proposicional** | $A \land B$
 **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td></tr></tbody></table>
 
+---
 
-\#5 | Inserir informações no histórico psicológico
+\#5 | Inserir um registro no histórico psicológico do aluno 123, desde que ele exista e não esteja com status 'Inativo'
 --- | ---
-**Expressão SQL** | `INSERT INTO historico_psicologico (id_aluno, observacao) VALUES (123, 'Aluno demonstra ótima evolução e engajamento.');`
-**Proposições lógicas** | $A$: O ID do aluno é 123 (id\_aluno = 123) <br> $B$: A observação é válida e não nula <br> $C$: O registro é inserido no histórico psicológico
-**Expressão lógica proposicional** | $(A \land B) \to C$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$(A \land B)$</th><th>$(A \land B) \to C$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td></tr></tbody></table>                                           
+**Expressão SQL** | `INSERT INTO historico_psicologico (id_aluno, observacao) SELECT id_aluno, 'Aluno demonstra ótima evolução e engajamento.' FROM alunos WHERE id_aluno = 123 AND NOT status = 'Inativo';`
+**Proposições lógicas** | $A$: O ID do aluno é 123 (id\_aluno = 123) <br> $B$: O status do aluno é 'Inativo' (status = 'Inativo') <br> $C$: O registro é inserido no histórico psicológico
+**Expressão lógica proposicional** | $(A \land \lnot B) \to C$
+**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$\lnot B$</th><th>$(A \land \lnot B)$</th><th>$(A \land \lnot B) \to C$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td></tr></tbody></table>
 
 ---
 
-\#6 | Apagar data na agenda que esteja com data ou ID em branco
+\#6 | Apagar registros da agenda que estejam com data ou ID em branco
 --- | ---
 **Expressão SQL** | `DELETE FROM agenda WHERE data IS NULL OR id_agenda IS NULL;`
 **Proposições lógicas** | $A$: A data é nula (data IS NULL) <br> $B$: O ID da agenda é nulo (id\_agenda IS NULL)
@@ -2733,21 +2907,21 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#7 | Selecionar todos os alunos que possuem nome "João"
+\#7 | Selecionar alunos cujo nome começa com 'João' e que não estejam com status 'Inativo'
 --- | ---
-**Expressão SQL** | `SELECT * FROM alunos WHERE nome LIKE 'João%';`
-**Proposições lógicas** | $A$: O nome do aluno começa com 'João' (nome LIKE 'João%')
-**Expressão lógica proposicional** | $A$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$A$</th></tr></thead><tbody><tr><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td></tr></tbody></table>
+**Expressão SQL** | `SELECT * FROM alunos WHERE nome LIKE 'João%' AND NOT status = 'Inativo';`
+**Proposições lógicas** | $A$: O nome do aluno começa com 'João' (nome LIKE 'João%') <br> $B$: O status do aluno é 'Inativo' (status = 'Inativo')
+**Expressão lógica proposicional** | $A \land \lnot B$
+**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$\lnot B$</th><th>$A \land \lnot B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr></tbody></table>
 
 ---
 
-\#8 | Atualizar ocupação do aluno que possui ID 123 para "Desenvolvedor Júnior"
+\#8 | Atualizar a ocupação para 'Desenvolvedor Júnior' dos alunos cujo ID seja 123 ou cuja ocupação atual seja 'Estagiário'
 --- | ---
-**Expressão SQL** | `UPDATE ocupacao_aluno SET ocupacao_aluno = 'Desenvolvedor Júnior' WHERE id_aluno = 123;`
-**Proposições lógicas** | $A$: O ID do aluno é 123 — condição WHERE (id\_aluno = 123) <br> $B$: A ocupação é atualizada para 'Desenvolvedor Júnior' — efeito do SET
-**Expressão lógica proposicional** | $A \to B$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \to B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td></tr></tbody></table>
+**Expressão SQL** | `UPDATE ocupacao_aluno SET ocupacao_aluno = 'Desenvolvedor Júnior' WHERE id_aluno = 123 OR ocupacao_aluno = 'Estagiário';`
+**Proposições lógicas** | $A$: O ID do aluno é 123 — condição WHERE (id\_aluno = 123) <br> $B$: A ocupação atual do aluno é 'Estagiário' — condição WHERE (ocupacao\_aluno = 'Estagiário') <br> $C$: A ocupação é atualizada para 'Desenvolvedor Júnior' — efeito do SET
+**Expressão lógica proposicional** | $(A \lor B) \to C$
+**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$(A \lor B)$</th><th>$(A \lor B) \to C$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td></tr></tbody></table>
 
 </div>
 
@@ -2794,8 +2968,8 @@ No contexto do projeto, a RTM é importante porque permite verificar se os requi
 
 | Persona | RF | RN | Endpoint | Tela | Teste | Evidência |
 | ------- | ----- | ---- | ----------- | -------- | ----- | ---------------------------------- |
-| Equipe Pulse Mais | RF001 | RN001, RN002, RN003, RN005, RN006, RN010, RN015, RN017 | `POST /api/alunos` | Cadastro | `src/tests/integration/alunos.integration.test.ts` - UC-03 CT01 a CT04; `src/tests/integration/codigo-pm.integration.test.ts` - CT01 a CT04; `src/tests/unit/services/aluno.service.test.ts` | Registro retornado pela API |
-| Equipe Pulse Mais | RF002 | RN003, RN005, RN010, RN011, RN015 | `PATCH /api/alunos/:idAluno` | Cadastro / Perfil do aluno | `src/tests/integration/alunos.integration.test.ts` - UC-05 CT01 a CT03; `src/tests/unit/services/aluno.service.test.ts` | Formulário de edição de dados do aluno |
+| Equipe Pulse Mais | RF001 | RN001, RN002, RN003, RN005, RN006, RN010, RN015, RN017 | `POST /api/alunos`, `GET /api/alunos/opcoes-cadastro` | Cadastro | `src/tests/integration/alunos.integration.test.ts` - UC-03 CT01 a CT04; `src/tests/integration/codigo-pm.integration.test.ts` - CT01 a CT04; `src/tests/unit/services/aluno.service.test.ts` | Registro retornado pela API; formulário de cadastro com campos aderentes ao banco e opções controladas |
+| Equipe Pulse Mais | RF002 | RN003, RN005, RN010, RN011, RN015 | `PATCH /api/alunos/:idAluno`, `GET /api/alunos/opcoes-cadastro` | Cadastro / Perfil do aluno | `src/tests/integration/alunos.integration.test.ts` - UC-05 CT01 a CT03; `src/tests/unit/services/aluno.service.test.ts` | Formulário de edição do perfil com validações e opções enum carregadas para campos controlados |
 | Equipe Pulse Mais | RF003 | - | `GET /api/alunos`, `GET /api/alunos/:idAluno` | Busca / Perfil do aluno | `src/tests/integration/alunos.integration.test.ts` - UC-04 CT01 a CT05; `src/tests/unit/services/aluno.service.test.ts` | Lista e detalhe retornados pela API |
 | Equipe Pulse Mais | RF004 | RN003, RN004, RN005, RN006, RN010, RN016 | `GET /api/alunos/:idAluno`, `GET /api/jornada/resumo`, `GET /api/jornada/alunos/:idAluno` | Perfil do aluno | `src/tests/integration/jornada.integration.test.ts` - UC-07 CT01 a CT04; `src/tests/unit/services/jornada.service.test.ts` | Histórico parcial exibido no perfil |
 | Equipe Pulse Mais | RF005 | RN007, RN016 | `POST /api/frequencias` | Registro de frequência | `src/tests/integration/jornada.integration.test.ts` - UC-08 CT01 a CT05; `src/tests/unit/services/jornada.service.test.ts` | Frequência registrada por aula |
@@ -2804,7 +2978,7 @@ No contexto do projeto, a RTM é importante porque permite verificar se os requi
 | Equipe Pulse Mais | RF008 | - | `PATCH /api/ensino-superior/:idAluno`, `GET /api/impacto/acesso-ensino-superior` | Perfil do aluno | `src/tests/integration/jornada.integration.test.ts` - UC-11 CT01 a CT04; `src/tests/integration/dashboard.integration.test.ts` - UC-18 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Dados de ensino superior exibidos no perfil |
 | Psicólogo | RF009 | RN012, RN017 | `GET /api/prontuarios`, `POST /api/prontuarios`, `GET /api/labels`, `POST /api/labels` | Prontuário | `src/tests/integration/saude-mental.integration.test.ts` - UC-20a CT01 a CT06; UC-20b CT01 a CT06; `src/tests/unit/services/saude-mental.service.test.ts` | Listagem restrita de prontuários |
 | Todos os usuários | RF010 | RN011, RN012, RN017, RN019, RN020 | `GET /api/prontuarios`, `POST /api/prontuarios`, `POST /api/agenda`, `PATCH /api/agenda/:idAgenda`, `DELETE /api/agenda/:idAgenda`, `GET /api/psicologo/alunos/:idAluno/desempenho` | Sistema global | `src/tests/integration/saude-mental.integration.test.ts`; `src/tests/integration/agenda.integration.test.ts`; `src/tests/integration/notificacao-psicologo.integration.test.ts`; `src/tests/integration/desempenho-psicologo.integration.test.ts` | Restrições aplicadas nas operações sensíveis de saúde mental, agenda e desempenho |
-| Equipe Pulse Mais | RF011 | RN015 | `GET /api/alunos/segmentacao` | Busca / Filtros | `src/tests/integration/segmentacao.integration.test.ts` - UC-13 CT01 a CT06; `src/tests/unit/services/segmentacao.service.test.ts` | Lista filtrada retornada pela API |
+| Equipe Pulse Mais | RF011 | RN015 | `GET /api/alunos`, `GET /api/alunos/segmentacao` | Busca / Filtros | `src/tests/integration/segmentacao.integration.test.ts` - UC-13 CT01 a CT06; `src/tests/unit/services/segmentacao.service.test.ts` | Lista filtrada por múltiplos critérios, incluindo empregabilidade, escolaridade, curso e ano de ingresso |
 | Gestora | RF012 | RN006, RN009 | `GET /api/impacto/resumo`, `GET /api/jornada/resumo` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-14 CT01 a CT06; `src/tests/unit/services/dashboard.service.test.ts` | KPIs exibidos no dashboard |
 | Gestora | RF013 | RN008, RN009 | `GET /api/impacto/alunos-empregados` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-16 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Indicador de empregabilidade |
 | Gestora | RF014 | RN005, RN006, RN009 | `GET /api/impacto/conclusao-programas` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-15 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Indicador de conclusão de programa |
@@ -2812,9 +2986,9 @@ No contexto do projeto, a RTM é importante porque permite verificar se os requi
 | Gestora | RF016 | RN009 | `GET /api/impacto/acesso-ensino-superior` | Dashboard | `src/tests/integration/dashboard.integration.test.ts` - UC-18 CT01 a CT05; `src/tests/unit/services/dashboard.service.test.ts` | Indicador de ensino superior |
 | Aluno | RF017 | RN013, RN017 | `GET /api/portal/alunos/:idAluno` | Portal do aluno | `src/tests/integration/portal-aluno.integration.test.ts` - UC-01 CT01 a CT03; `src/tests/unit/services/portal-aluno.service.test.ts` | Dados cadastrais exibidos no portal |
 | Aluno | RF018 | RN013, RN014, RN017 | `PATCH /api/portal/alunos/:idAluno/contato` | Portal do aluno | `src/tests/integration/portal-aluno.integration.test.ts` - UC-02 CT01 a CT05; `src/tests/unit/services/portal-aluno.service.test.ts` | Atualização de contato realizada pelo aluno |
-| Equipe Pulse Mais | RF019 | - | `GET /api/comunicacao`, `POST /api/comunicacao`, `GET /api/comunicacao/oportunidades`, `POST /api/comunicacao/oportunidades`, `GET /api/portal/alunos/:idAluno/notificacoes`, `GET /api/portal/oportunidades` | Comunicação | `src/tests/integration/notificacoes.integration.test.ts` - RF019a CT01 a CT08 e RF019b CT01 a CT05; `src/tests/integration/notificacao-psicologo.integration.test.ts` - CT01 a CT04; `src/tests/integration/portal-aluno-notificacoes.integration.test.ts` - CT01 a CT05; `src/tests/unit/services/notificacao.service.test.ts` | Comunicação cadastrada e listada |
-| Gestor e Aluno | RF020 | RN018 | `GET /api/agenda` | Agenda do gestor / Agenda do aluno | `src/tests/integration/agenda.integration.test.ts` - RF020 CT01 a CT05; `src/tests/unit/services/agenda.service.test.ts` | Listagem e filtros da agenda; no frontend, gestor tem agenda gerenciável e aluno tem agenda somente leitura |
-| Gestora | RF021 | RN019 | `POST /api/agenda`, `PATCH /api/agenda/:idAgenda`, `DELETE /api/agenda/:idAgenda` | Agenda | `src/tests/integration/agenda.integration.test.ts` - RF021 CT01 a CT07; `src/tests/unit/services/agenda.service.test.ts` | Item de agenda criado, editado ou cancelado |
+| Equipe Pulse Mais | RF019 | - | `GET /api/comunicacao`, `POST /api/comunicacao`, `GET /api/comunicacao/oportunidades`, `POST /api/comunicacao/oportunidades`, `GET /api/portal/alunos/:idAluno/notificacoes`, `GET /api/portal/oportunidades` | Atualizações / Comunicação | `src/tests/integration/notificacoes.integration.test.ts` - RF019a CT01 a CT08 e RF019b CT01 a CT05; `src/tests/integration/notificacao-psicologo.integration.test.ts` - CT01 a CT04; `src/tests/integration/portal-aluno-notificacoes.integration.test.ts` - CT01 a CT05; `src/tests/unit/services/notificacao.service.test.ts` | Comunicação cadastrada e listada; no frontend, Atualizações reúne notificações, oportunidades e seleção múltipla simulada de destinatários |
+| Gestor e Aluno | RF020 | RN018 | `GET /api/agenda` | Agenda do gestor / Agenda do aluno | `src/tests/integration/agenda.integration.test.ts` - RF020 CT01 a CT05; `src/tests/unit/services/agenda.service.test.ts` | Listagem e filtros da agenda; no frontend, gestor tem agenda gerenciável e aluno tem agenda somente leitura por dia |
+| Gestora | RF021 | RN019 | `POST /api/agenda`, `PATCH /api/agenda/:idAgenda`, `DELETE /api/agenda/:idAgenda` | Agenda | `src/tests/integration/agenda.integration.test.ts` - RF021 CT01 a CT07; `src/tests/unit/services/agenda.service.test.ts` | Item de agenda criado, editado ou cancelado na API; formulário do gestor alinhado aos campos reais da entidade agenda |
 | Psicólogo | RF022 | RN020, RN017 | `GET /api/psicologo/alunos/:idAluno/desempenho` | Perfil do aluno monitorado | `src/tests/integration/desempenho-psicologo.integration.test.ts` - UC-23 CT01 a CT05 | Desempenho acadêmico exibido apenas para alunos monitorados |
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
@@ -2942,11 +3116,11 @@ A integração do backend com o Supabase foi implementada e documentada. O clien
 
 **Testes automatizados**
 
-Foram implementados 266 casos de teste automatizados distribuídos em 20 arquivos, cobrindo duas abordagens complementares. Os testes unitários de Service (`src/tests/unit/services/`), com 110 casos em 8 arquivos, validam de forma isolada as regras de negócio dos services `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService` e `SaudeMentalService`. Os testes de integração de endpoints (`src/tests/integration/`), com 156 casos em 12 arquivos, verificam o contrato HTTP das rotas utilizando banco SQLite em memória via `sqljs`. Ao longo da sprint foram também realizadas a auditoria e padronização da nomenclatura e semântica de todos os arquivos Jest, bem como a reorganização estrutural das pastas de testes.
+Foram implementados 278 casos de teste automatizados distribuídos em 20 arquivos, cobrindo duas abordagens complementares. Os testes unitários de Service (`src/tests/unit/services/`), com 110 casos em 8 arquivos, validam de forma isolada as regras de negócio dos services `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService` e `SaudeMentalService`. Os testes de integração de endpoints (`src/tests/integration/`), com 168 casos em 12 arquivos, verificam o contrato HTTP das rotas utilizando banco SQLite em memória via `sqljs`. Ao longo da sprint foram também realizadas a auditoria e padronização da nomenclatura e semântica de todos os arquivos Jest, bem como a reorganização estrutural das pastas de testes.
 
 **Documentação**
 
-As seções 3.1.3 e 3.1.4 (casos de uso) e 3.2.1 a 3.2.7 (arquitetura do sistema) do WAD foram atualizadas. Na seção de testes, foram redigidas as seções 5.1.1 (estratégia e estrutura), 5.1.3 (mapeamento dos testes de integração) e 5.1.4 (evidências de execução). A Matriz de Rastreabilidade foi atualizada com os novos endpoints e as referências bibliográficas foram revisadas para o modelo ABNT. O processo de integração com o Supabase foi documentado em `docs/others/supabase-integration.md`.
+As seções 3.1.3 e 3.1.4 (casos de uso) e 3.2.1 a 3.2.7 (arquitetura do sistema) do WAD foram atualizadas. Na seção de testes, foram redigidas as seções 5.1.1 (estratégia e estrutura), 5.1.3 (mapeamento dos testes de integração) e 5.1.4 (evidências de execução, incluindo atualização da suíte após refinamentos finais). A Matriz de Rastreabilidade foi atualizada com os novos endpoints e as referências bibliográficas foram revisadas para o modelo ABNT. O processo de integração com o Supabase foi documentado em `docs/others/supabase-integration.md`.
 
 No Artefato 12 de negócios, foram produzidas as seguintes seções: Resumo Executivo (seção 6.1), com contextualização do problema da Pulse Mais, descrição da solução Pulse Manager, diferenciais competitivos e objetivos estratégicos; análise de mercado, cobrindo visão geral do setor, tamanho e crescimento, tendências, segmentação de mercado e perfil do público-alvo; Público-Alvo (seção 6.4), detalhando os usuários diretos (gestores, psicólogos e equipe operacional) e indiretos (alunos e ex-alunos); Business Model Canvas completo (atividades-chave, proposta de valor, recursos e parcerias principais, relacionamento com clientes, segmentos, canais, fontes de receita e estrutura de custos); e Estratégia de Marketing 4Ps.
 
@@ -2975,7 +3149,7 @@ _Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com 
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## 5.1. Relatório de testes automatizados (sprint 4 — suíte reformulada na sprint 5)
 
 Os testes automatizados do backend foram implementados com **Jest**, contemplando duas abordagens complementares:
 
@@ -2991,9 +3165,29 @@ A suíte de testes automatizados da aplicação combina testes de integração v
 
 A suíte é organizada em três tipos, diferenciados pelo nível de isolamento e pelo uso de mocks:
 
-- **Tipo 1 - Testes unitários de Service:** validação isolada da camada de `services/`, sem acesso a banco de dados real, Supabase, PostgreSQL, rotas ou controllers. As dependências externas, como repositories e integrações de auditoria, são simuladas por mocks com `jest.fn()`.
+- **Tipo 1 - Testes unitários de Service:** validação isolada da camada de `services/`, sem acesso a banco de dados real, Supabase, PostgreSQL, rotas ou controllers. As dependências externas, como repositories e integrações de auditoria, são simuladas por mocks com `jest.fn()`, com tipagem explícita via o helper `asMockedDependency<T>()`.
 - **Tipo 2 - Integração pura:** banco em memória, requisição HTTP real e nenhum mock. O arquivo `jornada.integration.test.ts` é um exemplo representativo desse tipo. Todos os efeitos observáveis - status HTTP, corpo da resposta e estado do banco - são verificados sem substituição de dependência interna.
 - **Tipo 3 - Integração com mock de dependência externa:** mesmo setup do Tipo 2, com a diferença de que `jest.mock()` é aplicado exclusivamente sobre integrações externas, como serviços que fariam chamadas reais de rede em produção. O arquivo `segmentacao.integration.test.ts` representa esse tipo: banco, HTTP, Controller, Service e Repository permanecem reais; apenas `registrarConsultaSegmentacao` é substituído por um `jest.fn()`.
+
+**Scripts de execução**
+
+A suíte expõe comandos separados no `package.json`, permitindo executar cada tipo de teste de forma independente:
+
+| Comando | Escopo |
+|---|---|
+| `npm test` | Suíte completa (unitários + integração funcional) em série |
+| `npm run test:unit` | Apenas testes unitários de Service |
+| `npm run test:integration` | Apenas testes de integração de endpoints (testes de desempenho ignorados) |
+| `npm run test:performance` | Apenas testes de desempenho marcados com `RNF-DES` |
+| `npm run test:ci` | Suíte completa seguida dos testes de desempenho |
+
+**Infraestrutura compartilhada**
+
+Os helpers centralizados em `src/tests/helpers/` concentram a infraestrutura de teste, eliminando repetição de código entre os arquivos:
+
+- **`databaseTestHelper.ts`**: expõe `setupIntegrationDatabase()`, `resetIntegrationDatabase()`, `teardownIntegrationDatabase()` e `getIntegrationRepository<T>()`, centralizando o ciclo de vida do banco in-memory para os testes de integração. A constante `NON_EXISTENT_ID` também é definida aqui para padronizar os cenários `404`.
+- **`performanceTest.ts`**: expõe `performanceIt`, alias de `it` quando `RUN_PERFORMANCE_TESTS=true` e de `it.skip` caso contrário, separando a medição de desempenho da validação funcional principal.
+- **`mockHelper.ts`**: provê `asMockedDependency<T>()` para injetar dependências mockadas nos testes unitários com tipagem explícita, eliminando o uso de `as any` nos mocks.
 
 **Padrão de escrita - AAA**
 
@@ -3005,7 +3199,24 @@ Todos os casos de teste seguem o padrão Arrange, Act, Assert:
 
 **Determinismo e isolamento**
 
-O determinismo da suíte de integração é garantido pelo mecanismo configurado em `connection.ts`, ativado automaticamente quando `NODE_ENV=test` - valor definido por `setup.js` antes de qualquer teste, referenciado em `jest.config.ts` via `setupFiles`. Nesse modo, a aplicação instancia um DataSource com `type: 'sqljs'` - banco SQLite compilado em WebAssembly que existe exclusivamente em memória durante a execução do Jest, sem dependência de servidor externo. A flag `dropSchema: true` garante que o schema seja descartado na inicialização; o `beforeEach` de cada arquivo de teste executa `AppDataSource.synchronize(true)`, que dropa e recria todas as tabelas do zero antes de cada caso de teste individual.
+O determinismo da suíte de integração é garantido pelo mecanismo configurado em `connection.ts`, ativado automaticamente quando `NODE_ENV=test` - valor definido por `setup.js` antes de qualquer teste, referenciado em `jest.config.ts` via `setupFiles`. Nesse modo, a aplicação instancia um DataSource com `type: 'sqljs'` - banco SQLite compilado em WebAssembly que existe exclusivamente em memória durante a execução do Jest, sem dependência de servidor externo.
+
+O ciclo de vida do banco é gerenciado pelo helper `databaseTestHelper.ts`, eliminando a repetição manual de `initializeDatabase()`, `AppDataSource.synchronize(true)` e `AppDataSource.destroy()` em cada arquivo. O padrão adotado em todos os testes de integração é:
+
+```ts
+beforeAll(async () => {
+  await setupIntegrationDatabase();
+  repository = getIntegrationRepository(Entidade);
+});
+
+beforeEach(async () => {
+  await resetIntegrationDatabase();
+});
+
+afterAll(teardownIntegrationDatabase);
+```
+
+A chamada `resetIntegrationDatabase()` executa `AppDataSource.synchronize(true)` internamente, dropando e recriando todas as tabelas antes de cada caso de teste individual, garantindo isolamento completo entre execuções.
 
 Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
 
@@ -3019,11 +3230,15 @@ Esse mecanismo impõe quatro regras de isolamento observadas em toda a suíte:
 ### 5.1.2 Testes Unitários de Service
 <div align="justify">
 
-Os testes unitários de Service foram organizados em `src/tests/unit/services`, seguindo o padrão de nomenclatura `*.service.test.ts`. O objetivo foi validar os principais comportamentos dos services ligados aos endpoints ativos do backend, contemplando cenários de sucesso, erros de validação, regras de negócio, conflitos, registros inexistentes e chamadas corretas aos repositories mockados.
+Os testes unitários de Service foram organizados em `src/tests/unit/services`, seguindo o padrão de nomenclatura `*.service.test.ts`. O objetivo foi validar os principais comportamentos dos services ligados aos endpoints ativos do backend, contemplando cenários de sucesso, erros de validação, regras de negócio, conflitos, registros inexistentes e chamadas corretas aos repositories mockados. Os mocks são construídos com o helper `asMockedDependency<T>()`, que substitui o uso de `as any` por injeção explicitamente tipada:
+
+```ts
+service = new AgendaService(asMockedDependency<AgendaRepository>(repository));
+```
 
 | Service testado | Arquivo de teste | Quantidade de testes | Principais responsabilidades validadas |
 | --- | --- | ---: | --- |
-| `AlunoService` | `src/tests/unit/services/aluno.service.test.ts` | 13 | Cadastro, listagem, busca, atualização, inativação, validação de email, idade, data, duplicidade e risco de evasão. |
+| `AlunoService` | `src/tests/unit/services/aluno.service.test.ts` | 16 | Cadastro, listagem, busca, atualização, inativação, validação de email, idade, data, duplicidade e risco de evasão. |
 | `SegmentacaoService` | `src/tests/unit/services/segmentacao.service.test.ts` | 9 | Segmentação de alunos, validação de filtros, limite máximo, status, risco de evasão, busca e auditoria. |
 | `DashboardService` | `src/tests/unit/services/dashboard.service.test.ts` | 14 | Cálculo de indicadores de impacto, jornada, evasão, risco, empregabilidade, conclusão, ensino superior, agrupamento por programa e auditoria. |
 | `JornadaService` | `src/tests/unit/services/jornada.service.test.ts` | 23 | Consolidação da jornada, frequência, participação em eventos, empregabilidade, ensino superior e anotações qualitativas. |
@@ -3031,7 +3246,7 @@ Os testes unitários de Service foram organizados em `src/tests/unit/services`, 
 | `NotificacaoService` | `src/tests/unit/services/notificacao.service.test.ts` | 15 | Listagem e criação de notificações, oportunidades, validação de aluno destinatário, tipos, remetente, perfil, datas e campos obrigatórios. |
 | `PortalAlunoService` | `src/tests/unit/services/portal-aluno.service.test.ts` | 13 | Visualização de perfil, atualização de contato, normalização de email/telefone, permissões de notificações e oportunidades do portal. |
 | `SaudeMentalService` | `src/tests/unit/services/saude-mental.service.test.ts` | 11 | Prontuários, labels, restrição ao perfil psicólogo, validação de aluno, tipo de label, título, observação e descrição. |
-| **Total** | **8 arquivos** | **110 testes** | **Cobertura unitária das principais regras de negócio da camada de Service.** |
+| **Total** | **8 arquivos** | **113 testes** | **Cobertura unitária das principais regras de negócio da camada de Service.** |
 
 **AlunoService**
 
@@ -3072,7 +3287,7 @@ Os testes do `SaudeMentalService` validam listagem de prontuários apenas para p
 
 Os testes de integração cobrem os endpoints principais da aplicação por meio de requisições HTTP reais via Supertest, com banco SQLite in-memory. Para cada endpoint, a cobertura segue quatro cenários-chave: sucesso (`200`/`201`), falha de validação (`400`/`422`), regra de negócio violada (`409`/`422`/`403`) e recurso não encontrado (`404`). Quando um cenário é marcado como N/A, significa que aquela categoria de erro não se aplica à lógica do endpoint - não é um gap de cobertura.
 
-A suíte de integração totaliza **156 testes distribuídos em 12 arquivos**, todos executados via `npm test` sem falhas.
+A suíte de integração totaliza **157 testes funcionais distribuídos em 12 arquivos**, todos executados via `npm run test:integration` sem falhas. Cada arquivo que cobre um endpoint com requisito de desempenho contém adicionalmente um caso `performanceIt` (marcado com `RNF-DES`), totalizando **8 testes de desempenho** executados separadamente via `npm run test:performance`.
 
 **Módulo: Alunos**
 
@@ -3144,22 +3359,38 @@ A suíte de integração totaliza **156 testes distribuídos em 12 arquivos**, t
 | `POST /api/labels` | ✅ | ✅ tipoLabel inválido | ✅ 422 sem perfil | ✅ |
 | `GET /api/psicologo/alunos/:id/desempenho` | ✅ | ✅ id não numérico | ✅ 403 sem vínculo | ✅ |
 
+**Testes de desempenho (RNF-DES)**
+
+Os testes de desempenho são marcados com `performanceIt` dentro dos próprios arquivos de integração e executados apenas quando `RUN_PERFORMANCE_TESTS=true`. Cada caso mede o tempo de resposta de um endpoint crítico e verifica se o limiar do requisito não funcional é respeitado.
+
+| Identificador | Endpoint | Limiar |
+|---|---|---|
+| `RNF-DES` | `GET /api/agenda` | ≤ 1000 ms |
+| `RNF-DES-UC04` | `GET /api/alunos` | ≤ 1500 ms |
+| `RNF-DES-UC14` | `GET /api/impacto/resumo` | ≤ 3000 ms |
+| `RNF-DES-UC07` | `GET /api/jornada/alunos/:id` | ≤ 1500 ms |
+| `RNF-DES-RF019` | `GET /api/comunicacao` | ≤ 1000 ms |
+| `RNF-DES-UC01` | `GET /api/portal/alunos/:id` | ≤ 1000 ms |
+| `RNF-DES-UC20` | `GET /api/prontuarios` | ≤ 1000 ms |
+| `RNF-DES-UC13` | `GET /api/alunos/segmentacao` | ≤ 2000 ms |
+
 </div>
 
 ### 5.1.4 Evidências de Execução dos Testes
 <div align="justify">
 
-As evidências de execução dos testes foram registradas a partir da execução local da suíte automatizada com Jest.
+As evidências de execução dos testes foram registradas a partir da execução local da suíte automatizada com Jest, após a reformulação da infraestrutura de testes.
 
 | Evidência | Comando executado | Escopo validado | Resultado |
 |---|---|---|---|
-| Testes unitários de Service | `npm run test -- src/tests/unit/services --runInBand` | Validação isolada das regras de negócio dos services, com repositories e integrações mockadas. | 8 suítes executadas, 110 testes aprovados. |
-| Suíte completa do backend | `npm run test` | Validação conjunta dos testes unitários de Service e dos testes de integração de endpoints. | 20 suítes executadas, 266 testes aprovados. |
+| Testes unitários de Service | `npm run test:unit -- --silent` | Validação isolada das regras de negócio dos services, com repositories mockados via `asMockedDependency`. | 8 suítes executadas, 113 testes aprovados. |
+| Testes de integração de endpoints | `npm run test:integration -- --silent` | Validação de endpoints via Supertest com banco in-memory; testes de desempenho ignorados nessa execução. | 12 suítes executadas, 157 testes aprovados, 8 ignorados. |
+| Testes de desempenho | `npm run test:performance -- --silent` | Execução dos 8 casos `RNF-DES` que medem tempo de resposta dos endpoints críticos. | 8 testes de desempenho aprovados. |
 
 **Evidência 1 - Testes unitários de Service**
 
 ```bash
-npm run test -- src/tests/unit/services --runInBand
+npm run test:unit -- --silent
 ```
 
 Resultado obtido:
@@ -3175,17 +3406,16 @@ PASS src/tests/unit/services/agenda.service.test.ts
 PASS src/tests/unit/services/saude-mental.service.test.ts
 
 Test Suites: 8 passed, 8 total
-Tests:       110 passed, 110 total
+Tests:       113 passed, 113 total
 Snapshots:   0 total
-Time:        9.445 s
 ```
 
 Essa execução comprova que os oito arquivos de testes unitários de Service foram executados com sucesso, validando regras de negócio de `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService` e `SaudeMentalService` sem acesso a banco real ou infraestrutura externa.
 
-**Evidência 2 - Suíte completa do backend**
+**Evidência 2 - Testes de integração de endpoints**
 
 ```bash
-npm run test
+npm run test:integration -- --silent
 ```
 
 Resultado obtido:
@@ -3195,7 +3425,6 @@ PASS src/tests/integration/saude-mental.integration.test.ts
 PASS src/tests/integration/desempenho-psicologo.integration.test.ts
 PASS src/tests/integration/notificacao-psicologo.integration.test.ts
 PASS src/tests/integration/dashboard.integration.test.ts
-PASS src/tests/unit/services/segmentacao.service.test.ts
 PASS src/tests/integration/jornada.integration.test.ts
 PASS src/tests/integration/alunos.integration.test.ts
 PASS src/tests/integration/notificacoes.integration.test.ts
@@ -3204,33 +3433,296 @@ PASS src/tests/integration/agenda.integration.test.ts
 PASS src/tests/integration/portal-aluno.integration.test.ts
 PASS src/tests/integration/portal-aluno-notificacoes.integration.test.ts
 PASS src/tests/integration/codigo-pm.integration.test.ts
-PASS src/tests/unit/services/aluno.service.test.ts
-PASS src/tests/unit/services/jornada.service.test.ts
-PASS src/tests/unit/services/agenda.service.test.ts
-PASS src/tests/unit/services/saude-mental.service.test.ts
-PASS src/tests/unit/services/portal-aluno.service.test.ts
-PASS src/tests/unit/services/dashboard.service.test.ts
-PASS src/tests/unit/services/notificacao.service.test.ts
 
-Test Suites: 20 passed, 20 total
-Tests:       266 passed, 266 total
+Test Suites: 12 passed, 12 total
+Tests:       157 passed, 8 skipped, 165 total
 Snapshots:   0 total
-Time:        53.384 s
 ```
 
-A execução completa demonstra que os testes necessários para o backend estão passando. A suíte final validada contém 20 arquivos de teste e 266 cenários aprovados, cobrindo testes unitários de Service e testes de integração dos endpoints ativos.
+Os 8 testes ignorados são os casos `performanceIt` (`RNF-DES`), que são convertidos em `it.skip` automaticamente quando `RUN_PERFORMANCE_TESTS` não está definido como `true`.
+
+**Evidência 3 - Testes de desempenho**
+
+```bash
+npm run test:performance -- --silent
+```
+
+Resultado obtido:
+
+```text
+Test Suites: 8 passed, 8 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+```
+
+Os 8 casos `RNF-DES` foram aprovados, verificando que os endpoints críticos respondem dentro dos limiares estabelecidos nos requisitos não funcionais de desempenho.
 
 </div>
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
+<div align="justify">
 
-_Posicione aqui as tabelas com enunciados de tarefas, etapas e resultados de testes de usabilidade. Ou utilize um link para seu relatório de testes (mantenha o link sempre público para visualização)._
+Os testes de guerrilha foram realizados com 7 participantes voluntários, recrutados de forma informal entre estudantes das turmas T28 e T24 do Inteli. Cada participante executou individualmente as tarefas propostas, sem auxílio do avaliador, enquanto o observador registrava o resultado geral e o desempenho em cada etapa. O critério de sucesso adotado foi a conclusão autônoma da tarefa sem erros bloqueadores. As heurísticas de Nielsen foram utilizadas como referência para identificar os princípios de usabilidade relacionados a cada tarefa.
+
+Ao todo, foram testadas 5 tarefas cobrindo os três perfis da aplicação (gestor, psicólogo e aluno). Todos os 7 participantes concluíram todas as tarefas com sucesso, o que indica boa adequação geral da interface às expectativas dos usuários. As ocorrências identificadas foram de baixa severidade e estão consolidadas ao final desta seção.
+
+**Tarefa 1 — Filtrar alunos por curso**
+
+Enunciado: Suponha que você é gestor(a) da Pulse Mais e quer encontrar alunos que cursam Sistemas de Informação para uma vaga específica. Utilize o sistema para filtrar alunos que cursam Sistemas de Informação.
+
+Heurísticas relacionadas:
+- **H4** — A linguagem e posição dos filtros devem seguir padrões esperados de sistemas similares.
+- **H6** — O filtro por curso deve estar visível e acessível sem que o usuário precise memorizar onde ele está.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Abrir lista de alunos | Etapa 3: Selecionar filtro de curso |
+|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 2 — Adicionar evento**
+
+Enunciado: Suponha que você é gestor(a) da Pulse Mais e quer marcar um evento com todos os alunos da Pulse Mais. Utilize o sistema para marcar um evento na agenda.
+
+Heurísticas relacionadas:
+- **H1** — O sistema deve confirmar claramente que o evento foi adicionado.
+- **H3** — O usuário deve poder editar ou cancelar um evento após criá-lo, com saída de emergência clara.
+- **H5** — Campos obrigatórios devem ser sinalizados antes do envio para evitar submissões incompletas.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Abrir agenda | Etapa 3: Adicionar dados do evento | Etapa 4: Adicionar registro |
+|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 3 — Adicionar registro psicológico**
+
+Enunciado: Suponha que você é Psicólogo da Pulse Mais e quer adicionar o registro de uma sessão ao perfil do aluno. Utilize o sistema para registrar o Histórico Psicológico.
+
+Heurísticas relacionadas:
+- **H2** — O termo "Histórico Psicológico" deve ser familiar ao psicólogo e refletir a linguagem da área clínica.
+- **H4** — A aba de Histórico Psicológico deve ter posição e ícone consistentes com as demais abas do perfil do aluno.
+- **H10** — Campos de registro psicológico podem exigir orientações sobre quais informações incluir, especialmente para novos usuários.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Psicólogo | Etapa 2: Abrir lista de alunos | Etapa 3: Abrir perfil do aluno | Etapa 4: Abrir aba de Histórico Psicológico | Etapa 5: Adicionar registro |
+|---|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+Observação: A participante Manuela T24 concluiu a tarefa com sucesso, porém não registrou a Etapa 5 na planilha de tabulação; o resultado geral foi marcado como sucesso.
+
+**Tarefa 4 — Visualizar evento**
+
+Enunciado: Suponha que você é Aluno da Pulse Mais e quer visualizar um evento na sua agenda. Utilize o sistema para visualizar os detalhes deste evento.
+
+Heurísticas relacionadas:
+- **H1** — Deve ser claro para o aluno quais eventos são futuros, em andamento ou passados.
+- **H6** — Os eventos devem ser visíveis diretamente na agenda sem que o aluno precise navegar por múltiplas telas.
+- **H8** — Os detalhes do evento devem apresentar apenas informações relevantes (data, hora, descrição).
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Aluno | Etapa 2: Abrir agenda | Etapa 3: Selecionar evento |
+|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 3 | Nicolas T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Tarefa 5 — Visualizar desempenho**
+
+Enunciado: Suponha que você é Gestor da Pulse Mais e quer visualizar o desempenho de um aluno. Utilize o sistema para ver o perfil do aluno e seu desempenho.
+
+Heurísticas relacionadas:
+- **H1** — Os dados de desempenho devem ser exibidos de forma clara, com indicadores visuais (gráficos, percentuais) que facilitem a leitura rápida.
+- **H2** — Métricas de desempenho devem usar terminologia familiar ao gestor educacional (ex.: frequência, progresso).
+- **H6** — A aba de desempenho deve estar destacada no perfil do aluno, sem necessidade de memorizar onde está.
+
+| # | Participante | Resultado da tarefa | Etapa 1: Fazer login como Gestor | Etapa 2: Selecionar lista de alunos | Etapa 3: Selecionar perfil do aluno | Etapa 4: Selecionar aba de desempenho |
+|---|---|---|---|---|---|---|
+| 1 | Fernanda T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 2 | Sofia Brandão T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 3 | Nicolas Deli T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 4 | Arthur Augusto T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 5 | Felipe Estrada T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 6 | Tainá T28 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+| 7 | Manuela T24 | ✅ Sucesso | ✅ | ✅ | ✅ | ✅ |
+
+Taxa de sucesso: 7/7 (100%)
+
+**Resumo das ocorrências**
+
+A tabela abaixo consolida os problemas e observações identificados durante os testes, ordenados por prioridade de melhoria. Os níveis de severidade seguem a escala: 1 — cosmética, 2 — baixa, 3 — alta, 4 — catástrofe.
+
+| Tarefa | Severidade | Resumo do ocorrido e potenciais melhorias | Participantes afetados |
+|---|---|---|---|
+| Filtragem de alunos | 1 - Cosmética | Problema de usabilidade: o participante achou a posição do filtro de cursos um pouco confusa. Potencial melhoria: destacar visualmente o campo de filtro por curso ou reposicioná-lo em local mais intuitivo. | Participante 1 |
+
+**Considerações gerais**
+
+Todos os 7 participantes concluíram as 5 tarefas com sucesso (taxa geral de 100%), sem ocorrências de severidade alta ou catastrófica. O único ponto de atenção identificado foi de severidade cosmética, referente à disposição do filtro de cursos na listagem de alunos. Os demais fluxos - adição de evento na agenda, registro psicológico, visualização de evento pelo aluno e visualização de desempenho pelo gestor - foram percorridos sem dificuldades por todos os participantes, o que indica boa aderência da interface às heurísticas de Nielsen avaliadas.
+
+</div>
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
-_Posicione aqui o relatório dos testes SUS realizados._
+<div align="justify">
+
+O teste SUS (System Usability Scale) foi utilizado como complemento ao teste de guerrilha realizado com a aplicação Pulse Manager. Enquanto o teste de guerrilha teve como objetivo verificar se os participantes conseguiam executar tarefas específicas sem auxílio do avaliador, o SUS teve como objetivo mensurar a percepção geral de usabilidade da interface após a interação com o sistema.
+
+Os testes de guerrilha foram conduzidos com 7 participantes voluntários das turmas T28 e T24 do Inteli. Cada participante executou 5 tarefas relacionadas aos principais perfis da aplicação: gestor, psicólogo e aluno. As tarefas avaliadas foram: filtrar alunos por curso, adicionar evento, adicionar registro psicológico, visualizar evento e visualizar desempenho de aluno. Ao todo, foram realizadas 35 tentativas de tarefa, todas concluídas com sucesso, resultando em taxa geral de sucesso de 100%.
+
+Após a execução dos fluxos, os participantes avaliaram a experiência de uso em escala de 1 a 5. As respostas registradas indicaram uma percepção positiva da aplicação, com notas 4 e 5 distribuídas nos itens positivos do questionário e discordância nos itens negativos. Esse resultado reforça que, além de conseguirem concluir as tarefas propostas, os usuários relataram boa experiência geral com a interface.
+
+</div>
+
+#### Método de aplicação
+
+<div align="justify">
+
+A aplicação do SUS ocorreu após a realização das tarefas do teste de guerrilha, para que a percepção dos participantes sobre a interface ainda estivesse recente. Cada participante respondeu às afirmativas considerando uma escala de 1 a 5, em que:
+
+</div>
+
+| Valor | Significado |
+|---|---|
+| 1 | Discordo totalmente |
+| 2 | Discordo parcialmente |
+| 3 | Neutro |
+| 4 | Concordo parcialmente |
+| 5 | Concordo totalmente |
+
+<div align="justify">
+
+As avaliações obtidas indicaram alto grau de concordância com aspectos positivos da experiência de uso, como facilidade de navegação, confiança durante a interação e compreensão dos fluxos principais. Nos itens positivos, as respostas ficaram concentradas entre 4 e 5. Nos itens negativos, as respostas ficaram concentradas entre 1 e 2, indicando discordância em relação a afirmações como complexidade, dificuldade de uso e inconsistência.
+
+</div>
+
+#### Questionário SUS aplicado
+
+| Item | Afirmativa |
+|---|---|
+| 1 | Eu acho que gostaria de usar este sistema com frequência. |
+| 2 | Eu achei o sistema desnecessariamente complexo. |
+| 3 | Eu achei o sistema fácil de usar. |
+| 4 | Eu acho que precisaria de ajuda de uma pessoa técnica para conseguir usar este sistema. |
+| 5 | Eu achei que as diversas funções do sistema estavam bem integradas. |
+| 6 | Eu achei que havia muita inconsistência neste sistema. |
+| 7 | Eu imagino que a maioria das pessoas aprenderia a usar este sistema rapidamente. |
+| 8 | Eu achei o sistema muito difícil de usar. |
+| 9 | Eu me senti confiante ao usar o sistema. |
+| 10 | Eu precisei aprender muitas coisas antes de conseguir usar este sistema. |
+
+#### Forma de cálculo
+
+<div align="justify">
+
+O cálculo do SUS deve ser realizado individualmente para cada participante. Para os itens ímpares, a contribuição corresponde à resposta do participante menos 1. Para os itens pares, a contribuição corresponde a 5 menos a resposta do participante. Em seguida, as contribuições dos 10 itens devem ser somadas e multiplicadas por 2,5. O resultado final varia de 0 a 100 pontos.
+
+</div>
+
+```text
+Itens ímpares: resposta - 1
+Itens pares: 5 - resposta
+Pontuação SUS = soma das contribuições x 2,5
+```
+
+<div align="justify">
+
+Como as avaliações dos itens positivos se concentraram entre 4 e 5, observou-se uma tendência favorável à usabilidade percebida. Além disso, a baixa concordância com os itens negativos reforça que os participantes não perceberam a aplicação como complexa, inconsistente ou difícil de utilizar.
+
+</div>
+
+#### Tabela de tabulação
+
+| Participante | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 | Pontuação SUS |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fernanda T28 | 5 | 1 | 5 | 1 | 4 | 1 | 5 | 1 | 5 | 1 | 97,5 |
+| Sofia Brandão T28 | 4 | 1 | 5 | 2 | 5 | 1 | 4 | 1 | 5 | 1 | 92,5 |
+| Nicolas T28 | 5 | 2 | 4 | 1 | 5 | 1 | 5 | 2 | 4 | 1 | 90,0 |
+| Arthur Augusto T28 | 4 | 1 | 4 | 1 | 5 | 2 | 5 | 1 | 5 | 2 | 90,0 |
+| Felipe Estrada T28 | 5 | 1 | 5 | 1 | 5 | 1 | 4 | 1 | 4 | 1 | 95,0 |
+| Tainá T28 | 4 | 2 | 5 | 1 | 4 | 1 | 5 | 1 | 5 | 1 | 92,5 |
+| Manuela T24 | 5 | 1 | 4 | 2 | 5 | 1 | 4 | 1 | 5 | 1 | 92,5 |
+| **Média geral** |  |  |  |  |  |  |  |  |  |  | **92,9** |
+
+<div align="justify">
+
+A tabela demonstra que todos os participantes atribuíram notas altas aos itens positivos do questionário, com respostas 4 e 5 distribuídas entre as afirmações relacionadas à frequência de uso, facilidade, integração das funções, aprendizagem rápida e confiança. Nos itens negativos, as respostas 1 e 2 indicam discordância em relação a afirmações de complexidade, inconsistência, dificuldade e necessidade de aprendizagem prévia excessiva.
+
+</div>
+
+#### Critérios de interpretação
+
+<div align="justify">
+
+Para interpretar a pontuação SUS, podem ser adotadas faixas de referência comumente utilizadas em estudos de usabilidade. Pontuações acima de 68 tendem a indicar usabilidade acima da média. Valores abaixo desse patamar sugerem necessidade de revisão da interface, especialmente nos fluxos em que os usuários demonstraram insegurança, demora ou dependência de ajuda externa.
+
+</div>
+
+| Faixa de pontuação | Interpretação |
+|---|---|
+| 0 a 50 | Usabilidade crítica ou insuficiente |
+| 51 a 67 | Usabilidade abaixo da média |
+| 68 a 80 | Usabilidade aceitável |
+| 81 a 90 | Usabilidade muito boa |
+| 91 a 100 | Usabilidade excelente |
+
+<div align="justify">
+
+Considerando a média geral de 92,9 pontos, a percepção geral da aplicação enquadra-se na faixa de usabilidade excelente. Esse resultado é coerente com o desempenho observado no teste de guerrilha, no qual todos os participantes concluíram os fluxos propostos sem erros bloqueadores.
+
+</div>
+
+#### Análise complementar com base no teste de guerrilha
+
+<div align="justify">
+
+Os dados do teste de guerrilha indicam uma percepção operacional positiva da interface. Todos os 7 participantes concluíram as 5 tarefas propostas com sucesso, totalizando 35 conclusões bem-sucedidas em 35 tentativas. Esse resultado sugere que os principais fluxos da aplicação foram compreendidos pelos usuários e que não houve barreiras bloqueadoras durante a navegação.
+
+As tarefas relacionadas ao perfil de gestor, como filtrar alunos por curso, adicionar evento e visualizar desempenho, foram concluídas por todos os participantes. O mesmo ocorreu com a tarefa do perfil de psicólogo, relacionada ao registro de histórico psicológico, e com a tarefa do perfil de aluno, relacionada à visualização de evento na agenda. Dessa forma, observou-se que os três perfis centrais da aplicação apresentaram boa navegabilidade no contexto avaliado.
+
+A única ocorrência registrada foi identificada na tarefa de filtragem de alunos por curso. Um participante indicou que a posição do filtro de cursos pareceu um pouco confusa. A severidade foi classificada como 1 - cosmética, pois não impediu a conclusão da tarefa. Como melhoria, recomenda-se destacar visualmente o campo de filtro por curso ou reposicioná-lo em uma área mais intuitiva da listagem de alunos.
+
+Além da taxa de sucesso de 100%, as respostas 4 e 5 nos itens positivos do SUS reforçam que os participantes não apenas conseguiram executar as tarefas, mas também avaliaram positivamente a experiência de uso. Assim, os resultados combinados do teste de guerrilha e da avaliação SUS apontam para uma interface funcional, compreensível e bem recebida pelos usuários testados.
+
+</div>
+
+#### Conclusão
+
+<div align="justify">
+
+Concluiu-se que o teste de guerrilha e a avaliação SUS apresentaram evidências favoráveis de usabilidade para o Pulse Manager. Todos os participantes conseguiram concluir os fluxos propostos sem erros bloqueadores e atribuíram avaliações altas à experiência, com notas 4 e 5 nos itens positivos do questionário.
+
+A aplicação demonstrou boa aderência aos principais cenários de uso dos perfis gestor, psicólogo e aluno. A combinação entre taxa de sucesso de 100% nas tarefas e média SUS de 92,9 pontos indica que a interface foi compreendida pelos usuários e apresentou baixo nível de atrito durante a navegação.
+
+Como plano de melhoria imediato, recomenda-se revisar a visibilidade e o posicionamento do filtro de cursos na tela de listagem de alunos, dado que esse foi o único ponto de confusão registrado. Após essa alteração, o questionário SUS pode ser reaplicado para verificar se a percepção geral de usabilidade se manteve positiva ou apresentou evolução.
+
+</div>
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
@@ -3338,13 +3830,21 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
-ABRASCE. Programa Pulse Mais 2026 inicia com alta adesão e reforça aposta na formação de jovens para o mercado de tecnologia. 2026. Disponível em: https://abrasce.com.br/espaco-do-associado/tecnologia/programa-pulse-mais-2026-inicia-com-alta-adesao-e-reforca-aposta-na-formacao-de-jovens-para-o-mercado-de-tecnologia/. Acesso em: 10 jun. 2026.
+ABRASCE. *Programa Pulse Mais 2026 inicia com alta adesão e reforça aposta na formação de jovens para o mercado de tecnologia*. 2026. Disponível em: https://abrasce.com.br/espaco-do-associado/tecnologia/programa-pulse-mais-2026-inicia-com-alta-adesao-e-reforca-aposta-na-formacao-de-jovens-para-o-mercado-de-tecnologia/. Acesso em: 10 jun. 2026.
 
-ESG INSIDE. Pulse Mais abre inscrições para programa gratuito que prepara jovens para carreiras em tecnologia. 2026. Disponível em: https://esginside.com.br/2026/01/23/pulse-mais-abre-inscricoes-para-programa-gratuito-que-prepara-jovens-para-carreiras-em-tecnologia/. Acesso em: 10 jun. 2026.
+BRASIL. Lei nº 13.709, de 14 de agosto de 2018. *Lei Geral de Proteção de Dados Pessoais (LGPD)*. Brasília, DF: Presidência da República, 2018. Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm. Acesso em: 10 jun. 2026.
 
-OBSERVATÓRIO DO TERCEIRO SETOR. Pulse Mais celebra 3 anos e amplia oportunidades para jovens na tecnologia. 2025. Disponível em: https://observatorio3setor.org.br/pulse-mais-celebra-3-anos-e-amplia-oportunidades-para-jovens-na-tecnologia/. Acesso em: 10 jun. 2026.
+ESG INSIDE. *Pulse Mais abre inscrições para programa gratuito que prepara jovens para carreiras em tecnologia*. 2026. Disponível em: https://esginside.com.br/2026/01/23/pulse-mais-abre-inscricoes-para-programa-gratuito-que-prepara-jovens-para-carreiras-em-tecnologia/. Acesso em: 10 jun. 2026.
 
-PULSE MAIS. Pulse Mais. 2026. Disponível em: https://pulsemais.org.br/. Acesso em: 10 jun. 2026.
+INTERNATIONAL ORGANIZATION FOR STANDARDIZATION. *ISO/IEC 25010: Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models*. Geneva: ISO, 2011. Disponível em: https://www.iso.org/standard/35733.html. Acesso em: 10 jun. 2026.
+
+NORMANDO, Célio. *Modelo relacional: conceitos, restrições de integridade, mapeamento de modelos E-R para esquemas relacionais*. Medium, 2024. Disponível em: https://medium.com/@celionormando/modelo-relacional-8de45e45e009. Acesso em: 10 jun. 2026.
+
+OBSERVATÓRIO DO TERCEIRO SETOR. *Pulse Mais celebra 3 anos e amplia oportunidades para jovens na tecnologia*. 2025. Disponível em: https://observatorio3setor.org.br/pulse-mais-celebra-3-anos-e-amplia-oportunidades-para-jovens-na-tecnologia/. Acesso em: 10 jun. 2026.
+
+PULSE MAIS. *Pulse Mais: site institucional*. 2026. Disponível em: https://pulsemais.org.br/. Acesso em: 10 jun. 2026.
+
+WORLD WIDE WEB CONSORTIUM (W3C). *Web Content Accessibility Guidelines (WCAG) 2.1*. [S. l.]: W3C, 2018. Disponível em: https://www.w3.org/TR/WCAG21/. Acesso em: 10 jun. 2026.
 
 # <a name="c9"></a>Anexos
 

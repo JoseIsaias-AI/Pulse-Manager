@@ -8,6 +8,7 @@ export interface UsuarioLoginRecord {
   email: string;
   nome: string;
   perfil: PerfilLogin;
+  codigoPm: string | null;
 }
 
 export class UsuarioRepository {
@@ -18,19 +19,19 @@ export class UsuarioRepository {
   ): Promise<UsuarioLoginRecord | null> {
     const consultas: Record<PerfilLogin, string> = {
       aluno: `
-        SELECT id_aluno AS id, email, nome, 'aluno' AS perfil
+        SELECT id_aluno AS id, email, nome, 'aluno' AS perfil, codigo_pm AS "codigoPm"
         FROM aluno
         WHERE LOWER(TRIM(email)) = LOWER(TRIM($1))
           AND LOWER(TRIM(nome)) = LOWER(TRIM($2))
       `,
       psicologo: `
-        SELECT id_psi AS id, email, nome_psi AS nome, 'psicologo' AS perfil
+        SELECT id_psi AS id, email, nome_psi AS nome, 'psicologo' AS perfil, NULL AS "codigoPm"
         FROM psicologo
         WHERE LOWER(TRIM(email)) = LOWER(TRIM($1))
           AND LOWER(TRIM(nome_psi)) = LOWER(TRIM($2))
       `,
       gestor: `
-        SELECT id_membro AS id, email, nome, 'gestor' AS perfil
+        SELECT id_membro AS id, email, nome, 'gestor' AS perfil, NULL AS "codigoPm"
         FROM membro_equipe
         WHERE LOWER(TRIM(email)) = LOWER(TRIM($1))
           AND LOWER(TRIM(nome)) = LOWER(TRIM($2))

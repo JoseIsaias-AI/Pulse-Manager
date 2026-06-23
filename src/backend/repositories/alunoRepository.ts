@@ -29,6 +29,7 @@ export interface AlunoRecord {
   programa: string | null;
   categoria: string | null;
   riscoEvasao: string;
+  probabilidadeEvasao: number | null;
   engajamento: number;
   dataIngresso: string;
   status: string;
@@ -140,6 +141,7 @@ const ALUNO_SELECT = `
     COALESCE(programa, curso, origem_participacao) AS programa,
     COALESCE(categoria, nivel_jornada, CAST(status AS TEXT)) AS categoria,
     COALESCE(risco_evasao, 'baixo') AS "riscoEvasao",
+    CAST(probabilidade_evasao AS REAL) AS "probabilidadeEvasao",
     COALESCE(engajamento, 0) AS engajamento,
     data_ingresso AS "dataIngresso",
     status,

@@ -13,6 +13,7 @@ import {
   STATUS_ALUNO,
   StatusAluno
 } from '../models/alunoModel';
+import { RiscoEvasaoService } from './riscoEvasaoService';
 
 function mergeOptions(...groups: readonly string[][]): string[] {
   return [...new Set(groups.flat().filter(Boolean))]
@@ -31,7 +32,10 @@ function apenasDigitos(value: string): string {
 }
 
 export class AlunoService {
-  constructor(private readonly repository: AlunoRepository) {}
+  constructor(
+    private readonly repository: AlunoRepository,
+    private readonly riscoEvasaoService?: Pick<RiscoEvasaoService, 'recalcularAluno'>
+  ) {}
 
   async listar(filtros: SegmentacaoAlunoQuery) {
     if (
@@ -97,7 +101,11 @@ export class AlunoService {
   async atualizar(idAluno: number, payload: AtualizarAlunoPayload) {
     await this.garantirAluno(idAluno);
     const data = this.validarAtualizacao(payload);
-    const aluno = await this.repository.update(idAluno, data);
+    let aluno = await this.repository.update(idAluno, data);
+    if (data.engajamento !== undefined && this.riscoEvasaoService) {
+      await this.riscoEvasaoService.recalcularAluno(idAluno);
+      aluno = await this.repository.findById(idAluno);
+    }
     return { success: true, data: aluno };
   }
 

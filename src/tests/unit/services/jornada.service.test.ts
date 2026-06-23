@@ -1,4 +1,6 @@
 import { JornadaService } from '../../../backend/services/jornadaService';
+import { JornadaRepository } from '../../../backend/repositories/jornadaRepository';
+import { asMockedDependency } from '../../helpers/mockHelper';
 
 const aluno = {
   idAluno: 1,
@@ -83,7 +85,7 @@ describe('JornadaService', () => {
 
   beforeEach(() => {
     repository = makeRepository();
-    service = new JornadaService(repository as any);
+    service = new JornadaService(asMockedDependency<JornadaRepository>(repository));
   });
 
   it('rejeita id de aluno invalido', async () => {
@@ -170,6 +172,19 @@ describe('JornadaService', () => {
     expect(result.data.operacao).toBe('criado');
   });
 
+  it('recalcula automaticamente o risco depois de registrar frequencia', async () => {
+    const riscoEvasaoService = { recalcularAluno: jest.fn().mockResolvedValue(undefined) };
+    service = new JornadaService(repository as any, riscoEvasaoService as any);
+    repository.findAlunoById.mockResolvedValue(aluno);
+    repository.findAtividadeById.mockResolvedValue(aula);
+    repository.findParticipacaoByAlunoAtividade.mockResolvedValue(null);
+    repository.saveParticipacao.mockResolvedValue(participacaoAula);
+
+    await service.registrarFrequencia({ idAluno: 1, idAtividade: 1, statusPart: false });
+
+    expect(riscoEvasaoService.recalcularAluno).toHaveBeenCalledWith(1);
+  });
+
   it('atualiza registro de frequencia existente', async () => {
     repository.findAlunoById.mockResolvedValue(aluno);
     repository.findAtividadeById.mockResolvedValue(aula);
@@ -225,6 +240,19 @@ describe('JornadaService', () => {
       dataPart: '2024-05-10'
     });
     expect(result.data.registro).toEqual(participacaoEvento);
+  });
+
+  it('recalcula automaticamente o risco depois de registrar participacao', async () => {
+    const riscoEvasaoService = { recalcularAluno: jest.fn().mockResolvedValue(undefined) };
+    service = new JornadaService(repository as any, riscoEvasaoService as any);
+    repository.findAlunoById.mockResolvedValue(aluno);
+    repository.findAtividadeById.mockResolvedValue(evento);
+    repository.findParticipacaoByAlunoAtividade.mockResolvedValue(null);
+    repository.saveParticipacao.mockResolvedValue(participacaoEvento);
+
+    await service.registrarParticipacaoEvento({ idAluno: 1, idAtividade: 2, statusPart: true });
+
+    expect(riscoEvasaoService.recalcularAluno).toHaveBeenCalledWith(1);
   });
 
   it('rejeita participacao duplicada em evento', async () => {

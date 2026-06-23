@@ -14,9 +14,11 @@ export interface LoginResponse {
   message: string;
   data: {
     id: number;
+    idAluno: number;
     email: string;
     nome: string;
     perfil: string;
+    codigoPm: string | null;
   };
 }
 
@@ -54,9 +56,11 @@ export class AuthService {
       message: 'Login realizado com sucesso.',
       data: {
         id: usuario.id,
+        idAluno: usuario.id,
         email: usuario.email,
         nome: usuario.nome,
-        perfil: usuario.perfil
+        perfil: usuario.perfil,
+        codigoPm: usuario.codigoPm
       }
     };
   }
