@@ -6,6 +6,9 @@
 
   // Seleciona o botão de avatar no canto superior direito
   const avatarBtn = document.querySelector('.menuSuperior__avatar-btn');
+  const displayUser = window.getPulseDisplayUser
+    ? window.getPulseDisplayUser(pulseConfig.user)
+    : pulseConfig.user;
 
   // ---- Função auxiliar: lê o label do item ativo no menu lateral ----
   // Procura o item com a classe --active e retorna o texto do seu <span>
@@ -30,8 +33,8 @@
 
   // ---- Avatar ----
   // Preenche as iniciais do usuário (definidas em pulseConfig.user.initials)
-  if (avatarBtn && pulseConfig.user) {
-    avatarBtn.textContent = pulseConfig.user.initials;
+  if (avatarBtn && displayUser) {
+    avatarBtn.textContent = displayUser.initials;
     avatarBtn.setAttribute('aria-label', 'Abrir perfil');
 
     // Aplica a cor de fundo definida em pulseConfig.topBar.avatarColor

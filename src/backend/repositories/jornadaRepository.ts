@@ -80,6 +80,16 @@ export class JornadaRepository {
     return result.rows[0] || null;
   }
 
+  async listAtividades(tipo?: string): Promise<AtividadeRecord[]> {
+    const where = tipo ? 'WHERE tipo = $1' : '';
+    const params = tipo ? [tipo] : [];
+    const result = await query<AtividadeRecord & Record<string, unknown>>(
+      `${ATIVIDADE_SELECT} ${where} ORDER BY titulo ASC`,
+      params
+    );
+    return result.rows;
+  }
+
   async findParticipacaoByAlunoAtividade(
     idAluno: number,
     idAtividade: number

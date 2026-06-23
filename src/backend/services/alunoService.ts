@@ -13,6 +13,7 @@ import {
   STATUS_ALUNO,
   StatusAluno
 } from '../models/alunoModel';
+import { RiscoEvasaoService } from './riscoEvasaoService';
 
 function mergeOptions(...groups: readonly string[][]): string[] {
   return [...new Set(groups.flat().filter(Boolean))]
@@ -26,8 +27,15 @@ function validarNomeAluno(nome: string): string {
   return nome;
 }
 
+function apenasDigitos(value: string): string {
+  return value.replace(/\D/g, '');
+}
+
 export class AlunoService {
-  constructor(private readonly repository: AlunoRepository) {}
+  constructor(
+    private readonly repository: AlunoRepository,
+    private readonly riscoEvasaoService?: Pick<RiscoEvasaoService, 'recalcularAluno'>
+  ) {}
 
   async listar(filtros: SegmentacaoAlunoQuery) {
     if (
@@ -59,6 +67,13 @@ export class AlunoService {
       throw new ConflictError('Ja existe aluno cadastrado com este e-mail.');
     }
 
+    if (data.cpf) {
+      const alunoComCpf = await this.repository.findOneByCpf(data.cpf);
+      if (alunoComCpf) {
+        throw new ConflictError('Ja existe aluno cadastrado com este CPF.');
+      }
+    }
+
     const aluno = await this.repository.create(data);
     return { success: true, data: aluno };
   }
@@ -86,7 +101,11 @@ export class AlunoService {
   async atualizar(idAluno: number, payload: AtualizarAlunoPayload) {
     await this.garantirAluno(idAluno);
     const data = this.validarAtualizacao(payload);
-    const aluno = await this.repository.update(idAluno, data);
+    let aluno = await this.repository.update(idAluno, data);
+    if (data.engajamento !== undefined && this.riscoEvasaoService) {
+      await this.riscoEvasaoService.recalcularAluno(idAluno);
+      aluno = await this.repository.findById(idAluno);
+    }
     return { success: true, data: aluno };
   }
 
@@ -109,6 +128,11 @@ export class AlunoService {
     const email = requiredString(payload.email, 'email', 5).toLowerCase();
     if (!email.includes('@')) {
       throw new PayloadValidationError('O campo email deve conter um endereco valido.');
+    }
+
+    const cpf = payload.cpf ? apenasDigitos(payload.cpf) : undefined;
+    if (cpf !== undefined && cpf.length !== 11) {
+      throw new PayloadValidationError('O campo cpf deve conter 11 digitos.');
     }
 
     if (
@@ -151,6 +175,7 @@ export class AlunoService {
       ...payload,
       nome,
       email,
+      cpf,
       dataIngresso: assertIsoDate(payload.dataIngresso, 'dataIngresso'),
       dataIngressoEnsinoSuperior: assertIsoDate(
         payload.dataIngressoEnsinoSuperior,

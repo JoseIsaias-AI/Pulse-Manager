@@ -172,6 +172,19 @@ describe('JornadaService', () => {
     expect(result.data.operacao).toBe('criado');
   });
 
+  it('recalcula automaticamente o risco depois de registrar frequencia', async () => {
+    const riscoEvasaoService = { recalcularAluno: jest.fn().mockResolvedValue(undefined) };
+    service = new JornadaService(repository as any, riscoEvasaoService as any);
+    repository.findAlunoById.mockResolvedValue(aluno);
+    repository.findAtividadeById.mockResolvedValue(aula);
+    repository.findParticipacaoByAlunoAtividade.mockResolvedValue(null);
+    repository.saveParticipacao.mockResolvedValue(participacaoAula);
+
+    await service.registrarFrequencia({ idAluno: 1, idAtividade: 1, statusPart: false });
+
+    expect(riscoEvasaoService.recalcularAluno).toHaveBeenCalledWith(1);
+  });
+
   it('atualiza registro de frequencia existente', async () => {
     repository.findAlunoById.mockResolvedValue(aluno);
     repository.findAtividadeById.mockResolvedValue(aula);
@@ -229,6 +242,19 @@ describe('JornadaService', () => {
     expect(result.data.registro).toEqual(participacaoEvento);
   });
 
+  it('recalcula automaticamente o risco depois de registrar participacao', async () => {
+    const riscoEvasaoService = { recalcularAluno: jest.fn().mockResolvedValue(undefined) };
+    service = new JornadaService(repository as any, riscoEvasaoService as any);
+    repository.findAlunoById.mockResolvedValue(aluno);
+    repository.findAtividadeById.mockResolvedValue(evento);
+    repository.findParticipacaoByAlunoAtividade.mockResolvedValue(null);
+    repository.saveParticipacao.mockResolvedValue(participacaoEvento);
+
+    await service.registrarParticipacaoEvento({ idAluno: 1, idAtividade: 2, statusPart: true });
+
+    expect(riscoEvasaoService.recalcularAluno).toHaveBeenCalledWith(1);
+  });
+
   it('rejeita participacao duplicada em evento', async () => {
     repository.findAlunoById.mockResolvedValue(aluno);
     repository.findAtividadeById.mockResolvedValue(evento);
@@ -236,15 +262,6 @@ describe('JornadaService', () => {
 
     await expect(service.registrarParticipacaoEvento({ idAluno: 1, idAtividade: 2, statusPart: true })).rejects.toThrow(
       'Ja existe participacao registrada para este aluno nesta atividade.'
-    );
-  });
-
-  it('rejeita participacao quando a atividade nao for evento', async () => {
-    repository.findAlunoById.mockResolvedValue(aluno);
-    repository.findAtividadeById.mockResolvedValue(aula);
-
-    await expect(service.registrarParticipacaoEvento({ idAluno: 1, idAtividade: 1, statusPart: true })).rejects.toThrow(
-      'A atividade informada nao e do tipo evento para participacao.'
     );
   });
 

@@ -1,9 +1,13 @@
 (function () {
   'use strict'; // ativa modo estrito para o conjunto de telas do Aluno
 
+  const displayUser = window.getPulseDisplayUser
+    ? window.getPulseDisplayUser(pulseConfig.user)
+    : pulseConfig.user;
+
   // ---- Role label ----
   document.querySelectorAll('.menuLateral__logo-role')
-    .forEach(el => { el.textContent = pulseConfig.role; });
+    .forEach(el => { el.textContent = displayUser.role || pulseConfig.role; });
 
   // ---- Menu Principal ----
   const menuList = document.querySelector('.menuLateral__menu');
@@ -46,9 +50,9 @@
   setupSidebarToggle();
 
   // ---- Perfil ----
-  document.querySelector('.menuLateral__avatar').textContent    = pulseConfig.user.initials;
-  document.querySelector('.menuLateral__user-name').textContent = pulseConfig.user.name;
-  document.querySelector('.menuLateral__user-role').textContent = pulseConfig.user.role;
+  document.querySelector('.menuLateral__avatar').textContent    = displayUser.initials;
+  document.querySelector('.menuLateral__user-name').textContent = displayUser.name;
+  document.querySelector('.menuLateral__user-role').textContent = displayUser.role;
 
   // ---- Estado ativo ao clicar ----
   function bindMenuClicks() {

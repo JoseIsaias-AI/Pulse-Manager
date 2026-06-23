@@ -27,6 +27,9 @@ export interface JornadaProgramaItem {
 
 export interface DashboardImpactoData {
   totalAlunos: number;
+  conectados: IndicadorResumo;
+  capacitados: IndicadorResumo;
+  transformados: IndicadorResumo;
   alunosEmpregados: IndicadorResumo;
   conclusaoProgramas: IndicadorResumo;
   acessoEnsinoSuperior: IndicadorResumo;

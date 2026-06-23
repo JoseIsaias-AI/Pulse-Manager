@@ -59,6 +59,11 @@ async function seed() {
 
     const alunos = alunosResult.rows.map((row: AlunoRow) => row.id_aluno);
 
+    await Promise.all(alunos.map((idAluno, index) => {
+      const cpf = String(index + 1).padStart(11, String(index + 1).slice(-1));
+      return client.query('UPDATE aluno SET cpf = $1 WHERE id_aluno = $2', [cpf, idAluno]);
+    }));
+
     const membrosResult = await client.query<MembroRow>(`
       INSERT INTO membro_equipe (nome, cargo, email)
       VALUES
@@ -73,13 +78,13 @@ async function seed() {
     const membros = membrosResult.rows.map((row: MembroRow) => row.id_membro);
 
     const psicologosResult = await client.query<PsicologoRow>(`
-      INSERT INTO psicologo (nome_psi, cargo_psi)
+      INSERT INTO psicologo (nome_psi, email, cargo_psi)
       VALUES
-        ('Isadora Valença', 'psicologo'),
-        ('André Lacerda', 'coordenador_psicologico'),
-        ('Lívia Marcondes', 'estagiario'),
-        ('Camila Furtado', 'psicologo'),
-        ('Samuel Azevedo', 'outro')
+        ('Isadora Valença', 'isadora.valenca@pulsemais.org', 'psicologo'),
+        ('André Lacerda', 'andre.lacerda@pulsemais.org', 'coordenador_psicologico'),
+        ('Lívia Marcondes', 'livia.marcondes@pulsemais.org', 'estagiario'),
+        ('Camila Furtado', 'camila.furtado@pulsemais.org', 'psicologo'),
+        ('Samuel Azevedo', 'samuel.azevedo@pulsemais.org', 'outro')
       RETURNING id_psi;
     `);
 

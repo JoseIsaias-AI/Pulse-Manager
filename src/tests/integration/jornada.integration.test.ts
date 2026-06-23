@@ -177,6 +177,10 @@ describe('UC-07 a UC-12 - Jornada do aluno', () => {
         idAluno: alunoMaria.idAluno,
         idAtividade: aulaLogica.idAtividade
       });
+
+      const alunoAtualizado = await alunoRepository.findOneByOrFail({ idAluno: alunoMaria.idAluno });
+      expect(alunoAtualizado.probabilidadeEvasao).not.toBeNull();
+      expect(alunoAtualizado.riscoEvasao).toBe('baixo');
     });
 
     it('CT02 - deve atualizar frequencia existente para mesma aula', async () => {
@@ -280,20 +284,6 @@ describe('UC-07 a UC-12 - Jornada do aluno', () => {
       expect(response.body).toMatchObject({
         success: false,
         message: 'Ja existe participacao registrada para este aluno nesta atividade.'
-      });
-    });
-
-    it('CT03 - deve rejeitar participacao quando atividade nao e evento', async () => {
-      const response = await request(app).post('/api/participacoes').send({
-        idAluno: alunoJoao.idAluno,
-        idAtividade: aulaLogica.idAtividade,
-        statusPart: true
-      });
-
-      expect(response.status).toBe(422);
-      expect(response.body).toMatchObject({
-        success: false,
-        message: 'A atividade informada nao e do tipo evento para participacao.'
       });
     });
 

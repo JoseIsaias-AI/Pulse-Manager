@@ -74,6 +74,9 @@ export class Aluno {
   @PrimaryGeneratedColumn({ name: 'id_aluno' })
   idAluno!: number;
 
+  @Column({ type: 'varchar', length: 11, nullable: true, unique: true })
+  cpf!: string | null;
+
   @Column({ type: 'varchar', length: 150 })
   nome!: string;
 
@@ -123,6 +126,9 @@ export class Aluno {
 
   @Column({ name: 'risco_evasao', type: 'varchar', length: 20, default: 'baixo' })
   riscoEvasao!: RiscoEvasao;
+
+  @Column({ name: 'probabilidade_evasao', type: 'decimal', precision: 5, scale: 2, nullable: true })
+  probabilidadeEvasao!: number | null;
 
   @Column({ type: 'integer', default: 0 })
   engajamento!: number;

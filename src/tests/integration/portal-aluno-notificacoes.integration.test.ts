@@ -85,7 +85,7 @@ describe('UC-03 - Visualizar notificacoes e oportunidades no portal do aluno', (
     expect(response.status).toBe(403);
     expect(response.body.success).toBe(false);
     expect(response.body.message).toBe(
-      'Acesso negado: voce so pode visualizar suas proprias notificacoes.'
+      'Acesso negado: voce so pode visualizar os seus proprios dados.'
     );
   });
 

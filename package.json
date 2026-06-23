@@ -10,6 +10,7 @@
     "seed": "ts-node src/backend/database/seed.ts",
     "db:test": "ts-node src/scripts/test-db.ts",
     "supabase:check": "ts-node src/scripts/test-db.ts",
+    "risco:recalcular": "ts-node src/scripts/recalcular-risco-evasao.ts",
     "test": "jest --runInBand",
     "test:unit": "jest --runInBand src/tests/unit",
     "test:integration": "jest --runInBand src/tests/integration",
