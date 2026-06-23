@@ -1,8 +1,11 @@
 (function () {
   'use strict';
 
-  const GESTOR_API_BASE = window.PULSE_API_BASE
-    || (window.location.port === '3000' ? '/api' : 'http://localhost:3000/api');
+  const GESTOR_API_BASE = window.PulseConfig?.apiBaseUrl || window.PULSE_API_BASE || '';
+
+  if (!GESTOR_API_BASE) {
+    console.error('[spaGestor] URL da API nao configurada. Verifique src/frontend/js/config.js.');
+  }
 
   /* ── VIEWS ────────────────────────────────────────────────── */
   const VIEWS = ['inicio', 'alunos', 'dashboard', 'agenda'];
