@@ -19,9 +19,10 @@
   }
 
   // ---- Função auxiliar: atualiza o breadcrumb ----
+  // Recebe o texto da página e exibe no formato "NomeDaPágina /"
   function atualizarBreadcrumb(texto) {
     if (breadcrumbEl) {
-      breadcrumbEl.textContent = texto || '';
+      breadcrumbEl.textContent = texto + ' /';
     }
   }
 
@@ -35,22 +36,11 @@
   // Preenche as iniciais do usuário (definidas em pulseConfig.user.initials)
   if (avatarBtn && displayUser) {
     avatarBtn.textContent = displayUser.initials;
-    avatarBtn.setAttribute('aria-label', 'Abrir perfil');
 
     // Aplica a cor de fundo definida em pulseConfig.topBar.avatarColor
     if (pulseConfig.topBar && pulseConfig.topBar.avatarColor) {
       avatarBtn.style.background = pulseConfig.topBar.avatarColor;
     }
-
-    avatarBtn.addEventListener('click', function () {
-      if (typeof window.openModal === 'function') {
-        window.openModal();
-        return;
-      }
-
-      const footerProfile = document.querySelector('.menuLateral__user');
-      if (footerProfile) footerProfile.click();
-    });
   }
 
   // ---- Atualização do breadcrumb ao clicar no menu lateral ----

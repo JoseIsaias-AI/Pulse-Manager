@@ -1,6 +1,12 @@
 import { AppDataSource } from './connection';
 import { Aluno } from '../models/alunoModel';
 import { Atividade } from '../models/atividadeModel';
+import { Agenda } from '../models/AgendaModel';
+import { SolicitacaoApoioPsicologico } from '../models/ApoioPsicologicoModel';
+import { Label } from '../models/LabelModel';
+import { Participacao } from '../models/participacaoModel';
+import { HistoricoPsicologico } from '../models/SaudeMentalModel';
+import { MembroEquipe, Psicologo } from '../models/usuarioModel';
 
 const ALUNOS_LOCAIS: Array<Partial<Aluno>> = [
   {
@@ -214,5 +220,116 @@ export async function seedLocalDevelopmentDatabase(): Promise<void> {
   if (!(await atividadeRepository.count())) {
     await atividadeRepository.save(ATIVIDADES_LOCAIS);
     console.log(`Base local carregada com ${ATIVIDADES_LOCAIS.length} atividades.`);
+  }
+
+  const membroRepository = AppDataSource.getRepository(MembroEquipe);
+  if (!(await membroRepository.count())) {
+    await membroRepository.save({
+      nome: 'Helena Duarte',
+      cargo: 'gestor',
+      email: 'helena.duarte@pulsemais.org',
+      cpf: '12345678901'
+    });
+    console.log('Base local carregada com gestor de desenvolvimento.');
+  }
+
+  const psicologoRepository = AppDataSource.getRepository(Psicologo);
+  if (!(await psicologoRepository.count())) {
+    await psicologoRepository.save({
+      nomePsi: 'Isadora Valença',
+      cargoPsi: 'psicologo',
+      email: 'isadora.valenca@pulsemais.org',
+      cpf: '23456789012'
+    });
+    console.log('Base local carregada com psicologo de desenvolvimento.');
+  }
+
+  const [aluno] = await alunoRepository.find({ take: 1, order: { idAluno: 'ASC' } });
+  const [psicologo] = await psicologoRepository.find({ take: 1, order: { idPsi: 'ASC' } });
+  const [membro] = await membroRepository.find({ take: 1, order: { idMembro: 'ASC' } });
+  const atividades = await atividadeRepository.find({ take: 3, order: { idAtividade: 'ASC' } });
+
+  if (!aluno || !psicologo || !membro) return;
+
+  const participacaoRepository = AppDataSource.getRepository(Participacao);
+  if (!(await participacaoRepository.count())) {
+    await participacaoRepository.save(atividades.map((atividade, index) => ({
+      idAluno: aluno.idAluno,
+      idAtividade: atividade.idAtividade,
+      dataPart: atividade.data || `2026-06-${10 + index}`,
+      statusPart: true,
+      nota: 8.4 - index * 0.3,
+      certificado: index > 0
+    })));
+    console.log('Base local carregada com participacoes da jornada.');
+  }
+
+  const agendaRepository = AppDataSource.getRepository(Agenda);
+  if (!(await agendaRepository.count())) {
+    await agendaRepository.save([
+      {
+        tipoUser: 'aluno',
+        registro: 'Mentoria de carreira',
+        data: '2026-06-24',
+        horaInicio: '10:00',
+        horaFim: '11:00',
+        status: 1,
+        idMembro: membro.idMembro,
+        idAluno: aluno.idAluno
+      },
+      {
+        tipoUser: 'aluno',
+        registro: 'Atendimento psicologico cancelado',
+        data: '2026-06-25',
+        horaInicio: '14:00',
+        horaFim: '15:00',
+        status: 0,
+        idMembro: membro.idMembro,
+        idAluno: aluno.idAluno
+      }
+    ]);
+    console.log('Base local carregada com agenda do aluno.');
+  }
+
+  const historicoRepository = AppDataSource.getRepository(HistoricoPsicologico);
+  if (!(await historicoRepository.count())) {
+    await historicoRepository.save({
+      titulo: 'Atendimento inicial',
+      observacao: 'Aluno relata ansiedade antes de entrevistas.',
+      idAluno: aluno.idAluno,
+      idPsi: psicologo.idPsi
+    });
+    console.log('Base local carregada com historico psicologico.');
+  }
+
+  const labelRepository = AppDataSource.getRepository(Label);
+  if (!(await labelRepository.count())) {
+    await labelRepository.save([
+      {
+        descricao: 'Risco moderado de evasao',
+        tipoLabel: 'risco',
+        idAluno: aluno.idAluno,
+        idPsi: psicologo.idPsi
+      },
+      {
+        descricao: 'Boa adesao aos encontros',
+        tipoLabel: 'engajamento',
+        idAluno: aluno.idAluno,
+        idPsi: psicologo.idPsi
+      }
+    ]);
+    console.log('Base local carregada com labels psicologicas.');
+  }
+
+  const apoioRepository = AppDataSource.getRepository(SolicitacaoApoioPsicologico);
+  if (!(await apoioRepository.count())) {
+    await apoioRepository.save({
+      idAluno: aluno.idAluno,
+      idPsicologo: psicologo.idPsi,
+      mensagem: 'Gostaria de conversar sobre ansiedade antes das entrevistas.',
+      status: 'pendente',
+      dataCriacao: new Date().toISOString()
+    });
+    console.log('Base local carregada com solicitacao de apoio.');
   }
 }

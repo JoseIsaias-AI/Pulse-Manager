@@ -4,6 +4,7 @@ import { app } from '../../backend/app';
 import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
 import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
+import { expectErrorContract, expectSuccessContract } from '../helpers/responseContract';
 
 describe('UC-03 a UC-06 - Gestao de Alunos', () => {
   let alunoRepository: Repository<Aluno>;
@@ -47,6 +48,7 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       });
 
       expect(response.status).toBe(201);
+      expectSuccessContract(response.body);
       expect(response.body.success).toBe(true);
       expect(response.body.data.codigoPm).toMatch(/^PM-\d{4}-\d{3}$/);
       expect(response.body.data.email).toBe('julia.ferreira@pulsemais.org');
@@ -62,6 +64,7 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       });
 
       expect(response.status).toBe(409);
+      expectErrorContract(response.body);
       expect(response.body).toMatchObject({
         success: false,
         message: 'Ja existe aluno cadastrado com este e-mail.'
@@ -178,6 +181,7 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       const response = await request(app).get('/api/alunos/opcoes-cadastro');
 
       expect(response.status).toBe(200);
+      expectSuccessContract(response.body);
       expect(response.body.success).toBe(true);
       expect(response.body.data.genero).toEqual(expect.arrayContaining([
         'feminino',
@@ -227,6 +231,7 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       const response = await request(app).get('/api/alunos/9999');
 
       expect(response.status).toBe(404);
+      expectErrorContract(response.body);
       expect(response.body).toMatchObject({
         success: false,
         message: 'Aluno nao encontrado.'

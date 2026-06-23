@@ -239,26 +239,17 @@
   }
   .al-filter-btn:hover  { border-color: #003870; color: #003870; }
   .al-filter-btn--active{ background: #003870; color: #fff; border-color: #003870; font-weight: 600; }
-  .al-filter-btn--active:hover { background: #003870; border-color: #003870; color: #fff; }
   .al-import-btn {
     margin-left: auto; font-size: 11px; font-weight: 600; color: #33B458;
     background: none; border: none; cursor: pointer; font-family: 'Poppins', sans-serif;
   }
   .al-import-btn:hover { opacity: .7; }
 
-  .al-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 14px;
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    padding-right: 4px;
-  }
+  .al-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; flex-shrink: 0; }
 
   .al-card {
     background: #fff; border-radius: 12px; border: 1px solid #DEE3EA;
-    padding: 16px 18px 14px; box-shadow: 0 1px 3px rgba(0,56,112,.05);
+    padding: 14px 16px 12px; box-shadow: 0 1px 3px rgba(0,56,112,.05);
     text-align: left; font-family: 'Poppins', sans-serif;
   }
   .al-card-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
@@ -268,13 +259,13 @@
     font-size: 13px; font-weight: 700; font-family: 'Poppins', sans-serif;
   }
   .al-info { flex: 1; min-width: 0; }
-  .al-name { font-size: 14px; font-weight: 600; color: #11161D; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .al-meta { font-size: 11px; color: #6B7684; margin-top: 3px; }
-  .al-id   { font-size: 11px; color: #97A1AE; }
+  .al-name { font-size: 13px; font-weight: 600; color: #11161D; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .al-meta { font-size: 10px; color: #6B7684; margin-top: 2px; }
+  .al-id   { font-size: 10px; color: #97A1AE; }
 
   .al-badge {
     display: inline-flex; align-items: center; gap: 4px;
-    padding: 4px 10px; border-radius: 999px; font-size: 10.5px;
+    padding: 3px 9px; border-radius: 999px; font-size: 10px;
     font-weight: 600; flex-shrink: 0; white-space: nowrap;
   }
   .al-badge--ativa     { background: #E8F8ED; color: #1D7A36; }
@@ -284,15 +275,15 @@
   .al-badge--atencao   { background: #FFF3E0; color: #C2410C; }
 
   .al-prog-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-  .al-module   { font-size: 12px; color: #6B7684; font-weight: 500; }
-  .al-pct      { font-size: 12px; font-weight: 600; color: #11161D; }
+  .al-module   { font-size: 11px; color: #6B7684; font-weight: 500; }
+  .al-pct      { font-size: 11px; font-weight: 600; color: #11161D; }
   .al-bar      { height: 5px; border-radius: 3px; background: #EEF1F4; overflow: hidden; margin-bottom: 6px; }
   .al-bar-inner{ height: 100%; border-radius: 3px; }
   .al-bar-inner.c-green { background: #33B458; }
   .al-bar-inner.c-amber { background: #F4A261; }
   .al-bar-inner.c-red   { background: #E24B4A; }
   .al-bar-inner.c-gray  { background: #C2CAD4; }
-  .al-note { font-size: 11px; color: #97A1AE; line-height: 1.4; }
+  .al-note { font-size: 10px; color: #97A1AE; line-height: 1.4; }
   .al-empty {
     grid-column: 1 / -1; min-height: 150px; display: flex; align-items: center; justify-content: center;
     gap: 8px; border: 1px dashed #C2CAD4; border-radius: 12px; color: #6B7684; font-size: 11px;
@@ -346,11 +337,11 @@
   #view-agenda { overflow-y: auto !important; padding: 24px 40px; gap: 20px; flex-direction: column; background: #EEF1F4; }
   .ag-layout { display: flex; gap: 20px; flex: 1; min-height: 0; }
   .ag-main { flex: 1; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
-  .ag-sidebar { width: 410px; flex-shrink: 0; }
+  .ag-sidebar { width: 360px; flex-shrink: 0; }
 
   /* Calendar */
-  .ag-cal { background: #fff; border-radius: 18px; border: 1px solid #DEE3EA; box-shadow: 0 10px 28px rgba(0,56,112,.08); overflow: hidden; }
-  .ag-cal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 22px; border-bottom: 1px solid #EEF1F4; background: linear-gradient(135deg, #FFFFFF 0%, #F6FAFF 100%); }
+  .ag-cal { background: #fff; border-radius: 12px; border: 1px solid #DEE3EA; box-shadow: 0 1px 4px rgba(0,56,112,.07); overflow: hidden; }
+  .ag-cal-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #EEF1F4; }
   .ag-cal-title { font-size: 17px; font-weight: 700; color: #003870; }
   .ag-cal-nav { display: flex; align-items: center; gap: 6px; }
   .ag-cal-nav-btn { width: 28px; height: 28px; border-radius: 7px; border: 1px solid #DEE3EA; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #6B7684; font-size: 12px; transition: background .12s; }
@@ -362,12 +353,9 @@
   .ag-week { border-bottom: 1px solid #EEF1F4; }
   .ag-week:last-child { border-bottom: none; }
   .ag-week-days { display: grid; grid-template-columns: repeat(7, 1fr); }
-  .ag-cell { border-right: 1px solid #F0F3F7; padding: 6px 8px 2px; min-height: 34px; cursor: pointer; position: relative; transition: background .12s, box-shadow .12s; }
-  .ag-cell:hover { background: #F8FBFF; box-shadow: inset 0 0 0 1px rgba(0,56,112,.08); }
+  .ag-cell { border-right: 1px solid #F0F3F7; padding: 6px 8px 2px; min-height: 30px; }
   .ag-cell:last-child { border-right: none; }
   .ag-cell.other-month .ag-day-num { color: #C0C7D0; }
-  .ag-cell.has-events::after { content: ''; position: absolute; right: 8px; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: #33B458; }
-  .ag-cell.selected-day { background: #EAF4FF; box-shadow: inset 0 0 0 2px rgba(0,56,112,.22); }
   .ag-day-num { font-size: 11px; font-weight: 500; color: #6B7684; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
   .ag-day-num.today { background: #003870; color: #fff; font-weight: 700; }
   .ag-day-num.weekend { color: #E24B4A; }
@@ -382,10 +370,9 @@
   .ag-cal-footer { padding: 6px 14px; font-size: 11px; color: #97A1AE; border-top: 1px solid #EEF1F4; }
 
   /* Event detail */
-  .ag-detail { background: #fff; border-radius: 18px; border: 1px solid #DEE3EA; box-shadow: 0 10px 28px rgba(0,56,112,.08); padding: 18px 22px; display: none; flex-direction: column; gap: 12px; }
+  .ag-detail { background: #fff; border-radius: 12px; border: 1px solid #DEE3EA; box-shadow: 0 1px 4px rgba(0,56,112,.07); padding: 16px 20px; display: none; flex-direction: column; gap: 10px; }
   .ag-detail.open { display: flex; }
   .ag-detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-  .ag-detail-kicker { font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; color: #97A1AE; margin-bottom: 4px; }
   .ag-detail-title { font-size: 15px; font-weight: 700; color: #11161D; }
   .ag-detail-type { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; }
   .ag-detail-close { width: 24px; height: 24px; border: none; background: #EEF1F4; border-radius: 50%; cursor: pointer; font-size: 13px; color: #6B7684; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -393,33 +380,20 @@
   .ag-detail-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6B7684; }
   .ag-detail-item i { font-size: 14px; color: #97A1AE; }
   .ag-detail-desc { font-size: 12px; color: #444; line-height: 1.6; border-left: 3px solid #EEF1F4; padding-left: 10px; }
-  .ag-day-list { display: flex; flex-direction: column; gap: 9px; }
-  .ag-day-event { width: 100%; border: 1px solid #EEF1F4; background: #FAFBFD; border-radius: 12px; padding: 10px 12px; display: grid; grid-template-columns: 48px 8px 1fr 16px; align-items: center; gap: 10px; text-align: left; cursor: pointer; transition: border-color .12s, transform .12s, background .12s; font-family: 'Poppins', sans-serif; }
-  .ag-day-event:hover { border-color: #BFD7F2; background: #F5FAFF; transform: translateY(-1px); }
-  .ag-day-event-time { font-size: 12px; font-weight: 700; color: #003870; }
-  .ag-day-event-dot { width: 8px; height: 8px; border-radius: 50%; }
-  .ag-day-event-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-  .ag-day-event-main strong { font-size: 12px; color: #11161D; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ag-day-event-main small { font-size: 10.5px; color: #6B7684; }
-  .ag-day-empty { min-height: 108px; border: 1px dashed #C2CAD4; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; color: #6B7684; text-align: center; }
-  .ag-day-empty i { font-size: 22px; color: #97A1AE; }
-  .ag-day-empty strong { font-size: 12px; color: #11161D; }
-  .ag-day-empty span { font-size: 11px; }
 
   /* Sidebar form */
   .ag-form-card { background: #fff; border-radius: 12px; border: 1px solid #DEE3EA; box-shadow: 0 1px 4px rgba(0,56,112,.07); overflow: hidden; display: flex; flex-direction: column; }
-  .ag-form-head { background: #003870; padding: 16px 20px; display: flex; align-items: center; gap: 10px; }
-  .ag-form-head-title { font-size: 14px; font-weight: 600; color: #fff; }
-  .ag-form-body { padding: 18px 20px; display: flex; flex-direction: column; gap: 13px; }
-  .ag-field { display: flex; flex-direction: column; gap: 5px; }
-  .ag-field label { font-size: 12px; font-weight: 500; color: #6B7684; display: flex; align-items: center; gap: 5px; }
-  .ag-field input, .ag-field select, .ag-field textarea { width: 100%; padding: 9px 12px; border: 1px solid #DEE3EA; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 13px; color: #11161D; background: #fff; outline: none; transition: border-color .12s; }
+  .ag-form-head { background: #003870; padding: 14px 18px; display: flex; align-items: center; gap: 10px; }
+  .ag-form-head-title { font-size: 13px; font-weight: 600; color: #fff; }
+  .ag-form-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 11px; }
+  .ag-field { display: flex; flex-direction: column; gap: 4px; }
+  .ag-field label { font-size: 11px; font-weight: 500; color: #6B7684; display: flex; align-items: center; gap: 5px; }
+  .ag-field input, .ag-field select, .ag-field textarea { width: 100%; padding: 7px 10px; border: 1px solid #DEE3EA; border-radius: 7px; font-family: 'Poppins', sans-serif; font-size: 12px; color: #11161D; background: #fff; outline: none; transition: border-color .12s; }
   .ag-field input:focus, .ag-field select:focus, .ag-field textarea:focus { border-color: #003870; }
-  .ag-field textarea { resize: vertical; min-height: 74px; }
+  .ag-field textarea { resize: vertical; min-height: 60px; }
   .ag-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .ag-form-hint { margin: 0; font-size: 10.5px; line-height: 1.5; color: #6B7684; background: #F7FAFD; border: 1px solid #EEF1F4; border-radius: 10px; padding: 9px 10px; }
-  .ag-form-footer { padding: 14px 20px; border-top: 1px solid #EEF1F4; }
-  .ag-submit-btn { width: 100%; padding: 12px; background: #003870; color: #fff; border: none; border-radius: 9px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: background .12s; }
+  .ag-form-footer { padding: 12px 18px; border-top: 1px solid #EEF1F4; }
+  .ag-submit-btn { width: 100%; padding: 10px; background: #003870; color: #fff; border: none; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: background .12s; }
   .ag-submit-btn:hover { background: #004F96; }
   .ag-val-err { border-color: #E24B4A !important; }
   /* ══ PERFIL OVERLAY ═══════════════════════════════════════ */
@@ -436,189 +410,6 @@
   .perfil-overlay.open { display: flex; }
   .perfil-overlay.open .modal { transform: translateY(0) scale(1); opacity: 1; }
   body.perfil-open { overflow: hidden; }
-  #view-atualizacoes {
-    overflow-y: auto !important;
-    padding: 24px 40px;
-    gap: 18px;
-    flex-direction: column;
-    background: #EEF1F4;
-    align-items: stretch !important;
-    justify-content: flex-start !important;
-  }
-  .upd-page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
-  .upd-page-title { font-size: 24px; font-weight: 800; color: #003870; letter-spacing: -.01em; }
-  .upd-page-sub { font-size: 13px; color: #6B7684; margin-top: 4px; max-width: 720px; line-height: 1.5; }
-  .upd-page-pill {
-    display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 999px;
-    background: #EDF3F9; color: #003870; font-size: 11px; font-weight: 800; white-space: nowrap;
-  }
-  .upd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: flex-start; }
-  .upd-card {
-    border: 1px solid #DEE3EA; border-radius: 16px; background: #fff;
-    box-shadow: 0 8px 22px rgba(0,56,112,.07); overflow: hidden;
-  }
-  .upd-card-head { padding: 16px 18px; background: #F7FAFD; border-bottom: 1px solid #EEF1F4; }
-  .upd-card-title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; color: #003870; }
-  .upd-card-sub { font-size: 11px; color: #6B7684; margin-top: 4px; line-height: 1.45; }
-  .upd-card-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
-  .upd-field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .upd-field { display: flex; flex-direction: column; gap: 5px; }
-  .upd-field.span2 { grid-column: 1 / -1; }
-  .upd-field label { font-size: 11px; font-weight: 700; color: #6B7684; }
-  .upd-field input,
-  .upd-field select,
-  .upd-field textarea {
-    width: 100%; border: 1px solid #DEE3EA; border-radius: 9px; padding: 9px 11px;
-    font: 500 12px 'Poppins', sans-serif; color: #11161D; background: #fff; outline: none;
-  }
-  .upd-field textarea { min-height: 82px; resize: vertical; }
-  .upd-field select[multiple] { min-height: 118px; }
-  .upd-field input:focus,
-  .upd-field select:focus,
-  .upd-field textarea:focus { border-color: #003870; }
-  .upd-submit {
-    border: none; border-radius: 10px; background: #003870; color: #fff;
-    font: 700 12px 'Poppins', sans-serif; padding: 11px 12px; cursor: default;
-  }
-  .upd-note { margin: 0; font-size: 10.5px; color: #97A1AE; line-height: 1.45; }
-  @media (max-width: 1180px) {
-    #view-inicio .charts-row,
-    #view-dashboard .charts-row,
-    .breakdown-row,
-    .impact-row,
-    .div-grid,
-    .upd-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-
-    .ag-layout {
-      flex-direction: column;
-    }
-
-    .ag-sidebar {
-      width: 100%;
-    }
-  }
-
-  @media (max-width: 820px) {
-    #view-inicio,
-    #view-dashboard,
-    #view-alunos,
-    #view-agenda,
-    #view-atualizacoes {
-      padding: 20px !important;
-    }
-
-    #view-inicio .charts-row,
-    #view-dashboard .charts-row,
-    .breakdown-row,
-    .impact-row,
-    .div-grid,
-    .rb-grid,
-    .al-stats-row,
-    .upd-grid,
-    .upd-field-grid {
-      grid-template-columns: 1fr !important;
-    }
-
-    .funnel-row,
-    .ag-cal-header,
-    .upd-page-head {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .funnel-card {
-      width: 100%;
-    }
-
-    .funnel-card + .funnel-card {
-      border-left: none;
-      border-top: 1px solid #DEE3EA;
-    }
-
-    .fc-arrow {
-      display: none;
-    }
-
-    .al-filters {
-      align-items: stretch;
-    }
-
-    .al-filter-field {
-      flex: 1 1 180px;
-      min-width: min(100%, 180px);
-    }
-
-    .al-filter-select,
-    .al-filter-btn,
-    .al-clear-filters,
-    .al-import-btn {
-      width: 100%;
-      justify-content: center;
-    }
-
-    .al-grid {
-      grid-template-columns: 1fr !important;
-    }
-
-    .al-foot {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 10px;
-    }
-
-    .al-pag {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .ag-cal {
-      overflow-x: auto;
-    }
-
-    .ag-week-days,
-    .ag-cal-weekdays,
-    .ag-ev-row {
-      min-width: 640px;
-    }
-
-    .ag-day-event {
-      grid-template-columns: 44px 8px 1fr;
-    }
-
-    .ag-day-event > i {
-      display: none;
-    }
-  }
-
-  @media (max-width: 520px) {
-    #view-inicio,
-    #view-dashboard,
-    #view-alunos,
-    #view-agenda,
-    #view-atualizacoes {
-      padding: 16px !important;
-      gap: 14px !important;
-    }
-
-    .al-header h1,
-    .ag-cal-title,
-    .upd-page-title {
-      font-size: 20px;
-    }
-
-    .fc-num,
-    .ic-value,
-    .al-stat-val {
-      font-size: 26px;
-    }
-
-    .upd-card-body,
-    .upd-card-head {
-      padding: 14px;
-    }
-  }
 </style>
 </head>
 <body>
@@ -637,7 +428,7 @@
       <ul class="menuLateral__menu"></ul>
     </nav>
     <footer class="menuLateral__footer">
-      <a href="#" class="menuLateral__settings menuLateral__link" onclick="window.__onMenuNav && window.__onMenuNav('configuracoes');return false;">
+      <a href="#" class="menuLateral__settings menuLateral__link">
         <i class="ti ti-settings menuLateral__icon"></i>
         <span>Configurações</span>
       </a>
@@ -1117,126 +908,6 @@
 
       </div><!-- fim #view-dashboard -->
 
-      <div id="view-atualizacoes" class="spa-view">
-        <div class="upd-page-head">
-          <div>
-            <div class="upd-page-title"><i class="ti ti-bell-ringing" style="font-size:22px;vertical-align:-3px;margin-right:8px;"></i>Atualizações</div>
-          </div>
-          <div class="upd-page-pill"><i class="ti ti-bell"></i> Central de envios</div>
-        </div>
-
-        <div class="upd-grid">
-          <section class="upd-card">
-            <div class="upd-card-head">
-              <div class="upd-card-title"><i class="ti ti-message-circle"></i> Enviar notificação</div>
-            </div>
-            <div class="upd-card-body">
-              <div class="upd-field-grid">
-                <div class="upd-field span2">
-                  <label>Título</label>
-                  <input type="text" maxlength="255" value="Nova atualização da Pulse Mais">
-                </div>
-                <div class="upd-field span2">
-                  <label>Destinatários</label>
-                  <select multiple size="4">
-                    <option selected>Marianne Oliveira</option>
-                    <option selected>Tiago Ribeiro</option>
-                    <option>Sofia Carvalho</option>
-                    <option>Lucas Nascimento</option>
-                    <option>Todos os alunos da turma T4</option>
-                  </select>
-                </div>
-                <div class="upd-field">
-                  <label>Tipo</label>
-                  <select>
-                    <option>alerta</option>
-                    <option selected>informativo</option>
-                    <option>convite</option>
-                    <option>urgente</option>
-                    <option>outro</option>
-                  </select>
-                </div>
-                <div class="upd-field">
-                  <label>Data envio</label>
-                  <input type="date" value="2026-06-16">
-                </div>
-                <div class="upd-field">
-                  <label>Remetente</label>
-                  <select>
-                    <option selected>Vitória Brandão</option>
-                    <option>Carlos Mendes</option>
-                    <option>Equipe Pulse Mais</option>
-                  </select>
-                </div>
-                <div class="upd-field">
-                  <label>Tipo remetente</label>
-                  <select>
-                    <option selected>membro_equipe</option>
-                    <option>psicologo</option>
-                  </select>
-                </div>
-                <div class="upd-field">
-                  <label>Nome remetente</label>
-                  <input type="text" maxlength="150" value="Vitória Brandão">
-                </div>
-                <div class="upd-field span2">
-                  <label>Mensagem</label>
-                  <textarea maxlength="500">Confira as novas oportunidades disponíveis no portal.</textarea>
-                </div>
-              </div>
-              <button class="upd-submit" type="button">Enviar notificação</button>
-            </div>
-          </section>
-
-          <section class="upd-card">
-            <div class="upd-card-head">
-              <div class="upd-card-title"><i class="ti ti-briefcase"></i> Enviar oportunidade</div>
-            </div>
-            <div class="upd-card-body">
-              <div class="upd-field-grid">
-                <div class="upd-field span2">
-                  <label>Título</label>
-                  <input type="text" maxlength="255" value="Estágio em Dados - Trilha Inicial">
-                </div>
-                <div class="upd-field">
-                  <label>Tipo</label>
-                  <select>
-                    <option>emprego</option>
-                    <option selected>estagio</option>
-                    <option>curso</option>
-                    <option>evento</option>
-                    <option>bolsa</option>
-                    <option>voluntariado</option>
-                    <option>outro</option>
-                  </select>
-                </div>
-                <div class="upd-field">
-                  <label>Data publicação</label>
-                  <input type="date" value="2026-06-16">
-                </div>
-                <div class="upd-field">
-                  <label>Prazo inscrição</label>
-                  <input type="date" value="2026-06-30">
-                </div>
-                <div class="upd-field">
-                  <label>Publicador</label>
-                  <select>
-                    <option selected>Vitória Brandão</option>
-                    <option>Carlos Mendes</option>
-                    <option>Equipe Pulse Mais</option>
-                  </select>
-                </div>
-                <div class="upd-field span2">
-                  <label>Descrição</label>
-                  <textarea maxlength="500">Oportunidade para alunos praticarem análise de dados e visualização de indicadores.</textarea>
-                </div>
-              </div>
-              <button class="upd-submit" type="button">Enviar oportunidade</button>
-            </div>
-          </section>
-        </div>
-      </div>
-
       <!-- ══════════════════════════════════════════════════════
            VIEW: AGENDA  (em desenvolvimento pelo colega)
       ══════════════════════════════════════════════════════ -->
@@ -1254,20 +925,34 @@
             <div class="ag-form-card">
               <div class="ag-form-head">
                 <i class="ti ti-calendar-plus" style="font-size:18px;color:#FFD927;"></i>
-                <span class="ag-form-head-title">Pré-cadastro de agenda</span>
+                <span class="ag-form-head-title">Adicionar Evento</span>
               </div>
               <div class="ag-form-body">
                 <div class="ag-field">
-                  <label>Usuário</label>
-                  <select id="ag-f-tipo-user">
+                  <label>Nome do evento</label>
+                  <input type="text" id="ag-f-title" placeholder="Ex.: Sessão de boas-vindas">
+                </div>
+                <div class="ag-field">
+                  <label>Responsável pela atividade</label>
+                  <input type="text" id="ag-f-nome" placeholder="Ex.: Ana Clara">
+                </div>
+                <div class="ag-field">
+                  <label>Ocupação</label>
+                  <select id="ag-f-role">
                     <option value="">Selecione...</option>
-                    <option value="aluno">Aluno</option>
-                    <option value="membro_equipe">Membro da equipe</option>
+                    <option>Psicólogo</option>
+                    <option>Gestor</option>
                   </select>
                 </div>
                 <div class="ag-field">
-                  <label>Registro</label>
-                  <textarea id="ag-f-registro" maxlength="500" placeholder="Texto que será salvo em agenda.registro"></textarea>
+                  <label>Tipo de compromisso</label>
+                  <select id="ag-f-type">
+                    <option value="">Selecione...</option>
+                    <option value="evento">Evento</option>
+                    <option value="consulta">Consulta</option>
+                    <option value="aula">Aula</option>
+                    <option value="mentoria">Mentoria</option>
+                  </select>
                 </div>
                 <div class="ag-field-row">
                   <div class="ag-field">
@@ -1275,27 +960,27 @@
                     <input type="date" id="ag-f-date">
                   </div>
                   <div class="ag-field">
-                    <label>Status</label>
-                    <select id="ag-f-status">
-                      <option value="1">Ativo</option>
-                      <option value="0">Cancelado/Inativo</option>
-                    </select>
+                    <label>Hora</label>
+                    <input type="time" id="ag-f-time">
                   </div>
                 </div>
-                <div class="ag-field-row">
-                  <div class="ag-field">
-                    <label>Hora início</label>
-                    <input type="time" id="ag-f-start">
-                  </div>
-                  <div class="ag-field">
-                    <label>Hora fim</label>
-                    <input type="time" id="ag-f-end">
-                  </div>
+                <div class="ag-field">
+                  <label>Descrição da atividade</label>
+                  <textarea id="ag-f-desc" placeholder="Descreva a atividade..."></textarea>
                 </div>
+                <div class="ag-field">
+                  <label>Enviar para</label>
+                  <select id="ag-f-target" onchange="agUpdateTargetField()">
+                    <option value="todos">Todos os alunos</option>
+                    <option value="especificos">Alunos específicos</option>
+                    <option value="aluno">Um aluno (por ID)</option>
+                  </select>
+                </div>
+                <div id="ag-target-detail"></div>
               </div>
               <div class="ag-form-footer">
                 <button class="ag-submit-btn" onclick="agAddEvent()">
-                  <i class="ti ti-plus"></i> Pré-visualizar na agenda
+                  <i class="ti ti-plus"></i> Adicionar evento
                 </button>
               </div>
             </div>
@@ -1303,104 +988,6 @@
 
         </div>
       </div><!-- fim #view-agenda -->
-
-      <div id="view-configuracoes" class="spa-view cfg-view">
-        <div class="cfg-head">
-          <div>
-            <h1 class="cfg-title"><i class="ti ti-settings"></i> Configurações</h1>
-            <p class="cfg-subtitle">Personalize a experiência visual do painel de gestão.</p>
-          </div>
-          <span class="cfg-pill"><i class="ti ti-device-desktop-cog"></i> Preferências do gestor</span>
-        </div>
-
-        <div class="cfg-grid">
-          <section class="cfg-card">
-            <div class="cfg-card-head">
-              <div>
-                <h2 class="cfg-card-title"><i class="ti ti-palette"></i> Aparência</h2>
-                <p class="cfg-card-sub">Ajustes rápidos para adaptar contraste, leitura e espaçamento.</p>
-              </div>
-            </div>
-            <div class="cfg-card-body">
-              <div class="cfg-section-label">Cor de destaque</div>
-              <div class="cfg-choice-row">
-                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="classic"><span class="cfg-dot" style="--dot-color:#003870"></span> Azul Pulse</button>
-                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="green"><span class="cfg-dot" style="--dot-color:#33B458"></span> Verde</button>
-                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="amber"><span class="cfg-dot" style="--dot-color:#D4860A"></span> Âmbar</button>
-                <button class="cfg-choice" type="button" data-cfg-option="theme" data-cfg-value="indigo"><span class="cfg-dot" style="--dot-color:#4F46E5"></span> Índigo</button>
-              </div>
-
-              <div class="cfg-section-label">Modo da interface</div>
-              <div class="cfg-choice-row">
-                <button class="cfg-choice" type="button" data-cfg-option="mode" data-cfg-value="light"><i class="ti ti-sun"></i> Claro</button>
-                <button class="cfg-choice" type="button" data-cfg-option="mode" data-cfg-value="dark"><i class="ti ti-moon"></i> Escuro</button>
-              </div>
-
-              <div class="cfg-section-label">Densidade</div>
-              <div class="cfg-choice-row">
-                <button class="cfg-choice" type="button" data-cfg-option="density" data-cfg-value="comfortable"><i class="ti ti-layout-grid"></i> Confortável</button>
-                <button class="cfg-choice" type="button" data-cfg-option="density" data-cfg-value="compact"><i class="ti ti-layout-list"></i> Compacta</button>
-              </div>
-
-              <div class="cfg-section-label">Leitura</div>
-              <div class="cfg-choice-row">
-                <button class="cfg-choice" type="button" data-cfg-option="font" data-cfg-value="normal"><i class="ti ti-letter-case"></i> Fonte padrão</button>
-                <button class="cfg-choice" type="button" data-cfg-option="font" data-cfg-value="large"><i class="ti ti-letter-case-upper"></i> Fonte maior</button>
-              </div>
-
-              <div class="cfg-section-label">Contraste</div>
-              <div class="cfg-choice-row">
-                <button class="cfg-choice" type="button" data-cfg-option="contrast" data-cfg-value="normal"><i class="ti ti-contrast"></i> Padrão</button>
-                <button class="cfg-choice" type="button" data-cfg-option="contrast" data-cfg-value="high"><i class="ti ti-contrast-2"></i> Alto contraste</button>
-              </div>
-
-              <div class="cfg-section-label">Bordas</div>
-              <div class="cfg-choice-row">
-                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="rounded"><i class="ti ti-square-rounded"></i> Arredondadas</button>
-                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="soft"><i class="ti ti-circle"></i> Suaves</button>
-                <button class="cfg-choice" type="button" data-cfg-option="shape" data-cfg-value="square"><i class="ti ti-square"></i> Retas</button>
-              </div>
-            </div>
-          </section>
-
-          <section class="cfg-card">
-            <div class="cfg-card-head">
-              <div>
-                <h2 class="cfg-card-title"><i class="ti ti-bell-cog"></i> Preferências</h2>
-                <p class="cfg-card-sub">Ajustes para notificações e acessibilidade.</p>
-              </div>
-            </div>
-            <div class="cfg-card-body">
-              <div class="cfg-toggle-list">
-                <label class="cfg-toggle-item">
-                  <span><span class="cfg-toggle-title">Alertas por e-mail</span><span class="cfg-toggle-desc">Receber resumo de alunos e agenda.</span></span>
-                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="email"><span class="cfg-slider"></span></span>
-                </label>
-                <label class="cfg-toggle-item">
-                  <span><span class="cfg-toggle-title">Notificações do painel</span><span class="cfg-toggle-desc">Exibir avisos visuais durante o uso.</span></span>
-                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="browser"><span class="cfg-slider"></span></span>
-                </label>
-                <label class="cfg-toggle-item">
-                  <span><span class="cfg-toggle-title">Resumo diário</span><span class="cfg-toggle-desc">Agrupar atualizações em uma visão diária.</span></span>
-                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="digest"><span class="cfg-slider"></span></span>
-                </label>
-                <label class="cfg-toggle-item">
-                  <span><span class="cfg-toggle-title">Reduzir animações</span><span class="cfg-toggle-desc">Deixar transições mais discretas.</span></span>
-                  <span class="cfg-switch"><input type="checkbox" data-cfg-switch="reduceMotion"><span class="cfg-slider"></span></span>
-                </label>
-              </div>
-              <div class="cfg-preview">
-                <div class="cfg-preview-top"><span class="cfg-preview-title">Prévia do painel</span><span class="cfg-preview-chip">Gestor</span></div>
-                <p class="cfg-preview-text">Veja como as preferências ajustam aparência e usabilidade do painel.</p>
-              </div>
-              <div class="cfg-actions">
-                <button class="cfg-btn cfg-btn-primary" type="button" data-cfg-option="density" data-cfg-value="compact">Usar modo compacto</button>
-                <button class="cfg-btn cfg-btn-ghost" type="button" data-cfg-reset>Restaurar padrão</button>
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
 
     </main>
   </div><!-- fim .paginaMain -->
@@ -1427,7 +1014,6 @@
       <div class="tab-strip">
         <button class="tab-btn active" onclick="showTab('dados',this)"><i class="ti ti-user"></i> Dados</button>
         <button class="tab-btn" onclick="showTab('contato',this)"><i class="ti ti-phone"></i> Contato</button>
-        <button class="tab-btn" onclick="showTab('atualizacoes',this)"><i class="ti ti-bell-ringing"></i> Atualizações</button>
       </div>
 
       <div class="modal-body">
@@ -1468,123 +1054,6 @@
               <label>Telefone</label>
               <input type="tel" value="(11) 99876-5432">
             </div>
-          </div>
-        </div>
-
-        <div id="tab-atualizacoes" class="tab-panel">
-          <div class="sec-label">Comunicação e oportunidades</div>
-          <div class="upd-grid">
-            <section class="upd-card">
-              <div class="upd-card-head">
-                <div class="upd-card-title"><i class="ti ti-message-circle"></i> Enviar notificação</div>
-                <div class="upd-card-sub">Campos de envio para notificações.</div>
-              </div>
-              <div class="upd-card-body">
-                <div class="upd-field-grid">
-                  <div class="upd-field span2">
-                    <label>Título</label>
-                    <input type="text" maxlength="255" value="Nova atualização da Pulse Mais">
-                  </div>
-                  <div class="upd-field span2">
-                    <label>Destinatários</label>
-                    <select multiple size="4">
-                      <option selected>Marianne Oliveira</option>
-                      <option selected>Tiago Ribeiro</option>
-                      <option>Sofia Carvalho</option>
-                      <option>Lucas Nascimento</option>
-                      <option>Todos os alunos da turma T4</option>
-                    </select>
-                  </div>
-                  <div class="upd-field">
-                    <label>Tipo</label>
-                    <select>
-                      <option>alerta</option>
-                      <option selected>informativo</option>
-                      <option>convite</option>
-                      <option>urgente</option>
-                      <option>outro</option>
-                    </select>
-                  </div>
-                  <div class="upd-field">
-                    <label>Data envio</label>
-                    <input type="date" value="2026-06-16">
-                  </div>
-                  <div class="upd-field">
-                    <label>Remetente</label>
-                    <select>
-                      <option selected>Vitória Brandão</option>
-                      <option>Carlos Mendes</option>
-                      <option>Equipe Pulse Mais</option>
-                    </select>
-                  </div>
-                  <div class="upd-field">
-                    <label>Tipo remetente</label>
-                    <select>
-                      <option selected>membro_equipe</option>
-                      <option>psicologo</option>
-                    </select>
-                  </div>
-                  <div class="upd-field">
-                    <label>Nome remetente</label>
-                    <input type="text" maxlength="150" value="Vitória Brandão">
-                  </div>
-                  <div class="upd-field span2">
-                    <label>Mensagem</label>
-                    <textarea maxlength="500">Confira as novas oportunidades disponíveis no portal.</textarea>
-                  </div>
-                </div>
-                <button class="upd-submit" type="button">Enviar notificação</button>
-              
-              </div>
-            </section>
-
-            <section class="upd-card">
-              <div class="upd-card-head">
-                <div class="upd-card-title"><i class="ti ti-briefcase"></i> Enviar oportunidade</div>
-                <div class="upd-card-sub">Campos de envio para oportunidades.</div>
-              </div>
-              <div class="upd-card-body">
-                <div class="upd-field-grid">
-                  <div class="upd-field span2">
-                    <label>Título</label>
-                    <input type="text" maxlength="255" value="Estágio em Dados - Trilha Inicial">
-                  </div>
-                  <div class="upd-field">
-                    <label>Tipo</label>
-                    <select>
-                      <option>emprego</option>
-                      <option selected>estagio</option>
-                      <option>curso</option>
-                      <option>evento</option>
-                      <option>bolsa</option>
-                      <option>voluntariado</option>
-                      <option>outro</option>
-                    </select>
-                  </div>
-                  <div class="upd-field">
-                    <label>Data publicação</label>
-                    <input type="date" value="2026-06-16">
-                  </div>
-                  <div class="upd-field">
-                    <label>Prazo inscrição</label>
-                    <input type="date" value="2026-06-30">
-                  </div>
-                  <div class="upd-field">
-                    <label>Publicador</label>
-                    <select>
-                      <option selected>Vitória Brandão</option>
-                      <option>Carlos Mendes</option>
-                      <option>Equipe Pulse Mais</option>
-                    </select>
-                  </div>
-                  <div class="upd-field span2">
-                    <label>Descrição</label>
-                    <textarea maxlength="500">Oportunidade para alunos praticarem análise de dados e visualização de indicadores.</textarea>
-                  </div>
-                </div>
-                <button class="upd-submit" type="button">Enviar oportunidade</button>
-              </div>
-            </section>
           </div>
         </div>
 
@@ -1847,8 +1316,10 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/config.js"></script>
 <script src="../js/services/config.js"></script>
 <script src="../js/services/api.js"></script>
+<script src="../js/services/uiState.js"></script>
 <script src="../js/services/sessionUser.js"></script>
 <script src="../js/components/guiaGestor.js"></script>
 <script src="../js/components/menuSuperior.js"></script>
@@ -1858,6 +1329,5 @@
 <script src="../js/pages/agendaGestorApp.js"></script>
 <script src="../js/pages/spaGestor.js"></script>
 <script src="../js/pages/comunicacao.js"></script>
-<script src="../js/components/configuracoesFrontend.js"></script>
 </body>
 </html>

@@ -1,8 +1,15 @@
 (function () {
   'use strict';
 
-  const GESTOR_API_BASE = window.PULSE_API_BASE
-    || (window.location.port === '3000' ? '/api' : 'http://localhost:3000/api');
+  function gestorApi() {
+    if (!window.PulseApi) {
+      const message = 'Cliente HTTP central nao carregado. Verifique se api.js foi incluido antes de spaGestor.js.';
+      console.error('[spaGestor]', message);
+      throw new Error(message);
+    }
+
+    return window.PulseApi;
+  }
 
   /* ── VIEWS ────────────────────────────────────────────────── */
   const VIEWS = ['inicio', 'alunos', 'dashboard', 'agenda', 'atualizacoes', 'configuracoes'];
@@ -962,11 +969,7 @@
   }
 
   async function fetchPerfilOptions() {
-    const response = await fetch(`${GESTOR_API_BASE}/alunos/opcoes-cadastro`);
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível carregar as opções do aluno.');
-    }
+    const body = await gestorApi().get('/alunos/opcoes-cadastro');
     return body.data || {};
   }
 
@@ -1168,15 +1171,7 @@
   }
 
   async function updatePerfilAluno(idAluno, payload) {
-    const response = await fetch(`${GESTOR_API_BASE}/alunos/${idAluno}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível atualizar o aluno.');
-    }
+    const body = await gestorApi().patch(`/alunos/${idAluno}`, payload);
     return body.data;
   }
 
@@ -1206,46 +1201,22 @@
   }
 
   async function fetchAtividades() {
-    const response = await fetch(`${GESTOR_API_BASE}/atividades`);
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível carregar as atividades.');
-    }
+    const body = await gestorApi().get('/atividades');
     return body.data.atividades || [];
   }
 
   async function fetchJornadaAluno(idAluno) {
-    const response = await fetch(`${GESTOR_API_BASE}/jornada/alunos/${idAluno}`);
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível carregar notas e presença do aluno.');
-    }
+    const body = await gestorApi().get(`/jornada/alunos/${idAluno}`);
     return body.data;
   }
 
   async function registrarFrequencia(payload) {
-    const response = await fetch(`${GESTOR_API_BASE}/frequencias`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível registrar a frequência.');
-    }
+    const body = await gestorApi().post('/frequencias', payload);
     return body.data;
   }
 
   async function registrarParticipacaoEvento(payload) {
-    const response = await fetch(`${GESTOR_API_BASE}/participacoes`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível registrar a participação.');
-    }
+    const body = await gestorApi().post('/participacoes', payload);
     return body.data;
   }
 
