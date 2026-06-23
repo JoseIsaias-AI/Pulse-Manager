@@ -6,6 +6,7 @@ import { Aluno } from '../../backend/models/alunoModel';
 import { Atividade } from '../../backend/models/atividadeModel';
 import { Participacao } from '../../backend/models/participacaoModel';
 import { AnotacaoQualitativa } from '../../backend/models/anotacaoQualitativaModel';
+import { expectErrorContract } from '../helpers/responseContract';
 
 describe('UC-07 a UC-12 - Jornada do aluno', () => {
   let alunoRepository: Repository<Aluno>;
@@ -512,11 +513,13 @@ describe('UC-07 a UC-12 - Jornada do aluno', () => {
       });
 
       expect(response.status).toBe(422);
+      expectErrorContract(response.body);
       expect(response.body).toEqual({
         success: false,
+        data: null,
         message: 'A atividade informada nao e do tipo aula para registro de frequencia.'
       });
-      expect(response.body.stack).toBeUndefined();
+      expect((response.body as { stack?: unknown }).stack).toBeUndefined();
     });
   });
 });

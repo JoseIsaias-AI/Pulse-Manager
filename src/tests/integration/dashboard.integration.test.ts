@@ -4,6 +4,7 @@ import { app } from '../../backend/app';
 import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
 import { Aluno } from '../../backend/models/alunoModel';
 import { registrarConsultaDashboard } from '../../backend/integrations/dashboardAuditoriaIntegration';
+import { expectErrorContract } from '../helpers/responseContract';
 
 jest.mock('../../backend/integrations/dashboardAuditoriaIntegration', () => ({
   registrarConsultaDashboard: jest.fn().mockResolvedValue(undefined)
@@ -498,11 +499,13 @@ describe('UC-14 a UC-19 - Dashboard de Impacto', () => {
         .query({ dataInicio: '2026/02/01' });
 
       expect(response.status).toBe(400);
+      expectErrorContract(response.body);
       expect(response.body).toEqual({
         success: false,
+        data: null,
         message: 'O parametro dataInicio deve estar no formato YYYY-MM-DD.'
       });
-      expect(response.body.stack).toBeUndefined();
+      expect((response.body as { stack?: unknown }).stack).toBeUndefined();
     });
   });
 });

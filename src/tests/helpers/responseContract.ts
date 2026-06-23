@@ -23,3 +23,19 @@ export function expectErrorContract(body: unknown): asserts body is {
   }));
   expect((body as { message: string }).message.trim().length).toBeGreaterThan(0);
 }
+
+export function expectContrato(body: unknown): void {
+  expect(body).toEqual(expect.objectContaining({
+    success: expect.any(Boolean),
+    message: expect.any(String)
+  }));
+
+  expect(body).toHaveProperty('data');
+  expect((body as { message: string }).message.trim().length).toBeGreaterThan(0);
+
+  if ((body as { success: boolean }).success === false) {
+    expect((body as { data: unknown }).data).toBeNull();
+  } else {
+    expect((body as { data: unknown }).data).not.toBeUndefined();
+  }
+}

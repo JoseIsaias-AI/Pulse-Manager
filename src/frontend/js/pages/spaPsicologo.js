@@ -178,13 +178,7 @@
     /* Botões Notificar */
     document.querySelectorAll('.btn-notificar').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var item   = btn.closest('.alerta-item');
-        var nomeEl = item ? item.querySelector('.alerta-nome') : null;
-        var nome   = nomeEl ? (nomeEl.textContent || '') : '';
-        console.log('Notificação enviada para: ' + nome);
-        btn.textContent  = '✓ Enviado';
-        btn.style.background = '#33B458';
-        btn.disabled = true;
+        if (window.Comunicacao) window.Comunicacao.abrir();
       });
     });
   }

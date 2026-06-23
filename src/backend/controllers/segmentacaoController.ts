@@ -45,11 +45,12 @@ export class SegmentacaoController {
 
     try {
       const resultado = await this.service.segmentar(filtros);
-      res.status(200).json(resultado);
+      res.status(200).json({ ...resultado, message: 'Segmentacao realizada com sucesso.' });
     } catch (error) {
       if (error instanceof AppError) {
         res.status(error.statusCode).json({
           success: false,
+          data: null,
           message: error.message
         });
         return;
