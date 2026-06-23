@@ -46,7 +46,7 @@ _A inserção do video sera feita na Sprint 05 com o projeto finalizado_
 
 Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
-- <b>docs</b>: reúne a documentação do projeto, incluindo setup, decisões técnicas, API e WAD.
+- <b>documentos</b>: reúne a documentação do projeto, incluindo setup, decisões técnicas, API e WAD.
 
 - <b>src</b>: contém o código-fonte principal da aplicação.
 
@@ -224,7 +224,6 @@ npm install --save-dev ts-node typescript @types/node
 
 - Caso ocorra erro de conexão com o banco, verifique se as variáveis do `.env` estão corretas e se o PostgreSQL/Supabase está ativo.
 
-
 ## Validação dos fluxos autenticados de ponta a ponta
 
 Esta seção orienta um avaliador externo a subir a aplicação, autenticar-se nos três perfis e percorrer os principais fluxos sem contato com o grupo. Ela complementa as seções de configuração e execução já documentadas acima.
@@ -232,25 +231,6 @@ Esta seção orienta um avaliador externo a subir a aplicação, autenticar-se n
 ### Credenciais de acesso após `npm run seed`
 
 O login na interface web é feito automaticamente com qualquer numero, mais a frente adicionaremos os comandos correspondentes. 
-
-
-> O seed também cria mais 19 alunos, 4 membros de equipe e 4 psicólogos, caso seja necessário testar outros registros.
-
-### Roteiro dos fluxos autenticados
-
-Com o servidor rodando (`npm run dev`) e o banco populado (`npm run seed`), abra `frontend/pages/login.html` no navegador e siga os roteiros abaixo por perfil.
-
-#### Perfil Gestor
-
-
-
-#### Perfil Psicólogo
-
-
-
-#### Perfil Aluno
-
-
 
 ### Cobertura da suite de testes
 

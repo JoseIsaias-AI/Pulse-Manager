@@ -1601,7 +1601,7 @@ Tela de login exclusiva para psicólogos da plataforma Pulse Mais. Dividida em d
 
 <div align="center">
 <sup>Figura 22: Wireframe da tela inicial do Gestor.</sup><br>
-    <img src="assets/wrfInicialGest.png" ><br>
+    <img src="assets/wrfInicialGestt.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -1671,7 +1671,7 @@ A tela exibe o perfil de um aluno com navegação lateral (Início, Alunos, Dash
 
 <div align="center">
 <sup>Figura 29: Wireframe da tela inicial do Aluno.</sup><br>
-    <img src="./assets/wrfInicioAluno.png" ><br>
+    <img src="./assets/wrfInicioAlunoo.png" ><br>
     <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
@@ -2855,7 +2855,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#1 | Enviar notificação de "Alerta: Cuidado com Faltas" para o aluno que possui ID 123 e possuem percentual de falta entre 10% e 15%
+\#1 | Enviar notificação de "Alerta: Cuidado com Faltas" para o aluno que possui ID 123 e cujo percentual de faltas está entre 10% e 15%
 --- | ---
 **Expressão SQL** | `INSERT INTO notificacoes (tipo, id_aluno) SELECT 'Alerta: Cuidado com Faltas', id_aluno FROM participacao WHERE id_aluno = 123 GROUP BY id_aluno HAVING (SUM(CASE WHEN participacao = FALSE THEN 1 ELSE 0 END) * 1.0 / COUNT(*)) BETWEEN 0.10 AND 0.15;`
 **Proposições lógicas** | $A$: A taxa de faltas do aluno é maior ou igual a 10% <br> $B$: A taxa de faltas do aluno é menor ou igual a 15% <br> $C$: O aluno recebe a notificação 'Alerta: Cuidado com Faltas'
@@ -2868,17 +2868,18 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 --- | ---
 **Expressão SQL** | `SELECT * FROM alunos WHERE idade IN (17, 18, 19);`
 **Proposições lógicas** | $A$: A idade do aluno é 17 (idade = 17) <br> $B$: A idade do aluno é 18 (idade = 18) <br> $C$: A idade do aluno é 19 (idade = 19)
-**Expressão lógica proposicional** | $(A \lor B) \lor C$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$(A \lor B)$</th><th>$(A \lor B) \lor C$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td></tr></tbody></table>
+**Expressão lógica proposicional** | $A \lor B \lor C$
+**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$A \lor B \lor C$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td><td>F</td></tr></tbody></table>
+**Observação** | Como a disjunção é associativa, a expressão dispensa parênteses internos. Vale notar que $A$, $B$ e $C$ são mutuamente exclusivas no domínio real (um mesmo aluno não pode ter 17, 18 e 19 anos ao mesmo tempo), de modo que as linhas com mais de uma proposição verdadeira não ocorrem na prática, embora sejam mantidas na tabela para completude lógica.
 
 ---
 
-\#3 | Selecionar alunos que tem status de participação "Ativo" e curso como "Sistemas de Informação"
+\#3 | Selecionar alunos com status 'Ativo' que cursam 'Sistemas de Informação' ou 'Ciência da Computação' e que não sejam bolsistas
 --- | ---
-**Expressão SQL** | `SELECT * FROM alunos WHERE status = 'Ativo' AND NOT curso = 'Sistemas de Informação';`
-**Proposições lógicas** | $A$: O status do aluno é 'Ativo' (status = 'Ativo') <br> $B$: O curso do aluno é 'Sistemas de Informação' (curso = 'Sistemas de Informação')
-**Expressão lógica proposicional** | $A \land \lnot B$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$\lnot B$</th><th>$A \land \lnot B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr></tbody></table>
+**Expressão SQL** | `SELECT * FROM alunos WHERE status = 'Ativo' AND (curso = 'Sistemas de Informação' OR curso = 'Ciência da Computação') AND NOT bolsista = TRUE;`
+**Proposições lógicas** | $A$: O status do aluno é 'Ativo' (status = 'Ativo') <br> $B$: O curso do aluno é 'Sistemas de Informação' (curso = 'Sistemas de Informação') <br> $C$: O curso do aluno é 'Ciência da Computação' (curso = 'Ciência da Computação') <br> $D$: O aluno é bolsista (bolsista = TRUE)
+**Expressão lógica proposicional** | $A \land (B \lor C) \land \lnot D$
+**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$D$</th><th>$(B \lor C)$</th><th>$\lnot D$</th><th>$A \land (B \lor C) \land \lnot D$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td></tr></tbody></table>
 
 ---
 
@@ -2889,17 +2890,18 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 **Expressão lógica proposicional** | $A \land B$
 **Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \land B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td></tr></tbody></table>
 
+---
 
-\#5 | Inserir informações no histórico psicológico
+\#5 | Inserir um registro no histórico psicológico do aluno 123, desde que ele exista e não esteja com status 'Inativo'
 --- | ---
-**Expressão SQL** | `INSERT INTO historico_psicologico (id_aluno, observacao) VALUES (123, 'Aluno demonstra ótima evolução e engajamento.');`
-**Proposições lógicas** | $A$: O ID do aluno é 123 (id\_aluno = 123) <br> $B$: A observação é válida e não nula <br> $C$: O registro é inserido no histórico psicológico
-**Expressão lógica proposicional** | $(A \land B) \to C$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$(A \land B)$</th><th>$(A \land B) \to C$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td></tr></tbody></table>                                           
+**Expressão SQL** | `INSERT INTO historico_psicologico (id_aluno, observacao) SELECT id_aluno, 'Aluno demonstra ótima evolução e engajamento.' FROM alunos WHERE id_aluno = 123 AND NOT status = 'Inativo';`
+**Proposições lógicas** | $A$: O ID do aluno é 123 (id\_aluno = 123) <br> $B$: O status do aluno é 'Inativo' (status = 'Inativo') <br> $C$: O registro é inserido no histórico psicológico
+**Expressão lógica proposicional** | $(A \land \lnot B) \to C$
+**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$\lnot B$</th><th>$(A \land \lnot B)$</th><th>$(A \land \lnot B) \to C$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td></tr></tbody></table>
 
 ---
 
-\#6 | Apagar data na agenda que esteja com data ou ID em branco
+\#6 | Apagar registros da agenda que estejam com data ou ID em branco
 --- | ---
 **Expressão SQL** | `DELETE FROM agenda WHERE data IS NULL OR id_agenda IS NULL;`
 **Proposições lógicas** | $A$: A data é nula (data IS NULL) <br> $B$: O ID da agenda é nulo (id\_agenda IS NULL)
@@ -2908,21 +2910,21 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ---
 
-\#7 | Selecionar todos os alunos que possuem nome "João"
+\#7 | Selecionar alunos cujo nome começa com 'João' e que não estejam com status 'Inativo'
 --- | ---
-**Expressão SQL** | `SELECT * FROM alunos WHERE nome LIKE 'João%';`
-**Proposições lógicas** | $A$: O nome do aluno começa com 'João' (nome LIKE 'João%')
-**Expressão lógica proposicional** | $A$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$A$</th></tr></thead><tbody><tr><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td></tr></tbody></table>
+**Expressão SQL** | `SELECT * FROM alunos WHERE nome LIKE 'João%' AND NOT status = 'Inativo';`
+**Proposições lógicas** | $A$: O nome do aluno começa com 'João' (nome LIKE 'João%') <br> $B$: O status do aluno é 'Inativo' (status = 'Inativo')
+**Expressão lógica proposicional** | $A \land \lnot B$
+**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$\lnot B$</th><th>$A \land \lnot B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>F</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td></tr></tbody></table>
 
 ---
 
-\#8 | Atualizar ocupação do aluno que possui ID 123 para "Desenvolvedor Júnior"
+\#8 | Atualizar a ocupação para 'Desenvolvedor Júnior' dos alunos cujo ID seja 123 ou cuja ocupação atual seja 'Estagiário'
 --- | ---
-**Expressão SQL** | `UPDATE ocupacao_aluno SET ocupacao_aluno = 'Desenvolvedor Júnior' WHERE id_aluno = 123;`
-**Proposições lógicas** | $A$: O ID do aluno é 123 — condição WHERE (id\_aluno = 123) <br> $B$: A ocupação é atualizada para 'Desenvolvedor Júnior' — efeito do SET
-**Expressão lógica proposicional** | $A \to B$
-**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$A \to B$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td></tr></tbody></table>
+**Expressão SQL** | `UPDATE ocupacao_aluno SET ocupacao_aluno = 'Desenvolvedor Júnior' WHERE id_aluno = 123 OR ocupacao_aluno = 'Estagiário';`
+**Proposições lógicas** | $A$: O ID do aluno é 123 — condição WHERE (id\_aluno = 123) <br> $B$: A ocupação atual do aluno é 'Estagiário' — condição WHERE (ocupacao\_aluno = 'Estagiário') <br> $C$: A ocupação é atualizada para 'Desenvolvedor Júnior' — efeito do SET
+**Expressão lógica proposicional** | $(A \lor B) \to C$
+**Tabela Verdade** | <table><thead><tr><th>$A$</th><th>$B$</th><th>$C$</th><th>$(A \lor B)$</th><th>$(A \lor B) \to C$</th></tr></thead><tbody><tr><td>V</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td><td>V</td><td>V</td></tr><tr><td>F</td><td>V</td><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td><td>F</td><td>V</td></tr></tbody></table>
 
 </div>
 
