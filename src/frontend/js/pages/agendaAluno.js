@@ -25,10 +25,17 @@
       { id:14, title:'Consulta Psicológica',               tipo:'consulta',  start:'2026-06-29', end:'2026-06-29', hora:'10:00', responsavel:'João Mário',      iniciais:'JM', ocupacao:'psicologo', occLabel:'Psicólogo', desc:'Encerramento de ciclo. Avaliação de progresso emocional.' },
       { id:15, title:'Encerramento de Junho',              tipo:'evento',    start:'2026-06-30', end:'2026-06-30', hora:'17:00', responsavel:'Vitória Brandão', iniciais:'VB', ocupacao:'gestor',    occLabel:'Gestor',    desc:'Reunião de encerramento mensal com toda a equipe e alunos.' },
     ];
+    let selectedDate = '2026-06-11';
 
     /* ── Helpers ───────────────────────────────────────────── */
     function toDate(s) { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
     function daysBetween(a,b) { return Math.round((toDate(b)-toDate(a))/(864e5))+1; }
+    function formatDate(str) { return toDate(str).toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' }); }
+    function eventsForDay(dateStr) {
+      return EVENTS
+        .filter(ev => ev.start <= dateStr && ev.end >= dateStr)
+        .sort((a, b) => (a.hora || '').localeCompare(b.hora || ''));
+    }
     function colOf(dateStr) {
       const d = toDate(dateStr);
       return ((d.getDay()+6)%7); // Mon=0 … Sun=6
@@ -111,12 +118,16 @@
         const cellsHtml = cells.map(d => {
           const valid = d >= 1 && d <= daysInMonth;
           const isToday = (d === 11); // hoje = 11 Jun 2026
+          const dateStr = valid ? `2026-06-${String(d).padStart(2, '0')}` : '';
+          const hasEvents = valid && eventsForDay(dateStr).length > 0;
           const cls = [
             'ag-cell',
             !valid ? 'other-month' : '',
-            isToday ? 'today' : ''
+            isToday ? 'today' : '',
+            dateStr === selectedDate ? 'selected-day' : '',
+            hasEvents ? 'has-events' : ''
           ].filter(Boolean).join(' ');
-          return `<div class="${cls}"><span class="ag-dn">${valid ? d : ''}</span></div>`;
+          return `<div class="${cls}" ${valid ? `data-date="${dateStr}" onclick="window.__agShowDay('${dateStr}')"` : ''}><span class="ag-dn">${valid ? d : ''}</span></div>`;
         }).join('');
 
         // Linhas de eventos
@@ -146,10 +157,47 @@
     }
 
     /* ── Mostrar detalhe ────────────────────────────────────── */
+    function showDayDetail(dateStr) {
+      selectedDate = dateStr;
+      const det = document.getElementById('ag-detail');
+      if (!det) return;
+      const dayEvents = eventsForDay(dateStr);
+      const tipoLabel = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria', formatura:'Formatura' };
+      const tipoIcon  = { evento:'ti-calendar-event', consulta:'ti-stethoscope', aula:'ti-school', mentoria:'ti-users', formatura:'ti-award' };
+      const itemsHtml = dayEvents.length
+        ? dayEvents.map(ev => `<button class="ag-day-event" type="button" onclick="window.__agShowDetail(${ev.id})">
+            <span class="ag-day-event-time">${ev.hora}</span>
+            <span class="ag-day-event-main">
+              <strong><i class="ti ${tipoIcon[ev.tipo]}"></i> ${ev.title}</strong>
+              <small>${tipoLabel[ev.tipo] || ev.tipo} · ${ev.responsavel}</small>
+            </span>
+            <i class="ti ti-chevron-right"></i>
+          </button>`).join('')
+        : `<div class="ag-day-empty">
+            <i class="ti ti-calendar-off"></i>
+            <strong>Nenhum evento neste dia</strong>
+            <span>Quando a agenda for integrada, seus compromissos aparecerão aqui.</span>
+          </div>`;
+
+      det.innerHTML = `
+        <div class="ag-det-head">
+          <div>
+            <div class="ag-det-kicker">Agenda do dia</div>
+            <div class="ag-det-title">${formatDate(dateStr)}</div>
+          </div>
+          <button class="ag-det-close" onclick="document.getElementById('ag-detail').classList.remove('open')"><i class="ti ti-x"></i></button>
+        </div>
+        <div class="ag-day-list">${itemsHtml}</div>`;
+      det.classList.add('open');
+      renderCal();
+      det.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     function showDetail(id) {
       const ev = EVENTS.find(e => e.id === id);
       const det = document.getElementById('ag-detail');
       if (!ev || !det) return;
+      selectedDate = ev.start;
 
       const tipoLabel = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria', formatura:'Formatura' };
       const tipoIcon  = { evento:'ti-calendar-event', consulta:'ti-stethoscope', aula:'ti-school', mentoria:'ti-users', formatura:'ti-award' };
@@ -160,7 +208,10 @@
 
       det.innerHTML = `
         <div class="ag-det-head">
-          <div class="ag-det-title">${ev.title}</div>
+          <div>
+            <div class="ag-det-kicker">Detalhe do evento</div>
+            <div class="ag-det-title">${ev.title}</div>
+          </div>
           <button class="ag-det-close" onclick="document.getElementById('ag-detail').classList.remove('open')"><i class="ti ti-x"></i></button>
         </div>
         <span class="ag-det-badge ev-tipo-${ev.tipo}"><i class="ti ${tipoIcon[ev.tipo]}"></i> ${tipoLabel[ev.tipo]}</span>
@@ -171,11 +222,13 @@
           <div class="ag-det-row"><i class="ti ti-notes"></i><div><div class="ag-det-lbl">Descrição</div><div class="ag-det-val">${ev.desc}</div></div></div>
         </div>`;
       det.classList.add('open');
+      renderCal();
       det.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     /* Expõe o handler globalmente para os onclick do HTML gerado */
     window.__agShowDetail = showDetail;
+    window.__agShowDay = showDayDetail;
 
     renderCal();
   }

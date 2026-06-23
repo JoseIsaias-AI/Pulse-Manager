@@ -141,6 +141,7 @@ CREATE TABLE IF NOT EXISTS aluno (
   programa VARCHAR(120) NOT NULL DEFAULT 'nao_informado',
   categoria VARCHAR(60) NOT NULL DEFAULT 'sem_categoria',
   risco_evasao VARCHAR(20) NOT NULL DEFAULT 'baixo' CHECK (risco_evasao IN ('baixo', 'medio', 'alto')),
+  probabilidade_evasao DECIMAL(5,2) CHECK (probabilidade_evasao IS NULL OR (probabilidade_evasao >= 0 AND probabilidade_evasao <= 100)),
   engajamento INTEGER NOT NULL DEFAULT 0 CHECK (engajamento >= 0 AND engajamento <= 100),
   data_ingresso DATE NOT NULL DEFAULT CURRENT_DATE,
   status status_aluno_enum NOT NULL DEFAULT 'ativo',
@@ -304,6 +305,7 @@ ADD COLUMN IF NOT EXISTS data_ingresso_ensino_superior DATE,
 ADD COLUMN IF NOT EXISTS programa VARCHAR(120) DEFAULT 'nao_informado',
 ADD COLUMN IF NOT EXISTS categoria VARCHAR(60) DEFAULT 'sem_categoria',
 ADD COLUMN IF NOT EXISTS risco_evasao VARCHAR(20) DEFAULT 'baixo',
+ADD COLUMN IF NOT EXISTS probabilidade_evasao DECIMAL(5,2),
 ADD COLUMN IF NOT EXISTS engajamento INTEGER DEFAULT 0,
 ADD COLUMN IF NOT EXISTS nivel_jornada VARCHAR(50),
 ADD COLUMN IF NOT EXISTS perfil_socioeconomico VARCHAR(150),
@@ -362,6 +364,11 @@ ADD CONSTRAINT aluno_renda_mensal_check CHECK (renda_mensal IS NULL OR renda_men
 ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_risco_evasao_check;
 ALTER TABLE public.aluno
 ADD CONSTRAINT aluno_risco_evasao_check CHECK (risco_evasao IN ('baixo', 'medio', 'alto'));
+
+ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_probabilidade_evasao_check;
+ALTER TABLE public.aluno
+ADD CONSTRAINT aluno_probabilidade_evasao_check
+CHECK (probabilidade_evasao IS NULL OR (probabilidade_evasao >= 0 AND probabilidade_evasao <= 100));
 
 ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_engajamento_check;
 ALTER TABLE public.aluno

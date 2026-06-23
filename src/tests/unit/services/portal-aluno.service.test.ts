@@ -1,4 +1,7 @@
 import { PortalAlunoService } from '../../../backend/services/portalAlunoService';
+import { AlunoRepository } from '../../../backend/repositories/alunoRepository';
+import { NotificacaoRepository } from '../../../backend/repositories/notificacaoRepository';
+import { asMockedDependency } from '../../helpers/mockHelper';
 
 const aluno = {
   idAluno: 1,
@@ -33,7 +36,10 @@ describe('PortalAlunoService', () => {
   beforeEach(() => {
     alunoRepository = makeAlunoRepository();
     notificacaoRepository = makeNotificacaoRepository();
-    service = new PortalAlunoService(alunoRepository as any, notificacaoRepository as any);
+    service = new PortalAlunoService(
+      asMockedDependency<AlunoRepository>(alunoRepository),
+      asMockedDependency<NotificacaoRepository>(notificacaoRepository)
+    );
   });
 
   it('visualiza perfil resumido do aluno', async () => {

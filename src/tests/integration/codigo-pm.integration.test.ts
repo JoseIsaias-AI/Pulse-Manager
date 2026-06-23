@@ -1,21 +1,17 @@
 import request from 'supertest';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
 
 describe('UC-05 - RN001: Geracao de codigo PM-AAAA-NNN com sequencial anual', () => {
   beforeAll(async () => {
-    await initializeDatabase();
+    await setupIntegrationDatabase();
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   it('CT01 - deve atribuir sequencial 001 ao primeiro aluno do ano', async () => {
     const response = await request(app).post('/api/alunos').send({
