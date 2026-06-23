@@ -74,7 +74,7 @@ describe('Autenticacao por email e nome', () => {
       }
     });
     expect(response.body.data.id).toBeDefined();
-    expect(response.body.data.idAluno).toBe(response.body.data.id);
+    expect(Object.keys(response.body.data).sort()).toEqual(['email', 'id', 'nome', 'perfil']);
   });
 
   it('deve negar login quando o email nao existe no banco', async () => {

@@ -196,6 +196,32 @@ http://localhost:3000
 
 A porta pode variar de acordo com a configuração definida no arquivo `.env`.
 
+### URL da API no Frontend
+
+O Frontend usa um único arquivo para resolver a URL base da API:
+
+```text
+src/frontend/js/config.js
+```
+
+Em desenvolvimento local, a configuração padrão aponta para:
+
+```js
+http://localhost:3000/api
+```
+
+Em produção, defina a URL antes de carregar `src/frontend/js/services/api.js`:
+
+```html
+<script>
+  window.PULSE_API_BASE = 'https://seu-dominio/api';
+</script>
+<script src="../js/config.js"></script>
+<script src="../js/services/api.js"></script>
+```
+
+Alternativamente, substitua o placeholder `__PULSE_API_BASE_URL__` em `src/frontend/js/config.js` durante o build/deploy. Se nenhuma URL estiver configurada fora de localhost, o console exibirá um erro claro informando que a URL da API está ausente.
+
 ### 7. Executar o frontend
 
 O frontend está localizado na pasta `frontend` e contém as páginas HTML, arquivos CSS, scripts JavaScript e assets da interface.

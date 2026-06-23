@@ -1,10 +1,17 @@
 (function () {
   'use strict';
 
-  const defaultBaseUrl = 'http://localhost:3000/api';
-
   function getBaseUrl() {
-    const configuredBaseUrl = window.PULSE_API_BASE || defaultBaseUrl;
+    const configuredBaseUrl = window.PulseConfig?.apiBaseUrl || window.PULSE_API_BASE;
+
+    if (!configuredBaseUrl) {
+      console.error(
+        '[PulseApi] URL da API ausente. Carregue src/frontend/js/config.js antes de api.js ' +
+          'ou defina window.PULSE_API_BASE.'
+      );
+      throw new Error('URL da API nao configurada.');
+    }
+
     return String(configuredBaseUrl).replace(/\/$/, '');
   }
 
