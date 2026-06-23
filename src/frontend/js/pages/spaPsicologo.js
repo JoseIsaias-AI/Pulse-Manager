@@ -178,7 +178,13 @@
     /* Botões Notificar */
     document.querySelectorAll('.btn-notificar').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        if (window.Comunicacao) window.Comunicacao.abrir();
+        var item   = btn.closest('.alerta-item');
+        var nomeEl = item ? item.querySelector('.alerta-nome') : null;
+        var nome   = nomeEl ? (nomeEl.textContent || '') : '';
+        console.log('Notificação enviada para: ' + nome);
+        btn.textContent  = '✓ Enviado';
+        btn.style.background = '#33B458';
+        btn.disabled = true;
       });
     });
   }
@@ -228,13 +234,16 @@
     function renderPage(page) {
       curPage = page;
       const list  = getList();
-      const total = list.length || 1;
+      const total = list.length;
       const start = (page - 1) * PER_PAGE;
       const slice = list.slice(start, start + PER_PAGE);
       const grid  = document.getElementById('al-grid');
       if (!grid) return;
 
-      grid.innerHTML = slice.map(function (s) {
+      window.PulseUiState.clear(grid, { replace: true });
+      if (!slice.length) {
+        window.PulseUiState.set(grid, 'empty', 'Nenhum aluno encontrado.', { replace: true });
+      } else grid.innerHTML = slice.map(function (s) {
         return `
         <div class="al-card" data-id="${s.id}">
           <div class="al-card-top">
@@ -260,11 +269,12 @@
       });
 
       /* Paginação */
-      const totalPages   = Math.ceil(total / PER_PAGE);
+      const totalPages   = Math.max(1, Math.ceil(total / PER_PAGE));
       const info         = document.getElementById('al-pag-info');
       const displayTotal = filterCourse === 'all' && !searchQuery ? totalAlunos : total;
-      if (info) info.textContent =
-        `Exibindo ${start + 1}–${Math.min(start + PER_PAGE, total)} de ${displayTotal} alunos`;
+      if (info) info.textContent = total === 0
+        ? 'Nenhum aluno encontrado'
+        : `Exibindo ${start + 1}–${Math.min(start + PER_PAGE, total)} de ${displayTotal} alunos`;
 
       const nums = document.getElementById('al-pag-nums');
       if (nums) {
@@ -372,7 +382,7 @@
     if (nextBtn) nextBtn.addEventListener('click', function () { renderPage(curPage + 1); });
 
     const grid = document.getElementById('al-grid');
-    if (grid) grid.innerHTML = '<div class="psico-empty">Carregando alunos...</div>';
+    if (grid) window.PulseUiState.set(grid, 'loading', 'Carregando alunos...', { replace: true });
 
     window.PulseApi.get('/alunos', { query: { limite: 100 } })
       .then(function (resposta) {
@@ -380,7 +390,10 @@
           ['#E0E7FF', '#4338CA'], ['#DCFCE7', '#15803D'], ['#FEF9C3', '#854D0E'],
           ['#CFFAFE', '#0E7490'], ['#FCE7F3', '#9D174D']
         ];
-        STUDENTS = (Array.isArray(resposta.data) ? resposta.data : []).map(function (aluno, indice) {
+        const alunos = resposta && resposta.data && Array.isArray(resposta.data.alunos)
+          ? resposta.data.alunos
+          : [];
+        STUDENTS = alunos.map(function (aluno, indice) {
           const partes = String(aluno.nome || '').trim().split(/\s+/);
           const cor = cores[indice % cores.length];
           return {
@@ -402,7 +415,12 @@
         renderPage(1);
       })
       .catch(function (erro) {
-        if (grid) grid.innerHTML = `<div class="psico-empty">${erro.message || 'Não foi possível carregar os alunos.'}</div>`;
+        if (grid) window.PulseUiState.set(
+          grid,
+          'error',
+          window.PulseUiState.messageFrom(erro, 'Não foi possível carregar os alunos.'),
+          { replace: true }
+        );
       });
   }
 

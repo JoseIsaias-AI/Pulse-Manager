@@ -78,13 +78,13 @@ async function seed() {
     const membros = membrosResult.rows.map((row: MembroRow) => row.id_membro);
 
     const psicologosResult = await client.query<PsicologoRow>(`
-      INSERT INTO psicologo (nome_psi, email, cargo_psi)
+      INSERT INTO psicologo (nome_psi, cargo_psi)
       VALUES
-        ('Isadora Valença', 'isadora.valenca@pulsemais.org', 'psicologo'),
-        ('André Lacerda', 'andre.lacerda@pulsemais.org', 'coordenador_psicologico'),
-        ('Lívia Marcondes', 'livia.marcondes@pulsemais.org', 'estagiario'),
-        ('Camila Furtado', 'camila.furtado@pulsemais.org', 'psicologo'),
-        ('Samuel Azevedo', 'samuel.azevedo@pulsemais.org', 'outro')
+        ('Isadora Valença', 'psicologo'),
+        ('André Lacerda', 'coordenador_psicologico'),
+        ('Lívia Marcondes', 'estagiario'),
+        ('Camila Furtado', 'psicologo'),
+        ('Samuel Azevedo', 'outro')
       RETURNING id_psi;
     `);
 

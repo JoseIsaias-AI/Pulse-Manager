@@ -39,12 +39,11 @@
     return String(value || '').slice(0, 10);
   }
 
-  function feedback(message, error) {
+  function feedback(message, error, state) {
     const element = document.querySelector('[data-agenda-feedback]');
     if (!element) return;
-    element.textContent = message || '';
-    element.style.color = error ? '#B42318' : '#1D7A36';
-    element.hidden = !message;
+    if (!message) return window.PulseUiState.clear(element);
+    window.PulseUiState.set(element, state || (error ? 'error' : 'success'), message);
   }
 
   function configureForm() {
@@ -209,6 +208,7 @@
     try {
       const payload = formPayload();
       if (button) button.disabled = true;
+      feedback(editingId ? 'Atualizando compromisso...' : 'Criando compromisso...', false, 'loading');
       if (editingId) await api().patch(`/agenda/${editingId}`, payload);
       else await api().post('/agenda', payload);
       feedback(editingId ? 'Compromisso atualizado.' : 'Compromisso criado.', false);
@@ -225,6 +225,7 @@
 
   async function cancelEvent(event) {
     try {
+      feedback('Cancelando compromisso...', false, 'loading');
       await api().delete(`/agenda/${event.idAgenda}`);
       feedback('Compromisso cancelado.', false);
       document.getElementById('ag-detail')?.classList.remove('open');
@@ -237,10 +238,11 @@
 
   async function loadEvents() {
     try {
-      feedback('Carregando compromissos...', false);
+      feedback('Carregando compromissos...', false, 'loading');
       const response = await api().get('/agenda');
       events = Array.isArray(response.data) ? response.data : [];
-      feedback('', false);
+      if (window.PulseUiState.isEmpty(events)) feedback('Nenhum compromisso cadastrado.', false, 'empty');
+      else feedback('', false);
       renderCalendar();
     } catch (error) {
       events = [];

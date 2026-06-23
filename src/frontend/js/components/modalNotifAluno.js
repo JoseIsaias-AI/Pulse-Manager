@@ -42,9 +42,11 @@
     const dados = filtroAtual === 'unread' ? notificacoes.filter(item => item.naoLida) : notificacoes;
 
     if (!dados.length) {
-      lista.innerHTML = '<div class="notif-empty"><i class="ti ti-bell-off"></i><p>Nenhuma notificação<br>por aqui ainda</p></div>';
+      window.PulseUiState.set(lista, 'empty', 'Nenhuma notificação por aqui ainda.', { replace: true });
       return;
     }
+
+    window.PulseUiState.clear(lista, { replace: true });
 
     lista.innerHTML = dados.map(item => {
       const remetente = item.nomeRemetente || 'Equipe Pulse Mais';
@@ -76,7 +78,7 @@
 
   async function carregarNotificacoes() {
     const lista = document.getElementById('notif-list');
-    if (lista) lista.innerHTML = '<div class="notif-empty"><p>Carregando notificações...</p></div>';
+    if (lista) window.PulseUiState.set(lista, 'loading', 'Carregando notificações...', { replace: true });
     try {
       const endpoint = window.PortalAluno.endpointAluno('/notificacoes');
       const resposta = await window.PulseApi.get(endpoint);
@@ -85,7 +87,12 @@
       sincronizarContadores();
       renderizar();
     } catch (error) {
-      if (lista) lista.innerHTML = `<div class="notif-empty"><i class="ti ti-alert-circle"></i><p>${escapar(error.message || 'Não foi possível carregar as notificações.')}</p></div>`;
+      if (lista) window.PulseUiState.set(
+        lista,
+        'error',
+        window.PulseUiState.messageFrom(error, 'Não foi possível carregar as notificações.'),
+        { replace: true }
+      );
     }
   }
 

@@ -5,7 +5,7 @@ import { AppDataSource, initializeDatabase } from '../../backend/database/connec
 import { Aluno } from '../../backend/models/alunoModel';
 import { MembroEquipe, Psicologo } from '../../backend/models/usuarioModel';
 
-describe('Autenticacao por email e nome', () => {
+describe('Autenticacao por CPF', () => {
   let alunoRepository: Repository<Aluno>;
   let membroRepository: Repository<MembroEquipe>;
   let psicologoRepository: Repository<Psicologo>;
@@ -42,7 +42,6 @@ describe('Autenticacao por email e nome', () => {
 
     await psicologoRepository.save({
       cpf: '11122233344',
-      email: 'psicologa.login@pulsemais.org',
       nomePsi: 'Psicologa Login',
       cargoPsi: 'psicologo'
     });
@@ -54,10 +53,10 @@ describe('Autenticacao por email e nome', () => {
     }
   });
 
-  it('deve permitir login quando email e nome existem no banco', async () => {
+  it('deve permitir login quando o CPF existe no banco', async () => {
     const response = await request(app).post('/api/auth/login').send({
-      email: 'aluno.login@pulsemais.org',
-      nome: 'Aluno Login',
+      cpf: '123.456.789-00',
+      nome: 'Nome Digitado',
       perfil: 'aluno'
     });
 
@@ -66,7 +65,7 @@ describe('Autenticacao por email e nome', () => {
       success: true,
       message: 'Login realizado com sucesso.',
       data: {
-        email: 'aluno.login@pulsemais.org',
+        cpf: '12345678900',
         nome: 'Aluno Login',
         perfil: 'aluno'
       }
@@ -75,10 +74,10 @@ describe('Autenticacao por email e nome', () => {
     expect(response.body.data.idAluno).toBe(response.body.data.id);
   });
 
-  it('deve negar login quando o email nao existe no banco', async () => {
+  it('deve negar login quando o CPF nao existe no banco', async () => {
     const response = await request(app).post('/api/auth/login').send({
-      email: 'inexistente@pulsemais.org',
-      nome: 'Aluno Login',
+      cpf: '00000000000',
+      nome: 'Nome Digitado',
       perfil: 'aluno'
     });
 
@@ -89,30 +88,30 @@ describe('Autenticacao por email e nome', () => {
     });
   });
 
-  it('deve rejeitar email invalido', async () => {
+  it('deve rejeitar CPF invalido', async () => {
     const response = await request(app).post('/api/auth/login').send({
-      email: 'email-invalido',
-      nome: 'Aluno Login',
+      cpf: '123',
+      nome: 'Nome Digitado',
       perfil: 'aluno'
     });
 
     expect(response.status).toBe(400);
     expect(response.body).toMatchObject({
       success: false,
-      message: 'Email invalido.'
+      message: 'CPF invalido.'
     });
   });
 
   it('deve permitir login de psicologo cadastrado com esse perfil', async () => {
     const response = await request(app).post('/api/auth/login').send({
-      email: 'psicologa.login@pulsemais.org',
-      nome: 'Psicologa Login',
+      cpf: '11122233344',
+      nome: 'Nome Digitado',
       perfil: 'psicologo'
     });
 
     expect(response.status).toBe(200);
     expect(response.body.data).toMatchObject({
-      email: 'psicologa.login@pulsemais.org',
+      cpf: '11122233344',
       nome: 'Psicologa Login',
       perfil: 'psicologo'
     });
@@ -120,23 +119,23 @@ describe('Autenticacao por email e nome', () => {
 
   it('deve permitir login de membro cadastrado como gestor', async () => {
     const response = await request(app).post('/api/auth/login').send({
-      email: 'gestora.login@pulsemais.org',
-      nome: 'Gestora Login',
+      cpf: '98765432100',
+      nome: 'Nome Digitado',
       perfil: 'gestor'
     });
 
     expect(response.status).toBe(200);
     expect(response.body.data).toMatchObject({
-      email: 'gestora.login@pulsemais.org',
+      cpf: '98765432100',
       nome: 'Gestora Login',
       perfil: 'gestor'
     });
   });
 
-  it('deve negar email existente quando o perfil selecionado nao pertence ao usuario', async () => {
+  it('deve negar CPF existente quando o perfil selecionado nao pertence ao usuario', async () => {
     const response = await request(app).post('/api/auth/login').send({
-      email: 'aluno.login@pulsemais.org',
-      nome: 'Aluno Login',
+      cpf: '12345678900',
+      nome: 'Nome Digitado',
       perfil: 'psicologo'
     });
 
@@ -147,21 +146,10 @@ describe('Autenticacao por email e nome', () => {
     });
   });
 
-  it('deve negar email existente quando o nome nao corresponde', async () => {
-    const response = await request(app).post('/api/auth/login').send({
-      email: 'aluno.login@pulsemais.org',
-      nome: 'Outro Nome',
-      perfil: 'aluno'
-    });
-
-    expect(response.status).toBe(404);
-    expect(response.body.success).toBe(false);
-  });
-
   it('deve rejeitar perfil fora das opcoes da tela', async () => {
     const response = await request(app).post('/api/auth/login').send({
-      email: 'aluno.login@pulsemais.org',
-      nome: 'Aluno Login',
+      cpf: '12345678900',
+      nome: 'Nome Digitado',
       perfil: 'administrador'
     });
 

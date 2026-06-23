@@ -446,12 +446,7 @@
   }
 
   function renderEmpty(instance, message, error) {
-    instance.grid.innerHTML = `
-      <div class="al-empty ${error ? 'al-empty--error' : ''}">
-        <i class="ti ${error ? 'ti-alert-circle' : 'ti-users-off'}"></i>
-        <span>${escapeHtml(message)}</span>
-      </div>
-    `;
+    window.PulseUiState.set(instance.grid, error ? 'error' : 'empty', message, { replace: true });
   }
 
   function renderSummary(instance) {
@@ -551,6 +546,7 @@
   }
 
   function renderPage(instance, page) {
+    window.PulseUiState.clear(instance.grid, { replace: true });
     const orderedStudents = sortedStudents(instance);
     const totalPages = Math.max(1, Math.ceil(orderedStudents.length / PER_PAGE));
     instance.currentPage = Math.min(Math.max(page, 1), totalPages);
@@ -601,7 +597,7 @@
   async function applyFilters(instance) {
     if (instance.controller) instance.controller.abort();
     instance.controller = new AbortController();
-    instance.grid.innerHTML = '<div class="al-empty"><i class="ti ti-loader-2 al-spin"></i><span>Consultando alunos...</span></div>';
+    window.PulseUiState.set(instance.grid, 'loading', 'Consultando alunos...', { replace: true });
 
     try {
       const alunos = await fetchStudents(selectedFilters(instance.root), instance.controller.signal);

@@ -8,9 +8,6 @@ export class Psicologo {
   @Column({ type: 'varchar', length: 11, nullable: true, unique: true })
   cpf!: string | null;
 
-  @Column({ type: 'varchar', length: 255, nullable: true, unique: true })
-  email!: string | null;
-
   @Column({ name: 'nome_psi', type: 'varchar', length: 150 })
   nomePsi!: string;
 
