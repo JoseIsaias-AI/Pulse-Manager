@@ -254,6 +254,18 @@ CREATE TABLE IF NOT EXISTS historico_psicologico (
   FOREIGN KEY (id_psi) REFERENCES psicologo(id_psi)
 );
 
+CREATE TABLE IF NOT EXISTS solicitacao_apoio_psicologico (
+  id_solicitacao INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id_aluno INTEGER NOT NULL,
+  id_psicologo INTEGER NOT NULL,
+  mensagem VARCHAR(500) NOT NULL,
+  status VARCHAR(30) NOT NULL DEFAULT 'pendente',
+  data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno),
+  FOREIGN KEY (id_psicologo) REFERENCES psicologo(id_psi)
+);
+
 CREATE TABLE IF NOT EXISTS participacao (
   id_part INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   data_part DATE DEFAULT CURRENT_DATE,
