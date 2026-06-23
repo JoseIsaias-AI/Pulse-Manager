@@ -805,6 +805,35 @@ A coluna "Requisito" descreve o atributo de qualidade esperado em linguagem de n
 Os requisitos não funcionais aqui definidos traduzem as escolhas de qualidade feitas para o sistema de gestão de jovens da Pulse Mais. O projeto atende a uma necessidade real de centralização e rastreabilidade de dados de acompanhamento socioeducativo, com foco na experiência da equipe interna e na privacidade dos jovens atendidos. As decisões técnicas, como stack Node.js com PostgreSQL, arquitetura MVC, controle de acesso por perfil e ausência de autenticação tradicional, foram tomadas em alinhamento com as restrições definidas pelo TAPI e validadas com o parceiro. Os critérios estabelecidos nesta seção orientam o desenvolvimento e servem como referência para a verificação da qualidade do produto entregue.
 </div>
 
+### 3.1.3.1. Histórico de Evolução dos RNFs (Sprint 1 → Sprint atual)
+
+<div align="justify">
+
+Esta subseção registra como cada RNF evoluiu desde o levantamento conceitual da Sprint 1 até as decisões técnicas concretas adotadas ao longo do projeto. O objetivo é tornar visível a transição entre intenções iniciais e implementações reais, justificando cada mudança com base no aprendizado obtido durante o desenvolvimento.
+
+</div>
+
+| Eixo | RNF | Estado na Sprint 1 (conceitual) | Evolução até Sprint atual | Justificativa da mudança |
+|------|-----|----------------------------------|---------------------------|--------------------------|
+| USAB | Responsividade | Previa suporte completo a mobile (320px), tablet e desktop (1920px), com área de toque mínima de 44×44 px para celular | Restringido a desktop (1920px a 1080px); responsividade mobile removida do escopo | Equipe gestora opera exclusivamente em desktop; manter mobile geraria custo desproporcional ao uso real |
+| USAB | Acessibilidade WCAG 2.1 | Métricas definidas, porém sem evidência de execução — planejado para sprints seguintes | Mantido; auditoria via Lighthouse passou a ser executada efetivamente nas revisões de sprint | Sem mudança de critério; evolução foi da intenção declarada para a prática verificável |
+| USAB | Curva de aprendizado | Definido conceitualmente (5 min para cadastro) | Mantido; validado informalmente com usuário da Pulse Mais em revisão de sprint | Sem mudança de critério; o teste passou de planejado para realizado |
+| CONF | Identificador estável do aluno | Previa campo `codigo_pulse` no formato `PM-AAAA-NNN` como chave de identificação | Renomeado para `codigo_pm`; chave primária `id_aluno` passou a ser a âncora interna dos relacionamentos | A separação entre identificador público (`codigo_pm`) e chave interna (`id_aluno`) emergiu como boa prática durante a modelagem |
+| CONF | Integridade transacional | Previa transações `BEGIN`/`COMMIT`/`ROLLBACK` no SQLite | Mantido o mesmo mecanismo, agora no PostgreSQL via biblioteca `pg` | A troca de banco não alterou o critério; apenas o driver mudou |
+| DES | Listagem de alunos | Índices planejados nas colunas `ano`, `programa`, `categoria`; medição via testes de carga simples na Sprint 5 | Índices implementados nas colunas de filtro operacional (`status`, `programa`, `categoria`); agregação do dashboard calculada na aplicação com otimização SQL planejada para sprints seguintes | Os nomes das colunas foram refinados após a modelagem física; a medição formal de carga foi postergada em favor de otimizações incrementais por sprint |
+| DES | Histórico consolidado do aluno | Planejado com auditoria Lighthouse na Sprint 5 | Mantido; Lighthouse executado nas revisões de sprint; payload JSON otimizado entre back-end e front-end | Sem mudança de critério; o que era intenção passou a ser prática contínua |
+| SUP | Padrão arquitetural | Previa MVC com diretórios `views/`, `controllers/`, `models/` | Adotado padrão Controller-Service-Repository (CSR) com diretórios `controllers/`, `services/`, `repositories/`; `models/` mantido para contratos de tipos | CSR isola melhor regras de negócio (Service) de acesso a dados (Repository), facilitando testes unitários |
+| SEG | Controle de perfil | Middleware de verificação de perfil planejado; testes de bloqueio mencionados sem detalhes de implementação | Implementado com `authMiddleware` (JWT), `permissionMiddleware` (RBAC) e `validationMiddleware`; testes de integração por perfil executados e documentados na seção de testes | Controle por `if/else` não era suficiente para proteger rotas sensíveis de saúde mental em sistema multi-perfil |
+| SEG | LGPD / dados sensíveis | Seeds fictícios e `.gitignore` planejados | Mantido e verificado em cada sprint; checklist de revisão de segredos antes de cada push | Sem mudança de critério; prática consolidada |
+| CAP | Capacidade da equipe | SQLite mencionado como banco com nota de "possível migração futura" | PostgreSQL adotado desde a Sprint 2; índices implementados nas colunas de filtro dos alunos; necessidade de migração futura eliminada | PostgreSQL entrega a concorrência e os índices necessários para o volume projetado de 2000 alunos |
+| CAP | Capacidade do portal do aluno | Planejado (30 acessos simultâneos); arquitetura stateless como estratégia | Mantido; arquitetura stateless do Node.js confirmada na implementação; consultas do portal verificadas como leves | Sem mudança de critério; confirmação técnica consolidada |
+| REST | Stack tecnológica | HTML, CSS, JavaScript; Node.js; SQLite | TypeScript adicionado ao front-end e back-end | TypeScript adotado na Sprint 2 para segurança de tipos e manutenibilidade |
+| REST | Autenticação e APIs externas | "Definido na arquitetura inicial; validado com docente" — sem detalhe técnico | Implementado com estrutura de `if/else` validando credenciais registradas no sistema, sem fluxo de senha ou OAuth | A Sprint 1 apenas declarou a restrição; a Sprint 2 formalizou a implementação concreta no código |
+| REST | Sem chat em tempo real | Decisão arquitetural declarada | Mantido; nenhum componente de comunicação em tempo real introduzido; interações representadas por registros estruturados de notificações e anotações | Sem mudança; confirmação contínua a cada sprint |
+| ORG | Processo Scrum e WAD | WAD como documento vivo, atualizado a cada sprint | Mantido; seção 3.1 consolidada com rastreabilidade entre RF, RN e RNF | Sem mudança |
+| ORG | Repositório público e LGPD | Checklist planejado | Mantido; checklist executado antes de cada push relevante; seeds com dados fictícios revisados | Sem mudança de critério; prática consolidada |
+| ORG | Idioma pt-BR | 100% das telas em português | Mantido e verificado nas revisões visuais de sprint | Sem mudança |
+
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
 
