@@ -44,13 +44,13 @@
   function exibirErro(mensagem) {
     const erro = document.getElementById('portal-aluno-erro');
     if (!erro) return;
-    erro.textContent = mensagem;
-    erro.style.display = 'block';
+    erro.style.display = '';
+    window.PulseUiState.set(erro, 'error', mensagem);
   }
 
   function limparErro() {
     const erro = document.getElementById('portal-aluno-erro');
-    if (erro) erro.style.display = 'none';
+    if (erro) window.PulseUiState.clear(erro);
   }
 
   function renderizarPerfil(aluno) {
@@ -78,13 +78,10 @@
   function renderizarOportunidades(oportunidades) {
     const lista = document.getElementById('portal-oportunidades');
     if (!lista) return;
-    lista.replaceChildren();
+    window.PulseUiState.clear(lista, { replace: true });
 
     if (!oportunidades.length) {
-      const vazio = document.createElement('li');
-      vazio.className = 'ini-event-item';
-      vazio.textContent = 'Nenhuma oportunidade disponível no momento.';
-      lista.appendChild(vazio);
+      window.PulseUiState.set(lista, 'empty', 'Nenhuma oportunidade disponível no momento.', { replace: true });
       return;
     }
 
@@ -116,6 +113,8 @@
 
   async function carregarPortal() {
     limparErro();
+    const estado = document.getElementById('portal-aluno-erro');
+    if (estado) window.PulseUiState.set(estado, 'loading', 'Carregando dados do aluno...');
     try {
       const [perfil, oportunidades] = await Promise.allSettled([
         window.PulseApi.get(endpointAluno()),
@@ -123,6 +122,7 @@
       ]);
       if (perfil.status === 'rejected') throw perfil.reason;
       renderizarPerfil(perfil.value.data);
+      limparErro();
 
       if (oportunidades.status === 'fulfilled') {
         renderizarOportunidades(Array.isArray(oportunidades.value.data) ? oportunidades.value.data : []);
@@ -164,6 +164,8 @@
     const telefone = document.getElementById('f-telefone')?.value.trim();
     if (botao) botao.disabled = true;
     limparErro();
+    const estado = document.getElementById('portal-aluno-erro');
+    if (estado) window.PulseUiState.set(estado, 'loading', 'Atualizando contato...');
 
     try {
       const resposta = await window.PulseApi.patch(endpointAluno('/contato'), { email, telefone });
@@ -174,6 +176,7 @@
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 3200);
       }
+      if (estado) window.PulseUiState.set(estado, 'success', 'Contato atualizado com sucesso.');
     } catch (error) {
       exibirErro(error.message || 'Não foi possível atualizar o contato.');
     } finally {

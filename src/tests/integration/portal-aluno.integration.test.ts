@@ -4,6 +4,7 @@ import { app } from '../../backend/app';
 import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
 import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
+import { expectErrorContract, expectSuccessContract } from '../helpers/responseContract';
 
 describe('UC-01 a UC-02 - Portal do Aluno', () => {
   let alunoRepository: Repository<Aluno>;
@@ -45,6 +46,7 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
         .set('x-user-id', String(aluno.idAluno));
 
       expect(response.status).toBe(200);
+      expectSuccessContract(response.body);
       expect(response.body.success).toBe(true);
       expect(response.body.data).toMatchObject({
         idAluno: aluno.idAluno,
@@ -62,6 +64,7 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
         .set('x-user-id', '9999');
 
       expect(response.status).toBe(404);
+      expectErrorContract(response.body);
       expect(response.body).toMatchObject({
         success: false,
         message: 'Aluno nao encontrado no portal.'
@@ -89,6 +92,7 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
         .send({ email: 'ana.novo@pulsemais.org' });
 
       expect(response.status).toBe(200);
+      expectSuccessContract(response.body);
       expect(response.body.success).toBe(true);
       expect(response.body.data.email).toBe('ana.novo@pulsemais.org');
     });
@@ -124,6 +128,7 @@ describe('UC-01 a UC-02 - Portal do Aluno', () => {
         .send({ email: 'emailsemarroba' });
 
       expect(response.status).toBe(400);
+      expectErrorContract(response.body);
       expect(response.body).toMatchObject({
         success: false,
         message: 'O campo email deve conter um endereco valido.'

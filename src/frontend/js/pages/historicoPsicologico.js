@@ -28,20 +28,21 @@
   function mostrarErro(mensagem) {
     const elemento = document.getElementById('psico-form-error');
     if (!elemento) return;
-    elemento.textContent = mensagem;
-    elemento.style.display = 'block';
+    elemento.style.display = '';
+    window.PulseUiState.set(elemento, 'error', mensagem);
   }
 
   function limparErro() {
     const elemento = document.getElementById('psico-form-error');
-    if (elemento) elemento.style.display = 'none';
+    if (elemento) window.PulseUiState.clear(elemento);
   }
 
   function renderizarProntuarios() {
     const lista = document.getElementById('psico-list');
     if (!lista) return;
+    window.PulseUiState.clear(lista, { replace: true });
     if (!prontuarios.length) {
-      lista.innerHTML = '<div class="psico-empty"><i class="ti ti-notes-off"></i><span>Nenhuma anotação registrada para este aluno.</span></div>';
+      window.PulseUiState.set(lista, 'empty', 'Nenhuma anotação registrada para este aluno.', { replace: true });
       return;
     }
 
@@ -95,7 +96,7 @@
       ? { ...aluno, idAluno: Number(aluno.idAluno) }
       : null;
     const lista = document.getElementById('psico-list');
-    if (lista) lista.innerHTML = '<div class="psico-empty">Carregando histórico psicológico...</div>';
+    if (lista) window.PulseUiState.set(lista, 'loading', 'Carregando histórico psicológico...', { replace: true });
     limparErro();
 
     try {
@@ -139,6 +140,8 @@
     try {
       const sessao = sessaoPsicologo();
       if (botao) botao.disabled = true;
+      const estado = document.getElementById('psico-form-error');
+      if (estado) window.PulseUiState.set(estado, 'loading', 'Registrando anotação...');
       const resposta = await window.PulseApi.post('/prontuarios', {
         idAluno: alunoSelecionado.idAluno,
         idPsi: sessao.idPsi,
@@ -154,6 +157,7 @@
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 3000);
       }
+      if (estado) window.PulseUiState.set(estado, 'success', 'Anotação registrada com sucesso.');
     } catch (error) {
       mostrarErro(error.message || 'Não foi possível registrar a anotação.');
     } finally {
@@ -173,6 +177,8 @@
 
     try {
       const sessao = sessaoPsicologo();
+      const estado = document.getElementById('psico-form-error');
+      if (estado) window.PulseUiState.set(estado, 'loading', 'Criando label...');
       const resposta = await window.PulseApi.post('/labels', {
         idAluno: alunoSelecionado.idAluno,
         idPsi: sessao.idPsi,
@@ -184,6 +190,7 @@
       if (descricaoEl) descricaoEl.value = '';
       const criada = document.querySelector(`#pf-label-picker [data-label="${resposta.data.idLabel}"]`);
       if (criada) selecionarLabel(criada);
+      if (estado) window.PulseUiState.set(estado, 'success', 'Label criada e disponível para seleção.');
     } catch (error) {
       mostrarErro(error.message || 'Não foi possível criar a label.');
     }

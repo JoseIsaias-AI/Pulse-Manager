@@ -1,5 +1,5 @@
 import { PerfilLogin, UsuarioRepository } from '../repositories/usuarioRepository';
-import { NotFoundError, PayloadValidationError } from '../utils/errors';
+import { ForbiddenError, NotFoundError, PayloadValidationError } from '../utils/errors';
 
 const perfisPermitidos = ['gestor', 'psicologo', 'aluno'];
 
@@ -42,13 +42,14 @@ export class AuthService {
       throw new PayloadValidationError('Perfil invalido.');
     }
 
-    const usuario = await this.usuarioRepository.findOneByEmailNomeAndPerfil(
-      email,
-      nomeInformado,
-      perfil as PerfilLogin
-    );
+    const usuarios = await this.usuarioRepository.findByEmail(email);
+    if (!usuarios.length) {
+      throw new NotFoundError('Usuario nao encontrado.');
+    }
+
+    const usuario = usuarios.find((item) => item.perfil === (perfil as PerfilLogin));
     if (!usuario) {
-      throw new NotFoundError('Usuario nao encontrado para o perfil informado.');
+      throw new ForbiddenError('Perfil informado nao corresponde ao cadastro do usuario.');
     }
 
     return {

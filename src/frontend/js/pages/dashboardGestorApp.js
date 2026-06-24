@@ -31,7 +31,7 @@
     if (status) return status;
     status = document.createElement('div');
     status.dataset.dashboardAppStatus = '';
-    status.className = 'dashboard-feedback dashboard-feedback--loading';
+    status.className = 'dashboard-feedback';
     status.setAttribute('role', 'status');
     root.querySelector('.page-header')?.insertAdjacentElement('afterend', status);
     return status;
@@ -119,7 +119,7 @@
     if (!root) return;
 
     const status = createStatus(root);
-    setText(status, 'Carregando indicadores...');
+    window.PulseUiState.set(status, 'loading', 'Carregando indicadores...', { baseClass: 'dashboard-feedback' });
     hideUnsupportedBlocks(root);
 
     try {
@@ -133,11 +133,14 @@
       updateFunnelCards(root, impacto);
       updateChartLabels(root);
       renderCharts(root, impacto, jornada);
-      status.hidden = true;
+      window.PulseUiState.clear(status);
     } catch (error) {
-      status.hidden = false;
-      status.className = 'dashboard-feedback dashboard-feedback--error';
-      setText(status, error.message || 'Nao foi possivel carregar os dados do dashboard.');
+      window.PulseUiState.set(
+        status,
+        'error',
+        window.PulseUiState.messageFrom(error, 'Não foi possível carregar os dados do dashboard.'),
+        { baseClass: 'dashboard-feedback' }
+      );
     }
   }
 

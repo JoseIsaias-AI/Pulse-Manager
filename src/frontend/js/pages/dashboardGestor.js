@@ -39,9 +39,9 @@
   }
 
   function createCharts() {
-    const barCanvas = document.getElementById('barChart');
-    const riskCanvas = document.getElementById('presencaChart');
-    const impactCanvas = document.getElementById('funnelChart');
+    const barCanvas = document.getElementById('barChart') || document.getElementById('g-historicoChart');
+    const riskCanvas = document.getElementById('presencaChart') || document.getElementById('g-empregadosChart');
+    const impactCanvas = document.getElementById('funnelChart') || document.getElementById('g-funnelChart');
     if (!barCanvas || !riskCanvas || !impactCanvas) return null;
 
     Chart.defaults.font.family = "'Poppins', sans-serif";
@@ -80,6 +80,12 @@
     if (element) element.textContent = value;
   }
 
+  function setTextAt(selector, index, value) {
+    const elements = typeof document.querySelectorAll === 'function' ? document.querySelectorAll(selector) : [];
+    const element = elements[index];
+    if (element) element.textContent = value;
+  }
+
   function formatPercent(value) {
     return `${Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%`;
   }
@@ -94,6 +100,17 @@
     setText('[data-dashboard-value="conclusao"]', impacto.conclusaoProgramas.valor);
     setText('[data-dashboard-footer="conclusao"]', `${formatPercent(impacto.conclusaoProgramas.percentual)} do total`);
     setText('[data-dashboard-total]', `${impacto.totalAlunos} alunos nos indicadores de impacto e jornada`);
+
+    setText('#view-dashboard .page-header p', `${impacto.totalAlunos} alunos nos indicadores de impacto e jornada`);
+    setTextAt('#view-dashboard .fc-num', 0, impacto.conectados.valor);
+    setTextAt('#view-dashboard .fc-num', 1, impacto.capacitados.valor);
+    setTextAt('#view-dashboard .fc-num', 2, impacto.transformados.valor);
+    setTextAt('#view-dashboard .fc-sub', 0, `${formatPercent(impacto.conectados.percentual)} do total`);
+    setTextAt('#view-dashboard .fc-sub', 1, `${formatPercent(impacto.capacitados.percentual)} do total`);
+    setTextAt('#view-dashboard .fc-sub', 2, `${formatPercent(impacto.transformados.percentual)} do total`);
+    setTextAt('#view-dashboard .bk-head', 0, `Conectados · ${impacto.conectados.valor} alunos`);
+    setTextAt('#view-dashboard .bk-head', 1, `Capacitados · ${impacto.capacitados.valor} alunos`);
+    setTextAt('#view-dashboard .bk-head', 2, `Transformados · ${impacto.transformados.valor} alunos`);
   }
 
   function renderCharts(impacto, jornada) {
@@ -114,7 +131,14 @@
   }
 
   function setStatus(message, type) {
-    const status = document.querySelector('[data-dashboard-status]');
+    let status = document.querySelector('[data-dashboard-status]');
+    if (!status) {
+      status = document.createElement('div');
+      status.setAttribute('data-dashboard-status', '');
+      status.className = 'dashboard-feedback';
+      const header = document.querySelector('#view-dashboard .page-header');
+      if (header) header.insertAdjacentElement('afterend', status);
+    }
     if (!status) return;
     status.textContent = message;
     status.className = `dashboard-feedback dashboard-feedback--${type}`;
