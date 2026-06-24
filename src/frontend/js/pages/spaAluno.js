@@ -2,8 +2,8 @@
   'use strict';
 
   /* ── VIEWS ────────────────────────────────────────────────── */
-  const VIEWS = ['inicio', 'dashboard', 'agenda'];
-  const chartInited = { inicio: false, dashboard: false, agenda: false };
+  const VIEWS = ['inicio', 'dashboard', 'agenda', 'atualizacoes', 'configuracoes'];
+  const chartInited = { inicio: false, dashboard: false, agenda: false, atualizacoes: false, configuracoes: false };
 
   let alunoSprintChart = null;
   let alunoBarChart = null;
@@ -534,8 +534,8 @@
         try {
           idAlunoSessao();
           const mensagem = textarea.value.trim();
-          if (mensagem.length < 5) {
-            setState(feedback, 'error', 'Descreva sua solicitação com pelo menos 5 caracteres.');
+          if (mensagem.length < 10) {
+            setState(feedback, 'error', 'Descreva sua solicitação com pelo menos 10 caracteres.');
             return;
           }
 

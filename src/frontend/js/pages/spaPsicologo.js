@@ -37,8 +37,8 @@
   /* ════════════════════════════════════════════════════════════
      VIEWS — roteador SPA
   ════════════════════════════════════════════════════════════ */
-  const VIEWS = ['inicio', 'alunos', 'dashboard'];
-  const chartInited = { inicio: false, alunos: false, dashboard: false };
+  const VIEWS = ['inicio', 'alunos', 'dashboard', 'atualizacoes', 'configuracoes'];
+  const chartInited = { inicio: false, alunos: false, dashboard: false, atualizacoes: false, configuracoes: false };
   let psicologoDashboardChart = null;
 
   function psicologoApi() {

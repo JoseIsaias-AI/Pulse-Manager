@@ -225,7 +225,9 @@
             <div class="al-create-grid">
               <label class="al-create-field">
                 Programa
-                <input name="programa" type="text" maxlength="120" data-al-option-field="programa">
+                <select name="programa" data-al-option-field="programa" data-al-empty-label="N&atilde;o informado">
+                  <option value="">Carregando op&ccedil;&otilde;es...</option>
+                </select>
               </label>
               <label class="al-create-field">
                 Categoria
@@ -257,7 +259,7 @@
             <div class="al-create-grid">
               <label class="al-create-field">
                 Ocupa&ccedil;&atilde;o
-                <input name="ocupacao" type="text" maxlength="150" data-al-option-field="ocupacao">
+                <input name="ocupacao" type="text" maxlength="150" placeholder="Digite a ocupa&ccedil;&atilde;o">
               </label>
               <label class="al-create-field">
                 Tipo de v&iacute;nculo

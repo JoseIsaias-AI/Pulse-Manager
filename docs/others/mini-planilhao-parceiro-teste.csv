@@ -1,0 +1,11 @@
+Column 17,Telefone,Email,Conectado (Mês),Conectado (Ano),Capacitado (Mês),Capacitado (Ano),Programa Capacitado,Empregabilidade,Bolsa,Data Transformado,Ano Transformado,Categoria,Evento conectado,Transformados,Ano Atingido
+Nome e Sobrenome Aluno Teste 1,11911111111,aluno.teste1@pulsemais.org.br,,,,,,08/2024,,08/2024,2024,Jovens Transformados,,Empregabilidade,#REF!
+Nome e Sobrenome Aluno Teste 1,11911111111,aluno.teste1@pulsemais.org.br,,,09/2024,2024,Programa de Mentoria,,,,,Jovens Capacitados,,,#REF!
+Nome e Sobrenome Aluno Teste 1,11911111111,aluno.teste1@pulsemais.org.br,07/2024,2024,,,,,,,,Jovens Conectados,"Revolução silenciosa: IA no comando",,#REF!
+Nome e Sobrenome Aluno Teste 2,11922222222,aluno.teste2@pulsemais.org.br,2024,2024,,,,,,,,Jovens Conectados,Mentoria DPFL,,#REF!
+Nome e Sobrenome Aluno Sem Email,11933333333,,,,,10/2024,2024,Programa de Mentoria,,,,,Jovens Capacitados,,,#REF!
+Nome e Sobrenome Aluno Teste 3,11944444444,aluno.teste3@pulsemais.org.br,03/2025,2025,,,,,,,,Jovens Conectados,Oficina de Carreira,,#REF!
+Nome e Sobrenome Aluno Teste 4,11955555555,aluno.teste4@pulsemais.org.br,,,,,,05/2025,,06/2025,2025,Jovens Transformados,,Empregabilidade,#REF!
+Nome e Sobrenome Aluno Teste 5,11966666666,aluno.teste5@pulsemais.org.br,,,07/2025,2025,Programa de Mentoria,,,,,Jovens Capacitados,,,#REF!
+Nome e Sobrenome Aluno Teste 6,11977777777,aluno.teste6@pulsemais.org.br,08/2025,2025,,,,,,,,Jovens Conectados,Encontro de Tecnologia,,#REF!
+Nome e Sobrenome Aluno Teste 7,11988888888,aluno.teste7@pulsemais.org.br,,,,,,09/2025,,09/2025,2025,Jovens Transformados,,Empregabilidade,#REF!

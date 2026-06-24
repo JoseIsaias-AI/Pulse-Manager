@@ -31,6 +31,8 @@ function apenasDigitos(value: string): string {
   return value.replace(/\D/g, '');
 }
 
+const PROGRAMAS_DISPONIVEIS = ['Mentoria', 'nao_informado', 'Programa Pulse Mais'];
+
 export class AlunoService {
   constructor(
     private readonly repository: AlunoRepository,
@@ -84,7 +86,9 @@ export class AlunoService {
       ...options,
       genero: mergeOptions([...GENEROS_ALUNO], options.genero),
       riscoEvasao: mergeOptions(RISCOS_EVASAO, options.riscoEvasao),
-      status: mergeOptions(STATUS_ALUNO, options.status)
+      status: mergeOptions(STATUS_ALUNO, options.status),
+      programa: PROGRAMAS_DISPONIVEIS,
+      ocupacao: []
     };
     return { success: true, data };
   }

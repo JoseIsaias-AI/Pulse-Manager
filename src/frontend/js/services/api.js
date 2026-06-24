@@ -74,12 +74,18 @@
     try {
       return JSON.parse(responseText);
     } catch (_error) {
-      return { success: false, message: responseText };
+      const contentType = response.headers.get('content-type') || '';
+      const isHtml = contentType.includes('text/html') || /^\s*</.test(responseText);
+
+      return {
+        success: false,
+        message: isHtml ? 'Não foi possível concluir a solicitação.' : responseText
+      };
     }
   }
 
   function createApiError(message, status, data) {
-    const error = new Error(message || 'Nao foi possivel concluir a requisicao.');
+    const error = new Error(message || 'Não foi possível concluir a solicitação.');
     error.status = status;
     error.data = data;
     return error;
@@ -110,6 +116,33 @@
     return responseBody;
   }
 
+  async function download(path, options) {
+    const requestOptions = options || {};
+    let response;
+
+    try {
+      response = await fetch(buildUrl(path, requestOptions.query), {
+        method: 'GET',
+        headers: {
+          Accept: 'text/csv',
+          ...getAuthHeaders(),
+          ...(requestOptions.headers || {})
+        },
+        signal: requestOptions.signal
+      });
+    } catch (error) {
+      if (error.name === 'AbortError') throw error;
+      throw createApiError('Nao foi possivel conectar a API.', 0, null);
+    }
+
+    if (!response.ok) {
+      const responseBody = await parseResponse(response);
+      throw createApiError(responseBody.message, response.status, responseBody);
+    }
+
+    return response.blob();
+  }
+
   const pulseApi = {
     get(path, options) {
       return request('GET', path, options);
@@ -125,6 +158,16 @@
 
     delete(path, options) {
       return request('DELETE', path, options);
+    },
+
+    importarAlunosCsv(csv) {
+      return request('POST', '/gestor/importacoes/alunos', {
+        body: { csv }
+      });
+    },
+
+    exportarAlunosCsv(options) {
+      return download('/gestor/exportacoes/alunos', options);
     }
   };
 
