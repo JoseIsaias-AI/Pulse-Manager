@@ -90,7 +90,7 @@ describe('Autenticacao por email e nome', () => {
     expectErrorContract(response.body);
     expect(response.body).toMatchObject({
       success: false,
-      message: 'Usuario nao encontrado para o perfil informado.'
+      message: 'Usuario nao encontrado.'
     });
   });
 
@@ -150,23 +150,28 @@ describe('Autenticacao por email e nome', () => {
       perfil: 'psicologo'
     });
 
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(403);
     expectErrorContract(response.body);
     expect(response.body).toMatchObject({
       success: false,
-      message: 'Usuario nao encontrado para o perfil informado.'
+      message: 'Perfil informado nao corresponde ao cadastro do usuario.'
     });
   });
 
-  it('deve negar email existente quando o nome nao corresponde', async () => {
+  it('deve permitir login por email e perfil mesmo quando o nome digitado diverge', async () => {
     const response = await request(app).post('/api/auth/login').send({
       email: 'aluno.login@pulsemais.org',
       nome: 'Outro Nome',
       perfil: 'aluno'
     });
 
-    expect(response.status).toBe(404);
-    expectErrorContract(response.body);
+    expect(response.status).toBe(200);
+    expectSuccessContract(response.body);
+    expect(response.body.data).toMatchObject({
+      email: 'aluno.login@pulsemais.org',
+      nome: 'Aluno Login',
+      perfil: 'aluno'
+    });
   });
 
   it('deve rejeitar perfil fora das opcoes da tela', async () => {
