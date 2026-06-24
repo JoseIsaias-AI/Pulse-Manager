@@ -22,6 +22,7 @@ describe('Autenticacao por email e nome', () => {
     await AppDataSource.synchronize(true);
 
     await alunoRepository.save({
+      codigoPm: 'PM-LOGIN-001',
       cpf: '12345678900',
       nome: 'Aluno Login',
       email: 'aluno.login@pulsemais.org',
@@ -70,11 +71,12 @@ describe('Autenticacao por email e nome', () => {
       data: {
         email: 'aluno.login@pulsemais.org',
         nome: 'Aluno Login',
-        perfil: 'aluno'
+        perfil: 'aluno',
+        codigoPm: 'PM-LOGIN-001'
       }
     });
     expect(response.body.data.id).toBeDefined();
-    expect(Object.keys(response.body.data).sort()).toEqual(['email', 'id', 'nome', 'perfil']);
+    expect(response.body.data.idAluno).toBe(response.body.data.id);
   });
 
   it('deve negar login quando o email nao existe no banco', async () => {
@@ -115,10 +117,12 @@ describe('Autenticacao por email e nome', () => {
     });
 
     expect(response.status).toBe(200);
+    expectSuccessContract(response.body);
     expect(response.body.data).toMatchObject({
       email: 'psicologa.login@pulsemais.org',
       nome: 'Psicologa Login',
-      perfil: 'psicologo'
+      perfil: 'psicologo',
+      codigoPm: null
     });
   });
 
@@ -130,10 +134,12 @@ describe('Autenticacao por email e nome', () => {
     });
 
     expect(response.status).toBe(200);
+    expectSuccessContract(response.body);
     expect(response.body.data).toMatchObject({
       email: 'gestora.login@pulsemais.org',
       nome: 'Gestora Login',
-      perfil: 'gestor'
+      perfil: 'gestor',
+      codigoPm: null
     });
   });
 
@@ -145,6 +151,7 @@ describe('Autenticacao por email e nome', () => {
     });
 
     expect(response.status).toBe(404);
+    expectErrorContract(response.body);
     expect(response.body).toMatchObject({
       success: false,
       message: 'Usuario nao encontrado para o perfil informado.'
@@ -159,7 +166,7 @@ describe('Autenticacao por email e nome', () => {
     });
 
     expect(response.status).toBe(404);
-    expect(response.body.success).toBe(false);
+    expectErrorContract(response.body);
   });
 
   it('deve rejeitar perfil fora das opcoes da tela', async () => {
@@ -170,6 +177,7 @@ describe('Autenticacao por email e nome', () => {
     });
 
     expect(response.status).toBe(400);
+    expectErrorContract(response.body);
     expect(response.body).toMatchObject({
       success: false,
       message: 'Perfil invalido.'

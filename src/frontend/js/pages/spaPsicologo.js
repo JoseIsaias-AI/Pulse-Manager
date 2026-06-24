@@ -39,6 +39,57 @@
   ════════════════════════════════════════════════════════════ */
   const VIEWS = ['inicio', 'alunos', 'dashboard'];
   const chartInited = { inicio: false, alunos: false, dashboard: false };
+  let psicologoDashboardChart = null;
+
+  function psicologoApi() {
+    if (!window.PulseApi) throw new Error('Cliente HTTP central nao carregado.');
+    return window.PulseApi;
+  }
+
+  function psicologoSessao() {
+    try {
+      return JSON.parse(sessionStorage.getItem('pulseUser') || 'null');
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function idPsicologoSessao() {
+    const user = psicologoSessao();
+    const id = Number(user && user.id);
+    if (!Number.isInteger(id) || id < 1) {
+      throw new Error('Sessao do psicologo nao encontrada. Faca login novamente.');
+    }
+    return id;
+  }
+
+  function dashboardStateHost() {
+    const root = document.getElementById('view-dashboard');
+    if (!root) return null;
+    let host = document.getElementById('psicologo-dashboard-state');
+    if (!host) {
+      host = document.createElement('div');
+      host.id = 'psicologo-dashboard-state';
+      host.className = 'pulse-ui-state';
+      root.prepend(host);
+    }
+    return host;
+  }
+
+  function setDashboardState(state, message) {
+    const host = dashboardStateHost();
+    if (host && window.PulseUiState) window.PulseUiState.set(host, state, message);
+  }
+
+  function clearDashboardState() {
+    const host = dashboardStateHost();
+    if (host && window.PulseUiState) window.PulseUiState.clear(host);
+  }
+
+  function numero(valor) {
+    const parsed = Number(valor || 0);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
 
   function showView(id) {
     VIEWS.forEach(function (v) {
@@ -427,7 +478,7 @@
     const META = 7;
 
     /* Dados: Mês (exibido por padrão) e Semana */
-    const DATA = {
+    const LEGACY_DATA_DESATIVADO = {
       mes:    { vals: [8.2, 7.6, 7.1, 6.8], labels: ['Eng.\nSoftware', 'Design', 'Gestão', 'Mkt.\nDigital'] },
       semana: { vals: [7.9, 7.3, 6.8, 6.5], labels: ['Eng.\nSoftware', 'Design', 'Gestão', 'Mkt.\nDigital'] }
     };
@@ -791,5 +842,144 @@
     var t = document.getElementById('toast-hist');
     if (t) { t.classList.add('show'); setTimeout(function () { t.classList.remove('show'); }, 3000); }
   };
+
+  function initDashboardView() {
+    Chart.defaults.font.family = "'Poppins', sans-serif";
+    const root = document.getElementById('view-dashboard');
+    const values = root ? root.querySelectorAll('.db-kpi-value') : [];
+    const labels = root ? root.querySelectorAll('.db-kpi-label') : [];
+    const subs = root ? root.querySelectorAll('.db-kpi-sub') : [];
+    const badges = root ? root.querySelectorAll('.db-kpi-badge') : [];
+    const headerSub = root ? root.querySelector('.db-header-sub') : null;
+    const footerMain = root ? root.querySelector('.db-chart-footer-main') : null;
+    const footerSub = root ? root.querySelector('.db-chart-footer-sub') : null;
+    const engList = root ? root.querySelector('.db-eng-list') : null;
+    const canvas = document.getElementById('db-bestar-chart');
+
+    setDashboardState('loading', 'Carregando dashboard psicologico...');
+
+    function setKpi(index, label, value, sub) {
+      if (labels[index]) labels[index].textContent = label;
+      if (values[index]) values[index].textContent = String(value);
+      if (subs[index]) subs[index].textContent = sub;
+    }
+
+    function renderChart(evolucao) {
+      if (!canvas) return;
+      const pontos = Array.isArray(evolucao) ? evolucao : [];
+      const chartLabels = pontos.length ? pontos.map(function (item) { return item.periodo || 'Periodo'; }) : ['Sem atendimentos'];
+      const chartValues = pontos.length ? pontos.map(function (item) { return numero(item.total); }) : [0];
+
+      if (psicologoDashboardChart) psicologoDashboardChart.destroy();
+      psicologoDashboardChart = new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: chartLabels,
+          datasets: [{
+            label: 'Atendimentos',
+            data: chartValues,
+            backgroundColor: '#003870',
+            borderRadius: 6,
+            borderSkipped: false,
+            barPercentage: 0.6,
+            categoryPercentage: 0.7
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: { padding: { top: 20, right: 24 } },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: { label: function (ctx) { return ' ' + ctx.raw + ' atendimentos'; } },
+              backgroundColor: '#11161D',
+              titleFont: { size: 11, weight: '600' },
+              bodyFont: { size: 11 },
+              padding: 10,
+              cornerRadius: 8
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 }, color: '#4D5663', maxRotation: 0 } },
+            y: { beginAtZero: true, ticks: { precision: 0, font: { size: 11 }, color: '#97A1AE' }, grid: { color: '#EEF1F4' }, border: { display: false } }
+          }
+        }
+      });
+    }
+
+    function renderIndicadores(indicadores) {
+      if (!engList) return;
+      const labelsPorTipo = indicadores?.labelsPorTipo || {};
+      const entries = Object.entries(labelsPorTipo);
+      const total = entries.reduce(function (acc, entry) { return acc + numero(entry[1]); }, 0);
+
+      if (!entries.length) {
+        window.PulseUiState?.set(engList, 'empty', 'Nenhum indicador de saude mental registrado.', { replace: true });
+        return;
+      }
+
+      engList.classList.remove('pulse-ui-state-host');
+      engList.innerHTML = entries.map(function (entry, index) {
+        const label = entry[0];
+        const count = numero(entry[1]);
+        const percent = total ? Math.round((count / total) * 100) : 0;
+        const colors = ['#1D7A36', '#33B458', '#5BC579', '#84CD99', '#378ADD', '#85B7EB', '#B5D4F4'];
+        return `
+          <div class="db-eng-item">
+            <span class="db-eng-label">${label}</span>
+            <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:${percent}%;background:${colors[index % colors.length]};"></div></div>
+            <span class="db-eng-pct">${count}</span>
+          </div>`;
+      }).join('');
+    }
+
+    try {
+      const idPsicologo = idPsicologoSessao();
+      psicologoApi().get(`/psicologo/dashboard/${idPsicologo}`)
+        .then(function (response) {
+          const data = response.data || {};
+          const indicadores = data.indicadoresSaudeMental || {};
+          const totalAtendimentos = numero(data.totalAtendimentos);
+          const alunosEmRisco = numero(data.alunosEmRisco);
+          const totalAlunos = numero(indicadores.totalAlunosAcompanhados);
+          const totalLabels = numero(indicadores.totalLabels);
+          const evolucao = Array.isArray(data.evolucaoAtendimentos) ? data.evolucaoAtendimentos : [];
+          const vazio = totalAtendimentos === 0 && alunosEmRisco === 0 && totalAlunos === 0 && totalLabels === 0 && evolucao.length === 0;
+
+          clearDashboardState();
+          setKpi(0, 'Alunos acompanhados', totalAlunos, 'vinculados a voce');
+          setKpi(1, 'Labels registradas', totalLabels, 'prontuarios vinculados');
+          setKpi(2, 'Alunos em risco', alunosEmRisco, 'conforme labels');
+          setKpi(3, 'Atendimentos realizados', totalAtendimentos, 'historico consolidado');
+          badges.forEach(function (badge) { badge.textContent = 'API'; });
+          if (headerSub) headerSub.textContent = `${totalAlunos} alunos acompanhados · ${totalAtendimentos} atendimentos`;
+          if (footerMain) footerMain.innerHTML = `Evolucao baseada em <strong>${totalAtendimentos}</strong> atendimentos reais.`;
+          if (footerSub) footerSub.textContent = 'Dados carregados de /api/psicologo/dashboard/:idPsicologo';
+
+          renderChart(evolucao);
+          renderIndicadores(indicadores);
+
+          window.dbToggle = function () {
+            renderChart(evolucao);
+            const btnS = document.getElementById('db-btn-semana');
+            const btnM = document.getElementById('db-btn-mes');
+            if (btnS) btnS.classList.remove('active');
+            if (btnM) btnM.classList.add('active');
+          };
+
+          if (vazio) setDashboardState('empty', 'Ainda nao ha dados de saude mental para este psicologo.');
+        })
+        .catch(function (error) {
+          setDashboardState('error', window.PulseUiState?.messageFrom(error, 'Nao foi possivel carregar o dashboard psicologico.') || 'Nao foi possivel carregar o dashboard psicologico.');
+          renderChart([]);
+          renderIndicadores({});
+        });
+    } catch (error) {
+      setDashboardState('error', error.message);
+      renderChart([]);
+      renderIndicadores({});
+    }
+  }
 
 })();

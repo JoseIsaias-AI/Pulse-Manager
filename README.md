@@ -194,7 +194,12 @@ Após a inicialização, a API estará disponível em:
 http://localhost:3000
 ```
 
-A porta pode variar de acordo com a configuração definida no arquivo `.env`.
+#### Variáveis opcionais
+
+Não são necessárias para instalar e executar o sistema; configure apenas se for usar os recursos correspondentes.
+
+- **Supabase via API HTTP:** `SUPABASE_URL`, `SUPABASE_ANON_KEY` (ou `SUPABASE_PUBLISHABLE_KEY`) e `SUPABASE_SERVICE_ROLE_KEY` (ou `SUPABASE_SECRET_KEY`). A service role key tem precedência sobre a anon key.
+- **Serviço de auditoria externo:** `AUDITORIA_URL` e `AUDITORIA_URL_DASHBOARD`.
 
 ### URL da API no Frontend
 
