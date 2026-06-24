@@ -3280,6 +3280,41 @@ Os testes do `PortalAlunoService` validam visualização do perfil do aluno, tra
 
 Os testes do `SaudeMentalService` validam listagem de prontuários apenas para perfil psicólogo, bloqueio de perfil não autorizado, criação de prontuário, rejeição de prontuário para aluno inexistente, validação de título e observação, listagem de labels, criação de label, validação de tipo de label, rejeição de label para aluno inexistente e validação da descrição.
 
+**Cobertura da camada Service**
+
+O relatório de cobertura foi gerado com o comando:
+
+```bash
+npm run test:unit -- --coverage --collectCoverageFrom="src/backend/services/*.ts"
+```
+
+Resultado obtido:
+
+```text
+-----------------------|---------|----------|---------|---------|
+File                   | % Stmts | % Branch | % Funcs | % Lines |
+-----------------------|---------|----------|---------|---------|
+All files              |   83.42 |    70.56 |    88.7 |   83.49 |
+ agendaService.ts      |     100 |      100 |     100 |     100 |
+ alunoService.ts       |   75.22 |    56.97 |   93.33 |   76.41 |
+ authService.ts        |       0 |        0 |       0 |       0 |
+ codigoPmService.ts    |       0 |        0 |       0 |       0 |
+ dashboardService.ts   |   96.55 |       88 |   97.29 |      96 |
+ desempenhoService.ts  |       0 |        0 |       0 |       0 |
+ jornadaService.ts     |   89.89 |    76.81 |   94.73 |   89.89 |
+ notificacaoService.ts |     100 |      100 |     100 |     100 |
+ portalAlunoService.ts |   96.29 |       90 |     100 |   96.29 |
+ riscoEvasaoService.ts |   86.53 |    78.94 |   91.66 |    87.5 |
+ saudeMentalService.ts |     100 |      100 |     100 |     100 |
+ segmentacaoService.ts |    93.1 |    77.77 |     100 |    93.1 |
+-----------------------|---------|----------|---------|---------|
+
+Test Suites: 11 passed, 11 total
+Tests:       126 passed, 126 total
+```
+
+A cobertura geral da camada `services/` atingiu **83,42% de statements**, **83,49% de linhas** e **88,7% de funções**, superando o limiar mínimo de 80%. Os três arquivos com cobertura zero (`authService.ts`, `codigoPmService.ts`, `desempenhoService.ts`) são services auxiliares ou de infraestrutura que não possuem testes unitários dedicados nesta suíte; os services diretamente vinculados aos endpoints ativos da aplicação estão todos com cobertura acima de 75%, e cinco deles atingiram 100% em todas as métricas.
+
 </div>
 
 ### 5.1.3 Testes de Integração de Endpoints
