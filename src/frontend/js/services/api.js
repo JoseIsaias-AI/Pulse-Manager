@@ -74,12 +74,18 @@
     try {
       return JSON.parse(responseText);
     } catch (_error) {
-      return { success: false, message: responseText };
+      const contentType = response.headers.get('content-type') || '';
+      const isHtml = contentType.includes('text/html') || /^\s*</.test(responseText);
+
+      return {
+        success: false,
+        message: isHtml ? 'Não foi possível concluir a solicitação.' : responseText
+      };
     }
   }
 
   function createApiError(message, status, data) {
-    const error = new Error(message || 'Nao foi possivel concluir a requisicao.');
+    const error = new Error(message || 'Não foi possível concluir a solicitação.');
     error.status = status;
     error.data = data;
     return error;

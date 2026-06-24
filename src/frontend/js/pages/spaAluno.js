@@ -534,8 +534,8 @@
         try {
           idAlunoSessao();
           const mensagem = textarea.value.trim();
-          if (mensagem.length < 5) {
-            setState(feedback, 'error', 'Descreva sua solicitação com pelo menos 5 caracteres.');
+          if (mensagem.length < 10) {
+            setState(feedback, 'error', 'Descreva sua solicitação com pelo menos 10 caracteres.');
             return;
           }
 
