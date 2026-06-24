@@ -1047,6 +1047,16 @@
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
+  function normalizePrograma(value) {
+    const normalized = normalizeToken(value || '');
+    if (!normalized || normalized === 'nao_informado' || normalized === 'sem_programa') {
+      return 'nao_informado';
+    }
+    if (normalized.includes('mentoria')) return 'Mentoria';
+    if (normalized.includes('pulse_mais')) return 'Programa Pulse Mais';
+    return 'nao_informado';
+  }
+
   async function fetchPerfilOptions() {
     const body = await gestorApi().get('/alunos/opcoes-cadastro');
     return body.data || {};
@@ -1074,12 +1084,16 @@
     overlay.querySelectorAll('select[data-pf-option-field]').forEach((select) => {
       const optionField = select.dataset.pfOptionField;
       const dataField = select.dataset.pfField;
-      const currentValue = aluno[dataField];
+      const currentValue = optionField === 'programa'
+        ? normalizePrograma(aluno[dataField])
+        : aluno[dataField];
       const sourceValues = Array.isArray(perfilOptions?.[optionField]) ? perfilOptions[optionField] : [];
-      const values = [...new Set([
-        ...sourceValues,
-        ...(currentValue ? [currentValue] : [])
-      ].filter(Boolean))];
+      const values = optionField === 'programa'
+        ? ['Mentoria', 'nao_informado', 'Programa Pulse Mais']
+        : [...new Set([
+          ...sourceValues,
+          ...(currentValue ? [currentValue] : [])
+        ].filter(Boolean))];
 
       select.innerHTML = '<option value="">Não informado</option>';
       values.forEach((value) => {
@@ -1166,7 +1180,7 @@
     setPerfilInput('pf-course', curso === 'Curso nao informado' ? '' : curso);
     setPerfilInput('pf-escolaridade', aluno.escolaridade);
     setPerfilInput('pf-ocupacao', aluno.ocupacao);
-    setPerfilInput('pf-programa', programa);
+    setPerfilInput('pf-programa', normalizePrograma(programa));
     setPerfilInput('pf-perfil-socioeconomico', aluno.perfilSocioeconomico);
     setPerfilInput('pf-renda-mensal', aluno.rendaMensal);
     setPerfilInput('pf-nivel-jornada', aluno.nivelJornada);

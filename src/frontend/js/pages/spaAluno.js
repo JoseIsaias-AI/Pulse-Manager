@@ -2,8 +2,8 @@
   'use strict';
 
   /* ── VIEWS ────────────────────────────────────────────────── */
-  const VIEWS = ['inicio', 'dashboard', 'agenda'];
-  const chartInited = { inicio: false, dashboard: false, agenda: false };
+  const VIEWS = ['inicio', 'dashboard', 'agenda', 'atualizacoes', 'configuracoes'];
+  const chartInited = { inicio: false, dashboard: false, agenda: false, atualizacoes: false, configuracoes: false };
 
   let alunoSprintChart = null;
   let alunoBarChart = null;

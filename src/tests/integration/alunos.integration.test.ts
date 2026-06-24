@@ -199,7 +199,12 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       ]));
       expect(response.body.data.riscoEvasao).toEqual(expect.arrayContaining(['baixo', 'medio', 'alto']));
       expect(response.body.data.escolaridade).toContain('ensino_medio');
-      expect(response.body.data.programa).toContain('Jornada de empregabilidade');
+      expect(response.body.data.programa).toEqual([
+        'Mentoria',
+        'nao_informado',
+        'Programa Pulse Mais'
+      ]);
+      expect(response.body.data.ocupacao).toEqual([]);
     });
 
     it('CT01 - deve listar alunos cadastrados', async () => {

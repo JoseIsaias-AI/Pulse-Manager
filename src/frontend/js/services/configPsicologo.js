@@ -10,6 +10,7 @@ const pulseConfig = {
     { id: 'inicio',    icon: 'ti-home',      label: 'Início'    },
     { id: 'alunos',    icon: 'ti-users',     label: 'Alunos'    },
     { id: 'dashboard', icon: 'ti-chart-bar', label: 'Dashboard' },
+    { id: 'atualizacoes', icon: 'ti-bell-ringing', label: 'Atualizações' },
     { id: 'configuracoes', icon: 'ti-settings', label: 'Configurações' }
   ],
 

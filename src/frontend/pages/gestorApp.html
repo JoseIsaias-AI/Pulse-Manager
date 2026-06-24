@@ -1171,9 +1171,7 @@
           </div>
           <div class="field">
             <label>Ocupação</label>
-            <select id="pf-ocupacao" data-pf-field="ocupacao" data-pf-option-field="ocupacao" disabled>
-              <option value="">Não informado</option>
-            </select>
+            <input type="text" id="pf-ocupacao" data-pf-field="ocupacao" maxlength="150" placeholder="Digite a ocupação" readonly>
           </div>
           <div class="field">
             <label>Programa</label>
@@ -1339,6 +1337,7 @@
 <script src="../js/services/api.js"></script>
 <script src="../js/services/uiState.js"></script>
 <script src="../js/services/sessionUser.js"></script>
+<script src="../js/components/configuracoesFrontend.js"></script>
 <script src="../js/components/guiaGestor.js"></script>
 <script src="../js/components/menuSuperior.js"></script>
 <script src="../js/components/modalConfEquipe.js"></script>
