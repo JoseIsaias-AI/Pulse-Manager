@@ -3576,10 +3576,11 @@ No campo regulatório, destaca-se a Lei Geral de Proteção de Dados, que estabe
 
 ### 6.2.2 Tamanho e crescimento do mercado
 
-O mercado potencial da solução pode ser observado por três dimensões complementares: o crescimento do terceiro setor, a expansão das edtechs e o avanço do mercado brasileiro de tecnologia. No terceiro setor, o Brasil possuía 897.054 organizações da sociedade civil ativas em 2024, segundo o Ipea. Esse volume demonstra a existência de um ecossistema amplo de organizações que, em diferentes níveis de maturidade, podem demandar ferramentas de gestão, monitoramento de impacto e organização de dados.
-No segmento educacional, o EdTech Report 2025, da Distrito, aponta a análise de mais de 1.300 startups de educação na América Latina, com destaque para inovação, inteligência artificial e novas tendências pedagógicas. Esse dado evidencia o crescimento do mercado de soluções digitais voltadas à educação, capacitação e gestão da aprendizagem. Ainda que o Pulse Manager não seja uma edtech tradicional voltada à venda direta de cursos, a aplicação se relaciona com esse mercado ao apoiar a gestão de jornadas formativas e indicadores educacionais.
-Além disso, o mercado brasileiro de tecnologia da informação segue em expansão. Segundo estudo da ABES/IDC, o mercado brasileiro de TI alcançou US$ 67,8 bilhões em receitas em 2025, com crescimento de 18,5% em relação a 2024. Esse avanço reforça a adoção crescente de soluções digitais, sistemas em nuvem, automação e ferramentas de dados por organizações de diferentes portes.
-Por fim, a demanda social também sustenta a relevância do projeto. O IBGE indicou que, em 2024, 18,5% dos jovens brasileiros de 15 a 29 anos não trabalhavam, não estudavam e nem se qualificavam. Esse cenário reforça a importância de organizações que promovem capacitação e empregabilidade juvenil, bem como de ferramentas que aumentem sua eficiência operacional e capacidade de acompanhamento.
+O mercado potencial da solução é observado por três dimensões complementares: o crescimento do terceiro setor, a expansão das edtechs e o avanço do mercado brasileiro de tecnologia. No terceiro setor, o Brasil possuía 897.054 organizações da sociedade civil ativas em 2024, segundo o Ipea, ecossistema que demanda ferramentas de gestão, monitoramento de impacto e organização de dados.
+No segmento educacional, o EdTech Report 2025, da Distrito, aponta análise de mais de 1.300 startups de educação na América Latina, com destaque para inovação e inteligência artificial. Em escala global, o mercado de EdTech foi avaliado em US$ 187,0 bilhões em 2025, com projeção de US$ 348,41 bilhões até 2030, a um CAGR de 13,3% (GRAND VIEW RESEARCH, 2025). Ainda que não seja uma edtech tradicional, o Pulse Manager se relaciona a esse mercado ao apoiar a gestão de jornadas formativas e indicadores educacionais.
+Mais especificamente, o mercado global de software para o terceiro setor (non-profit software) foi estimado em US$ 4,59 bilhões em 2025, com projeção de US$ 7,24 bilhões até 2031, a um CAGR de 7,9%, impulsionado por soluções em nuvem, exigência regulatória de prestação de contas e expectativa de doadores por transparência em tempo real (MORDOR INTELLIGENCE, 2026). O dado evidencia mercado específico e em expansão para ferramentas de gestão social, no qual o Pulse Manager se insere.
+O mercado brasileiro de TI segue em expansão: segundo a ABES/IDC, alcançou US$ 67,8 bilhões em receitas em 2025, com crescimento de 18,5% sobre 2024, reforçando a adoção de soluções digitais, nuvem e automação por organizações de diferentes portes.
+Por fim, o IBGE indicou que, em 2024, 18,5% dos jovens brasileiros de 15 a 29 anos não trabalhavam, não estudavam nem se qualificavam, reforçando a relevância de organizações de capacitação e de ferramentas que ampliem sua eficiência e acompanhamento.
 
 
 ### 6.2.3 Tendências do mercado
@@ -3689,6 +3690,10 @@ ANPD. Agência Nacional de Proteção de Dados aprova Agenda Regulatória para o
 DIÁRIO DO COMÉRCIO. Após cinco anos em vigor, LGPD ainda é desafio para pequenas empresas e terceiro setor. 2025. Disponível em: https://diariodocomercio.com.br/legislacao/lgpd-desafios-pequenas-empresas-terceiro-setor/. Acesso em: 24 jun. 2026.
 
 ESG INSIDE. Pulse Mais abre inscrições para programa gratuito que prepara jovens para carreiras em tecnologia. 2026. Disponível em: https://esginside.com.br/2026/01/23/pulse-mais-abre-inscricoes-para-programa-gratuito-que-prepara-jovens-para-carreiras-em-tecnologia/. Acesso em: 10 jun. 2026.
+
+GRAND VIEW RESEARCH. Education Technology Market Size, Share & Trends Analysis Report. San Francisco: Grand View Research, 2025. Disponível em: https://www.grandviewresearch.com/industry-analysis/education-technology-market. Acesso em: 24 jun. 2026.
+
+MORDOR INTELLIGENCE. Non-Profit Software Market Size & Share Analysis. Hyderabad: Mordor Intelligence, 2026. Disponível em: https://www.mordorintelligence.com/industry-reports/non-profit-software-market. Acesso em: 24 jun. 2026.
 
 OBSERVATÓRIO DO TERCEIRO SETOR. Pulse Mais celebra 3 anos e amplia oportunidades para jovens na tecnologia. 2025. Disponível em: https://observatorio3setor.org.br/pulse-mais-celebra-3-anos-e-amplia-oportunidades-para-jovens-na-tecnologia/. Acesso em: 10 jun. 2026.
 
