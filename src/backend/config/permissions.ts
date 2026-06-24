@@ -6,5 +6,8 @@ export const PERMISSOES: Record<string, string[]> = {
   editarCadastroAluno: ['gestor', 'equipe'],
   gerenciarImportacaoCsv: ['gestor'],
   criarCamposSegmentacao: ['gestor', 'psicologo'],
-  acessarDesempenhoAluno: ['psicologo']
+  acessarDesempenhoAluno: ['psicologo'],
+  acessarDashboardPsicologo: ['psicologo'],
+  solicitarApoioPsicologico: ['aluno'],
+  listarSolicitacoesApoio: ['psicologo']
 };

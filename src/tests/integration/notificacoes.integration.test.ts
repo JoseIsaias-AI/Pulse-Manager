@@ -1,7 +1,8 @@
-﻿import request from 'supertest';
+import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
+import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
 import { MembroEquipe } from '../../backend/models/usuarioModel';
 
@@ -12,13 +13,13 @@ describe('RF019 - Comunicacao e Oportunidades', () => {
   let membro: MembroEquipe;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
-    membroRepository = AppDataSource.getRepository(MembroEquipe);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
+    membroRepository = getIntegrationRepository(MembroEquipe);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
 
     aluno = await alunoRepository.save({
       nome: 'Rafael Lima',
@@ -38,11 +39,7 @@ describe('RF019 - Comunicacao e Oportunidades', () => {
     });
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   describe('RF019a - Notificacoes', () => {
     it('CT01 - deve listar notificacoes vazia inicialmente', async () => {
@@ -254,7 +251,7 @@ describe('RF019 - Comunicacao e Oportunidades', () => {
   });
 
   describe('RNF - Qualidade para RF019', () => {
-    it('RNF-DES-RF019 - deve responder listagem de notificacoes em ate 1000ms', async () => {
+    performanceIt('RNF-DES-RF019 - deve responder listagem de notificacoes em ate 1000ms', async () => {
       const inicio = Date.now();
       const response = await request(app).get('/api/comunicacao');
       const duracaoMs = Date.now() - inicio;

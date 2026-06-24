@@ -24,11 +24,21 @@ function parseId(value: unknown, fieldName: string): number {
 export class JornadaController {
   constructor(private readonly service: JornadaService) { }
 
+  listarAtividades = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const tipo = typeof req.query.tipo === 'string' ? req.query.tipo : undefined;
+      const resultado = await this.service.listarAtividades(tipo);
+      res.status(200).json({ ...resultado, message: 'Atividades listadas com sucesso.' });
+    } catch (error) {
+      this.tratarErro(error, res, next);
+    }
+  };
+
   obterJornadaAluno = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const idAluno = parseId(req.params.idAluno, 'idAluno');
       const resultado = await this.service.obterJornadaAluno(idAluno);
-      res.status(200).json(resultado);
+      res.status(200).json({ ...resultado, message: 'Jornada do aluno carregada com sucesso.' });
     } catch (error) {
       this.tratarErro(error, res, next);
     }
@@ -45,7 +55,10 @@ export class JornadaController {
       };
 
       const resultado = await this.service.registrarFrequencia(payload);
-      res.status(resultado.data.operacao === 'criado' ? 201 : 200).json(resultado);
+      res.status(resultado.data.operacao === 'criado' ? 201 : 200).json({
+        ...resultado,
+        message: 'Frequencia registrada com sucesso.'
+      });
     } catch (error) {
       this.tratarErro(error, res, next);
     }
@@ -66,7 +79,7 @@ export class JornadaController {
       };
 
       const resultado = await this.service.registrarParticipacaoEvento(payload);
-      res.status(201).json(resultado);
+      res.status(201).json({ ...resultado, message: 'Participacao registrada com sucesso.' });
     } catch (error) {
       this.tratarErro(error, res, next);
     }
@@ -86,7 +99,7 @@ export class JornadaController {
       };
 
       const resultado = await this.service.atualizarEmpregabilidade(idAluno, payload);
-      res.status(200).json(resultado);
+      res.status(200).json({ ...resultado, message: 'Empregabilidade atualizada com sucesso.' });
     } catch (error) {
       this.tratarErro(error, res, next);
     }
@@ -108,7 +121,7 @@ export class JornadaController {
       };
 
       const resultado = await this.service.atualizarEnsinoSuperior(idAluno, payload);
-      res.status(200).json(resultado);
+      res.status(200).json({ ...resultado, message: 'Ensino superior atualizado com sucesso.' });
     } catch (error) {
       this.tratarErro(error, res, next);
     }
@@ -129,7 +142,7 @@ export class JornadaController {
       };
 
       const resultado = await this.service.registrarAnotacaoQualitativa(payload);
-      res.status(201).json(resultado);
+      res.status(201).json({ ...resultado, message: 'Anotacao qualitativa registrada com sucesso.' });
     } catch (error) {
       this.tratarErro(error, res, next);
     }
@@ -139,6 +152,7 @@ export class JornadaController {
     if (error instanceof AppError) {
       res.status(error.statusCode).json({
         success: false,
+        data: null,
         message: error.message
       });
       return;

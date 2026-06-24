@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
 import { Aluno } from '../../backend/models/alunoModel';
 import { Notificacao, Oportunidade } from '../../backend/models/NotificacaoModel';
 
@@ -13,14 +13,14 @@ describe('UC-03 - Visualizar notificacoes e oportunidades no portal do aluno', (
   let outroAluno: Aluno;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
-    notificacaoRepository = AppDataSource.getRepository(Notificacao);
-    oportunidadeRepository = AppDataSource.getRepository(Oportunidade);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
+    notificacaoRepository = getIntegrationRepository(Notificacao);
+    oportunidadeRepository = getIntegrationRepository(Oportunidade);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
 
     aluno = await alunoRepository.save({
       nome: 'Marina Silva',
@@ -62,11 +62,7 @@ describe('UC-03 - Visualizar notificacoes e oportunidades no portal do aluno', (
     });
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   it('CT01 - deve exibir apenas as notificacoes do proprio aluno autenticado', async () => {
     const response = await request(app)
@@ -89,7 +85,7 @@ describe('UC-03 - Visualizar notificacoes e oportunidades no portal do aluno', (
     expect(response.status).toBe(403);
     expect(response.body.success).toBe(false);
     expect(response.body.message).toBe(
-      'Acesso negado: voce so pode visualizar suas proprias notificacoes.'
+      'Acesso negado: voce so pode visualizar os seus proprios dados.'
     );
   });
 

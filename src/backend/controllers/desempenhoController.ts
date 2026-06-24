@@ -11,14 +11,17 @@ export class DesempenhoController {
     try {
       const idPsi = req.usuario?.id;
       if (!idPsi) {
-        res.status(401).json({ success: false, message: 'Identificacao do psicologo nao informada.' });
+        res.status(401).json({ success: false, data: null, message: 'Identificacao do psicologo nao informada.' });
         return;
       }
       const idAluno = positiveInteger(req.params.idAluno, 'idAluno');
-      res.status(200).json(await this.service.obterDesempenho(idPsi, idAluno));
+      res.status(200).json({
+        ...await this.service.obterDesempenho(idPsi, idAluno),
+        message: 'Desempenho carregado com sucesso.'
+      });
     } catch (error) {
       if (error instanceof AppError) {
-        res.status(error.statusCode).json({ success: false, message: error.message });
+        res.status(error.statusCode).json({ success: false, data: null, message: error.message });
         return;
       }
       next(error);

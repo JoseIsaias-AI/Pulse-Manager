@@ -1,9 +1,11 @@
-﻿import request from 'supertest';
+import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
+import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
 import { registrarConsultaDashboard } from '../../backend/integrations/dashboardAuditoriaIntegration';
+import { expectErrorContract } from '../helpers/responseContract';
 
 jest.mock('../../backend/integrations/dashboardAuditoriaIntegration', () => ({
   registrarConsultaDashboard: jest.fn().mockResolvedValue(undefined)
@@ -13,12 +15,12 @@ describe('UC-14 a UC-19 - Dashboard de Impacto', () => {
   let alunoRepository: Repository<Aluno>;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
     jest.clearAllMocks();
 
     await alunoRepository.save([
@@ -109,11 +111,7 @@ describe('UC-14 a UC-19 - Dashboard de Impacto', () => {
     ]);
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   describe('UC-14 - Visualizar dashboard de impacto', () => {
     it('CT01 - deve retornar resumo de impacto consolidado', async () => {
@@ -122,6 +120,9 @@ describe('UC-14 a UC-19 - Dashboard de Impacto', () => {
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
       expect(response.body.data.totalAlunos).toBe(6);
+      expect(response.body.data.conectados).toEqual({ valor: 2, percentual: 33.33 });
+      expect(response.body.data.capacitados).toEqual({ valor: 3, percentual: 50 });
+      expect(response.body.data.transformados).toEqual({ valor: 0, percentual: 0 });
       expect(response.body.data.alunosEmpregados.valor).toBe(2);
       expect(response.body.data.conclusaoProgramas.valor).toBe(1);
       expect(response.body.data.acessoEnsinoSuperior.valor).toBe(2);
@@ -480,7 +481,7 @@ describe('UC-14 a UC-19 - Dashboard de Impacto', () => {
   });
 
   describe('RNF - Qualidade para UC-14 a UC-19', () => {
-    it('RNF-DES-UC14 - deve responder resumo de impacto em ate 3000ms', async () => {
+    performanceIt('RNF-DES-UC14 - deve responder resumo de impacto em ate 3000ms', async () => {
       const inicio = Date.now();
       const response = await request(app).get('/api/impacto/resumo');
       const duracaoMs = Date.now() - inicio;
@@ -495,11 +496,13 @@ describe('UC-14 a UC-19 - Dashboard de Impacto', () => {
         .query({ dataInicio: '2026/02/01' });
 
       expect(response.status).toBe(400);
+      expectErrorContract(response.body);
       expect(response.body).toEqual({
         success: false,
+        data: null,
         message: 'O parametro dataInicio deve estar no formato YYYY-MM-DD.'
       });
-      expect(response.body.stack).toBeUndefined();
+      expect((response.body as { stack?: unknown }).stack).toBeUndefined();
     });
   });
 });

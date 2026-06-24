@@ -39,6 +39,57 @@
   ════════════════════════════════════════════════════════════ */
   const VIEWS = ['inicio', 'alunos', 'dashboard'];
   const chartInited = { inicio: false, alunos: false, dashboard: false };
+  let psicologoDashboardChart = null;
+
+  function psicologoApi() {
+    if (!window.PulseApi) throw new Error('Cliente HTTP central nao carregado.');
+    return window.PulseApi;
+  }
+
+  function psicologoSessao() {
+    try {
+      return JSON.parse(sessionStorage.getItem('pulseUser') || 'null');
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function idPsicologoSessao() {
+    const user = psicologoSessao();
+    const id = Number(user && user.id);
+    if (!Number.isInteger(id) || id < 1) {
+      throw new Error('Sessao do psicologo nao encontrada. Faca login novamente.');
+    }
+    return id;
+  }
+
+  function dashboardStateHost() {
+    const root = document.getElementById('view-dashboard');
+    if (!root) return null;
+    let host = document.getElementById('psicologo-dashboard-state');
+    if (!host) {
+      host = document.createElement('div');
+      host.id = 'psicologo-dashboard-state';
+      host.className = 'pulse-ui-state';
+      root.prepend(host);
+    }
+    return host;
+  }
+
+  function setDashboardState(state, message) {
+    const host = dashboardStateHost();
+    if (host && window.PulseUiState) window.PulseUiState.set(host, state, message);
+  }
+
+  function clearDashboardState() {
+    const host = dashboardStateHost();
+    if (host && window.PulseUiState) window.PulseUiState.clear(host);
+  }
+
+  function numero(valor) {
+    const parsed = Number(valor || 0);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
 
   function showView(id) {
     VIEWS.forEach(function (v) {
@@ -54,6 +105,14 @@
     if (!target) return;
     target.style.display = 'flex';
 
+    document.querySelectorAll('.menuLateral__item[data-page]').forEach(item => {
+      item.classList.toggle('menuLateral__item--active', item.dataset.page === id);
+    });
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', id);
+    window.history.replaceState({}, '', url);
+
     if (!chartInited[id]) {
       chartInited[id] = true;
       if (id === 'inicio')     initInicioView();
@@ -68,7 +127,8 @@
   };
 
   /* ── View padrão ─────────────────────────────────────────── */
-  showView('inicio');
+  const requestedView = new URLSearchParams(window.location.search).get('view');
+  showView(VIEWS.includes(requestedView) ? requestedView : 'inicio');
 
   /* ── Bloco de perfil na sidebar → abre modalConfEquipe ───── */
   document.addEventListener('DOMContentLoaded', function () {
@@ -169,13 +229,7 @@
     /* Botões Notificar */
     document.querySelectorAll('.btn-notificar').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var item   = btn.closest('.alerta-item');
-        var nomeEl = item ? item.querySelector('.alerta-nome') : null;
-        var nome   = nomeEl ? (nomeEl.textContent || '') : '';
-        console.log('Notificação enviada para: ' + nome);
-        btn.textContent  = '✓ Enviado';
-        btn.style.background = '#33B458';
-        btn.disabled = true;
+        if (window.Comunicacao) window.Comunicacao.abrir();
       });
     });
   }
@@ -185,7 +239,7 @@
   ════════════════════════════════════════════════════════════ */
   function initAlunosView() {
     const PER_PAGE = 9;
-    const TOTAL    = 18;
+    let totalAlunos  = 0;
     let curPage      = 1;
     let filterCourse = 'all';
     let desempSort   = 'none';
@@ -194,28 +248,8 @@
     let nameSort     = 'none';
     let searchQuery  = '';
 
-    const STUDENTS = [
-      { id:'PM-2024-474', name:'Mariana Costa',   ini:'MC', bg:'#E0E7FF', tc:'#4338CA', age:19, course:'Desenvolvimento AI-First na Prática',                    st:'ativa',     mod:'Módulo 5',             pct:84,  nota:8.4, eng:8, techCourse:'Engenharia de Software'          },
-      { id:'PM-2024-950', name:'Tiago Ribeiro',   ini:'TR', bg:'#FFE4E1', tc:'#DC2626', age:21, course:'Letramento Digital',                                     st:'risco',     mod:'Módulo 4',             pct:62,  nota:7.2, eng:5, techCourse:'Análise e Des. de Sistemas'      },
-      { id:'PM-2024-811', name:'Letícia Pires',   ini:'LP', bg:'#FEF9C3', tc:'#854D0E', age:22, course:'Autogestão no Mundo do Trabalho',                        st:'empregado', mod:'Módulo 5 · Concluído', pct:100, nota:9.5, eng:9, techCourse:'Sistemas de Informação'          },
-      { id:'PM-2024-137', name:'Bruno Ferraz',    ini:'BF', bg:'#F1F5F9', tc:'#475569', age:19, course:'Letramento Digital',                                     st:'inativo',   mod:'Módulo 3',             pct:48,  nota:6.3, eng:3, techCourse:''                                },
-      { id:'PM-2024-465', name:'Júlia Alves',     ini:'JA', bg:'#DCFCE7', tc:'#15803D', age:20, course:'Fortalecimento Emocional para Jovens',                   st:'ativa',     mod:'Módulo 5',             pct:85,  nota:8.5, eng:8, techCourse:''                                },
-      { id:'PM-2024-799', name:'Renato Dias',     ini:'RD', bg:'#FEF9C3', tc:'#854D0E', age:23, course:'Mercado de Trabalho: Preparação, Conexão e Vivências',   st:'atencao',   mod:'Módulo 4',             pct:65,  nota:7.6, eng:6, techCourse:'Tecnologia em Redes'             },
-      { id:'PM-2024-302', name:'Karen Souza',     ini:'KS', bg:'#CFFAFE', tc:'#0E7490', age:20, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:82,  nota:8.2, eng:7, techCourse:'Desenvolvimento Web'             },
-      { id:'PM-2024-618', name:'Pedro Lima',      ini:'PL', bg:'#FFE4E1', tc:'#DC2626', age:22, course:'Laboratório de Mentoria',                                st:'risco',     mod:'Módulo 3',             pct:42,  nota:5.9, eng:4, techCourse:''                                },
-      { id:'PM-2024-229', name:'Ana Martins',     ini:'AM', bg:'#DCFCE7', tc:'#15803D', age:19, course:'Autogestão no Mundo do Trabalho',                        st:'ativa',     mod:'Módulo 5',             pct:91,  nota:9.0, eng:9, techCourse:''                                },
-      { id:'PM-2024-531', name:'Felipe Santos',   ini:'FS', bg:'#E0E7FF', tc:'#4338CA', age:21, course:'Laboratório de Mentoria',                                st:'ativa',     mod:'Módulo 4',             pct:68,  nota:7.8, eng:7, techCourse:'Ciência da Computação'          },
-      { id:'PM-2024-388', name:'Camila Rocha',    ini:'CR', bg:'#FCE7F3', tc:'#9D174D', age:20, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:87,  nota:8.7, eng:8, techCourse:'Design Digital'                  },
-      { id:'PM-2024-712', name:'Diego Melo',      ini:'DM', bg:'#FFE4E1', tc:'#DC2626', age:24, course:'Letramento Digital',                                     st:'risco',     mod:'Módulo 2',             pct:31,  nota:5.1, eng:3, techCourse:''                                },
-      { id:'PM-2024-559', name:'Isabela Gomes',   ini:'IG', bg:'#F3E8FF', tc:'#7E22CE', age:19, course:'Fortalecimento Emocional para Jovens',                   st:'ativa',     mod:'Módulo 5',             pct:83,  nota:8.3, eng:8, techCourse:''                                },
-      { id:'PM-2024-244', name:'Lucas Ferreira',  ini:'LF', bg:'#FEF9C3', tc:'#854D0E', age:22, course:'Mercado de Trabalho: Preparação, Conexão e Vivências',   st:'empregado', mod:'Módulo 5 · Concluído', pct:100, nota:9.4, eng:9, techCourse:'Engenharia de Software'          },
-      { id:'PM-2024-876', name:'Sofia Carvalho',  ini:'SC', bg:'#FEF3C7', tc:'#92400E', age:20, course:'Autogestão no Mundo do Trabalho',                        st:'atencao',   mod:'Módulo 3',             pct:43,  nota:6.0, eng:5, techCourse:''                                },
-      { id:'PM-2024-193', name:'Gabriel Nunes',   ini:'GN', bg:'#CFFAFE', tc:'#0E7490', age:21, course:'Desenvolvimento AI-First na Prática',                    st:'ativa',     mod:'Módulo 5',             pct:86,  nota:8.6, eng:8, techCourse:'Análise e Des. de Sistemas'      },
-      { id:'PM-2024-647', name:'Patrícia Leal',   ini:'PL', bg:'#DCFCE7', tc:'#15803D', age:23, course:'Ferramentas de Produtividade',                           st:'ativa',     mod:'Módulo 5',             pct:88,  nota:8.8, eng:9, techCourse:'Sistemas de Informação'          },
-      { id:'PM-2024-320', name:'Henrique Torres', ini:'HT', bg:'#F1F5F9', tc:'#475569', age:19, course:'Laboratório de Mentoria',                                st:'inativo',   mod:'Módulo 2',             pct:23,  nota:4.5, eng:2, techCourse:''                                },
-    ];
-
-    const COURSES = ['Todos', ...new Set(STUDENTS.map(function (s) { return s.techCourse || '—'; }))];
+    let STUDENTS = [];
+    let COURSES = ['Todos'];
     let courseIdx = 0;
 
     const BAR  = { ativa:'c-green', risco:'c-red', empregado:'c-green', inativo:'c-gray', atencao:'c-amber' };
@@ -245,13 +279,16 @@
     function renderPage(page) {
       curPage = page;
       const list  = getList();
-      const total = list.length || 1;
+      const total = list.length;
       const start = (page - 1) * PER_PAGE;
       const slice = list.slice(start, start + PER_PAGE);
       const grid  = document.getElementById('al-grid');
       if (!grid) return;
 
-      grid.innerHTML = slice.map(function (s) {
+      window.PulseUiState.clear(grid, { replace: true });
+      if (!slice.length) {
+        window.PulseUiState.set(grid, 'empty', 'Nenhum aluno encontrado.', { replace: true });
+      } else grid.innerHTML = slice.map(function (s) {
         return `
         <div class="al-card" data-id="${s.id}">
           <div class="al-card-top">
@@ -277,11 +314,12 @@
       });
 
       /* Paginação */
-      const totalPages   = Math.ceil(total / PER_PAGE);
+      const totalPages   = Math.max(1, Math.ceil(total / PER_PAGE));
       const info         = document.getElementById('al-pag-info');
-      const displayTotal = filterCourse === 'all' && !searchQuery ? TOTAL : total;
-      if (info) info.textContent =
-        `Exibindo ${start + 1}–${Math.min(start + PER_PAGE, total)} de ${displayTotal} alunos`;
+      const displayTotal = filterCourse === 'all' && !searchQuery ? totalAlunos : total;
+      if (info) info.textContent = total === 0
+        ? 'Nenhum aluno encontrado'
+        : `Exibindo ${start + 1}–${Math.min(start + PER_PAGE, total)} de ${displayTotal} alunos`;
 
       const nums = document.getElementById('al-pag-nums');
       if (nums) {
@@ -388,7 +426,47 @@
     if (prevBtn) prevBtn.addEventListener('click', function () { renderPage(curPage - 1); });
     if (nextBtn) nextBtn.addEventListener('click', function () { renderPage(curPage + 1); });
 
-    renderPage(1);
+    const grid = document.getElementById('al-grid');
+    if (grid) window.PulseUiState.set(grid, 'loading', 'Carregando alunos...', { replace: true });
+
+    window.PulseApi.get('/alunos', { query: { limite: 100 } })
+      .then(function (resposta) {
+        const cores = [
+          ['#E0E7FF', '#4338CA'], ['#DCFCE7', '#15803D'], ['#FEF9C3', '#854D0E'],
+          ['#CFFAFE', '#0E7490'], ['#FCE7F3', '#9D174D']
+        ];
+        const alunos = resposta && resposta.data && Array.isArray(resposta.data.alunos)
+          ? resposta.data.alunos
+          : [];
+        STUDENTS = alunos.map(function (aluno, indice) {
+          const partes = String(aluno.nome || '').trim().split(/\s+/);
+          const cor = cores[indice % cores.length];
+          return {
+            idAluno: Number(aluno.idAluno),
+            id: aluno.codigoPm || `Aluno #${aluno.idAluno}`,
+            name: aluno.nome,
+            ini: `${partes[0]?.[0] || 'A'}${partes.length > 1 ? partes[partes.length - 1][0] : ''}`.toUpperCase(),
+            bg: cor[0], tc: cor[1], age: aluno.idade || '—',
+            course: aluno.curso || aluno.programa || 'Não informado',
+            st: aluno.riscoEvasao === 'alto' ? 'risco' : aluno.status === 'inativo' ? 'inativo' : 'ativa',
+            mod: aluno.nivelJornada || 'Jornada não informada',
+            pct: Number(aluno.engajamento) || 0,
+            nota: 0, eng: Number(aluno.engajamento) / 10 || 0,
+            techCourse: aluno.cursoEnsinoSuperior || aluno.curso || '—'
+          };
+        });
+        totalAlunos = STUDENTS.length;
+        COURSES = ['Todos', ...new Set(STUDENTS.map(function (s) { return s.techCourse || '—'; }))];
+        renderPage(1);
+      })
+      .catch(function (erro) {
+        if (grid) window.PulseUiState.set(
+          grid,
+          'error',
+          window.PulseUiState.messageFrom(erro, 'Não foi possível carregar os alunos.'),
+          { replace: true }
+        );
+      });
   }
 
   /* ════════════════════════════════════════════════════════════
@@ -400,7 +478,7 @@
     const META = 7;
 
     /* Dados: Mês (exibido por padrão) e Semana */
-    const DATA = {
+    const LEGACY_DATA_DESATIVADO = {
       mes:    { vals: [8.2, 7.6, 7.1, 6.8], labels: ['Eng.\nSoftware', 'Design', 'Gestão', 'Mkt.\nDigital'] },
       semana: { vals: [7.9, 7.3, 6.8, 6.5], labels: ['Eng.\nSoftware', 'Design', 'Gestão', 'Mkt.\nDigital'] }
     };
@@ -631,8 +709,8 @@
     const pfData = document.getElementById('pf-data');
     if (pfData && !pfData.value) pfData.value = new Date().toISOString().split('T')[0];
 
-    /* Renderizar lista de anotações existentes */
-    renderLista();
+    /* Carrega o histórico usando o idAluno real do card selecionado. */
+    if (window.HistoricoPsicologico) window.HistoricoPsicologico.carregarAluno(s);
 
     /* Reset para aba "Dados gerais" */
     window.showHistTab('pf-tab-dados', overlay.querySelector('.tab-btn'));
@@ -671,26 +749,7 @@
   /* ════════════════════════════════════════════════════════════
      ANOTAÇÕES PSICOLÓGICAS
   ════════════════════════════════════════════════════════════ */
-  const anotacoes = [
-    {
-      data: '2024-10-03',
-      tipo: 'Triagem inicial',
-      psi:  'Dr. João Mário',
-      texto: 'Primeira sessão de triagem. Aluno demonstra bom vínculo social com colegas de turma. Leve ansiedade em relação às entregas do módulo atual, porém sem impacto significativo no desempenho. Recomendado acompanhamento mensal.'
-    },
-    {
-      data: '2024-11-07',
-      tipo: 'Acompanhamento',
-      psi:  'Dr. João Mário',
-      texto: 'Segunda sessão. Ansiedade reduzida em relação ao período anterior. Melhora na organização de rotina de estudos. Engajamento nas atividades em grupo permanece positivo. Nenhuma intervenção adicional necessária no momento.'
-    },
-    {
-      data: '2024-12-12',
-      tipo: 'Acompanhamento',
-      psi:  'Dr. João Mário',
-      texto: 'Sessão de final de semestre. Sinais de cansaço típicos do período, sem indicadores de sofrimento psíquico. Orientado sobre técnicas de autocuidado durante o recesso. Retorno previsto para o início do próximo módulo.'
-    }
-  ];
+  const anotacoes = [];
 
   function renderLista() {
     var list = document.getElementById('psico-list');
@@ -783,5 +842,144 @@
     var t = document.getElementById('toast-hist');
     if (t) { t.classList.add('show'); setTimeout(function () { t.classList.remove('show'); }, 3000); }
   };
+
+  function initDashboardView() {
+    Chart.defaults.font.family = "'Poppins', sans-serif";
+    const root = document.getElementById('view-dashboard');
+    const values = root ? root.querySelectorAll('.db-kpi-value') : [];
+    const labels = root ? root.querySelectorAll('.db-kpi-label') : [];
+    const subs = root ? root.querySelectorAll('.db-kpi-sub') : [];
+    const badges = root ? root.querySelectorAll('.db-kpi-badge') : [];
+    const headerSub = root ? root.querySelector('.db-header-sub') : null;
+    const footerMain = root ? root.querySelector('.db-chart-footer-main') : null;
+    const footerSub = root ? root.querySelector('.db-chart-footer-sub') : null;
+    const engList = root ? root.querySelector('.db-eng-list') : null;
+    const canvas = document.getElementById('db-bestar-chart');
+
+    setDashboardState('loading', 'Carregando dashboard psicologico...');
+
+    function setKpi(index, label, value, sub) {
+      if (labels[index]) labels[index].textContent = label;
+      if (values[index]) values[index].textContent = String(value);
+      if (subs[index]) subs[index].textContent = sub;
+    }
+
+    function renderChart(evolucao) {
+      if (!canvas) return;
+      const pontos = Array.isArray(evolucao) ? evolucao : [];
+      const chartLabels = pontos.length ? pontos.map(function (item) { return item.periodo || 'Periodo'; }) : ['Sem atendimentos'];
+      const chartValues = pontos.length ? pontos.map(function (item) { return numero(item.total); }) : [0];
+
+      if (psicologoDashboardChart) psicologoDashboardChart.destroy();
+      psicologoDashboardChart = new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: chartLabels,
+          datasets: [{
+            label: 'Atendimentos',
+            data: chartValues,
+            backgroundColor: '#003870',
+            borderRadius: 6,
+            borderSkipped: false,
+            barPercentage: 0.6,
+            categoryPercentage: 0.7
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: { padding: { top: 20, right: 24 } },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: { label: function (ctx) { return ' ' + ctx.raw + ' atendimentos'; } },
+              backgroundColor: '#11161D',
+              titleFont: { size: 11, weight: '600' },
+              bodyFont: { size: 11 },
+              padding: 10,
+              cornerRadius: 8
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 }, color: '#4D5663', maxRotation: 0 } },
+            y: { beginAtZero: true, ticks: { precision: 0, font: { size: 11 }, color: '#97A1AE' }, grid: { color: '#EEF1F4' }, border: { display: false } }
+          }
+        }
+      });
+    }
+
+    function renderIndicadores(indicadores) {
+      if (!engList) return;
+      const labelsPorTipo = indicadores?.labelsPorTipo || {};
+      const entries = Object.entries(labelsPorTipo);
+      const total = entries.reduce(function (acc, entry) { return acc + numero(entry[1]); }, 0);
+
+      if (!entries.length) {
+        window.PulseUiState?.set(engList, 'empty', 'Nenhum indicador de saude mental registrado.', { replace: true });
+        return;
+      }
+
+      engList.classList.remove('pulse-ui-state-host');
+      engList.innerHTML = entries.map(function (entry, index) {
+        const label = entry[0];
+        const count = numero(entry[1]);
+        const percent = total ? Math.round((count / total) * 100) : 0;
+        const colors = ['#1D7A36', '#33B458', '#5BC579', '#84CD99', '#378ADD', '#85B7EB', '#B5D4F4'];
+        return `
+          <div class="db-eng-item">
+            <span class="db-eng-label">${label}</span>
+            <div class="db-eng-bar-wrap"><div class="db-eng-bar" style="width:${percent}%;background:${colors[index % colors.length]};"></div></div>
+            <span class="db-eng-pct">${count}</span>
+          </div>`;
+      }).join('');
+    }
+
+    try {
+      const idPsicologo = idPsicologoSessao();
+      psicologoApi().get(`/psicologo/dashboard/${idPsicologo}`)
+        .then(function (response) {
+          const data = response.data || {};
+          const indicadores = data.indicadoresSaudeMental || {};
+          const totalAtendimentos = numero(data.totalAtendimentos);
+          const alunosEmRisco = numero(data.alunosEmRisco);
+          const totalAlunos = numero(indicadores.totalAlunosAcompanhados);
+          const totalLabels = numero(indicadores.totalLabels);
+          const evolucao = Array.isArray(data.evolucaoAtendimentos) ? data.evolucaoAtendimentos : [];
+          const vazio = totalAtendimentos === 0 && alunosEmRisco === 0 && totalAlunos === 0 && totalLabels === 0 && evolucao.length === 0;
+
+          clearDashboardState();
+          setKpi(0, 'Alunos acompanhados', totalAlunos, 'vinculados a voce');
+          setKpi(1, 'Labels registradas', totalLabels, 'prontuarios vinculados');
+          setKpi(2, 'Alunos em risco', alunosEmRisco, 'conforme labels');
+          setKpi(3, 'Atendimentos realizados', totalAtendimentos, 'historico consolidado');
+          badges.forEach(function (badge) { badge.textContent = 'API'; });
+          if (headerSub) headerSub.textContent = `${totalAlunos} alunos acompanhados · ${totalAtendimentos} atendimentos`;
+          if (footerMain) footerMain.innerHTML = `Evolucao baseada em <strong>${totalAtendimentos}</strong> atendimentos reais.`;
+          if (footerSub) footerSub.textContent = 'Dados carregados de /api/psicologo/dashboard/:idPsicologo';
+
+          renderChart(evolucao);
+          renderIndicadores(indicadores);
+
+          window.dbToggle = function () {
+            renderChart(evolucao);
+            const btnS = document.getElementById('db-btn-semana');
+            const btnM = document.getElementById('db-btn-mes');
+            if (btnS) btnS.classList.remove('active');
+            if (btnM) btnM.classList.add('active');
+          };
+
+          if (vazio) setDashboardState('empty', 'Ainda nao ha dados de saude mental para este psicologo.');
+        })
+        .catch(function (error) {
+          setDashboardState('error', window.PulseUiState?.messageFrom(error, 'Nao foi possivel carregar o dashboard psicologico.') || 'Nao foi possivel carregar o dashboard psicologico.');
+          renderChart([]);
+          renderIndicadores({});
+        });
+    } catch (error) {
+      setDashboardState('error', error.message);
+      renderChart([]);
+      renderIndicadores({});
+    }
+  }
 
 })();

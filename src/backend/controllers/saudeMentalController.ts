@@ -8,10 +8,13 @@ export class SaudeMentalController {
 
   listar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.status(200).json(await this.service.listar({
+      res.status(200).json({
+        ...await this.service.listar({
         idAluno: optionalNumber(req.query.idAluno, 'idAluno'),
         idPsi: optionalNumber(req.query.idPsi, 'idPsi')
-      }, this.perfil(req)));
+        }, this.perfil(req)),
+        message: 'Prontuarios carregados com sucesso.'
+      });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -19,7 +22,10 @@ export class SaudeMentalController {
 
   criar = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.status(201).json(await this.service.criar(req.body, this.perfil(req)));
+      res.status(201).json({
+        ...await this.service.criar(req.body, this.perfil(req)),
+        message: 'Prontuario criado com sucesso.'
+      });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -27,10 +33,13 @@ export class SaudeMentalController {
 
   listarLabels = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.status(200).json(await this.service.listarLabels({
+      res.status(200).json({
+        ...await this.service.listarLabels({
         idAluno: optionalNumber(req.query.idAluno, 'idAluno'),
         idPsi: optionalNumber(req.query.idPsi, 'idPsi')
-      }, this.perfil(req)));
+        }, this.perfil(req)),
+        message: 'Labels carregadas com sucesso.'
+      });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -38,7 +47,10 @@ export class SaudeMentalController {
 
   criarLabel = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      res.status(201).json(await this.service.criarLabel(req.body, this.perfil(req)));
+      res.status(201).json({
+        ...await this.service.criarLabel(req.body, this.perfil(req)),
+        message: 'Label criada com sucesso.'
+      });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -50,7 +62,7 @@ export class SaudeMentalController {
 
   private handle(error: unknown, res: Response, next: NextFunction): void {
     if (error instanceof AppError) {
-      res.status(error.statusCode).json({ success: false, message: error.message });
+      res.status(error.statusCode).json({ success: false, data: null, message: error.message });
       return;
     }
     next(error);

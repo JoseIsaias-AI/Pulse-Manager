@@ -1,7 +1,8 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
+import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
 import { Psicologo } from '../../backend/models/usuarioModel';
 
@@ -12,13 +13,13 @@ describe('UC-20 - Saude Mental e Historico Psicologico', () => {
   let psicologo: Psicologo;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
-    psicologoRepository = AppDataSource.getRepository(Psicologo);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
+    psicologoRepository = getIntegrationRepository(Psicologo);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
 
     aluno = await alunoRepository.save({
       nome: 'Lucia Nunes',
@@ -37,11 +38,7 @@ describe('UC-20 - Saude Mental e Historico Psicologico', () => {
     });
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   describe('UC-20a - Historico psicologico (prontuarios)', () => {
     it('CT01 - deve listar prontuarios com perfil psicologo', async () => {
@@ -234,7 +231,7 @@ describe('UC-20 - Saude Mental e Historico Psicologico', () => {
   });
 
   describe('RNF - Qualidade para UC-20', () => {
-    it('RNF-DES-UC20 - deve responder listagem de prontuarios em ate 1000ms', async () => {
+    performanceIt('RNF-DES-UC20 - deve responder listagem de prontuarios em ate 1000ms', async () => {
       const inicio = Date.now();
       const response = await request(app)
         .get('/api/prontuarios')

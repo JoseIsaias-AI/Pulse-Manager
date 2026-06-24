@@ -2,6 +2,7 @@
 import {
   RISCOS_EVASAO,
   STATUS_ALUNO,
+  EMPREGABILIDADES_ALUNO,
   CRITERIOS_SEGMENTACAO,
   SegmentacaoAlunoQuery,
   SegmentacaoAlunoResponse
@@ -47,6 +48,17 @@ export class SegmentacaoService {
 
     if (filtros.risco && !RISCOS_EVASAO.includes(filtros.risco)) {
       throw new PayloadValidationError('Risco de evasao invalido.');
+    }
+
+    if (filtros.empregabilidade && !EMPREGABILIDADES_ALUNO.includes(filtros.empregabilidade)) {
+      throw new PayloadValidationError('Empregabilidade invalida.');
+    }
+
+    if (
+      filtros.anoIngresso !== undefined &&
+      (!Number.isInteger(filtros.anoIngresso) || filtros.anoIngresso < 1900 || filtros.anoIngresso > 2100)
+    ) {
+      throw new PayloadValidationError('O parametro anoIngresso deve ser um ano valido.');
     }
 
     if (filtros.busca !== undefined && filtros.busca.trim().length < 3) {
