@@ -3599,6 +3599,8 @@ Além da Pulse Mais, a solução pode atender iniciativas semelhantes que precis
 
 Esse segmento possui uma dor clara: conforme aumenta o número de jovens, atividades, mentorias, oportunidades e registros, controles manuais e planilhas passam a dificultar a rastreabilidade dos dados. A Pulse Mais já alcançou mais de 650 jovens por meio de cursos, mentorias e bolsas de graduação, o que reforça a necessidade de uma ferramenta capaz de organizar histórico, evolução e indicadores de acompanhamento (OBSERVATÓRIO DO TERCEIRO SETOR, 2025).
 
+Esse segmento pode ser ampliado, de forma qualitativa, a programas corporativos de responsabilidade social (RSE) e institutos empresariais com iniciativas de capacitação de jovens. Compartilham a mesma dor de dados fragmentados, difícil rastreabilidade da jornada e necessidade de demonstrar impacto a patrocinadores. Por ser segmento institucional, não consumidor, a Pulse Manager é igualmente adaptável a esse contexto.
+
 
 ### 6.3.2 Perfil do Público-Alvo
 O público-alvo final acompanhado pela Pulse Manager é composto por jovens de baixa renda, em geral entre 17 e 26 anos, residentes em São Paulo ou Região Metropolitana, com ensino médio cursando ou concluído em escola pública, ou como bolsistas em escola particular. Para participar do Programa Pulse Mais 2026, também são considerados o interesse em tecnologia, a disponibilidade para dedicação semanal e o desejo de conquistar novas oportunidades profissionais (ESG INSIDE, 2026).
