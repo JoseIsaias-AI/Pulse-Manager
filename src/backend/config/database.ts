@@ -10,6 +10,7 @@ import { HistoricoPsicologico } from '../models/SaudeMentalModel';
 import { Label } from '../models/LabelModel';
 import { Agenda } from '../models/AgendaModel';
 import { Notificacao, Oportunidade } from '../models/NotificacaoModel';
+import { SolicitacaoApoioPsicologico } from '../models/ApoioPsicologicoModel';
 
 export const appEntities = [
   Aluno,
@@ -22,7 +23,8 @@ export const appEntities = [
   Label,
   Agenda,
   Notificacao,
-  Oportunidade
+  Oportunidade,
+  SolicitacaoApoioPsicologico
 ];
 
 export interface DatabaseConnectionInfo {

@@ -5,6 +5,95 @@
   const VIEWS = ['inicio', 'dashboard', 'agenda', 'atualizacoes', 'configuracoes'];
   const chartInited = { inicio: false, dashboard: false, agenda: false, atualizacoes: false, configuracoes: false };
 
+  let alunoSprintChart = null;
+  let alunoBarChart = null;
+  let alunoLineChart = null;
+  let agendaEventosAtivos = [];
+
+  function alunoApi() {
+    if (!window.PulseApi) throw new Error('Cliente HTTP central nao carregado.');
+    return window.PulseApi;
+  }
+
+  function alunoSessao() {
+    try {
+      return JSON.parse(sessionStorage.getItem('pulseUser') || 'null');
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function idAlunoSessao() {
+    const user = alunoSessao();
+    const id = Number(user && user.id);
+    if (!Number.isInteger(id) || id < 1) {
+      throw new Error('Sessao do aluno nao encontrada. Faca login novamente.');
+    }
+    return id;
+  }
+
+  function stateHost(root, id) {
+    if (!root) return null;
+    let host = document.getElementById(id);
+    if (!host) {
+      host = document.createElement('div');
+      host.id = id;
+      host.className = 'pulse-ui-state';
+      root.prepend(host);
+    }
+    return host;
+  }
+
+  function setState(host, state, message) {
+    if (!host || !window.PulseUiState) return;
+    window.PulseUiState.set(host, state, message);
+  }
+
+  function clearState(host) {
+    if (!host || !window.PulseUiState) return;
+    window.PulseUiState.clear(host);
+  }
+
+  function pct(value, total) {
+    if (!total) return 0;
+    return Math.round((Number(value || 0) / Number(total || 1)) * 100);
+  }
+
+  function fmtDate(value) {
+    if (!value) return 'Data nao informada';
+    const date = new Date(`${String(value).slice(0, 10)}T00:00:00`);
+    if (Number.isNaN(date.getTime())) return String(value);
+    return date.toLocaleDateString('pt-BR');
+  }
+
+  function normalizeJornada(data) {
+    const frequencias = Array.isArray(data?.frequencias) ? data.frequencias : [];
+    const participacoes = Array.isArray(data?.participacoesEventos) ? data.participacoesEventos : [];
+    const registros = [...frequencias, ...participacoes];
+    const presentes = registros.filter((item) => item.statusPart === true || item.statusPart === 1 || item.statusPart === 'presente').length;
+    const notas = registros.map((item) => Number(item.nota)).filter((nota) => Number.isFinite(nota));
+    const media = notas.length ? notas.reduce((acc, nota) => acc + nota, 0) / notas.length : 0;
+    const tipos = new Set(registros.map((item) => item.tipoAtividade || item.tituloAtividade).filter(Boolean));
+
+    return {
+      aluno: data?.aluno || {},
+      frequencias,
+      participacoes,
+      registros,
+      presentes,
+      frequenciaPct: pct(presentes, registros.length),
+      mediaNota: media,
+      modulos: tipos.size,
+      vazio: registros.length === 0
+    };
+  }
+
+  async function carregarJornadaAluno() {
+    const idAluno = idAlunoSessao();
+    const response = await alunoApi().get(`/jornada/alunos/${idAluno}`);
+    return normalizeJornada(response.data || {});
+  }
+
   function showView(id) {
     VIEWS.forEach(v => {
       const el = document.getElementById('view-' + v);
@@ -28,7 +117,6 @@
       if (id === 'inicio')    initInicioView();
       if (id === 'dashboard') initDashboardView();
       if (id === 'agenda')    initAgendaView();
-      if (id === 'atualizacoes') initAtualizacoesView();
     }
   }
 
@@ -59,138 +147,29 @@
   const requestedView = new URLSearchParams(window.location.search).get('view');
   showView(VIEWS.includes(requestedView) ? requestedView : 'inicio');
 
-  function initAtualizacoesView() {
-    const list = document.getElementById('at-oportunidades-list');
-    const notifList = document.getElementById('at-notificacoes-list');
-    if ((!list || list.dataset.rendered === '1') && (!notifList || notifList.dataset.rendered === '1')) return;
-    if (list) list.dataset.rendered = '1';
-    if (notifList) notifList.dataset.rendered = '1';
-    const notificacoes = [
-      {
-        titulo: 'Convite para evento de carreiras',
-        mensagem: 'Participe do encontro demonstrativo com empresas parceiras e trilhas de empregabilidade.',
-        tipo: 'convite',
-        dataEnvio: '2026-06-17',
-        tipoRemetente: 'membro_equipe',
-        nomeRemetente: 'Vitória Brandão'
-      },
-      {
-        titulo: 'Atualização de oportunidade',
-        mensagem: 'Novas oportunidades simuladas foram adicionadas para acompanhamento no portal do aluno.',
-        tipo: 'informativo',
-        dataEnvio: '2026-06-15',
-        tipoRemetente: 'membro_equipe',
-        nomeRemetente: 'Equipe Pulse Mais'
-      },
-      {
-        titulo: 'Acompanhamento disponível',
-        mensagem: 'Há um horário demonstrativo reservado para conversa sobre objetivos de carreira.',
-        tipo: 'alerta',
-        dataEnvio: '2026-06-12',
-        tipoRemetente: 'psicologo',
-        nomeRemetente: 'João Mário'
-      }
-    ];
-    const oportunidades = [
-      {
-        titulo: 'Estágio em Dados - Trilha Inicial',
-        descricao: 'Vaga demonstrativa para praticar análise de dados, planilhas e visualização de indicadores.',
-        tipo: 'estagio',
-        dataPublicacao: '2026-06-12',
-        prazoInscricao: '2026-06-28',
-        idMembro: 1
-      },
-      {
-        titulo: 'Curso de UX para Produtos Sociais',
-        descricao: 'Oportunidade fictícia de formação curta em pesquisa com usuários e prototipação.',
-        tipo: 'curso',
-        dataPublicacao: '2026-06-10',
-        prazoInscricao: '2026-07-05',
-        idMembro: 2
-      },
-      {
-        titulo: 'Bolsa para Certificação em Cloud',
-        descricao: 'Bolsa simulada para alunos em fase de aprofundamento técnico.',
-        tipo: 'bolsa',
-        dataPublicacao: '2026-06-08',
-        prazoInscricao: '2026-06-30',
-        idMembro: 1
-      },
-      {
-        titulo: 'Evento de Carreiras em Tecnologia',
-        descricao: 'Encontro demonstrativo com empresas parceiras e rodas de conversa sobre empregabilidade.',
-        tipo: 'evento',
-        dataPublicacao: '2026-06-04',
-        prazoInscricao: '2026-06-24',
-        idMembro: 3
-      }
-    ];
-    const tipoLabel = { emprego:'Emprego', estagio:'Estágio', curso:'Curso', evento:'Evento', bolsa:'Bolsa', voluntariado:'Voluntariado', outro:'Outro' };
-    const notifTipoLabel = { alerta:'Alerta', informativo:'Informativo', convite:'Convite', urgente:'Urgente', outro:'Outro' };
-    if (notifList) {
-      notifList.innerHTML = notificacoes.map((n) => `
-        <article class="at-notif-card at-notif-card--${n.tipo}">
-          <div class="at-op-top">
-            <span class="at-notif-type">${notifTipoLabel[n.tipo] || n.tipo}</span>
-            <span class="at-op-date">Enviada em ${formatDatePt(n.dataEnvio)}</span>
-          </div>
-          <h2>${n.titulo}</h2>
-          <p>${n.mensagem}</p>
-          <div class="at-notif-meta">
-            <span><i class="ti ti-user"></i> ${n.nomeRemetente}</span>
-            <span><i class="ti ti-id"></i> ${n.tipoRemetente}</span>
-          </div>
-        </article>
-      `).join('');
-    }
-    if (list) {
-      list.innerHTML = oportunidades.map((op) => `
-      <article class="at-op-card">
-        <div class="at-op-top">
-          <span class="at-op-type at-op-type--${op.tipo}">${tipoLabel[op.tipo] || op.tipo}</span>
-          <span class="at-op-date">Publicada em ${formatDatePt(op.dataPublicacao)}</span>
-        </div>
-        <h2>${op.titulo}</h2>
-        <p>${op.descricao}</p>
-        <div class="at-op-meta">
-          <span><i class="ti ti-calendar-due"></i> Prazo: ${formatDatePt(op.prazoInscricao)}</span>
-          <span><i class="ti ti-user-star"></i> Membro #${op.idMembro}</span>
-        </div>
-        <button class="at-op-btn" type="button" disabled>Inscrição indisponível</button>
-      </article>
-      `).join('');
-    }
-  }
-
-  function formatDatePt(value) {
-    if (!value) return 'Não informado';
-    const [year, month, day] = value.split('-').map(Number);
-    return new Date(year, month - 1, day).toLocaleDateString('pt-BR');
-  }
-
   /* ════════════════════════════════════════════════════════════
      VIEW: INÍCIO (Portal do Aluno)
   ════════════════════════════════════════════════════════════ */
   function initInicioView() {
-    var wellbeingRange = document.getElementById('ini-wellbeing-range');
-    var wellbeingValue = document.getElementById('ini-wellbeing-value');
+    /* Emoji selector */
+    var emojiRow = document.getElementById('ini-emoji-row');
     var saudeMsg = document.getElementById('ini-saude-msg');
-    function wellbeingText(value) {
-      var score = Number(value);
-      if (score <= 2) return 'Bem-estar baixo. Considere buscar apoio hoje.';
-      if (score <= 4) return 'Dia mais difícil. Vá com calma e acompanhe como se sente.';
-      if (score <= 6) return 'Bem-estar moderado. Pequenas pausas podem ajudar.';
-      if (score <= 8) return 'Bem-estar estável. Continue acompanhando sua rotina.';
-      return 'Bem-estar alto. Ótimo momento para manter seus hábitos.';
-    }
-    function updateWellbeing(value) {
-      if (wellbeingValue) wellbeingValue.textContent = value;
-      if (saudeMsg) saudeMsg.textContent = wellbeingText(value);
-    }
-    if (wellbeingRange) {
-      updateWellbeing(wellbeingRange.value);
-      wellbeingRange.addEventListener('input', function () {
-        updateWellbeing(wellbeingRange.value);
+    var MOODS = {
+      '1': 'Vamos juntos superar isso 💙',
+      '2': 'Não está fácil. Fale com o psicólogo 💜',
+      '3': 'Tudo bem! Vá devagar hoje.',
+      '4': 'Que bom! Continue assim 👏',
+      '5': 'Você está arrasando! 🎉'
+    };
+    if (emojiRow) {
+      emojiRow.querySelectorAll('.ini-emoji-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          emojiRow.querySelectorAll('.ini-emoji-btn').forEach(function (b) {
+            b.classList.remove('ini-emoji-selected');
+          });
+          btn.classList.add('ini-emoji-selected');
+          if (saudeMsg) saudeMsg.textContent = MOODS[btn.dataset.mood] || '';
+        });
       });
     }
 
@@ -335,7 +314,7 @@
   function initAgendaView() {
 
     /* ── Eventos de Junho 2026 ─────────────────────────────── */
-    const EVENTS = [
+    const LEGACY_EVENTS_DESATIVADOS = [
       { id:1,  title:'Aula — Letramento Digital',          tipo:'aula',      start:'2026-06-01', end:'2026-06-01', hora:'09:00', responsavel:'Vitória Brandão', iniciais:'VB', ocupacao:'gestor',    occLabel:'Gestor',    desc:'Módulo 1 — Intro ao Digital. Participação obrigatória.' },
       { id:2,  title:'Mentoria em Grupo',                  tipo:'mentoria',  start:'2026-06-03', end:'2026-06-03', hora:'14:00', responsavel:'João Mário',      iniciais:'JM', ocupacao:'psicologo', occLabel:'Psicólogo', desc:'Sessão de mentoria coletiva com foco em autoconhecimento.' },
       { id:3,  title:'Consulta Psicológica',               tipo:'consulta',  start:'2026-06-05', end:'2026-06-05', hora:'10:00', responsavel:'João Mário',      iniciais:'JM', ocupacao:'psicologo', occLabel:'Psicólogo', desc:'Atendimento individual. Comparecer com antecedência.' },
@@ -352,17 +331,10 @@
       { id:14, title:'Consulta Psicológica',               tipo:'consulta',  start:'2026-06-29', end:'2026-06-29', hora:'10:00', responsavel:'João Mário',      iniciais:'JM', ocupacao:'psicologo', occLabel:'Psicólogo', desc:'Encerramento de ciclo. Avaliação de progresso emocional.' },
       { id:15, title:'Encerramento de Junho',              tipo:'evento',    start:'2026-06-30', end:'2026-06-30', hora:'17:00', responsavel:'Vitória Brandão', iniciais:'VB', ocupacao:'gestor',    occLabel:'Gestor',    desc:'Reunião de encerramento mensal com toda a equipe e alunos.' },
     ];
-    let selectedDate = '2026-06-11';
 
     /* ── Helpers ───────────────────────────────────────────── */
     function toDate(s) { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
     function daysBetween(a,b) { return Math.round((toDate(b)-toDate(a))/(864e5))+1; }
-    function formatDate(str) { return toDate(str).toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' }); }
-    function eventsForDay(dateStr) {
-      return EVENTS
-        .filter(ev => ev.start <= dateStr && ev.end >= dateStr)
-        .sort((a, b) => (a.hora || '').localeCompare(b.hora || ''));
-    }
     function colOf(dateStr) {
       const d = toDate(dateStr);
       return ((d.getDay()+6)%7); // Mon=0 … Sun=6
@@ -445,16 +417,12 @@
         const cellsHtml = cells.map(d => {
           const valid = d >= 1 && d <= daysInMonth;
           const isToday = (d === 11); // hoje = 11 Jun 2026
-          const dateStr = valid ? `2026-06-${String(d).padStart(2, '0')}` : '';
-          const hasEvents = valid && eventsForDay(dateStr).length > 0;
           const cls = [
             'ag-cell',
             !valid ? 'other-month' : '',
-            isToday ? 'today' : '',
-            dateStr === selectedDate ? 'selected-day' : '',
-            hasEvents ? 'has-events' : ''
+            isToday ? 'today' : ''
           ].filter(Boolean).join(' ');
-          return `<div class="${cls}" ${valid ? `data-date="${dateStr}" onclick="window.__agShowDay('${dateStr}')"` : ''}><span class="ag-dn">${valid ? d : ''}</span></div>`;
+          return `<div class="${cls}"><span class="ag-dn">${valid ? d : ''}</span></div>`;
         }).join('');
 
         // Linhas de eventos
@@ -484,47 +452,10 @@
     }
 
     /* ── Mostrar detalhe ────────────────────────────────────── */
-    function showDayDetail(dateStr) {
-      selectedDate = dateStr;
-      const det = document.getElementById('ag-detail');
-      if (!det) return;
-      const dayEvents = eventsForDay(dateStr);
-      const tipoLabel = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria', formatura:'Formatura' };
-      const tipoIcon  = { evento:'ti-calendar-event', consulta:'ti-stethoscope', aula:'ti-school', mentoria:'ti-users', formatura:'ti-award' };
-      const itemsHtml = dayEvents.length
-        ? dayEvents.map(ev => `<button class="ag-day-event" type="button" onclick="window.__agShowDetail(${ev.id})">
-            <span class="ag-day-event-time">${ev.hora}</span>
-            <span class="ag-day-event-main">
-              <strong><i class="ti ${tipoIcon[ev.tipo]}"></i> ${ev.title}</strong>
-              <small>${tipoLabel[ev.tipo] || ev.tipo} · ${ev.responsavel}</small>
-            </span>
-            <i class="ti ti-chevron-right"></i>
-          </button>`).join('')
-        : `<div class="ag-day-empty">
-            <i class="ti ti-calendar-off"></i>
-            <strong>Nenhum evento neste dia</strong>
-            <span>Quando a agenda for integrada, seus compromissos aparecerão aqui.</span>
-          </div>`;
-
-      det.innerHTML = `
-        <div class="ag-det-head">
-          <div>
-            <div class="ag-det-kicker">Agenda do dia</div>
-            <div class="ag-det-title">${formatDate(dateStr)}</div>
-          </div>
-          <button class="ag-det-close" onclick="document.getElementById('ag-detail').classList.remove('open')"><i class="ti ti-x"></i></button>
-        </div>
-        <div class="ag-day-list">${itemsHtml}</div>`;
-      det.classList.add('open');
-      renderCal();
-      det.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
     function showDetail(id) {
       const ev = EVENTS.find(e => e.id === id);
       const det = document.getElementById('ag-detail');
       if (!ev || !det) return;
-      selectedDate = ev.start;
 
       const tipoLabel = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria', formatura:'Formatura' };
       const tipoIcon  = { evento:'ti-calendar-event', consulta:'ti-stethoscope', aula:'ti-school', mentoria:'ti-users', formatura:'ti-award' };
@@ -535,10 +466,7 @@
 
       det.innerHTML = `
         <div class="ag-det-head">
-          <div>
-            <div class="ag-det-kicker">Detalhe do evento</div>
-            <div class="ag-det-title">${ev.title}</div>
-          </div>
+          <div class="ag-det-title">${ev.title}</div>
           <button class="ag-det-close" onclick="document.getElementById('ag-detail').classList.remove('open')"><i class="ti ti-x"></i></button>
         </div>
         <span class="ag-det-badge ev-tipo-${ev.tipo}"><i class="ti ${tipoIcon[ev.tipo]}"></i> ${tipoLabel[ev.tipo]}</span>
@@ -549,15 +477,360 @@
           <div class="ag-det-row"><i class="ti ti-notes"></i><div><div class="ag-det-lbl">Descrição</div><div class="ag-det-val">${ev.desc}</div></div></div>
         </div>`;
       det.classList.add('open');
-      renderCal();
       det.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     /* Expõe o handler globalmente para os onclick do HTML gerado */
     window.__agShowDetail = showDetail;
-    window.__agShowDay = showDayDetail;
 
     renderCal();
+  }
+
+  function initInicioView() {
+    var emojiRow = document.getElementById('ini-emoji-row');
+    var saudeMsg = document.getElementById('ini-saude-msg');
+    var MOODS = {
+      '1': 'Vamos juntos superar isso 💙',
+      '2': 'Não está fácil. Se quiser, solicite apoio psicológico.',
+      '3': 'Tudo bem! Vá devagar hoje.',
+      '4': 'Que bom! Continue assim 👏',
+      '5': 'Você está arrasando! 🎉'
+    };
+
+    if (emojiRow) {
+      emojiRow.querySelectorAll('.ini-emoji-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          emojiRow.querySelectorAll('.ini-emoji-btn').forEach(function (b) {
+            b.classList.remove('ini-emoji-selected');
+          });
+          btn.classList.add('ini-emoji-selected');
+          if (saudeMsg) saudeMsg.textContent = MOODS[btn.dataset.mood] || '';
+        });
+      });
+    }
+
+    const supportButton = document.querySelector('.ini-btn-psi');
+    if (supportButton) {
+      supportButton.innerHTML = '<i class="ti ti-heart-handshake"></i> Solicitar apoio';
+      let textarea = document.getElementById('apoio-mensagem');
+      if (!textarea) {
+        textarea = document.createElement('textarea');
+        textarea.id = 'apoio-mensagem';
+        textarea.placeholder = 'Conte brevemente como podemos te apoiar.';
+        textarea.rows = 3;
+        textarea.style.cssText = 'width:100%;resize:vertical;border:1px solid #DEE3EA;border-radius:10px;padding:10px;font-family:Poppins,sans-serif;font-size:12px;';
+        supportButton.parentElement.insertBefore(textarea, supportButton);
+      }
+
+      let feedback = document.getElementById('apoio-feedback');
+      if (!feedback) {
+        feedback = document.createElement('div');
+        feedback.id = 'apoio-feedback';
+        feedback.className = 'pulse-ui-state';
+        supportButton.insertAdjacentElement('afterend', feedback);
+      }
+
+      supportButton.addEventListener('click', async function () {
+        try {
+          idAlunoSessao();
+          const mensagem = textarea.value.trim();
+          if (mensagem.length < 10) {
+            setState(feedback, 'error', 'Descreva sua solicitação com pelo menos 10 caracteres.');
+            return;
+          }
+
+          supportButton.disabled = true;
+          setState(feedback, 'loading', 'Enviando solicitação de apoio...');
+          await alunoApi().post('/apoio/solicitar', { mensagem });
+          textarea.value = '';
+          setState(feedback, 'success', 'Solicitação enviada. Um psicólogo irá acompanhar seu pedido.');
+        } catch (error) {
+          setState(feedback, 'error', window.PulseUiState?.messageFrom(error, 'Não foi possível enviar a solicitação de apoio.') || 'Não foi possível enviar a solicitação de apoio.');
+        } finally {
+          supportButton.disabled = false;
+        }
+      });
+    }
+
+    const sprintCanvas = document.getElementById('ini-sprint-chart');
+    if (!sprintCanvas) return;
+    const host = stateHost(sprintCanvas.closest('.chart-card') || sprintCanvas.parentElement, 'ini-jornada-state');
+    setState(host, 'loading', 'Carregando progresso da jornada...');
+
+    carregarJornadaAluno()
+      .then(function (jornada) {
+        clearState(host);
+        const labels = jornada.registros.slice(-4).map(function (item, index) {
+          return item.tituloAtividade || `Registro ${index + 1}`;
+        });
+        const values = jornada.registros.slice(-4).map(function (item) {
+          return item.statusPart === true || item.statusPart === 1 || item.statusPart === 'presente' ? 100 : 0;
+        });
+
+        if (alunoSprintChart) alunoSprintChart.destroy();
+        alunoSprintChart = new Chart(sprintCanvas, {
+          type: 'bar',
+          data: {
+            labels: labels.length ? labels : ['Sem registros'],
+            datasets: [{
+              label: 'Progresso (%)',
+              data: values.length ? values : [0],
+              backgroundColor: values.map(function (value) { return value >= 100 ? '#33B458' : '#EEF1F4'; }),
+              borderRadius: 8,
+              borderSkipped: false,
+              barPercentage: 0.6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { callbacks: { label: function (c) { return ' ' + c.raw + '%'; } } } },
+            scales: {
+              x: { grid: { display: false }, ticks: { color: '#6B7684', font: { family: 'Poppins', size: 10 } }, border: { display: false } },
+              y: { min: 0, max: 100, ticks: { color: '#97A1AE', stepSize: 25, callback: function (v) { return v + '%'; }, font: { family: 'Poppins', size: 10 } }, grid: { color: '#F0F3F7' }, border: { display: false } }
+            }
+          }
+        });
+
+        if (jornada.vazio) setState(host, 'empty', 'Sua jornada ainda nao possui registros.');
+      })
+      .catch(function (error) {
+        setState(host, 'error', window.PulseUiState?.messageFrom(error, 'Não foi possível carregar a jornada.') || 'Não foi possível carregar a jornada.');
+      });
+  }
+
+  function initDashboardView() {
+    Chart.defaults.font.family = "'Poppins', sans-serif";
+    Chart.defaults.font.size = 11;
+
+    const root = document.getElementById('view-dashboard');
+    const host = stateHost(root, 'aluno-dashboard-state');
+    const values = root ? root.querySelectorAll('.stat-card__value') : [];
+    const footers = root ? root.querySelectorAll('.stat-card__footer') : [];
+    setState(host, 'loading', 'Carregando dados da jornada...');
+
+    carregarJornadaAluno()
+      .then(function (jornada) {
+        clearState(host);
+
+        if (values[0]) values[0].innerHTML = `${jornada.frequenciaPct}<span class="stat-card__unit">%</span>`;
+        if (footers[0]) footers[0].textContent = `com base em ${jornada.registros.length} registros`;
+        if (values[1]) values[1].innerHTML = `${jornada.modulos}<span class="stat-card__unit"> módulos</span>`;
+        if (footers[1]) footers[1].textContent = jornada.aluno.programa || 'Programa nao informado';
+        if (values[2]) values[2].textContent = jornada.mediaNota ? jornada.mediaNota.toFixed(1).replace('.', ',') : '0';
+        if (footers[2]) footers[2].textContent = 'média calculada pelos registros reais';
+        if (values[3]) values[3].innerHTML = `${jornada.participacoes.length}<span class="stat-card__unit"> eventos</span>`;
+        if (footers[3]) footers[3].textContent = jornada.aluno.categoria || jornada.aluno.status || 'Sem categoria informada';
+
+        const barCanvas = document.getElementById('a-barChart');
+        const lineCanvas = document.getElementById('a-lineChart');
+        const freqLabels = jornada.frequencias.map(function (item) { return item.tituloAtividade || fmtDate(item.dataPart); });
+        const freqData = jornada.frequencias.map(function (item) {
+          return item.statusPart === true || item.statusPart === 1 || item.statusPart === 'presente' ? 100 : 0;
+        });
+        const lineLabels = jornada.registros.map(function (item) { return item.tituloAtividade || fmtDate(item.dataPart); });
+        const notas = jornada.registros.map(function (item) {
+          const nota = Number(item.nota);
+          return Number.isFinite(nota) ? nota : 0;
+        });
+
+        if (barCanvas) {
+          if (alunoBarChart) alunoBarChart.destroy();
+          alunoBarChart = new Chart(barCanvas, {
+            type: 'bar',
+            data: {
+              labels: freqLabels.length ? freqLabels : ['Sem frequencias'],
+              datasets: [
+                {
+                  type: 'bar',
+                  data: freqData.length ? freqData : [0],
+                  backgroundColor: '#003870',
+                  borderRadius: 8,
+                  borderSkipped: false,
+                  barPercentage: 0.52,
+                  order: 2
+                },
+                {
+                  type: 'line',
+                  label: 'Meta (85%)',
+                  data: new Array(Math.max(freqData.length, 1)).fill(85),
+                  borderColor: '#C2CAD4',
+                  borderDash: [6, 4],
+                  borderWidth: 1.5,
+                  pointRadius: 0,
+                  fill: false,
+                  tension: 0,
+                  order: 1
+                }
+              ]
+            },
+            options: {
+              responsive: true, maintainAspectRatio: false,
+              plugins: { legend: { display: false }, tooltip: { callbacks: { label: function (c) { return ` ${c.raw}%`; } } } },
+              scales: {
+                x: { grid: { display: false }, ticks: { color: '#6B7684' }, border: { display: false } },
+                y: { min: 0, max: 100, ticks: { color: '#97A1AE', stepSize: 25, callback: function (v) { return v + '%'; } }, grid: { color: '#F0F3F7' }, border: { display: false } }
+              }
+            }
+          });
+        }
+
+        if (lineCanvas) {
+          const lCtx = lineCanvas.getContext('2d');
+          const grad = lCtx.createLinearGradient(0, 0, 0, 272);
+          grad.addColorStop(0, 'rgba(0,56,112,.14)');
+          grad.addColorStop(1, 'rgba(0,56,112,0)');
+          if (alunoLineChart) alunoLineChart.destroy();
+          alunoLineChart = new Chart(lCtx, {
+            type: 'line',
+            data: {
+              labels: lineLabels.length ? lineLabels : ['Sem registros'],
+              datasets: [
+                {
+                  label: 'Nota',
+                  data: notas.length ? notas : [0],
+                  borderColor: '#003870',
+                  backgroundColor: grad,
+                  fill: true,
+                  tension: 0.4,
+                  pointBackgroundColor: '#003870',
+                  pointRadius: 4,
+                  borderWidth: 2.5,
+                  order: 2
+                },
+                {
+                  label: 'Meta (7,0)',
+                  data: new Array(Math.max(notas.length, 1)).fill(7),
+                  borderColor: '#DEE3EA',
+                  borderDash: [6, 4],
+                  borderWidth: 1.5,
+                  pointRadius: 0,
+                  fill: false,
+                  tension: 0,
+                  order: 1
+                }
+              ]
+            },
+            options: {
+              responsive: true, maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                x: { grid: { display: false }, ticks: { color: '#6B7684' }, border: { display: false } },
+                y: { min: 0, max: 10, ticks: { color: '#97A1AE', stepSize: 2 }, grid: { color: '#F0F3F7' }, border: { display: false } }
+              }
+            }
+          });
+        }
+
+        if (jornada.vazio) setState(host, 'empty', 'Ainda nao ha dados de jornada para exibir.');
+      })
+      .catch(function (error) {
+        setState(host, 'error', window.PulseUiState?.messageFrom(error, 'Não foi possível carregar a jornada.') || 'Não foi possível carregar a jornada.');
+      });
+  }
+
+  function normalizeAgendaItem(item) {
+    const id = item.idAgenda || item.id || item.idCompromisso;
+    const data = String(item.data || item.dataAgenda || '').slice(0, 10);
+    return {
+      id,
+      title: item.registro || item.titulo || 'Compromisso',
+      tipo: item.tipo || item.tipoAtividade || 'evento',
+      start: data,
+      end: data,
+      hora: item.horaInicio || item.hora || item.horario || 'Horario nao informado',
+      responsavel: item.responsavel || item.nomeResponsavel || 'Equipe Pulse',
+      ocupacao: item.ocupacao || 'gestor',
+      occLabel: item.occLabel || 'Equipe',
+      desc: item.descricao || item.registro || 'Sem descricao informada.',
+      status: item.status
+    };
+  }
+
+  function statusCancelado(status) {
+    const normalized = String(status).toLowerCase();
+    return status === 0 || status === false || normalized === 'cancelado' || normalized === 'cancelada' || normalized === 'inativo';
+  }
+
+  function initAgendaView() {
+    const root = document.getElementById('view-agenda');
+    const cal = document.getElementById('ag-cal');
+    const det = document.getElementById('ag-detail');
+    const host = stateHost(root, 'aluno-agenda-state');
+
+    function toDate(s) {
+      const parts = String(s || '').slice(0, 10).split('-').map(Number);
+      return new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+
+    function daysBetween(a, b) {
+      return Math.round((toDate(b) - toDate(a)) / 864e5) + 1;
+    }
+
+    function renderList(events) {
+      if (!cal) return;
+      if (!events.length) {
+        window.PulseUiState?.set(cal, 'empty', 'Nao ha eventos ativos na sua agenda.', { replace: true });
+        if (det) det.classList.remove('open');
+        return;
+      }
+
+      cal.classList.remove('pulse-ui-state-host');
+      const ordered = [...events].sort(function (a, b) { return a.start.localeCompare(b.start); });
+      cal.innerHTML = ordered.map(function (ev) {
+        const tipoCls = 'ev-tipo-' + ev.tipo;
+        return `
+          <div class="ag-week" style="min-height:auto">
+            <div class="ag-ev ${tipoCls}" style="position:static;display:flex;justify-content:space-between;gap:12px;cursor:pointer" onclick="window.__agShowDetail(${ev.id})" title="${ev.title}">
+              <span>${ev.title}</span>
+              <span>${fmtDate(ev.start)} · ${ev.hora}</span>
+            </div>
+          </div>`;
+      }).join('');
+      showDetail(ordered[0].id);
+    }
+
+    function showDetail(id) {
+      const ev = agendaEventosAtivos.find(function (item) { return Number(item.id) === Number(id); });
+      if (!ev || !det) return;
+      const days = daysBetween(ev.start, ev.end);
+      const dateLabel = days > 1 ? `${fmtDate(ev.start)} – ${fmtDate(ev.end)}` : fmtDate(ev.start);
+      det.innerHTML = `
+        <div class="ag-det-head">
+          <div class="ag-det-title">${ev.title}</div>
+          <button class="ag-det-close" onclick="document.getElementById('ag-detail').classList.remove('open')"><i class="ti ti-x"></i></button>
+        </div>
+        <span class="ag-det-badge ev-tipo-${ev.tipo}"><i class="ti ti-calendar-event"></i> ${ev.tipo}</span>
+        <div class="ag-det-rows">
+          <div class="ag-det-row"><i class="ti ti-calendar"></i><div><div class="ag-det-lbl">Data</div><div class="ag-det-val">${dateLabel}</div></div></div>
+          <div class="ag-det-row"><i class="ti ti-clock"></i><div><div class="ag-det-lbl">Hora</div><div class="ag-det-val">${ev.hora}</div></div></div>
+          <div class="ag-det-row"><i class="ti ti-user-circle"></i><div><div class="ag-det-lbl">Responsavel</div><div class="ag-det-val">${ev.responsavel} <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px;vertical-align:middle;background:rgba(0,56,112,.10);color:#003870">${ev.occLabel}</span></div></div></div>
+          <div class="ag-det-row"><i class="ti ti-notes"></i><div><div class="ag-det-lbl">Descricao</div><div class="ag-det-val">${ev.desc}</div></div></div>
+        </div>`;
+      det.classList.add('open');
+    }
+
+    window.__agShowDetail = showDetail;
+    setState(host, 'loading', 'Carregando agenda...');
+    try {
+      const idAluno = idAlunoSessao();
+      alunoApi().get('/agenda', { query: { idAluno } })
+        .then(function (response) {
+          clearState(host);
+          const items = Array.isArray(response.data) ? response.data : [];
+          agendaEventosAtivos = items.map(normalizeAgendaItem).filter(function (item) {
+            return item.start && !statusCancelado(item.status);
+          });
+          renderList(agendaEventosAtivos);
+        })
+        .catch(function (error) {
+          setState(host, 'error', window.PulseUiState?.messageFrom(error, 'Não foi possível carregar a agenda.') || 'Não foi possível carregar a agenda.');
+          if (cal) window.PulseUiState?.set(cal, 'error', 'Agenda indisponivel no momento.', { replace: true });
+        });
+    } catch (error) {
+      setState(host, 'error', error.message);
+      if (cal) window.PulseUiState?.set(cal, 'error', error.message, { replace: true });
+    }
   }
 
 })();

@@ -35,7 +35,14 @@ function showButtonFeedback(button, message) {
 }
 
 function savePulseUser(user) {
-  sessionStorage.setItem('pulseUser', JSON.stringify(user));
+  const pulseUser = {
+    id: user.id,
+    email: user.email,
+    nome: user.nome,
+    perfil: user.perfil
+  };
+
+  sessionStorage.setItem('pulseUser', JSON.stringify(pulseUser));
 }
 
 function getDestinationPage(role) {
@@ -59,9 +66,10 @@ async function loginWithEmail(email, name, role) {
   }
 
   return {
-    ...user,
-    nome: name.trim(),
-    perfil: role
+    id: user.id,
+    email: user.email,
+    nome: user.nome || name.trim(),
+    perfil: user.perfil || role
   };
 }
 

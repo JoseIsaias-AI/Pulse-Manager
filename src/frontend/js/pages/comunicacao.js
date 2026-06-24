@@ -1,219 +1,297 @@
 (function () {
   'use strict';
 
-  let comunicacoes = [];
-  let oportunidades = [];
-  let alunos = [];
+  var comunicacoes = [];
+  var oportunidades = [];
+  var alunos = [];
 
   function sessaoAtual() {
     try {
-      const sessao = JSON.parse(sessionStorage.getItem('pulseUser') || 'null');
-      const id = Number(sessao && sessao.id);
+      var sessao = JSON.parse(sessionStorage.getItem('pulseUser') || 'null');
+      var id = Number(sessao && sessao.id);
       if (!sessao || !['gestor', 'psicologo'].includes(sessao.perfil) || !Number.isInteger(id) || id <= 0) {
         throw new Error('Sessão inválida. Entre novamente para acessar a comunicação.');
       }
-      return { id, nome: sessao.nome || 'Equipe Pulse Mais', perfil: sessao.perfil };
+      return {
+        id: id,
+        nome: sessao.nome || 'Equipe Pulse Mais',
+        perfil: sessao.perfil
+      };
     } catch (error) {
       throw new Error(error.message || 'Sessão inválida. Entre novamente.');
     }
   }
 
-  function criarInterfaceGestor() {
-    if (document.getElementById('comunicacao-overlay')) return;
-    const contenedor = document.createElement('div');
-    contenedor.innerHTML = `<div class="overlay" id="comunicacao-overlay">
-      <div class="modal" style="max-width:1080px;width:min(1080px,94vw);max-height:90vh;overflow:auto;">
-        <div class="modal-header"><div class="mh-top"><div class="modal-avatar"><i class="ti ti-speakerphone"></i></div><div><div class="modal-name">Central de comunicação</div><div class="modal-meta">Notificações e oportunidades</div></div></div><button type="button" class="close-btn" id="fechar-comunicacao"><i class="ti ti-x"></i></button></div>
-        <div class="modal-body" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">
-          <section><div class="sec-label">Nova comunicação</div><div class="field-grid">
-            <div class="field span2"><label>Aluno destinatário</label><select id="com-aluno"><option value="">Carregando alunos...</option></select></div>
-            <div class="field"><label>Título</label><input id="com-titulo"></div><div class="field"><label>Tipo</label><select id="com-tipo"><option value="informativo">Informativo</option><option value="alerta">Alerta</option><option value="convite">Convite</option><option value="urgente">Urgente</option><option value="outro">Outro</option></select></div>
-            <div class="field span2"><label>Mensagem</label><textarea id="com-mensagem" rows="3"></textarea></div></div>
-            <div id="com-status" role="status" style="font-size:12px;margin:8px 0;color:#6B7684;"></div><button type="button" class="btn btn-primary" id="com-enviar">Enviar comunicação</button><div class="sec-label" style="margin-top:20px;">Comunicações enviadas</div><div id="com-lista" style="display:flex;flex-direction:column;gap:8px;"></div>
-          </section>
-          <section><div class="sec-label">Nova oportunidade</div><div class="field-grid">
-            <div class="field"><label>Título</label><input id="op-titulo"></div><div class="field"><label>Tipo</label><select id="op-tipo"><option value="emprego">Emprego</option><option value="estagio">Estágio</option><option value="curso">Curso</option><option value="evento">Evento</option><option value="bolsa">Bolsa</option><option value="voluntariado">Voluntariado</option><option value="outro">Outro</option></select></div>
-            <div class="field span2"><label>Descrição</label><textarea id="op-descricao" rows="3"></textarea></div><div class="field span2"><label>Prazo de inscrição</label><input type="date" id="op-prazo"></div></div>
-            <div id="op-status" role="status" style="font-size:12px;margin:8px 0;color:#6B7684;"></div><button type="button" class="btn btn-primary" id="op-criar">Publicar oportunidade</button><div class="sec-label" style="margin-top:20px;">Oportunidades publicadas</div><div id="op-lista" style="display:flex;flex-direction:column;gap:8px;"></div>
-          </section>
-        </div>
-      </div></div>`;
-    document.body.appendChild(contenedor.firstElementChild);
+  function extrairAlunos(resposta) {
+    if (resposta && resposta.data && Array.isArray(resposta.data.alunos)) return resposta.data.alunos;
+    if (resposta && Array.isArray(resposta.data)) return resposta.data;
+    return [];
   }
 
-  function garantirBotao() {
-    if (document.getElementById('abrir-comunicacao')) return;
-    const acoes = document.querySelector('.menuSuperior__actions');
-    if (!acoes) return;
-    const botao = document.createElement('button');
-    botao.type = 'button';
-    botao.id = 'abrir-comunicacao';
-    botao.className = 'btn btn-primary';
-    botao.innerHTML = '<i class="ti ti-message-circle"></i> Comunicação';
-    acoes.prepend(botao);
+  function garantirEstilos() {
+    if (document.getElementById('comunicacao-style')) return;
+    var estilo = document.createElement('style');
+    estilo.id = 'comunicacao-style';
+    estilo.textContent = [
+      '.com-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px}',
+      '.com-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}',
+      '.com-fields label{font-size:11px;color:#4d5663;display:flex;flex-direction:column;gap:4px}',
+      '.com-fields .wide{grid-column:1/-1}',
+      '.com-fields input,.com-fields select,.com-fields textarea{border:1px solid #dce2e9;border-radius:7px;padding:8px;font:inherit}',
+      '.com-list{display:flex;flex-direction:column;gap:8px;max-height:230px;overflow:auto}',
+      '.com-card{border:1px solid #e3e7ec;border-radius:8px;padding:10px;background:#fff}',
+      '.com-card strong{display:block;font-size:12px;color:#11161d}',
+      '.com-card p,.com-card small{font-size:11px;color:#6b7684}',
+      '.com-card p{white-space:pre-wrap;margin:4px 0}',
+      '.com-actions{display:flex;justify-content:flex-end;margin-top:10px}',
+      '.com-status{font-size:11px;min-height:18px;margin-top:7px}',
+      '.com-section-title{font-size:13px;font-weight:700;color:#003870;margin:0 0 10px}',
+      '.com-subtitle{font-size:11px;font-weight:600;color:#6b7684;margin:18px 0 8px}'
+    ].join('');
+    document.head.appendChild(estilo);
   }
 
-  function status(id, mensagem, tipo) {
-    const elemento = document.getElementById(id);
-    if (!elemento) return;
-    elemento.textContent = mensagem;
-    elemento.style.color = tipo === 'erro' ? '#B42318' : tipo === 'sucesso' ? '#1D7A36' : '#6B7684';
+  function criarInterface() {
+    garantirEstilos();
+    if (!document.getElementById('comunicacao-overlay')) {
+      var overlay = document.createElement('div');
+      overlay.id = 'comunicacao-overlay';
+      overlay.className = 'overlay';
+      overlay.innerHTML = '<div class="modal" style="width:min(1080px,94vw);max-width:1080px;max-height:90vh;overflow:auto">' +
+        '<div class="modal-header"><div class="mh-top"><div class="modal-avatar"><i class="ti ti-speakerphone"></i></div><div><div class="modal-name">Central de comunicação</div><div class="modal-meta">Notificações e oportunidades reais</div></div></div><button class="close-btn" id="fechar-comunicacao" type="button" aria-label="Fechar"><i class="ti ti-x"></i></button></div>' +
+        '<div class="modal-body com-grid">' +
+          '<section><h3 class="com-section-title">Nova comunicação</h3><div class="com-fields">' +
+            '<label class="wide">Aluno<select id="com-aluno"><option value="">Carregando...</option></select></label>' +
+            '<label>Título<input id="com-titulo" maxlength="255"></label><label>Tipo<select id="com-tipo"><option value="informativo">Informativo</option><option value="alerta">Alerta</option><option value="convite">Convite</option><option value="urgente">Urgente</option><option value="outro">Outro</option></select></label>' +
+            '<label class="wide">Mensagem<textarea id="com-mensagem" rows="3" maxlength="500"></textarea></label></div>' +
+            '<div class="com-status" id="com-status" role="status"></div><div class="com-actions"><button class="btn btn-primary" id="com-enviar" type="button">Enviar comunicação</button></div>' +
+            '<div class="com-subtitle">Comunicações enviadas</div><div class="com-list" id="com-lista"></div></section>' +
+          '<section><h3 class="com-section-title">Nova oportunidade</h3><div class="com-fields">' +
+            '<label>Título<input id="op-titulo" maxlength="255"></label><label>Tipo<select id="op-tipo"><option value="emprego">Emprego</option><option value="estagio">Estágio</option><option value="curso">Curso</option><option value="evento">Evento</option><option value="bolsa">Bolsa</option><option value="voluntariado">Voluntariado</option><option value="outro">Outro</option></select></label>' +
+            '<label class="wide">Descrição<textarea id="op-descricao" rows="3" maxlength="500"></textarea></label><label class="wide">Prazo<input id="op-prazo" type="date"></label></div>' +
+            '<div class="com-status" id="op-status" role="status"></div><div class="com-actions"><button class="btn btn-primary" id="op-criar" type="button">Publicar oportunidade</button></div>' +
+            '<div class="com-subtitle">Oportunidades publicadas</div><div class="com-list" id="op-lista"></div></section>' +
+        '</div></div>';
+      document.body.appendChild(overlay);
+    }
+
+    if (!document.getElementById('abrir-comunicacao')) {
+      var acoes = document.querySelector('.menuSuperior__actions');
+      if (acoes) {
+        var botao = document.createElement('button');
+        botao.id = 'abrir-comunicacao';
+        botao.type = 'button';
+        botao.className = 'btn btn-primary';
+        botao.innerHTML = '<i class="ti ti-message-circle"></i> Comunicação';
+        acoes.prepend(botao);
+      }
+    }
   }
 
-  function criarCard(titulo, texto, meta) {
-    const card = document.createElement('article');
-    card.style.cssText = 'border:1px solid #DEE3EA;border-radius:9px;padding:10px 12px;background:#fff;';
-    const nome = document.createElement('strong');
-    nome.style.cssText = 'display:block;font-size:12px;color:#11161D;';
-    nome.textContent = titulo;
-    const corpo = document.createElement('p');
-    corpo.style.cssText = 'font-size:11px;color:#6B7684;margin:4px 0;white-space:pre-wrap;';
-    corpo.textContent = texto || 'Sem descrição.';
-    const detalhe = document.createElement('small');
-    detalhe.style.color = '#97A1AE';
-    detalhe.textContent = meta || '';
-    card.append(nome, corpo, detalhe);
-    return card;
+  function definirStatus(id, texto, tipo) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (window.PulseUiState && typeof window.PulseUiState.set === 'function') {
+      window.PulseUiState.set(el, tipo === 'erro' ? 'error' : tipo === 'sucesso' ? 'success' : tipo, texto);
+      return;
+    }
+    el.textContent = texto;
+    el.style.color = tipo === 'erro' ? '#B42318' : tipo === 'sucesso' ? '#1D7A36' : '#6B7684';
+  }
+
+  function limparLista(lista) {
+    if (!lista) return;
+    if (window.PulseUiState && typeof window.PulseUiState.clear === 'function') {
+      window.PulseUiState.clear(lista, { replace: true });
+    } else {
+      lista.replaceChildren();
+    }
+  }
+
+  function estadoVazio(lista, mensagem) {
+    if (!lista) return;
+    if (window.PulseUiState && typeof window.PulseUiState.set === 'function') {
+      window.PulseUiState.set(lista, 'empty', mensagem, { replace: true });
+      return;
+    }
+    lista.appendChild(criarCard('Nada por aqui ainda', mensagem, ''));
+  }
+
+  function criarCard(titulo, corpo, meta) {
+    var item = document.createElement('article');
+    item.className = 'com-card';
+    var strong = document.createElement('strong');
+    strong.textContent = titulo || 'Sem título';
+    var p = document.createElement('p');
+    p.textContent = corpo || 'Sem descrição.';
+    var small = document.createElement('small');
+    small.textContent = meta || '';
+    item.append(strong, p, small);
+    return item;
   }
 
   function renderizarComunicacoes() {
-    const lista = document.getElementById('com-lista');
+    var lista = document.getElementById('com-lista');
+    limparLista(lista);
     if (!lista) return;
-    lista.replaceChildren();
     if (!comunicacoes.length) {
-      lista.appendChild(criarCard('Nenhuma comunicação', 'Ainda não há comunicações cadastradas.', ''));
+      estadoVazio(lista, 'Nenhuma comunicação cadastrada.');
       return;
     }
-    comunicacoes.forEach(item => {
-      const aluno = alunos.find(a => Number(a.idAluno) === Number(item.idAluno));
-      lista.appendChild(criarCard(item.titulo, item.mensagem, `${aluno?.nome || `Aluno #${item.idAluno}`} · ${item.tipo} · ${item.dataEnvio || ''}`));
+    comunicacoes.forEach(function (item) {
+      var aluno = alunos.find(function (a) { return Number(a.idAluno) === Number(item.idAluno); });
+      var metaAluno = aluno ? aluno.nome : 'Aluno #' + item.idAluno;
+      var metaData = item.dataEnvio ? ' · ' + item.dataEnvio : '';
+      lista.appendChild(criarCard(item.titulo, item.mensagem, metaAluno + ' · ' + item.tipo + metaData));
     });
   }
 
   function renderizarOportunidades() {
-    const lista = document.getElementById('op-lista');
+    var lista = document.getElementById('op-lista');
+    limparLista(lista);
     if (!lista) return;
-    lista.replaceChildren();
     if (!oportunidades.length) {
-      lista.appendChild(criarCard('Nenhuma oportunidade', 'Ainda não há oportunidades publicadas.', ''));
+      estadoVazio(lista, 'Nenhuma oportunidade publicada.');
       return;
     }
-    oportunidades.forEach(item => lista.appendChild(
-      criarCard(item.titulo, item.descricao, `${item.tipo} · prazo: ${item.prazoInscricao || 'não informado'}`)
-    ));
+    oportunidades.forEach(function (item) {
+      lista.appendChild(criarCard(item.titulo, item.descricao, item.tipo + ' · prazo: ' + (item.prazoInscricao || 'não informado')));
+    });
   }
 
   function preencherAlunos() {
-    const select = document.getElementById('com-aluno');
+    var select = document.getElementById('com-aluno');
     if (!select) return;
     select.replaceChildren(new Option('Selecione...', ''));
-    alunos.forEach(aluno => select.add(new Option(`${aluno.nome} · ${aluno.codigoPm || `#${aluno.idAluno}`}`, aluno.idAluno)));
+    alunos.forEach(function (aluno) {
+      select.add(new Option(aluno.nome + ' · ' + (aluno.codigoPm || '#' + aluno.idAluno), aluno.idAluno));
+    });
   }
 
   async function carregar() {
-    status('com-status', 'Carregando comunicações...', 'loading');
-    status('op-status', 'Carregando oportunidades...', 'loading');
+    definirStatus('com-status', 'Carregando comunicações...', 'loading');
+    definirStatus('op-status', 'Carregando oportunidades...', 'loading');
     try {
-      const [resComunicacoes, resOportunidades, resAlunos] = await Promise.all([
+      var respostas = await Promise.all([
         window.PulseApi.get('/comunicacao'),
         window.PulseApi.get('/comunicacao/oportunidades'),
         window.PulseApi.get('/alunos', { query: { limite: 100 } })
       ]);
-      comunicacoes = Array.isArray(resComunicacoes.data) ? resComunicacoes.data : [];
-      oportunidades = Array.isArray(resOportunidades.data) ? resOportunidades.data : [];
-      alunos = Array.isArray(resAlunos.data) ? resAlunos.data : [];
+      comunicacoes = Array.isArray(respostas[0].data) ? respostas[0].data : [];
+      oportunidades = Array.isArray(respostas[1].data) ? respostas[1].data : [];
+      alunos = extrairAlunos(respostas[2]);
       preencherAlunos();
       renderizarComunicacoes();
       renderizarOportunidades();
-      status('com-status', `${comunicacoes.length} comunicação(ões) carregada(s).`, 'sucesso');
-      status('op-status', `${oportunidades.length} oportunidade(s) carregada(s).`, 'sucesso');
+      definirStatus('com-status', comunicacoes.length + ' comunicação(ões) carregada(s).', 'sucesso');
+      definirStatus('op-status', oportunidades.length + ' oportunidade(s) carregada(s).', 'sucesso');
     } catch (error) {
-      status('com-status', error.message || 'Não foi possível carregar as comunicações.', 'erro');
-      status('op-status', error.message || 'Não foi possível carregar as oportunidades.', 'erro');
+      definirStatus('com-status', error.message || 'Não foi possível carregar as comunicações.', 'erro');
+      definirStatus('op-status', error.message || 'Não foi possível carregar as oportunidades.', 'erro');
     }
   }
 
   async function enviarComunicacao() {
-    const botao = document.getElementById('com-enviar');
-    const idAluno = Number(document.getElementById('com-aluno')?.value);
-    const titulo = document.getElementById('com-titulo')?.value.trim();
-    const mensagem = document.getElementById('com-mensagem')?.value.trim();
-    if (!idAluno || !titulo || titulo.length < 3 || !mensagem || mensagem.length < 5) {
-      status('com-status', 'Selecione o aluno e preencha título e mensagem.', 'erro');
+    var idAluno = Number(document.getElementById('com-aluno') && document.getElementById('com-aluno').value);
+    var titulo = (document.getElementById('com-titulo') && document.getElementById('com-titulo').value.trim()) || '';
+    var mensagem = (document.getElementById('com-mensagem') && document.getElementById('com-mensagem').value.trim()) || '';
+    if (!idAluno || titulo.length < 3 || mensagem.length < 5) {
+      definirStatus('com-status', 'Selecione o aluno e preencha título e mensagem.', 'erro');
       return;
     }
+
+    var botao = document.getElementById('com-enviar');
     try {
-      const sessao = sessaoAtual();
+      var usuario = sessaoAtual();
       if (botao) botao.disabled = true;
-      status('com-status', 'Enviando comunicação...', 'loading');
-      const resposta = await window.PulseApi.post('/comunicacao', {
-        titulo, idAluno, mensagem,
+      definirStatus('com-status', 'Enviando comunicação...', 'loading');
+      var resposta = await window.PulseApi.post('/comunicacao', {
+        titulo: titulo,
+        idAluno: idAluno,
+        mensagem: mensagem,
         tipo: document.getElementById('com-tipo').value,
-        idRemetente: sessao.id,
-        tipoRemetente: sessao.perfil === 'psicologo' ? 'psicologo' : 'membro_equipe',
-        nomeRemetente: sessao.nome
+        idRemetente: usuario.id,
+        tipoRemetente: usuario.perfil === 'psicologo' ? 'psicologo' : 'membro_equipe',
+        nomeRemetente: usuario.nome
       });
-      comunicacoes.unshift({ ...resposta.data, mensagem, nomeRemetente: sessao.nome });
+      comunicacoes.unshift(Object.assign({}, resposta.data, { mensagem: mensagem, nomeRemetente: usuario.nome }));
       renderizarComunicacoes();
       document.getElementById('com-titulo').value = '';
       document.getElementById('com-mensagem').value = '';
-      status('com-status', 'Comunicação enviada com sucesso.', 'sucesso');
+      definirStatus('com-status', 'Comunicação enviada com sucesso.', 'sucesso');
     } catch (error) {
-      status('com-status', error.message || 'Não foi possível enviar a comunicação.', 'erro');
+      definirStatus('com-status', error.message || 'Não foi possível enviar a comunicação.', 'erro');
     } finally {
       if (botao) botao.disabled = false;
     }
   }
 
   async function criarOportunidade() {
-    const botao = document.getElementById('op-criar');
-    const titulo = document.getElementById('op-titulo')?.value.trim();
-    if (!titulo || titulo.length < 3) {
-      status('op-status', 'Informe um título com pelo menos 3 caracteres.', 'erro');
+    var titulo = (document.getElementById('op-titulo') && document.getElementById('op-titulo').value.trim()) || '';
+    if (titulo.length < 3) {
+      definirStatus('op-status', 'Informe um título com pelo menos 3 caracteres.', 'erro');
       return;
     }
+
+    var botao = document.getElementById('op-criar');
     try {
-      const sessao = sessaoAtual();
-      if (sessao.perfil !== 'gestor') throw new Error('A publicação de oportunidades é exclusiva do gestor.');
+      var usuario = sessaoAtual();
+      if (usuario.perfil !== 'gestor') throw new Error('A publicação de oportunidades é exclusiva do gestor.');
       if (botao) botao.disabled = true;
-      status('op-status', 'Publicando oportunidade...', 'loading');
-      const descricao = document.getElementById('op-descricao')?.value.trim();
-      const prazoInscricao = document.getElementById('op-prazo')?.value || undefined;
-      const resposta = await window.PulseApi.post('/comunicacao/oportunidades', {
-        titulo, descricao: descricao || undefined,
+      definirStatus('op-status', 'Publicando oportunidade...', 'loading');
+      var descricao = (document.getElementById('op-descricao') && document.getElementById('op-descricao').value.trim()) || '';
+      var prazoInscricao = (document.getElementById('op-prazo') && document.getElementById('op-prazo').value) || undefined;
+      var resposta = await window.PulseApi.post('/comunicacao/oportunidades', {
+        titulo: titulo,
+        descricao: descricao || undefined,
         tipo: document.getElementById('op-tipo').value,
-        prazoInscricao, idMembro: sessao.id
+        prazoInscricao: prazoInscricao,
+        idMembro: usuario.id
       });
-      oportunidades.unshift({ ...resposta.data, descricao });
+      oportunidades.unshift(Object.assign({}, resposta.data, { descricao: descricao }));
       renderizarOportunidades();
       document.getElementById('op-titulo').value = '';
       document.getElementById('op-descricao').value = '';
       document.getElementById('op-prazo').value = '';
-      status('op-status', 'Oportunidade publicada com sucesso.', 'sucesso');
+      definirStatus('op-status', 'Oportunidade publicada com sucesso.', 'sucesso');
     } catch (error) {
-      status('op-status', error.message || 'Não foi possível publicar a oportunidade.', 'erro');
+      definirStatus('op-status', error.message || 'Não foi possível publicar a oportunidade.', 'erro');
     } finally {
       if (botao) botao.disabled = false;
     }
   }
 
   function abrir() {
-    document.getElementById('comunicacao-overlay')?.classList.add('open');
+    var overlay = document.getElementById('comunicacao-overlay');
+    if (overlay) overlay.classList.add('open');
     carregar();
   }
 
   function fechar() {
-    document.getElementById('comunicacao-overlay')?.classList.remove('open');
+    var overlay = document.getElementById('comunicacao-overlay');
+    if (overlay) overlay.classList.remove('open');
   }
 
-  criarInterfaceGestor();
-  garantirBotao();
-  document.getElementById('abrir-comunicacao')?.addEventListener('click', abrir);
-  document.getElementById('fechar-comunicacao')?.addEventListener('click', fechar);
-  document.getElementById('com-enviar')?.addEventListener('click', enviarComunicacao);
-  document.getElementById('op-criar')?.addEventListener('click', criarOportunidade);
-  document.getElementById('comunicacao-overlay')?.addEventListener('click', event => {
-    if (event.target === document.getElementById('comunicacao-overlay')) fechar();
-  });
-  window.Comunicacao = { abrir, carregar };
+  criarInterface();
+  var botaoAbrir = document.getElementById('abrir-comunicacao');
+  var botaoFechar = document.getElementById('fechar-comunicacao') || document.getElementById('com-fechar');
+  var botaoEnviar = document.getElementById('com-enviar');
+  var botaoCriar = document.getElementById('op-criar');
+  var overlay = document.getElementById('comunicacao-overlay');
+
+  if (botaoAbrir) botaoAbrir.addEventListener('click', abrir);
+  if (botaoFechar) botaoFechar.addEventListener('click', fechar);
+  if (botaoEnviar) botaoEnviar.addEventListener('click', enviarComunicacao);
+  if (botaoCriar) botaoCriar.addEventListener('click', criarOportunidade);
+  if (overlay) {
+    overlay.addEventListener('click', function (event) {
+      if (event.target === overlay) fechar();
+    });
+  }
+
+  window.Comunicacao = {
+    abrir: abrir,
+    carregar: carregar,
+    extrairAlunos: extrairAlunos
+  };
 })();

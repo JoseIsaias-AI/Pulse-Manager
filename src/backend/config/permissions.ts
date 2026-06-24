@@ -4,6 +4,10 @@ export const PERMISSOES: Record<string, string[]> = {
   acessarSaudeMental: ['psicologo'],
   editarContatoAluno: ['aluno'],
   editarCadastroAluno: ['gestor', 'equipe'],
+  gerenciarImportacaoCsv: ['gestor'],
   criarCamposSegmentacao: ['gestor', 'psicologo'],
-  acessarDesempenhoAluno: ['psicologo']
+  acessarDesempenhoAluno: ['psicologo'],
+  acessarDashboardPsicologo: ['psicologo'],
+  solicitarApoioPsicologico: ['aluno'],
+  listarSolicitacoesApoio: ['psicologo']
 };

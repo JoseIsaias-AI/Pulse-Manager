@@ -7,7 +7,7 @@ export function requirePermission(acao: string) {
     const perfil = req.usuario?.perfil;
     const perfisPermitidos = PERMISSOES[acao];
     if (!perfisPermitidos || !perfil || !perfisPermitidos.includes(perfil)) {
-      res.status(403).json({ success: false, message: 'Acesso nao permitido para este perfil.' });
+      res.status(403).json({ success: false, data: null, message: 'Acesso nao permitido para este perfil.' });
       return;
     }
     next();

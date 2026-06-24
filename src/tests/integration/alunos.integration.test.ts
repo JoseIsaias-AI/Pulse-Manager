@@ -4,6 +4,7 @@ import { app } from '../../backend/app';
 import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
 import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
+import { expectErrorContract, expectSuccessContract } from '../helpers/responseContract';
 
 describe('UC-03 a UC-06 - Gestao de Alunos', () => {
   let alunoRepository: Repository<Aluno>;
@@ -47,6 +48,7 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       });
 
       expect(response.status).toBe(201);
+      expectSuccessContract(response.body);
       expect(response.body.success).toBe(true);
       expect(response.body.data.codigoPm).toMatch(/^PM-\d{4}-\d{3}$/);
       expect(response.body.data.email).toBe('julia.ferreira@pulsemais.org');
@@ -62,6 +64,7 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       });
 
       expect(response.status).toBe(409);
+      expectErrorContract(response.body);
       expect(response.body).toMatchObject({
         success: false,
         message: 'Ja existe aluno cadastrado com este e-mail.'
@@ -178,6 +181,7 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       const response = await request(app).get('/api/alunos/opcoes-cadastro');
 
       expect(response.status).toBe(200);
+      expectSuccessContract(response.body);
       expect(response.body.success).toBe(true);
       expect(response.body.data.genero).toEqual(expect.arrayContaining([
         'feminino',
@@ -195,7 +199,12 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       ]));
       expect(response.body.data.riscoEvasao).toEqual(expect.arrayContaining(['baixo', 'medio', 'alto']));
       expect(response.body.data.escolaridade).toContain('ensino_medio');
-      expect(response.body.data.programa).toContain('Jornada de empregabilidade');
+      expect(response.body.data.programa).toEqual([
+        'Mentoria',
+        'nao_informado',
+        'Programa Pulse Mais'
+      ]);
+      expect(response.body.data.ocupacao).toEqual([]);
     });
 
     it('CT01 - deve listar alunos cadastrados', async () => {
@@ -227,6 +236,7 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
       const response = await request(app).get('/api/alunos/9999');
 
       expect(response.status).toBe(404);
+      expectErrorContract(response.body);
       expect(response.body).toMatchObject({
         success: false,
         message: 'Aluno nao encontrado.'
@@ -507,6 +517,81 @@ describe('UC-03 a UC-06 - Gestao de Alunos', () => {
 
       expect(response.status).toBe(200);
       expect(response.body.data.status).toBe('inativo');
+    });
+  });
+
+  describe('Importacao e exportacao CSV do gestor', () => {
+    it('deve restringir a funcionalidade ao perfil gestor', async () => {
+      const response = await request(app)
+        .post('/api/gestor/importacoes/alunos')
+        .set('x-user-role', 'psicologo')
+        .send({ csv: 'nome,email\nPessoa Teste,pessoa.teste@pulsemais.org' });
+
+      expect(response.status).toBe(403);
+      expectErrorContract(response.body);
+    });
+
+    it('deve importar um aluno e disponibiliza-lo na listagem integrada', async () => {
+      const response = await request(app)
+        .post('/api/gestor/importacoes/alunos')
+        .set('x-user-role', 'gestor')
+        .send({
+          csv: [
+            'nome,email,cpf,programa,categoria,engajamento',
+            'Pessoa Importada,pessoa.importada@pulsemais.org,12345678901,Mentoria,capacitado,72'
+          ].join('\n')
+        });
+
+      expect(response.status).toBe(200);
+      expectSuccessContract(response.body);
+      expect(response.body.data).toMatchObject({
+        importados: 1,
+        atualizados: 0,
+        ignorados: 0
+      });
+
+      const listagem = await request(app).get('/api/alunos').query({ busca: 'Pessoa Importada' });
+      expect(listagem.status).toBe(200);
+      expect(listagem.body.data.alunos).toEqual([
+        expect.objectContaining({
+          nome: 'Pessoa Importada',
+          email: 'pessoa.importada@pulsemais.org',
+          cpf: '12345678901',
+          programa: 'Mentoria',
+          categoria: 'capacitado',
+          engajamento: 72
+        })
+      ]);
+    });
+
+    it('deve preservar programa e categoria em atualizacao parcial por CSV', async () => {
+      const response = await request(app)
+        .post('/api/gestor/importacoes/alunos')
+        .set('x-user-role', 'gestor')
+        .send({
+          csv: 'nome,email,status\nCarlos Atualizado,carlos.mendes@pulsemais.org,ativo'
+        });
+
+      expect(response.status).toBe(200);
+      expect(response.body.data.atualizados).toBe(1);
+
+      const alunoAtualizado = await alunoRepository.findOneByOrFail({ email: 'carlos.mendes@pulsemais.org' });
+      expect(alunoAtualizado.nome).toBe('Carlos Atualizado');
+      expect(alunoAtualizado.programa).toBe('Jornada de empregabilidade');
+      expect(alunoAtualizado.categoria).toBe('capacitado');
+    });
+
+    it('deve exportar os alunos em CSV com os campos atuais do cadastro', async () => {
+      const response = await request(app)
+        .get('/api/gestor/exportacoes/alunos')
+        .set('x-user-role', 'gestor');
+
+      expect(response.status).toBe(200);
+      expect(response.headers['content-type']).toContain('text/csv');
+      expect(response.headers['content-disposition']).toContain('alunos.csv');
+      expect(response.text).toContain('codigoPm,cpf,nome,email');
+      expect(response.text).toContain('Carlos Mendes');
+      expect(response.text).toContain('carlos.mendes@pulsemais.org');
     });
   });
 

@@ -1,8 +1,15 @@
 (function () {
   'use strict';
 
-  const GESTOR_API_BASE = window.PULSE_API_BASE
-    || (window.location.port === '3000' ? '/api' : 'http://localhost:3000/api');
+  function gestorApi() {
+    if (!window.PulseApi) {
+      const message = 'Cliente HTTP central nao carregado. Verifique se api.js foi incluido antes de spaGestor.js.';
+      console.error('[spaGestor]', message);
+      throw new Error(message);
+    }
+
+    return window.PulseApi;
+  }
 
   /* ── VIEWS ────────────────────────────────────────────────── */
   const VIEWS = ['inicio', 'alunos', 'dashboard', 'agenda', 'atualizacoes', 'configuracoes'];
@@ -163,7 +170,86 @@
   /* ════════════════════════════════════════════════════════════
      VIEW: ALUNOS
   ════════════════════════════════════════════════════════════ */
+  function bindIntegratedCsvActions() {
+    const input = document.getElementById('al-csv-file');
+    const importBtn = document.getElementById('al-import-csv');
+    const exportBtn = document.getElementById('al-export-csv');
+    const status = document.getElementById('al-import-status');
+
+    function showStatus(message, isError) {
+      if (!status) return;
+      status.classList.toggle('is-error', Boolean(isError));
+      status.style.display = 'block';
+      status.innerHTML = message;
+    }
+
+    if (importBtn && input && !importBtn.dataset.csvBound) {
+      importBtn.dataset.csvBound = 'true';
+      importBtn.addEventListener('click', () => input.click());
+      input.addEventListener('change', async () => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+
+        if (!file.name.toLowerCase().endsWith('.csv')) {
+          showStatus('Escolha um arquivo no formato <strong>.csv</strong>.', true);
+          input.value = '';
+          return;
+        }
+
+        try {
+          importBtn.disabled = true;
+          importBtn.innerHTML = '<i class="ti ti-loader-2" style="font-size:13px;"></i> Importando...';
+          const result = await window.PulseApi.importarAlunosCsv(await file.text());
+          const data = result.data;
+          const erros = data.erros?.length ? ` ${data.erros.length} linha(s) com erro.` : '';
+
+          showStatus(
+            `<strong>CSV processado:</strong> ${data.importados} novo(s), ${data.atualizados} atualizado(s), ${data.ignorados} ignorado(s).${erros}`,
+            false
+          );
+
+          if (window.refreshListaAlunosView) {
+            await window.refreshListaAlunosView();
+          }
+        } catch (error) {
+          showStatus(error.message || 'Não foi possível importar o CSV.', true);
+        } finally {
+          importBtn.disabled = false;
+          importBtn.innerHTML = '<i class="ti ti-upload" style="font-size:13px;"></i> Importar CSV';
+          input.value = '';
+        }
+      });
+    }
+
+    if (exportBtn && !exportBtn.dataset.csvBound) {
+      exportBtn.dataset.csvBound = 'true';
+      exportBtn.addEventListener('click', async () => {
+        try {
+          exportBtn.disabled = true;
+          exportBtn.innerHTML = '<i class="ti ti-loader-2" style="font-size:13px;"></i> Exportando...';
+          const blob = await window.PulseApi.exportarAlunosCsv();
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'alunos.csv';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+          showStatus('<strong>Exportação pronta:</strong> o arquivo alunos.csv foi gerado.', false);
+        } catch (error) {
+          showStatus(error.message || 'Não foi possível exportar o CSV.', true);
+        } finally {
+          exportBtn.disabled = false;
+          exportBtn.innerHTML = '<i class="ti ti-download" style="font-size:13px;"></i> Exportar CSV';
+        }
+      });
+    }
+  }
+
   function initAlunosView() {
+    bindIntegratedCsvActions();
+
     if (window.initListaAlunosView) {
       window.initListaAlunosView({ onSelect: openStudentProfile });
       return;
@@ -961,12 +1047,18 @@
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
-  async function fetchPerfilOptions() {
-    const response = await fetch(`${GESTOR_API_BASE}/alunos/opcoes-cadastro`);
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível carregar as opções do aluno.');
+  function normalizePrograma(value) {
+    const normalized = normalizeToken(value || '');
+    if (!normalized || normalized === 'nao_informado' || normalized === 'sem_programa') {
+      return 'nao_informado';
     }
+    if (normalized.includes('mentoria')) return 'Mentoria';
+    if (normalized.includes('pulse_mais')) return 'Programa Pulse Mais';
+    return 'nao_informado';
+  }
+
+  async function fetchPerfilOptions() {
+    const body = await gestorApi().get('/alunos/opcoes-cadastro');
     return body.data || {};
   }
 
@@ -992,12 +1084,16 @@
     overlay.querySelectorAll('select[data-pf-option-field]').forEach((select) => {
       const optionField = select.dataset.pfOptionField;
       const dataField = select.dataset.pfField;
-      const currentValue = aluno[dataField];
+      const currentValue = optionField === 'programa'
+        ? normalizePrograma(aluno[dataField])
+        : aluno[dataField];
       const sourceValues = Array.isArray(perfilOptions?.[optionField]) ? perfilOptions[optionField] : [];
-      const values = [...new Set([
-        ...sourceValues,
-        ...(currentValue ? [currentValue] : [])
-      ].filter(Boolean))];
+      const values = optionField === 'programa'
+        ? ['Mentoria', 'nao_informado', 'Programa Pulse Mais']
+        : [...new Set([
+          ...sourceValues,
+          ...(currentValue ? [currentValue] : [])
+        ].filter(Boolean))];
 
       select.innerHTML = '<option value="">Não informado</option>';
       values.forEach((value) => {
@@ -1084,7 +1180,7 @@
     setPerfilInput('pf-course', curso === 'Curso nao informado' ? '' : curso);
     setPerfilInput('pf-escolaridade', aluno.escolaridade);
     setPerfilInput('pf-ocupacao', aluno.ocupacao);
-    setPerfilInput('pf-programa', programa);
+    setPerfilInput('pf-programa', normalizePrograma(programa));
     setPerfilInput('pf-perfil-socioeconomico', aluno.perfilSocioeconomico);
     setPerfilInput('pf-renda-mensal', aluno.rendaMensal);
     setPerfilInput('pf-nivel-jornada', aluno.nivelJornada);
@@ -1168,15 +1264,7 @@
   }
 
   async function updatePerfilAluno(idAluno, payload) {
-    const response = await fetch(`${GESTOR_API_BASE}/alunos/${idAluno}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível atualizar o aluno.');
-    }
+    const body = await gestorApi().patch(`/alunos/${idAluno}`, payload);
     return body.data;
   }
 
@@ -1206,46 +1294,22 @@
   }
 
   async function fetchAtividades() {
-    const response = await fetch(`${GESTOR_API_BASE}/atividades`);
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível carregar as atividades.');
-    }
+    const body = await gestorApi().get('/atividades');
     return body.data.atividades || [];
   }
 
   async function fetchJornadaAluno(idAluno) {
-    const response = await fetch(`${GESTOR_API_BASE}/jornada/alunos/${idAluno}`);
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível carregar notas e presença do aluno.');
-    }
+    const body = await gestorApi().get(`/jornada/alunos/${idAluno}`);
     return body.data;
   }
 
   async function registrarFrequencia(payload) {
-    const response = await fetch(`${GESTOR_API_BASE}/frequencias`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível registrar a frequência.');
-    }
+    const body = await gestorApi().post('/frequencias', payload);
     return body.data;
   }
 
   async function registrarParticipacaoEvento(payload) {
-    const response = await fetch(`${GESTOR_API_BASE}/participacoes`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok || !body.success) {
-      throw new Error(body.message || 'Não foi possível registrar a participação.');
-    }
+    const body = await gestorApi().post('/participacoes', payload);
     return body.data;
   }
 
