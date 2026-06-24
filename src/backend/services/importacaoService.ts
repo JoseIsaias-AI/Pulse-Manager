@@ -1,5 +1,6 @@
 import { AlunoRecord, AtualizarAlunoPayload, CriarAlunoPayload } from '../repositories/alunoRepository';
 import { ImportacaoRepository } from '../repositories/importacaoRepository';
+import { RiscoEvasao, StatusAluno } from '../models/alunoModel';
 import { parseCsv, toCsv } from '../utils/csv';
 import { PayloadValidationError } from '../utils/errors';
 
@@ -23,16 +24,25 @@ const STATUS = new Set(['ativo', 'inativo', 'egresso', 'desligado', 'em_acompanh
 
 const CSV_HEADERS = [
   'codigoPm',
+  'cpf',
   'nome',
   'email',
   'telefone',
   'idade',
   'genero',
   'ocupacao',
+  'tipoVinculoEmpregaticio',
+  'rendaMensal',
   'escolaridade',
+  'instituicaoEnsinoSuperior',
+  'cursoEnsinoSuperior',
+  'statusEnsinoSuperior',
+  'dataIngressoEnsinoSuperior',
   'dataIngresso',
   'programa',
   'categoria',
+  'riscoEvasao',
+  'engajamento',
   'status',
   'nivelJornada',
   'perfilSocioeconomico',
@@ -42,6 +52,7 @@ const CSV_HEADERS = [
 
 const NOME_KEYS = ['nome', 'name', 'column_17', 'nome_e_sobrenome', 'nome_e_sobrenome_aluno', 'aluno', 'estudante'];
 const EMAIL_KEYS = ['email', 'e_mail'];
+const CPF_KEYS = ['cpf', 'documento', 'numero_cpf'];
 const TELEFONE_KEYS = ['telefone', 'phone', 'celular', 'whatsapp'];
 const PROGRAMA_KEYS = ['programa', 'programa_capacitado'];
 const CATEGORIA_KEYS = ['categoria'];
@@ -54,9 +65,14 @@ const DEFAULT_CATEGORIA = 'sem_categoria';
 const MAX_LENGTHS = {
   nome: 150,
   email: 255,
+  cpf: 11,
   telefone: 30,
   ocupacao: 150,
+  tipoVinculoEmpregaticio: 50,
   escolaridade: 100,
+  instituicaoEnsinoSuperior: 150,
+  cursoEnsinoSuperior: 150,
+  statusEnsinoSuperior: 50,
   programa: 120,
   categoria: 60,
   nivelJornada: 50,
@@ -93,9 +109,14 @@ function trimPayloadToSchema(payload: AlunoImportPayload, applyDefaults = false)
     ...payload,
     nome: truncate(payload.nome, MAX_LENGTHS.nome) || payload.nome,
     email: truncate(payload.email, MAX_LENGTHS.email) || payload.email,
+    cpf: truncate(payload.cpf, MAX_LENGTHS.cpf),
     telefone: truncate(payload.telefone, MAX_LENGTHS.telefone),
     ocupacao: truncate(payload.ocupacao, MAX_LENGTHS.ocupacao),
+    tipoVinculoEmpregaticio: truncate(payload.tipoVinculoEmpregaticio, MAX_LENGTHS.tipoVinculoEmpregaticio),
     escolaridade: truncate(payload.escolaridade, MAX_LENGTHS.escolaridade),
+    instituicaoEnsinoSuperior: truncate(payload.instituicaoEnsinoSuperior, MAX_LENGTHS.instituicaoEnsinoSuperior),
+    cursoEnsinoSuperior: truncate(payload.cursoEnsinoSuperior, MAX_LENGTHS.cursoEnsinoSuperior),
+    statusEnsinoSuperior: truncate(payload.statusEnsinoSuperior, MAX_LENGTHS.statusEnsinoSuperior),
     programa: truncate(payload.programa || (applyDefaults ? DEFAULT_PROGRAMA : undefined), MAX_LENGTHS.programa),
     categoria: truncate(payload.categoria || (applyDefaults ? DEFAULT_CATEGORIA : undefined), MAX_LENGTHS.categoria),
     nivelJornada: truncate(payload.nivelJornada, MAX_LENGTHS.nivelJornada),
@@ -137,6 +158,12 @@ function parseOptionalNumber(value: string | undefined): number | undefined {
   return Number.isFinite(numeric) ? numeric : Number.NaN;
 }
 
+function parseOptionalCpf(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  const digits = value.replace(/\D/g, '');
+  return digits || undefined;
+}
+
 function parseOptionalDate(value: string | undefined): string | undefined {
   if (!value) return undefined;
 
@@ -163,14 +190,18 @@ function parseOptionalDate(value: string | undefined): string | undefined {
 function buildAlunoPayload(row: Record<string, string>, lineNumber: number): AlunoImportPayload {
   const nome = firstValue(row, NOME_KEYS);
   const rawEmail = firstValue(row, EMAIL_KEYS);
+  const cpf = parseOptionalCpf(firstValue(row, CPF_KEYS));
   const telefone = firstValue(row, TELEFONE_KEYS);
   const idade = parseOptionalNumber(firstValue(row, ['idade', 'age']));
+  const rendaMensal = parseOptionalNumber(firstValue(row, ['renda_mensal', 'rendamensal', 'renda']));
+  const engajamento = parseOptionalNumber(firstValue(row, ['engajamento']));
   const genero = normalizeEnum(firstValue(row, ['genero', 'gender']));
   const status = normalizeEnum(firstValue(row, ['status', 'situacao']));
+  const riscoEvasao = normalizeEnum(firstValue(row, ['risco_evasao', 'riscoevasao', 'risco']));
   const eventoConectado = firstValue(row, ORIGEM_KEYS);
   const transformado = firstValue(row, TRANSFORMADO_KEYS);
 
-    if (!nome) {
+  if (!nome) {
     throw new PayloadValidationError(`Linha ${lineNumber}: o campo nome é obrigatório.`);
   }
 
@@ -192,18 +223,41 @@ function buildAlunoPayload(row: Record<string, string>, lineNumber: number): Alu
     throw new PayloadValidationError(`Linha ${lineNumber}: status inválido.`);
   }
 
+  if (cpf && cpf.length !== 11) {
+    throw new PayloadValidationError(`Linha ${lineNumber}: o CPF deve conter 11 dígitos.`);
+  }
+
+  if (riscoEvasao && !['baixo', 'medio', 'alto'].includes(riscoEvasao)) {
+    throw new PayloadValidationError(`Linha ${lineNumber}: risco de evasão inválido.`);
+  }
+
+  if (engajamento !== undefined && (!Number.isInteger(engajamento) || engajamento < 0 || engajamento > 100)) {
+    throw new PayloadValidationError(`Linha ${lineNumber}: o engajamento deve ser um número inteiro entre 0 e 100.`);
+  }
+
   const payload: AlunoImportPayload = {
     nome,
     email: email.toLowerCase(),
+    cpf,
     telefone,
     idade,
     genero,
     ocupacao: firstValue(row, ['ocupacao', 'profissao']),
+    tipoVinculoEmpregaticio: firstValue(row, ['tipo_vinculo_empregaticio', 'tipovinculoempregaticio']),
+    rendaMensal,
     escolaridade: firstValue(row, ['escolaridade']),
+    instituicaoEnsinoSuperior: firstValue(row, ['instituicao_ensino_superior', 'instituicaoensinosuperior']),
+    cursoEnsinoSuperior: firstValue(row, ['curso_ensino_superior', 'cursoensinosuperior']),
+    statusEnsinoSuperior: firstValue(row, ['status_ensino_superior', 'statusensinosuperior']),
+    dataIngressoEnsinoSuperior: parseOptionalDate(
+      firstValue(row, ['data_ingresso_ensino_superior', 'dataingressoensinosuperior'])
+    ),
     dataIngresso: parseOptionalDate(firstValue(row, DATA_INGRESSO_KEYS)),
     programa: firstValue(row, PROGRAMA_KEYS),
     categoria: firstValue(row, CATEGORIA_KEYS),
-    status,
+    riscoEvasao: riscoEvasao as RiscoEvasao | undefined,
+    engajamento,
+    status: status as StatusAluno | undefined,
     nivelJornada: firstValue(row, ['nivel_jornada', 'niveljornada']),
     perfilSocioeconomico: firstValue(row, ['perfil_socioeconomico', 'perfilsocioeconomico']),
     curso: firstValue(row, CURSO_KEYS),
@@ -226,14 +280,23 @@ function mergePayload(current: AlunoImportPayload | undefined, next: AlunoImport
     ...current,
     nome: current.nome || next.nome,
     email: current.email || next.email,
+    cpf: current.cpf || next.cpf,
     telefone: current.telefone || next.telefone,
     idade: current.idade ?? next.idade,
     genero: current.genero || next.genero,
     ocupacao: current.ocupacao || next.ocupacao,
+    tipoVinculoEmpregaticio: current.tipoVinculoEmpregaticio || next.tipoVinculoEmpregaticio,
+    rendaMensal: current.rendaMensal ?? next.rendaMensal,
     escolaridade: current.escolaridade || next.escolaridade,
+    instituicaoEnsinoSuperior: current.instituicaoEnsinoSuperior || next.instituicaoEnsinoSuperior,
+    cursoEnsinoSuperior: current.cursoEnsinoSuperior || next.cursoEnsinoSuperior,
+    statusEnsinoSuperior: current.statusEnsinoSuperior || next.statusEnsinoSuperior,
+    dataIngressoEnsinoSuperior: current.dataIngressoEnsinoSuperior || next.dataIngressoEnsinoSuperior,
     dataIngresso: [current.dataIngresso, next.dataIngresso].filter(Boolean).sort()[0],
     programa: joinDistinct(current.programa, next.programa),
     categoria: joinDistinct(current.categoria, next.categoria),
+    riscoEvasao: current.riscoEvasao || next.riscoEvasao,
+    engajamento: current.engajamento ?? next.engajamento,
     status: current.status || next.status,
     nivelJornada: joinDistinct(current.nivelJornada, next.nivelJornada),
     perfilSocioeconomico: current.perfilSocioeconomico || next.perfilSocioeconomico,
@@ -245,16 +308,25 @@ function mergePayload(current: AlunoImportPayload | undefined, next: AlunoImport
 function alunoToCsvRow(aluno: AlunoRecord): Record<string, unknown> {
   return {
     codigoPm: aluno.codigoPm,
+    cpf: aluno.cpf,
     nome: aluno.nome,
     email: aluno.email,
     telefone: aluno.telefone,
     idade: aluno.idade,
     genero: aluno.genero,
     ocupacao: aluno.ocupacao,
+    tipoVinculoEmpregaticio: aluno.tipoVinculoEmpregaticio,
+    rendaMensal: aluno.rendaMensal,
     escolaridade: aluno.escolaridade,
+    instituicaoEnsinoSuperior: aluno.instituicaoEnsinoSuperior,
+    cursoEnsinoSuperior: aluno.cursoEnsinoSuperior,
+    statusEnsinoSuperior: aluno.statusEnsinoSuperior,
+    dataIngressoEnsinoSuperior: aluno.dataIngressoEnsinoSuperior,
     dataIngresso: aluno.dataIngresso,
     programa: aluno.programa,
     categoria: aluno.categoria,
+    riscoEvasao: aluno.riscoEvasao,
+    engajamento: aluno.engajamento,
     status: aluno.status,
     nivelJornada: aluno.nivelJornada,
     perfilSocioeconomico: aluno.perfilSocioeconomico,
@@ -301,14 +373,20 @@ export class ImportacaoService {
     }
 
     for (const payloadImportado of alunosPorEmail.values()) {
-      const payload = trimPayloadToSchema(payloadImportado, true);
-      const alunoExistente = await this.repository.buscarAlunoPorEmail(payload.email);
+      const payloadAtualizacao = trimPayloadToSchema(payloadImportado);
+      const alunoPorEmail = await this.repository.buscarAlunoPorEmail(payloadAtualizacao.email);
+      const alunoExistente = alunoPorEmail || (
+        payloadAtualizacao.cpf
+          ? await this.repository.buscarAlunoPorCpf(payloadAtualizacao.cpf)
+          : null
+      );
 
       if (alunoExistente) {
-        await this.repository.atualizarAluno(alunoExistente.idAluno, payload);
+        await this.repository.atualizarAluno(alunoExistente.idAluno, payloadAtualizacao);
         resumo.atualizados += 1;
       } else {
-        await this.repository.criarAluno(payload as CriarAlunoPayload);
+        const payloadCriacao = trimPayloadToSchema(payloadImportado, true);
+        await this.repository.criarAluno(payloadCriacao as CriarAlunoPayload);
         resumo.importados += 1;
       }
     }

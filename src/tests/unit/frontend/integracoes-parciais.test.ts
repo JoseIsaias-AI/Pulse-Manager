@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 const spaPsicologo = readFileSync('src/frontend/js/pages/spaPsicologo.js', 'utf8');
 const comunicacao = readFileSync('src/frontend/js/pages/comunicacao.js', 'utf8');
 const gestorHtml = readFileSync('src/frontend/pages/gestorApp.html', 'utf8');
-const psicologoHtml = readFileSync('src/frontend/pages/psicologoApp.html').toString('utf16le');
+const psicologoHtml = readFileSync('src/frontend/pages/psicologoApp.html', 'utf8');
 
 describe('Integrações concluídas de histórico e comunicação', () => {
   it('usa data.alunos na lista real do psicólogo', () => {

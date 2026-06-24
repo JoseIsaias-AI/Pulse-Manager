@@ -16,6 +16,10 @@ export class ImportacaoRepository {
     return this.alunoRepository.findOneByEmail(email);
   }
 
+  buscarAlunoPorCpf(cpf: string): Promise<AlunoRecord | null> {
+    return this.alunoRepository.findOneByCpf(cpf);
+  }
+
   criarAluno(payload: CriarAlunoPayload): Promise<AlunoRecord> {
     return this.alunoRepository.create(payload);
   }

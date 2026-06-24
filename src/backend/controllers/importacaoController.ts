@@ -9,7 +9,7 @@ export class ImportacaoController {
     try {
       const csv = req.body?.csv ?? req.body?.conteudoCsv;
       const result = await this.service.importarAlunosCsv(csv);
-      res.status(200).json(result);
+      res.status(200).json({ ...result, message: 'Arquivo CSV importado com sucesso.' });
     } catch (error) {
       this.handle(error, res, next);
     }
@@ -47,10 +47,10 @@ export class ImportacaoController {
 
   private handle(error: unknown, res: Response, next: NextFunction): void {
     if (error instanceof AppError) {
-      res.status(error.statusCode).json({ success: false, message: error.message });
+      res.status(error.statusCode).json({ success: false, data: null, message: error.message });
       return;
     }
     const message = this.traduzirMensagemErro(error);
-    res.status(500).json({ success: false, message });
+    res.status(500).json({ success: false, data: null, message });
   }
 }

@@ -170,7 +170,86 @@
   /* ════════════════════════════════════════════════════════════
      VIEW: ALUNOS
   ════════════════════════════════════════════════════════════ */
+  function bindIntegratedCsvActions() {
+    const input = document.getElementById('al-csv-file');
+    const importBtn = document.getElementById('al-import-csv');
+    const exportBtn = document.getElementById('al-export-csv');
+    const status = document.getElementById('al-import-status');
+
+    function showStatus(message, isError) {
+      if (!status) return;
+      status.classList.toggle('is-error', Boolean(isError));
+      status.style.display = 'block';
+      status.innerHTML = message;
+    }
+
+    if (importBtn && input && !importBtn.dataset.csvBound) {
+      importBtn.dataset.csvBound = 'true';
+      importBtn.addEventListener('click', () => input.click());
+      input.addEventListener('change', async () => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+
+        if (!file.name.toLowerCase().endsWith('.csv')) {
+          showStatus('Escolha um arquivo no formato <strong>.csv</strong>.', true);
+          input.value = '';
+          return;
+        }
+
+        try {
+          importBtn.disabled = true;
+          importBtn.innerHTML = '<i class="ti ti-loader-2" style="font-size:13px;"></i> Importando...';
+          const result = await window.PulseApi.importarAlunosCsv(await file.text());
+          const data = result.data;
+          const erros = data.erros?.length ? ` ${data.erros.length} linha(s) com erro.` : '';
+
+          showStatus(
+            `<strong>CSV processado:</strong> ${data.importados} novo(s), ${data.atualizados} atualizado(s), ${data.ignorados} ignorado(s).${erros}`,
+            false
+          );
+
+          if (window.refreshListaAlunosView) {
+            await window.refreshListaAlunosView();
+          }
+        } catch (error) {
+          showStatus(error.message || 'Não foi possível importar o CSV.', true);
+        } finally {
+          importBtn.disabled = false;
+          importBtn.innerHTML = '<i class="ti ti-upload" style="font-size:13px;"></i> Importar CSV';
+          input.value = '';
+        }
+      });
+    }
+
+    if (exportBtn && !exportBtn.dataset.csvBound) {
+      exportBtn.dataset.csvBound = 'true';
+      exportBtn.addEventListener('click', async () => {
+        try {
+          exportBtn.disabled = true;
+          exportBtn.innerHTML = '<i class="ti ti-loader-2" style="font-size:13px;"></i> Exportando...';
+          const blob = await window.PulseApi.exportarAlunosCsv();
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'alunos.csv';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+          showStatus('<strong>Exportação pronta:</strong> o arquivo alunos.csv foi gerado.', false);
+        } catch (error) {
+          showStatus(error.message || 'Não foi possível exportar o CSV.', true);
+        } finally {
+          exportBtn.disabled = false;
+          exportBtn.innerHTML = '<i class="ti ti-download" style="font-size:13px;"></i> Exportar CSV';
+        }
+      });
+    }
+  }
+
   function initAlunosView() {
+    bindIntegratedCsvActions();
+
     if (window.initListaAlunosView) {
       window.initListaAlunosView({ onSelect: openStudentProfile });
       return;
@@ -300,83 +379,6 @@
     }
 
     /* ── Botões de filtro e ordenação ──────────────────────── */
-    function setImportStatus(message, isError) {
-      const status = document.getElementById('al-import-status');
-      if (!status) return;
-      status.classList.toggle('is-error', Boolean(isError));
-      status.style.display = 'block';
-      status.innerHTML = message;
-    }
-
-    function downloadBlob(blob, fileName) {
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
-    }
-
-    function bindCsvActions() {
-      const input = document.getElementById('al-csv-file');
-      const importBtn = document.getElementById('al-import-csv');
-      const exportBtn = document.getElementById('al-export-csv');
-
-      if (importBtn && input) {
-        importBtn.addEventListener('click', () => input.click());
-        input.addEventListener('change', async () => {
-          const file = input.files && input.files[0];
-          if (!file) return;
-
-          if (!file.name.toLowerCase().endsWith('.csv')) {
-            setImportStatus('Escolha um arquivo no formato <strong>.csv</strong>.', true);
-            input.value = '';
-            return;
-          }
-
-          try {
-            importBtn.disabled = true;
-            importBtn.innerHTML = '<i class="ti ti-loader-2" style="font-size:13px;"></i> Importando...';
-            const csv = await file.text();
-            const result = await window.PulseApi.importarAlunosCsv(csv);
-            const data = result.data;
-            const erros = data.erros && data.erros.length
-              ? ` ${data.erros.length} linha(s) com erro.`
-              : '';
-            setImportStatus(
-              `<strong>CSV processado:</strong> ${data.importados} novo(s), ${data.atualizados} atualizado(s), ${data.ignorados} ignorado(s).${erros}`,
-              false
-            );
-          } catch (error) {
-            setImportStatus(error.message || 'Não foi possível importar o CSV.', true);
-          } finally {
-            importBtn.disabled = false;
-            importBtn.innerHTML = '<i class="ti ti-upload" style="font-size:13px;"></i> Importar CSV';
-            input.value = '';
-          }
-        });
-      }
-
-      if (exportBtn) {
-        exportBtn.addEventListener('click', async () => {
-          try {
-            exportBtn.disabled = true;
-            exportBtn.innerHTML = '<i class="ti ti-loader-2" style="font-size:13px;"></i> Exportando...';
-            const blob = await window.PulseApi.exportarAlunosCsv();
-            downloadBlob(blob, 'alunos.csv');
-            setImportStatus('<strong>Exportação pronta:</strong> o arquivo alunos.csv foi gerado.', false);
-          } catch (error) {
-            setImportStatus(error.message || 'Não foi possível exportar o CSV.', true);
-          } finally {
-            exportBtn.disabled = false;
-            exportBtn.innerHTML = '<i class="ti ti-download" style="font-size:13px;"></i> Exportar CSV';
-          }
-        });
-      }
-    }
-
     const btnCurso  = document.getElementById('btn-curso');
     const btnDesemp = document.getElementById('btn-desemp');
     const btnNota   = document.getElementById('btn-nota');
@@ -446,7 +448,6 @@
     /* ── Paginação ──────────────────────────────────────────── */
     document.getElementById('al-prev').addEventListener('click', () => renderPage(curPage - 1));
     document.getElementById('al-next').addEventListener('click', () => renderPage(curPage + 1));
-    bindCsvActions();
     renderPage(1);
   }
 
