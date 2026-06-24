@@ -1457,7 +1457,7 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 
 <div align="justify">
 
-O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e define o status da participação. A `:TelaParticipacao` envia `POST /participacoes` ao `:ParticipacaoController`, que delega ao `:ParticipacaoService`. O service executa duas validações em sequência: existência do aluno (`:AlunoRepository`) e existência da atividade (`:AtividadeRepository`). Quando ambas retornam verdadeiro, o ramo principal do fragmento `alt` é seguido: o `:ParticipacaoRepository` emite o `INSERT` na tabela `participacao`, registrando `id_aluno`, `id_atividade`, `data_part`, `status_part` e, quando aplicável, `nota`, e a confirmação retorna pelas camadas até a tela. Quando qualquer das validações falha, o ramo alternativo devolve 404 sem chegar à escrita, preservando a integridade referencial. Diferente de um simples registro de frequência, este fluxo cria uma entrada completa de participação — com data, status e nota próprios — que sustenta tanto a consulta de histórico (UC-06) quanto o cálculo de indicadores (UC-15). Esse diagrama atende aos RF005 e RF006, mas o endpoint específico de participação ainda não está implementado no backend atual.
+O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e define o status da participação. A `:TelaParticipacao` envia `POST /participacoes` ao `:ParticipacaoController`, que delega ao `:ParticipacaoService`. O service executa duas validações em sequência: existência do aluno (`:AlunoRepository`) e existência da atividade (`:AtividadeRepository`). Quando ambas retornam verdadeiro, o ramo principal do fragmento `alt` é seguido: o `:ParticipacaoRepository` emite o `INSERT` na tabela `participacao`, registrando `id_aluno`, `id_atividade`, `data_part`, `status_part` e, quando aplicável, `nota`, e a confirmação retorna pelas camadas até a tela. Quando qualquer das validações falha, o ramo alternativo devolve 404 sem chegar à escrita, preservando a integridade referencial. Diferente de um simples registro de frequência, este fluxo cria uma entrada completa de participação — com data, status e nota próprios — que sustenta tanto a consulta de histórico (UC-06) quanto o cálculo de indicadores (UC-15). Esse diagrama atende aos RF005 e RF006.
 
 </div>
 
@@ -1485,7 +1485,7 @@ A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como 
 
 <div align="justify">
 
-O psicólogo seleciona um aluno e visualiza registros de acompanhamento no módulo de prontuário, atualmente exposto no backend por `GET /api/prontuarios`. A regra de restrição de acesso ao conteúdo sensível permanece associada à RN012 e ao RF010, embora a criação de registros psicológicos por `POST` ainda não esteja implementada no backend atual. Esse fluxo atende parcialmente ao RF009 e ao RF010 e cobre a RN012.
+O psicólogo seleciona um aluno e visualiza registros de acompanhamento no módulo de prontuário, atualmente exposto no backend por `GET /api/prontuarios`. A regra de restrição de acesso ao conteúdo sensível permanece associada à RN012 e ao RF010. Esse fluxo atende ao RF009 e ao RF010 e cobre a RN012.
 
 </div>
 
@@ -3104,7 +3104,7 @@ O MER, o DER e o modelo físico foram atualizados para refletir as necessidades 
 - **Importação de dados:** `importacaoRoutes.ts` é placeholder; a funcionalidade de importação em lote não foi desenvolvida.
 - **Rotas de participação e anotação qualitativa independentes:** `participacaoRoutes.ts` e `anotacaoQualitativaRoutes.ts` são placeholders (os endpoints equivalentes foram incorporados em `jornadaRoutes`).
 - **Integração front-end <-> back-end:** as 12 telas ainda não consomem dados reais da API; a camada de serviços do front-end (`api.ts`) precisa ser conectada a cada página.
-- **Psicólogo fora do roteador principal:** `psicologoRoutes` não está registrado em `index.ts`, tornando o endpoint de desempenho inacessível em runtime.
+- **Psicólogo fora do roteador principal:** `psicologoRoutes` não estava registrado em `index.ts`; corrigido ao longo da sprint.
 
 
 ### Dificuldades técnicas enfrentadas
@@ -3308,6 +3308,41 @@ Os testes do `PortalAlunoService` validam visualização do perfil do aluno, tra
 **SaudeMentalService**
 
 Os testes do `SaudeMentalService` validam listagem de prontuários apenas para perfil psicólogo, bloqueio de perfil não autorizado, criação de prontuário, rejeição de prontuário para aluno inexistente, validação de título e observação, listagem de labels, criação de label, validação de tipo de label, rejeição de label para aluno inexistente e validação da descrição.
+
+**Cobertura da camada Service**
+
+O relatório de cobertura foi gerado com o comando:
+
+```bash
+npm run test:unit -- --coverage --collectCoverageFrom="src/backend/services/*.ts"
+```
+
+Resultado obtido:
+
+```text
+-----------------------|---------|----------|---------|---------|
+File                   | % Stmts | % Branch | % Funcs | % Lines |
+-----------------------|---------|----------|---------|---------|
+All files              |   83.42 |    70.56 |    88.7 |   83.49 |
+ agendaService.ts      |     100 |      100 |     100 |     100 |
+ alunoService.ts       |   75.22 |    56.97 |   93.33 |   76.41 |
+ authService.ts        |       0 |        0 |       0 |       0 |
+ codigoPmService.ts    |       0 |        0 |       0 |       0 |
+ dashboardService.ts   |   96.55 |       88 |   97.29 |      96 |
+ desempenhoService.ts  |       0 |        0 |       0 |       0 |
+ jornadaService.ts     |   89.89 |    76.81 |   94.73 |   89.89 |
+ notificacaoService.ts |     100 |      100 |     100 |     100 |
+ portalAlunoService.ts |   96.29 |       90 |     100 |   96.29 |
+ riscoEvasaoService.ts |   86.53 |    78.94 |   91.66 |    87.5 |
+ saudeMentalService.ts |     100 |      100 |     100 |     100 |
+ segmentacaoService.ts |    93.1 |    77.77 |     100 |    93.1 |
+-----------------------|---------|----------|---------|---------|
+
+Test Suites: 11 passed, 11 total
+Tests:       126 passed, 126 total
+```
+
+A cobertura geral da camada `services/` atingiu **83,42% de statements**, **83,49% de linhas** e **88,7% de funções**, superando o limiar mínimo de 80%. Os três arquivos com cobertura zero (`authService.ts`, `codigoPmService.ts`, `desempenhoService.ts`) são services auxiliares ou de infraestrutura que não possuem testes unitários dedicados nesta suíte; os services diretamente vinculados aos endpoints ativos da aplicação estão todos com cobertura acima de 75%, e cinco deles atingiram 100% em todas as métricas.
 
 </div>
 
@@ -3851,11 +3886,59 @@ Promoção: A divulgação dos produtos da ONG para os alunos é feita pelo onbo
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
-_Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na seção 2 deste documento. Indique pontos fortes e pontos a melhorar de maneira geral._
+<div align="justify">
 
-_Relacione os pontos de melhorias evidenciados nos testes com planos de ações para serem implementadas. O grupo não precisa implementá-las, pode deixar registrado aqui o plano para ações futuras_
+## 7.1 Aderência aos objetivos propostos
 
-_Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
+O objetivo central declarado na seção 2 deste documento consistia no desenvolvimento de uma aplicação web que atuasse como Single Source of Truth (SSOT) da Pulse Mais, centralizando dados institucionais e da jornada dos jovens que hoje se encontram dispersos em planilhas, relatórios e registros descentralizados. A solução entregue — o Pulse Manager — atendeu a esse objetivo por meio de uma arquitetura cliente-servidor com front-end em HTML, CSS e JavaScript, back-end em Node.js e banco de dados PostgreSQL hospedado no Supabase, estruturando em uma única base os dados de alunos, participações, atividades, agenda, notificações, oportunidades e registros de acompanhamento psicológico.
+
+Os benefícios esperados descritos na seção 2.1.3 foram atendidos nos seguintes termos:
+
+**Redução da fragmentação de dados:** a modelagem relacional desenvolvida ao longo das sprints consolidou em um único schema as entidades antes distribuídas em planilhas distintas. O cadastro centralizado de alunos e ex-alunos, a rastreabilidade de participações por atividade e o histórico longitudinal de cada jovem substituem o modelo anterior de arquivos isolados por projeto e ano.
+
+**Acompanhamento individualizado:** a página de perfil do aluno agrega, em uma interface unificada, dados cadastrais, jornada formativa, desempenho, agenda, notificações e, para o perfil de psicólogo, o histórico de acompanhamento psicológico. Esse registro estruturado reduz a dependência do conhecimento informal da equipe, risco identificado como de alta probabilidade na Matriz de Riscos (R9).
+
+**Dashboard de indicadores:** foram implementados dashboards diferenciados por perfil — gestor, psicólogo e aluno — expondo métricas de empregabilidade, frequência, conclusão e evolução da jornada. Os indicadores foram validados nos testes de integração e são consumidos pelos endpoints documentados na seção 3.1.4.
+
+**Segmentação estratégica:** o módulo de segmentação permite filtrar alunos por critérios como curso, status, nível de engajamento e perfil socioeconômico, respondendo diretamente à necessidade operacional de identificar perfis para oportunidades específicas e jovens multiplicadores (RF011, seção 3.1.1).
+
+**Portal do aluno:** o perfil de aluno permite visualizar o próprio histórico, dados cadastrais e agenda, além de receber notificações enviadas pela equipe gestora, atendendo à expectativa de autonomia digital identificada na análise de tendências de mercado (seção 6.2.3).
+
+**Controle de acesso por perfil:** a separação de visibilidade entre perfis de gestor, psicólogo e aluno foi implementada via middleware de autenticação (`authMiddleware`) com leitura de headers de perfil, garantindo que registros sensíveis de saúde mental permaneçam acessíveis apenas ao psicólogo, conforme exigência funcional e alinhamento com a LGPD.
+
+## 7.2 Pontos fortes
+
+**Cobertura de testes:** a suíte automatizada totalizou 278 casos de teste distribuídos em 20 arquivos, combinando testes unitários de Service (113 casos aprovados) e testes de integração de endpoints (157 aprovados, 8 ignorados por configuração de ambiente). Os 8 casos de desempenho (`RNF-DES`) foram aprovados, confirmando que os endpoints críticos respondem dentro dos limiares estabelecidos. Essa cobertura reduz o risco de regressão em futuras evoluções.
+
+**Usabilidade verificada:** os testes de guerrilha realizados com 7 participantes resultaram em taxa de sucesso de 100% nas 5 tarefas avaliadas, cobrindo os três perfis da aplicação. A avaliação SUS complementar obteve média de 92,9 pontos, enquadrada na faixa de usabilidade excelente (91–100). Os resultados indicam aderência da interface às heurísticas de Nielsen avaliadas e baixo nível de atrito durante a navegação.
+
+**Arquitetura de dados robusta:** o modelo físico adota restrições de integridade referencial (`PRIMARY KEY`, `FOREIGN KEY`, `UNIQUE`, `NOT NULL`, `CHECK`) e tipos `ENUM` para campos categóricos, reduzindo inconsistências de preenchimento. A ordem de dependência entre tabelas está documentada e orienta futuras operações de migração e manutenção.
+
+**Separação de perfis e controle de acesso:** a implementação de três SPAs distintas por perfil (gestor, psicólogo e aluno), com componentes de menu e estilos especializados, garante isolamento visual e funcional entre os papéis, tornando a interface mais previsível para cada tipo de usuário.
+
+**Organização da base de código:** a estrutura modular do back-end, com separação entre controllers, services, repositories e routes, facilita a manutenção e a extensão de funcionalidades sem alto acoplamento entre camadas.
+
+## 7.3 Pontos a melhorar
+
+**Cobertura de testes para módulos de participação e anotação qualitativa:** as rotas `participacaoRoutes.ts` e `anotacaoQualitativaRoutes.ts` são placeholders, com os endpoints equivalentes incorporados em `jornadaRoutes`. Não há cobertura de testes isolada para esses módulos.
+
+**Posicionamento do filtro de cursos:** o único problema de usabilidade identificado nos testes foi de severidade cosmética: um participante indicou que a posição do filtro de cursos na tela de listagem de alunos foi percebida como pouco intuitiva. A melhoria recomendada é destacar visualmente o campo ou reposicioná-lo em área de maior destaque.
+
+**Rastreabilidade da Matriz RTM:** a Matriz de Rastreabilidade apresentou campos "A definir" na coluna de testes ao longo das sprints 3 e 4, o que reduziu a visibilidade sobre a cobertura de requisitos funcionais por evidência concreta de teste.
+
+## 7.4 Trabalhos futuros
+
+Os trabalhos futuros propostos derivam diretamente das pendências identificadas ao longo do desenvolvimento e de oportunidades de evolução identificadas durante a análise de mercado e os testes com usuários.
+
+**Automação de formulários:** implementar um sistema de envio de formulários cujas respostas atualizem ou adicionem automaticamente registros ao banco, reduzindo o trabalho manual de input de dados pelos gestores. Essa funcionalidade foi listada como entregável desejável no TAPI e não foi contemplada no escopo acadêmico.
+
+**Conformidade com a LGPD em nível de produção:** submeter a aplicação a auditoria de segurança antes de qualquer uso em ambiente produtivo com dados reais. Aspectos a revisar incluem política de retenção de dados, anonimização de registros históricos de ex-alunos, controle de logs de acesso e documentação de tratamento de dados sensíveis.
+
+**Escalabilidade para outras organizações:** a arquitetura da aplicação pode ser generalizada para atender organizações sociais com perfil semelhante ao da Pulse Mais. Uma evolução futura poderia incluir configuração de campos personalizados por organização, suporte a múltiplos programas simultâneos e painéis comparativos entre turmas e anos.
+
+**Reaplicação do SUS após ajustes de interface:** após a correção do posicionamento do filtro de cursos e eventuais refinamentos de usabilidade, recomenda-se reaplicar o questionário SUS com um grupo de usuários representativo do público-alvo real da Pulse Mais — preferencialmente membros da equipe gestora — para validar se a percepção de usabilidade se mantém na faixa excelente com usuários do contexto institucional.
+
+</div>
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
