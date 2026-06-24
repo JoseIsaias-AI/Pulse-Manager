@@ -3621,6 +3621,29 @@ O Business Model Canvas é uma ferramenta visual que descreve, de forma estrutur
 <sub>Fonte: Elaborado pela equipe (2026), com base no Business Model Canvas de Strategyzer.</sub><br>
 </div>
 
+<div align="justify">
+
+A seguir, são detalhados os nove blocos do Business Model Canvas, de forma coerente com as análises de mercado, público-alvo e posicionamento apresentadas nas seções anteriores.
+
+Nos Segmentos de Clientes, identificam-se usuários primários, secundários e beneficiários indiretos da informação. Como usuários primários, são considerados os gestores de projeto e relacionamento da equipe Pulse Mais, responsáveis pela tomada de decisão, e o psicólogo da instituição, responsável pelo acompanhamento de saúde mental. Como usuários secundários, são considerados os jovens, alunos e ex-alunos da rede, atendidos por meio do portal do aluno. Como beneficiários indiretos da informação, são considerados doadores e empresas parceiras, que recebem indicadores de impacto, e mentores, integrantes da própria rede de talentos.
+
+Na Proposta de Valor, é resolvida a dor de dados fragmentados em planilhas e WhatsApp. É oferecido um repositório central unificado dos alunos, configurado como Single Source of Truth, além de dashboards de impacto que substituem a coleta manual e traduzem a jornada do aluno nas etapas conectado, capacitado e transformado. É disponibilizada uma página do aluno com histórico completo de jornada, empregabilidade e ensino superior, bem como um prontuário digital de saúde mental de acesso exclusivo do psicólogo. A solução permite agir preventivamente, identificando risco de evasão em estágio inicial, e posiciona o jovem como protagonista por meio do portal do aluno, no qual o próprio perfil é atualizado. É garantida, ainda, autonomia à equipe, que passa a criar novos campos sem depender de TI.
+
+Nos Canais, a cocriação é viabilizada por reuniões de sprint com os pontos focais da Pulse Mais, e a avaliação é realizada por meio de testes e validação das funcionalidades a cada sprint. O acesso é estruturado por uma aplicação web com login segmentado por perfil — gestor, psicólogo e aluno —, e a entrega ocorre pela própria plataforma, composta por front-end em HTML/CSS/JS e back-end em Node.js com SQLite. A comunicação interna é realizada por divulgação de eventos, formulários e disparo de e-mails, e o suporte é mantido por acompanhamento contínuo da equipe ao longo do projeto.
+
+No Relacionamento com Clientes, é estabelecida uma parceria de cocriação, e não uma relação cliente-fornecedor: a solução é concebida e evoluída a partir da dor real da Pulse Mais, com validação conjunta junto aos pontos focais Denise Ghattas e Eduardo Moura, em reuniões periódicas de acompanhamento a cada sprint. Com os usuários do sistema, o relacionamento é diferenciado por perfil — à equipe Pulse, são oferecidos assistência e suporte consultivo via dados centralizados; aos jovens, é oferecido self-service no portal do aluno, com atualização do próprio perfil.
+
+Nas Fontes de Receita, é adotado um modelo sem fins lucrativos, no qual o valor é capturado, e não vendido. Para a Pulse Mais, é obtido ganho de eficiência operacional, com redução do tempo dedicado a planilhas, melhor empregabilidade e retenção baseadas em dados, além de indicadores de impacto confiáveis, que ampliam o poder de prestação de contas a doadores. Para o Inteli e para o grupo, é obtida a entrega acadêmica e o desenvolvimento de competências em Engenharia Web. Como sustentabilidade futura, é prevista uma solução open ou interna, mantida pela própria Pulse Mais.
+
+Nos Recursos Principais, é mobilizado o recurso humano, representado pela equipe de desenvolvimento do Inteli sob liderança técnica de Diogo Duarte, e o recurso intelectual, representado pelos requisitos e pelo conhecimento da dor, cedidos pela Pulse Mais. É utilizado o recurso de dados, composto pela base dos alunos no "Planilhão de Jovens" e pelo CSV de atividades, bem como o recurso tecnológico, correspondente à stack do Inteli — HTML/CSS/JS, Node.js e SQLite. É empregado, ainda, o recurso de design, derivado do Manual de Identidade Visual da Pulse Mais, além do acesso aos pontos focais e à rotina real da operação.
+
+Nas Atividades-Chave, são realizados o desenvolvimento da plataforma, abrangendo aplicação web front-end e back-end e migração das planilhas, e a modelagem do banco de dados. São construídos os dashboards de impacto e o portal do aluno, e são conduzidos o levantamento e a validação de requisitos junto aos pontos focais. São executadas entregas e testes iterativos a cada sprint, conforme metodologia ágil, e é garantida a segurança e a privacidade dos dados sensíveis de saúde mental.
+
+Nas Parcerias Principais, a Pulse Mais é estabelecida como parceiro central, responsável pela aquisição de recursos e dados, pelo fornecimento da dor, dos requisitos, dos dados e da validação. É firmada parceria estratégica com o Inteli, da qual decorrem orientação acadêmica, stack tecnológica e metodologia. São definidos como pontos focais de cocriação Denise Ghattas, na liderança de negócio, e Eduardo Moura e Diogo Duarte, na frente técnica. Como fornecedores de tecnologia, são considerados a plataforma LMS atual, origem do CSV, e as ferramentas open source da stack.
+
+Por fim, na Estrutura de Custos, é adotado um modelo guiado pelo valor, voltado à resolução da dor, e não à minimização do custo. Como principal custo, são identificadas as horas de desenvolvimento da equipe, enquanto recurso humano. Como custos adicionais, são consideradas a infraestrutura de hospedagem da aplicação e do banco de dados, a manutenção e a evolução da plataforma após a entrega, e o treinamento da equipe Pulse Mais para uso do sistema. É observado, ainda, custo baixo associado à stack, composta por tecnologias open source, como Node.js e SQLite.
+
+</div>
 
 ## 6.5 Posicionamento
 
