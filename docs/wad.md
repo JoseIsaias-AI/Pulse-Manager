@@ -3585,10 +3585,10 @@ Por fim, a demanda social também sustenta a relevância do projeto. O IBGE indi
 ### 6.2.3 Tendências do mercado
 
 Identificaram-se três grupos de tendências com impacto direto sobre a adoção do Pulse Manager: tendências tecnológicas, comportamentais e mercadológicas.
-No campo tecnológico, destaca-se a valorização de plataformas baseadas em dados, dashboards gerenciais e sistemas de acompanhamento longitudinal. Organizações sociais e educacionais tendem a buscar ferramentas que permitam monitorar indicadores, acompanhar a evolução dos participantes e transformar registros operacionais em evidências de impacto. Também se observa a expansão do uso de inteligência artificial e automação no setor educacional, conforme apontado pelo EdTech Report 2025, o que amplia a expectativa por soluções digitais mais inteligentes, integradas e orientadas por dados.
-No âmbito comportamental, foi observado que gestores, parceiros e financiadores demandam maior transparência sobre resultados. Assim, a simples execução de programas sociais tende a ser insuficiente sem mecanismos de mensuração, visualização e comunicação de impacto. Para os alunos, há também maior expectativa de autonomia digital, acesso ao próprio histórico, consulta a oportunidades e acompanhamento do progresso individual.
-Já na ótica metodológica, a competição entre organizações de impacto social tende a aumentar a importância da diferenciação institucional. ONGs, institutos e negócios de impacto competem por editais, doações, empresas parceiras, mentores e reconhecimento público. Nesse contexto, soluções capazes de organizar dados e demonstrar resultados podem se tornar vantagem estratégica.
-Também se destaca a crescente atenção à privacidade e à governança de dados. A LGPD exige que organizações tratem dados pessoais com finalidade clara, segurança e limitação de acesso. Dessa forma, plataformas que incorporam controle de permissões, organização da informação e proteção de dados tendem a ser mais adequadas ao cenário regulatório atual.
+No campo tecnológico, valorizam-se plataformas baseadas em dados, dashboards gerenciais e sistemas de acompanhamento longitudinal. Conforme o EdTech Report 2025, da Distrito, observa-se expansão do uso de inteligência artificial no setor educacional. No terceiro setor, levantamento com mais de 1,5 mil organizações indica que 62% ainda estão em estágio inicial de adoção de IA, aplicada à redução de retrabalho, à integração de dados dispersos em planilhas e à geração de relatórios de impacto (PORTAL DO IMPACTO, 2025).
+No âmbito comportamental, gestores, parceiros e financiadores demandam maior transparência sobre resultados, tornando insuficiente a execução de programas sem mensuração e comunicação de impacto. Conforme o Observatório do Terceiro Setor, ONGs vêm sendo exigidas a aprimorar planejamento financeiro, comunicação e prestação de contas, utilizando IA para adaptar relatórios a doadores (OBSERVATÓRIO DO TERCEIRO SETOR, 2026).
+Na ótica regulatória e mercadológica, a competição entre organizações de impacto amplia a importância da diferenciação institucional e da governança de dados. A Agenda Regulatória 2025-2026 da ANPD prioriza segurança, dados sensíveis, IA e relatório de impacto à proteção de dados (ANPD, 2024). Segundo o Mapa das OSCs do Ipea, o Brasil possui mais de 897 mil ONGs e associações ativas, das quais a maioria opera à margem da LGPD (DIÁRIO DO COMÉRCIO, 2025), reforçando a relevância de soluções com controle de permissões e proteção de dados.
+Em conjunto, as tendências tecnológica, comportamental e regulatória/mercadológica convergem para a mesma necessidade: centralizar dados, mensurar impacto e garantir governança. O Pulse Manager responde a esse encadeamento ao substituir controles manuais por uma base estruturada, viabilizar a comunicação de resultados a financiadores e incorporar controle de acesso e proteção de dados sensíveis, posicionando-se como resposta direta ao cenário identificado.
 
 ## 6.3 Público-Alvo
 
@@ -3684,9 +3684,17 @@ _Relacione também quaisquer outras ideias que o grupo tenha para melhorias futu
 
 ABRASCE. Programa Pulse Mais 2026 inicia com alta adesão e reforça aposta na formação de jovens para o mercado de tecnologia. 2026. Disponível em: https://abrasce.com.br/espaco-do-associado/tecnologia/programa-pulse-mais-2026-inicia-com-alta-adesao-e-reforca-aposta-na-formacao-de-jovens-para-o-mercado-de-tecnologia/. Acesso em: 10 jun. 2026.
 
+ANPD. Agência Nacional de Proteção de Dados aprova Agenda Regulatória para o biênio 2025-2026. Brasília: ANPD, 2024. Disponível em: https://www.gov.br/anpd/pt-br. Acesso em: 24 jun. 2026.
+
+DIÁRIO DO COMÉRCIO. Após cinco anos em vigor, LGPD ainda é desafio para pequenas empresas e terceiro setor. 2025. Disponível em: https://diariodocomercio.com.br/legislacao/lgpd-desafios-pequenas-empresas-terceiro-setor/. Acesso em: 24 jun. 2026.
+
 ESG INSIDE. Pulse Mais abre inscrições para programa gratuito que prepara jovens para carreiras em tecnologia. 2026. Disponível em: https://esginside.com.br/2026/01/23/pulse-mais-abre-inscricoes-para-programa-gratuito-que-prepara-jovens-para-carreiras-em-tecnologia/. Acesso em: 10 jun. 2026.
 
 OBSERVATÓRIO DO TERCEIRO SETOR. Pulse Mais celebra 3 anos e amplia oportunidades para jovens na tecnologia. 2025. Disponível em: https://observatorio3setor.org.br/pulse-mais-celebra-3-anos-e-amplia-oportunidades-para-jovens-na-tecnologia/. Acesso em: 10 jun. 2026.
+
+OBSERVATÓRIO DO TERCEIRO SETOR. Tendências da captação de recursos para 2026. 2026. Disponível em: https://observatorio3setor.org.br/tendencias-da-captacao-de-recursos-para-2026/. Acesso em: 24 jun. 2026.
+
+PORTAL DO IMPACTO. Agentes de Inteligência Artificial: o que muda para o Terceiro Setor em 2026. 2025. Disponível em: https://www.portaldoimpacto.com/agentes-de-inteligencia-artificial-o-que-muda-para-o-terceiro-setor-em-2026. Acesso em: 24 jun. 2026.
 
 PULSE MAIS. Pulse Mais. 2026. Disponível em: https://pulsemais.org.br/. Acesso em: 10 jun. 2026.
 
