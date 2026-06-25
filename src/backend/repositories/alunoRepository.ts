@@ -31,6 +31,7 @@ export interface AlunoRecord {
   riscoEvasao: string;
   probabilidadeEvasao: number | null;
   engajamento: number;
+  frequencia: number;
   dataIngresso: string;
   status: string;
   nivelJornada: string | null;
@@ -59,6 +60,7 @@ export interface CriarAlunoPayload {
   categoria?: string;
   riscoEvasao?: RiscoEvasao;
   engajamento?: number;
+  frequencia?: number;
   status?: StatusAluno;
   nivelJornada?: string;
   perfilSocioeconomico?: string;
@@ -143,6 +145,7 @@ const ALUNO_SELECT = `
     COALESCE(risco_evasao, 'baixo') AS "riscoEvasao",
     CAST(probabilidade_evasao AS REAL) AS "probabilidadeEvasao",
     COALESCE(engajamento, 0) AS engajamento,
+    COALESCE(frequencia, 0) AS frequencia,
     data_ingresso AS "dataIngresso",
     status,
     nivel_jornada AS "nivelJornada",
@@ -216,11 +219,11 @@ export class AlunoRepository {
         nome, email, cpf, telefone, idade, genero, ocupacao, tipo_vinculo_empregaticio,
         renda_mensal, escolaridade, instituicao_ensino_superior, curso_ensino_superior,
         status_ensino_superior, data_ingresso_ensino_superior, data_ingresso, programa,
-        categoria, risco_evasao, engajamento, status, nivel_jornada, perfil_socioeconomico,
+        categoria, risco_evasao, engajamento, frequencia, status, nivel_jornada, perfil_socioeconomico,
         curso, origem_participacao
       ) VALUES (
         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14,
-        COALESCE($15, CURRENT_DATE), $16, $17, $18, $19, $20, $21, $22, $23, $24
+        COALESCE($15, CURRENT_DATE), $16, $17, $18, $19, $20, $21, $22, $23, $24, $25
       )
       RETURNING id_aluno AS "idAluno"`,
       [
@@ -243,6 +246,7 @@ export class AlunoRepository {
         payload.categoria ?? payload.nivelJornada ?? 'sem_categoria',
         payload.riscoEvasao ?? 'baixo',
         payload.engajamento ?? 0,
+        payload.frequencia ?? 0,
         payload.status ?? 'ativo',
         payload.nivelJornada ?? null,
         payload.perfilSocioeconomico ?? null,
@@ -294,7 +298,8 @@ export class AlunoRepository {
       origemParticipacao: 'origem_participacao',
       status: 'status',
       riscoEvasao: 'risco_evasao',
-      engajamento: 'engajamento'
+      engajamento: 'engajamento',
+      frequencia: 'frequencia'
     };
 
     const entries = definedEntries(payload as Record<string, unknown>);
