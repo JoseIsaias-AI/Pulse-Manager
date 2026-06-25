@@ -39,8 +39,7 @@ A aplicação é composta por um backend em **Node.js + TypeScript** para persis
 
 ## Link de demonstração
 
-_Coloque aqui o link para o vídeo de demonstração do projeto_
-_A inserção do video sera feita na Sprint 05 com o projeto finalizado_
+https://drive.google.com/file/d/1cHVSOaElW6ZeaWegSKxueduLck7n8Vlo/view?usp=sharing
 
 ## Estrutura de pastas
 
