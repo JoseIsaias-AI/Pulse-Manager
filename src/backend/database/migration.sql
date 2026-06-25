@@ -374,6 +374,14 @@ ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_engajamento_check;
 ALTER TABLE public.aluno
 ADD CONSTRAINT aluno_engajamento_check CHECK (engajamento >= 0 AND engajamento <= 100);
 
+ALTER TABLE public.aluno
+ADD COLUMN IF NOT EXISTS frequencia DECIMAL(5,2) DEFAULT 0;
+
+ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_frequencia_check;
+ALTER TABLE public.aluno
+ADD CONSTRAINT aluno_frequencia_check
+CHECK (frequencia IS NULL OR (frequencia >= 0 AND frequencia <= 100));
+
 CREATE INDEX IF NOT EXISTS idx_aluno_codigo_pm
 ON aluno(codigo_pm);
 

@@ -74,7 +74,7 @@
     const attention = aluno.riscoEvasao === 'medio';
     const inactive = aluno.status === 'inativo' || aluno.status === 'desligado';
     const st = risk ? 'risco' : attention ? 'atencao' : inactive ? 'inativo' : employed ? 'empregado' : 'ativa';
-    const progress = Math.max(0, Math.min(100, Number(aluno.engajamento) || 0));
+    const progress = Math.max(0, Math.min(100, Number(aluno.frequencia ?? aluno.engajamento) || 0));
 
     return {
       raw: aluno,
