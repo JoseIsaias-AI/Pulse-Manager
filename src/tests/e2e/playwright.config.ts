@@ -1,10 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
+import path from 'path';
 
 const backendPort = Number(process.env.E2E_BACKEND_PORT || 3100);
 const frontendPort = Number(process.env.E2E_FRONTEND_PORT || 4173);
+const repoRoot = path.resolve(__dirname, '../../..');
 
 export default defineConfig({
-  testDir: './src/tests/e2e',
+  testDir: '.',
   timeout: 45_000,
   expect: {
     timeout: 10_000
@@ -19,6 +21,7 @@ export default defineConfig({
   webServer: [
     {
       command: 'npx ts-node src/server.ts',
+      cwd: repoRoot,
       url: `http://localhost:${backendPort}/api/health`,
       reuseExistingServer: !process.env.CI,
       timeout: 60_000,
@@ -31,6 +34,7 @@ export default defineConfig({
     },
     {
       command: 'node src/scripts/e2e-static-server.js',
+      cwd: repoRoot,
       url: `http://localhost:${frontendPort}/pages/login.html`,
       reuseExistingServer: !process.env.CI,
       timeout: 30_000,
