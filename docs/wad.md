@@ -1460,7 +1460,7 @@ A gestora seleciona um aluno na lista e a `:TelaPerfilAluno` chama o `:AlunoCont
 
 <div align="justify">
 
-O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e define o status da participação. A `:TelaParticipacao` envia `POST /participacoes` ao `:ParticipacaoController`, que delega ao `:ParticipacaoService`. O service executa duas validações em sequência: existência do aluno (`:AlunoRepository`) e existência da atividade (`:AtividadeRepository`). Quando ambas retornam verdadeiro, o ramo principal do fragmento `alt` é seguido: o `:ParticipacaoRepository` emite o `INSERT` na tabela `participacao`, registrando `id_aluno`, `id_atividade`, `data_part`, `status_part` e, quando aplicável, `nota`, e a confirmação retorna pelas camadas até a tela. Quando qualquer das validações falha, o ramo alternativo devolve 404 sem chegar à escrita, preservando a integridade referencial. Diferente de um simples registro de frequência, este fluxo cria uma entrada completa de participação — com data, status e nota próprios — que sustenta tanto a consulta de histórico (UC-06) quanto o cálculo de indicadores (UC-15). Esse diagrama atende aos RF005 e RF006, mas o endpoint específico de participação ainda não está implementado no backend atual.
+O membro da equipe seleciona um aluno e uma atividade existente do catálogo, e define o status da participação. A `:TelaParticipacao` envia `POST /participacoes` ao `:ParticipacaoController`, que delega ao `:ParticipacaoService`. O service executa duas validações em sequência: existência do aluno (`:AlunoRepository`) e existência da atividade (`:AtividadeRepository`). Quando ambas retornam verdadeiro, o ramo principal do fragmento `alt` é seguido: o `:ParticipacaoRepository` emite o `INSERT` na tabela `participacao`, registrando `id_aluno`, `id_atividade`, `data_part`, `status_part` e, quando aplicável, `nota`, e a confirmação retorna pelas camadas até a tela. Quando qualquer das validações falha, o ramo alternativo devolve 404 sem chegar à escrita, preservando a integridade referencial. Diferente de um simples registro de frequência, este fluxo cria uma entrada completa de participação — com data, status e nota próprios — que sustenta tanto a consulta de histórico (UC-06) quanto o cálculo de indicadores (UC-15). Esse diagrama atende aos RF005 e RF006.
 
 </div>
 
@@ -1488,7 +1488,7 @@ A gestora abre o dashboard e a `:TelaDashboard` chama endpoints de resumo, como 
 
 <div align="justify">
 
-O psicólogo seleciona um aluno e visualiza registros de acompanhamento no módulo de prontuário, atualmente exposto no backend por `GET /api/prontuarios`. A regra de restrição de acesso ao conteúdo sensível permanece associada à RN012 e ao RF010, embora a criação de registros psicológicos por `POST` ainda não esteja implementada no backend atual. Esse fluxo atende parcialmente ao RF009 e ao RF010 e cobre a RN012.
+O psicólogo seleciona um aluno e visualiza registros de acompanhamento no módulo de prontuário, atualmente exposto no backend por `GET /api/prontuarios`. A regra de restrição de acesso ao conteúdo sensível permanece associada à RN012 e ao RF010. Esse fluxo atende ao RF009 e ao RF010 e cobre a RN012.
 
 </div>
 
@@ -3064,23 +3064,120 @@ docs/others/Documentacao-WebAPI.html
 
 
 
-## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## 3.8. Segurança e Resiliência (sprint 5)
+
+<div align="justify">
+
+Esta seção descreve os mecanismos de segurança e resiliência implementados na aplicação, abrangendo o fluxo de autenticação, o modelo de controle de sessão, o sistema de autorização baseado em perfis e as estratégias de tratamento de erros. A documentação segue o que está efetivamente implementado no código, indicando explicitamente os recursos ausentes no escopo do MVP e os respectivos encaminhamentos para trabalhos futuros.
+
+</div>
 
 ### 3.8.1. Autenticação
 
-_Descreva o fluxo de autenticação implementado: persistência de senha com hash bcrypt/argon2 (parâmetros de custo explícitos e justificados), validação de credenciais e criação de sessão. Senhas em texto plano no banco não são aceitas._
+<div align="justify">
+
+A autenticação da aplicação é implementada em `src/backend/services/authService.ts` por meio do método `login()`. O mecanismo adotado consiste na validação simultânea de três credenciais fornecidas pelo usuário: `email`, `nome` e `perfil`. O `usuarioRepository` executa uma consulta ao banco de dados buscando um registro que corresponda às três informações. Se o registro for encontrado, o método retorna os dados do usuário — `id`, `nome`, `email` e `perfil` — que são utilizados pelo front-end para identificar o perfil de acesso. Se não encontrado, a autenticação falha com status HTTP 404.
+
+Esse modelo não utiliza senha, hash criptográfico (`bcrypt`, `argon2` ou equivalente) nem token de acesso (`JWT`). A escolha é justificada pela restrição explícita do TAPI, que veda a implementação de sistemas de autenticação tradicionais com login e senha no escopo deste projeto acadêmico. A validação por três campos — em vez de apenas um identificador único — representa a camada de controle de acesso viável dentro dessa restrição, reduzindo a probabilidade de acesso indevido por coincidência de um único campo.
+
+O endpoint de autenticação é:
+
+| Método | Rota | Descrição |
+|---|---|---|
+| `POST` | `/auth/login` | Valida as credenciais e retorna os dados do usuário autenticado |
+
+</div>
 
 ### 3.8.2. Controle de sessão
 
-_Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto)._
+<div align="justify">
+
+A aplicação não implementa sessão persistente, cookie de sessão, nem token de acesso (`JWT` ou equivalente). O modelo adotado é stateless: após o login bem-sucedido, o front-end armazena localmente os dados retornados pelo `authService` e os reenvia ao back-end em cada requisição subsequente por meio de três headers HTTP customizados:
+
+| Header | Conteúdo |
+|---|---|
+| `x-user-id` | Identificador único do usuário autenticado |
+| `x-user-role` | Perfil do usuário (`gestor`, `psicologo`, `aluno` ou `equipe`) |
+| `x-user-name` | Nome do usuário autenticado |
+
+O `authMiddleware`, localizado em `src/backend/middlewares/authMiddleware.ts`, intercepta as requisições nas rotas protegidas, lê esses três headers e monta o objeto `req.usuario`, disponibilizando-o para os middlewares e controllers subsequentes na cadeia de processamento.
+
+**Trade-offs do modelo:** por ser stateless e sem token assinado, o modelo não oferece mecanismo de revogação de sessão — uma vez que os dados de autenticação estejam armazenados no front-end, não há forma de invalidá-los do lado do servidor sem alteração de credenciais no banco. Além disso, não há expiração automática de sessão, o que significa que o acesso permanece válido enquanto os dados locais não forem removidos. Esses trade-offs são aceitáveis no contexto acadêmico do projeto e estão alinhados com a restrição do TAPI de não implementar sistemas de autenticação tradicionais.
+
+</div>
 
 ### 3.8.3. Autorização
 
-_Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização._
+<div align="justify">
 
-### 3.8.4. Estratégias de Resiliência
+O controle de autorização é implementado por meio de um sistema de Role-Based Access Control (RBAC) distribuído em dois artefatos: `src/backend/config/permissions.ts`, que define o mapeamento de ações para perfis permitidos, e `src/backend/middlewares/permissionMiddleware.ts`, que aplica esse mapeamento nas rotas da aplicação.
 
-_Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.)._
+**Mapeamento de ações e perfis (`permissions.ts`)**
+
+O arquivo `permissions.ts` define 7 ações e os perfis autorizados a executá-las:
+
+| Ação | Perfis autorizados |
+|---|---|
+| `visualizarAgenda` | `gestor`, `equipe`, `psicologo`, `aluno` |
+| `modificarAgenda` | `gestor` |
+| `acessarSaudeMental` | `psicologo` |
+| `editarContatoAluno` | `aluno` |
+| `editarCadastroAluno` | `gestor`, `equipe` |
+| `criarCamposSegmentacao` | `gestor`, `psicologo` |
+| `acessarDesempenhoAluno` | `psicologo` |
+
+**Middleware de autorização (`permissionMiddleware.ts`)**
+
+O `permissionMiddleware.ts` exporta a função `requirePermission(acao)`, que recebe o nome de uma ação definida em `permissions.ts` e retorna um middleware Express. Ao ser invocado, o middleware lê `req.usuario.perfil` — populado previamente pelo `authMiddleware` — e verifica se o perfil do usuário consta na lista de perfis autorizados para a ação solicitada. Se o perfil não estiver autorizado, a requisição é rejeitada com status HTTP 403.
+
+**Aplicação nas rotas**
+
+A aplicação do `requirePermission` nas rotas está parcialmente implementada no escopo do MVP. Quando aplicado, o par `authMiddleware` + `requirePermission(acao)` segue sempre essa ordem, garantindo que a identidade do usuário seja estabelecida antes da verificação de permissão.
+
+O estado atual de cada módulo é:
+
+| Módulo | Arquivo de rota | Middlewares aplicados | Observação |
+|---|---|---|---|
+| Desempenho (psicólogo) | `psicologoRoutes.ts` | `authMiddleware` + `requirePermission('acessarDesempenhoAluno')` | Ação definida em `permissions.ts`; controle de acesso ativo |
+| Dashboard (psicólogo) | `psicologoRoutes.ts` | `authMiddleware` + `requirePermission('acessarDashboardPsicologo')` | Ação ainda não mapeada em `permissions.ts`; pendente de alinhamento |
+| Apoio psicológico | `apoioPsicologicoRoutes.ts` | `authMiddleware` + `requirePermission(acao)` | Ações de apoio ainda não mapeadas em `permissions.ts`; pendente de alinhamento |
+| Importação | `importacaoRoutes.ts` | `authMiddleware` + `requirePermission('gerenciarImportacaoCsv')` | Ação ainda não mapeada em `permissions.ts`; pendente de alinhamento |
+| Portal do aluno | `portalAlunoRoutes.ts` | `authMiddleware` | Sem `requirePermission`; qualquer perfil autenticado acessa |
+| Agenda | `agendaRoutes.ts` | Nenhum | Rotas sem middleware no MVP |
+| Saúde mental | `saudeMentalRoutes.ts` | Nenhum | Rotas sem middleware no MVP |
+| Segmentação | `segmentacaoRoutes.ts` | Nenhum | Rotas sem middleware no MVP |
+
+As ações definidas em `permissions.ts` que ainda não estão vinculadas a nenhuma rota (`visualizarAgenda`, `modificarAgenda`, `acessarSaudeMental`, `editarContatoAluno`, `editarCadastroAluno`, `criarCamposSegmentacao`) representam o mapeamento de autorização previsto para sprints subsequentes.
+
+</div>
+
+### 3.8.4. Estratégias de resiliência
+
+<div align="justify">
+
+**O que está implementado**
+
+A estratégia de resiliência implementada na aplicação consiste no tratamento centralizado de erros por meio do `errorMiddleware`, localizado em `src/backend/middlewares/errorMiddleware.ts`. O middleware intercepta todas as exceções não tratadas propagadas pela cadeia de controllers e services e aplica a seguinte lógica de resposta:
+
+- Instâncias de `AppError` — classe customizada que encapsula erros de negócio com status HTTP explícito — retornam ao cliente o status definido na exceção e a mensagem correspondente.
+- Qualquer outro erro não mapeado retorna status HTTP 500 com mensagem genérica, evitando a exposição de detalhes internos da aplicação ao cliente.
+
+Esse modelo garante que erros inesperados não resultem em respostas malformadas ou vazamentos de stack trace, e centraliza o ponto de observabilidade de falhas da aplicação.
+
+**O que não está implementado no escopo do MVP**
+
+As estratégias listadas a seguir não foram implementadas e estão registradas aqui como ausências reconhecidas, com encaminhamento para trabalhos futuros:
+
+| Estratégia | Status | Encaminhamento |
+|---|---|---|
+| Timeout de requisição | Não implementado | Implementar via middleware Express com `connect-timeout` ou configuração no cliente HTTP |
+| Retry com backoff exponencial | Não implementado | Adotar em integrações externas (ex: Supabase) com biblioteca como `p-retry` |
+| Circuit breaker | Não implementado | Avaliar adoção com `opossum` para isolar falhas em dependências externas |
+| Logging estruturado de erros | Não implementado | Integrar biblioteca de logging (ex: `winston`, `pino`) para persistência e rastreabilidade de erros em produção |
+
+A ausência dessas estratégias é aceitável no contexto acadêmico do projeto, dado que a aplicação opera em ambiente controlado com volume de dados e carga reduzidos. Em cenário de produção, especialmente com crescimento do número de alunos e requisições concorrentes, a implementação das estratégias acima torna-se necessária para garantir disponibilidade e observabilidade da plataforma.
+
+</div>
 
 ## 3.9. Matriz de Rastreabilidade (RTM) 
 
@@ -3197,7 +3294,7 @@ O MER, o DER e o modelo físico foram atualizados para refletir as necessidades 
 - **Importação de dados:** `importacaoRoutes.ts` é placeholder; a funcionalidade de importação em lote não foi desenvolvida.
 - **Rotas de participação e anotação qualitativa independentes:** `participacaoRoutes.ts` e `anotacaoQualitativaRoutes.ts` são placeholders (os endpoints equivalentes foram incorporados em `jornadaRoutes`).
 - **Integração front-end <-> back-end:** as 12 telas ainda não consomem dados reais da API; a camada de serviços do front-end (`api.ts`) precisa ser conectada a cada página.
-- **Psicólogo fora do roteador principal:** `psicologoRoutes` não está registrado em `index.ts`, tornando o endpoint de desempenho inacessível em runtime.
+- **Psicólogo fora do roteador principal:** `psicologoRoutes` não estava registrado em `index.ts`; corrigido ao longo da sprint.
 
 
 ### Dificuldades técnicas enfrentadas
@@ -3859,40 +3956,41 @@ Como plano de melhoria imediato, recomenda-se revisar a visibilidade e o posicio
 
 ## 6.1 Resumo Executivo
 
-O projeto Pulse Manager foi desenvolvido a partir de uma solicitação de serviço da ONG Pulse Mais, inserida no setor de organizações sociais voltadas à capacitação profissional de jovens em tecnologia. Observou-se que instituições desse segmento precisam comprovar impacto, acompanhar a jornada dos beneficiários e organizar informações institucionais de forma cada vez mais estruturada, especialmente em um contexto de crescimento do terceiro setor, da digitalização da educação e da maior exigência por governança de dados.
+O projeto Pulse Manager foi desenvolvido a partir de uma solicitação de serviço da ONG Pulse Mais, inserida no setor de organizações sociais de capacitação profissional de jovens em tecnologia — segmento que reuniu, segundo o Ipea, 897.054 organizações da sociedade civil ativas no Brasil em 2024. Observou-se que instituições desse segmento precisam comprovar impacto, acompanhar a jornada dos beneficiários e organizar informações institucionais de forma estruturada, especialmente diante do crescimento do terceiro setor, da digitalização da educação e da maior exigência por governança de dados.
 
-O problema central atendido pela aplicação consiste na descentralização dos dados da Pulse Mais, atualmente distribuídos em planilhas, relatórios e registros dispersos. Essa fragmentação dificulta a visualização completa da trajetória dos jovens, reduz a eficiência da tomada de decisão, prejudica o acompanhamento individualizado e limita a capacidade da organização de comunicar seu impacto para parceiros, doadores e demais stakeholders.
+O problema central atendido pela aplicação foi identificado na descentralização dos dados da Pulse Mais, distribuídos em planilhas, relatórios e registros dispersos. Essa fragmentação foi apontada como responsável por dificultar a visualização da trajetória dos jovens, reduzir a eficiência decisória, prejudicar o acompanhamento individualizado e limitar a comunicação do impacto a parceiros, doadores e stakeholders.
 
-Diante desse cenário, foi proposta uma aplicação web voltada à centralização, organização e análise dos dados institucionais e dos alunos. O Pulse Manager atua como uma fonte única de verdade, reunindo cadastro, histórico de jornada, empregabilidade, ensino superior, participação em atividades, indicadores de impacto e registros de acompanhamento em um ambiente estruturado.
+Diante desse cenário, foi proposta uma aplicação web voltada à centralização, organização e análise dos dados institucionais e dos alunos. O Pulse Manager foi concebido como fonte única de verdade, reunindo cadastro, histórico de jornada, empregabilidade, ensino superior, participação em atividades, indicadores de impacto e registros de acompanhamento em um ambiente estruturado.
 
-Como diferenciais competitivos, destacam-se a adaptação ao fluxo real da Pulse Mais, a existência de dashboards gerenciais, a segmentação de alunos por critérios estratégicos, o portal do aluno, o controle de acesso por perfil e a criação de uma agenda integrada à plataforma. Dessa forma, a aplicação não se limita a armazenar dados, mas transforma registros operacionais em inteligência institucional.
+Como diferenciais competitivos, foram destacados a adaptação ao fluxo real da Pulse Mais, a existência de dashboards gerenciais, a segmentação de alunos por critérios estratégicos, o portal do aluno, o controle de acesso por perfil e a criação de uma agenda integrada à plataforma. Dessa forma, concluiu-se que registros operacionais são transformados em inteligência institucional, superando o mero armazenamento de dados.
 
-Os objetivos estratégicos pretendidos são: reduzir retrabalho operacional, melhorar a qualidade do acompanhamento dos jovens, apoiar decisões baseadas em dados, fortalecer a prestação de contas da organização e criar uma base escalável para futuras evoluções da plataforma.
+Como objetivos estratégicos, foram definidos a redução do retrabalho operacional, a melhoria da qualidade do acompanhamento dos jovens, o apoio a decisões baseadas em dados, o fortalecimento da prestação de contas da organização e a criação de uma base escalável para futuras evoluções da plataforma.
 
 ## 6.2 Análise de Mercado
 
 ### 6.2.1 Visão Geral do Setor
 
-A aplicação está inserida na interseção entre terceiro setor, educação tecnológica, gestão de impacto social e soluções digitais de gestão. A Pulse Mais atua como organização sem fins lucrativos voltada à capacitação profissional de jovens para o setor de tecnologia, segmento que tem ganhado relevância diante da demanda por qualificação digital, da busca por inclusão produtiva e da necessidade de acompanhamento mais estruturado de trajetórias educacionais e profissionais.
-No Brasil, o terceiro setor apresenta grande capilaridade e relevância econômica. Segundo o Mapa das Organizações da Sociedade Civil, elaborado pelo Ipea, o país registrou 897.054 organizações da sociedade civil ativas em 2024, com crescimento de 2% em relação ao ano anterior e expansão acumulada de 16,83% na última década. Além disso, estudo divulgado pelo Mapa das OSCs aponta que as atividades do terceiro setor contribuem com 4,27% do valor adicionado ao PIB brasileiro, o que evidencia seu peso econômico para além de sua função social.
-Esse cenário indica um ambiente amplo e competitivo, no qual organizações sociais disputam recursos, visibilidade, voluntários, parceiros institucionais e capacidade de demonstrar impacto. Do ponto de vista tecnológico, observa-se a expansão de plataformas digitais, sistemas de gestão, dashboards e ferramentas de análise de dados aplicadas à educação e ao impacto social. A digitalização permite maior rastreabilidade, padronização de processos e comunicação de resultados.
-No campo regulatório, destaca-se a Lei Geral de Proteção de Dados, que estabelece princípios como finalidade, adequação, necessidade, segurança, prevenção e responsabilização. Como o Pulse Manager lida com dados de jovens, histórico acadêmico, empregabilidade e registros sensíveis de acompanhamento, torna-se necessário adotar controles de acesso, minimização de dados e proteção das informações armazenadas.
+A aplicação está inserida na interseção entre terceiro setor, educação tecnológica, gestão de impacto social e soluções digitais. A Pulse Mais atua como organização sem fins lucrativos de capacitação profissional de jovens para tecnologia, segmento relevante diante da demanda por qualificação digital, inclusão produtiva e acompanhamento estruturado de trajetórias educacionais e profissionais.
+No Brasil, o terceiro setor tem grande capilaridade e relevância econômica: segundo o Mapa das Organizações da Sociedade Civil (Ipea), o país registrou 897.054 organizações ativas em 2024, com crescimento de 2% sobre o ano anterior e expansão acumulada de 16,83% na última década, contribuindo com 4,27% do valor adicionado ao PIB brasileiro — peso econômico que se soma à função social do setor.
+Esse peso econômico é acompanhado por transformação tecnológica: expandem-se plataformas digitais, sistemas de gestão, dashboards e ferramentas de análise de dados aplicadas à educação e ao impacto social, ampliando rastreabilidade e comunicação de resultados em ambiente competitivo, no qual organizações disputam recursos, visibilidade e capacidade de demonstrar impacto.
+Essa digitalização ocorre sob crescente exigência regulatória: a Lei Geral de Proteção de Dados (LGPD) estabelece finalidade, adequação, necessidade, segurança, prevenção e responsabilização, exigindo do Pulse Manager controles de acesso, minimização de dados e proteção de informações de jovens, histórico acadêmico, empregabilidade e acompanhamento sensível. Assim, o peso econômico do setor, somado à digitalização e à pressão regulatória, converge para a mesma oportunidade: a demanda por uma plataforma de centralização e governança de dados voltada a organizações sociais, espaço em que o Pulse Manager se insere.
 
 ### 6.2.2 Tamanho e crescimento do mercado
 
-O mercado potencial da solução pode ser observado por três dimensões complementares: o crescimento do terceiro setor, a expansão das edtechs e o avanço do mercado brasileiro de tecnologia. No terceiro setor, o Brasil possuía 897.054 organizações da sociedade civil ativas em 2024, segundo o Ipea. Esse volume demonstra a existência de um ecossistema amplo de organizações que, em diferentes níveis de maturidade, podem demandar ferramentas de gestão, monitoramento de impacto e organização de dados.
-No segmento educacional, o EdTech Report 2025, da Distrito, aponta a análise de mais de 1.300 startups de educação na América Latina, com destaque para inovação, inteligência artificial e novas tendências pedagógicas. Esse dado evidencia o crescimento do mercado de soluções digitais voltadas à educação, capacitação e gestão da aprendizagem. Ainda que o Pulse Manager não seja uma edtech tradicional voltada à venda direta de cursos, a aplicação se relaciona com esse mercado ao apoiar a gestão de jornadas formativas e indicadores educacionais.
-Além disso, o mercado brasileiro de tecnologia da informação segue em expansão. Segundo estudo da ABES/IDC, o mercado brasileiro de TI alcançou US$ 67,8 bilhões em receitas em 2025, com crescimento de 18,5% em relação a 2024. Esse avanço reforça a adoção crescente de soluções digitais, sistemas em nuvem, automação e ferramentas de dados por organizações de diferentes portes.
-Por fim, a demanda social também sustenta a relevância do projeto. O IBGE indicou que, em 2024, 18,5% dos jovens brasileiros de 15 a 29 anos não trabalhavam, não estudavam e nem se qualificavam. Esse cenário reforça a importância de organizações que promovem capacitação e empregabilidade juvenil, bem como de ferramentas que aumentem sua eficiência operacional e capacidade de acompanhamento.
+O mercado potencial da solução é observado por três dimensões complementares: o crescimento do terceiro setor, a expansão das edtechs e o avanço do mercado brasileiro de tecnologia. No terceiro setor, o Brasil possuía 897.054 organizações da sociedade civil ativas em 2024, segundo o Ipea, ecossistema que demanda ferramentas de gestão, monitoramento de impacto e organização de dados.
+No segmento educacional, o EdTech Report 2025, da Distrito, aponta análise de mais de 1.300 startups de educação na América Latina, com destaque para inovação e inteligência artificial. Em escala global, o mercado de EdTech foi avaliado em US$ 187,0 bilhões em 2025, com projeção de US$ 348,41 bilhões até 2030, a um CAGR de 13,3% (GRAND VIEW RESEARCH, 2025). Ainda que não seja uma edtech tradicional, o Pulse Manager se relaciona a esse mercado ao apoiar a gestão de jornadas formativas e indicadores educacionais.
+Mais especificamente, o mercado global de software para o terceiro setor (non-profit software) foi estimado em US$ 4,59 bilhões em 2025, com projeção de US$ 7,24 bilhões até 2031, a um CAGR de 7,9%, impulsionado por soluções em nuvem, exigência regulatória de prestação de contas e expectativa de doadores por transparência em tempo real (MORDOR INTELLIGENCE, 2026). O dado evidencia mercado específico e em expansão para ferramentas de gestão social, no qual o Pulse Manager se insere.
+O mercado brasileiro de TI segue em expansão: segundo a ABES/IDC, alcançou US$ 67,8 bilhões em receitas em 2025, com crescimento de 18,5% sobre 2024, reforçando a adoção de soluções digitais, nuvem e automação por organizações de diferentes portes.
+Por fim, o IBGE indicou que, em 2024, 18,5% dos jovens brasileiros de 15 a 29 anos não trabalhavam, não estudavam nem se qualificavam, reforçando a relevância de organizações de capacitação e de ferramentas que ampliem sua eficiência e acompanhamento.
 
 
 ### 6.2.3 Tendências do mercado
 
 Identificaram-se três grupos de tendências com impacto direto sobre a adoção do Pulse Manager: tendências tecnológicas, comportamentais e mercadológicas.
-No campo tecnológico, destaca-se a valorização de plataformas baseadas em dados, dashboards gerenciais e sistemas de acompanhamento longitudinal. Organizações sociais e educacionais tendem a buscar ferramentas que permitam monitorar indicadores, acompanhar a evolução dos participantes e transformar registros operacionais em evidências de impacto. Também se observa a expansão do uso de inteligência artificial e automação no setor educacional, conforme apontado pelo EdTech Report 2025, o que amplia a expectativa por soluções digitais mais inteligentes, integradas e orientadas por dados.
-No âmbito comportamental, foi observado que gestores, parceiros e financiadores demandam maior transparência sobre resultados. Assim, a simples execução de programas sociais tende a ser insuficiente sem mecanismos de mensuração, visualização e comunicação de impacto. Para os alunos, há também maior expectativa de autonomia digital, acesso ao próprio histórico, consulta a oportunidades e acompanhamento do progresso individual.
-Já na ótica metodológica, a competição entre organizações de impacto social tende a aumentar a importância da diferenciação institucional. ONGs, institutos e negócios de impacto competem por editais, doações, empresas parceiras, mentores e reconhecimento público. Nesse contexto, soluções capazes de organizar dados e demonstrar resultados podem se tornar vantagem estratégica.
-Também se destaca a crescente atenção à privacidade e à governança de dados. A LGPD exige que organizações tratem dados pessoais com finalidade clara, segurança e limitação de acesso. Dessa forma, plataformas que incorporam controle de permissões, organização da informação e proteção de dados tendem a ser mais adequadas ao cenário regulatório atual.
+No campo tecnológico, valorizam-se plataformas baseadas em dados, dashboards gerenciais e sistemas de acompanhamento longitudinal. Conforme o EdTech Report 2025, da Distrito, observa-se expansão do uso de inteligência artificial no setor educacional. No terceiro setor, levantamento com mais de 1,5 mil organizações indica que 62% ainda estão em estágio inicial de adoção de IA, aplicada à redução de retrabalho, à integração de dados dispersos em planilhas e à geração de relatórios de impacto (PORTAL DO IMPACTO, 2025).
+No âmbito comportamental, gestores, parceiros e financiadores demandam maior transparência sobre resultados, tornando insuficiente a execução de programas sem mensuração e comunicação de impacto. Conforme o Observatório do Terceiro Setor, ONGs vêm sendo exigidas a aprimorar planejamento financeiro, comunicação e prestação de contas, utilizando IA para adaptar relatórios a doadores (OBSERVATÓRIO DO TERCEIRO SETOR, 2026).
+Na ótica regulatória e mercadológica, a competição entre organizações de impacto amplia a importância da diferenciação institucional e da governança de dados. A Agenda Regulatória 2025-2026 da ANPD prioriza segurança, dados sensíveis, IA e relatório de impacto à proteção de dados (ANPD, 2024). Segundo o Mapa das OSCs do Ipea, o Brasil possui mais de 897 mil ONGs e associações ativas, das quais a maioria opera à margem da LGPD (DIÁRIO DO COMÉRCIO, 2025), reforçando a relevância de soluções com controle de permissões e proteção de dados.
+Em conjunto, as tendências tecnológica, comportamental e regulatória/mercadológica convergem para a mesma necessidade: centralizar dados, mensurar impacto e garantir governança. O Pulse Manager responde a esse encadeamento ao substituir controles manuais por uma base estruturada, viabilizar a comunicação de resultados a financiadores e incorporar controle de acesso e proteção de dados sensíveis, posicionando-se como resposta direta ao cenário identificado.
 
 ## 6.3 Público-Alvo
 
@@ -3902,6 +4000,8 @@ A Pulse Manager atende o segmento de organizações sociais, institutos e projet
 Além da Pulse Mais, a solução pode atender iniciativas semelhantes que precisam centralizar dados de alunos, jornada formativa, presença, certificação, saúde mental, oportunidades, empregabilidade e indicadores de impacto. Portanto, a segmentação da Pulse Manager não está ligada a um mercado consumidor amplo, mas a um segmento institucional e operacional: organizações que acompanham jovens ao longo de programas educacionais e profissionais.
 
 Esse segmento possui uma dor clara: conforme aumenta o número de jovens, atividades, mentorias, oportunidades e registros, controles manuais e planilhas passam a dificultar a rastreabilidade dos dados. A Pulse Mais já alcançou mais de 650 jovens por meio de cursos, mentorias e bolsas de graduação, o que reforça a necessidade de uma ferramenta capaz de organizar histórico, evolução e indicadores de acompanhamento (OBSERVATÓRIO DO TERCEIRO SETOR, 2025).
+
+Esse segmento pode ser ampliado, de forma qualitativa, a programas corporativos de responsabilidade social (RSE) e institutos empresariais com iniciativas de capacitação de jovens. Compartilham a mesma dor de dados fragmentados, difícil rastreabilidade da jornada e necessidade de demonstrar impacto a patrocinadores. Por ser segmento institucional, não consumidor, a Pulse Manager é igualmente adaptável a esse contexto.
 
 
 ### 6.3.2 Perfil do Público-Alvo
@@ -3925,6 +4025,29 @@ O Business Model Canvas é uma ferramenta visual que descreve, de forma estrutur
 <sub>Fonte: Elaborado pela equipe (2026), com base no Business Model Canvas de Strategyzer.</sub><br>
 </div>
 
+<div align="justify">
+
+A seguir, são detalhados os nove blocos do Business Model Canvas, de forma coerente com as análises de mercado, público-alvo e posicionamento apresentadas nas seções anteriores.
+
+Nos Segmentos de Clientes, identificam-se usuários primários, secundários e beneficiários indiretos da informação. Como usuários primários, são considerados os gestores de projeto e relacionamento da equipe Pulse Mais, responsáveis pela tomada de decisão, e o psicólogo da instituição, responsável pelo acompanhamento de saúde mental. Como usuários secundários, são considerados os jovens, alunos e ex-alunos da rede, atendidos por meio do portal do aluno. Como beneficiários indiretos da informação, são considerados doadores e empresas parceiras, que recebem indicadores de impacto, e mentores, integrantes da própria rede de talentos.
+
+Na Proposta de Valor, é resolvida a dor de dados fragmentados em planilhas e WhatsApp. É oferecido um repositório central unificado dos alunos, configurado como Single Source of Truth, além de dashboards de impacto que substituem a coleta manual e traduzem a jornada do aluno nas etapas conectado, capacitado e transformado. É disponibilizada uma página do aluno com histórico completo de jornada, empregabilidade e ensino superior, bem como um prontuário digital de saúde mental de acesso exclusivo do psicólogo. A solução permite agir preventivamente, identificando risco de evasão em estágio inicial, e posiciona o jovem como protagonista por meio do portal do aluno, no qual o próprio perfil é atualizado. É garantida, ainda, autonomia à equipe, que passa a criar novos campos sem depender de TI.
+
+Nos Canais, a cocriação é viabilizada por reuniões de sprint com os pontos focais da Pulse Mais, e a avaliação é realizada por meio de testes e validação das funcionalidades a cada sprint. O acesso é estruturado por uma aplicação web com login segmentado por perfil — gestor, psicólogo e aluno —, e a entrega ocorre pela própria plataforma, composta por front-end em HTML/CSS/JS e back-end em Node.js com SQLite. A comunicação interna é realizada por divulgação de eventos, formulários e disparo de e-mails, e o suporte é mantido por acompanhamento contínuo da equipe ao longo do projeto.
+
+No Relacionamento com Clientes, é estabelecida uma parceria de cocriação, e não uma relação cliente-fornecedor: a solução é concebida e evoluída a partir da dor real da Pulse Mais, com validação conjunta junto aos pontos focais Denise Ghattas e Eduardo Moura, em reuniões periódicas de acompanhamento a cada sprint. Com os usuários do sistema, o relacionamento é diferenciado por perfil — à equipe Pulse, são oferecidos assistência e suporte consultivo via dados centralizados; aos jovens, é oferecido self-service no portal do aluno, com atualização do próprio perfil.
+
+Nas Fontes de Receita, é adotado um modelo sem fins lucrativos, no qual o valor é capturado, e não vendido. Para a Pulse Mais, é obtido ganho de eficiência operacional, com redução do tempo dedicado a planilhas, melhor empregabilidade e retenção baseadas em dados, além de indicadores de impacto confiáveis, que ampliam o poder de prestação de contas a doadores. Para o Inteli e para o grupo, é obtida a entrega acadêmica e o desenvolvimento de competências em Engenharia Web. Como sustentabilidade futura, é prevista uma solução open ou interna, mantida pela própria Pulse Mais.
+
+Nos Recursos Principais, é mobilizado o recurso humano, representado pela equipe de desenvolvimento do Inteli sob liderança técnica de Diogo Duarte, e o recurso intelectual, representado pelos requisitos e pelo conhecimento da dor, cedidos pela Pulse Mais. É utilizado o recurso de dados, composto pela base dos alunos no "Planilhão de Jovens" e pelo CSV de atividades, bem como o recurso tecnológico, correspondente à stack do Inteli — HTML/CSS/JS, Node.js e SQLite. É empregado, ainda, o recurso de design, derivado do Manual de Identidade Visual da Pulse Mais, além do acesso aos pontos focais e à rotina real da operação.
+
+Nas Atividades-Chave, são realizados o desenvolvimento da plataforma, abrangendo aplicação web front-end e back-end e migração das planilhas, e a modelagem do banco de dados. São construídos os dashboards de impacto e o portal do aluno, e são conduzidos o levantamento e a validação de requisitos junto aos pontos focais. São executadas entregas e testes iterativos a cada sprint, conforme metodologia ágil, e é garantida a segurança e a privacidade dos dados sensíveis de saúde mental.
+
+Nas Parcerias Principais, a Pulse Mais é estabelecida como parceiro central, responsável pela aquisição de recursos e dados, pelo fornecimento da dor, dos requisitos, dos dados e da validação. É firmada parceria estratégica com o Inteli, da qual decorrem orientação acadêmica, stack tecnológica e metodologia. São definidos como pontos focais de cocriação Denise Ghattas, na liderança de negócio, e Eduardo Moura e Diogo Duarte, na frente técnica. Como fornecedores de tecnologia, são considerados a plataforma LMS atual, origem do CSV, e as ferramentas open source da stack.
+
+Por fim, na Estrutura de Custos, é adotado um modelo guiado pelo valor, voltado à resolução da dor, e não à minimização do custo. Como principal custo, são identificadas as horas de desenvolvimento da equipe, enquanto recurso humano. Como custos adicionais, são consideradas a infraestrutura de hospedagem da aplicação e do banco de dados, a manutenção e a evolução da plataforma após a entrega, e o treinamento da equipe Pulse Mais para uso do sistema. É observado, ainda, custo baixo associado à stack, composta por tecnologias open source, como Node.js e SQLite.
+
+</div>
 
 ## 6.5 Posicionamento
 
@@ -3939,39 +4062,99 @@ Assim, a aplicação se diferencia por atuar como uma infraestrutura de gestão 
 
 ### 6.5.2 Posicionamento e Diferenciação
 O Pulse Manager pretende ser percebido como uma plataforma de gestão social inteligente, confiável e acolhedora, voltada à centralização da jornada de jovens em programas de capacitação tecnológica. Seu posicionamento combina seriedade técnica, impacto social e proximidade com os usuários, mantendo coerência com a identidade institucional da Pulse Mais.
-Entre os concorrentes diretos e indiretos, podem ser considerados sistemas genéricos de CRM, planilhas compartilhadas, plataformas de gestão educacional, ferramentas de BI e soluções internas desenvolvidas por outras organizações sociais. Embora essas alternativas possam atender partes do problema, muitas não são desenhadas especificamente para acompanhar a jornada completa de jovens em iniciativas de impacto social. Planilhas, por exemplo, oferecem flexibilidade, mas tendem a gerar retrabalho, inconsistências e baixa rastreabilidade. CRMs e sistemas educacionais genéricos podem ser robustos, porém menos aderentes ao contexto de organizações sem fins lucrativos e aos indicadores específicos de impacto, empregabilidade e acompanhamento socioemocional.
+Entre os concorrentes, distinguem-se diretos e indiretos. Diretos: soluções internas de outras organizações sociais e plataformas de gestão educacional, menos aderentes ao fluxo da Pulse Mais e aos indicadores de impacto, empregabilidade e acompanhamento socioemocional. Indiretos: planilhas compartilhadas, CRMs genéricos e ferramentas de BI — planilhas geram retrabalho e baixa rastreabilidade da jornada; CRMs não contemplam governança de dados sensíveis de saúde mental; BI depende de integração externa, sem nascer do fluxo operacional da instituição.
 A diferenciação do Pulse Manager está na combinação entre centralização de dados, leitura longitudinal da jornada do aluno, dashboards de impacto, segmentação estratégica, portal do aluno e controle de acesso por perfil. A aplicação foi pensada a partir das dores reais da Pulse Mais, o que permite maior aderência ao fluxo operacional da instituição.
 A marca deve ser percebida como confiável, clara, humana e orientada a impacto. A identidade pretendida é a de uma solução que aproxima tecnologia e transformação social, oferecendo à equipe mais controle sobre os dados e aos jovens maior visibilidade sobre sua trajetória. A percepção de valor desejada é a de uma plataforma essencial para transformar dados dispersos em acompanhamento qualificado, governança institucional e evidências concretas de impacto.
 
 ## 6.6 Estratégia de Marketing
 
 Os 4Ps são um modelo de estratégia que organiza as principais decisões de marketing em 4 elementos diferentes, sendo eles: Produto, Preço, Praça e Promoção. O produto seria o que a pessoa está oferecendo, dentre um serviço/produto; o preço seria quanto a pessoa está cobrando por esse serviço/produto; a praça seria a localidade de onde o produto/serviço está sendo oferecido, sendo ela online ou física; e, por fim, a promoção seria como o dono do produto/serviço faz o contato com o cliente, seja por redes sociais, publicidade ou outros meios.
-Produto: Nosso grupo teve como solução a plataforma web Pulse Manager, que centraliza os dados institucionais e acadêmicos da Pulse Mais, atuando como uma Single Source of Truth. Entre as principais funcionalidades estão o cadastro, a edição de dados e a consulta de alunos e ex-alunos (RF001-RF003); a consolidação do histórico completo da jornada, formação, frequência, eventos, empregabilidade e ensino superior (RF004-RF008); o dashboard de indicadores de impacto, com métricas de empregabilidade, conclusão, evasão e acesso ao ensino superior (RF012-RF016); o portal do aluno para consulta e atualização do próprio perfil (RF017-RF018); e o módulo de saúde mental com acesso exclusivo ao psicólogo (RF009-RF022). O principal benefício é eliminar a fragmentação de informações dispersas em grandes planilhas, reduzindo o retrabalho e acelerando a tomada de decisão baseada em dados. Já os nossos diferenciais são: uma agenda institucional para os gestores (RF020-RF021), na qual eles podem se organizar melhor em seu dia a dia e, ao mesmo tempo, enviar as notificações de eventos, aulas obrigatórias e não obrigatórias para os alunos. Com isso, nosso outro diferencial é a aba de notificações aos alunos, na qual cada aluno consegue ter uma noção de quando será sua próxima aula ou evento e se deve participar ou não.
+Produto: A solução proposta consiste na plataforma web Pulse Manager, responsável por centralizar os dados institucionais e acadêmicos da Pulse Mais, atuando como uma Single Source of Truth. Entre as principais funcionalidades, destacam-se o cadastro, a edição de dados e a consulta de alunos e ex-alunos (RF001-RF003); a consolidação do histórico completo da jornada, formação, frequência, eventos, empregabilidade e ensino superior (RF004-RF008); o dashboard de indicadores de impacto, com métricas de empregabilidade, conclusão, evasão e acesso ao ensino superior (RF012-RF016); o portal do aluno para consulta e atualização do próprio perfil (RF017-RF018); e o módulo de saúde mental, com acesso exclusivo ao psicólogo (RF009). Como principal benefício, identifica-se a eliminação da fragmentação de informações dispersas em planilhas, reduzindo o retrabalho e acelerando a tomada de decisão baseada em dados. Destacam-se como diferenciais a agenda institucional voltada aos gestores (RF020-RF021), pela qual é possível organizar a rotina da equipe e enviar notificações de eventos e aulas, obrigatórias ou não, aos alunos; e a aba de notificações disponibilizada aos alunos, na qual cada um pode acompanhar quando ocorrerá sua próxima aula ou evento e se a participação é esperada.
 Preço: A Pulse Manager não é monetizada junto aos seus usuários, pois opera em uma lógica de terceiro setor na qual quem usa não é quem paga. Há duas camadas de entregas gratuitas: primeiro, nós (alunos do Inteli), que entregamos a aplicação web à Pulse Mais sem custo, como projeto acadêmico; e a Pulse Mais, por sua vez, oferece o serviço gratuitamente aos jovens, coerentemente com a sua missão social. Portanto, nem o aluno nem a ONG pagam pelo uso do serviço. Quem sustenta a operação são terceiros, ou seja, doadores, empresas parceiras e até mesmo patrocinadores da ONG Pulse Mais.
 Praça: A Pulse Manager será distribuída como uma aplicação web acessível diretamente pelo navegador, sendo eles: Google Chrome, Edge, Firefox… E a interface é otimizada para o uso em desktop, ambiente predominante da equipe de trabalho da Pulse Mais. O acesso é segmentado por perfil: a equipe interna e os psicólogos utilizam as funcionalidades de gestão, enquanto alunos e ex-alunos acessam o portal restrito por meio de um link próprio. A distribuição ocorre de forma direta ao parceiro, ou seja, sem marketplace e lojas, aproveitando, assim, os próprios canais já existentes da ONG.
-Promoção: A divulgação dos produtos da ONG para os alunos é feita pelo onboarding e pelo treinamento da equipe Pulse Mais. A segunda estratégia é a divulgação do portal do aluno pela própria instituição, ou seja, por e-mail e redes sociais; e a terceira estratégia é uma estratégia de marketing e relacionamento, com conteúdo voltado a doadores e parceiros.
+Promoção: Para a equipe interna e os gestores, a divulgação das funcionalidades é realizada por meio de onboarding e treinamentos institucionais, garantindo apropriação das ferramentas de gestão, agenda e notificações. Para alunos e ex-alunos, o portal é divulgado por e-mail institucional e redes sociais da Pulse Mais, com publicações sobre cadastro, atualização de perfil e acesso a oportunidades, reforçando a proximidade já buscada no posicionamento da marca. Para doadores e parceiros, é adotada uma estratégia de marketing de relacionamento, com conteúdo voltado à prestação de contas e à demonstração de impacto, distribuído por e-mail e redes sociais. Eventos institucionais da Pulse Mais, como encontros com jovens e apresentações a apoiadores, são aproveitados como canal de promoção, sendo usados para apresentar indicadores de impacto extraídos da plataforma e fortalecer a percepção de credibilidade. Parcerias com empresas patrocinadoras e organizações do terceiro setor também são exploradas, possibilitando a divulgação cruzada do trabalho da Pulse Mais e, indiretamente, da própria ferramenta de gestão. Dessa forma, a promoção é estruturada conforme o perfil de cada público, sem necessidade de campanhas pagas, dado o caráter institucional da solução.
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
-_Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na seção 2 deste documento. Indique pontos fortes e pontos a melhorar de maneira geral._
+<div align="justify">
 
-_Relacione os pontos de melhorias evidenciados nos testes com planos de ações para serem implementadas. O grupo não precisa implementá-las, pode deixar registrado aqui o plano para ações futuras_
+## 7.1 Aderência aos objetivos propostos
 
-_Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras_
+O objetivo central declarado na seção 2 deste documento consistia no desenvolvimento de uma aplicação web que atuasse como Single Source of Truth (SSOT) da Pulse Mais, centralizando dados institucionais e da jornada dos jovens que hoje se encontram dispersos em planilhas, relatórios e registros descentralizados. A solução entregue — o Pulse Manager — atendeu a esse objetivo por meio de uma arquitetura cliente-servidor com front-end em HTML, CSS e JavaScript, back-end em Node.js e banco de dados PostgreSQL hospedado no Supabase, estruturando em uma única base os dados de alunos, participações, atividades, agenda, notificações, oportunidades e registros de acompanhamento psicológico.
+
+Os benefícios esperados descritos na seção 2.1.3 foram atendidos nos seguintes termos:
+
+**Redução da fragmentação de dados:** a modelagem relacional desenvolvida ao longo das sprints consolidou em um único schema as entidades antes distribuídas em planilhas distintas. O cadastro centralizado de alunos e ex-alunos, a rastreabilidade de participações por atividade e o histórico longitudinal de cada jovem substituem o modelo anterior de arquivos isolados por projeto e ano.
+
+**Acompanhamento individualizado:** a página de perfil do aluno agrega, em uma interface unificada, dados cadastrais, jornada formativa, desempenho, agenda, notificações e, para o perfil de psicólogo, o histórico de acompanhamento psicológico. Esse registro estruturado reduz a dependência do conhecimento informal da equipe, risco identificado como de alta probabilidade na Matriz de Riscos (R9).
+
+**Dashboard de indicadores:** foram implementados dashboards diferenciados por perfil — gestor, psicólogo e aluno — expondo métricas de empregabilidade, frequência, conclusão e evolução da jornada. Os indicadores foram validados nos testes de integração e são consumidos pelos endpoints documentados na seção 3.1.4.
+
+**Segmentação estratégica:** o módulo de segmentação permite filtrar alunos por critérios como curso, status, nível de engajamento e perfil socioeconômico, respondendo diretamente à necessidade operacional de identificar perfis para oportunidades específicas e jovens multiplicadores (RF011, seção 3.1.1).
+
+**Portal do aluno:** o perfil de aluno permite visualizar o próprio histórico, dados cadastrais e agenda, além de receber notificações enviadas pela equipe gestora, atendendo à expectativa de autonomia digital identificada na análise de tendências de mercado (seção 6.2.3).
+
+**Controle de acesso por perfil:** a separação de visibilidade entre perfis de gestor, psicólogo e aluno foi implementada via middleware de autenticação (`authMiddleware`) com leitura de headers de perfil, garantindo que registros sensíveis de saúde mental permaneçam acessíveis apenas ao psicólogo, conforme exigência funcional e alinhamento com a LGPD.
+
+## 7.2 Pontos fortes
+
+**Cobertura de testes:** a suíte automatizada totalizou 278 casos de teste distribuídos em 20 arquivos, combinando testes unitários de Service (113 casos aprovados) e testes de integração de endpoints (157 aprovados, 8 ignorados por configuração de ambiente). Os 8 casos de desempenho (`RNF-DES`) foram aprovados, confirmando que os endpoints críticos respondem dentro dos limiares estabelecidos. Essa cobertura reduz o risco de regressão em futuras evoluções.
+
+**Usabilidade verificada:** os testes de guerrilha realizados com 7 participantes resultaram em taxa de sucesso de 100% nas 5 tarefas avaliadas, cobrindo os três perfis da aplicação. A avaliação SUS complementar obteve média de 92,9 pontos, enquadrada na faixa de usabilidade excelente (91–100). Os resultados indicam aderência da interface às heurísticas de Nielsen avaliadas e baixo nível de atrito durante a navegação.
+
+**Arquitetura de dados robusta:** o modelo físico adota restrições de integridade referencial (`PRIMARY KEY`, `FOREIGN KEY`, `UNIQUE`, `NOT NULL`, `CHECK`) e tipos `ENUM` para campos categóricos, reduzindo inconsistências de preenchimento. A ordem de dependência entre tabelas está documentada e orienta futuras operações de migração e manutenção.
+
+**Separação de perfis e controle de acesso:** a implementação de três SPAs distintas por perfil (gestor, psicólogo e aluno), com componentes de menu e estilos especializados, garante isolamento visual e funcional entre os papéis, tornando a interface mais previsível para cada tipo de usuário.
+
+**Organização da base de código:** a estrutura modular do back-end, com separação entre controllers, services, repositories e routes, facilita a manutenção e a extensão de funcionalidades sem alto acoplamento entre camadas.
+
+## 7.3 Pontos a melhorar
+
+**Cobertura de testes para módulos de participação e anotação qualitativa:** as rotas `participacaoRoutes.ts` e `anotacaoQualitativaRoutes.ts` são placeholders, com os endpoints equivalentes incorporados em `jornadaRoutes`. Não há cobertura de testes isolada para esses módulos.
+
+**Posicionamento do filtro de cursos:** o único problema de usabilidade identificado nos testes foi de severidade cosmética: um participante indicou que a posição do filtro de cursos na tela de listagem de alunos foi percebida como pouco intuitiva. A melhoria recomendada é destacar visualmente o campo ou reposicioná-lo em área de maior destaque.
+
+**Rastreabilidade da Matriz RTM:** a Matriz de Rastreabilidade apresentou campos "A definir" na coluna de testes ao longo das sprints 3 e 4, o que reduziu a visibilidade sobre a cobertura de requisitos funcionais por evidência concreta de teste.
+
+## 7.4 Trabalhos futuros
+
+Os trabalhos futuros propostos derivam diretamente das pendências identificadas ao longo do desenvolvimento e de oportunidades de evolução identificadas durante a análise de mercado e os testes com usuários.
+
+**Automação de formulários:** implementar um sistema de envio de formulários cujas respostas atualizem ou adicionem automaticamente registros ao banco, reduzindo o trabalho manual de input de dados pelos gestores. Essa funcionalidade foi listada como entregável desejável no TAPI e não foi contemplada no escopo acadêmico.
+
+**Conformidade com a LGPD em nível de produção:** submeter a aplicação a auditoria de segurança antes de qualquer uso em ambiente produtivo com dados reais. Aspectos a revisar incluem política de retenção de dados, anonimização de registros históricos de ex-alunos, controle de logs de acesso e documentação de tratamento de dados sensíveis.
+
+**Escalabilidade para outras organizações:** a arquitetura da aplicação pode ser generalizada para atender organizações sociais com perfil semelhante ao da Pulse Mais. Uma evolução futura poderia incluir configuração de campos personalizados por organização, suporte a múltiplos programas simultâneos e painéis comparativos entre turmas e anos.
+
+**Reaplicação do SUS após ajustes de interface:** após a correção do posicionamento do filtro de cursos e eventuais refinamentos de usabilidade, recomenda-se reaplicar o questionário SUS com um grupo de usuários representativo do público-alvo real da Pulse Mais — preferencialmente membros da equipe gestora — para validar se a percepção de usabilidade se mantém na faixa excelente com usuários do contexto institucional.
+
+</div>
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
 ABRASCE. *Programa Pulse Mais 2026 inicia com alta adesão e reforça aposta na formação de jovens para o mercado de tecnologia*. 2026. Disponível em: https://abrasce.com.br/espaco-do-associado/tecnologia/programa-pulse-mais-2026-inicia-com-alta-adesao-e-reforca-aposta-na-formacao-de-jovens-para-o-mercado-de-tecnologia/. Acesso em: 10 jun. 2026.
 
+ANPD. *Agência Nacional de Proteção de Dados aprova Agenda Regulatória para o biênio 2025-2026*. Brasília: ANPD, 2024. Disponível em: https://www.gov.br/anpd/pt-br. Acesso em: 24 jun. 2026.
+
 BRASIL. Lei nº 13.709, de 14 de agosto de 2018. *Lei Geral de Proteção de Dados Pessoais (LGPD)*. Brasília, DF: Presidência da República, 2018. Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm. Acesso em: 10 jun. 2026.
+
+DIÁRIO DO COMÉRCIO. *Após cinco anos em vigor, LGPD ainda é desafio para pequenas empresas e terceiro setor*. 2025. Disponível em: https://diariodocomercio.com.br/legislacao/lgpd-desafios-pequenas-empresas-terceiro-setor/. Acesso em: 24 jun. 2026.
 
 ESG INSIDE. *Pulse Mais abre inscrições para programa gratuito que prepara jovens para carreiras em tecnologia*. 2026. Disponível em: https://esginside.com.br/2026/01/23/pulse-mais-abre-inscricoes-para-programa-gratuito-que-prepara-jovens-para-carreiras-em-tecnologia/. Acesso em: 10 jun. 2026.
 
+GRAND VIEW RESEARCH. *Education Technology Market Size, Share & Trends Analysis Report*. San Francisco: Grand View Research, 2025. Disponível em: https://www.grandviewresearch.com/industry-analysis/education-technology-market. Acesso em: 24 jun. 2026.
+
 INTERNATIONAL ORGANIZATION FOR STANDARDIZATION. *ISO/IEC 25010: Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models*. Geneva: ISO, 2011. Disponível em: https://www.iso.org/standard/35733.html. Acesso em: 10 jun. 2026.
+
+MORDOR INTELLIGENCE. *Non-Profit Software Market Size & Share Analysis*. Hyderabad: Mordor Intelligence, 2026. Disponível em: https://www.mordorintelligence.com/industry-reports/non-profit-software-market. Acesso em: 24 jun. 2026.
 
 NORMANDO, Célio. *Modelo relacional: conceitos, restrições de integridade, mapeamento de modelos E-R para esquemas relacionais*. Medium, 2024. Disponível em: https://medium.com/@celionormando/modelo-relacional-8de45e45e009. Acesso em: 10 jun. 2026.
 
 OBSERVATÓRIO DO TERCEIRO SETOR. *Pulse Mais celebra 3 anos e amplia oportunidades para jovens na tecnologia*. 2025. Disponível em: https://observatorio3setor.org.br/pulse-mais-celebra-3-anos-e-amplia-oportunidades-para-jovens-na-tecnologia/. Acesso em: 10 jun. 2026.
+
+OBSERVATÓRIO DO TERCEIRO SETOR. *Tendências da captação de recursos para 2026*. 2026. Disponível em: https://observatorio3setor.org.br/tendencias-da-captacao-de-recursos-para-2026/. Acesso em: 24 jun. 2026.
+
+PORTAL DO IMPACTO. *Agentes de Inteligência Artificial: o que muda para o Terceiro Setor em 2026*. 2025. Disponível em: https://www.portaldoimpacto.com/agentes-de-inteligencia-artificial-o-que-muda-para-o-terceiro-setor-em-2026. Acesso em: 24 jun. 2026.
 
 PULSE MAIS. *Pulse Mais: site institucional*. 2026. Disponível em: https://pulsemais.org.br/. Acesso em: 10 jun. 2026.
 

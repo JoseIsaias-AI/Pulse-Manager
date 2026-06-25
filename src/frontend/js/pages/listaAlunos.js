@@ -58,6 +58,15 @@
       .join('');
   }
 
+  function displayLabel(value, fallback) {
+    const text = String(value || fallback || '').trim();
+    if (!text) return '';
+
+    return text.replace(/(^|[\s/-])([\p{L}])/gu, (match, separator, letter) => {
+      return `${separator}${letter.toLocaleUpperCase('pt-BR')}`;
+    });
+  }
+
   function normalizeStudent(aluno, index) {
     const [bg, tc] = AVATAR_COLORS[index % AVATAR_COLORS.length];
     const employed = aluno.empregabilidade === 'empregado';
@@ -78,7 +87,7 @@
       course: aluno.curso || aluno.programa || 'Programa Pulse Mais',
       techCourse: aluno.curso || 'Curso nao informado',
       st,
-      mod: aluno.nivelJornada || aluno.categoria || aluno.status || 'Sem etapa informada',
+      mod: displayLabel(aluno.nivelJornada || aluno.categoria || aluno.status, 'Sem etapa informada'),
       pct: progress,
       nota: progress / 10,
       eng: progress / 10,
