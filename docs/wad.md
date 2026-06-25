@@ -702,7 +702,7 @@ As regras de negócio formalizam as políticas, condições e restrições que a
 | RN004 | Um aluno pode estar vinculado a múltiplos programas ao longo do tempo, e o histórico de programas e atividades anteriores deve ser preservado. | RF004, RF005, RF006 |
 | RN005 | O status do aluno deve refletir sua situação atual na jornada, sem apagar o histórico quando houver encerramento, retorno ou inativação. | RF001, RF002, RF004 |
 | RN006 | A categoria do aluno deve representar seu estágio na jornada Pulse Mais, como conectado, capacitado, empregado ou egresso. | RF001, RF012, RF014 |
-| RN007 | O risco de evasão deve ser classificado em níveis como baixo, médio ou alto a partir de sinais de frequência, notas, participação e engajamento. | RF011, RF015 |
+| RN007 | O risco de evasão deve ser calculado por lógica fuzzy explicável a partir de frequência, participação, notas e engajamento. O sistema deve persistir um índice de priorização entre 0 e 100 e classificá-lo como baixo, médio ou alto, sem tratá-lo como previsão estatística ou substituir a avaliação humana. | RF011, RF015 |
 | RN008 | Para fins de dashboard, considera-se "aluno empregado" aquele que possui registro de trabalho formal ou informal, com incentivo ao detalhamento do tipo de vínculo. | RF007, RF013 |
 | RN009 | Indicadores de dashboard devem validar filtros de período e impedir consultas em que `dataFim` seja anterior a `dataInicio`. | RF012, RF013, RF014, RF015, RF016 |
 | RN010 | A exclusão definitiva de aluno não é permitida; encerramentos devem inativar o registro e preservar os dados históricos necessários à análise de impacto. | RF001, RF002 |
@@ -733,6 +733,9 @@ Além das RNs principais, a implementação possui regras técnicas testáveis p
 | RN-ALUNO-04 | Consulta por id deve validar `idAluno` como inteiro positivo. | `AlunoController`, `alunos.integration.test.ts` |
 | RN-ALUNO-05 | Consulta de aluno inexistente deve retornar erro de recurso não encontrado. | `AlunoService`, `alunos.integration.test.ts` |
 | RN-ALUNO-06 | Atualização de aluno deve validar valores de risco de evasão. | `AlunoService`, `alunos.integration.test.ts` |
+| RN-RISCO-01 | O cálculo fuzzy deve considerar somente fatores com dados disponíveis e renormalizar os pesos restantes quando algum sinal estiver ausente. | `RiscoEvasaoService`, `risco-evasao.service.test.ts` |
+| RN-RISCO-02 | Alunos sem qualquer sinal quantitativo não devem ter a classificação existente sobrescrita; nesse caso, `probabilidade_evasao` permanece nula. | `RiscoEvasaoService`, `risco-evasao.integration.test.ts` |
+| RN-RISCO-03 | Resultados abaixo de 40 são classificados como `baixo`, resultados entre 40 e 69,99 como `medio` e resultados a partir de 70 como `alto`. | `classificarRisco`, `risco-evasao.service.test.ts` |
 | RN-ALUNO-07 | Atualização de aluno inexistente deve retornar erro de recurso não encontrado. | `AlunoService`, `alunos.integration.test.ts` |
 | RN-JORNADA-01 | Jornada consolidada deve validar `idAluno` como inteiro positivo. | `JornadaService`, `jornada.integration.test.ts` |
 | RN-JORNADA-02 | Jornada de aluno inexistente deve retornar erro de recurso não encontrado. | `JornadaService`, `jornada.integration.test.ts` |
@@ -1545,6 +1548,96 @@ Uma hierarquia de classes de erro foi implementada em errors.ts, com AppError co
 Funções utilitárias reutilizáveis foram isoladas em módulos dedicados dentro de src/utils: validators.ts para validação e sanitização de parâmetros, errors.ts para a hierarquia de erros, response.ts para o envelope padronizado de respostas e date.ts para validação e formatação de datas ISO. Essa separação garante que a mesma lógica seja reutilizada de forma consistente em todos os controllers sem duplicação de código.
 
 </div>
+
+### 3.2.6. Lógica fuzzy para risco de evasão
+
+<div align="justify">
+
+O Pulse Manager utiliza lógica fuzzy para transformar sinais quantitativos da jornada do aluno em um índice explicável de priorização de acompanhamento. O resultado é armazenado em `probabilidade_evasao`, com valor entre 0 e 100, e convertido para a classificação categórica `risco_evasao`, cujos valores são `baixo`, `medio` e `alto`. Apesar do nome do campo, o percentual não representa uma probabilidade estatística validada nem uma certeza de evasão; trata-se de um indicador determinístico de apoio à decisão, que deve ser interpretado em conjunto com o acompanhamento humano.
+
+</div>
+
+#### Dados de entrada
+
+O `RiscoEvasaoRepository` agrega dados das tabelas `aluno`, `participacao` e `atividade`. Um registro inexistente não é contabilizado como falta: ausências são consideradas somente quando há uma participação registrada com `status_part = false`.
+
+| Fator | Origem | Cálculo inicial | Peso |
+| --- | --- | --- | ---: |
+| Faltas em aula | Atividades do tipo `aula` e suas participações | `(faltasAulas / totalAulas) × 100` | 0,45 |
+| Ausências em outras atividades | Atividades diferentes de `aula` e suas participações | `(ausenciasAtividades / totalAtividades) × 100` | 0,20 |
+| Desempenho acadêmico | Média das notas não nulas em `participacao` | Média na escala de 0 a 10 | 0,20 |
+| Desengajamento | `aluno.engajamento` | `100 - engajamento` | 0,15 |
+
+#### Funções de pertinência
+
+Para sinais em que valores maiores indicam maior risco, é utilizada uma pertinência crescente:
+
+```text
+pertinenciaCrescente(x, inicio, fim) =
+  limitar((x - inicio) / (fim - inicio), 0, 1)
+```
+
+Para sinais em que valores menores indicam maior risco, é utilizada uma pertinência decrescente:
+
+```text
+pertinenciaDecrescente(x, ruim, bom) =
+  limitar((bom - x) / (bom - ruim), 0, 1)
+```
+
+Os intervalos definidos pela regra de negócio são:
+
+| Fator | Grau de risco 0 | Transição linear | Grau de risco 1 |
+| --- | --- | --- | --- |
+| Faltas em aula | até 10% | entre 10% e 40% | a partir de 40% |
+| Ausências em atividades | até 15% | entre 15% e 60% | a partir de 60% |
+| Média de notas | a partir de 8 | entre 5 e 8 | até 5 |
+| Engajamento | a partir de 80 | entre 30 e 80 | até 30 |
+
+#### Agregação, confiabilidade e classificação
+
+Os graus disponíveis são combinados por média ponderada. Quando um fator não possui dados suficientes, ele é removido do cálculo e os pesos presentes são renormalizados pela soma dos pesos disponíveis:
+
+```text
+riscoFuzzy = soma(grauDeRisco × peso) / soma(pesosDisponiveis)
+```
+
+Para reduzir conclusões fortes com poucos registros, o motor calcula a confiabilidade com base na quantidade de aulas, atividades e notas:
+
+```text
+quantidadeRegistros = totalAulas + totalAtividades
+confiabilidade = limitar(
+  (quantidadeRegistros + quantidadeNotas) / 5,
+  0,
+  1
+)
+
+probabilidade =
+  25 + ((riscoFuzzy × 100) - 25) × confiabilidade
+```
+
+Com poucos dados, o resultado é aproximado da referência conservadora de 25%. A classificação final segue os limites abaixo:
+
+| Índice calculado | Classificação |
+| --- | --- |
+| menor que 40 | `baixo` |
+| de 40 até 69,99 | `medio` |
+| igual ou maior que 70 | `alto` |
+
+Quando não existem aulas, atividades, notas ou engajamento informado, o motor retorna probabilidade e classificação nulas, não atualiza o aluno e preserva o valor anterior de `risco_evasao`. Essa regra evita interpretar ausência de dados como baixo ou alto risco.
+
+#### Integração arquitetural
+
+O cálculo está implementado em `src/backend/services/riscoEvasaoService.ts`, enquanto `src/backend/repositories/riscoEvasaoRepository.ts` realiza a agregação dos indicadores e persiste o resultado. O recálculo ocorre após alterações de engajamento, frequência ou participação e também durante a inicialização do servidor, sincronizando dados históricos. Para manutenção administrativa, o comando `npm run risco:recalcular` executa o mesmo processamento em lote.
+
+O campo `probabilidadeEvasao` é devolvido pelas APIs de aluno junto de `riscoEvasao`. A interface pode utilizar a classificação categórica para filtros e alertas, enquanto o valor percentual permanece disponível para análises mais detalhadas.
+
+#### Limitações e uso responsável
+
+- Os pesos e limites são regras iniciais de negócio e devem ser recalibrados quando houver histórico suficiente de evasões reais.
+- O cálculo considera todo o histórico disponível, sem janela temporal.
+- Somente atividades com registro em `participacao` entram no cálculo.
+- O indicador apoia a priorização do acompanhamento e não substitui avaliação pedagógica, social ou psicológica.
+- O resultado não deve ser apresentado como diagnóstico, previsão clínica ou decisão automatizada definitiva.
 
 ## 3.3. Wireframes (sprint 2)
 
@@ -2420,7 +2513,7 @@ Com base na modelagem de dados do projeto, o modelo relacional foi definido para
 
 | Tabela | Chave primária | Atributos | Chaves estrangeiras |
 |---|---|---|---|
-| `aluno` | `id_aluno` | `codigo_pm`, `nome`, `email`, `telefone`, `idade`, `genero`, `ocupacao`, `tipo_vinculo_empregaticio`, `renda_mensal`, `escolaridade`, `instituicao_ensino_superior`, `curso_ensino_superior`, `status_ensino_superior`, `data_ingresso_ensino_superior`, `programa`, `categoria`, `risco_evasao`, `engajamento`, `data_ingresso`, `status`, `nivel_jornada`, `perfil_socioeconomico`, `curso`, `origem_participacao` | - |
+| `aluno` | `id_aluno` | `codigo_pm`, `nome`, `email`, `telefone`, `idade`, `genero`, `ocupacao`, `tipo_vinculo_empregaticio`, `renda_mensal`, `escolaridade`, `instituicao_ensino_superior`, `curso_ensino_superior`, `status_ensino_superior`, `data_ingresso_ensino_superior`, `programa`, `categoria`, `risco_evasao`, `probabilidade_evasao`, `engajamento`, `data_ingresso`, `status`, `nivel_jornada`, `perfil_socioeconomico`, `curso`, `origem_participacao` | - |
 | `membro_equipe` | `id_membro` | `nome`, `cargo`, `email` | - |
 | `psicologo` | `id_psi` | `nome_psi`, `cargo_psi` | - |
 | `atividade` | `id_atividade` | `titulo`, `tipo`, `descricao`, `data`, `modalidade`, `carga_horaria` | - |
@@ -2438,7 +2531,7 @@ Com base na modelagem de dados do projeto, o modelo relacional foi definido para
 
 <div align="justify">
 
-A tabela `aluno` representa os jovens acompanhados pela Pulse Mais. Ela contém os dados principais do aluno e é a base para registros de agenda, notificações, labels, histórico psicológico e participação em atividades.
+A tabela `aluno` representa os jovens acompanhados pela Pulse Mais. Ela contém os dados principais do aluno e é a base para registros de agenda, notificações, labels, histórico psicológico e participação em atividades. Os campos `risco_evasao` e `probabilidade_evasao` armazenam, respectivamente, a classificação categórica e o índice fuzzy calculado pelo backend. A coluna percentual utiliza `DECIMAL(5,2)` e aceita apenas valores nulos ou entre 0 e 100.
 
 </div>
 
@@ -3372,7 +3465,8 @@ service = new AgendaService(asMockedDependency<AgendaRepository>(repository));
 | `NotificacaoService` | `src/tests/unit/services/notificacao.service.test.ts` | 15 | Listagem e criação de notificações, oportunidades, validação de aluno destinatário, tipos, remetente, perfil, datas e campos obrigatórios. |
 | `PortalAlunoService` | `src/tests/unit/services/portal-aluno.service.test.ts` | 13 | Visualização de perfil, atualização de contato, normalização de email/telefone, permissões de notificações e oportunidades do portal. |
 | `SaudeMentalService` | `src/tests/unit/services/saude-mental.service.test.ts` | 11 | Prontuários, labels, restrição ao perfil psicólogo, validação de aluno, tipo de label, título, observação e descrição. |
-| **Total** | **8 arquivos** | **113 testes** | **Cobertura unitária das principais regras de negócio da camada de Service.** |
+| `RiscoEvasaoService` | `src/tests/unit/services/risco-evasao.service.test.ts` | 6 | Funções de pertinência, classificação, ausência de dados, confiabilidade com poucos registros e persistência seletiva no recálculo em lote. |
+| **Total documentado nesta tabela** | **9 arquivos** | **119 testes** | **Cobertura unitária das principais regras de negócio da camada de Service, incluindo o motor fuzzy.** |
 
 **AlunoService**
 
@@ -3441,6 +3535,10 @@ Tests:       126 passed, 126 total
 
 A cobertura geral da camada `services/` atingiu **83,42% de statements**, **83,49% de linhas** e **88,7% de funções**, superando o limiar mínimo de 80%. Os três arquivos com cobertura zero (`authService.ts`, `codigoPmService.ts`, `desempenhoService.ts`) são services auxiliares ou de infraestrutura que não possuem testes unitários dedicados nesta suíte; os services diretamente vinculados aos endpoints ativos da aplicação estão todos com cobertura acima de 75%, e cinco deles atingiram 100% em todas as métricas.
 
+**RiscoEvasaoService**
+
+Os testes do `RiscoEvasaoService` verificam a classificação de cenários de baixo e alto risco, os limites de 40% e 70%, a preservação de alunos sem dados quantitativos, a redução de confiabilidade quando há somente um registro e a persistência exclusiva dos resultados que possuem dados calculáveis.
+
 </div>
 
 ### 5.1.3 Testes de Integração de Endpoints
@@ -3491,6 +3589,10 @@ A suíte de integração totaliza **157 testes funcionais distribuídos em 12 ar
 | `GET /api/impacto/alunos-empregados` | ✅ | ✅ formato dataFim | ✅ 422 intervalo inválido | N/A |
 | `GET /api/impacto/acesso-ensino-superior` | ✅ | ✅ programa < 3 chars | ✅ 422 intervalo inválido | N/A |
 | `GET /api/jornada/evasao-risco` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
+
+**Integração do motor fuzzy**
+
+O arquivo `src/tests/integration/risco-evasao.integration.test.ts` executa o cálculo contra o banco em memória com entidades reais. Os dois cenários verificam: (1) agregação de frequência, notas e engajamento com persistência de risco alto; e (2) preservação da classificação anterior e probabilidade nula quando o aluno não possui sinais quantitativos.
 
 **Módulo: Comunicação**
 
