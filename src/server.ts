@@ -17,6 +17,7 @@ initializeDatabase()
 
     app.listen(port, () => {
       console.log(`Servidor Pulse Mais rodando na porta ${port}`);
+      console.log(`Aplicacao web: http://localhost:${port}/`);
       console.log(`Healthcheck: http://localhost:${port}/api/health`);
       console.log(`Supabase/db check: http://localhost:${port}/api/health/supabase`);
     });

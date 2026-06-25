@@ -179,13 +179,19 @@ npm run dev:local
 
 O frontend está localizado na pasta `src/frontend` e contém as páginas HTML, arquivos CSS, scripts JavaScript e assets da interface.
 
-As páginas estáticas podem ser abertas diretamente no navegador a partir da pasta `src/frontend/pages`, ou servidas com a extensão Live Server do Visual Studio Code. Com o backend em execução na porta `3000`, o arquivo `config.js` aponta automaticamente para `http://localhost:3000/api` em ambiente local.
-
-Exemplo de acesso:
+Com o backend em execução na porta `3000`, a própria aplicação Express serve o frontend. Acesse:
 
 ```sh
-src/frontend/pages/login.html
+http://localhost:3000/
 ```
+
+A rota raiz redireciona para a tela de login:
+
+```sh
+http://localhost:3000/pages/login.html
+```
+
+O arquivo `config.js` aponta automaticamente para `http://localhost:3000/api` em ambiente local. As páginas também continuam disponíveis diretamente em `src/frontend/pages` para inspeção dos arquivos, mas o fluxo recomendado é abrir pelo servidor local.
 
 ### 5. Observações importantes
 
