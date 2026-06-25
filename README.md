@@ -101,16 +101,40 @@ A API ficará disponível em `http://localhost:3000` e o healthcheck em `http://
 
 ## Histórico de lançamentos
 
-* 0.5.0 - XX/XX/2024
-    * 
-* 0.4.0 - XX/XX/2024
-    * 
-* 0.3.0 - XX/XX/2024
-    * 
-* 0.2.0 - XX/XX/2024
-    * 
-* 0.1.0 - XX/XX/2024
-    *
+- **0.5.0 -26/06/2026 (Sprint 5 - encerramento)**
+  - Integração final entre frontend, backend e banco de dados.
+  - Refinamento da autenticação, autorização por perfil, segurança e resiliência.
+  - Consolidação dos testes automatizados, testes de desempenho e testes de ponta a ponta.
+  - Realização dos testes de usabilidade e avaliação SUS.
+  - Finalização do WAD, conclusões e definição dos trabalhos futuros.
+
+- **0.4.0 -12/06/2026 (Sprint 4)**
+  - Desenvolvimento das SPAs dos perfis de aluno, gestor e psicólogo.
+  - Integração do backend com PostgreSQL e Supabase.
+  - Implementação e documentação da suíte de testes unitários e de integração.
+  - Atualização da modelagem de dados e da matriz de rastreabilidade.
+  - Elaboração do estudo de mercado, Business Model Canvas e estratégia de marketing.
+
+- **0.3.0 -29/05/2026 (Sprint 3)**
+  - Implementação da primeira versão funcional da aplicação web e da WebAPI.
+  - Estruturação do backend em rotas, controllers, services, repositories e models.
+  - Definição da arquitetura e dos padrões de projeto.
+  - Criação do guia de estilos e dos protótipos de alta fidelidade.
+  - Documentação dos endpoints e dos principais fluxos da aplicação.
+
+- **0.2.0 -15/05/2026 (Sprint 2)**
+  - Criação dos wireframes e definição inicial da experiência de usuário.
+  - Elaboração dos diagramas de classes e de sequência.
+  - Construção do Modelo Entidade-Relacionamento e do Diagrama Entidade-Relacionamento.
+  - Definição dos modelos relacional e físico do banco de dados.
+  - Desenvolvimento das consultas SQL e da lógica proposicional.
+
+- **0.1.0 -01/05/2026 (Sprint 1)**
+  - Definição do escopo, problema, objetivos e solução proposta.
+  - Análises das Cinco Forças de Porter e SWOT.
+  - Construção das personas, histórias de usuário e casos de uso.
+  - Levantamento dos requisitos funcionais e não funcionais.
+  - Estruturação inicial do WAD e da arquitetura da solução.
 
 ## Licença/License
 
