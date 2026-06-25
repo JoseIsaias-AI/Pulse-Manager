@@ -49,6 +49,8 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 - <b>src</b>: contém o código-fonte principal da aplicação.
 
+- <b>.env.example</b>: exemplo da estrutura do .env do projeto.
+
 - <b>.gitattributes</b>: define configurações de atributos específicos do repositório Git.
 
 - <b>.gitignore</b>: especifica arquivos e pastas que o Git deve ignorar no versionamento.
