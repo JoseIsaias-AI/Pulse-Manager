@@ -9,7 +9,7 @@ const port = env.port;
 
 initializeDatabase()
   .then(async () => {
-    if (env.database.type === 'sqljs' && !env.isTest) {
+    if (env.database.type === 'sqljs' && env.isDevelopment) {
       await seedLocalDevelopmentDatabase();
     }
 

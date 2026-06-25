@@ -167,7 +167,7 @@ DATABASE_SSL=true
 # DATABASE_SSL=false
 
 # Tipo de banco (postgres | sqljs)
-# DB_TYPE=postgres   # padrão: postgres em dev, sqljs em test
+# DB_TYPE=postgres   # use PostgreSQL quando houver conexão configurada
 ```
 
 Para executar localmente sem PostgreSQL ou Supabase configurado, usando o banco em memória:
@@ -175,6 +175,8 @@ Para executar localmente sem PostgreSQL ou Supabase configurado, usando o banco 
 ```sh
 npm run dev:local
 ```
+
+Em produção, `npm start` define `NODE_ENV=production`. Quando nenhuma conexão PostgreSQL/Supabase estiver configurada, a aplicação inicia com banco em memória vazio e não carrega dados demonstrativos. Os dados locais de exemplo são inseridos somente pelos comandos de desenvolvimento.
 
 ### 4. Frontend
 
