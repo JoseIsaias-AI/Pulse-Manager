@@ -38,7 +38,7 @@
     });
   }
 
-  menuList.innerHTML = pulseConfig.menu.map(item => `
+  menuList.innerHTML = pulseConfig.menu.filter(item => item.id !== 'configuracoes').map(item => `
     <li class="menuLateral__item" data-page="${item.id}">
       <a href="#" class="menuLateral__link">
         <i class="ti ${item.icon} menuLateral__icon"></i>
