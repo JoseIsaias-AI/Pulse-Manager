@@ -794,7 +794,7 @@ A coluna "Requisito" descreve o atributo de qualidade esperado em linguagem de n
 | DES: Desempenho | A consulta ao histórico consolidado de um aluno deve carregar em tempo aceitável para uso diário pela equipe. | Tempo de resposta p95 < 1.5 segundos para abertura do histórico completo de um aluno; pontuação mínima de 80 na categoria Performance do Google Lighthouse nas principais telas. | Consultas pré-otimizadas; agregações feitas no servidor; payload JSON enxuto entre back-end e front-end; auditoria via Lighthouse executada nas revisões de sprint. |
 | SUP: Suportabilidade | O código-fonte deve seguir um padrão arquitetural claro, com separação de responsabilidades entre apresentação, lógica de aplicação e persistência. | Cada camada do sistema deve ter responsabilidade única e bem delimitada; nenhuma lógica de acesso a dados deve estar misturada com a camada de apresentação. | Adoção do padrão MVC com diretórios `controllers/`, `service/` e `repository/`; revisões de pull request validando a separação; consultas SQL restritas à camada de Model. |
 | SUP: Suportabilidade | O sistema deve ser facilmente analisável, permitindo que um novo desenvolvedor ou docente entenda e contribua com o código. | Um novo colaborador deve conseguir realizar o setup local em até 10 minutos a partir da documentação; trechos de lógica não trivial devem estar comentados; nomenclatura consistente. | README com passo a passo de instalação; revisão por pares; aderência ao guia de estilo do módulo. |
-| SEG: Segurança | O acesso às funcionalidades sensíveis deve ser controlado por níveis de permissão simples, sem autenticação formal (login/senha), conforme restrição do TAPI. As observações de saúde mental devem ser visíveis apenas para usuários com perfil de psicólogo. | Usuários sem o perfil adequado não devem conseguir acessar dados de saúde mental por nenhum caminho do sistema, incluindo tentativas de acesso direto. | Middleware de verificação de perfil no Express; rotas protegidas por papel; testes de bloqueio em cada perfil. |
+| SEG: Segurança | O acesso às funcionalidades sensíveis deve ser controlado por níveis de permissão simples, sem autenticação formal (login/senha), conforme restrição do TAPI. As observações de saúde mental devem ser visíveis apenas para usuários com perfil de psicólogo. | Usuários sem o perfil adequado não devem conseguir acessar dados de saúde mental por nenhum caminho do sistema, incluindo tentativas de acesso direto. | Leitura de perfil por headers, `permissionMiddleware` nas rotas críticas e validações de perfil nos services sensíveis; testes de bloqueio por perfil. |
 | SEG: Segurança | Dados pessoais e relatos qualitativos sensíveis dos jovens, em conformidade com a LGPD e com o "Conteúdo Restrito" definido no TAPI, não devem ser expostos publicamente nem incluídos em commits do repositório público. | Nenhum dado pessoal real presente no repositório; uso obrigatório de massa de dados fictícia para desenvolvimento e demonstração. | Banco real e dumps incluídos no `.gitignore`; arquivo de seeds com dados fictícios; revisão manual de segredos antes de cada commit. |
 | CAP: Capacidade | O sistema deve suportar a carga prevista de uso pela equipe Pulse Mais e o volume estimado de alunos cadastrados. | Suporte a, no mínimo, 15 usuários simultâneos da equipe (margem confortável sobre os 7 colaboradores internos atuais); base de dados projetada para crescer até 2000 alunos cadastrados sem degradação perceptível. | Banco PostgreSQL com índices nas principais colunas de filtro dos alunos para facilitar operação e escalabilidade. |
 | CAP: Capacidade | O portal do aluno deve suportar acessos eventuais distribuídos ao longo do dia, sem necessidade de alta concorrência. | Suporte a, no mínimo, 30 acessos simultâneos no portal do aluno sem degradação superior a 20% no tempo de resposta. | Arquitetura stateless do back-end Node.js; consultas leves na rota pública do aluno. |
@@ -826,7 +826,7 @@ Esta subseção registra como cada RNF evoluiu desde o levantamento conceitual d
 | DES | Listagem de alunos | Índices planejados nas colunas `ano`, `programa`, `categoria`; medição via testes de carga simples na Sprint 5 | Índices implementados nas colunas de filtro operacional (`status`, `programa`, `categoria`); agregação do dashboard calculada na aplicação com otimização SQL planejada para sprints seguintes | Os nomes das colunas foram refinados após a modelagem física; a medição formal de carga foi postergada em favor de otimizações incrementais por sprint |
 | DES | Histórico consolidado do aluno | Planejado com auditoria Lighthouse na Sprint 5 | Mantido; Lighthouse executado nas revisões de sprint; payload JSON otimizado entre back-end e front-end | Sem mudança de critério; o que era intenção passou a ser prática contínua |
 | SUP | Padrão arquitetural | Previa MVC com diretórios `views/`, `controllers/`, `models/` | Adotado padrão Controller-Service-Repository (CSR) com diretórios `controllers/`, `services/`, `repositories/`; `models/` mantido para contratos de tipos | CSR isola melhor regras de negócio (Service) de acesso a dados (Repository), facilitando testes unitários |
-| SEG | Controle de perfil | Middleware de verificação de perfil planejado; testes de bloqueio mencionados sem detalhes de implementação | Implementado com `authMiddleware` (JWT), `permissionMiddleware` (RBAC) e `validationMiddleware`; testes de integração por perfil executados e documentados na seção de testes | Controle por `if/else` não era suficiente para proteger rotas sensíveis de saúde mental em sistema multi-perfil |
+| SEG | Controle de perfil | Middleware de verificação de perfil planejado; testes de bloqueio mencionados sem detalhes de implementação | Implementado com `authMiddleware` baseado em headers, `permissionMiddleware` (RBAC) nas rotas críticas e validações de perfil nos services de agenda, saúde mental e portal; testes de integração por perfil executados e documentados na seção de testes | A validação simples no front-end não era suficiente; as decisões de acesso passaram a ocorrer no back-end |
 | SEG | LGPD / dados sensíveis | Seeds fictícios e `.gitignore` planejados | Mantido e verificado em cada sprint; checklist de revisão de segredos antes de cada push | Sem mudança de critério; prática consolidada |
 | CAP | Capacidade da equipe | SQLite mencionado como banco com nota de "possível migração futura" | PostgreSQL adotado desde a Sprint 2; índices implementados nas colunas de filtro dos alunos; necessidade de migração futura eliminada | PostgreSQL entrega a concorrência e os índices necessários para o volume projetado de 2000 alunos |
 | CAP | Capacidade do portal do aluno | Planejado (30 acessos simultâneos); arquitetura stateless como estratégia | Mantido; arquitetura stateless do Node.js confirmada na implementação; consultas do portal verificadas como leves | Sem mudança de critério; confirmação técnica consolidada |
@@ -902,18 +902,18 @@ A Arquitetura em Camadas organiza o sistema em níveis hierárquicos com respons
 
 A requisição HTTP percorre o sistema sempre no mesmo sentido descendente, e a resposta retorna no sentido inverso. Cada camada conhece apenas a camada imediatamente inferior, garantindo o princípio da dependência unidirecional:
 
-- **Cliente (Frontend Web):** aplicação em HTML + CSS + TypeScript que consome a API por meio da camada de serviços do próprio frontend (`frontend/js/services/api.ts`).
+- **Cliente (Frontend Web):** aplicação em HTML + CSS + JavaScript/TypeScript que consome a API por meio da camada de serviços do próprio frontend (`src/frontend/js/services/api.js`).
 - **Camada de Rotas (Routes):** mapeia URLs e verbos HTTP para os Controllers e aplica os middlewares de autenticação, permissão e validação de payload.
 - **Camada de Controllers:** recebe a requisição HTTP, extrai os parâmetros, delega a operação ao Service apropriado e formata a resposta (status code + JSON). Não contém regra de negócio.
 - **Camada de Services:** concentra toda a regra de negócio — validações de domínio, orquestração entre repositórios, cálculos, integrações externas e regras transacionais.
 - **Camada de Repositories:** único ponto de acesso ao banco de dados. Encapsula as queries SQL e isola o Service da tecnologia de persistência.
 - **Banco de Dados:** PostgreSQL, acessado via pool de conexões.
 
-Em paralelo, atuam três camadas transversais (cross-cutting): Middlewares (autenticação, permissão, validação de payload e tratamento centralizado de erros), Models (contratos e tipos do domínio em TypeScript) e Integrations (adapters para e-mail, auditoria e notificações).
+Em paralelo, atuam três camadas transversais (cross-cutting): Middlewares (autenticação por headers, permissão, validação de payload quando aplicável e tratamento centralizado de erros), Models (contratos e tipos do domínio em TypeScript) e Integrations (adapters para Supabase e auditoria).
 
 **Estrutura de Diretórios do Backend**
 
-A organização física do código em `backend/src/` reflete fielmente a divisão lógica das camadas, contendo as pastas `config/`, `routes/`, `controllers/`, `services/`, `repositories/`, `models/`, `middlewares/`, `integrations/`, `database/` e `utils/`, além dos arquivos `app.ts` (bootstrap do Express) e `server.ts` (inicialização do servidor HTTP).
+A organização física do código em `src/backend/` reflete fielmente a divisão lógica das camadas, contendo as pastas `config/`, `routes/`, `controllers/`, `services/`, `repositories/`, `models/`, `middlewares/`, `integrations/`, `database/` e `utils/`, além dos arquivos `app.ts` (bootstrap do Express) e `server.ts` (inicialização do servidor HTTP).
 
 **Responsabilidade Detalhada de Cada Camada**
 
@@ -941,19 +941,19 @@ A pasta `models/` define os contratos de tipos do domínio em TypeScript: interf
 
 **5. Camadas Transversais**
 
-A pasta `middlewares/` contém o `authMiddleware` (valida o JWT), o `permissionMiddleware` (verifica perfil e RBAC), o `validationMiddleware` (valida o schema do payload antes da requisição chegar ao Controller) e o `errorMiddleware` (captura erros lançados em qualquer camada e converte em resposta HTTP padronizada).
+A pasta `middlewares/` contém o `authMiddleware` (lê os headers `x-user-id`, `x-user-role` e `x-user-name`), o `permissionMiddleware` (verifica perfil e RBAC nas rotas em que é aplicado), o `validationMiddleware` (utilitário para validação de payload) e o `errorMiddleware` (captura erros lançados em qualquer camada e converte em resposta HTTP padronizada).
 
-A pasta `integrations/` contém os adapters para sistemas externos — `emailProvider`, `notificationProvider`, `auditoriaIntegration` e `dashboardAuditoriaIntegration` — isolando dependências externas para que mudanças de provedor não afetem o domínio.
+A pasta `integrations/` contém os adapters para sistemas externos — `supabaseClient`, `auditoriaIntegration`, `dashboardAuditoriaIntegration` e `autoIntegration` — isolando dependências externas para que mudanças de provedor não afetem o domínio.
 
 As pastas `config/` (variáveis de ambiente, conexão com o banco, política de CORS e matriz de permissões), `database/` (pool de conexões, execução de migrações e seed) e `utils/` (helpers puros e sem estado — date, errors, pagination, response, validators) completam a infraestrutura de suporte.
 
 **Camada de Cliente — Frontend**
 
-O frontend (`frontend/`) é uma aplicação web em HTML + CSS + TypeScript organizada por páginas (`frontend/pages/*.html`), scripts por página (`frontend/js/pages/*.ts`), componentes reutilizáveis (`frontend/js/components/`: sidebar, table, filters) e uma camada de serviços de API própria (`frontend/js/services/api.ts` e `auth.ts`) que centraliza todas as chamadas HTTP ao backend. Essa separação espelha, no cliente, o mesmo princípio aplicado no servidor: a UI não conhece detalhes de transporte, e sim invoca métodos do `api.ts`.
+O frontend (`src/frontend/`) é uma aplicação web em HTML + CSS + JavaScript/TypeScript organizada por páginas (`src/frontend/pages/*.html`), scripts por página (`src/frontend/js/pages/`), componentes reutilizáveis (`src/frontend/js/components/`) e uma camada de serviços própria (`src/frontend/js/services/api.js`, `config.js`, `sessionUser.js` e `uiState.js`). Essa separação espelha, no cliente, o mesmo princípio aplicado no servidor: a UI não conhece detalhes de transporte, e sim invoca métodos do cliente HTTP central.
 
 **Fluxo de uma Requisição (exemplo: cadastrar frequência de um aluno)**
 
-O usuário, no navegador, dispara um `POST /frequencia` a partir de `frontend/js/pages/...` via `frontend/js/services/api.ts`. O Express recebe a requisição e a direciona pelo `routes/frequenciaRoutes.ts`, que aplica `authMiddleware`, `permissionMiddleware` e `validationMiddleware`. Em seguida, o `frequenciaController` extrai o payload validado e chama o método correspondente do `frequenciaService`. O `frequenciaService` aplica as regras de negócio — como verificar se o aluno está ativo no programa e calcular o impacto no risco de evasão via `riscoEvasaoService` — e invoca o `frequenciaRepository` e, se necessário, o `auditoriaIntegration`. O `frequenciaRepository` executa o SQL parametrizado contra o PostgreSQL e devolve o registro persistido. O retorno sobe a pilha — Service → Controller — e o Controller responde com `201 Created` e o JSON da frequência criada. Qualquer erro lançado em qualquer ponto é capturado pelo `errorMiddleware`, que padroniza a resposta de erro.
+O usuário, no navegador, dispara um `POST /api/frequencias` a partir dos scripts de página em `src/frontend/js/pages/`, por meio do cliente HTTP central `src/frontend/js/services/api.js`. O Express recebe a requisição e a direciona pelo `jornadaRoutes.ts`, que aplica `authMiddleware` antes de chamar o `jornadaController`. Em seguida, o controller extrai o payload e chama o método correspondente do `jornadaService`. O service aplica as regras de negócio — como validar aluno e atividade, persistir a participação/frequência e recalcular o risco de evasão via `riscoEvasaoService` — e invoca os repositories necessários. O retorno sobe a pilha — Service → Controller — e o Controller responde com JSON padronizado. Qualquer erro lançado em qualquer ponto é capturado pelo `errorMiddleware`, que padroniza a resposta de erro.
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
@@ -1513,7 +1513,7 @@ O padrão MVC separa o projeto em três camadas independentes: Model, View e Con
 
 <div align="justify">
 
-O padrão DAO separa as classes de acesso a banco de dados das classes responsáveis pelas regras de negócio. No Pulse Mais, isso é feito por dois mecanismos paralelos: o arquivo connection.ts usa o TypeORM com mapeamento objeto-relacional via decorators para operações estruturadas, e o pool.ts usa o driver pg nativo com Pool de conexões para queries SQL diretas. Ambos se conectam ao PostgreSQL hospedado no Supabase. O controle de acesso por perfil fica centralizado em permissions.ts, onde se define que apenas o psicólogo acessa registros de saúde mental e apenas o gestor pode modificar a agenda, por exemplo.
+O padrão DAO separa as classes de acesso a banco de dados das classes responsáveis pelas regras de negócio. No Pulse Mais, isso é feito por dois mecanismos paralelos: o arquivo connection.ts usa o TypeORM com mapeamento objeto-relacional via decorators para operações estruturadas, e o pool.ts usa o driver pg nativo com Pool de conexões para queries SQL diretas. Em desenvolvimento com banco persistente, ambos se conectam ao PostgreSQL/Supabase; nos testes e no modo local simplificado, o `sqljs` é usado em memória. O controle de acesso por perfil combina `permissions.ts` nas rotas críticas com validações nos services, como ocorre em saúde mental, agenda e portal do aluno.
 
 </div>
 
@@ -1529,7 +1529,7 @@ A camada de Services concentra todas as regras de negócio da aplicação. Os co
 
 <div align="justify">
 
-O encadeamento de middlewares intercepta as requisições antes que cheguem aos controllers, centralizando responsabilidades transversais. O authMiddleware extrai os dados do usuário dos headers HTTP. O permissionMiddleware controla o acesso por perfil. O errorMiddleware centraliza o tratamento de exceções, respondendo com o status HTTP correto para cada tipo de erro. Esse padrão evita que lógica de verificação de perfil fique duplicada dentro de cada controller.
+O encadeamento de middlewares intercepta as requisições antes que cheguem aos controllers, centralizando responsabilidades transversais. O `authMiddleware` extrai os dados do usuário dos headers HTTP. O `permissionMiddleware` controla o acesso por perfil nas rotas em que há RBAC explícito. O `errorMiddleware` centraliza o tratamento de exceções, respondendo com o status HTTP correto para cada tipo de erro. Regras dependentes de contexto, como "aluno só acessa os próprios dados" ou "apenas gestor modifica agenda", ficam nos services para que possam ser testadas isoladamente.
 
 </div>
 
@@ -1660,7 +1660,7 @@ Caso queira acessar os wireframes completos, acesse o link: https://www.canva.co
 </div>
 
 <div align="justify">
-Neste fluxo, o aluno faz login com CPF e nome, acessa a tela inicial com jornada, eventos e oportunidades, e navega para Perfil, Dashboard (progresso/presenças), Agenda (calendário) ou Notificações.
+Neste fluxo, o aluno faz login com e-mail, nome e seleção do perfil Aluno, acessa a tela inicial com jornada, eventos e oportunidades, e navega para Perfil, Dashboard (progresso/presenças), Agenda (calendário) ou Notificações.
 </div>
 
 
@@ -1672,7 +1672,7 @@ Neste fluxo, o aluno faz login com CPF e nome, acessa a tela inicial com jornada
 </div>
 
 <div align="justify">
-O gestor faz login com e-mail e senha, acessa a tela inicial com visão geral da turma (alunos conectafos, transformados e evolução), e navega para Dashboard (performance/gráficos), Lista de Alunos (com filtros e acesso ao perfil individual), Agenda ou Notificações.
+O gestor faz login com e-mail, nome e seleção do perfil Gestor, acessa a tela inicial com visão geral da turma (alunos conectados, transformados e evolução), e navega para Dashboard (performance/gráficos), Lista de Alunos (com filtros e acesso ao perfil individual), Agenda ou Notificações.
 </div>
 
 
@@ -1683,7 +1683,7 @@ O gestor faz login com e-mail e senha, acessa a tela inicial com visão geral da
 </div>
 
 <div align="justify">
-O psicólogo faz login com e-mail, nome e senha, acessa a tela inicial com foco em bem-estar (alunos acompanhados, em atenção, sessões e alertas com flags), e navega para lista de Alunos (com ação de notificar por card), Dashboard (saúde mental/bem-estar por curso e faixa) Agenda ou Notificações.
+O fluxo do psicólogo prevê autenticação por e-mail, nome e perfil, acessando uma tela inicial com foco em bem-estar (alunos acompanhados, em atenção, sessões e alertas com flags), e navegação para lista de Alunos, Dashboard (saúde mental/bem-estar por curso e faixa), Agenda ou Notificações.
 </div>
 
 
@@ -1695,7 +1695,7 @@ O psicólogo faz login com e-mail, nome e senha, acessa a tela inicial com foco 
 </div>
 
 <div align="justify">
-Tela de login do sistema  dividida em dois painéis. O painel esquerdo (cinza) exibe conteúdo informativo com textos placeholder e um botão "CADASTRAR-SE". O painel direito contém o formulário de login com campos de E-mail e Senha. Um botão escuro "ENTRAR" centralizado realiza o acesso. Abaixo do botão há um link placeholder, provavelmente para recuperação de senha.
+O wireframe inicial de login do gestor previa uma tela dividida em dois painéis, com conteúdo informativo à esquerda e formulário à direita. Na versão final, o fluxo foi consolidado em uma tela única para todos os perfis, sem senha, usando e-mail, nome completo e seleção de perfil.
 </div>
 
 <div align="center">
@@ -1705,7 +1705,7 @@ Tela de login do sistema  dividida em dois painéis. O painel esquerdo (cinza) e
 </div>
 
 <div align="justify">
-Tela de login para Alunos do PULSE MAIS com layout dividido em dois painéis. O painel esquerdo exibe conteúdo informativo da plataforma. O painel direito contém campos de CPF e Nome completo para autenticação. O acesso é feito sem senha, validado apenas pelo CPF cadastrado. Um botão "ENTRAR" escuro centralizado confirma o login.
+O wireframe inicial do aluno previa login por CPF e nome completo, sem senha. Na versão final, o fluxo foi unificado com os demais perfis e passou a usar e-mail, nome completo e seleção do perfil Aluno.
 </div>
 
 <div align="center">
@@ -1715,7 +1715,7 @@ Tela de login para Alunos do PULSE MAIS com layout dividido em dois painéis. O 
 </div>
 
 <div align="justify">
-Tela de login exclusiva para psicólogos da plataforma Pulse Mais. Dividida em dois painéis: esquerdo com imagem/texto ilustrativo, direito com formulário. O formulário possui três campos (e-mail, nome completo e senha) e um botão "Entrar".
+O wireframe inicial do psicólogo previa uma tela exclusiva com formulário próprio. Na versão final, o acesso do psicólogo também foi consolidado na tela geral de login, sem senha, usando e-mail, nome completo e seleção do perfil Psicólogo.
 </div>
 
 <div align="center">
@@ -1942,7 +1942,7 @@ Em casos onde a Lucide não oferecer o ícone necessário, as bibliotecas **Phos
 </div>
 
 <div align="justify">
-A tela de login é a página inicial da plataforma para todos os perfis de usuário. Ela conta com um fundo azul institucional, o logo do Pulse Manager centralizado no topo e um card branco com os campos de autenticação — CPF e Nome Completo para alunos, e e-mail e senha para gestores e psicólogos — e o botão "Entrar", que redireciona cada usuário para sua tela inicial correspondente.
+A tela de login é a página inicial da plataforma para todos os perfis de usuário. Ela conta com um fundo azul institucional, o logo do Pulse Manager centralizado no topo e um card branco com seleção de perfil e campos de autenticação por e-mail e nome completo, sem senha. O botão "Entrar" redireciona cada usuário para sua tela inicial correspondente.
 Esta tela está associada às User Stories US05, US07, US08 e US09, de acordo com o critério de aceite número 1 de cada uma. Isso porque o acesso unificado e padronizado garante tanto a simplicidade para o aluno quanto o controle de acesso necessário para gestores e psicólogos visualizarem e interagirem com os dados da plataforma.
 </div>
 
@@ -3110,11 +3110,11 @@ O `authMiddleware`, localizado em `src/backend/middlewares/authMiddleware.ts`, i
 
 <div align="justify">
 
-O controle de autorização é implementado por meio de um sistema de Role-Based Access Control (RBAC) distribuído em dois artefatos: `src/backend/config/permissions.ts`, que define o mapeamento de ações para perfis permitidos, e `src/backend/middlewares/permissionMiddleware.ts`, que aplica esse mapeamento nas rotas da aplicação.
+O controle de autorização é implementado por meio de um modelo híbrido: Role-Based Access Control (RBAC) nas rotas críticas e validações de perfil nos services quando a regra depende do contexto da operação. O RBAC fica distribuído em dois artefatos: `src/backend/config/permissions.ts`, que define o mapeamento de ações para perfis permitidos, e `src/backend/middlewares/permissionMiddleware.ts`, que aplica esse mapeamento nas rotas em que há permissão explícita.
 
 **Mapeamento de ações e perfis (`permissions.ts`)**
 
-O arquivo `permissions.ts` define 7 ações e os perfis autorizados a executá-las:
+O arquivo `permissions.ts` define 11 ações e os perfis autorizados a executá-las:
 
 | Ação | Perfis autorizados |
 |---|---|
@@ -3123,8 +3123,12 @@ O arquivo `permissions.ts` define 7 ações e os perfis autorizados a executá-l
 | `acessarSaudeMental` | `psicologo` |
 | `editarContatoAluno` | `aluno` |
 | `editarCadastroAluno` | `gestor`, `equipe` |
+| `gerenciarImportacaoCsv` | `gestor` |
 | `criarCamposSegmentacao` | `gestor`, `psicologo` |
 | `acessarDesempenhoAluno` | `psicologo` |
+| `acessarDashboardPsicologo` | `psicologo` |
+| `solicitarApoioPsicologico` | `aluno` |
+| `listarSolicitacoesApoio` | `psicologo` |
 
 **Middleware de autorização (`permissionMiddleware.ts`)**
 
@@ -3139,15 +3143,15 @@ O estado atual de cada módulo é:
 | Módulo | Arquivo de rota | Middlewares aplicados | Observação |
 |---|---|---|---|
 | Desempenho (psicólogo) | `psicologoRoutes.ts` | `authMiddleware` + `requirePermission('acessarDesempenhoAluno')` | Ação definida em `permissions.ts`; controle de acesso ativo |
-| Dashboard (psicólogo) | `psicologoRoutes.ts` | `authMiddleware` + `requirePermission('acessarDashboardPsicologo')` | Ação ainda não mapeada em `permissions.ts`; pendente de alinhamento |
-| Apoio psicológico | `apoioPsicologicoRoutes.ts` | `authMiddleware` + `requirePermission(acao)` | Ações de apoio ainda não mapeadas em `permissions.ts`; pendente de alinhamento |
-| Importação | `importacaoRoutes.ts` | `authMiddleware` + `requirePermission('gerenciarImportacaoCsv')` | Ação ainda não mapeada em `permissions.ts`; pendente de alinhamento |
-| Portal do aluno | `portalAlunoRoutes.ts` | `authMiddleware` | Sem `requirePermission`; qualquer perfil autenticado acessa |
-| Agenda | `agendaRoutes.ts` | Nenhum | Rotas sem middleware no MVP |
-| Saúde mental | `saudeMentalRoutes.ts` | Nenhum | Rotas sem middleware no MVP |
+| Dashboard (psicólogo) | `psicologoRoutes.ts` | `authMiddleware` + `requirePermission('acessarDashboardPsicologo')` | Ação definida em `permissions.ts`; controle de acesso ativo |
+| Apoio psicológico | `apoioPsicologicoRoutes.ts` | `authMiddleware` + `requirePermission(acao)` | Solicitação restrita ao perfil `aluno`; listagem restrita ao perfil `psicologo` |
+| Importação | `importacaoRoutes.ts` | `authMiddleware` + `requirePermission('gerenciarImportacaoCsv')` | Ação definida em `permissions.ts`; controle de acesso ativo para gestor |
+| Portal do aluno | `portalAlunoRoutes.ts` | `authMiddleware` | O service valida se `idAluno` da rota corresponde ao usuário autenticado |
+| Agenda | `agendaRoutes.ts` | Nenhum middleware de permissão | Leitura aberta no MVP; criação, edição e cancelamento exigem perfil `gestor` no `AgendaService` |
+| Saúde mental | `saudeMentalRoutes.ts` | Nenhum middleware de permissão | O controller lê `x-user-role`; o `SaudeMentalService` rejeita acesso sem perfil `psicologo` |
 | Segmentação | `segmentacaoRoutes.ts` | Nenhum | Rotas sem middleware no MVP |
 
-As ações definidas em `permissions.ts` que ainda não estão vinculadas a nenhuma rota (`visualizarAgenda`, `modificarAgenda`, `acessarSaudeMental`, `editarContatoAluno`, `editarCadastroAluno`, `criarCamposSegmentacao`) representam o mapeamento de autorização previsto para sprints subsequentes.
+As ações definidas em `permissions.ts` que ainda não estão vinculadas a `requirePermission` nas rotas (`visualizarAgenda`, `modificarAgenda`, `acessarSaudeMental`, `editarContatoAluno`, `editarCadastroAluno`, `criarCamposSegmentacao`) representam o mapeamento de autorização previsto para sprints subsequentes. Parte dessas regras já existe em services, mas ainda não foi migrada para middleware RBAC uniforme.
 
 </div>
 
@@ -3232,7 +3236,7 @@ O back-end foi estruturado em camadas (routes → controllers → services → r
 | Portal do aluno | `GET /portal/alunos/:id`, `PATCH /portal/alunos/:id/contato`, `GET /portal/alunos/:id/notificacoes`, `GET /portal/oportunidades` |
 | Psicólogo | `GET /psicologo/alunos/:id/desempenho` (com controle de permissão por perfil) |
 
-Os endpoints de jornada, saúde mental, portal e psicólogo aplicam o `authMiddleware`, que lê os headers `x-user-id`, `x-user-role` e `x-user-name` e os anexa ao objeto de requisição - não há validação de token nesta versão. Foram implementados testes de integração para 10 módulos: alunos, código PM, dashboard, jornada, agenda, notificações, portal do aluno, saúde mental e segmentação.
+Os endpoints de jornada, portal e psicólogo aplicam o `authMiddleware`, que lê os headers `x-user-id`, `x-user-role` e `x-user-name` e os anexa ao objeto de requisição - não há validação de token nesta versão. O módulo de saúde mental valida o perfil informado no controller/service, rejeitando acessos sem perfil `psicologo`. Foram implementados testes de integração para 10 módulos: alunos, código PM, dashboard, jornada, agenda, notificações, portal do aluno, saúde mental e segmentação.
 
 **Protótipos de Alta Fidelidade**
 
@@ -3293,7 +3297,7 @@ O MER, o DER e o modelo físico foram atualizados para refletir as necessidades 
 
 - **Importação de dados:** `importacaoRoutes.ts` é placeholder; a funcionalidade de importação em lote não foi desenvolvida.
 - **Rotas de participação e anotação qualitativa independentes:** `participacaoRoutes.ts` e `anotacaoQualitativaRoutes.ts` são placeholders (os endpoints equivalentes foram incorporados em `jornadaRoutes`).
-- **Integração front-end <-> back-end:** as 12 telas ainda não consomem dados reais da API; a camada de serviços do front-end (`api.ts`) precisa ser conectada a cada página.
+- **Integração front-end <-> back-end:** as 12 telas ainda não consomem dados reais da API; a camada de serviços do front-end (`api.js`, na versão final) precisa ser conectada a cada página.
 - **Psicólogo fora do roteador principal:** `psicologoRoutes` não estava registrado em `index.ts`; corrigido ao longo da sprint.
 
 
@@ -3364,7 +3368,113 @@ No Artefato 12 de negócios, foram produzidas as seguintes seções: Resumo Exec
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
-_Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas._
+<div align="justify">
+
+A Sprint 5 consolidou a aplicação web como versão final do MVP. Em relação à Sprint 4, que havia entregue principalmente telas estáticas por perfil, integração inicial com Supabase e suíte automatizada de backend, a versão final passou a operar com fluxos autenticados, consumo real da API pelas SPAs, padronização visual, correções de experiência e validação ponta a ponta com Playwright. As capturas desta seção foram realizadas na aplicação executada localmente com banco `sqljs`, dados de desenvolvimento e os mesmos perfis usados na suíte E2E.
+
+</div>
+
+<div align="center">
+
+<sup>Figura 56: Tela de login final com seleção de perfil e credenciais por e-mail e nome.</sup><br>
+<img src="./assets/sprint5-login-autenticacao.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+### 4.3.1. Refinamentos e adições desde a Sprint 4
+
+<div align="justify">
+
+O principal avanço da Sprint 5 foi a troca do comportamento estático por fluxos integrados com o backend. A camada de comunicação do frontend foi centralizada em `src/frontend/js/services/api.js`, que passou a resolver a URL da API a partir de `src/frontend/js/config.js`, montar query strings, padronizar headers JSON, tratar falhas de rede, interpretar respostas não JSON e expor operações de download/importação. Com isso, as páginas deixaram de depender de dados simulados fixos e passaram a consumir endpoints reais de dashboard, alunos, agenda, jornada, comunicação, histórico psicológico e apoio psicológico.
+
+No frontend, os cards da Sprint 5 relacionados à integração e organização das SPAs resultaram na atualização dos fluxos de Gestor, Psicólogo e Aluno. Foram integrados dashboards reais, lista de alunos, agenda com CRUD da API, perfil do aluno, histórico psicológico, aba de comunicação e estados reutilizáveis de carregamento, vazio e erro. Também foram removidos botões sem funcionalidade, ajustados contrastes, padronizada a paleta institucional e corrigidos detalhes de responsividade, sidebar e componentes visuais. Esses refinamentos correspondem especialmente aos cards de padronização visual (#345 e #346), integração real de dashboards e SPAs (#337), cliente HTTP central (#303), remoção de `fetch` direto (#327), headers de autenticação (#308) e integração dos fluxos principais (#311 a #316).
+
+</div>
+
+<div align="center">
+
+<sup>Figura 57: Dashboard do Gestor consumindo indicadores reais da API após autenticação.</sup><br>
+<img src="./assets/sprint5-dashboard-gestor-integrado.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+<div align="justify">
+
+No backend, a versão final acrescentou ou estabilizou funcionalidades que estavam pendentes no fechamento da Sprint 4. A importação e exportação de alunos por CSV foi implementada em `importacaoRoutes.ts`, `importacaoController.ts`, `importacaoService.ts` e `importacaoRepository.ts`, com normalização de campos, aceitação do modelo de planilha do parceiro, geração de e-mails de fallback e atualização de alunos existentes por e-mail ou CPF. O dashboard psicológico passou a retornar resumo real por psicólogo, com total de atendimentos, alunos acompanhados, labels e evolução de registros. O fluxo de solicitação de apoio psicológico foi disponibilizado para o aluno e a listagem dessas solicitações foi restringida ao psicólogo. A lógica fuzzy de risco de evasão também foi consolidada em `riscoEvasaoService.ts`, recalculando classificação, probabilidade, confiabilidade e fatores explicativos a partir de frequência, participação, notas e engajamento.
+
+Também foram aplicadas refatorações de qualidade e padronização de contrato. Os controllers passaram a responder de forma mais uniforme com `{ success, data, message }`, as validações de payload e limites de caracteres foram reforçadas, o tratamento de exceções foi centralizado no `errorMiddleware` e o README da raiz foi atualizado com instruções de instalação, configuração, execução, migrations, seed, testes e credenciais de acesso. A suíte de testes foi estabilizada com Jest para services/endpoints e Playwright para os fluxos autenticados de ponta a ponta.
+
+</div>
+
+### 4.3.2. Autenticação e autorização entregues
+
+<div align="justify">
+
+A autenticação final foi implementada sem senha e sem token assinado, em alinhamento com a restrição do TAPI de não adotar autenticação tradicional. O endpoint `POST /api/auth/login`, definido em `authRoutes.ts`, recebe `email`, `nome` e `perfil`; o `AuthService` valida formato de e-mail, tamanho mínimo do nome e perfil permitido; em seguida, o `UsuarioRepository` consulta as tabelas de alunos, psicólogos e membros da equipe para confirmar se existe um cadastro compatível com as credenciais informadas. Quando a autenticação é bem-sucedida, o backend retorna os dados mínimos do usuário autenticado.
+
+No navegador, `login.js` salva o usuário em `sessionStorage` como `pulseUser` e redireciona para a SPA correspondente: `gestorApp.html`, `psicologoApp.html` ou `alunoApp.html`. A partir desse ponto, o cliente HTTP central (`api.js`) injeta automaticamente `x-user-id`, `x-user-role` e `x-user-name` em todas as chamadas feitas pela aplicação. No backend, o `authMiddleware` lê esses headers e popula `req.usuario`; o `permissionMiddleware`, por sua vez, aplica o RBAC definido em `permissions.ts`.
+
+As rotas protegidas na versão final incluem o dashboard e o desempenho do psicólogo, a importação/exportação de CSV, a solicitação de apoio psicológico pelo aluno e a listagem de solicitações pelo psicólogo. O portal do aluno também valida se o `idAluno` da rota corresponde ao usuário autenticado antes de retornar perfil, contato ou notificações. Essa arquitetura mantém a autorização no backend, evitando que a interface seja a fonte final de decisão de acesso.
+
+</div>
+
+<div align="center">
+
+<sup>Figura 58: Dashboard do Psicólogo carregado por rota autorizada para o perfil `psicologo`.</sup><br>
+<img src="./assets/sprint5-dashboard-psicologo-autorizado.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+<div align="center">
+
+<sup>Figura 59: Portal do Aluno com fluxo autenticado de solicitação de apoio psicológico.</sup><br>
+<img src="./assets/sprint5-portal-aluno-apoio.png"><br>
+<sub>Fonte: Autoria própria (2026).</sub>
+</div>
+
+<br>
+
+### 4.3.3. Estratégias de resiliência e validação final
+
+<div align="justify">
+
+A resiliência entregue concentrou-se em três frentes práticas. No backend, o `errorMiddleware` centraliza exceções inesperadas e evita vazamento de stack trace ao cliente, enquanto os controllers convertem erros de negócio em respostas HTTP previsíveis. No frontend, o `api.js` diferencia falhas de rede, respostas HTML inesperadas e erros de negócio retornados pela API, permitindo que as telas exibam estados de erro sem quebrar a navegação. Nas SPAs, os estados reutilizáveis de carregamento, vazio e erro foram aplicados aos dashboards, listas e fluxos integrados.
+
+A validação final foi apoiada por testes automatizados. A suíte Jest cobre services e endpoints de integração, enquanto `src/tests/e2e/integracao-final.spec.ts` valida login por perfil, navegação nas SPAs, carregamento de dashboards reais, lista de alunos, agenda do aluno, solicitação de apoio sem duplo envio e comportamento visual diante de falhas simuladas da API. Esse teste E2E fecha a pendência registrada na Sprint 4 de validar a integração ponta a ponta.
+
+</div>
+
+### 4.3.4. Pendências remanescentes
+
+<div align="justify">
+
+Apesar do fechamento funcional do MVP, algumas pendências técnicas permanecem registradas para evolução posterior:
+
+- A autenticação ainda não utiliza senha, hash criptográfico, JWT, cookie assinado, expiração de sessão ou `SESSION_SECRET`, pois a implementação seguiu a restrição acadêmica do TAPI. Em produção, seria necessário adotar sessão assinada ou token com expiração e política de revogação.
+- As rotas de agenda e saúde mental ainda não aplicam `requirePermission` diretamente. Elas já possuem validação de perfil nos services, mas a cobertura deve ser padronizada futuramente para RBAC uniforme em todos os módulos sensíveis.
+- A autorização do portal do aluno valida o vínculo pelo `idAluno`, mas ainda depende dos headers enviados pelo cliente. Uma autenticação assinada reduziria o risco de manipulação manual desses headers.
+- A suíte E2E cobre os principais fluxos integrados, mas ainda pode ser ampliada para importação/exportação CSV via interface, testes negativos de permissão em todos os perfis e execução em múltiplos navegadores/dispositivos.
+- A publicação em ambiente externo exige conferir a substituição de `__PULSE_API_BASE_URL__`, variáveis de ambiente, HTTPS e banco persistente, pois os prints e os testes finais desta seção foram executados em ambiente local controlado.
+
+</div>
+
+### 4.3.5. Dificuldades técnicas enfrentadas
+
+<div align="justify">
+
+A maior dificuldade técnica foi integrar telas originalmente estáticas a uma API real sem quebrar o comportamento visual já aprovado. Isso exigiu criar um cliente HTTP central, remover chamadas `fetch` dispersas, preservar contratos de dados entre frontend e backend e tratar estados intermediários que antes não existiam, como carregamento, falha de rede e lista vazia.
+
+Outra dificuldade foi equilibrar segurança e restrição de escopo. Como não era permitido implementar autenticação tradicional com senha, a equipe precisou construir um modelo intermediário baseado em e-mail, nome e perfil, complementado por RBAC no backend. Essa solução atendeu ao MVP, mas demandou cuidado para explicitar os trade-offs e evitar que a sessão no frontend fosse confundida com autenticação forte.
+
+Também houve complexidade na estabilização dos dados e dos testes. A mesma aplicação precisava rodar com Supabase/PostgreSQL no ambiente principal, com `sqljs` nos testes e com seed local suficiente para demonstrar fluxos reais. A integração E2E exigiu sincronizar backend, servidor estático, credenciais de teste, dados de agenda, histórico psicológico, dashboard e solicitações de apoio. Por fim, os trabalhos paralelos em múltiplas branches geraram conflitos em arquivos compartilhados como `wad.md`, `README.md`, rotas, CSS e scripts das SPAs, exigindo revisões finais para manter consistência entre código, documentação e evidências visuais.
+
+</div>
 
 # <a name="c5"></a>5. Testes
 
@@ -4129,7 +4239,7 @@ Os benefícios esperados descritos na seção 2.1.3 foram atendidos nos seguinte
 
 **Portal do aluno:** o perfil de aluno permite visualizar o próprio histórico, dados cadastrais e agenda, além de receber notificações enviadas pela equipe gestora, atendendo à expectativa de autonomia digital identificada na análise de tendências de mercado (seção 6.2.3).
 
-**Controle de acesso por perfil:** a separação de visibilidade entre perfis de gestor, psicólogo e aluno foi implementada via middleware de autenticação (`authMiddleware`) com leitura de headers de perfil, garantindo que registros sensíveis de saúde mental permaneçam acessíveis apenas ao psicólogo, conforme exigência funcional e alinhamento com a LGPD.
+**Controle de acesso por perfil:** a separação de visibilidade entre perfis de gestor, psicólogo e aluno foi implementada por leitura de headers no `authMiddleware`, RBAC nas rotas críticas e validações de perfil em services sensíveis, garantindo que registros de saúde mental sejam rejeitados para usuários sem perfil de psicólogo, conforme exigência funcional e alinhamento com a LGPD.
 
 ## 7.2 Pontos fortes
 

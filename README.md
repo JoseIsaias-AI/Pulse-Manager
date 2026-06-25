@@ -134,6 +134,10 @@ Comandos de execução disponíveis:
 | Build | `npm run build` | Compila TypeScript para `dist/`. |
 | Produção | `npm start` | Executa `dist/backend/server.js`. |
 | Testes | `npm test` | Jest em modo serial (`--runInBand`). |
+| Testes unitários | `npm run test:unit` | Executa apenas os testes unitários de services. |
+| Testes de integração | `npm run test:integration` | Executa os testes HTTP de integração. |
+| Testes E2E | `npm run test:e2e` | Sobe backend e frontend de teste e valida os fluxos autenticados com Playwright. |
+| Testes de desempenho | `npm run test:performance` | Executa os cenários marcados para RNFs de desempenho. |
 
 ### 3. Configuração de ambiente
 
@@ -173,15 +177,20 @@ npm run dev:local
 
 ### 4. Frontend
 
-O frontend está localizado na pasta `frontend` e contém as páginas HTML, arquivos CSS, scripts JavaScript e assets da interface.
-
-As páginas estáticas podem ser abertas diretamente no navegador a partir da pasta `frontend/pages`, ou servidas com a extensão Live Server do Visual Studio Code.
-
-Exemplo de acesso:
+O frontend está localizado na pasta `src/frontend` e contém as páginas HTML, arquivos CSS, scripts JavaScript e assets da interface.
+As páginas estáticas podem ser abertas diretamente no navegador a partir da pasta `frontend/pages`, ou servidas com a extensão Live Server do Visual Studio Code. Com o backend em execução na porta `3000`, a própria aplicação Express serve o frontend. Acesse:  
 
 ```sh
-frontend/pages/login.html
+http://localhost:3000/
 ```
+
+A rota raiz redireciona para a tela de login:
+
+```sh
+http://localhost:3000/pages/login.html
+```
+
+O arquivo `config.js` aponta automaticamente para `http://localhost:3000/api` em ambiente local. As páginas também continuam disponíveis diretamente em `src/frontend/pages` para inspeção dos arquivos, mas o fluxo recomendado é abrir pelo servidor local.
 
 ### 5. Observações importantes
 
@@ -207,6 +216,16 @@ O login na interface web exige a seleção do perfil (Gestor, Psicólogo ou Alun
 | Gestor | Helena Duarte | helena.duarte@pulsemais.org |
 | Psicólogo | Isadora Valença | isadora.valenca@pulsemais.org |
 | Aluno | Ana Clara Ribeiro | ana.clara.ribeiro@aluno.pulsemais.org |
+
+Para execução sem PostgreSQL usando `npm run dev:local`, o seed local em memória usa os seguintes acessos:
+
+| Perfil | Nome | E-mail |
+|--------|------|--------|
+| Gestor | Helena Duarte | helena.duarte@pulsemais.org |
+| Psicólogo | Isadora Valença | isadora.valenca@pulsemais.org |
+| Aluno | Mariana Costa | mariana.costa@local.pulsemais.org |
+
+O projeto não usa `SESSION_SECRET`, JWT, senha ou cookie assinado no MVP. A autenticação segue a restrição acadêmica definida no WAD: e-mail, nome completo e perfil são validados contra o cadastro, e o frontend reenvia os headers `x-user-id`, `x-user-role` e `x-user-name` nas requisições autenticadas.
 
 
 ## Histórico de lançamentos
