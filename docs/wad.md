@@ -4,7 +4,17 @@
 
 ## Nome do Grupo
 
+Grupo 03
+
 #### Nomes dos integrantes do grupo
+
+- Ana Luiza Lima de Carvalho
+- Felipe Sodré Pessôa
+- Gabrieli Marques Battini
+- José Isaias Menezes Santos
+- Nicolas Rigolin Carrascossa
+- Raffael Cabral Bensoussan
+- Vitor Medrado Lisboa
 
 ## Sumário
 
@@ -3047,20 +3057,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 ## 3.7. WebAPI e endpoints
 
-
-A documentação da WebAPI do Pulse Manager foi desenvolvida em HTML puro, seguindo o backend real implementado no projeto (SSOT). Nela estão descritos os endpoints disponíveis na aplicação, incluindo métodos HTTP, headers, parâmetros, status codes e organização dos módulos da API.
-
-### Acesso à documentação
-
-A documentação pode ser acessada diretamente pelo link abaixo:
-
-[Abrir documentação WebAPI](others/Documentacao-WebAPI.html)
-
-Caso o link não seja suportado pela plataforma de visualização, o arquivo também pode ser encontrado manualmente no seguinte caminho:
-
-docs/others/Documentacao-WebAPI.html
-
-
+A documentação e os links relacionados à WebAPI estão disponíveis no [Anexo A — Documentação da WebAPI](#anexo-a-webapi).
 
 ## 3.8. Segurança e Resiliência
 
@@ -4192,3 +4189,8 @@ PULSE MAIS. *Pulse Mais: site institucional*. 2026. Disponível em: https://puls
 WORLD WIDE WEB CONSORTIUM (W3C). *Web Content Accessibility Guidelines (WCAG) 2.1*. [S. l.]: W3C, 2018. Disponível em: https://www.w3.org/TR/WCAG21/. Acesso em: 10 jun. 2026.
 
 # <a name="c9"></a>Anexos
+
+## <a name="anexo-a-webapi"></a>Anexo A — Documentação da WebAPI
+
+- [Abrir documentação da WebAPI](others/Documentacao-WebAPI.html)
+- Caminho do arquivo no repositório: `docs/others/Documentacao-WebAPI.html`
