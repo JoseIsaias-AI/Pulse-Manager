@@ -2971,23 +2971,120 @@ docs/others/Documentacao-WebAPI.html
 
 
 
-## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## 3.8. Segurança e Resiliência (sprint 5)
+
+<div align="justify">
+
+Esta seção descreve os mecanismos de segurança e resiliência implementados na aplicação, abrangendo o fluxo de autenticação, o modelo de controle de sessão, o sistema de autorização baseado em perfis e as estratégias de tratamento de erros. A documentação segue o que está efetivamente implementado no código, indicando explicitamente os recursos ausentes no escopo do MVP e os respectivos encaminhamentos para trabalhos futuros.
+
+</div>
 
 ### 3.8.1. Autenticação
 
-_Descreva o fluxo de autenticação implementado: persistência de senha com hash bcrypt/argon2 (parâmetros de custo explícitos e justificados), validação de credenciais e criação de sessão. Senhas em texto plano no banco não são aceitas._
+<div align="justify">
+
+A autenticação da aplicação é implementada em `src/backend/services/authService.ts` por meio do método `login()`. O mecanismo adotado consiste na validação simultânea de três credenciais fornecidas pelo usuário: `email`, `nome` e `perfil`. O `usuarioRepository` executa uma consulta ao banco de dados buscando um registro que corresponda às três informações. Se o registro for encontrado, o método retorna os dados do usuário — `id`, `nome`, `email` e `perfil` — que são utilizados pelo front-end para identificar o perfil de acesso. Se não encontrado, a autenticação falha com status HTTP 404.
+
+Esse modelo não utiliza senha, hash criptográfico (`bcrypt`, `argon2` ou equivalente) nem token de acesso (`JWT`). A escolha é justificada pela restrição explícita do TAPI, que veda a implementação de sistemas de autenticação tradicionais com login e senha no escopo deste projeto acadêmico. A validação por três campos — em vez de apenas um identificador único — representa a camada de controle de acesso viável dentro dessa restrição, reduzindo a probabilidade de acesso indevido por coincidência de um único campo.
+
+O endpoint de autenticação é:
+
+| Método | Rota | Descrição |
+|---|---|---|
+| `POST` | `/auth/login` | Valida as credenciais e retorna os dados do usuário autenticado |
+
+</div>
 
 ### 3.8.2. Controle de sessão
 
-_Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto)._
+<div align="justify">
+
+A aplicação não implementa sessão persistente, cookie de sessão, nem token de acesso (`JWT` ou equivalente). O modelo adotado é stateless: após o login bem-sucedido, o front-end armazena localmente os dados retornados pelo `authService` e os reenvia ao back-end em cada requisição subsequente por meio de três headers HTTP customizados:
+
+| Header | Conteúdo |
+|---|---|
+| `x-user-id` | Identificador único do usuário autenticado |
+| `x-user-role` | Perfil do usuário (`gestor`, `psicologo`, `aluno` ou `equipe`) |
+| `x-user-name` | Nome do usuário autenticado |
+
+O `authMiddleware`, localizado em `src/backend/middlewares/authMiddleware.ts`, intercepta as requisições nas rotas protegidas, lê esses três headers e monta o objeto `req.usuario`, disponibilizando-o para os middlewares e controllers subsequentes na cadeia de processamento.
+
+**Trade-offs do modelo:** por ser stateless e sem token assinado, o modelo não oferece mecanismo de revogação de sessão — uma vez que os dados de autenticação estejam armazenados no front-end, não há forma de invalidá-los do lado do servidor sem alteração de credenciais no banco. Além disso, não há expiração automática de sessão, o que significa que o acesso permanece válido enquanto os dados locais não forem removidos. Esses trade-offs são aceitáveis no contexto acadêmico do projeto e estão alinhados com a restrição do TAPI de não implementar sistemas de autenticação tradicionais.
+
+</div>
 
 ### 3.8.3. Autorização
 
-_Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização._
+<div align="justify">
 
-### 3.8.4. Estratégias de Resiliência
+O controle de autorização é implementado por meio de um sistema de Role-Based Access Control (RBAC) distribuído em dois artefatos: `src/backend/config/permissions.ts`, que define o mapeamento de ações para perfis permitidos, e `src/backend/middlewares/permissionMiddleware.ts`, que aplica esse mapeamento nas rotas da aplicação.
 
-_Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.)._
+**Mapeamento de ações e perfis (`permissions.ts`)**
+
+O arquivo `permissions.ts` define 7 ações e os perfis autorizados a executá-las:
+
+| Ação | Perfis autorizados |
+|---|---|
+| `visualizarAgenda` | `gestor`, `equipe`, `psicologo`, `aluno` |
+| `modificarAgenda` | `gestor` |
+| `acessarSaudeMental` | `psicologo` |
+| `editarContatoAluno` | `aluno` |
+| `editarCadastroAluno` | `gestor`, `equipe` |
+| `criarCamposSegmentacao` | `gestor`, `psicologo` |
+| `acessarDesempenhoAluno` | `psicologo` |
+
+**Middleware de autorização (`permissionMiddleware.ts`)**
+
+O `permissionMiddleware.ts` exporta a função `requirePermission(acao)`, que recebe o nome de uma ação definida em `permissions.ts` e retorna um middleware Express. Ao ser invocado, o middleware lê `req.usuario.perfil` — populado previamente pelo `authMiddleware` — e verifica se o perfil do usuário consta na lista de perfis autorizados para a ação solicitada. Se o perfil não estiver autorizado, a requisição é rejeitada com status HTTP 403.
+
+**Aplicação nas rotas**
+
+A aplicação do `requirePermission` nas rotas está parcialmente implementada no escopo do MVP. Quando aplicado, o par `authMiddleware` + `requirePermission(acao)` segue sempre essa ordem, garantindo que a identidade do usuário seja estabelecida antes da verificação de permissão.
+
+O estado atual de cada módulo é:
+
+| Módulo | Arquivo de rota | Middlewares aplicados | Observação |
+|---|---|---|---|
+| Desempenho (psicólogo) | `psicologoRoutes.ts` | `authMiddleware` + `requirePermission('acessarDesempenhoAluno')` | Ação definida em `permissions.ts`; controle de acesso ativo |
+| Dashboard (psicólogo) | `psicologoRoutes.ts` | `authMiddleware` + `requirePermission('acessarDashboardPsicologo')` | Ação ainda não mapeada em `permissions.ts`; pendente de alinhamento |
+| Apoio psicológico | `apoioPsicologicoRoutes.ts` | `authMiddleware` + `requirePermission(acao)` | Ações de apoio ainda não mapeadas em `permissions.ts`; pendente de alinhamento |
+| Importação | `importacaoRoutes.ts` | `authMiddleware` + `requirePermission('gerenciarImportacaoCsv')` | Ação ainda não mapeada em `permissions.ts`; pendente de alinhamento |
+| Portal do aluno | `portalAlunoRoutes.ts` | `authMiddleware` | Sem `requirePermission`; qualquer perfil autenticado acessa |
+| Agenda | `agendaRoutes.ts` | Nenhum | Rotas sem middleware no MVP |
+| Saúde mental | `saudeMentalRoutes.ts` | Nenhum | Rotas sem middleware no MVP |
+| Segmentação | `segmentacaoRoutes.ts` | Nenhum | Rotas sem middleware no MVP |
+
+As ações definidas em `permissions.ts` que ainda não estão vinculadas a nenhuma rota (`visualizarAgenda`, `modificarAgenda`, `acessarSaudeMental`, `editarContatoAluno`, `editarCadastroAluno`, `criarCamposSegmentacao`) representam o mapeamento de autorização previsto para sprints subsequentes.
+
+</div>
+
+### 3.8.4. Estratégias de resiliência
+
+<div align="justify">
+
+**O que está implementado**
+
+A estratégia de resiliência implementada na aplicação consiste no tratamento centralizado de erros por meio do `errorMiddleware`, localizado em `src/backend/middlewares/errorMiddleware.ts`. O middleware intercepta todas as exceções não tratadas propagadas pela cadeia de controllers e services e aplica a seguinte lógica de resposta:
+
+- Instâncias de `AppError` — classe customizada que encapsula erros de negócio com status HTTP explícito — retornam ao cliente o status definido na exceção e a mensagem correspondente.
+- Qualquer outro erro não mapeado retorna status HTTP 500 com mensagem genérica, evitando a exposição de detalhes internos da aplicação ao cliente.
+
+Esse modelo garante que erros inesperados não resultem em respostas malformadas ou vazamentos de stack trace, e centraliza o ponto de observabilidade de falhas da aplicação.
+
+**O que não está implementado no escopo do MVP**
+
+As estratégias listadas a seguir não foram implementadas e estão registradas aqui como ausências reconhecidas, com encaminhamento para trabalhos futuros:
+
+| Estratégia | Status | Encaminhamento |
+|---|---|---|
+| Timeout de requisição | Não implementado | Implementar via middleware Express com `connect-timeout` ou configuração no cliente HTTP |
+| Retry com backoff exponencial | Não implementado | Adotar em integrações externas (ex: Supabase) com biblioteca como `p-retry` |
+| Circuit breaker | Não implementado | Avaliar adoção com `opossum` para isolar falhas em dependências externas |
+| Logging estruturado de erros | Não implementado | Integrar biblioteca de logging (ex: `winston`, `pino`) para persistência e rastreabilidade de erros em produção |
+
+A ausência dessas estratégias é aceitável no contexto acadêmico do projeto, dado que a aplicação opera em ambiente controlado com volume de dados e carga reduzidos. Em cenário de produção, especialmente com crescimento do número de alunos e requisições concorrentes, a implementação das estratégias acima torna-se necessária para garantir disponibilidade e observabilidade da plataforma.
+
+</div>
 
 ## 3.9. Matriz de Rastreabilidade (RTM) 
 
