@@ -3582,7 +3582,8 @@ service = new AgendaService(asMockedDependency<AgendaRepository>(repository));
 | `PortalAlunoService` | `src/tests/unit/services/portal-aluno.service.test.ts` | 13 | Visualização de perfil, atualização de contato, normalização de email/telefone, permissões de notificações e oportunidades do portal. |
 | `SaudeMentalService` | `src/tests/unit/services/saude-mental.service.test.ts` | 11 | Prontuários, labels, restrição ao perfil psicólogo, validação de aluno, tipo de label, título, observação e descrição. |
 | `RiscoEvasaoService` | `src/tests/unit/services/risco-evasao.service.test.ts` | 6 | Funções de pertinência, classificação, ausência de dados, confiabilidade com poucos registros e persistência seletiva no recálculo em lote. |
-| **Total documentado nesta tabela** | **9 arquivos** | **119 testes** | **Cobertura unitária das principais regras de negócio da camada de Service, incluindo o motor fuzzy.** |
+| `ImportacaoService` | `src/tests/unit/services/importacao.service.test.ts` | 5 | Importação de CSV com alunos novos, atualização por email, rejeição de email inválido, geração automática de email técnico quando não informado e consolidação de linhas no modelo de planilha do parceiro. |
+| **Total (Services)** | **10 arquivos** | — | **Cobertura unitária das principais regras de negócio da camada de Service, incluindo o motor fuzzy e o módulo de importação.** |
 
 **AlunoService**
 
@@ -3655,6 +3656,23 @@ A cobertura geral da camada `services/` atingiu **83,42% de statements**, **83,4
 
 Os testes do `RiscoEvasaoService` verificam a classificação de cenários de baixo e alto risco, os limites de 40% e 70%, a preservação de alunos sem dados quantitativos, a redução de confiabilidade quando há somente um registro e a persistência exclusiva dos resultados que possuem dados calculáveis.
 
+**ImportacaoService**
+
+Os testes do `ImportacaoService` validam a importação de alunos novos a partir de CSV, a atualização de aluno já cadastrado pelo email, a rejeição de linhas com email em formato inválido, a geração automática de email técnico quando o campo não é preenchido na planilha, e a consolidação de múltiplas linhas de um mesmo aluno no modelo de planilha enviado pelo parceiro, incluindo normalização de email, telefone, data de ingresso, programa, categoria e origem de participação.
+
+**Testes unitários de Frontend**
+
+Além dos testes de Service, a suíte unitária cobre módulos do frontend por meio de execução via `vm.runInNewContext`, isolando os scripts JavaScript do navegador sem dependência de DOM real. Os quatro arquivos estão em `src/tests/unit/frontend/`.
+
+| Módulo testado | Arquivo de teste | Quantidade de testes | Principais responsabilidades validadas |
+| --- | --- | ---: | --- |
+| `PulseUiState` | `src/tests/unit/frontend/ui-state.test.ts` | 3 | Renderização de estados de loading, erro, sucesso e vazio; normalização de mensagens de erro; identificação de coleções vazias. |
+| Integrações de comunicação e configuração | `src/tests/unit/frontend/integracoes-parciais.test.ts` | 6 | Presença das integrações de listagem de alunos (`data.alunos`), comunicações e oportunidades; carregamento da central de comunicação nos portais de gestor e psicólogo; configurações compartilhadas nos três portais; restrição de programas no formulário do gestor. |
+| Dashboard do gestor | `src/tests/unit/frontend/dashboard-gestor.test.ts` | 2 | Carregamento dos resumos de impacto e jornada via `PulseApi`, atualização de cards e gráficos Chart.js e exibição de feedback de erro quando a API falha. |
+| Dados visuais da sessão | `src/tests/unit/frontend/session-user.test.ts` | 2 | Extração de nome, perfil e iniciais a partir da sessão armazenada em `sessionStorage`; fallback para configuração estática quando não há sessão ativa. |
+
+**Total geral de testes unitários: 14 suítes, 140 testes.**
+
 </div>
 
 ### 5.1.3 Testes de Integração de Endpoints
@@ -3662,7 +3680,7 @@ Os testes do `RiscoEvasaoService` verificam a classificação de cenários de ba
 
 Os testes de integração cobrem os endpoints principais da aplicação por meio de requisições HTTP reais via Supertest, com banco SQLite in-memory. Para cada endpoint, a cobertura segue quatro cenários-chave: sucesso (`200`/`201`), falha de validação (`400`/`422`), regra de negócio violada (`409`/`422`/`403`) e recurso não encontrado (`404`). Quando um cenário é marcado como N/A, significa que aquela categoria de erro não se aplica à lógica do endpoint - não é um gap de cobertura.
 
-A suíte de integração totaliza **157 testes funcionais distribuídos em 12 arquivos**, todos executados via `npm run test:integration` sem falhas. Cada arquivo que cobre um endpoint com requisito de desempenho contém adicionalmente um caso `performanceIt` (marcado com `RNF-DES`), totalizando **8 testes de desempenho** executados separadamente via `npm run test:performance`.
+A suíte de integração totaliza **179 testes funcionais distribuídos em 16 arquivos**, todos executados via `npm run test:integration` sem falhas. Cada arquivo que cobre um endpoint com requisito de desempenho contém adicionalmente um caso `performanceIt` (marcado com `RNF-DES`), totalizando **8 testes de desempenho** executados separadamente via `npm run test:performance`.
 
 **Módulo: Alunos**
 
@@ -3706,9 +3724,31 @@ A suíte de integração totaliza **157 testes funcionais distribuídos em 12 ar
 | `GET /api/impacto/acesso-ensino-superior` | ✅ | ✅ programa < 3 chars | ✅ 422 intervalo inválido | N/A |
 | `GET /api/jornada/evasao-risco` | ✅ | ✅ formato dataInicio | ✅ 422 intervalo inválido | N/A |
 
-**Integração do motor fuzzy**
+**Módulo: Motor Fuzzy de Risco de Evasão**
 
-O arquivo `src/tests/integration/risco-evasao.integration.test.ts` executa o cálculo contra o banco em memória com entidades reais. Os dois cenários verificam: (1) agregação de frequência, notas e engajamento com persistência de risco alto; e (2) preservação da classificação anterior e probabilidade nula quando o aluno não possui sinais quantitativos.
+| Cenário | Resultado esperado |
+|---|---|
+| Aluno com 80% de faltas e nota 4 em 5 aulas | Risco classificado como `alto`, `probabilidadeEvasao ≥ 70` persistido no banco |
+| Aluno sem participações nem notas registradas | Classificação anterior preservada, `probabilidadeEvasao` permanece `null` |
+
+**Módulo: Autenticação**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `POST /api/auth/login` | ✅ aluno, psicólogo, gestor; login com nome divergente aceito | ✅ email inválido, perfil inválido | ✅ 403 perfil não corresponde ao cadastro | ✅ email não encontrado |
+
+**Módulo: Apoio Psicológico**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `POST /api/apoio/solicitar` | ✅ | ✅ mensagem < 10 chars; idAluno no body (spoofing) | N/A | N/A |
+| `GET /api/apoio/solicitacoes` | ✅ apenas pendentes do psicólogo autenticado | N/A | N/A | N/A |
+
+**Módulo: Dashboard Psicológico**
+
+| Endpoint | 200/201 | 400/422 validação | 409/422/403 regra | 404 |
+|---|---|---|---|---|
+| `GET /api/psicologo/dashboard/:id` | ✅ dados filtrados por psicólogo; zeros para psicólogo sem registros | N/A | ✅ 403 acesso ao dashboard de outro psicólogo | N/A |
 
 **Módulo: Comunicação**
 
@@ -3762,11 +3802,11 @@ As evidências de execução dos testes foram registradas a partir da execução
 
 | Evidência | Comando executado | Escopo validado | Resultado |
 |---|---|---|---|
-| Testes unitários de Service | `npm run test:unit -- --silent` | Validação isolada das regras de negócio dos services, com repositories mockados via `asMockedDependency`. | 8 suítes executadas, 113 testes aprovados. |
-| Testes de integração de endpoints | `npm run test:integration -- --silent` | Validação de endpoints via Supertest com banco in-memory; testes de desempenho ignorados nessa execução. | 12 suítes executadas, 157 testes aprovados, 8 ignorados. |
+| Testes unitários (services + frontend) | `npm run test:unit -- --silent` | Validação isolada das regras de negócio dos services e dos módulos de frontend, com dependencies mockadas via `asMockedDependency` e `vm.runInNewContext`. | 14 suítes executadas, 140 testes aprovados. |
+| Testes de integração de endpoints | `npm run test:integration -- --silent` | Validação de endpoints via Supertest com banco in-memory; testes de desempenho ignorados nessa execução. | 16 suítes executadas, 179 testes aprovados, 8 ignorados. |
 | Testes de desempenho | `npm run test:performance -- --silent` | Execução dos 8 casos `RNF-DES` que medem tempo de resposta dos endpoints críticos. | 8 testes de desempenho aprovados. |
 
-**Evidência 1 - Testes unitários de Service**
+**Evidência 1 - Testes unitários (services + frontend)**
 
 ```bash
 npm run test:unit -- --silent
@@ -3775,21 +3815,27 @@ npm run test:unit -- --silent
 Resultado obtido:
 
 ```text
-PASS src/tests/unit/services/segmentacao.service.test.ts
-PASS src/tests/unit/services/jornada.service.test.ts
 PASS src/tests/unit/services/aluno.service.test.ts
+PASS src/tests/unit/services/segmentacao.service.test.ts
+PASS src/tests/unit/services/importacao.service.test.ts
+PASS src/tests/unit/frontend/integracoes-parciais.test.ts
+PASS src/tests/unit/services/jornada.service.test.ts
 PASS src/tests/unit/services/notificacao.service.test.ts
-PASS src/tests/unit/services/dashboard.service.test.ts
 PASS src/tests/unit/services/portal-aluno.service.test.ts
+PASS src/tests/unit/services/dashboard.service.test.ts
 PASS src/tests/unit/services/agenda.service.test.ts
+PASS src/tests/unit/frontend/dashboard-gestor.test.ts
 PASS src/tests/unit/services/saude-mental.service.test.ts
+PASS src/tests/unit/frontend/ui-state.test.ts
+PASS src/tests/unit/services/risco-evasao.service.test.ts
+PASS src/tests/unit/frontend/session-user.test.ts
 
-Test Suites: 8 passed, 8 total
-Tests:       113 passed, 113 total
+Test Suites: 14 passed, 14 total
+Tests:       140 passed, 140 total
 Snapshots:   0 total
 ```
 
-Essa execução comprova que os oito arquivos de testes unitários de Service foram executados com sucesso, validando regras de negócio de `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService` e `SaudeMentalService` sem acesso a banco real ou infraestrutura externa.
+Essa execução comprova que os 14 arquivos de testes unitários foram executados com sucesso: 10 arquivos de Service validando regras de negócio de `AlunoService`, `SegmentacaoService`, `DashboardService`, `JornadaService`, `AgendaService`, `NotificacaoService`, `PortalAlunoService`, `SaudeMentalService`, `RiscoEvasaoService` e `ImportacaoService` sem acesso a banco real ou infraestrutura externa; e 4 arquivos de Frontend validando `PulseUiState`, integrações de comunicação, dashboard do gestor e dados de sessão via `vm.runInNewContext`.
 
 **Evidência 2 - Testes de integração de endpoints**
 
@@ -3800,21 +3846,25 @@ npm run test:integration -- --silent
 Resultado obtido:
 
 ```text
-PASS src/tests/integration/saude-mental.integration.test.ts
-PASS src/tests/integration/desempenho-psicologo.integration.test.ts
-PASS src/tests/integration/notificacao-psicologo.integration.test.ts
+PASS src/tests/integration/alunos.integration.test.ts
 PASS src/tests/integration/dashboard.integration.test.ts
 PASS src/tests/integration/jornada.integration.test.ts
-PASS src/tests/integration/alunos.integration.test.ts
 PASS src/tests/integration/notificacoes.integration.test.ts
-PASS src/tests/integration/segmentacao.integration.test.ts
+PASS src/tests/integration/auth.integration.test.ts
 PASS src/tests/integration/agenda.integration.test.ts
+PASS src/tests/integration/desempenho-psicologo.integration.test.ts
+PASS src/tests/integration/segmentacao.integration.test.ts
+PASS src/tests/integration/saude-mental.integration.test.ts
 PASS src/tests/integration/portal-aluno.integration.test.ts
 PASS src/tests/integration/portal-aluno-notificacoes.integration.test.ts
+PASS src/tests/integration/notificacao-psicologo.integration.test.ts
+PASS src/tests/integration/psicologo-dashboard.integration.test.ts
+PASS src/tests/integration/apoio-psicologico.integration.test.ts
 PASS src/tests/integration/codigo-pm.integration.test.ts
+PASS src/tests/integration/risco-evasao.integration.test.ts
 
-Test Suites: 12 passed, 12 total
-Tests:       157 passed, 8 skipped, 165 total
+Test Suites: 16 passed, 16 total
+Tests:       179 passed, 8 skipped, 187 total
 Snapshots:   0 total
 ```
 

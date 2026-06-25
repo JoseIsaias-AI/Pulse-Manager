@@ -39,7 +39,7 @@ A aplicação é composta por um backend em **Node.js + TypeScript** para persis
 
 ## Link de demonstração
 
-https://drive.google.com/file/d/1cHVSOaElW6ZeaWegSKxueduLck7n8Vlo/view?usp=sharing
+https://www.youtube.com/watch?v=fWK7AwfBxYY
 
 ## Estrutura de pastas
 
