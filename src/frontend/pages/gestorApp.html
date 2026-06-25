@@ -42,6 +42,11 @@
   #view-inicio .stat-card  { padding: 16px 22px 14px; border-radius: 14px; }
   #view-inicio .sc-value   { font-size: 44px; }
   #view-inicio .charts-row { grid-template-columns: 1fr 420px; }
+  /* Fix: dashboardGestor.css sobrescreve stat-card--amber para verde (#33B458);
+     cores iguais aos outros cards (label/sub semi-transparentes, value branco puro) */
+  #view-inicio .stat-card--amber .sc-label { color: rgba(255,255,255,.65); }
+  #view-inicio .stat-card--amber .sc-value { color: #fff; }
+  #view-inicio .stat-card--amber .sc-sub   { color: rgba(255,255,255,.45); }
 
   /* ══ DASHBOARD — layout scrollável ══════════════════════ */
   #view-dashboard {
@@ -670,19 +675,16 @@
             <div class="fc-num">528</div>
             <div class="fc-title">Jovens Conectados</div>
             <div class="fc-sub">Palestras, vivências e cursos</div>
-            <div class="fc-arrow"><i class="ti ti-chevron-right"></i></div>
           </div>
           <div class="funnel-card funnel-card--green">
             <div class="fc-num">126</div>
             <div class="fc-title">Jovens Capacitados</div>
             <div class="fc-sub">Pulse Mais + Mentoria</div>
-            <div class="fc-arrow"><i class="ti ti-chevron-right"></i></div>
           </div>
           <div class="funnel-card funnel-card--amber">
             <div class="fc-num">60</div>
             <div class="fc-title">Jovens Transformados</div>
             <div class="fc-sub">Emprego e/ou bolsa universitária</div>
-            <div class="fc-arrow"><i class="ti ti-chevron-right"></i></div>
           </div>
           <div class="funnel-card funnel-card--white">
             <div class="fc-num">46</div>

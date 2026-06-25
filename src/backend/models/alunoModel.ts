@@ -133,6 +133,9 @@ export class Aluno {
   @Column({ type: 'integer', default: 0 })
   engajamento!: number;
 
+  @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true, default: 0 })
+  frequencia!: number;
+
   @Column({ name: 'data_ingresso', type: 'date' })
   dataIngresso!: string;
 
