@@ -12,7 +12,7 @@
     "supabase:check": "ts-node src/scripts/test-db.ts",
     "risco:recalcular": "ts-node src/scripts/recalcular-risco-evasao.ts",
     "test": "jest --runInBand",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test -c src/tests/e2e/playwright.config.ts",
     "test:unit": "jest --runInBand src/tests/unit",
     "test:integration": "jest --runInBand src/tests/integration",
     "test:performance": "node src/tests/run-performance-tests.js --runInBand src/tests/integration --testNamePattern=RNF-DES",

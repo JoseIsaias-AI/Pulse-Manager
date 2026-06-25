@@ -2,11 +2,17 @@
 
 # WAD - Web Application Document - Módulo 2 - Inteli
 
-**_Os trechos em itálico servem apenas como guia para o preenchimento da seção. Por esse motivo, não devem fazer parte da documentação final_**
+## Grupo 03 - Pulse Manager
 
-## Nome do Grupo
+#### Integrantes
 
-#### Nomes dos integrantes do grupo
+- <a href="https://www.linkedin.com/in/ana-carvalho-27268634b/">Ana Luiza Lima de Carvalho</a>
+- <a href="http://www.linkedin.com/in/felipe-sodr%C3%A9-pess%C3%B4a">Felipe Sodré Pessôa</a> 
+- <a href="https://www.linkedin.com/in/gabrielibattini/">Gabrieli Marques Battini</a> 
+- <a href="https://www.linkedin.com/in/joseisaias/">José Isaias Menezes Santos</a>
+- <a href="https://www.linkedin.com/in/nicolas-rigolin-carrascossa-4492b2261/">Nicolas Rigolin Carrascossa</a> 
+- <a href="https://www.linkedin.com/in/raffael-bensoussan-98331b187/">Raffael Cabral Bensoussan</a>
+- <a href="https://www.linkedin.com/in/lisboavitor/">Vitor Medrado Lisboa</a>
 
 ## Sumário
 
@@ -30,7 +36,7 @@
 
 <br>
 
-# <a name="c1"></a>1. Introdução (sprints 1 a 5)
+# <a name="c1"></a>1. Introdução 
 
 <div align="justify">
 A Pulse Mais é uma organização sem fins lucrativos voltada à capacitação profissional de jovens que desejam seguir na área de tecnologia. Ao analisar o contexto da ONG, identifica-se uma problemática central: a descentralização dos dados institucionais, dispersos em múltiplos arquivos de diferentes formatos de planilhas a relatórios e sistemas externos. Essa fragmentação compromete a eficiência na tomada de decisões, dificulta o acompanhamento individualizado dos jovens e reduz a capacidade da instituição de comunicar seu impacto de forma estruturada a parceiros e financiadores.
@@ -39,11 +45,11 @@ A partir desta problemática, o grupo propos o desenvolvimento de uma plataforma
 
 </div>
 
-# <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
+# <a name="c2"></a>2. Visão Geral da Aplicação Web 
 
-## 2.1. Escopo do Projeto (sprints 1 e 4)
+## 2.1. Escopo do Projeto 
 
-### 2.1.1. Modelo de 5 Forças de Porter (sprint 1)
+### 2.1.1. Modelo de 5 Forças de Porter 
 
 <div align="justify">
 
@@ -69,7 +75,7 @@ No segmento de aprendizado voltado à tecnologia, há uma maior disputa por visi
 
 </div>
 
-### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
+### 2.1.2. Análise SWOT da Instituição Parceira 
 
 <div align="center">
 <sup>Figura 1: Análise SWOT.</sup><br>
@@ -83,7 +89,7 @@ Os pontos fortes da Pulse Mais residem no alto NPS e em uma proposta de impacto 
 
 </div>
 
-### 2.1.3. Solução (sprints 1 a 5)
+### 2.1.3. Solução 
 
 #### 1. Problema a ser resolvido
 
@@ -533,7 +539,7 @@ Diante disso, conclui-se que a condução mais adequada consiste em priorizar um
 
 </div>
 
-## 2.2. Personas (sprint 1)
+## 2.2. Personas 
 
 <div align="justify">
 
@@ -556,7 +562,7 @@ Personas: A persona é definida como uma descrição realista e detalhada do usu
 <sub>Fonte: Autoria própria (2026).</sub>
 </div>
 
-## 2.3. User Stories (sprints 1 a 5)
+## 2.3. User Stories 
 
 <div align="justify">
 
@@ -643,9 +649,9 @@ User Stories: As User Stories são definidas como descrições de uma funcionali
 | Critério de aceite 2 | CR2: Dado que o aluno entrou em contato com o psicólogo, quando ele clicar em "Solicitar conversa", então o sistema registra a solicitação e envia uma notificação ao psicólogo, que poderá confirmar o horário diretamente com o aluno pela plataforma. |
 | Critérios INVEST     | INDEPENDENTE: O fluxo de solicitação de conversa pode ser desenvolvido como uma extensão do sistema de notificações já existente, sem criar um módulo de agendamento completo. <br><br> NEGOCIÁVEL: O formato da solicitação e a forma como o psicólogo confirma o horário podem ser ajustados com o parceiro conforme o fluxo de atendimento real. <br><br> VALIOSA: Oferece ao aluno um canal direto e acessível para buscar apoio psicológico dentro da plataforma, reduzindo a barreira para pedir ajuda. <br><br> ESTIMÁVEL: O esforço técnico é limitado à criação de um registro de solicitação no banco de dados e ao disparo de uma notificação, ambos já padrões no sistema. <br><br> PEQUENA: A história cobre apenas o envio da solicitação e a notificação ao psicólogo, deixando a confirmação de horário como responsabilidade do psicólogo via notificação de resposta. <br><br> TESTÁVEL: É possível validar simulando um clique em "Solicitar conversa" pelo aluno e verificando se a notificação chega ao psicólogo com os dados corretos do solicitante. |
 
-# <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
+# <a name="c3"></a>3. Projeto da Aplicação Web 
 
-## 3.1. Requisitos do Sistema (sprints 1 a 5)
+## 3.1. Requisitos do Sistema
 
 <div align="justify">
 
@@ -657,7 +663,7 @@ Cada requisito recebe um identificador único e estável (RF001, RN001, RNF001�
 
 </div>
 
-### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
+### 3.1.1. Requisitos Funcionais 
 
 <div align="justify">
 
@@ -773,7 +779,7 @@ Além das RNs principais, a implementação possui regras técnicas testáveis p
 | RN-PSI-02 | Psicólogo só pode acessar desempenho de aluno com vínculo registrado. | `DesempenhoService`, `desempenho-psicologo.integration.test.ts` |
 | RN-INFRA-01 | Healthchecks devem retornar status de disponibilidade sem expor dados sensíveis. | `routes/index.ts` |
 
-### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
+### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 
 
 <div align="justify">
 
@@ -808,7 +814,7 @@ A coluna "Requisito" descreve o atributo de qualidade esperado em linguagem de n
 Os requisitos não funcionais aqui definidos traduzem as escolhas de qualidade feitas para o sistema de gestão de jovens da Pulse Mais. O projeto atende a uma necessidade real de centralização e rastreabilidade de dados de acompanhamento socioeducativo, com foco na experiência da equipe interna e na privacidade dos jovens atendidos. As decisões técnicas, como stack Node.js com PostgreSQL, arquitetura MVC, controle de acesso por perfil e ausência de autenticação tradicional, foram tomadas em alinhamento com as restrições definidas pelo TAPI e validadas com o parceiro. Os critérios estabelecidos nesta seção orientam o desenvolvimento e servem como referência para a verificação da qualidade do produto entregue.
 </div>
 
-### 3.1.3.1. Histórico de Evolução dos RNFs (Sprint 1 → Sprint atual)
+### 3.1.3.1. Histórico de Evolução dos RNFs 
 
 <div align="justify">
 
@@ -837,7 +843,7 @@ Esta subseção registra como cada RNF evoluiu desde o levantamento conceitual d
 | ORG | Repositório público e LGPD | Checklist planejado | Mantido; checklist executado antes de cada push relevante; seeds com dados fictícios revisados | Sem mudança de critério; prática consolidada |
 | ORG | Idioma pt-BR | 100% das telas em português | Mantido e verificado nas revisões visuais de sprint | Sem mudança |
 
-### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
+### 3.1.4. Matriz RF → RN → Endpoint 
 
 
 | Metodo | Endpoint | RF | RN | Entrada principal | Retorno esperado | Status principais |
@@ -881,9 +887,9 @@ Esta subseção registra como cada RNF evoluiu desde o levantamento conceitual d
 | POST | `/api/labels` | RF009, RF010 | RN012, RN016, RN-SAUDE-04, RN-SAUDE-05 | `idAluno`, `idPsi`, `descricao`, `tipoLabel`, perfil | Label criada | 201, 400, 404, 422 |
 | GET | `/api/psicologo/alunos/:idAluno/desempenho` | RF022 | RN020, RN-PSI-01, RN-PSI-02 | `idAluno`, headers de autenticação/permissão | Desempenho do aluno | 200, 400, 403, 404 |
 
-## 3.2. Arquitetura (sprints 1 a 5)
+## 3.2. Arquitetura 
 
-### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
+### 3.2.1. Diagrama de Arquitetura 
 
 
 
@@ -955,7 +961,7 @@ O frontend (`src/frontend/`) é uma aplicação web em HTML + CSS + JavaScript/T
 
 O usuário, no navegador, dispara um `POST /api/frequencias` a partir dos scripts de página em `src/frontend/js/pages/`, por meio do cliente HTTP central `src/frontend/js/services/api.js`. O Express recebe a requisição e a direciona pelo `jornadaRoutes.ts`, que aplica `authMiddleware` antes de chamar o `jornadaController`. Em seguida, o controller extrai o payload e chama o método correspondente do `jornadaService`. O service aplica as regras de negócio — como validar aluno e atividade, persistir a participação/frequência e recalcular o risco de evasão via `riscoEvasaoService` — e invoca os repositories necessários. O retorno sobe a pilha — Service → Controller — e o Controller responde com JSON padronizado. Qualquer erro lançado em qualquer ponto é capturado pelo `errorMiddleware`, que padroniza a resposta de erro.
 
-### 3.2.2. Diagrama de Casos de Uso (sprint 1)
+### 3.2.2. Diagrama de Casos de Uso 
 
 <div align="center">
 <sup>Figura 8: Diagrama de Casos de Uso.</sup><br>
@@ -1134,7 +1140,7 @@ O diagrama de casos de uso formaliza as interações entre os quatro perfis de u
 | **Pós-requisitos** | O registro de saúde mental é persistido no banco com acesso restrito ao psicólogo vinculado. Dados sensíveis não aparecem em consultas de outros perfis (RN016). |
 | **Regras de negócio associadas** | RN009, RN012, RN016, RN017, RN-SAUDE-01 a RN-SAUDE-05 |
 
-### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
+### 3.2.3. Diagrama de Classes do Domínio 
 
 <div align="justify">
 
@@ -1493,7 +1499,7 @@ O psicólogo seleciona um aluno e visualiza registros de acompanhamento no módu
 </div>
 
 
-### 3.2.5. Padrões de Projeto Aplicados (sprints 3 a 5)
+### 3.2.5. Padrões de Projeto Aplicados 
 
 <div align="justify">
 
@@ -1639,7 +1645,7 @@ O campo `probabilidadeEvasao` é devolvido pelas APIs de aluno junto de `riscoEv
 - O indicador apoia a priorização do acompanhamento e não substitui avaliação pedagógica, social ou psicológica.
 - O resultado não deve ser apresentado como diagnóstico, previsão clínica ou decisão automatizada definitiva.
 
-## 3.3. Wireframes (sprint 2)
+## 3.3. Wireframes 
 
 <div align="justify">
 Wireframes são esboços simples de telas, como sites e aplicativos. O objetivo é validar ideias, por isso eles não contêm informações detalhadas como cores, imagens e tipografia final. Desta forma, wireframes conseguem demonstrar de forma direta a estrutura das telas e o fluxo de navegação do sistema, focando apenas no que é essencial.
@@ -1828,7 +1834,7 @@ Wireframe da tela notificações com uma lista à esquerda filtrada por abas (To
 Wireframe de uma tela de gerenciamento de alunos com sidebar de navegação (Início, Alunos, Dashboard, Agenda), área principal com busca e filtros, e cards de alunos em grade 2x2 com avatar e status.
 </div>
 
-## 3.4. Guia de estilos (sprint 3)
+## 3.4. Guia de estilos 
 
 <div align="justify">
 
@@ -1930,7 +1936,7 @@ Em casos onde a Lucide não oferecer o ícone necessário, as bibliotecas **Phos
 
 </div>
 
-## 3.5 Protótipo de alta fidelidade (sprint 3)
+## 3.5 Protótipo de alta fidelidade 
 
 ### Tela de Login
 
@@ -2107,9 +2113,9 @@ Link: https://www.figma.com/proto/txJwOwELjVHZt3YVdrjuo0/PulseMais---Prot%C3%B3t
 </div>
 
 
-## 3.6. Modelagem do banco de dados (sprints 2 e 4)
+## 3.6. Modelagem do banco de dados
 
-### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
+### 3.6.1. Modelo Entidade-Relacionamento (ER) 
 
 <div align="justify">
 Um diagrama de Modelo Entidade-Relacionamento (MER) é uma representação visual da estrutura lógica de um banco de dados que descreve como os dados de um sistema estão organizados e se relacionam entre si. Ele é composto por três elementos fundamentais: Entidades, que representam os objetos ou conceitos do mundo real sobre os quais se deseja armazenar informações, como usuários, produtos ou pedidos; Atributos, que são as características ou propriedades que descrevem cada entidade, como nome, data de nascimento ou preço; e Relacionamentos, que expressam as associações existentes entre as entidades, podendo ser do tipo um-para-um, um-para-muitos ou muitos-para-muitos. Esse tipo de diagrama é amplamente utilizado na fase de modelagem de dados de um projeto, pois permite visualizar de forma clara e estruturada como as informações se conectam, facilitando o planejamento do banco de dados, a comunicação entre a equipe de desenvolvimento e a posterior implementação das tabelas e relações em um sistema gerenciador de banco de dados.
@@ -2180,7 +2186,7 @@ Por fim, as entidades aplicadas foram elaboradas a partir da análise das Regras
 | Psicólogo | Acesso ao desempenho acadêmico | RN020, RN017 | Pois o psicólogo pode consultar notas, frequência e indicadores acadêmicos apenas dos alunos que monitora, mantendo a restrição de acesso aos dados pessoais |
 
 
-### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+### 3.6.2. Diagrama Entidade-Relacionamento (DER) 
 
 <div align="justify">
 
@@ -2491,7 +2497,7 @@ O Diagrama Entidade-Relacionamento do PulseManager representa de forma estrutura
 
 
 
-### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
+### 3.6.3. Modelo Relacional e Modelo Físico 
 
 <div align="justify">
 
@@ -2965,7 +2971,7 @@ Para exclusões estruturais, a ordem deve ser invertida: primeiro removem-se ou 
 
 </div>
 
-### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+### 3.6.4. Consultas SQL e lógica proposicional 
 
 <div align = "justify">
 A lógica proposicional se refere a uma área da matemática que estuda proposições, que são afirmações classificadas entre verdadeiras ou falsas, e as relações estabelecidas entre elas a partir de conectivos lógicos. No contexto do desenvolvimento de um projeto, ela é utilizada na tradução de expressões SQL em proposições lógicas, com o objetivo de explicitar as regras de negócio aplicadas e verificar sua sintaxe e funcionamento no banco de dados.
@@ -3047,7 +3053,7 @@ Os conectivos lógicos utilizados nesta seção incluem: a conjunção (“e”)
 
 </div>
 
-## 3.7. WebAPI e endpoints (sprints 3 e 4)
+## 3.7. WebAPI e endpoints 
 
 
 A documentação da WebAPI do Pulse Manager foi desenvolvida em HTML puro, seguindo o backend real implementado no projeto (SSOT). Nela estão descritos os endpoints disponíveis na aplicação, incluindo métodos HTTP, headers, parâmetros, status codes e organização dos módulos da API.
@@ -3064,7 +3070,7 @@ docs/others/Documentacao-WebAPI.html
 
 
 
-## 3.8. Segurança e Resiliência (sprint 5)
+## 3.8. Segurança e Resiliência 
 
 <div align="justify">
 
@@ -3216,7 +3222,7 @@ No contexto do projeto, a RTM é importante porque permite verificar se os requi
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
-## 4.1. Primeira versão da aplicação web (sprint 3)
+## 4.1. Primeira versão da aplicação web 
 
 ### Novas implementações
 
@@ -3317,7 +3323,7 @@ O MER, o DER e o modelo físico foram atualizados para refletir as necessidades 
 - Ampliar a cobertura de testes para garantir que os fluxos principais (login, cadastro de aluno, dashboard, agenda, saúde mental) funcionem end-to-end.
 - Revisar a Matriz de Rastreabilidade (RTM) para eliminar os campos "A definir" na coluna de testes, associando cada RF a evidência concreta de teste.
 
-## 4.2. Segunda versão da aplicação web (sprint 4)
+## 4.2. Segunda versão da aplicação web 
 
 A Sprint 4 concentrou-se na construção das telas estáticas do front-end para os três perfis da aplicação (Aluno, Gestor e Psicólogo), na integração do backend com o Supabase, na implementação e documentação da suíte de testes automatizados e na conclusão do Artefato 12 de negócios.
 
@@ -3366,7 +3372,7 @@ No Artefato 12 de negócios, foram produzidas as seguintes seções: Resumo Exec
 - Ampliar a cobertura de testes para os fluxos de importação de dados e os módulos de frequência, participação e anotação qualitativa.
 - Revisar a Matriz RTM para eliminar campos "A definir" na coluna de testes, associando cada requisito funcional a evidências concretas.
 
-## 4.3. Versão final da aplicação web (sprint 5)
+## 4.3. Versão final da aplicação web 
 
 <div align="justify">
 
@@ -3478,7 +3484,7 @@ Também houve complexidade na estabilização dos dados e dos testes. A mesma ap
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes automatizados (sprint 4 — suíte reformulada na sprint 5)
+## 5.1. Relatório de testes automatizados 
 
 Os testes automatizados do backend foram implementados com **Jest**, contemplando duas abordagens complementares:
 
@@ -3832,7 +3838,7 @@ Os 8 casos `RNF-DES` foram aprovados, verificando que os endpoints críticos res
 
 </div>
 
-## 5.2. Testes de usabilidade (sprint 5)
+## 5.2. Testes de usabilidade 
 
 ### 5.2.1. Relatório de testes de guerrilha
 <div align="justify">
@@ -4097,7 +4103,7 @@ Como plano de melhoria imediato, recomenda-se revisar a visibilidade e o posicio
 
 </div>
 
-# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing 
 
 ## 6.1 Resumo Executivo
 
@@ -4219,7 +4225,7 @@ Preço: A Pulse Manager não é monetizada junto aos seus usuários, pois opera 
 Praça: A Pulse Manager será distribuída como uma aplicação web acessível diretamente pelo navegador, sendo eles: Google Chrome, Edge, Firefox… E a interface é otimizada para o uso em desktop, ambiente predominante da equipe de trabalho da Pulse Mais. O acesso é segmentado por perfil: a equipe interna e os psicólogos utilizam as funcionalidades de gestão, enquanto alunos e ex-alunos acessam o portal restrito por meio de um link próprio. A distribuição ocorre de forma direta ao parceiro, ou seja, sem marketplace e lojas, aproveitando, assim, os próprios canais já existentes da ONG.
 Promoção: Para a equipe interna e os gestores, a divulgação das funcionalidades é realizada por meio de onboarding e treinamentos institucionais, garantindo apropriação das ferramentas de gestão, agenda e notificações. Para alunos e ex-alunos, o portal é divulgado por e-mail institucional e redes sociais da Pulse Mais, com publicações sobre cadastro, atualização de perfil e acesso a oportunidades, reforçando a proximidade já buscada no posicionamento da marca. Para doadores e parceiros, é adotada uma estratégia de marketing de relacionamento, com conteúdo voltado à prestação de contas e à demonstração de impacto, distribuído por e-mail e redes sociais. Eventos institucionais da Pulse Mais, como encontros com jovens e apresentações a apoiadores, são aproveitados como canal de promoção, sendo usados para apresentar indicadores de impacto extraídos da plataforma e fortalecer a percepção de credibilidade. Parcerias com empresas patrocinadoras e organizações do terceiro setor também são exploradas, possibilitando a divulgação cruzada do trabalho da Pulse Mais e, indiretamente, da própria ferramenta de gestão. Dessa forma, a promoção é estruturada conforme o perfil de cada público, sem necessidade de campanhas pagas, dado o caráter institucional da solução.
 
-# <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
+# <a name="c7"></a>7. Conclusões e trabalhos futuros 
 
 <div align="justify">
 
@@ -4275,7 +4281,7 @@ Os trabalhos futuros propostos derivam diretamente das pendências identificadas
 
 </div>
 
-# <a name="c8"></a>8. Referências (sprints 1 a 5)
+# <a name="c8"></a>8. Referências 
 
 ABRASCE. *Programa Pulse Mais 2026 inicia com alta adesão e reforça aposta na formação de jovens para o mercado de tecnologia*. 2026. Disponível em: https://abrasce.com.br/espaco-do-associado/tecnologia/programa-pulse-mais-2026-inicia-com-alta-adesao-e-reforca-aposta-na-formacao-de-jovens-para-o-mercado-de-tecnologia/. Acesso em: 10 jun. 2026.
 
@@ -4307,4 +4313,4 @@ WORLD WIDE WEB CONSORTIUM (W3C). *Web Content Accessibility Guidelines (WCAG) 2.
 
 # <a name="c9"></a>Anexos
 
-_Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)_
+Não se aplica.

@@ -66,7 +66,7 @@ Arquivo:
 
 Configuração:
 
-- `playwright.config.ts`
+- `src/tests/e2e/playwright.config.ts`
 - `src/scripts/e2e-static-server.js`
 - Script npm: `npm run test:e2e`
 
