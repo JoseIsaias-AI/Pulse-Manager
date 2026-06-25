@@ -4,6 +4,7 @@ const path = require('path');
 
 const port = Number(process.env.E2E_FRONTEND_PORT || 4173);
 const root = path.resolve(__dirname, '..', 'frontend');
+const chartJsRoot = path.resolve(__dirname, '..', '..', 'node_modules', 'chart.js', 'dist');
 
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
@@ -19,6 +20,13 @@ const mimeTypes = {
 
 function safeResolve(urlPath) {
   const decoded = decodeURIComponent(urlPath.split('?')[0]);
+  if (decoded.startsWith('/vendor/chart.js/')) {
+    const vendorTarget = path.normalize(
+      path.join(chartJsRoot, decoded.slice('/vendor/chart.js/'.length))
+    );
+    return vendorTarget.startsWith(chartJsRoot) ? vendorTarget : null;
+  }
+
   const relative = decoded === '/' ? '/pages/login.html' : decoded;
   const target = path.normalize(path.join(root, relative));
   return target.startsWith(root) ? target : null;

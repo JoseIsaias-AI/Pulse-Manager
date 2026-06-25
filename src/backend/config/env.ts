@@ -41,7 +41,23 @@ function booleanEnv(name: string, fallback: boolean): boolean {
 }
 
 function databaseTypeEnv(nodeEnv: string): DatabaseType {
-  const value = (firstEnv('DB_TYPE', 'DB_MODE') || (nodeEnv === 'test' ? 'sqljs' : 'postgres')).toLowerCase();
+  const configuredType = firstEnv('DB_TYPE', 'DB_MODE');
+  const hasPostgresConfig = Boolean(
+    firstEnv(
+      'DATABASE_URL',
+      'SUPABASE_DB_URL',
+      'DB_HOST',
+      'DB_USERNAME',
+      'DB_USER',
+      'DB_PASSWORD',
+      'DB_DATABASE',
+      'DB_NAME'
+    )
+  );
+  const value = (
+    configuredType ||
+    (nodeEnv === 'test' || !hasPostgresConfig ? 'sqljs' : 'postgres')
+  ).toLowerCase();
 
   if (value !== 'postgres' && value !== 'sqljs') {
     throw new Error('DB_TYPE deve ser "postgres" ou "sqljs".');
@@ -56,6 +72,7 @@ const databaseUrl = firstEnv('DATABASE_URL', 'SUPABASE_DB_URL');
 export const env = {
   nodeEnv,
   isTest: nodeEnv === 'test',
+  isDevelopment: nodeEnv === 'development',
   port: numberEnv('PORT', 3000),
   database: {
     type: databaseTypeEnv(nodeEnv),

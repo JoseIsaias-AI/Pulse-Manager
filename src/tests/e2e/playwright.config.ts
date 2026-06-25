@@ -20,7 +20,7 @@ export default defineConfig({
   },
   webServer: [
     {
-      command: 'npx ts-node src/server.ts',
+      command: 'node -r ts-node/register src/server.ts',
       cwd: repoRoot,
       url: `http://localhost:${backendPort}/api/health`,
       reuseExistingServer: !process.env.CI,
