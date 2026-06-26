@@ -3,7 +3,6 @@
 
   const STORAGE_KEY = 'pulseUiPreferences';
   const DEFAULTS = {
-    mode: 'light',
     theme: 'classic',
     density: 'comfortable',
     font: 'normal',
@@ -68,7 +67,7 @@
         </div>
         <div class="cfg-grid">
           <article class="cfg-card">
-            <div class="cfg-card-head"><div><h2 class="cfg-card-title">Aparência</h2><p class="cfg-card-sub">Escolha tema, modo e densidade.</p></div><i class="ti ti-palette"></i></div>
+            <div class="cfg-card-head"><div><h2 class="cfg-card-title">Aparência</h2><p class="cfg-card-sub">Escolha tema e densidade.</p></div><i class="ti ti-palette"></i></div>
             <div class="cfg-card-body">
               <span class="cfg-section-label">Tema</span>
               <div class="cfg-choice-row">
@@ -76,11 +75,6 @@
                 <button type="button" class="cfg-choice" data-cfg-option="theme" data-cfg-value="green"><span class="cfg-dot" style="background:#278545"></span>Verde</button>
                 <button type="button" class="cfg-choice" data-cfg-option="theme" data-cfg-value="amber"><span class="cfg-dot" style="background:#D4860A"></span>Âmbar</button>
                 <button type="button" class="cfg-choice" data-cfg-option="theme" data-cfg-value="indigo"><span class="cfg-dot" style="background:#4F46E5"></span>Índigo</button>
-              </div>
-              <span class="cfg-section-label">Modo</span>
-              <div class="cfg-choice-row">
-                <button type="button" class="cfg-choice" data-cfg-option="mode" data-cfg-value="light"><i class="ti ti-sun"></i>Claro</button>
-                <button type="button" class="cfg-choice" data-cfg-option="mode" data-cfg-value="dark"><i class="ti ti-moon"></i>Escuro</button>
               </div>
               <span class="cfg-section-label">Layout</span>
               <div class="cfg-choice-row">
@@ -109,14 +103,18 @@
 
   function readPrefs() {
     try {
-      return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') };
+      const prefs = { ...DEFAULTS, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') };
+      delete prefs.mode;
+      return prefs;
     } catch (_) {
       return { ...DEFAULTS };
     }
   }
 
   function savePrefs(prefs) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+    const normalized = { ...prefs };
+    delete normalized.mode;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
   }
 
   function applyPrefs(prefs) {
@@ -125,8 +123,6 @@
       'pulse-theme-green',
       'pulse-theme-amber',
       'pulse-theme-indigo',
-      'pulse-mode-light',
-      'pulse-mode-dark',
       'pulse-density-compact',
       'pulse-font-large',
       'pulse-contrast-high',
@@ -135,7 +131,6 @@
       'pulse-reduce-motion'
     );
     document.body.classList.add('pulse-theme-' + prefs.theme);
-    document.body.classList.add('pulse-mode-' + prefs.mode);
     if (prefs.density === 'compact') document.body.classList.add('pulse-density-compact');
     if (prefs.font === 'large') document.body.classList.add('pulse-font-large');
     if (prefs.contrast === 'high') document.body.classList.add('pulse-contrast-high');
