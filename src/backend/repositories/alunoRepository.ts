@@ -1,17 +1,24 @@
 import { QueryResultRow } from 'pg';
 import { query } from '../database/connection';
-import { SegmentacaoAlunoQuery } from '../models/alunoModel';
+import {
+  EmpregabilidadeAluno,
+  RiscoEvasao,
+  SegmentacaoAlunoQuery,
+  StatusAluno
+} from '../models/alunoModel';
 import { formatarCodigoPm, extrairSequencial } from '../services/codigoPmService';
 
 export interface AlunoRecord {
   idAluno: number;
   codigoPm: string | null;
+  cpf: string | null;
   nome: string;
   email: string;
   telefone: string | null;
   idade: number | null;
   genero: string | null;
   ocupacao: string | null;
+  empregabilidade: EmpregabilidadeAluno;
   tipoVinculoEmpregaticio: string | null;
   rendaMensal: number | null;
   escolaridade: string | null;
@@ -22,7 +29,9 @@ export interface AlunoRecord {
   programa: string | null;
   categoria: string | null;
   riscoEvasao: string;
+  probabilidadeEvasao: number | null;
   engajamento: number;
+  frequencia: number;
   dataIngresso: string;
   status: string;
   nivelJornada: string | null;
@@ -34,14 +43,25 @@ export interface AlunoRecord {
 export interface CriarAlunoPayload {
   nome: string;
   email: string;
+  cpf?: string;
   telefone?: string;
   idade?: number;
   genero?: string;
   ocupacao?: string;
+  tipoVinculoEmpregaticio?: string;
+  rendaMensal?: number;
   escolaridade?: string;
+  instituicaoEnsinoSuperior?: string;
+  cursoEnsinoSuperior?: string;
+  statusEnsinoSuperior?: string;
+  dataIngressoEnsinoSuperior?: string;
   dataIngresso?: string;
   programa?: string;
   categoria?: string;
+  riscoEvasao?: RiscoEvasao;
+  engajamento?: number;
+  frequencia?: number;
+  status?: StatusAluno;
   nivelJornada?: string;
   perfilSocioeconomico?: string;
   curso?: string;
@@ -49,23 +69,70 @@ export interface CriarAlunoPayload {
 }
 
 export interface AtualizarAlunoPayload extends Partial<CriarAlunoPayload> {
-  status?: string;
-  riscoEvasao?: string;
-  engajamento?: number;
+  status?: StatusAluno;
+  riscoEvasao?: RiscoEvasao;
 }
+
+export interface CadastroAlunoOptions {
+  genero: string[];
+  ocupacao: string[];
+  tipoVinculoEmpregaticio: string[];
+  escolaridade: string[];
+  instituicaoEnsinoSuperior: string[];
+  cursoEnsinoSuperior: string[];
+  statusEnsinoSuperior: string[];
+  programa: string[];
+  categoria: string[];
+  riscoEvasao: string[];
+  status: string[];
+  nivelJornada: string[];
+  perfilSocioeconomico: string[];
+  curso: string[];
+  origemParticipacao: string[];
+}
+
+const CADASTRO_OPTION_COLUMNS: Record<keyof CadastroAlunoOptions, string> = {
+  genero: 'genero',
+  ocupacao: 'ocupacao',
+  tipoVinculoEmpregaticio: 'tipo_vinculo_empregaticio',
+  escolaridade: 'escolaridade',
+  instituicaoEnsinoSuperior: 'instituicao_ensino_superior',
+  cursoEnsinoSuperior: 'curso_ensino_superior',
+  statusEnsinoSuperior: 'status_ensino_superior',
+  programa: 'programa',
+  categoria: 'categoria',
+  riscoEvasao: 'risco_evasao',
+  status: 'status',
+  nivelJornada: 'nivel_jornada',
+  perfilSocioeconomico: 'perfil_socioeconomico',
+  curso: 'curso',
+  origemParticipacao: 'origem_participacao'
+};
 
 // Sem casts PostgreSQL-específicos (::text, ::float) para compatibilidade com sqljs nos testes.
 // PostgreSQL faz conversão implícita; sqljs não suporta sintaxe de cast do PG.
+const EMPREGABILIDADE_SQL = `
+  CASE
+    WHEN TRIM(COALESCE(tipo_vinculo_empregaticio, '')) <> '' THEN 'empregado'
+    WHEN LOWER(COALESCE(ocupacao, '')) LIKE '%desempreg%' OR LOWER(COALESCE(ocupacao, '')) LIKE '%buscando_emprego%' OR LOWER(COALESCE(ocupacao, '')) LIKE '%procurando%' THEN 'desempregado'
+    WHEN LOWER(COALESCE(ocupacao, '')) LIKE '%estudante%' THEN 'estudante'
+    WHEN TRIM(COALESCE(ocupacao, '')) = '' THEN 'nao_informado'
+    ELSE 'empregado'
+  END
+`;
+
 const ALUNO_SELECT = `
   SELECT
     id_aluno AS "idAluno",
     codigo_pm AS "codigoPm",
+    cpf,
     nome,
     email,
     telefone,
     idade,
     genero,
     ocupacao,
+    ${EMPREGABILIDADE_SQL} AS empregabilidade,
     tipo_vinculo_empregaticio AS "tipoVinculoEmpregaticio",
     CAST(renda_mensal AS REAL) AS "rendaMensal",
     escolaridade,
@@ -74,9 +141,11 @@ const ALUNO_SELECT = `
     status_ensino_superior AS "statusEnsinoSuperior",
     data_ingresso_ensino_superior AS "dataIngressoEnsinoSuperior",
     COALESCE(programa, curso, origem_participacao) AS programa,
-    COALESCE(categoria, nivel_jornada, status) AS categoria,
+    COALESCE(categoria, nivel_jornada, CAST(status AS TEXT)) AS categoria,
     COALESCE(risco_evasao, 'baixo') AS "riscoEvasao",
+    CAST(probabilidade_evasao AS REAL) AS "probabilidadeEvasao",
     COALESCE(engajamento, 0) AS engajamento,
+    COALESCE(frequencia, 0) AS frequencia,
     data_ingresso AS "dataIngresso",
     status,
     nivel_jornada AS "nivelJornada",
@@ -91,6 +160,22 @@ function definedEntries(payload: Record<string, unknown>): Array<[string, unknow
 }
 
 export class AlunoRepository {
+  async getCadastroOptions(): Promise<CadastroAlunoOptions> {
+    const entries = await Promise.all(
+      Object.entries(CADASTRO_OPTION_COLUMNS).map(async ([field, column]) => {
+        const result = await query<{ value: string } & QueryResultRow>(
+          `SELECT DISTINCT ${column} AS value
+           FROM aluno
+           WHERE ${column} IS NOT NULL AND TRIM(CAST(${column} AS TEXT)) <> ''
+           ORDER BY value`
+        );
+        return [field, result.rows.map((row) => String(row.value))] as const;
+      })
+    );
+
+    return Object.fromEntries(entries) as unknown as CadastroAlunoOptions;
+  }
+
   async list(filters: SegmentacaoAlunoQuery = {}): Promise<AlunoRecord[]> {
     const { where, params } = this.buildFilters(filters, false);
     const limit = filters.limite || 100;
@@ -119,28 +204,50 @@ export class AlunoRepository {
     return result.rows[0] || null;
   }
 
+  async findOneByCpf(cpf: string): Promise<AlunoRecord | null> {
+    const result = await query<AlunoRecord & QueryResultRow>(
+      `${ALUNO_SELECT} WHERE cpf = $1`,
+      [cpf]
+    );
+    return result.rows[0] || null;
+  }
+
   async create(payload: CriarAlunoPayload): Promise<AlunoRecord> {
     // Sem cast ::genero_aluno_enum — PostgreSQL aceita string implicitamente para colunas enum
     const result = await query<{ idAluno: number } & QueryResultRow>(
       `INSERT INTO aluno (
-        nome, email, telefone, idade, genero, ocupacao, escolaridade, data_ingresso,
-        programa, categoria, nivel_jornada, perfil_socioeconomico, curso, origem_participacao
+        nome, email, cpf, telefone, idade, genero, ocupacao, tipo_vinculo_empregaticio,
+        renda_mensal, escolaridade, instituicao_ensino_superior, curso_ensino_superior,
+        status_ensino_superior, data_ingresso_ensino_superior, data_ingresso, programa,
+        categoria, risco_evasao, engajamento, frequencia, status, nivel_jornada, perfil_socioeconomico,
+        curso, origem_participacao
       ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7, COALESCE($8, CURRENT_DATE),
-        $9, $10, $11, $12, $13, $14
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14,
+        COALESCE($15, CURRENT_DATE), $16, $17, $18, $19, $20, $21, $22, $23, $24, $25
       )
       RETURNING id_aluno AS "idAluno"`,
       [
         payload.nome,
         payload.email,
+        payload.cpf ?? null,
         payload.telefone ?? null,
         payload.idade ?? null,
         payload.genero ?? null,
         payload.ocupacao ?? null,
+        payload.tipoVinculoEmpregaticio ?? null,
+        payload.rendaMensal ?? null,
         payload.escolaridade ?? null,
+        payload.instituicaoEnsinoSuperior ?? null,
+        payload.cursoEnsinoSuperior ?? null,
+        payload.statusEnsinoSuperior ?? null,
+        payload.dataIngressoEnsinoSuperior ?? null,
         payload.dataIngresso ?? null,
-        payload.programa ?? payload.curso ?? null,
-        payload.categoria ?? payload.nivelJornada ?? null,
+        payload.programa ?? payload.curso ?? 'nao_informado',
+        payload.categoria ?? payload.nivelJornada ?? 'sem_categoria',
+        payload.riscoEvasao ?? 'baixo',
+        payload.engajamento ?? 0,
+        payload.frequencia ?? 0,
+        payload.status ?? 'ativo',
         payload.nivelJornada ?? null,
         payload.perfilSocioeconomico ?? null,
         payload.curso ?? null,
@@ -170,11 +277,18 @@ export class AlunoRepository {
     const columnMap: Record<string, string> = {
       nome: 'nome',
       email: 'email',
+      cpf: 'cpf',
       telefone: 'telefone',
       idade: 'idade',
       genero: 'genero',
       ocupacao: 'ocupacao',
+      tipoVinculoEmpregaticio: 'tipo_vinculo_empregaticio',
+      rendaMensal: 'renda_mensal',
       escolaridade: 'escolaridade',
+      instituicaoEnsinoSuperior: 'instituicao_ensino_superior',
+      cursoEnsinoSuperior: 'curso_ensino_superior',
+      statusEnsinoSuperior: 'status_ensino_superior',
+      dataIngressoEnsinoSuperior: 'data_ingresso_ensino_superior',
       dataIngresso: 'data_ingresso',
       programa: 'programa',
       categoria: 'categoria',
@@ -184,7 +298,8 @@ export class AlunoRepository {
       origemParticipacao: 'origem_participacao',
       status: 'status',
       riscoEvasao: 'risco_evasao',
-      engajamento: 'engajamento'
+      engajamento: 'engajamento',
+      frequencia: 'frequencia'
     };
 
     const entries = definedEntries(payload as Record<string, unknown>);
@@ -293,7 +408,13 @@ export class AlunoRepository {
     if (filters.risco) push("COALESCE(risco_evasao, 'baixo') = ?", filters.risco);
     if (filters.categoria) push("LOWER(COALESCE(categoria, nivel_jornada, '')) = LOWER(?)", filters.categoria);
     if (filters.ocupacao) push("LOWER(COALESCE(ocupacao, '')) = LOWER(?)", filters.ocupacao);
+    if (filters.empregabilidade) push(`(${EMPREGABILIDADE_SQL}) = ?`, filters.empregabilidade);
     if (filters.escolaridade) push("LOWER(COALESCE(escolaridade, '')) = LOWER(?)", filters.escolaridade);
+    if (filters.curso) push("LOWER(COALESCE(curso, '')) = LOWER(?)", filters.curso);
+    if (filters.anoIngresso !== undefined) {
+      push('data_ingresso >= ?', `${filters.anoIngresso}-01-01`);
+      push('data_ingresso < ?', `${filters.anoIngresso + 1}-01-01`);
+    }
     if (filters.busca) {
       push('(LOWER(nome) LIKE LOWER(?) OR LOWER(email) LIKE LOWER(?))', `%${filters.busca}%`);
       params.push(`%${filters.busca}%`);

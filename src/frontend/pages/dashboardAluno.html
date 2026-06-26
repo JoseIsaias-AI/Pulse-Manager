@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="../js/pages/redirectToApp.js"></script>
 <title>Pulse Manager – Dashboard</title>
 <!-- Base: layout sidebar + topbar (Aluno) -->
 <link rel="stylesheet" href="../css/themes/guiaAluno.css">
@@ -12,7 +13,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <!-- Estilos da página -->
 <link rel="stylesheet" href="../css/pages/dashboardAluno.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/vendor/chart.js/chart.umd.js"></script>
 </head>
 <body>
 
@@ -113,7 +114,6 @@
             <div>
               <div class="chart-card__title">Presenças por bimestre</div>
             </div>
-            <button class="chart-btn">Mês</button>
           </div>
           <div class="chart-body" style="height:272px"><canvas id="barChart"></canvas></div>
           <div class="chart-footer">
@@ -135,7 +135,6 @@
               <div class="chart-card__title">Evolução ao longo do tempo</div>
               <div class="chart-card__sub">Nota por módulo · Let. Digital · Módulo atual: 4/5</div>
             </div>
-            <button class="chart-btn">Exportar</button>
           </div>
           <div class="chart-body" style="height:272px"><canvas id="lineChart"></canvas></div>
           <div class="chart-footer">

@@ -1,9 +1,11 @@
-﻿import request from 'supertest';
+import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
+import { performanceIt } from '../helpers/performanceTest';
 import { Aluno } from '../../backend/models/alunoModel';
 import { registrarConsultaSegmentacao } from '../../backend/integrations/auditoriaIntegration';
+import { expectErrorContract } from '../helpers/responseContract';
 
 jest.mock('../../backend/integrations/auditoriaIntegration', () => ({
   registrarConsultaSegmentacao: jest.fn().mockResolvedValue(undefined)
@@ -13,12 +15,12 @@ describe('UC-13 - Segmentacao de alunos', () => {
   let alunoRepository: Repository<Aluno>;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
     jest.clearAllMocks();
 
     await alunoRepository.save([
@@ -95,11 +97,7 @@ describe('UC-13 - Segmentacao de alunos', () => {
     ]);
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   it('CT01 - deve consultar e segmentar alunos por programa e risco com sucesso', async () => {
     const response = await request(app)
@@ -200,7 +198,7 @@ describe('UC-13 - Segmentacao de alunos', () => {
     });
   });
 
-  it('RNF-DES-UC13 - deve responder segmentacao em ate 2000ms com base ampliada', async () => {
+  performanceIt('RNF-DES-UC13 - deve responder segmentacao em ate 2000ms com base ampliada', async () => {
     const massa = Array.from({ length: 300 }).map((_, index) => ({
       nome: `Aluno ${index + 1}`,
       email: `aluno.${index + 1}@pulsemais.org`,
@@ -237,10 +235,12 @@ describe('UC-13 - Segmentacao de alunos', () => {
     const response = await request(app).get('/api/alunos/segmentacao').query({ busca: 'ab' });
 
     expect(response.status).toBe(400);
+    expectErrorContract(response.body);
     expect(response.body).toEqual({
       success: false,
+      data: null,
       message: 'O parametro busca deve ter pelo menos 3 caracteres.'
     });
-    expect(response.body.stack).toBeUndefined();
+    expect((response.body as { stack?: unknown }).stack).toBeUndefined();
   });
 });

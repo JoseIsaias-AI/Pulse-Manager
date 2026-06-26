@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="../js/pages/redirectToApp.js"></script>
 <title>Pulse Manager – Dashboard Performance</title>
 <!-- Base: layout sidebar + topbar (Gestor) -->
 <link rel="stylesheet" href="../css/themes/guiaGestor.css">
@@ -12,7 +13,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <!-- Estilos da página -->
 <link rel="stylesheet" href="../css/pages/dashboardGestor.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/vendor/chart.js/chart.umd.js"></script>
 </head>
 <body>
 
@@ -67,42 +68,44 @@
 
       <div class="page-header" style="flex-shrink:0;">
         <h1>Dashboard – Performance da Turma</h1>
-        <p>Semana 12 de 20 · 18 alunos ativos</p>
+        <p data-dashboard-total>Carregando indicadores de impacto e jornada...</p>
       </div>
+
+      <div class="dashboard-feedback dashboard-feedback--loading" data-dashboard-status role="status">Carregando indicadores...</div>
 
       <!-- Stat cards -->
       <div class="stat-grid">
 
         <div class="stat-card stat-card--blue">
           <div class="sc-header">
-            <div class="sc-label">Alunos Ativos</div>
+            <div class="sc-label">Alunos Acompanhados</div>
           </div>
-          <div class="sc-value">18</div>
-          <div class="sc-footer">ativos no programa</div>
+          <div class="sc-value" data-dashboard-value="ativos">&mdash;</div>
+          <div class="sc-footer" data-dashboard-footer="ativos">Carregando...</div>
         </div>
 
         <div class="stat-card stat-card--red">
           <div class="sc-header">
             <div class="sc-label">Evasão</div>
           </div>
-          <div class="sc-value">12</div>
-          <div class="sc-footer">em risco</div>
+          <div class="sc-value" data-dashboard-value="evasao">&mdash;</div>
+          <div class="sc-footer" data-dashboard-footer="evasao">Carregando...</div>
         </div>
 
         <div class="stat-card stat-card--green">
           <div class="sc-header">
             <div class="sc-label">Empregabilidade</div>
           </div>
-          <div class="sc-value">22 <span class="unit">alunos</span></div>
-          <div class="sc-footer">este mês</div>
+          <div class="sc-value" data-dashboard-value="empregados">&mdash;</div>
+          <div class="sc-footer" data-dashboard-footer="empregados">Carregando...</div>
         </div>
 
         <div class="stat-card stat-card--amber">
           <div class="sc-header">
-            <div class="sc-label">Engajamento Médio</div>
+            <div class="sc-label">Conclusão de Programas</div>
           </div>
-          <div class="sc-value">7,1</div>
-          <div class="sc-footer">meta: 7,0</div>
+          <div class="sc-value" data-dashboard-value="conclusao">&mdash;</div>
+          <div class="sc-footer" data-dashboard-footer="conclusao">Carregando...</div>
         </div>
 
       </div>
@@ -116,44 +119,42 @@
             <div>
               <div class="chart-card__title">Alunos por Curso</div>
             </div>
-            <button class="chart-btn">Mês</button>
+            <span class="chart-card__sub">Dados atuais</span>
           </div>
           <div class="canvas-wrap">
             <canvas id="barChart"></canvas>
           </div>
           <div class="legend-row">
-            <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>Em andamento</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#33B458"></div>Concluído</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#FFD927"></div>Em atraso</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>Total de alunos por programa</div>
           </div>
         </div>
 
-        <!-- Tipo de Presença -->
+        <!-- Risco por programa -->
         <div class="chart-card">
           <div class="chart-card__head">
             <div>
-              <div class="chart-card__title">Tipo de Presença</div>
-              <div class="chart-card__sub">% de presença por curso — Programa Pulse Mais · EAD vs Presencial</div>
+              <div class="chart-card__title">Risco por Programa</div>
+              <div class="chart-card__sub">Alunos com risco alto comparados aos demais alunos</div>
             </div>
-            <button class="chart-btn">Exportar</button>
+            <span class="chart-card__sub">Dados atuais</span>
           </div>
           <div class="canvas-wrap">
             <canvas id="presencaChart"></canvas>
           </div>
           <div class="legend-row">
-            <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>EAD</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#33B458"></div>Presencial</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#FFD927"></div>Risco alto</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#003870"></div>Demais alunos</div>
           </div>
         </div>
 
       </div>
 
-      <!-- Funil de Impacto -->
+      <!-- Indicadores de Impacto -->
       <div class="chart-card" style="flex-shrink:0; height:180px;">
         <div class="chart-card__head" style="flex-shrink:0;">
           <div>
-            <div class="chart-card__title">Funil de Impacto</div>
-            <div class="chart-card__sub">Progresso da turma Engenharia T4 · Semana 12</div>
+            <div class="chart-card__title">Indicadores de Impacto</div>
+            <div class="chart-card__sub">Jovens conectados, capacitados e transformados</div>
           </div>
         </div>
         <div class="canvas-wrap">
@@ -165,7 +166,9 @@
   </div><!-- fim .paginaMain -->
 
 <!-- config.js deve vir ANTES dos outros scripts -->
+<script src="../js/config.js"></script>
 <script src="../js/services/config.js"></script>
+<script src="../js/services/api.js"></script>
 <script src="../js/components/guiaGestor.js"></script>
 <script src="../js/components/menuSuperior.js"></script>
 <script src="../js/pages/dashboardGestor.js"></script>

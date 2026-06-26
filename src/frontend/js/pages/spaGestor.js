@@ -1,9 +1,19 @@
 (function () {
   'use strict';
 
+  function gestorApi() {
+    if (!window.PulseApi) {
+      const message = 'Cliente HTTP central nao carregado. Verifique se api.js foi incluido antes de spaGestor.js.';
+      console.error('[spaGestor]', message);
+      throw new Error(message);
+    }
+
+    return window.PulseApi;
+  }
+
   /* ── VIEWS ────────────────────────────────────────────────── */
-  const VIEWS = ['inicio', 'alunos', 'dashboard', 'agenda'];
-  const chartInited = { inicio: false, alunos: false, dashboard: false, agenda: false };
+  const VIEWS = ['inicio', 'alunos', 'dashboard', 'agenda', 'atualizacoes', 'configuracoes'];
+  const chartInited = { inicio: false, alunos: false, dashboard: false, agenda: false, atualizacoes: false, configuracoes: false };
 
   function showView(id) {
     // Esconde todas as views
@@ -16,6 +26,14 @@
     const target = document.getElementById('view-' + id);
     if (!target) return;
     target.style.display = 'flex';
+
+    document.querySelectorAll('.menuLateral__item[data-page]').forEach(item => {
+      item.classList.toggle('menuLateral__item--active', item.dataset.page === id);
+    });
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', id);
+    window.history.replaceState({}, '', url);
 
     // Barra de busca: visível apenas na aba Alunos
     const search = document.getElementById('top-search');
@@ -47,6 +65,16 @@
       userBlock.title = 'Ver equipe';
       userBlock.addEventListener('click', openEquipeModal);
     }
+
+    /* Aba "Notas e Presença" — tipo filtra atividade, "sem nota" desabilita o campo */
+    const tipoSelect = document.getElementById('pf-registro-tipo');
+    if (tipoSelect) {
+      tipoSelect.addEventListener('change', () => populateAtividadeSelect(tipoSelect.value));
+    }
+    const semNotaCheckbox = document.getElementById('pf-registro-sem-nota');
+    if (semNotaCheckbox) {
+      semNotaCheckbox.addEventListener('change', updateRegistroNotaState);
+    }
   });
 
   /* ── ROTEADOR — hook chamado por guiaBase.js ──────────────── */
@@ -55,7 +83,8 @@
   };
 
   /* ── INICIALIZAR VIEW PADRÃO ──────────────────────────────── */
-  showView('inicio');
+  const requestedView = new URLSearchParams(window.location.search).get('view');
+  showView(VIEWS.includes(requestedView) ? requestedView : 'inicio');
 
   /* ════════════════════════════════════════════════════════════
      VIEW: INÍCIO (inicioGestor)
@@ -104,7 +133,8 @@
       { title:'Sprint Review',      start:'2026-06-25', type:'evento',   color:'#33B458', sender:'Carlos Mendes',  role:'Gestor',    time:'15:00' },
       { title:'Formatura T4',       start:'2026-06-30', type:'evento',   color:'#FFD927', sender:'Ana Clara',      role:'Gestora',   time:'18:00' },
     ];
-    const TODAY_STR  = '2026-06-11';
+    const hojeInicio = new Date();
+    const TODAY_STR  = `${hojeInicio.getFullYear()}-${String(hojeInicio.getMonth() + 1).padStart(2, '0')}-${String(hojeInicio.getDate()).padStart(2, '0')}`;
     const TYPE_LABEL_EV = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria' };
     const MONTH_ABREV = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
@@ -140,7 +170,91 @@
   /* ════════════════════════════════════════════════════════════
      VIEW: ALUNOS
   ════════════════════════════════════════════════════════════ */
+  function bindIntegratedCsvActions() {
+    const input = document.getElementById('al-csv-file');
+    const importBtn = document.getElementById('al-import-csv');
+    const exportBtn = document.getElementById('al-export-csv');
+    const status = document.getElementById('al-import-status');
+
+    function showStatus(message, isError) {
+      if (!status) return;
+      status.classList.toggle('is-error', Boolean(isError));
+      status.style.display = 'block';
+      status.innerHTML = message;
+    }
+
+    if (importBtn && input && !importBtn.dataset.csvBound) {
+      importBtn.dataset.csvBound = 'true';
+      importBtn.addEventListener('click', () => input.click());
+      input.addEventListener('change', async () => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+
+        if (!file.name.toLowerCase().endsWith('.csv')) {
+          showStatus('Escolha um arquivo no formato <strong>.csv</strong>.', true);
+          input.value = '';
+          return;
+        }
+
+        try {
+          importBtn.disabled = true;
+          importBtn.innerHTML = '<i class="ti ti-loader-2" style="font-size:13px;"></i> Importando...';
+          const result = await window.PulseApi.importarAlunosCsv(await file.text());
+          const data = result.data;
+          const erros = data.erros?.length ? ` ${data.erros.length} linha(s) com erro.` : '';
+
+          showStatus(
+            `<strong>CSV processado:</strong> ${data.importados} novo(s), ${data.atualizados} atualizado(s), ${data.ignorados} ignorado(s).${erros}`,
+            false
+          );
+
+          if (window.refreshListaAlunosView) {
+            await window.refreshListaAlunosView();
+          }
+        } catch (error) {
+          showStatus(error.message || 'Não foi possível importar o CSV.', true);
+        } finally {
+          importBtn.disabled = false;
+          importBtn.innerHTML = '<i class="ti ti-upload" style="font-size:13px;"></i> Importar CSV';
+          input.value = '';
+        }
+      });
+    }
+
+    if (exportBtn && !exportBtn.dataset.csvBound) {
+      exportBtn.dataset.csvBound = 'true';
+      exportBtn.addEventListener('click', async () => {
+        try {
+          exportBtn.disabled = true;
+          exportBtn.innerHTML = '<i class="ti ti-loader-2" style="font-size:13px;"></i> Exportando...';
+          const blob = await window.PulseApi.exportarAlunosCsv();
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'alunos.csv';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+          showStatus('<strong>Exportação pronta:</strong> o arquivo alunos.csv foi gerado.', false);
+        } catch (error) {
+          showStatus(error.message || 'Não foi possível exportar o CSV.', true);
+        } finally {
+          exportBtn.disabled = false;
+          exportBtn.innerHTML = '<i class="ti ti-download" style="font-size:13px;"></i> Exportar CSV';
+        }
+      });
+    }
+  }
+
   function initAlunosView() {
+    bindIntegratedCsvActions();
+
+    if (window.initListaAlunosView) {
+      window.initListaAlunosView({ onSelect: openStudentProfile });
+      return;
+    }
+
     const PER_PAGE = 9;
     const TOTAL    = 18;
     let curPage      = 1;
@@ -341,6 +455,11 @@
      VIEW: DASHBOARD (dashboardGestor) — Dados Pulse Mais 2022–2025
   ════════════════════════════════════════════════════════════ */
   function initDashboardView() {
+    if (window.initDashboardGestorApp) {
+      window.initDashboardGestorApp();
+      return;
+    }
+
     Chart.defaults.font.family = "'Poppins', sans-serif";
     Chart.defaults.font.size   = 11;
 
@@ -507,15 +626,21 @@
      VIEW: AGENDA
   ════════════════════════════════════════════════════════════ */
   function initAgendaView() {
+    if (window.initAgendaGestorApp) {
+      window.initAgendaGestorApp();
+      return;
+    }
+
     const MONTH_NAMES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
     const WD_LABELS   = ['D','S','T','Q','Q','S','S'];
     const TYPE_COLOR  = { evento:'#003870', consulta:'#7B4FD9', aula:'#F4A261', mentoria:'#33B458' };
     const TYPE_LABEL  = { evento:'Evento', consulta:'Consulta', aula:'Aula', mentoria:'Mentoria' };
-    const today       = new Date(2026, 5, 11); // data do sistema: 11 jun 2026
+    const today       = new Date();
 
-    let viewYear  = 2026;
-    let viewMonth = 5; // junho
+    let viewYear  = today.getFullYear();
+    let viewMonth = today.getMonth();
     let selectedId = null;
+    let selectedDate = null;
 
     let events = [
       { id:1, title:'Check-in Semanal',    start:'2026-06-03', end:'2026-06-03', type:'evento',   color:'#003870', sender:'Ana Clara',      role:'Gestora',   time:'09:00', desc:'Check-in semanal com todos os alunos da turma T4.',              target:'todos'        },
@@ -532,6 +657,16 @@
     function toDate(str) { const [y,m,d] = str.split('-').map(Number); return new Date(y,m-1,d); }
     function toStr(d)    { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
     const todayStr = toStr(today);
+    selectedDate = todayStr;
+    function formatDate(str) {
+      const d = toDate(str);
+      return `${d.getDate()} de ${MONTH_NAMES[d.getMonth()]} de ${d.getFullYear()}`;
+    }
+    function eventsForDay(dateStr) {
+      return events
+        .filter(ev => ev.start <= dateStr && ev.end >= dateStr)
+        .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+    }
 
     function renderCal() {
       const calEl = document.getElementById('ag-cal');
@@ -614,7 +749,8 @@
           const dStr   = toStr(cell.d);
           const isToday = dStr === todayStr;
           const isWkd  = i === 0 || i === 6;
-          html += `<div class="ag-cell${cell.other ? ' other-month' : ''}">
+          const hasEvents = eventsForDay(dStr).length > 0;
+          html += `<div class="ag-cell${cell.other ? ' other-month' : ''}${dStr === selectedDate ? ' selected-day' : ''}${hasEvents ? ' has-events' : ''}" data-date="${dStr}">
             <div class="ag-day-num${isToday ? ' today' : ''}${isWkd && !isToday ? ' weekend' : ''}">${cell.d.getDate()}</div>
           </div>`;
         });
@@ -652,6 +788,58 @@
         el.addEventListener('click', e => {
           e.stopPropagation();
           selectedId = parseInt(el.dataset.evId);
+          const ev = events.find(item => item.id === selectedId);
+          if (ev) selectedDate = ev.start;
+          showDetail(selectedId);
+          renderCal();
+        });
+      });
+      calEl.querySelectorAll('.ag-cell[data-date]').forEach(el => {
+        el.addEventListener('click', () => {
+          selectedId = null;
+          selectedDate = el.dataset.date;
+          renderCal();
+          showDayDetail(selectedDate);
+        });
+      });
+    }
+
+    function showDayDetail(dateStr) {
+      const box = document.getElementById('ag-detail');
+      if (!box) return;
+      const dayEvents = eventsForDay(dateStr);
+      const itemsHtml = dayEvents.length
+        ? dayEvents.map(ev => {
+            const tc = TYPE_COLOR[ev.type] || '#003870';
+            const targetStr = ev.target === 'todos' ? 'Todos os alunos' : ev.target;
+            return `<button class="ag-day-event" type="button" data-ev-id="${ev.id}">
+              <span class="ag-day-event-time">${ev.time || '--:--'}</span>
+              <span class="ag-day-event-dot" style="background:${tc};"></span>
+              <span class="ag-day-event-main">
+                <strong>${ev.title}</strong>
+                <small>${TYPE_LABEL[ev.type] || ev.type} · ${targetStr}</small>
+              </span>
+              <i class="ti ti-chevron-right"></i>
+            </button>`;
+          }).join('')
+        : `<div class="ag-day-empty">
+            <i class="ti ti-calendar-off"></i>
+            <strong>Nenhum evento neste dia</strong>
+          </div>`;
+
+      box.innerHTML = `
+        <div class="ag-detail-header">
+          <div>
+            <div class="ag-detail-kicker">Agenda do dia</div>
+            <div class="ag-detail-title">${formatDate(dateStr)}</div>
+          </div>
+          <button class="ag-detail-close" onclick="document.getElementById('ag-detail').classList.remove('open');"><i class="ti ti-x"></i></button>
+        </div>
+        <div class="ag-day-list">${itemsHtml}</div>`;
+      box.classList.add('open');
+      box.querySelectorAll('.ag-day-event').forEach(el => {
+        el.addEventListener('click', () => {
+          selectedId = parseInt(el.dataset.evId);
           showDetail(selectedId);
           renderCal();
         });
@@ -662,6 +850,7 @@
       const ev  = events.find(e => e.id === id);
       const box = document.getElementById('ag-detail');
       if (!ev || !box) return;
+      selectedDate = ev.start;
 
       const startD  = toDate(ev.start), endD = toDate(ev.end);
       const sameDay = ev.start === ev.end;
@@ -676,7 +865,10 @@
 
       box.innerHTML = `
         <div class="ag-detail-header">
-          <div class="ag-detail-title">${ev.title}</div>
+          <div>
+            <div class="ag-detail-kicker">Detalhe do evento</div>
+            <div class="ag-detail-title">${ev.title}</div>
+          </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="ag-detail-type" style="background:${tc}20;color:${tc};">${tl}</span>
             <button class="ag-detail-close" onclick="document.getElementById('ag-detail').classList.remove('open');"><i class="ti ti-x"></i></button>
@@ -695,65 +887,53 @@
 
     /* ── Formulário: campo condicional de destinatário ── */
     window.agUpdateTargetField = function () {
-      const val = document.getElementById('ag-f-target')?.value;
-      const td  = document.getElementById('ag-target-detail');
-      if (!td) return;
-      if (val === 'aluno') {
-        td.innerHTML = `<div class="ag-field"><label><i class="ti ti-hash" style="font-size:11px;"></i> ID do aluno</label><input type="text" id="ag-f-tid" placeholder="PM-2024-000"></div>`;
-      } else if (val === 'especificos') {
-        td.innerHTML = `<div class="ag-field"><label><i class="ti ti-list" style="font-size:11px;"></i> IDs separados por vírgula</label><input type="text" id="ag-f-tids" placeholder="PM-2024-000, PM-2024-001..."></div>`;
-      } else {
-        td.innerHTML = '';
-      }
+      return null;
     };
 
     /* ── Formulário: adicionar evento ── */
     window.agAddEvent = function () {
-      const evtTitle = document.getElementById('ag-f-title')?.value.trim();
-      const nome = document.getElementById('ag-f-nome')?.value.trim();
-      const role = document.getElementById('ag-f-role')?.value;
-      const type = document.getElementById('ag-f-type')?.value;
+      const registro = document.getElementById('ag-f-registro')?.value.trim();
+      const tipoUser = document.getElementById('ag-f-tipo-user')?.value;
       const date = document.getElementById('ag-f-date')?.value;
-      const time = document.getElementById('ag-f-time')?.value;
-      const desc = document.getElementById('ag-f-desc')?.value.trim();
-      const tgtV = document.getElementById('ag-f-target')?.value;
+      const horaInicio = document.getElementById('ag-f-start')?.value;
+      const horaFim = document.getElementById('ag-f-end')?.value;
+      const status = document.getElementById('ag-f-status')?.value;
 
       /* Validação */
       let ok = true;
-      [['ag-f-title', evtTitle], ['ag-f-nome', nome], ['ag-f-type', type], ['ag-f-date', date]].forEach(([id, v]) => {
+      [['ag-f-registro', registro], ['ag-f-tipo-user', tipoUser], ['ag-f-date', date]].forEach(([id, v]) => {
         const el = document.getElementById(id);
         if (!v) { el?.classList.add('ag-val-err'); ok = false; }
         else    el?.classList.remove('ag-val-err');
       });
       if (!ok) return;
 
-      const target = tgtV === 'aluno'       ? (document.getElementById('ag-f-tid')?.value.trim()  || 'todos')
-                   : tgtV === 'especificos' ? (document.getElementById('ag-f-tids')?.value.trim() || 'todos')
-                   : 'todos';
-
       const newEv = {
         id: Date.now(),
-        title: evtTitle,
+        title: registro,
         start: date, end: date,
-        type, color: TYPE_COLOR[type] || '#003870',
-        sender: nome, role: role || '—', time: time || '—',
-        desc: desc || '—', target,
+        type: tipoUser === 'aluno' ? 'mentoria' : 'evento',
+        color: tipoUser === 'aluno' ? TYPE_COLOR.mentoria : TYPE_COLOR.evento,
+        sender: tipoUser === 'aluno' ? 'Aluno' : 'Membro da equipe',
+        role: tipoUser === 'aluno' ? 'Aluno' : 'Membro da equipe',
+        time: horaInicio || '—',
+        desc: `Pré-visualização: ${registro}. Horário: ${horaInicio || 'não informado'}${horaFim ? ` até ${horaFim}` : ''}. Status: ${status || 1}.`,
+        target: tipoUser === 'aluno' ? 'Aluno' : 'Membro da equipe',
       };
       events.push(newEv);
 
       /* Limpa formulário */
-      ['ag-f-title','ag-f-nome','ag-f-role','ag-f-type','ag-f-date','ag-f-time','ag-f-desc'].forEach(id => {
+      ['ag-f-registro','ag-f-tipo-user','ag-f-date','ag-f-start','ag-f-end','ag-f-status'].forEach(id => {
         const el = document.getElementById(id); if (el) el.value = '';
       });
-      document.getElementById('ag-target-detail').innerHTML = '';
-      document.getElementById('ag-f-target').value = 'todos';
 
       /* Navega para o mês do evento e seleciona */
       const [y, m] = date.split('-').map(Number);
       viewYear = y; viewMonth = m - 1;
       selectedId = newEv.id;
+      selectedDate = date;
       renderCal();
-      showDetail(newEv.id);
+      showDayDetail(date);
     };
   }
 
@@ -790,65 +970,563 @@
     'Laboratório de Mentoria':                                'ti-users',
   };
 
-  function openStudentProfile(s) {
+  const PERFIL_FIELD_CONFIG = {
+    nome: { required: true },
+    email: { required: true },
+    telefone: { nullable: true },
+    idade: { number: true, integer: true, nullable: true },
+    genero: { token: true, nullable: true },
+    status: { token: true, skipEmpty: true },
+    dataIngresso: { skipEmpty: true },
+    curso: { nullable: true },
+    escolaridade: { nullable: true },
+    ocupacao: { nullable: true },
+    programa: { skipEmpty: true },
+    perfilSocioeconomico: { nullable: true },
+    rendaMensal: { number: true, nullable: true },
+    nivelJornada: { nullable: true },
+    categoria: { skipEmpty: true },
+    tipoVinculoEmpregaticio: { nullable: true },
+    origemParticipacao: { nullable: true },
+    riscoEvasao: { token: true, skipEmpty: true }
+  };
+
+  let currentPerfilStudent = null;
+  let currentPerfilAluno = null;
+  let currentAtividades = [];
+  let perfilOptions = null;
+  let perfilOptionsPromise = null;
+
+  function normalizeToken(value) {
+    return String(value)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim()
+      .toLowerCase()
+      .replace(/[\s-]+/g, '_');
+  }
+
+  function formatPerfilLabel(value) {
+    const text = String(value ?? '').trim();
+    if (!text) return 'Não informado';
+    return text
+      .replace(/_/g, ' ')
+      .replace(/\s+/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  }
+
+  function perfilOptionLabel(value) {
+    const exactLabels = {
+      nao_informado: 'Não informado',
+      sem_categoria: 'Sem categoria',
+      em_acompanhamento: 'Em acompanhamento',
+      nao_binario: 'Não binário',
+      prefiro_nao_informar: 'Prefiro não informar',
+      programa_pulse_mais: 'Programa Pulse Mais',
+      ex_aluno_indicacao: 'Ex-aluno por indicação',
+      vivencia_empresa: 'Vivência em empresa'
+    };
+    const wordLabels = {
+      nao: 'não',
+      medio: 'médio',
+      indicacao: 'indicação',
+      publica: 'pública',
+      participacao: 'participação',
+      socioeconomico: 'socioeconômico',
+      vinculo: 'vínculo'
+    };
+    const raw = String(value ?? '').trim();
+    if (!raw) return 'Não informado';
+    if (exactLabels[raw.toLowerCase()]) return exactLabels[raw.toLowerCase()];
+    if (/^[A-Z0-9]{2,}$/.test(raw)) return raw;
+    const text = raw
+      .replace(/_/g, ' ')
+      .split(/\s+/)
+      .map((word) => wordLabels[word.toLowerCase()] || word)
+      .join(' ');
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  function normalizePrograma(value) {
+    const normalized = normalizeToken(value || '');
+    if (!normalized || normalized === 'nao_informado' || normalized === 'sem_programa') {
+      return 'nao_informado';
+    }
+    if (normalized.includes('mentoria')) return 'Mentoria';
+    if (normalized.includes('pulse_mais')) return 'Programa Pulse Mais';
+    return 'nao_informado';
+  }
+
+  async function fetchPerfilOptions() {
+    const body = await gestorApi().get('/alunos/opcoes-cadastro');
+    return body.data || {};
+  }
+
+  async function ensurePerfilOptions() {
+    if (perfilOptions) return perfilOptions;
+    if (!perfilOptionsPromise) {
+      perfilOptionsPromise = fetchPerfilOptions()
+        .then((options) => {
+          perfilOptions = options;
+          return options;
+        })
+        .finally(() => {
+          perfilOptionsPromise = null;
+        });
+    }
+    return perfilOptionsPromise;
+  }
+
+  function fillPerfilSelectOptions(aluno = {}) {
     const overlay = document.getElementById('perfil-overlay');
     if (!overlay) return;
 
-    /* Avatar */
-    const av = document.getElementById('pf-avatar');
-    if (av) { av.textContent = s.ini; av.style.background = s.bg; av.style.color = s.tc; }
+    overlay.querySelectorAll('select[data-pf-option-field]').forEach((select) => {
+      const optionField = select.dataset.pfOptionField;
+      const dataField = select.dataset.pfField;
+      const currentValue = optionField === 'programa'
+        ? normalizePrograma(aluno[dataField])
+        : aluno[dataField];
+      const sourceValues = Array.isArray(perfilOptions?.[optionField]) ? perfilOptions[optionField] : [];
+      const values = optionField === 'programa'
+        ? ['Mentoria', 'nao_informado', 'Programa Pulse Mais']
+        : [...new Set([
+          ...sourceValues,
+          ...(currentValue ? [currentValue] : [])
+        ].filter(Boolean))];
 
-    /* Nome e meta */
+      select.innerHTML = '<option value="">Não informado</option>';
+      values.forEach((value) => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = perfilOptionLabel(value);
+        select.appendChild(option);
+      });
+    });
+  }
+
+  function setPerfilInput(id, value) {
+    const input = document.getElementById(id);
+    if (!input) return;
+    if (input.tagName === 'SELECT') {
+      const selectedValue = value === undefined || value === null ? '' : String(value);
+      if (selectedValue && !Array.from(input.options).some((option) => option.value === selectedValue)) {
+        const option = document.createElement('option');
+        option.value = selectedValue;
+        option.textContent = perfilOptionLabel(selectedValue);
+        input.appendChild(option);
+      }
+      input.value = selectedValue;
+      return;
+    }
+    input.placeholder = 'Não informado';
+    input.value = value === undefined || value === null ? '' : String(value);
+  }
+
+  function setPerfilStatus(message, icon = 'ti-eye') {
+    const footer = document.getElementById('pf-footer-status');
+    if (footer) footer.innerHTML = `<i class="ti ${icon}" style="font-size:13px;"></i> ${message}`;
+  }
+
+  function showPerfilNotice(message, error) {
+    if (window.showPulseNotice) {
+      window.showPulseNotice(message, error);
+      return;
+    }
+    const notice = document.createElement('div');
+    notice.className = `al-notice${error ? ' al-notice--error' : ''}`;
+    notice.textContent = message;
+    document.body.appendChild(notice);
+    setTimeout(() => notice.remove(), 3600);
+  }
+
+  function setPerfilEditMode(editing) {
+    const overlay = document.getElementById('perfil-overlay');
+    if (!overlay) return;
+
+    overlay.querySelectorAll('[data-pf-field]').forEach((input) => {
+      if (input.tagName === 'SELECT') input.disabled = !editing;
+      else input.readOnly = !editing;
+    });
+
+    const editBtn = document.getElementById('pf-edit-btn');
+    const saveBtn = document.getElementById('pf-save-btn');
+    const cancelBtn = document.getElementById('pf-cancel-edit');
+    if (editBtn) editBtn.hidden = editing;
+    if (saveBtn) saveBtn.hidden = !editing;
+    if (cancelBtn) cancelBtn.hidden = !editing;
+
+    setPerfilStatus(
+      editing ? 'Edição ativa — revise e salve para atualizar o banco' : 'Visualização — dados do cadastro',
+      editing ? 'ti-pencil' : 'ti-eye'
+    );
+  }
+
+  function fillPerfilFields(student) {
+    const aluno = student?.raw || student || {};
+    const codigo = aluno.codigoPm || student?.id || (aluno.idAluno ? String(aluno.idAluno) : '');
+    const curso = aluno.curso || student?.techCourse || '';
+    const programa = aluno.programa || student?.course || '';
+    const nivel = aluno.nivelJornada || student?.mod || '';
+
+    fillPerfilSelectOptions(aluno);
+
+    setPerfilInput('pf-code', codigo);
+    setPerfilInput('pf-fullname', aluno.nome || student?.name);
+    setPerfilInput('pf-age', aluno.idade);
+    setPerfilInput('pf-genero', aluno.genero);
+    setPerfilInput('pf-status', aluno.status);
+    setPerfilInput('pf-data-ingresso', aluno.dataIngresso ? String(aluno.dataIngresso).slice(0, 10) : '');
+    setPerfilInput('pf-course', curso === 'Curso nao informado' ? '' : curso);
+    setPerfilInput('pf-escolaridade', aluno.escolaridade);
+    setPerfilInput('pf-ocupacao', aluno.ocupacao);
+    setPerfilInput('pf-programa', normalizePrograma(programa));
+    setPerfilInput('pf-perfil-socioeconomico', aluno.perfilSocioeconomico);
+    setPerfilInput('pf-renda-mensal', aluno.rendaMensal);
+    setPerfilInput('pf-nivel-jornada', aluno.nivelJornada);
+    setPerfilInput('pf-categoria', aluno.categoria);
+    setPerfilInput('pf-tipo-vinculo', aluno.tipoVinculoEmpregaticio);
+    setPerfilInput('pf-origem-participacao', aluno.origemParticipacao);
+    setPerfilInput('pf-risco-evasao', aluno.riscoEvasao);
+    setPerfilInput('pf-email', aluno.email);
+    setPerfilInput('pf-telefone', aluno.telefone);
+
     const nameEl = document.getElementById('pf-name');
-    if (nameEl) nameEl.textContent = s.name;
+    if (nameEl) nameEl.textContent = aluno.nome || student?.name || 'Aluno';
 
     const metaEl = document.getElementById('pf-meta');
-    if (metaEl) metaEl.textContent = s.id + ' · Programa Pulse Mais · Turma T4';
-
-    /* Badge de curso */
-    const badgeCurso = document.getElementById('pf-badge-curso');
-    if (badgeCurso) {
-      const icon  = COURSE_ICON[s.course]  || 'ti-book';
-      const short = COURSE_SHORT[s.course] || s.course;
-      badgeCurso.innerHTML = `<i class="ti ${icon}" style="font-size:11px;"></i> ${short}`;
+    if (metaEl) {
+      const metaParts = [codigo, programa || curso].filter(Boolean).map(formatPerfilLabel);
+      metaEl.textContent = metaParts.length ? metaParts.join(' · ') : 'Cadastro sem detalhes informados';
     }
 
-    /* Campos do formulário */
-    const codeNum = s.id.split('-').pop();
-    const codeEl  = document.getElementById('pf-code');     if (codeEl)     codeEl.value    = codeNum;
-    const nameInp = document.getElementById('pf-fullname'); if (nameInp)    nameInp.value   = s.name;
-    const ageInp  = document.getElementById('pf-age');      if (ageInp)     ageInp.value    = s.age + ' anos';
-    const courseInp = document.getElementById('pf-course'); if (courseInp)  courseInp.value = s.techCourse || '—';
+    const statusBadge = document.getElementById('pf-badge-status');
+    if (statusBadge) {
+      statusBadge.innerHTML = `<i class="ti ti-circle-filled" style="font-size:8px;"></i> ${formatPerfilLabel(aluno.status || student?.st)}`;
+    }
+
+    const badgeCurso = document.getElementById('pf-badge-curso');
+    if (badgeCurso) {
+      const courseForIcon = aluno.curso || student?.course;
+      const icon = COURSE_ICON[courseForIcon] || 'ti-book';
+      badgeCurso.innerHTML = `<i class="ti ${icon}" style="font-size:11px;"></i> ${formatPerfilLabel(curso || programa)}`;
+    }
+
+    const badgeNivel = document.getElementById('pf-badge-nivel');
+    if (badgeNivel) badgeNivel.textContent = formatPerfilLabel(nivel);
+
+    const av = document.getElementById('pf-avatar');
+    if (av) {
+      av.textContent = student?.ini || (aluno.nome || 'A').trim().slice(0, 2).toUpperCase();
+      av.style.background = student?.bg || '#E0E7FF';
+      av.style.color = student?.tc || '#4338CA';
+    }
+  }
+
+  function buildPerfilPayload() {
+    const payload = {};
+    const overlay = document.getElementById('perfil-overlay');
+    overlay?.querySelectorAll('[data-pf-field]').forEach((input) => {
+      const field = input.dataset.pfField;
+      const config = PERFIL_FIELD_CONFIG[field] || {};
+      const rawValue = input.value.trim();
+
+      if (!input.checkValidity()) {
+        const label = input.closest('.field')?.querySelector('label')?.textContent?.trim() || field;
+        throw new Error(`${label}: ${input.validationMessage}`);
+      }
+
+      if (!rawValue) {
+        if (config.required) {
+          throw new Error(`O campo ${field} é obrigatório.`);
+        }
+        if (config.skipEmpty) return;
+        payload[field] = null;
+        return;
+      }
+
+      if (config.number) {
+        const value = Number(rawValue.replace(',', '.'));
+        if (!Number.isFinite(value)) throw new Error(`O campo ${field} deve ser numérico.`);
+        if (config.integer && !Number.isInteger(value)) throw new Error(`O campo ${field} deve ser inteiro.`);
+        payload[field] = value;
+        return;
+      }
+
+      payload[field] = config.token ? normalizeToken(rawValue) : rawValue;
+    });
+
+    if (payload.email && !String(payload.email).includes('@')) {
+      throw new Error('O e-mail deve conter um endereço válido.');
+    }
+
+    return payload;
+  }
+
+  async function updatePerfilAluno(idAluno, payload) {
+    const body = await gestorApi().patch(`/alunos/${idAluno}`, payload);
+    return body.data;
+  }
+
+  function syncPerfilStudent(updatedAluno) {
+    const previous = currentPerfilStudent || {};
+    return {
+      ...previous,
+      raw: updatedAluno,
+      id: updatedAluno.codigoPm || String(updatedAluno.idAluno),
+      name: updatedAluno.nome,
+      age: updatedAluno.idade,
+      course: updatedAluno.curso || updatedAluno.programa || previous.course || 'Programa Pulse Mais',
+      techCourse: updatedAluno.curso || previous.techCourse || 'Curso nao informado',
+      mod: updatedAluno.nivelJornada || updatedAluno.categoria || updatedAluno.status || previous.mod || 'Sem etapa informada',
+      pct: Math.max(0, Math.min(100, Number(updatedAluno.engajamento) || previous.pct || 0))
+    };
+  }
+
+  /* ── Notas e presença (registros reais) ───────────────────── */
+
+  function setRegistroStatus(message, isError) {
+    const el = document.getElementById('pf-registro-status');
+    if (!el) return;
+    el.textContent = message || '';
+    el.classList.toggle('is-error', !!isError);
+    el.classList.toggle('is-success', !isError && !!message);
+  }
+
+  async function fetchAtividades() {
+    const body = await gestorApi().get('/atividades');
+    return body.data.atividades || [];
+  }
+
+  async function fetchJornadaAluno(idAluno) {
+    const body = await gestorApi().get(`/jornada/alunos/${idAluno}`);
+    return body.data;
+  }
+
+  async function registrarFrequencia(payload) {
+    const body = await gestorApi().post('/frequencias', payload);
+    return body.data;
+  }
+
+  async function registrarParticipacaoEvento(payload) {
+    const body = await gestorApi().post('/participacoes', payload);
+    return body.data;
+  }
+
+  function populateTipoAtividadeSelect(atividades) {
+    const select = document.getElementById('pf-registro-tipo');
+    if (!select) return;
+    const tipos = [...new Set(atividades.map((a) => a.tipo))].sort();
+    select.innerHTML = '<option value="">Selecione o tipo</option>' + tipos.map((tipo) =>
+      `<option value="${tipo}">${formatPerfilLabel(tipo)}</option>`
+    ).join('');
+  }
+
+  function populateAtividadeSelect(tipo) {
+    const select = document.getElementById('pf-registro-atividade');
+    if (!select) return;
+
+    if (!tipo) {
+      select.innerHTML = '<option value="">Selecione o tipo primeiro</option>';
+      select.disabled = true;
+      return;
+    }
+
+    const filtradas = currentAtividades.filter((a) => a.tipo === tipo);
+    select.disabled = false;
+    select.innerHTML = '<option value="">Selecione uma atividade</option>' + filtradas.map((a) =>
+      `<option value="${a.idAtividade}">${a.titulo}${a.data ? ' — ' + String(a.data).slice(0, 10) : ''}</option>`
+    ).join('');
+  }
+
+  function updateRegistroNotaState() {
+    const semNota = document.getElementById('pf-registro-sem-nota')?.checked;
+    const notaInput = document.getElementById('pf-registro-nota');
+    if (!notaInput) return;
+    notaInput.disabled = !!semNota;
+    if (semNota) notaInput.value = '';
+  }
+
+  function renderRegistrosGrid(jornada) {
+    const grid = document.getElementById('pf-registros-grid');
+    if (!grid) return;
+
+    const registros = [...(jornada?.frequencias || []), ...(jornada?.participacoesEventos || [])]
+      .sort((a, b) => String(b.dataPart).localeCompare(String(a.dataPart)));
+
+    if (registros.length === 0) {
+      grid.innerHTML = '<div class="perf-card__sub">Nenhum registro de nota ou presença ainda.</div>';
+      return;
+    }
+
+    grid.innerHTML = registros.map((r) => {
+      const editavel = r.tipoAtividade === 'aula';
+      const notaValue = r.nota !== null && r.nota !== undefined ? r.nota : '';
+      return `<div class="registro-item" data-id-atividade="${r.idAtividade}" data-tipo="${r.tipoAtividade}">
+        <div class="registro-titulo">
+          ${r.tituloAtividade}
+          <small>${formatPerfilLabel(r.tipoAtividade)} · ${r.dataPart ? String(r.dataPart).slice(0, 10) : '—'}</small>
+        </div>
+        <label class="registro-presenca">
+          <input type="checkbox" class="registro-presenca-input" ${r.statusPart ? 'checked' : ''} ${editavel ? '' : 'disabled'}>
+          Presente
+        </label>
+        <input type="number" class="registro-nota-input" min="0" max="10" step="0.1" value="${notaValue}" ${editavel ? '' : 'disabled'}>
+        ${editavel
+          ? '<button class="registro-save-btn" title="Salvar"><i class="ti ti-device-floppy"></i></button>'
+          : ''}
+      </div>`;
+    }).join('');
+
+    grid.querySelectorAll('.registro-save-btn').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const item = btn.closest('.registro-item');
+        const idAtividade = Number(item.dataset.idAtividade);
+        const presente = item.querySelector('.registro-presenca-input').checked;
+        const notaRaw = item.querySelector('.registro-nota-input').value.trim();
+        const nota = notaRaw === '' ? undefined : Number(notaRaw);
+
+        if (nota !== undefined && (!Number.isFinite(nota) || nota < 0 || nota > 10)) {
+          setRegistroStatus('A nota deve ser um número entre 0 e 10.', true);
+          return;
+        }
+
+        btn.disabled = true;
+        try {
+          await registrarFrequencia({
+            idAluno: currentPerfilAluno.idAluno,
+            idAtividade,
+            statusPart: presente,
+            nota
+          });
+          setRegistroStatus('Registro atualizado com sucesso.', false);
+          const jornada = await fetchJornadaAluno(currentPerfilAluno.idAluno);
+          renderRegistrosGrid(jornada);
+        } catch (error) {
+          setRegistroStatus(error.message || 'Não foi possível salvar o registro.', true);
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    });
+  }
+
+  window.registrarNotaPresenca = async function () {
+    const btn = document.getElementById('pf-registro-btn');
+    try {
+      if (!currentPerfilAluno?.idAluno) {
+        throw new Error('Este aluno ainda não possui identificador para registro.');
+      }
+
+      const idAtividade = Number(document.getElementById('pf-registro-atividade').value);
+      if (!idAtividade) {
+        throw new Error('Selecione uma atividade para registrar.');
+      }
+
+      const presente = document.getElementById('pf-registro-presenca').checked;
+      const semNota = document.getElementById('pf-registro-sem-nota').checked;
+      const notaRaw = document.getElementById('pf-registro-nota').value.trim();
+      const nota = semNota || notaRaw === '' ? undefined : Number(notaRaw);
+      if (nota !== undefined && (!Number.isFinite(nota) || nota < 0 || nota > 10)) {
+        throw new Error('A nota deve ser um número entre 0 e 10.');
+      }
+
+      const atividade = currentAtividades.find((a) => a.idAtividade === idAtividade);
+      if (!atividade) {
+        throw new Error('Atividade inválida.');
+      }
+
+      if (btn) btn.disabled = true;
+      setRegistroStatus('Registrando...', false);
+
+      const payload = { idAluno: currentPerfilAluno.idAluno, idAtividade, statusPart: presente, nota };
+      if (atividade.tipo === 'aula') {
+        await registrarFrequencia(payload);
+      } else {
+        await registrarParticipacaoEvento(payload);
+      }
+
+      setRegistroStatus('Registro salvo com sucesso.', false);
+      document.getElementById('pf-registro-tipo').value = '';
+      populateAtividadeSelect('');
+      document.getElementById('pf-registro-nota').value = '';
+      document.getElementById('pf-registro-sem-nota').checked = false;
+      updateRegistroNotaState();
+      document.getElementById('pf-registro-presenca').checked = false;
+
+      const jornada = await fetchJornadaAluno(currentPerfilAluno.idAluno);
+      renderRegistrosGrid(jornada);
+    } catch (error) {
+      setRegistroStatus(error.message || 'Não foi possível registrar.', true);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  };
+
+  async function loadRegistrosTab(idAluno) {
+    const grid = document.getElementById('pf-registros-grid');
+    if (grid) grid.innerHTML = '<div class="perf-card__sub">Carregando registros...</div>';
+    setRegistroStatus('', false);
+
+    try {
+      if (currentAtividades.length === 0) {
+        currentAtividades = await fetchAtividades();
+        populateTipoAtividadeSelect(currentAtividades);
+      }
+      const jornada = await fetchJornadaAluno(idAluno);
+      renderRegistrosGrid(jornada);
+    } catch (error) {
+      if (grid) grid.innerHTML = '<div class="perf-card__sub">Não foi possível carregar os registros.</div>';
+      setRegistroStatus(error.message || 'Erro ao carregar notas e presença.', true);
+    }
+  }
+
+  async function openStudentProfile(s) {
+    const overlay = document.getElementById('perfil-overlay');
+    if (!overlay) return;
+
+    currentPerfilStudent = s || {};
+    currentPerfilAluno = currentPerfilStudent.raw || currentPerfilStudent;
+    try {
+      await ensurePerfilOptions();
+    } catch (error) {
+      showPerfilNotice(error.message || 'Não foi possível carregar as opções do aluno.', true);
+    }
+    fillPerfilFields(currentPerfilStudent);
+    setPerfilEditMode(false);
 
     /* Frequência */
     const freqVal = document.getElementById('pf-freq-val');
     const freqBar = document.getElementById('pf-freq-bar');
-    if (freqVal) freqVal.textContent = s.pct + '%';
-    if (freqBar) { freqBar.style.width = s.pct + '%'; freqBar.style.background = s.pct < 60 ? '#E24B4A' : s.pct < 75 ? '#F4A261' : 'var(--green-600,#33B458)'; }
+    const progress = Math.max(0, Math.min(100, Number(s?.pct) || Number(currentPerfilAluno?.engajamento) || 0));
+    if (freqVal) freqVal.textContent = progress + '%';
+    if (freqBar) { freqBar.style.width = progress + '%'; freqBar.style.background = progress < 60 ? '#E24B4A' : progress < 75 ? '#F4A261' : 'var(--green-600,#33B458)'; }
 
     /* Estrelas de engajamento */
     const stars = document.getElementById('pf-eng-stars');
     if (stars) {
-      const score = Math.round(s.pct / 10);
+      const score = Math.round(progress / 10);
       stars.innerHTML = Array.from({length: 10}, (_, i) =>
         `<i class="ti ti-star${i < score ? '-filled' : ''}" style="font-size:13px;color:${i < score ? '#FFD927' : '#DEE3EA'};"></i>`
       ).join('');
     }
 
     /* ── Notas e Jornada dinâmicas ─────────────────────────── */
-    const modules    = COURSE_MODULES[s.course] || ['Módulo 1','Módulo 2','Módulo 3','Módulo 4','Módulo 5'];
-    const concluded  = s.mod.includes('Concluído');
-    const modNumMatch = s.mod.match(/Módulo (\d)/);
+    const courseName = s?.course || currentPerfilAluno?.curso || currentPerfilAluno?.programa || 'Programa Pulse Mais';
+    const modName = s?.mod || currentPerfilAluno?.nivelJornada || currentPerfilAluno?.categoria || '';
+    const modules    = COURSE_MODULES[courseName] || ['Módulo 1','Módulo 2','Módulo 3','Módulo 4','Módulo 5'];
+    const concluded  = String(modName).includes('Concluído');
+    const modNumMatch = String(modName).match(/Módulo (\d)/);
     const currentMod = modNumMatch ? parseInt(modNumMatch[1]) : 5;
     const doneMods   = concluded ? 5 : currentMod - 1;
 
     /* grade determinística: varia por curso+módulo, centrada no pct do aluno */
-    const baseGrade  = 5.5 + (s.pct / 100) * 3.5;
+    const baseGrade  = 5.5 + (progress / 100) * 3.5;
     const offsets    = [0.5, 0.2, 0, -0.2, -0.4];
 
     /* Label */
     const notasLabel = document.getElementById('pf-notas-label');
-    if (notasLabel) notasLabel.textContent = `Notas — ${s.course}`;
+    if (notasLabel) notasLabel.textContent = `Notas — ${formatPerfilLabel(courseName)}`;
 
     /* Grid de notas */
     const notasGrid = document.getElementById('pf-notas-grid');
@@ -895,6 +1573,11 @@
       }).join('');
     }
 
+    /* Notas e presença reais (registros do banco) */
+    if (currentPerfilAluno?.idAluno) {
+      loadRegistrosTab(currentPerfilAluno.idAluno);
+    }
+
     /* Reset para aba "Dados gerais" */
     showPerfilTab('pf-tab-dados', overlay.querySelector('.tab-btn'));
 
@@ -902,6 +1585,50 @@
     overlay.classList.add('open');
     document.body.classList.add('perfil-open');
   }
+
+  window.startPerfilEdit = function () {
+    if (!currentPerfilAluno?.idAluno) {
+      setPerfilStatus('Este aluno ainda não possui identificador para edição.', 'ti-alert-circle');
+      return;
+    }
+    setPerfilEditMode(true);
+  };
+
+  window.cancelPerfilEdit = function () {
+    if (currentPerfilStudent) fillPerfilFields(currentPerfilStudent);
+    setPerfilEditMode(false);
+  };
+
+  window.savePerfilAluno = async function () {
+    const saveBtn = document.getElementById('pf-save-btn');
+    try {
+      if (!currentPerfilAluno?.idAluno) {
+        throw new Error('Este aluno ainda não possui identificador para edição.');
+      }
+
+      const payload = buildPerfilPayload();
+      if (saveBtn) saveBtn.disabled = true;
+      setPerfilStatus('Salvando alterações...', 'ti-loader-2');
+
+      const updatedAluno = await updatePerfilAluno(currentPerfilAluno.idAluno, payload);
+      currentPerfilAluno = updatedAluno;
+      currentPerfilStudent = syncPerfilStudent(updatedAluno);
+
+      fillPerfilFields(currentPerfilStudent);
+      setPerfilEditMode(false);
+      setPerfilStatus('Aluno atualizado com sucesso.', 'ti-circle-check');
+      showPerfilNotice('Aluno atualizado com sucesso.');
+
+      if (window.refreshListaAlunosView) {
+        await window.refreshListaAlunosView();
+      }
+    } catch (error) {
+      setPerfilStatus(error.message || 'Não foi possível atualizar o aluno.', 'ti-alert-circle');
+      showPerfilNotice(error.message || 'Não foi possível atualizar o aluno.', true);
+    } finally {
+      if (saveBtn) saveBtn.disabled = false;
+    }
+  };
 
   window.closePerfilModal = function () {
     const overlay = document.getElementById('perfil-overlay');

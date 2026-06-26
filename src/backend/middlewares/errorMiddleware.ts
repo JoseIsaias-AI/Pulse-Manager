@@ -8,9 +8,9 @@ export function errorMiddleware(
   _next: NextFunction
 ) {
   if (err instanceof AppError) {
-    return res.status(err.statusCode).json({ erro: err.message });
+    return res.status(err.statusCode).json({ success: false, data: null, message: err.message });
   }
 
   console.error(err);
-  return res.status(500).json({ erro: 'Erro interno do servidor' });
+  return res.status(500).json({ success: false, data: null, message: 'Erro interno do servidor' });
 }

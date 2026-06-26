@@ -1,11 +1,20 @@
 import { app } from './app';
 import { env } from './config/env';
 import { initializeDatabase } from './database/connection';
+import { seedLocalDevelopmentDatabase } from './database/localSeed';
+import { RiscoEvasaoRepository } from './repositories/riscoEvasaoRepository';
+import { RiscoEvasaoService } from './services/riscoEvasaoService';
 
 const port = env.port;
 
 initializeDatabase()
-  .then(() => {
+  .then(async () => {
+    if (env.database.type === 'sqljs' && env.isDevelopment) {
+      await seedLocalDevelopmentDatabase();
+    }
+
+    await new RiscoEvasaoService(new RiscoEvasaoRepository()).recalcularTodos();
+
     app.listen(port, () => {
       console.log(`API Pulse Manager rodando em http://localhost:${port}`);
       console.log(`Healthcheck: http://localhost:${port}/api/health`);

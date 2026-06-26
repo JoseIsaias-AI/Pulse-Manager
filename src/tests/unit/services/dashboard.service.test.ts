@@ -1,5 +1,7 @@
 import { DashboardService } from '../../../backend/services/dashboardService';
 import { registrarConsultaDashboard } from '../../../backend/integrations/dashboardAuditoriaIntegration';
+import { DashboardRepository } from '../../../backend/repositories/dashboardRepository';
+import { asMockedDependency } from '../../helpers/mockHelper';
 
 jest.mock('../../../backend/integrations/dashboardAuditoriaIntegration', () => ({
   registrarConsultaDashboard: jest.fn()
@@ -50,7 +52,7 @@ describe('DashboardService', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     repository = makeRepository();
-    service = new DashboardService(repository as any);
+    service = new DashboardService(asMockedDependency<DashboardRepository>(repository));
     (registrarConsultaDashboard as jest.Mock).mockResolvedValue(undefined);
   });
 
@@ -78,6 +80,20 @@ describe('DashboardService', () => {
     const result = await service.obterResumoImpacto({});
 
     expect(result.data.alunosEmpregados).toEqual({ valor: 2, percentual: 66.67 });
+  });
+
+  it('calcula os estagios do indicador de impacto pela categoria', async () => {
+    repository.listarAlunosParaDashboard.mockResolvedValue([
+      aluno({ categoria: 'conectado' }),
+      aluno({ idAluno: 2, categoria: 'capacitado' }),
+      aluno({ idAluno: 3, categoria: 'transformado' })
+    ]);
+
+    const result = await service.obterResumoImpacto({});
+
+    expect(result.data.conectados).toEqual({ valor: 1, percentual: 33.33 });
+    expect(result.data.capacitados).toEqual({ valor: 1, percentual: 33.33 });
+    expect(result.data.transformados).toEqual({ valor: 1, percentual: 33.33 });
   });
 
   it('retorna percentual zero quando nao houver alunos', async () => {

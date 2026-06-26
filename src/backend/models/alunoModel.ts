@@ -2,6 +2,7 @@ import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 export type StatusAluno = 'ativo' | 'inativo' | 'egresso' | 'desligado' | 'em_acompanhamento';
 export type RiscoEvasao = 'baixo' | 'medio' | 'alto';
+export type EmpregabilidadeAluno = 'empregado' | 'desempregado' | 'estudante' | 'nao_informado';
 
 export interface SegmentacaoAlunoQuery {
   programa?: string;
@@ -9,7 +10,10 @@ export interface SegmentacaoAlunoQuery {
   risco?: RiscoEvasao;
   categoria?: string;
   ocupacao?: string;
+  empregabilidade?: EmpregabilidadeAluno;
   escolaridade?: string;
+  curso?: string;
+  anoIngresso?: number;
   busca?: string;
   limite?: number;
 }
@@ -32,6 +36,19 @@ export const STATUS_ALUNO: StatusAluno[] = [
 ];
 
 export const RISCOS_EVASAO: RiscoEvasao[] = ['baixo', 'medio', 'alto'];
+export const GENEROS_ALUNO = [
+  'feminino',
+  'masculino',
+  'nao_binario',
+  'outro',
+  'prefiro_nao_informar'
+] as const;
+export const EMPREGABILIDADES_ALUNO: EmpregabilidadeAluno[] = [
+  'empregado',
+  'desempregado',
+  'estudante',
+  'nao_informado'
+];
 
 export const CRITERIOS_SEGMENTACAO: Array<keyof SegmentacaoAlunoQuery> = [
   'programa',
@@ -39,7 +56,10 @@ export const CRITERIOS_SEGMENTACAO: Array<keyof SegmentacaoAlunoQuery> = [
   'risco',
   'categoria',
   'ocupacao',
+  'empregabilidade',
   'escolaridade',
+  'curso',
+  'anoIngresso',
   'busca'
 ];
 
@@ -53,6 +73,9 @@ export const CRITERIOS_SEGMENTACAO: Array<keyof SegmentacaoAlunoQuery> = [
 export class Aluno {
   @PrimaryGeneratedColumn({ name: 'id_aluno' })
   idAluno!: number;
+
+  @Column({ type: 'varchar', length: 11, nullable: true, unique: true })
+  cpf!: string | null;
 
   @Column({ type: 'varchar', length: 150 })
   nome!: string;
@@ -104,8 +127,14 @@ export class Aluno {
   @Column({ name: 'risco_evasao', type: 'varchar', length: 20, default: 'baixo' })
   riscoEvasao!: RiscoEvasao;
 
+  @Column({ name: 'probabilidade_evasao', type: 'decimal', precision: 5, scale: 2, nullable: true })
+  probabilidadeEvasao!: number | null;
+
   @Column({ type: 'integer', default: 0 })
   engajamento!: number;
+
+  @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true, default: 0 })
+  frequencia!: number;
 
   @Column({ name: 'data_ingresso', type: 'date' })
   dataIngresso!: string;

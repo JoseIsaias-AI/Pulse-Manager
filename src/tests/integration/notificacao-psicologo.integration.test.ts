@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { Repository } from 'typeorm';
 import { app } from '../../backend/app';
-import { AppDataSource, initializeDatabase } from '../../backend/database/connection';
+import { getIntegrationRepository, resetIntegrationDatabase, setupIntegrationDatabase, teardownIntegrationDatabase } from '../helpers/databaseTestHelper';
 import { Aluno } from '../../backend/models/alunoModel';
 
 describe('UC-24 - Restricao de remetente psicologo em notificacoes', () => {
@@ -9,12 +9,12 @@ describe('UC-24 - Restricao de remetente psicologo em notificacoes', () => {
   let aluno: Aluno;
 
   beforeAll(async () => {
-    await initializeDatabase();
-    alunoRepository = AppDataSource.getRepository(Aluno);
+    await setupIntegrationDatabase();
+    alunoRepository = getIntegrationRepository(Aluno);
   });
 
   beforeEach(async () => {
-    await AppDataSource.synchronize(true);
+    await resetIntegrationDatabase();
 
     aluno = await alunoRepository.save({
       nome: 'Bia Alves',
@@ -28,11 +28,7 @@ describe('UC-24 - Restricao de remetente psicologo em notificacoes', () => {
     });
   });
 
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
+  afterAll(teardownIntegrationDatabase);
 
   it('CT01 - deve permitir psicologo enviar notificacao com tipoRemetente psicologo', async () => {
     const response = await request(app)

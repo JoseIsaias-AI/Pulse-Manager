@@ -389,7 +389,8 @@
         <!-- Page header -->
         <div style="flex-shrink:0;">
           <h1 style="font-size:24px;font-weight:700;color:#003870;line-height:1.2;letter-spacing:-.01em;font-family:'Poppins',sans-serif;">Visão Geral</h1>
-          <p style="font-size:12px;color:#97A1AE;margin-top:4px;font-family:'Poppins',sans-serif;">Semana 15 de 20 · Letramento Digital em andamento</p>
+          <p id="portal-aluno-resumo" style="font-size:12px;color:#97A1AE;margin-top:4px;font-family:'Poppins',sans-serif;">Carregando seus dados...</p>
+          <p id="portal-aluno-erro" role="alert" style="display:none;font-size:12px;color:#B42318;margin-top:4px;font-family:'Poppins',sans-serif;"></p>
         </div>
 
         <!-- KPI row -->
@@ -588,6 +589,18 @@
               </ul>
             </section>
 
+            <section class="ini-card">
+              <div class="ini-card-head">
+                <div>
+                  <div class="ini-card-title">Oportunidades</div>
+                  <div class="ini-card-sub">Disponíveis para sua jornada</div>
+                </div>
+              </div>
+              <ul class="ini-event-list" id="portal-oportunidades" style="list-style:none;margin:0;padding:0;">
+                <li class="ini-event-item"><span class="ini-event-time">Carregando oportunidades...</span></li>
+              </ul>
+            </section>
+
           </div><!-- fim .ini-right-col -->
         </div><!-- fim .ini-main-grid -->
 
@@ -646,7 +659,6 @@
               <div>
                 <div class="chart-card__title">Presenças por bimestre</div>
               </div>
-              <button class="chart-btn">Mês</button>
             </div>
             <div class="chart-body" style="height:272px"><canvas id="a-barChart"></canvas></div>
             <div class="chart-footer">
@@ -668,7 +680,6 @@
                 <div class="chart-card__title">Evolução ao longo do tempo</div>
                 <div class="chart-card__sub">Nota por módulo · Let. Digital · Módulo atual: 4/5</div>
               </div>
-              <button class="chart-btn">Exportar</button>
             </div>
             <div class="chart-body" style="height:272px"><canvas id="a-lineChart"></canvas></div>
             <div class="chart-footer">
@@ -725,16 +736,16 @@
 
       <div class="modal-header">
         <div class="mh-top">
-          <div class="modal-avatar" id="m-initials">MO</div>
+          <div class="modal-avatar" id="m-initials">--</div>
           <div>
-            <div class="modal-name" id="m-name">Marianne Oliveira</div>
-            <div class="modal-meta" id="m-meta">PM-2024-465 · Programa Pulse Mais · Turma T4</div>
+            <div class="modal-name" id="m-name">Carregando...</div>
+            <div class="modal-meta" id="m-meta">Dados do aluno</div>
           </div>
         </div>
         <div class="modal-badges">
-          <span class="badge badge-ativo"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
-          <span class="badge badge-curso"><i class="ti ti-code" style="font-size:11px;"></i> Let. Digital</span>
-          <span class="badge badge-nivel">Capacitado</span>
+          <span class="badge badge-ativo" id="m-status"><i class="ti ti-circle-filled" style="font-size:8px;"></i> --</span>
+          <span class="badge badge-curso" id="m-curso"><i class="ti ti-code" style="font-size:11px;"></i> --</span>
+          <span class="badge badge-nivel" id="m-nivel">--</span>
         </div>
         <button class="close-btn" onclick="closeModal()" aria-label="Fechar modal"><i class="ti ti-x"></i></button>
       </div>
@@ -752,33 +763,27 @@
           <div class="field-grid">
             <div class="field">
               <label><i class="ti ti-hash"></i> Código PM</label>
-              <input type="text" value="465">
+              <input type="text" id="f-codigo-pm" value="" readonly>
             </div>
             <div class="field span2">
               <label><i class="ti ti-user"></i> Nome completo</label>
-              <input type="text" id="f-nome" value="Marianne Oliveira" oninput="updateHeader()">
+              <input type="text" id="f-nome" value="" readonly>
             </div>
             <div class="field">
               <label><i class="ti ti-calendar-event"></i> Idade</label>
-              <input type="number" value="20" min="14" max="80">
+              <input type="text" value="Não informado" disabled>
             </div>
             <div class="field">
               <label><i class="ti ti-gender-bigender"></i> Gênero</label>
-              <select>
-                <option selected>Feminino</option>
-                <option>Masculino</option>
-                <option>Não binário</option>
-                <option>Outro</option>
-                <option>Prefiro não informar</option>
-              </select>
+              <input type="text" value="Não informado" disabled>
             </div>
           </div>
           <div class="sec-label">Formação</div>
           <div class="field-grid">
             <div class="field">
               <label><i class="ti ti-book"></i> Curso</label>
-              <select>
-                <option selected>Letramento Digital</option>
+              <select id="f-curso" disabled>
+                <option selected>Não informado</option>
                 <option>Ferramentas de Produtividade</option>
                 <option>Desenvolvimento AI-First na Prática</option>
                 <option>Fortalecimento Emocional para Jovens</option>
@@ -789,26 +794,15 @@
             </div>
             <div class="field">
               <label><i class="ti ti-certificate"></i> Escolaridade</label>
-              <select>
-                <option>Ensino Médio Incompleto</option>
-                <option selected>Ensino Médio Completo</option>
-                <option>Superior Incompleto</option>
-                <option>Superior Completo</option>
-              </select>
+              <input type="text" value="Não informado" disabled>
             </div>
             <div class="field">
               <label><i class="ti ti-briefcase"></i> Ocupação</label>
-              <select>
-                <option selected>Estudante</option>
-                <option>Estagiário</option>
-                <option>Empregado CLT</option>
-                <option>Autônomo/Freelancer</option>
-                <option>Desempregado</option>
-              </select>
+              <input type="text" value="Não informado" disabled>
             </div>
             <div class="field">
               <label><i class="ti ti-notebook"></i> Programa</label>
-              <input type="text" value="Programa Pulse Mais">
+              <input type="text" value="Não informado" disabled>
             </div>
           </div>
         </div>
@@ -818,22 +812,15 @@
           <div class="field-grid">
             <div class="field">
               <label><i class="ti ti-chart-pie"></i> Perfil socioeconômico</label>
-              <select>
-                <option>Classe A</option><option>Classe B</option>
-                <option selected>Classe C</option><option>Classe D</option><option>Classe E</option>
-              </select>
+              <input type="text" value="Não informado" disabled>
             </div>
             <div class="field">
               <label><i class="ti ti-currency-dollar"></i> Renda mensal familiar (R$)</label>
-              <input type="number" value="1800" min="0" step="100">
+              <input type="text" value="Não informado" disabled>
             </div>
             <div class="field span2">
               <label>Nível de jornada</label>
-              <select>
-                <option>Conectado</option>
-                <option selected>Capacitado</option>
-                <option>Transformado</option>
-              </select>
+              <input type="text" id="f-nivel-jornada" value="" disabled>
             </div>
           </div>
         </div>
@@ -843,11 +830,11 @@
           <div class="field-grid">
             <div class="field">
               <label><i class="ti ti-mail"></i> E-mail</label>
-              <input type="email" value="marianne@pulsemais.org.br">
+              <input type="email" id="f-email" value="">
             </div>
             <div class="field">
               <label><i class="ti ti-phone"></i> Telefone</label>
-              <input type="tel" value="(11) 98765-4321">
+              <input type="tel" id="f-telefone" value="">
             </div>
           </div>
         </div>
@@ -905,8 +892,13 @@
   </div><!-- fim .notif-overlay -->
 
 <!-- Scripts — ordem importante -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/vendor/chart.js/chart.umd.js"></script>
+<script src="../js/config.js"></script>
 <script src="../js/services/configAluno.js"></script>
+<script src="../js/services/api.js"></script>
+<script src="../js/services/uiState.js"></script>
+<script src="../js/services/sessionUser.js"></script>
+<script src="../js/components/configuracoesFrontend.js"></script>
 <script src="../js/components/guiaAluno.js"></script>
 <script src="../js/components/menuSuperior.js"></script>
 <script src="../js/components/modalConfAluno.js"></script>

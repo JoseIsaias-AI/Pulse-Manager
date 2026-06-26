@@ -124,6 +124,7 @@ ALTER TYPE tipo_atividade_enum ADD VALUE IF NOT EXISTS 'curso';
 CREATE TABLE IF NOT EXISTS aluno (
   id_aluno INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   codigo_pm VARCHAR(20) UNIQUE,
+  cpf VARCHAR(11) UNIQUE,
   nome VARCHAR(150) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
   telefone VARCHAR(30),
@@ -140,6 +141,7 @@ CREATE TABLE IF NOT EXISTS aluno (
   programa VARCHAR(120) NOT NULL DEFAULT 'nao_informado',
   categoria VARCHAR(60) NOT NULL DEFAULT 'sem_categoria',
   risco_evasao VARCHAR(20) NOT NULL DEFAULT 'baixo' CHECK (risco_evasao IN ('baixo', 'medio', 'alto')),
+  probabilidade_evasao DECIMAL(5,2) CHECK (probabilidade_evasao IS NULL OR (probabilidade_evasao >= 0 AND probabilidade_evasao <= 100)),
   engajamento INTEGER NOT NULL DEFAULT 0 CHECK (engajamento >= 0 AND engajamento <= 100),
   data_ingresso DATE NOT NULL DEFAULT CURRENT_DATE,
   status status_aluno_enum NOT NULL DEFAULT 'ativo',
@@ -149,18 +151,36 @@ CREATE TABLE IF NOT EXISTS aluno (
   origem_participacao VARCHAR(100)
 );
 
+ALTER TABLE public.aluno
+ADD COLUMN IF NOT EXISTS cpf VARCHAR(11);
+
+ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_cpf_key;
+ALTER TABLE public.aluno ADD CONSTRAINT aluno_cpf_key UNIQUE (cpf);
+
 CREATE TABLE IF NOT EXISTS membro_equipe (
   id_membro INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  cpf VARCHAR(11) UNIQUE,
   nome VARCHAR(150) NOT NULL,
   cargo cargo_membro_enum NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE
 );
 
+ALTER TABLE public.membro_equipe
+ADD COLUMN IF NOT EXISTS cpf VARCHAR(11) UNIQUE;
+
 CREATE TABLE IF NOT EXISTS psicologo (
   id_psi INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  cpf VARCHAR(11) UNIQUE,
+  email VARCHAR(255) UNIQUE,
   nome_psi VARCHAR(150) NOT NULL,
   cargo_psi cargo_psicologo_enum NOT NULL
 );
+
+ALTER TABLE public.psicologo
+ADD COLUMN IF NOT EXISTS cpf VARCHAR(11) UNIQUE;
+
+ALTER TABLE public.psicologo
+ADD COLUMN IF NOT EXISTS email VARCHAR(255) UNIQUE;
 
 CREATE TABLE IF NOT EXISTS atividade (
   id_atividade INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -235,6 +255,18 @@ CREATE TABLE IF NOT EXISTS historico_psicologico (
   FOREIGN KEY (id_psi) REFERENCES psicologo(id_psi)
 );
 
+CREATE TABLE IF NOT EXISTS solicitacao_apoio_psicologico (
+  id_solicitacao INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id_aluno INTEGER NOT NULL,
+  id_psicologo INTEGER NOT NULL,
+  mensagem VARCHAR(500) NOT NULL,
+  status VARCHAR(30) NOT NULL DEFAULT 'pendente',
+  data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno),
+  FOREIGN KEY (id_psicologo) REFERENCES psicologo(id_psi)
+);
+
 CREATE TABLE IF NOT EXISTS participacao (
   id_part INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   data_part DATE DEFAULT CURRENT_DATE,
@@ -273,6 +305,7 @@ ADD COLUMN IF NOT EXISTS data_ingresso_ensino_superior DATE,
 ADD COLUMN IF NOT EXISTS programa VARCHAR(120) DEFAULT 'nao_informado',
 ADD COLUMN IF NOT EXISTS categoria VARCHAR(60) DEFAULT 'sem_categoria',
 ADD COLUMN IF NOT EXISTS risco_evasao VARCHAR(20) DEFAULT 'baixo',
+ADD COLUMN IF NOT EXISTS probabilidade_evasao DECIMAL(5,2),
 ADD COLUMN IF NOT EXISTS engajamento INTEGER DEFAULT 0,
 ADD COLUMN IF NOT EXISTS nivel_jornada VARCHAR(50),
 ADD COLUMN IF NOT EXISTS perfil_socioeconomico VARCHAR(150),
@@ -332,9 +365,22 @@ ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_risco_evasao_check;
 ALTER TABLE public.aluno
 ADD CONSTRAINT aluno_risco_evasao_check CHECK (risco_evasao IN ('baixo', 'medio', 'alto'));
 
+ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_probabilidade_evasao_check;
+ALTER TABLE public.aluno
+ADD CONSTRAINT aluno_probabilidade_evasao_check
+CHECK (probabilidade_evasao IS NULL OR (probabilidade_evasao >= 0 AND probabilidade_evasao <= 100));
+
 ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_engajamento_check;
 ALTER TABLE public.aluno
 ADD CONSTRAINT aluno_engajamento_check CHECK (engajamento >= 0 AND engajamento <= 100);
+
+ALTER TABLE public.aluno
+ADD COLUMN IF NOT EXISTS frequencia DECIMAL(5,2) DEFAULT 0;
+
+ALTER TABLE public.aluno DROP CONSTRAINT IF EXISTS aluno_frequencia_check;
+ALTER TABLE public.aluno
+ADD CONSTRAINT aluno_frequencia_check
+CHECK (frequencia IS NULL OR (frequencia >= 0 AND frequencia <= 100));
 
 CREATE INDEX IF NOT EXISTS idx_aluno_codigo_pm
 ON aluno(codigo_pm);
@@ -356,6 +402,15 @@ ON aluno(nivel_jornada);
 
 CREATE INDEX IF NOT EXISTS idx_aluno_curso
 ON aluno(curso);
+
+CREATE INDEX IF NOT EXISTS idx_aluno_escolaridade
+ON aluno(escolaridade);
+
+CREATE INDEX IF NOT EXISTS idx_aluno_ocupacao
+ON aluno(ocupacao);
+
+CREATE INDEX IF NOT EXISTS idx_aluno_data_ingresso
+ON aluno(data_ingresso);
 
 CREATE INDEX IF NOT EXISTS idx_atividade_tipo
 ON atividade(tipo);

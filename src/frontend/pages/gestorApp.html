@@ -16,6 +16,7 @@
 <!-- Estilos do modal -->
 <link rel="stylesheet" href="../css/pages/modalConfEquipe.css">
 <link rel="stylesheet" href="../css/pages/perfilAluno.css">
+<link rel="stylesheet" href="../css/pages/cadastroAluno.css">
 <style>
   /* ── SPA: container de conteúdo sem padding próprio ── */
   .paginaConteudo {
@@ -41,6 +42,11 @@
   #view-inicio .stat-card  { padding: 16px 22px 14px; border-radius: 14px; }
   #view-inicio .sc-value   { font-size: 44px; }
   #view-inicio .charts-row { grid-template-columns: 1fr 420px; }
+  /* Fix: dashboardGestor.css sobrescreve stat-card--amber para verde (#33B458);
+     cores iguais aos outros cards (label/sub semi-transparentes, value branco puro) */
+  #view-inicio .stat-card--amber .sc-label { color: rgba(255,255,255,.65); }
+  #view-inicio .stat-card--amber .sc-value { color: #fff; }
+  #view-inicio .stat-card--amber .sc-sub   { color: rgba(255,255,255,.45); }
 
   /* ══ DASHBOARD — layout scrollável ══════════════════════ */
   #view-dashboard {
@@ -213,9 +219,25 @@
   .al-subtitle .al-risk { color: #E24B4A; font-weight: 600; }
   .al-subtitle .al-emp  { color: #33B458;  font-weight: 600; }
 
-  .al-filters { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .al-filters { display: flex; align-items: flex-end; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+  .al-filter-field {
+    display: flex; flex-direction: column; gap: 3px; min-width: 145px;
+    font-size: 9px; font-weight: 600; color: #6B7684;
+  }
+  .al-filter-select {
+    height: 32px; padding: 4px 28px 4px 10px; border-radius: 8px; border: 1px solid #DEE3EA;
+    background: #fff; font-size: 10px; font-weight: 500; color: #6B7684;
+    cursor: pointer; font-family: 'Poppins', sans-serif; outline: none;
+  }
+  .al-filter-select:hover, .al-filter-select:focus { border-color: #003870; color: #003870; }
+  .al-filter-select--active { background: #EDF3F9; border-color: #003870; color: #003870; font-weight: 600; }
+  .al-clear-filters {
+    height: 32px; padding: 5px 10px; border: none; background: none; color: #6B7684;
+    font: 500 10px 'Poppins', sans-serif; cursor: pointer;
+  }
+  .al-clear-filters:hover { color: #003870; text-decoration: underline; }
   .al-filter-btn {
-    padding: 5px 14px; border-radius: 8px; border: 1px solid #DEE3EA;
+    height: 32px; padding: 5px 14px; border-radius: 8px; border: 1px solid #DEE3EA;
     background: #fff; font-size: 11px; font-weight: 500; color: #6B7684;
     cursor: pointer; font-family: 'Poppins', sans-serif; transition: all .15s;
     display: inline-flex; align-items: center; gap: 5px;
@@ -223,16 +245,25 @@
   .al-filter-btn:hover  { border-color: #003870; color: #003870; }
   .al-filter-btn--active{ background: #003870; color: #fff; border-color: #003870; font-weight: 600; }
   .al-import-btn {
-    margin-left: auto; font-size: 11px; font-weight: 600; color: #33B458;
+    font-size: 11px; font-weight: 600; color: #33B458;
     background: none; border: none; cursor: pointer; font-family: 'Poppins', sans-serif;
+    display: inline-flex; align-items: center; gap: 5px;
   }
   .al-import-btn:hover { opacity: .7; }
+  .al-csv-actions { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; }
+  .al-import-status {
+    display: none; flex-shrink: 0; border: 1px solid #D9E7D6; background: #F5FBF4;
+    color: #1F7A36; border-radius: 8px; padding: 8px 12px; font-size: 11px;
+  }
+  .al-import-status.is-error { border-color: #F3CACA; background: #FFF6F6; color: #B42318; }
+  .al-import-status strong { font-weight: 700; }
 
   .al-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; flex-shrink: 0; }
 
   .al-card {
     background: #fff; border-radius: 12px; border: 1px solid #DEE3EA;
     padding: 14px 16px 12px; box-shadow: 0 1px 3px rgba(0,56,112,.05);
+    text-align: left; font-family: 'Poppins', sans-serif;
   }
   .al-card-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
   .al-av {
@@ -266,6 +297,14 @@
   .al-bar-inner.c-red   { background: #E24B4A; }
   .al-bar-inner.c-gray  { background: #C2CAD4; }
   .al-note { font-size: 10px; color: #97A1AE; line-height: 1.4; }
+  .al-empty {
+    grid-column: 1 / -1; min-height: 150px; display: flex; align-items: center; justify-content: center;
+    gap: 8px; border: 1px dashed #C2CAD4; border-radius: 12px; color: #6B7684; font-size: 11px;
+  }
+  .al-empty i { font-size: 18px; }
+  .al-empty--error { color: #C2410C; border-color: #F4A261; background: #FFF9F0; }
+  .al-spin { animation: al-spin .8s linear infinite; }
+  @keyframes al-spin { to { transform: rotate(360deg); } }
 
   .al-foot {
     display: flex; align-items: center; justify-content: space-between;
@@ -519,15 +558,54 @@
 
         <!-- Filtros -->
         <div class="al-filters">
-          <button class="al-filter-btn" id="btn-curso">Curso</button>
-          <button class="al-filter-btn" id="btn-desemp">Desempenho</button>
-          <button class="al-filter-btn" id="btn-nota">Nota Média</button>
-          <button class="al-filter-btn" id="btn-eng">Engajamento</button>
-          <button class="al-filter-btn" id="btn-ord">
+          <label class="al-filter-field">
+            <span>Empregabilidade</span>
+            <select class="al-filter-select" id="filtro-empregabilidade" data-al-filter="empregabilidade">
+              <option value="">Todas</option>
+              <option value="empregado">Empregado</option>
+              <option value="desempregado">Desempregado ou buscando</option>
+              <option value="estudante">Estudante</option>
+              <option value="nao_informado">Nao informado</option>
+            </select>
+          </label>
+          <label class="al-filter-field">
+            <span>Escolaridade</span>
+            <select class="al-filter-select" id="filtro-escolaridade" data-al-filter="escolaridade">
+              <option value="">Todas</option>
+            </select>
+          </label>
+          <label class="al-filter-field">
+            <span>Curso</span>
+            <select class="al-filter-select" id="filtro-curso" data-al-filter="curso">
+              <option value="">Todos</option>
+            </select>
+          </label>
+          <label class="al-filter-field">
+            <span>Ano de ingresso</span>
+            <select class="al-filter-select" id="filtro-ano-ingresso" data-al-filter="anoIngresso">
+              <option value="">Todos</option>
+            </select>
+          </label>
+          <button class="al-filter-btn" id="btn-desemp" type="button">Desempenho</button>
+          <button class="al-filter-btn" id="btn-nota" type="button">Nota Média</button>
+          <button class="al-filter-btn" id="btn-eng" type="button">Engajamento</button>
+          <button class="al-filter-btn" id="btn-ord" type="button">
             <i class="ti ti-adjustments-horizontal" style="font-size:11px;"></i> Ordenar
           </button>
-          <button class="al-import-btn">+ Importar CSV</button>
+          <button class="al-clear-filters" id="btn-limpar-filtros" type="button">Limpar filtros</button>
+          <button class="al-new-btn" type="button" data-al-open-create>+ Novo aluno</button>
+          <div class="al-csv-actions">
+            <input type="file" id="al-csv-file" accept=".csv,text/csv" hidden>
+            <button class="al-import-btn" id="al-import-csv" type="button">
+              <i class="ti ti-upload" style="font-size:13px;"></i> Importar CSV
+            </button>
+            <button class="al-import-btn" id="al-export-csv" type="button">
+              <i class="ti ti-download" style="font-size:13px;"></i> Exportar CSV
+            </button>
+          </div>
         </div>
+
+        <div class="al-import-status" id="al-import-status"></div>
 
         <!-- Grid de alunos (renderizado por JS) -->
         <div class="al-grid" id="al-grid"></div>
@@ -597,19 +675,16 @@
             <div class="fc-num">528</div>
             <div class="fc-title">Jovens Conectados</div>
             <div class="fc-sub">Palestras, vivências e cursos</div>
-            <div class="fc-arrow"><i class="ti ti-chevron-right"></i></div>
           </div>
           <div class="funnel-card funnel-card--green">
             <div class="fc-num">126</div>
             <div class="fc-title">Jovens Capacitados</div>
             <div class="fc-sub">Pulse Mais + Mentoria</div>
-            <div class="fc-arrow"><i class="ti ti-chevron-right"></i></div>
           </div>
           <div class="funnel-card funnel-card--amber">
             <div class="fc-num">60</div>
             <div class="fc-title">Jovens Transformados</div>
             <div class="fc-sub">Emprego e/ou bolsa universitária</div>
-            <div class="fc-arrow"><i class="ti ti-chevron-right"></i></div>
           </div>
           <div class="funnel-card funnel-card--white">
             <div class="fc-num">46</div>
@@ -1033,9 +1108,9 @@
         </div>
       </div>
       <div class="modal-badges">
-        <span class="badge badge-ativo"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
+        <span class="badge badge-ativo" id="pf-badge-status"><i class="ti ti-circle-filled" style="font-size:8px;"></i> Ativo</span>
         <span class="badge badge-curso" id="pf-badge-curso"><i class="ti ti-code" style="font-size:11px;"></i> —</span>
-        <span class="badge badge-nivel">Capacitado</span>
+        <span class="badge badge-nivel" id="pf-badge-nivel">—</span>
       </div>
       <button class="close-btn" onclick="closePerfilModal()" aria-label="Fechar"><i class="ti ti-x"></i></button>
     </div>
@@ -1045,6 +1120,7 @@
       <button class="tab-btn" onclick="showPerfilTab('pf-tab-socio',this)"><i class="ti ti-chart-pie"></i> Socioeconômico</button>
       <button class="tab-btn" onclick="showPerfilTab('pf-tab-contato',this)"><i class="ti ti-phone"></i> Contato</button>
       <button class="tab-btn" onclick="showPerfilTab('pf-tab-desempenho',this)"><i class="ti ti-chart-line"></i> Desempenho</button>
+      <button class="tab-btn" onclick="showPerfilTab('pf-tab-registro',this)"><i class="ti ti-clipboard-check"></i> Notas e Presença</button>
     </div>
 
     <div class="modal-body">
@@ -1058,38 +1134,52 @@
           </div>
           <div class="field span2">
             <label>Nome completo</label>
-            <input type="text" id="pf-fullname" value="—" readonly>
-          </div>
-          <div class="field">
-            <label>CPF</label>
-            <input type="text" id="pf-cpf" value="—" readonly>
+            <input type="text" id="pf-fullname" data-pf-field="nome" value="—" minlength="3" maxlength="150" pattern="[^0-9]{3,150}" title="Nome nao pode conter numeros." required readonly>
           </div>
           <div class="field">
             <label>Idade</label>
-            <input type="text" id="pf-age" value="—" readonly>
+            <input type="number" min="0" max="120" step="1" id="pf-age" data-pf-field="idade" value="—" readonly>
           </div>
           <div class="field">
             <label>Gênero</label>
-            <input type="text" value="Não informado" readonly>
+            <select id="pf-genero" data-pf-field="genero" data-pf-option-field="genero" disabled>
+              <option value="">Não informado</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select id="pf-status" data-pf-field="status" data-pf-option-field="status" disabled>
+              <option value="">Não informado</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Data de ingresso</label>
+            <input type="date" id="pf-data-ingresso" data-pf-field="dataIngresso" readonly>
           </div>
         </div>
         <div class="sec-label">Formação</div>
         <div class="field-grid">
           <div class="field">
             <label>Curso</label>
-            <input type="text" id="pf-course" value="—" readonly>
+            <select id="pf-course" data-pf-field="curso" data-pf-option-field="curso" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Escolaridade</label>
-            <input type="text" value="Ensino Médio Completo" readonly>
+            <select id="pf-escolaridade" data-pf-field="escolaridade" data-pf-option-field="escolaridade" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Ocupação</label>
-            <input type="text" value="Estudante" readonly>
+            <input type="text" id="pf-ocupacao" data-pf-field="ocupacao" maxlength="150" placeholder="Digite a ocupação" readonly>
           </div>
           <div class="field">
             <label>Programa</label>
-            <input type="text" value="Programa Pulse Mais" readonly>
+            <select id="pf-programa" data-pf-field="programa" data-pf-option-field="programa" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
         </div>
       </div>
@@ -1099,15 +1189,43 @@
         <div class="field-grid">
           <div class="field">
             <label>Perfil socioeconômico</label>
-            <input type="text" value="Classe C" readonly>
+            <select id="pf-perfil-socioeconomico" data-pf-field="perfilSocioeconomico" data-pf-option-field="perfilSocioeconomico" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
           <div class="field">
             <label>Renda mensal familiar</label>
-            <input type="text" value="R$ 1.800,00" readonly>
+            <input type="number" min="0" max="99999999.99" step="0.01" id="pf-renda-mensal" data-pf-field="rendaMensal" value="—" readonly>
           </div>
-          <div class="field span2">
+          <div class="field">
             <label>Nível de jornada</label>
-            <input type="text" value="Capacitado" readonly>
+            <select id="pf-nivel-jornada" data-pf-field="nivelJornada" data-pf-option-field="nivelJornada" disabled>
+              <option value="">Não informado</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Categoria</label>
+            <select id="pf-categoria" data-pf-field="categoria" data-pf-option-field="categoria" disabled>
+              <option value="">Não informado</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Tipo de vínculo</label>
+            <select id="pf-tipo-vinculo" data-pf-field="tipoVinculoEmpregaticio" data-pf-option-field="tipoVinculoEmpregaticio" disabled>
+              <option value="">Não informado</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Origem da participação</label>
+            <select id="pf-origem-participacao" data-pf-field="origemParticipacao" data-pf-option-field="origemParticipacao" disabled>
+              <option value="">Não informado</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Risco de evasão</label>
+            <select id="pf-risco-evasao" data-pf-field="riscoEvasao" data-pf-option-field="riscoEvasao" disabled>
+              <option value="">Não informado</option>
+            </select>
           </div>
         </div>
       </div>
@@ -1117,11 +1235,11 @@
         <div class="field-grid">
           <div class="field">
             <label>E-mail</label>
-            <input type="text" id="pf-email" value="—" readonly>
+            <input type="email" id="pf-email" data-pf-field="email" value="—" maxlength="255" required readonly>
           </div>
           <div class="field">
             <label>Telefone</label>
-            <input type="text" value="(11) 98765-4321" readonly>
+            <input type="tel" id="pf-telefone" data-pf-field="telefone" value="—" maxlength="30" pattern="[0-9()+\-.\s]*" autocomplete="tel" readonly>
           </div>
         </div>
       </div>
@@ -1150,6 +1268,7 @@
         <div class="sec-label" id="pf-notas-label" style="margin-top:20px;">Notas — Módulos</div>
         <div class="notas-grid" id="pf-notas-grid"></div>
         <div class="nota-media-row"><span class="nota-media-label">Nota média geral</span><span class="nota-media-val" id="pf-nota-media-val">—</span></div>
+
         <div class="sec-label" style="margin-top:20px;">Jornada — Programa Pulse Mais</div>
         <div class="journey" id="pf-journey"></div>
         <div class="journey-legend">
@@ -1159,11 +1278,54 @@
         </div>
       </div>
 
+      <div id="pf-tab-registro" class="tab-panel">
+        <div class="sec-label">Registrar nota e presença</div>
+        <div class="registro-novo">
+          <div class="field">
+            <label>Tipo de atividade</label>
+            <select id="pf-registro-tipo">
+              <option value="">Selecione o tipo</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Atividade</label>
+            <select id="pf-registro-atividade" disabled>
+              <option value="">Selecione o tipo primeiro</option>
+            </select>
+          </div>
+          <div class="field" style="max-width:90px;">
+            <label>Nota (0-10)</label>
+            <input type="number" id="pf-registro-nota" min="0" max="10" step="0.1" placeholder="—">
+          </div>
+          <div class="registro-presenca" style="flex-direction:column;align-items:flex-start;gap:4px;">
+            <span style="font-size:11px;color:var(--gray-400);">&nbsp;</span>
+            <span style="display:flex;align-items:center;gap:5px;">
+              <input type="checkbox" id="pf-registro-sem-nota">
+              <label for="pf-registro-sem-nota">Sem nota (ex: evento)</label>
+            </span>
+          </div>
+          <div class="registro-presenca">
+            <input type="checkbox" id="pf-registro-presenca">
+            <label for="pf-registro-presenca">Presente</label>
+          </div>
+          <button class="btn btn-primary" id="pf-registro-btn" onclick="registrarNotaPresenca()"><i class="ti ti-plus"></i> Registrar</button>
+        </div>
+        <div class="registro-status" id="pf-registro-status"></div>
+
+        <div class="sec-label" style="margin-top:20px;">Notas e presença registradas</div>
+        <div class="notas-grid" id="pf-registros-grid">
+          <div class="perf-card__sub">Carregando registros...</div>
+        </div>
+      </div>
+
     </div>
 
     <div class="modal-footer">
-      <div class="footer-left"><i class="ti ti-eye" style="font-size:13px;"></i> Visualização — dados somente leitura</div>
+      <div class="footer-left" id="pf-footer-status"><i class="ti ti-eye" style="font-size:13px;"></i> Visualização — dados somente leitura</div>
       <div class="footer-right">
+        <button class="btn btn-ghost" id="pf-cancel-edit" onclick="cancelPerfilEdit()" hidden>Cancelar</button>
+        <button class="btn btn-ghost" id="pf-edit-btn" onclick="startPerfilEdit()"><i class="ti ti-pencil"></i> Editar dados</button>
+        <button class="btn btn-primary" id="pf-save-btn" onclick="savePerfilAluno()" hidden><i class="ti ti-device-floppy"></i> Salvar</button>
         <button class="btn btn-primary" onclick="closePerfilModal()"><i class="ti ti-x"></i> Fechar</button>
       </div>
     </div>
@@ -1171,11 +1333,20 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/vendor/chart.js/chart.umd.js"></script>
+<script src="../js/config.js"></script>
 <script src="../js/services/config.js"></script>
+<script src="../js/services/api.js"></script>
+<script src="../js/services/uiState.js"></script>
+<script src="../js/services/sessionUser.js"></script>
+<script src="../js/components/configuracoesFrontend.js"></script>
 <script src="../js/components/guiaGestor.js"></script>
 <script src="../js/components/menuSuperior.js"></script>
 <script src="../js/components/modalConfEquipe.js"></script>
+<script src="../js/pages/listaAlunos.js"></script>
+<script src="../js/pages/dashboardGestorApp.js"></script>
+<script src="../js/pages/agendaGestorApp.js"></script>
 <script src="../js/pages/spaGestor.js"></script>
+<script src="../js/pages/comunicacao.js"></script>
 </body>
 </html>

@@ -1,14 +1,44 @@
 (function () {
   'use strict'; // ativa modo estrito para o conjunto de telas do Gestor
 
+  const displayUser = window.getPulseDisplayUser
+    ? window.getPulseDisplayUser(pulseConfig.user)
+    : pulseConfig.user;
+
   // ---- Role label ----
   document.querySelectorAll('.menuLateral__logo-role')
-    .forEach(el => { el.textContent = pulseConfig.role; });
+    .forEach(el => { el.textContent = displayUser.role || pulseConfig.role; });
 
   // ---- Menu Principal ----
   const menuList = document.querySelector('.menuLateral__menu');
+  const sidebar = document.querySelector('.menuLateral');
 
-  menuList.innerHTML = pulseConfig.menu.map(item => `
+  function setupSidebarToggle() {
+    if (!sidebar || sidebar.querySelector('.menuLateral__toggle')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'menuLateral__toggle';
+    button.setAttribute('aria-label', 'Reduzir menu lateral');
+    button.innerHTML = '<i class="ti ti-layout-sidebar-left-collapse"></i><span>Reduzir</span>';
+    const logo = sidebar.querySelector('.menuLateral__logo');
+    if (logo) logo.appendChild(button);
+
+    const applyState = (collapsed) => {
+      document.body.classList.toggle('sidebar-collapsed', collapsed);
+      button.setAttribute('aria-label', collapsed ? 'Expandir menu lateral' : 'Reduzir menu lateral');
+      button.innerHTML = collapsed
+        ? '<i class="ti ti-layout-sidebar-left-expand"></i><span>Expandir</span>'
+        : '<i class="ti ti-layout-sidebar-left-collapse"></i><span>Reduzir</span>';
+      localStorage.setItem('pulseSidebarCollapsed', collapsed ? '1' : '0');
+    };
+
+    applyState(localStorage.getItem('pulseSidebarCollapsed') === '1');
+    button.addEventListener('click', () => {
+      applyState(!document.body.classList.contains('sidebar-collapsed'));
+    });
+  }
+
+  menuList.innerHTML = pulseConfig.menu.filter(item => item.id !== 'configuracoes').map(item => `
     <li class="menuLateral__item" data-page="${item.id}">
       <a href="#" class="menuLateral__link">
         <i class="ti ${item.icon} menuLateral__icon"></i>
@@ -17,10 +47,12 @@
     </li>
   `).join('');
 
+  setupSidebarToggle();
+
   // ---- Perfil ----
-  document.querySelector('.menuLateral__avatar').textContent    = pulseConfig.user.initials;
-  document.querySelector('.menuLateral__user-name').textContent = pulseConfig.user.name;
-  document.querySelector('.menuLateral__user-role').textContent = pulseConfig.user.role;
+  document.querySelector('.menuLateral__avatar').textContent    = displayUser.initials;
+  document.querySelector('.menuLateral__user-name').textContent = displayUser.name;
+  document.querySelector('.menuLateral__user-role').textContent = displayUser.role;
 
   // ---- Estado ativo ao clicar ----
   function bindMenuClicks() {
