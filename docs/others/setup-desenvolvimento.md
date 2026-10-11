@@ -15,8 +15,8 @@ Antes de iniciar, instale:
 ## 1. Clonar o repositório
 
 ```sh
-git clone https://git.inteli.edu.br/graduacao/2026-1b/t29/g03.git
-cd g03
+git clone https://github.com/JoseIsaias-AI/Pulse-Manager.git
+cd Pulse-Manager
 ```
 
 ## 2. Instalar as dependências

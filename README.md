@@ -111,8 +111,8 @@ Antes de iniciar a execução do projeto, é necessário ter instalado:
 
 ```sh
 # 1. Clonar o repositório e entrar na pasta
-git clone https://git.inteli.edu.br/graduacao/2026-1b/t29/g03.git
-cd g03
+git clone https://github.com/JoseIsaias-AI/Pulse-Manager.git
+cd Pulse-Manager
 
 # 2. Instalar as dependências
 npm install
@@ -247,4 +247,4 @@ O projeto não usa `SESSION_SECRET`, JWT, senha ou cookie assinado no MVP. A aut
 
 ## Licença/License
 
-<a href="https://git.inteli.edu.br/graduacao/2026-1b/t29/g03.git">Pulse Manager</a> © 2026 by <a href="https://www.inteli.edu.br/">INTELI</a>, <a href="https://www.linkedin.com/in/ana-carvalho-27268634b/">ANA LUIZA LIMA DE CARVALHO</a>, <a href="http://www.linkedin.com/in/felipe-sodr%C3%A9-pess%C3%B4a">FELIPE SODRÉ PESSÔA</a>, <a href="https://www.linkedin.com/in/gabrielibattini/">GABRIELI MARQUES BATTINI</a>, <a href="https://www.linkedin.com/in/joseisaias/">JOSÉ ISAIAS MENEZES SANTOS</a>, <a href="https://www.linkedin.com/in/nicolas-rigolin-carrascossa-4492b2261/">NÍCOLAS RIGOLIN CARRASCOSSA</a>, <a href="https://www.linkedin.com/in/raffael-bensoussan-98331b187/">RAFFAEL CABRAL BENSOUSSAN</a>, <a href="https://www.linkedin.com/in/lisboavitor/">VITOR MEDRADO LISBÔA</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+<a href="https://github.com/JoseIsaias-AI/Pulse-Manager.git">Pulse Manager</a> © 2026 by <a href="https://www.inteli.edu.br/">INTELI</a>, <a href="https://www.linkedin.com/in/ana-carvalho-27268634b/">ANA LUIZA LIMA DE CARVALHO</a>, <a href="http://www.linkedin.com/in/felipe-sodr%C3%A9-pess%C3%B4a">FELIPE SODRÉ PESSÔA</a>, <a href="https://www.linkedin.com/in/gabrielibattini/">GABRIELI MARQUES BATTINI</a>, <a href="https://www.linkedin.com/in/joseisaias/">JOSÉ ISAIAS MENEZES SANTOS</a>, <a href="https://www.linkedin.com/in/nicolas-rigolin-carrascossa-4492b2261/">NÍCOLAS RIGOLIN CARRASCOSSA</a>, <a href="https://www.linkedin.com/in/raffael-bensoussan-98331b187/">RAFFAEL CABRAL BENSOUSSAN</a>, <a href="https://www.linkedin.com/in/lisboavitor/">VITOR MEDRADO LISBÔA</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
